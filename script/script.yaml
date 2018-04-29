@@ -82,10 +82,6 @@
         entity_id: switch.kok_stora_fonstret
       - service: homeassistant.turn_on
         entity_id: switch.kok_lilla_fonstret
-      - service: homeassistant.turn_on
-        entity_id: switch.hall_byra
-      - service: homeassistant.turn_on
-        entity_id: switch.vardagsrum_fonster
       - service: light.turn_on
         data:
           entity_id: light.hall_byra_dimmer
@@ -111,13 +107,7 @@
       - service: homeassistant.turn_on
         entity_id: switch.kok_lilla_fonstret
       - service: homeassistant.turn_on
-        entity_id: switch.hall_byra
-      - service: homeassistant.turn_on
         entity_id: switch.hall_skap
-      - service: homeassistant.turn_on
-        entity_id: switch.vardagsrum_fonster
-      - service: homeassistant.turn_on
-        entity_id: switch.vardagsrum_byra
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_vitrinskap
       - service: homeassistant.turn_on
@@ -154,10 +144,6 @@
         entity_id: switch.kok_stora_fonstret
       - service: homeassistant.turn_on
         entity_id: switch.kok_lilla_fonstret
-      - service: homeassistant.turn_on
-        entity_id: switch.hall_byra
-      - service: homeassistant.turn_on
-        entity_id: switch.vardagsrum_fonster
       - service: homeassistant.turn_on
         entity_id: switch.sovrum_fonster
       - service: homeassistant.turn_on

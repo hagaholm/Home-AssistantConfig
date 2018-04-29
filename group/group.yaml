@@ -125,9 +125,7 @@
     entities:
       - switch.kok_stora_fonstret
       - switch.kok_lilla_fonstret
-      - switch.hall_byra
       - light.hall_byra_dimmer
-      - switch.vardagsrum_fonster
       - light.vardagsrum_fonster_dimmer
       
   evening_lights:
@@ -136,12 +134,9 @@
     entities:
       - switch.kok_stora_fonstret
       - switch.kok_lilla_fonstret
-      - switch.hall_byra
       - light.hall_byra_dimmer
       - switch.hall_skap
-      - switch.vardagsrum_fonster
       - light.vardagsrum_fonster_dimmer
-      - switch.vardagsrum_byra
       - light.vardagsrum_byra_dimmer
       - switch.vardagsrum_vitrinskap
       - switch.sovrum_fonster
@@ -163,9 +158,7 @@
     entities:
       - switch.kok_stora_fonstret
       - switch.kok_lilla_fonstret
-      - switch.hall_byra
       - light.hall_byra_dimmer
-      - switch.vardagsrum_fonster
       - light.vardagsrum_fonster_dimmer
       - switch.sovrum_fonster
       - switch.andreas_fonster
@@ -213,7 +206,6 @@
     name: Hall
     view: no
     entities:
-      - switch.hall_byra
       - light.hall_byra_dimmer
       - switch.hall_skap
       - sensor.hall_temperature
@@ -230,9 +222,7 @@
     name: Vardagsrum
     view: no
     entities:
-      - switch.vardagsrum_fonster
       - light.vardagsrum_fonster_dimmer
-      - switch.vardagsrum_byra
       - light.vardagsrum_byra_dimmer
       - switch.vardagsrum_vitrinskap
       - switch.vardagsrum_stereobank

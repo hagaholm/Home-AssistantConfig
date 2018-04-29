@@ -186,7 +186,6 @@
       - group.friggebod
       - group.garage
       - group.outside
-      - group.heater
       - group.fan  
   kitchen:
     name: Kök
@@ -217,6 +216,7 @@
     entities:
       - sensor.tvattstuga_temperature
       - sensor.tvattstuga_humidity
+      - sensor.varmepump_temperature
       
   livingroom:   
     name: Vardagsrum
@@ -235,6 +235,8 @@
       - sensor.badrum_temperature
       - sensor.badrum_humidity
       - sensor.fukt_badrumsfonster
+      - switch.fan_speed
+      - sensor.VentSpeed
 
   bedroom:
     name: Sovrum
@@ -287,9 +289,10 @@
     name: Garage
     view: no
     entities:
-      - sensor.garage_temperature
       - sensor.forrad_temperature
       - sensor.forrad_humidity
+      - sensor.forrad_frys_temperature
+      - switch.forrad_frys
       
   outside:
     name: Ute
@@ -298,12 +301,6 @@
       - switch.friggebod_ute
       - sensor.ute
       - sensor.ljusstyrka
-      
-  heater:
-    name: Bergvärme ackumulatortank
-    view: no
-    entities:
-      - sensor.varmepump_temperature
       
   fan:
     name: Ventilation
@@ -336,6 +333,7 @@
       - group.automation_mediaplayer
       - group.automation_hassbian
       - group.automation_doorbell
+      - group.automation_forrad_frys
       
   automation_kitchen_light:
     name: Köksbelysning
@@ -437,6 +435,15 @@
       - automation.ringklocka_tvattstuga
       - automation.ringklocka_hall
 
+  automation_forrad_frys:
+    name: Förråd frys
+#    control: hidden
+    entities:
+      - automation.forrad_frys_off___22
+      - automation.forrad_frys_on___17
+      - automation.larm_forrad_frys_off___23
+      - automation.larm_forrad_frys_on___16
+      
   
 ###########################################################
 

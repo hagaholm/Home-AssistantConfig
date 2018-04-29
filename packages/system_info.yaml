@@ -189,6 +189,7 @@ automation:
           message: ""
 
   - alias: Ny enhet hittad
+    initial_state: 'on'
     trigger:
       platform: event
       event_type: device_tracker_new_device
@@ -201,6 +202,7 @@ automation:
             ({{trigger.event.data.entity_id}})
 
   - alias: Hassbian uppdatering
+    initial_state: 'on'
     trigger:
       - platform: state
         entity_id: updater.updater

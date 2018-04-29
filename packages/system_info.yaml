@@ -1,0 +1,211 @@
+homeassistant:
+  customize:
+    sensor.disk_used_:
+      friendly_name: Rpi Disk Used
+    sensor.uptime:
+      friendly_name: 'Hass Uptime'
+
+group:
+  system_info_view:
+    name: System info
+    icon: mdi:lan
+    view: yes
+    entities:
+      - group.device_states
+      - group.computer_states
+      - group.media_states
+      - group.mobile_states
+      - group.network_states
+      - group.system_monitor_card
+
+  device_states:
+    name: Enheter status
+    entities:
+    - sensor.printer
+    - sensor.nas
+    - sensor.ipad
+    - sensor.galaxy_tab
+    - sensor.ip_camera
+    - sensor.ir_blaster
+    - sensor.ir_blaster_bedroom
+    - sensor.ir_blaster_living_room
+    - sensor.withings_scale
+    - sensor.hue_hub
+    - sensor.milight_hub
+    - sensor.ikea_gateway
+    - sensor.xiaomi_gateway
+    - sensor.hass_rpi
+    - sensor.magic_mirror_rpi
+    - sensor.ring_doorbell
+    - sensor.ring_chime_pro
+    - sensor.ring_chime
+
+  computer_states:
+    name: Dator status
+    entities:
+    - sensor.mickes_laptop
+    - sensor.mickes_work_laptop
+    - sensor.louise_dator
+
+  media_states:
+    name: Mediaspelare status
+    entities:
+    - sensor.harmony_hub
+    - sensor.yamaha
+    - sensor.classic
+    - sensor.panasonic_tv
+    - sensor.canal_digital
+    - sensor.chromecast
+    - sensor.chromecast_2
+
+  mobile_states:
+    name: Mobil status
+    entities:
+    - sensor.mobil_louise
+    - sensor.mobil_annelie
+    - sensor.mobil_micke
+    - sensor.mobil_andreas
+    - sensor.mobil_margareta
+    - sensor.mobil_herbert
+
+  network_states:
+    name: Nätverks status
+    entities:
+    - sensor.router_asuscom
+    - sensor.switch_asus_friggebod
+    - sensor.router
+    - sensor.dns320
+    - sensor.raspberry_pi_2    
+    - sensor.raspberry_pi_3
+    - sensor.hassbian    
+
+#  system_monitor_card:
+#    name: System Monitor Hass Rpi
+#    entities:
+#      - sensor.uptime
+#      - sensor.last_boot
+#      - sensor.since_last_boot
+      
+sensor:
+  # - platform: systemmonitor
+    # resources:
+      # - type: last_boot
+      # - type: since_last_boot
+  - platform: uptime
+    unit_of_measurement: hours
+  - platform: template
+    sensors:
+      harmony_hub:
+        friendly_name: 'Harmony hub'
+        value_template: "{{ 'Online' if is_state('device_tracker.harmony_hub', 'home') else 'Offline' }}"                
+      canal_digital:
+        friendly_name: 'Canal digital'
+        value_template: "{{ 'Online' if is_state('device_tracker.canal_digital', 'home') else 'Offline' }}"        
+      classic:
+        friendly_name: 'SqueezeBox Classic'
+        value_template: "{{ 'Online' if is_state('device_tracker.classic', 'home') else 'Offline' }}"
+      raspberry_pi_2:
+        friendly_name: 'Raspberry Pi 2 - 1-Wire'
+        value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_2', 'home') else 'Offline' }}"        
+      dns320:
+          friendly_name: 'Nas DNS-320'
+          value_template: "{{ 'Online' if is_state('device_tracker.dns320', 'home') else 'Offline' }}"
+      yamaha:
+        friendly_name: 'Yamaha RX-A1030'
+        value_template: "{{ 'Online' if is_state('device_tracker.yamaha', 'home') else 'Offline' }}"        
+      raspberry_pi_3:
+        friendly_name: 'Raspberry Pi 3 - Nexahome'
+        value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_3', 'home') else 'Offline' }}"        
+      chromecast:
+        friendly_name: 'Chromecast'
+        value_template: "{{ 'Online' if is_state('device_tracker.chromecast', 'home') else 'Offline' }}"
+      router_asuscom:
+        friendly_name: 'ASUS Router'
+        value_template: "{{ 'Online' if is_state('device_tracker.router_asuscom', 'home') else 'Offline' }}"
+      mobil_louise:
+        friendly_name: 'Louise mobil'
+        value_template: "{{ 'Online' if is_state('device_tracker.mobil_louise', 'home') else 'Offline' }}"
+      louise_dator:
+        friendly_name: 'Louise computer'
+        value_template: "{{ 'Online' if is_state('device_tracker.louise_dator', 'home') else 'Offline' }}"
+      mobil_annelie:
+        friendly_name: 'Annelie mobil'
+        value_template: "{{ 'Online' if is_state('device_tracker.mobil_annelie', 'home') else 'Offline' }}"
+      mobil_micke:
+        friendly_name: 'Micke mobil'
+        value_template: "{{ 'Online' if is_state('device_tracker.mobil_micke', 'home') else 'Offline' }}"
+      mobil_andreas:
+        friendly_name: 'Andreas mobil'
+        value_template: "{{ 'Online' if is_state('device_tracker.mobil_andreas', 'home') else 'Offline' }}"
+      panasonic_tv:
+        friendly_name: 'Tv Panasonic'
+        value_template: "{{ 'Online' if is_state('device_tracker.panasonic_tv', 'home') else 'Offline' }}"
+      mobil_margareta:
+        friendly_name: 'Margareta mobil'
+        value_template: "{{ 'Online' if is_state('device_tracker.mobil_margareta', 'home') else 'Offline' }}"
+      mobil_herbert:
+        friendly_name: 'Herbert mobil'
+        value_template: "{{ 'Online' if is_state('device_tracker.v', 'home') else 'Offline' }}"
+      switch_asus_friggebod:
+        friendly_name: 'ASUS Switch friggebod'
+        value_template: "{{ 'Online' if is_state('device_tracker.switch_asus_friggebod', 'home') else 'Offline' }}"
+      chromecast_2:
+        friendly_name: 'Chromecast Wifi'
+        value_template: "{{ 'Online' if is_state('device_tracker.chromecast_2', 'home') else 'Offline' }}"        
+      mickes_laptop:
+        friendly_name: 'Micke dator'
+        value_template: "{{ 'Online' if is_state('device_tracker.mickes_laptop', 'home') else 'Offline' }}"
+      hassbian:
+        friendly_name: 'Raspberry Pi 3 - Hassbian'
+        value_template: "{{ 'Online' if is_state('device_tracker.hassbian', 'home') else 'Offline' }}"
+      mickes_work_laptop:
+        friendly_name: 'Micke jobb dator'
+        value_template: "{{ 'Online' if is_state('device_tracker.mickes_work_laptop', 'home') else 'Offline' }}"
+      router:
+        friendly_name: 'Router?'
+        value_template: "{{ 'Online' if is_state('device_tracker.Router?', 'home') else 'Offline' }}"
+
+automation:
+  - alias: 'Hassbian startad'
+    initial_state: 'on'
+    trigger:
+      platform: homeassistant
+      event: start
+    action:
+      - service: notify.pushetta
+        data:
+          title: "Hassbian startad"
+          message: ""
+
+  - alias: 'Hassbian stoppad'
+    initial_state: 'on'
+    trigger:
+      platform: homeassistant
+      event: shutdown
+    action:
+      - service: notify.pushetta
+        data:
+          title: "Hassbian stoppad"
+          message: ""
+
+  - alias: Ny enhet hittad
+    trigger:
+      platform: event
+      event_type: device_tracker_new_device
+    action:
+      - service: notify.pushetta
+        data:
+          title: "Ny enhet hittad"
+          message: >
+            {{trigger.event.data.host_name}} 
+            ({{trigger.event.data.entity_id}})
+
+  - alias: Hassbian uppdatering
+    trigger:
+      - platform: state
+        entity_id: updater.updater
+    action:
+      - service: notify.pushetta
+        data: 
+          title: 'Ny Home Assistant Release'
+          message: "Home Assistant  {{ states.updater.updater.state }}"

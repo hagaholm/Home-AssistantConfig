@@ -1,0 +1,114 @@
+    #####################################################
+    ### Tänder lampor när sista åker hemifrån         ###
+    ### T: group.track_for_home_devices to 'not_home' ###
+    ### C: sensor.ljusstyrka < 200                    ###
+    ###    12:00:00 - 22:30:00                        ###
+    ### A: group.away_lights = on                     ###
+    #####################################################
+  - alias: Bortabelysning on (-> borta, <200)
+    trigger:
+      platform: state
+      entity_id: group.track_for_home_devices
+      from: 'home'
+      to: 'not_home'
+      for:
+        minutes: 1
+    condition:
+      condition: and
+      conditions:
+        - condition: numeric_state
+          entity_id: sensor.ljusstyrka
+          below: 200
+        - condition: time
+          after: '12:00:00'
+          before: '22:30:00' 
+    action:
+      service: script.away_lights_on
+      #- service: homeassistant.turn_on
+      #  entity_id: group.away_lights
+        
+    ###########################################################
+    ### Tänder lampor när ingen är hemma och det blir mörkt ###
+    ### T: sensor.ljusstyrka < 200                          ###
+    ### C: group.track_for_home_devices to 'not_home'       ###
+    ###    12:00:00 - 22:30:00                              ###
+    ### A: group.away_lights = on                           ###
+    ###########################################################
+  - alias: Bortabelysning on (<200, borta)
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      below: 200
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
+        - condition: time
+          after: '12:00:00'
+          before: '22:30:00'      
+    action:
+      service: script.away_lights_on
+      #service: homeassistant.turn_on
+      #entity_id: group.away_lights
+      
+    ####################################################################
+    ### Sätter på lampor när ingen är hemma kl 12.00 om det är mörkt ###
+    ### T: time = '12:00:00'                                         ###
+    ### C: group.track_for_home_devices to 'not_home'                ###
+    ###    12:00:00                                                  ###
+    ###     ensor.ljusstyrka < 200                                   ###
+    ### A: group.away_lights = on                                    ###
+    ####################################################################
+  - alias: Bortabelysning on (=12:00:00, <200, borta)
+    trigger:
+      platform: time
+      at: '12:00:00'
+    condition:
+      condition: and
+      conditions:
+        - condition: numeric_state
+          entity_id: sensor.ljusstyrka
+          below: 200
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'          
+    action:
+      service: script.away_lights_on
+      #service: homeassistant.turn_on
+      #entity_id: group.away_lights
+        
+    #################################################
+    ### Stänger av lampor när första kommer hem   ###
+    ### T: group.track_for_home_devices to 'home' ###
+    ### A: group.away_lights = off                ###
+    #################################################
+#  - alias: Bortabelysning off (-> hemma)
+#    trigger:
+#      platform: state
+#      entity_id: group.track_for_home_devices
+#      from: 'not_home'
+#      to: 'home'
+#    action:
+#      - service: homeassistant.turn_off
+#        entity_id: group.away_lights
+
+    #####################################################
+    ### Stänger av lampor kl 23:00 om ingen är hemma  ###
+    ### T: time > '23:00:00'                          ###
+    ### C: group.track_for_home_devices to 'not_home' ###
+    ### A: group.away_lights = off                    ###
+    #####################################################
+  - alias: Bortabelysning off (>23:00:00, borta)
+    trigger:
+      platform: time
+      at: '23:00:00'
+    condition:
+      condition: state
+      entity_id: group.track_for_home_devices
+      state: 'not_home'
+    action:
+      service: script.away_lights_off
+      #- service: homeassistant.turn_off
+      #  entity_id: group.away_lights

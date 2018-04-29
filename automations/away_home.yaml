@@ -1,0 +1,34 @@
+    #######################################################
+    ### Stänger av mediaspelare när sista åker hemifrån ###
+    ### T: group.track_for_home_devices to 'not_home'   ###
+    ### A: switch.brytare_extra_1 = off                 ###
+    #######################################################
+  - alias: Mediaspelare off (-> borta)
+    trigger:
+      platform: state
+      entity_id: group.track_for_home_devices
+      to: 'not_home'
+    action:
+      - service: remote.turn_off
+        entity_id: remote.harmony_hub
+      - delay: '00:00:15'
+      - service: homeassistant.turn_off
+        entity_id: switch.vardagsrum_stereobank
+      - service: homeassistant.turn_off
+        entity_id: switch.vardagsrum_extra_subbas  
+        
+    ####################################################
+    ### Sätter på mediaspelare när första kommer hem ###
+    ### T: group.track_for_home_devices to 'home'    ###
+    ### A: switch.brytare_extra_1 = off              ###
+    ####################################################
+  - alias: Mediaspelare on (-> hemma)
+    trigger:
+      platform: state
+      entity_id: group.track_for_home_devices
+      to: 'home'
+    action:
+      - service: homeassistant.turn_on
+        entity_id: switch.vardagsrum_stereobank
+      - service: homeassistant.turn_on
+        entity_id: switch.vardagsrum_extra_subbas      

@@ -1,0 +1,13 @@
+    ######################################
+    ### Hög temp Raspberry             ###
+    ### T: sensor.cpu_temperature > 70 ###
+    ######################################
+  - alias: Hög temp Raspberry
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.cpu_temperature
+      above: '70'
+    action:
+      - service: notify.pushetta
+        data:
+          message: "Raspberry HOMEASS CPU hög temp"        

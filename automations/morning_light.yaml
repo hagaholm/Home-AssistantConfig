@@ -1,0 +1,107 @@
+    # Morgonbelysning on (sensor on, <1500)
+    # Morgonbelysning on (-> hemma, <1500)
+    # Morgonbelysning off (<1500, hemma)
+    # Morgonbelysning off (-> borta)
+
+    #####################################################
+    ### Tänder lampor på morgonen vid rörelse i köket ###
+    ### T: switch.rorelsevakt_kok = on                ###
+    ### C: sensor.ljusstyrka < 1500                   ###
+    ###    05:00:00 - 12:00:00                        ###
+    ### A: group.morning_lights = on                  ###
+    #####################################################
+  - alias: Morgonbelysning on (sensor on, <1500)
+    trigger:
+      platform: state
+      entity_id: switch.rorelsevakt_kok
+      to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: numeric_state
+          entity_id: sensor.ljusstyrka
+          below: 1500
+        - condition: state
+          entity_id: group.morning_lights
+          state: 'off'
+        - condition: time
+          after: '05:00:00'
+          before: '12:00:00'
+    action:
+      service: script.morning_lights_on
+      #service: homeassistant.turn_on
+      #entity_id: group.morning_lights
+
+    ##########################################################
+    ### Tänder lampor när första kommer hem på förmiddagen ###
+    ### T: group.track_for_home_devices to: 'home'         ###
+    ### C: sensor.ljusstyrka < 1500                        ###
+    ###    05:00:00 - 12:00:00                             ###
+    ### A: group.morning_lights = on                       ###
+    ##########################################################
+  - alias: Morgonbelysning on (-> hemma, <1500)
+    trigger:
+      platform: state
+      entity_id: group.track_for_home_devices
+      from: 'not_home'
+      to: 'home'
+    condition:
+      condition: and
+      conditions:
+        - condition: numeric_state
+          entity_id: sensor.ljusstyrka
+          below: 1500
+        - condition: time
+          after: '05:00:00'
+          before: '12:00:00'
+    action:
+      service: script.morning_lights_on
+      #service: homeassistant.turn_on
+      #entity_id: group.morning_lights
+
+    ############################################################
+    ### Släcker lampor på förmiddagen när det blir ljust ute ###
+    ### T: sensor.ljusstyrka < 1500                          ###
+    ### C: group.track_for_home_devices = 'home'             ###
+    ###    05:00:00 - 12:00:00                               ###
+    ### A: group.evening_lights = off                        ###
+    ############################################################
+  - alias: Morgonbelysning off (<1500, hemma)
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      above: 1500
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'home'
+        - condition: time
+          after: '05:00:00'
+          before: '12:00:00'      
+    action:
+      service: script.morning_lights_off
+      #service: homeassistant.turn_off
+      #entity_id: group.evening_lights
+
+    #############################################################
+    ### Släcker lampor på förmiddagen när sista åker hemifrån ###
+    ### T: group.track_for_home_devices to: 'not_home'        ###
+    ### C: 05:00:00 - 12:00:00                                ###
+    ### A: group.evening_lights = off                         ###
+    #############################################################
+  - alias: Morgonbelysning off (-> borta)
+    trigger:
+      platform: state
+      entity_id: group.track_for_home_devices
+      from: 'home'
+      to: 'not_home'
+    condition:
+      condition: time
+      after: '05:00:00'
+      before: '12:00:00'
+    action:
+      service: script.morning_lights_off
+      #service: homeassistant.turn_off
+      #entity_id: group.evening_lights

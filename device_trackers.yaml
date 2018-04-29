@@ -1,0 +1,72 @@
+# https://home-assistant.io/components/device_tracker/
+
+####################################################
+#                                                  #
+#              DEVICE TRACKER - NMAP               #
+#                                                  #
+####################################################
+
+# https://home-assistant.io/components/device_tracker.nmap_tracker/
+      
+#  - platform: nmap_tracker
+#    hosts: 192.168.1.2-254
+#    home_interval: 1
+#    consider_home: 180
+#    new_device_defaults:
+#      track_new_devices: True
+#      hide_if_away: False
+
+
+####################################################
+#                                                  #
+#             DEVICE TRACKER - ASUSWRT             #
+#                                                  #
+####################################################
+
+# https://home-assistant.io/components/device_tracker.asuswrt/
+
+  - platform: asuswrt
+    host: 192.168.1.1
+    username: admin
+    ssh_key: /home/homeassistant/.ssh/id_rsa
+
+# Not used as it works fine with asuswrt instead
+#  - platform: asuswrt
+#    host: 192.168.1.1
+#    username: user
+#    password: password
+#    protocol: telnet
+#    interval_seconds: 10
+#    consider_home: 180
+#    track_new_devices: yes
+
+
+####################################################
+#                                                  #
+#             DEVICE TRACKER - BLUETOOTH           #
+#                                                  #
+####################################################
+
+# https://home-assistant.io/components/device_tracker.bluetooth_tracker/
+#  - platform: bluetooth_tracker
+
+  
+####################################################
+#                                                  #
+#             DEVICE TRACKER - PING                #
+#                                                  #
+####################################################
+
+#https://home-assistant.io/components/device_tracker.ping/
+
+#  - platform: ping
+#    hosts:
+#      hostone: 192.168.100.1
+#      0011326ef7c5: 192.168.2.2  
+
+
+####################################################
+#                                                  #
+#            END OF CONFIGUATION FILE              #
+#                                                  #
+####################################################

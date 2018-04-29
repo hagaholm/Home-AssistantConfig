@@ -1,0 +1,513 @@
+﻿####################################################
+#                                                  #
+#                       GROUP                      #
+#                                                  #
+####################################################
+
+#################
+#################
+# View: Default #
+#################
+#################
+  default_view2:
+    name: Info
+    view: yes
+    icon: mdi:information-outline
+    entities:
+      - group.default_view_info
+      - group.default_view_lights
+      - group.default_view_ventilation
+      - group.default_view_temp_graph
+      - group.default_view_lux_graph
+
+  default_view_info:
+    name: Info
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - device_tracker.mobil_micke
+      - device_tracker.mobil_annelie
+      - device_tracker.mobil_andreas
+      - device_tracker.mobil_louise
+      - sensor.ute
+      - sensor.hall_temperature
+      - sensor.uterum
+      - sensor.friggebod_temperature
+      - sensor.ljusstyrka
+ 
+  default_view_lights:
+    name: Belysning
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - script.goodnight
+      - script.bedroom_off
+      - script.extra_room_off
+      - script.andreas_room_off
+ 
+  default_view_ventilation:
+    name: Ventilation badrum
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - sensor.ventspeed
+      - sensor.badrum_humidity
+      - sensor.fukt_badrumsfonster
+ 
+  default_view_temp_graph:
+    name: Temperatur
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - history_graph.temperatur_ute_2_dagar
+
+  default_view_lux_graph:
+    name: Ljusstyrka (lux)
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - history_graph.lux
+
+#####################
+#####################
+# View: Temperature #
+#####################
+#####################      
+  temperature_view:
+    name: Temperatur
+    view: yes
+    entities:
+      - group.temperature_view_current
+      
+  temperature_view_current:
+    name: Aktuell temperatur
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - sensor.ute
+      - sensor.hall_temperature
+      - sensor.uterum
+      - sensor.friggebod_temperature
+      
+###############################
+###############################
+# View: Belysning och brytare #
+###############################
+###############################
+  switch_view:
+    name: Belysning och brytare
+    view: yes
+    icon: mdi:lightbulb
+    entities:
+      - group.kitchen_lights
+      - group.morning_lights
+      - group.evening_lights
+      - group.outside_lights
+      - group.away_lights
+
+  kitchen_lights:
+    name: Köksbelysning
+    view: no
+    entities:      
+      - light.kok_underskap_bank
+      - light.kok_underskap_diskbank
+      - light.kok_vitrinskap
+      
+  morning_lights:
+    name: Morgonbelysning
+    view: no
+    entities:
+      - switch.kok_stora_fonstret
+      - switch.kok_lilla_fonstret
+      - switch.hall_byra
+      - light.hall_byra_dimmer
+      - switch.vardagsrum_fonster
+      - light.vardagsrum_fonster_dimmer
+      
+  evening_lights:
+    name: Kvällsbelysning
+    view: no
+    entities:
+      - switch.kok_stora_fonstret
+      - switch.kok_lilla_fonstret
+      - switch.hall_byra
+      - light.hall_byra_dimmer
+      - switch.hall_skap
+      - switch.vardagsrum_fonster
+      - light.vardagsrum_fonster_dimmer
+      - switch.vardagsrum_byra
+      - light.vardagsrum_byra_dimmer
+      - switch.vardagsrum_vitrinskap
+      - switch.sovrum_fonster
+      - switch.extrarum_fonster
+      - switch.andreas_fonster
+      
+  outside_lights:
+    name: Utomhusbelysning
+    view: no
+    entities:
+      - switch.friggebod_stora_fonstret
+      - switch.friggebod_lilla_fonstret
+      - switch.uterum_fonster
+      - light.spabad_vagg
+      
+  away_lights:
+    name: Bortabelysning
+    view: no
+    entities:
+      - switch.kok_stora_fonstret
+      - switch.kok_lilla_fonstret
+      - switch.hall_byra
+      - light.hall_byra_dimmer
+      - switch.vardagsrum_fonster
+      - light.vardagsrum_fonster_dimmer
+      - switch.sovrum_fonster
+      - switch.andreas_fonster
+          
+#############
+#############
+# View: Rum #
+#############      
+#############
+  room:
+    name: Rum
+    view: yes
+    entities:
+      - group.kitchen
+      - group.hall
+      - group.laundry
+      - group.livingroom
+      - group.bathroom
+      - group.bedroom
+      - group.andreas_room
+      - group.extra_room
+      - group.conservatory # uterum
+      - group.attic        # vinden
+      - group.spa
+      - group.friggebod
+      - group.garage
+      - group.outside
+      - group.heater
+      - group.fan  
+  kitchen:
+    name: Kök
+    view: no
+    entities:
+      - switch.kok_stora_fonstret
+      - switch.kok_lilla_fonstret
+      - light.kok_underskap_bank
+      - light.kok_underskap_diskbank
+      - light.kok_vitrinskap 
+      - switch.rorelsevakt_kok
+      - sensor.kyl_temperature
+      #- sensor.kyl_humidity # Onödigt att visa, kanska kan larma om ovanligt värde
+      - sensor.frys_temperature
+      #- sensor.frys_humidity # Onödigt att visa, kanska kan larma om ovanligt värde
+  hall:
+    name: Hall
+    view: no
+    entities:
+      - switch.hall_byra
+      - light.hall_byra_dimmer
+      - switch.hall_skap
+      - sensor.hall_temperature
+      - sensor.hall_humidity
+      
+  laundry:
+    name: Tvättstuga
+    view: no
+    entities:
+      - sensor.tvattstuga_temperature
+      - sensor.tvattstuga_humidity
+      
+  livingroom:   
+    name: Vardagsrum
+    view: no
+    entities:
+      - switch.vardagsrum_fonster
+      - light.vardagsrum_fonster_dimmer
+      - switch.vardagsrum_byra
+      - light.vardagsrum_byra_dimmer
+      - switch.vardagsrum_vitrinskap
+      - switch.vardagsrum_stereobank
+      - switch.vardagsrum_extra_subbas
+      
+  bathroom:
+    name: Badrum
+    view: no
+    entities:
+      - sensor.badrum_temperature
+      - sensor.badrum_humidity
+      - sensor.fukt_badrumsfonster
+
+  bedroom:
+    name: Sovrum
+    view: no
+    entities:
+      - switch.sovrum_fonster
+      - sensor.sovrum
+      
+  andreas_room:
+    name: Andreas rum
+    view: no
+    entities:
+      - switch.andreas_fonster
+      - switch.andreas_bokhylla
+      - switch.andreas_skrivbord
+      
+  extra_room:
+    name: Extrarum
+    view: no
+    entities:
+      - switch.extrarum_fonster
+      
+  conservatory:
+    name: Uterum
+    view: no
+    entities:
+      - switch.uterum_fonster
+      - sensor.uterum
+      
+  attic:
+    name: Vinden
+    view: no
+    entities:
+      - sensor.pa_vinden
+      
+  spa:
+    name: Spabad
+    view: no
+    entities:
+      - light.spabad_vagg
+  friggebod:
+    name: Friggebod
+    view: no
+    entities:
+      - switch.friggebod_lilla_fonstret
+      - switch.friggebod_stora_fonstret
+      - sensor.friggebod_temperature
+      - sensor.friggebod_humidity
+  garage:
+    name: Garage
+    view: no
+    entities:
+      - sensor.garage_temperature
+      - sensor.forrad_temperature
+      - sensor.forrad_humidity
+      
+  outside:
+    name: Ute
+    view: no
+    entities:
+      - switch.friggebod_ute
+      - sensor.ute
+      - sensor.ljusstyrka
+      
+  heater:
+    name: Bergvärme ackumulatortank
+    view: no
+    entities:
+      - sensor.varmepump_temperature
+      
+  fan:
+    name: Ventilation
+    view: no
+    entities:
+      - switches.fan_speed
+      - sensor.VentSpeed # Fläkt hastighet
+      - sensor.ventagg1
+      - sensor.ventagg2
+      - sensor.ventagg3
+      - sensor.ventagg4
+      # Verkningsgrad
+
+####################
+####################
+# View: Automation #
+####################
+####################
+  automation:
+    name: Automation
+    view: yes
+    entities:
+      - group.automation_kitchen_light
+      - group.automation_morning_light
+      - group.automation_evening_light
+      - group.automation_away_light
+      - group.automation_outside_light
+      - group.automation_temp_larm
+      - group.automation_ventilation
+      - group.automation_mediaplayer
+      - group.automation_hassbian
+      - group.automation_doorbell
+      
+  automation_kitchen_light:
+    name: Köksbelysning
+#    control: hidden
+    entities:
+      - automation.kok_100_morgon_sensor_on_2500
+      - automation.kok_100_sensor_on_0150
+      - automation.kok_100_sensor_on_1502500
+      - automation.kok_100_sensor_on_borta_0150
+      - automation.kok_25_sensor_on_hemma_0150
+      - automation.kok_off__borta
+      - automation.kok_off_sensor_off
+
+  automation_morning_light:
+    name: Morgonbelysning
+#    control: hidden
+    entities:
+      - automation.morgonbelysning_on_sensor_on_1500
+      - automation.morgonbelysning_on__hemma_1500
+      - automation.morgonbelysning_off_1500_hemma
+      - automation.morgonbelysning_off__borta
+
+  automation_evening_light:
+    name: Kvällsbelysning
+#    control: hidden
+    entities:
+      - automation.kvallsbelysning_on_1500_hemma
+      - automation.kvallsbelysning_on_sensor_on_borta_1500
+      - automation.kvallsbelysning_on__hemma_1500
+      - automation.kvallsbelysning_off_1600_hemma
+      - automation.kvallsbelysning_off__borta
+ 
+  automation_away_light:
+    name: Bortabelysning
+#    control: hidden
+    entities:
+      - automation.bortabelysning_on_120000_200_borta
+      - automation.bortabelysning_on_200_borta
+      - automation.bortabelysning_on__borta_200 
+      - automation.bortabelysning_off_230000_borta
+      - automation.bortabelysning_off__hemma
+  
+  automation_outside_light:
+    name: Utebelysning
+#    control: hidden
+    entities:
+      - automation.friggebod_belysning_on_1
+      - automation.spabelysning_on_5
+      - automation.utebelysning_off_220000_borta
+      - automation.uterum_belysning_on_100
+      - automation.utebelysning_off_220000_hemma
+      - automation.uterum_off_all_off_hemma
+      
+  automation_temp_larm:
+    name: Larm temperatur
+#    control: hidden
+    entities:
+      - automation.friggebod_larm_hog_temp
+      - automation.friggebod_larm_lag_temp
+      - automation.friggebod_frysvakt
+      - automation.larm_hog_temp_i_kyl
+      - automation.larm_lag_temp_i_kyl
+      - automation.larm_hog_temp_i_frys
+      - automation.larm_lag_temp_i_frys
+      - automation.larm_hog_fukt_i_frys
+      - automation.hog_temp_raspberry
+      
+  automation_ventilation:
+    name: Ventilation
+#    control: hidden
+    entities:
+      - automation.badrum_hog_fukt
+      - automation.badrumsfonster_hog_fukt
+      - automation.badrum_lag_fukt
+      - automation.badrumsfonster_lag_fukt
+      
+  automation_mediaplayer:
+    name: Mediaspelare
+#    control: hidden
+    entities:
+      - automation.mediaspelare_on__hemma
+      - automation.mediaspelare_off__borta
+      - automation.satt_pa_mediaspelare_vid_on
+      - automation.stang_av_mediaspelare_vid_off
+
+  automation_hassbian:
+    name: Hassbian
+#    control: hidden
+    entities:
+      - automation.hassbian_startad
+      - automation.hassbian_stoppad
+      - automation.ny_enhet_hittad
+      - automation.hassbian_uppdatering
+
+  automation_doorbell:
+    name: Ringklocka
+#    control: hidden
+    entities:
+      - automation.ringklocka_tvattstuga
+      - automation.ringklocka_hall
+
+  
+###########################################################
+
+#  setup:
+#    name: Setup
+#    view: yes
+#    entities:
+#      - group.setup_lux_home
+#      - group.setup_lux_away
+#
+#  setup_lux_home:
+#    name: Lux hemma
+#    view: no
+#    entities:
+#      - input_number.lux_kitchen_home
+#      - input_number.lux_inside_home
+#      - input_number.lux_outside_home
+#  
+#  setup_lux_away:
+#    name: Lux borta
+#    view: no
+#    entities:
+#      - input_number.lux_inside_away
+#      - input_number.lux_outside_away
+      
+  family:
+    name: Familj
+    entities:
+    - device_tracker.mobil_micke
+    - device_tracker.mobil_annelie
+    - device_tracker.mobil_louise
+    - device_tracker.mobil_andreas
+
+  track_for_home_devices:
+    name: Enheter för kontroll om hemma
+    entities:
+    - device_tracker.mobil_micke
+    - device_tracker.mobil_annelie
+    - device_tracker.mobil_louise
+    - device_tracker.mobil_andreas
+    - device_tracker.mobil_margareta
+    - device_tracker.mobil_herbert
+    
+  HA Server Monitor:
+    - sensor.cpu_used
+    - sensor.disk_use_home
+    - sensor.ram_used
+#    - sensor.since_last_boot_templated
+    - sensor.ha_uptime
+    - sensor.sent_ens32
+    - sensor.received_ens32
+    - sensor.cpu
+    - sensor.connected_clients
+    - sensor.battery
+    - sensor.lets_encrypt_expiration
+
+  HA Version Info:
+    - sensor.installed_version
+    - sensor.current_ha_version
+
+  Network Performance:
+    - sensor.speedtest_download
+    - sensor.speedtest_upload
+    - sensor.speedtest_ping    

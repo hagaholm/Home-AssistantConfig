@@ -1,0 +1,257 @@
+﻿####################################################
+#                                                  #
+#                 HOME ASSISTANT                   #
+#                                                  #
+####################################################
+# https://home-assistant.io/docs/configuration/basic/
+
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret latitude
+  longitude: !secret longitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 34
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: !secret time_zone
+  # Customization file
+  customize: !include customize.yaml  
+  # Package folder
+  packages: !include_dir_named packages
+  
+  customize_glob:
+    "*.*":
+      custom_ui_state_card: state-card-custom-ui
+      show_last_changed: true
+
+#    light.*:
+#      custom_ui_state_card: state-card-custom-ui
+#      show_last_changed: true
+#    switch.*:
+#      custom_ui_state_card: state-card-custom-ui
+#      show_last_changed: true
+#    sensor.*:
+#      custom_ui_state_card: state-card-custom-ui
+#      show_last_changed: true
+
+  
+####################################################
+#                                                  #
+#                     GENERAL                      #
+#                                                  #
+#################################################### 
+
+#---------------------------------------------------
+# Show links to resources in log and frontend
+#introduction:
+
+#recorder:
+
+#---------------------------------------------------
+# Enables the frontend
+frontend:
+  extra_html_url:
+    - /local/custom_ui/state-card-custom-ui.html
+  extra_html_url_es5:
+    - /local/custom_ui/state-card-custom-ui-es5.html
+
+#---------------------------------------------------
+# Enables configuration UI
+# https://home-assistant.io/components/config/
+config:
+
+#---------------------------------------------------
+# https://home-assistant.io/components/logger/
+logger:
+  default: critical
+  logs:
+    homeassistant.components.media_player: error
+#    homeassistant.components.device_tracker: debug
+
+#---------------------------------------------------
+# http
+# https://home-assistant.io/components/http/
+http:
+  api_password: !secret http_password  
+
+#---------------------------------------------------
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+#---------------------------------------------------
+# Discover some devices automatically
+discovery:
+
+#---------------------------------------------------
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+#---------------------------------------------------
+# Enables support for tracking state changes over time
+# https://home-assistant.io/components/history/
+history:
+
+#---------------------------------------------------
+# View all events in a logbook
+logbook:
+  include:
+    domains:
+      - sensor
+#      - switch
+      - media_player
+      - automation
+  exclude:
+    domains:
+      - switch
+#    entities:
+#      - switch.rorelsevakt_kok
+#      -sensor.yr_symbol
+
+#---------------------------------------------------
+# Enables a map showing the location of tracked devices
+#map:
+
+#---------------------------------------------------
+# Track the sun
+# https://home-assistant.io/components/sun/
+sun:
+
+#---------------------------------------------------
+# Notifier
+#https://home-assistant.io/components/notify.pushetta/
+notify:
+  name: pushetta
+  platform: pushetta
+  channel_name: !secret pushetta_channel_name
+  api_key: !secret pushetta_api_key
+
+
+####################################################
+#                                                  #
+#      LINKS TO INDIVUAL CONFIGURATION FILES       #
+#                                                  #
+####################################################
+
+# https://home-assistant.io/docs/configuration/splitting_configuration/
+
+#---------------------------------------------------
+automation: !include_dir_merge_list automations/
+#---------------------------------------------------
+device_tracker: !include device_trackers.yaml
+#---------------------------------------------------
+sensor: !include_dir_merge_list sensor
+#---------------------------------------------------
+group: !include_dir_merge_named group
+#---------------------------------------------------
+script: !include_dir_merge_named script
+#---------------------------------------------------
+
+
+####################################################
+#                                                  #
+#                    TELLSTICK                     #
+#                                                  #
+####################################################
+tellstick:
+  signal_repetitions: 3
+
+
+####################################################
+#                                                  #
+#                     COVER                        #
+#                                                  #
+####################################################
+cover:
+  - platform: tellstick
+
+  
+####################################################
+#                                                  #
+#                     LIGHT                        #
+#                                                  #
+####################################################
+light:
+  - platform: tellstick
+
+  
+####################################################
+#                                                  #
+#                     SWITCH                       #
+#                                                  #
+####################################################
+switch:
+  - platform: tellstick
+  
+  - platform: command_line
+    switches:
+      fan_speed:
+        command_on: python3 -c "import requests; requests.get('http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=on&PIO.A=CHANGE');"
+        command_off: python3 -c "import requests; requests.get('http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=CHANGE');"
+        friendly_name: Fläkthastighet Normal / Forcerad
+        
+# Hämta aktuell status: 'http://192.168.1.12:3001/text/12.A84D7D000000/PIO.A' 
+# Sätt till Off: 'http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=CHANGE'
+# Sätt till On: 'http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=on&PIO.A=CHANGE'
+
+  
+####################################################
+#                                                  #
+#                TEXT TO SPEECH                    #
+#                                                  #
+####################################################
+tts:
+  - platform: google
+
+  
+####################################################
+#                                                  #
+#                  MEDIA PLAYER                    #
+#                                                  #
+####################################################
+media_player:
+  - platform: squeezebox
+    host: 192.168.1.13
+    port: 9090
+
+    
+####################################################
+#                                                  #
+#                    CLOUD                         #
+#                                                  #
+####################################################
+cloud:
+
+####################################################
+#                                                  #
+#                 EMULATED HUE                     #
+#                                                  #
+####################################################
+#emulated_hue:
+
+####################################################
+#                                                  #
+#                 EMULATED HUE                     #
+#                                                  #
+####################################################
+#emulated_roku:
+#  host_ip: 192.168.1.14 # should be set to Home Assistant's address
+##  advertise_ip: 10.0.0.10 # optional, defaults to host_ip if not specified
+##  upnp_bind_multicast: True # optional, defaults to True
+#  listen_ports:
+#    - 8060
+
+
+####################################################
+#                                                  #
+#            END OF CONFIGURATION FILE             #
+#                                                  #
+####################################################

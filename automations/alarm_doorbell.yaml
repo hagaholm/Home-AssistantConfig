@@ -1,0 +1,25 @@
+  - alias: Ringklocka tvättstuga
+    trigger:
+      platform: state
+      entity_id: switch.ringklocka_tvattstuga
+      to: 'on'
+    action:
+      - service: homeassistant.turn_off
+        entity_id: switch.ringklocka_tvattstuga
+      - service: notify.pushetta
+        data:
+          title: "Ringklocka tvättstuga."
+          message: "Det ringer på dörren..."
+
+  - alias: Ringklocka hall
+    trigger:
+      platform: state
+      entity_id: switch.ringklocka_hall
+      to: 'on'
+    action:
+      - service: homeassistant.turn_off
+        entity_id: switch.ringklocka_hall
+      - service: notify.pushetta
+        data:
+          title: "Ringklocka hall."
+          message: "Det ringer på dörren..."

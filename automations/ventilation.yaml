@@ -1,0 +1,69 @@
+﻿    ######################################
+    ### Hög fukt i badrum              ###
+    ### T: sensor.badrum_humidity > 60 ###
+    ### A: switch.fan_speed = on       ###
+    ######################################
+  - alias: Badrum hög fukt
+    initial_state: 'off'
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.badrum_humidity
+      above: '60'
+    action:
+      - service: homeassistant.turn_on
+        entity_id: switch.fan_speed
+#      - service: notify.pushetta
+#        data:
+#          message: "Badrum hög fukt {{ states.sensor.badrum_humidity.state }}"        
+         
+    ##########################################
+    ### Hög fukt badrumsfönster            ###
+    ### T: sensor.fukt_badrumsfonster > 70 ###
+    ### A: switch.fan_speed = on           ###
+    ########################################## 
+  - alias: Badrumsfönster hög fukt
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.fukt_badrumsfonster
+      above: '70'
+    action:
+      - service: homeassistant.turn_on
+        entity_id: switch.fan_speed
+#      - service: notify.pushetta
+#        data:
+#          message: "Badrumsfönster hög fukt {{ states.sensor.fukt_badrumsfonster.state }} ({{ states.sensor.badrum_humidity.state }})"        
+
+    ##########################################
+    ### Låg fukt badrum                    ###
+    ### T: sensor.badrum_humidity < 58     ###
+    ### A: switch.fan_speed = off          ###
+    ########################################## 
+  - alias: Badrum låg fukt
+    initial_state: 'off'
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.badrum_humidity
+      below: '58'
+    action:
+      - service: homeassistant.turn_off
+        entity_id: switch.fan_speed
+#      - service: notify.pushetta
+#        data:
+#          message: "Badrum låg fukt {{ states.sensor.badrum_humidity.state }}"   
+
+    ##########################################
+    ### Låg fukt badrumsfönster            ###
+    ### T: sensor.fukt_badrumsfonster < 68 ###
+    ### A: switch.fan_speed = off          ###
+    ##########################################        
+  - alias: Badrumsfönster låg fukt
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.fukt_badrumsfonster
+      below: '68'
+    action:
+      - service: homeassistant.turn_off
+        entity_id: switch.fan_speed
+#      - service: notify.pushetta
+#        data:
+#          message: "Badrumsfönster låg fukt {{ states.sensor.fukt_badrumsfonster.state }} ({{ states.sensor.badrum_humidity.state }})"   

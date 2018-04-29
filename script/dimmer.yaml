@@ -1,0 +1,58 @@
+  tv_light_max:
+    alias: Tv lampor max
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: light.vardagsrum_byra_dimmer
+          brightness_pct: 100
+      - service: light.turn_on
+        data:
+          entity_id: light.vardagsrum_fonster_dimmer
+          brightness_pct: 100
+      - service: light.turn_on
+        data:
+          entity_id: light.hall_byra_dimmer
+          brightness_pct: 100  
+        
+  tv_light_normal:
+    alias: Tv lampor normal
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: light.vardagsrum_byra_dimmer
+          brightness_pct: 75
+      - service: light.turn_on
+        data:
+          entity_id: light.vardagsrum_fonster_dimmer
+          brightness_pct: 75
+      - service: light.turn_on
+        data:
+          entity_id: light.hall_byra_dimmer
+          brightness_pct: 75  
+
+  tv_light_look_at_tv:
+    alias: Tv lampor se på tv
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: light.vardagsrum_byra_dimmer
+          brightness_pct: 50
+      - service: light.turn_on
+        data:
+          entity_id: light.vardagsrum_fonster_dimmer
+          brightness_pct: 50
+      - service: light.turn_on
+        data:
+          entity_id: light.hall_byra_dimmer
+          brightness_pct: 40  
+
+  tv_light_off:
+    alias: Tv lampor off
+    sequence:
+      - service: light.turn_off
+        entity_id: light.vardagsrum_byra_dimmer
+      - service: light.turn_off
+        entity_id: light.vardagsrum_fonster_dimmer
+      - service: light.turn_off
+        entity_id: light.hall_byra_dimmer           
+ 

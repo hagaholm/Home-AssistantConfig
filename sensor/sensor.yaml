@@ -1,0 +1,226 @@
+﻿####################################################
+#                                                  #
+#                     SENSOR                       #
+#                                                  #
+####################################################
+# https://home-assistant.io/components/sensor/
+
+#############
+# Tellstick #
+#############
+  - platform: tellstick
+    only_named: False # False visar även andras sensorer
+    135: Badrum
+    151: Frys
+    167: Kyl
+    183: Tvättstuga
+    184: Värmepump
+    199: Förråd
+    200: Garage
+    215: Friggebod
+    247: Hall
+    
+#######################
+# command_line 1-Wire #
+#######################
+  - platform: command_line
+    command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.9C97DA050000/temperature').text; print(str[12:])"
+    name: På vinden
+    unit_of_measurement: "°C"
+  - platform: command_line
+    command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.DB5AFE050000/temperature').text; print(str[12:])"
+    name: Ute
+    unit_of_measurement: "°C"
+  - platform: command_line
+    command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.8378FD050000/temperature').text; print(str[12:])"
+    name: Uterum
+    unit_of_measurement: "°C"
+  - platform: command_line
+    command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.AEA6FF050000/temperature').text; print(str[12:])"
+    name: Sovrum
+    unit_of_measurement: "°C"
+  - platform: command_line
+    command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.C517FF050000/temperature').text; print(str[12:])"
+    name: Ventagg1
+    unit_of_measurement: "°C"
+  - platform: command_line
+    command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.B47DFF050000/temperature').text; print(str[12:])"
+    name: Ventagg2
+    unit_of_measurement: "°C"
+  - platform: command_line
+    command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.93F7FC050000/temperature').text; print(str[12:])"
+    name: Ventagg3
+    unit_of_measurement: "°C"
+  - platform: command_line
+    command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.E485D9050000/temperature').text; print(str[12:])"
+    name: Ventagg4
+    unit_of_measurement: "°C"
+    
+  - platform: command_line
+    command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/12.A84D7D000000/PIO.A').text; print(str[6:])"
+    name: VentSpeed
+    unit_of_measurement: ""
+
+################
+# command_line #
+################
+  - platform: command_line
+    name: CPU Temperature
+    command: "cat /sys/class/thermal/thermal_zone0/temp"
+    # If errors occur, remove degree symbol below
+    unit_of_measurement: "°C"
+    value_template: '{{ value | multiply(0.001) }}'
+    
+  ###################
+  # Lux från Thomas #
+  ###################  
+  - platform: command_line
+    command: python3 -c "import requests; str = requests.get('http://chef.suka.se/lux/current.php').text; print(str)"
+    name: Ljusstyrka
+    unit_of_measurement: "lux"
+
+##############
+# statistics #
+##############   
+  # - platform: statistics
+    # name: Värmepump
+    # entity_id: sensor.varmepump_temperature
+    # max_age:
+      # hours: 24
+  # - platform: statistics
+    # name: Ute
+    # entity_id: sensor.ute
+    # max_age:
+      # days: 1
+  # - platform: statistics
+    # name: Ute 7 dagar
+    # entity_id: sensor.ute
+    # max_age:
+      # days: 7
+  # - platform: statistics
+    # name: Frys
+    # entity_id: sensor.frys_temperature
+    # max_age:
+      # hours: 24
+  # - platform: statistics
+    # name: Kyl
+    # entity_id: sensor.kyl_temperature
+    # max_age:
+      # hours: 24
+  # - platform: statistics
+    # name: Hall
+    # entity_id: sensor.hall_temperature
+    # max_age:
+      # hours: 24
+
+##################
+# mold_indicator #
+##################
+# calibration_factor = (temp_indoor - temp_outdoor) / (temp_criticalpoint - temp_outdoor)
+# (21,6 - 0,8) / (17,2 - 0,8) = 1,268292682926829
+# (21,6 - -1,0) / (17,2 - -1,0) = 1,241758241758242
+  - platform: mold_indicator
+    name: Fukt badrumsfönster
+    indoor_temp_sensor: sensor.badrum_temperature
+    indoor_humidity_sensor: sensor.badrum_humidity
+    outdoor_temp_sensor: sensor.ute
+    calibration_factor: 1.25    
+
+######
+# YR #
+######
+  - platform: yr
+
+  
+  # - platform: min_max
+    # name: Inne min
+    # type: min
+    # entity_ids:
+      # - sensor.hall_temperature
+      # - sensor.sovrum
+
+  # - platform: min_max
+    # name: Inne medel
+    # type: mean
+    # entity_ids:
+      # - sensor.hall_temperature
+      # - sensor.sovrum
+
+  # - platform: min_max
+    # name: Inne max
+    # type: max
+    # entity_ids:
+      # - sensor.hall_temperature
+      # - sensor.sovrum
+
+#  - platform: file
+#    file_path: /tmp/tellcore-remote-spy_latest.txt
+
+#####################
+# HA server metrics #
+#####################
+# https://home-assistant.io/components/sensor.systemmonitor/
+#  - platform: systemmonitor
+#    resources:
+#      - type: processor_use
+#      - type: disk_use_percent
+#        arg: /home
+#      - type: memory_use_percent
+#      - type: swap_use_percent
+#      - type: load_1m
+#      - type: load_5m
+#      - type: load_15m
+#      - type: since_last_boot
+#      - type: network_in
+#        arg: ens32
+#      - type: network_out
+#        arg: ens32
+
+#############
+# CPU Speed #
+#############
+# https://home-assistant.io/components/sensor.cpuspeed/
+#  - platform: cpuspeed
+#    name: CPU
+
+###############
+# API Streams #
+############### 
+# https://home-assistant.io/components/sensor.api_stream/
+#  - platform: api_streams
+
+######################
+# HA Current version #
+###################### 
+# https://home-assistant.io/components/sensor.command_line/
+#  -  platform: command_line
+#     command: python3 -c "import requests; print(requests.get('https://pypi.python.org/pypi/homeassistant/json').json()['info']['version'])"
+#     name: Current HA Version
+
+########################
+# HA Installed version #
+########################     
+#  -  platform: command_line
+#     name: Installed version
+#     command: "head -5 /home/ha/.homeassistant/.HA_VERSION"     
+     
+################################
+# Internet performance metrics #
+################################
+# https://home-assistant.io/components/sensor.speedtest/
+#  - platform: speedtest
+#    server_id: 1776
+#    monitored_conditions:
+#      - download
+#      - upload
+#      - ping
+#    hour:
+#      - 0
+#      - 3
+#      - 6
+#      - 9
+#      - 12
+#      - 15
+#      - 18
+#      - 21
+

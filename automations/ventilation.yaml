@@ -12,9 +12,6 @@
     action:
       - service: homeassistant.turn_on
         entity_id: switch.fan_speed
-#      - service: notify.pushetta
-#        data:
-#          message: "Badrum hög fukt {{ states.sensor.badrum_humidity.state }}"        
          
     ##########################################
     ### Hög fukt badrumsfönster            ###
@@ -28,10 +25,7 @@
       above: '70'
     action:
       - service: homeassistant.turn_on
-        entity_id: switch.fan_speed
-#      - service: notify.pushetta
-#        data:
-#          message: "Badrumsfönster hög fukt {{ states.sensor.fukt_badrumsfonster.state }} ({{ states.sensor.badrum_humidity.state }})"        
+        entity_id: switch.fan_speed      
 
     ##########################################
     ### Låg fukt badrum                    ###
@@ -47,9 +41,6 @@
     action:
       - service: homeassistant.turn_off
         entity_id: switch.fan_speed
-#      - service: notify.pushetta
-#        data:
-#          message: "Badrum låg fukt {{ states.sensor.badrum_humidity.state }}"   
 
     ##########################################
     ### Låg fukt badrumsfönster            ###
@@ -64,6 +55,3 @@
     action:
       - service: homeassistant.turn_off
         entity_id: switch.fan_speed
-#      - service: notify.pushetta
-#        data:
-#          message: "Badrumsfönster låg fukt {{ states.sensor.fukt_badrumsfonster.state }} ({{ states.sensor.badrum_humidity.state }})"   

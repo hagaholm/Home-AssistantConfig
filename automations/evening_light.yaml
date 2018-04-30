@@ -1,10 +1,4 @@
-﻿    # Kvällsbelysning on (<1500, hemma)
-    # Kvällsbelysning on (sensor on, borta, <1500)
-    # Kvällsbelysning on (-> hemma, <1500)
-    # Kvällsbelysning off (>1600, hemma)
-    # Kvällsbelysning off (-> borta)
-    
-    ########################################################
+﻿    ########################################################
     ### Tänder lampor när det blir mörkt fram till 22:00 ###
     ### T: sensor.ljusstyrka < 1500                      ###
     ### C: group.track_for_home_devices = 'home'         ###
@@ -27,8 +21,6 @@
           before: '22:00:00'
     action:
       service: script.evening_lights_on
-      #service: homeassistant.turn_on
-      #entity_id: group.evening_lights  
 
     ########################################################
     ### Tänder lampor vid rörelse i köket övrigt tid     ###
@@ -59,8 +51,6 @@
           before: '05:00:00'
     action:
       service: script.evening_lights_on
-      #service: homeassistant.turn_on
-      #entity_id: group.evening_lights  
 
     #####################################################
     ### Tänder lampor när första kommer hem övrig tid ###
@@ -86,21 +76,19 @@
           before: '05:00:00'
     action:
       service: script.evening_lights_on
-      #service: homeassistant.turn_on
-      #entity_id: group.evening_lights
-      
+     
     ##########################################################
     ### Släcker lampor om det blir för ljust ute övrig tid ###
-    ### T: sensor.ljusstyrka > 1600                        ###
+    ### T: sensor.ljusstyrka > 1700                        ###
     ### C: group.track_for_home_devices = 'home'           ###
     ###    12:00:00 - 05:00:00                             ###
     ### A: group.evening_lights = off                      ###
     ##########################################################
-  - alias: Kvällsbelysning off (>1600, hemma)
+  - alias: Kvällsbelysning off (>1700, hemma)
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      above: 1600
+      above: 1700
     condition:
       condition: and
       conditions:
@@ -112,8 +100,6 @@
           before: '05:00:00'          
     action:
       service: script.evening_lights_off
-      #service: homeassistant.turn_off
-      #entity_id: group.evening_lights
 
     ########################################################
     ### Släcker lampor när sista åker hemifrån övrig tid ###
@@ -133,5 +119,3 @@
       before: '05:00:00'
     action:
       service: script.evening_lights_off
-      #service: homeassistant.turn_off
-      #entity_id: group.evening_lights

@@ -21,7 +21,7 @@
           before: '12:00:00'
     action:
       - service: script.kitchen_light_100
- 
+
     #####################################################################
     ### Tänder lampor 100% vid rörelse i köket 150-2500 lux övrig tid ###
     ### T: switch.rorelsevakt_kok = on                                ###
@@ -53,7 +53,7 @@
     ### C: sensor.ljusstyrka 0-150                                  ###
     ###    12:00:00 - 05:00:00                                      ###
     ###    switch.kok_lilla_fonstret = 'on'                         ###
-    ### A: switch.kok_lilla_fonstret                                ###
+    ### A: script.kitchen_light_100                                 ###
     ###################################################################
   - alias: Kök 100% (sensor on, 0-150)
     trigger:
@@ -74,16 +74,16 @@
           state: 'on'
     action:
       - service: script.kitchen_light_100
-                
-    ######################################################################################
-    ### Tänder lampor 100% övrig tid vid rörelse i köket 0-1500 lux när ingen är hemma ###
-    ### T: switch.rorelsevakt_kok = on                                                 ###
-    ### C: group.track_for_home_devices = 'not_home'                                   ###
-    ###    sensor.ljusstyrka 0-15 0                                                    ###
-    ###    12:00:00 - 05:00:00                                                         ###
-    ###    switch.kok_lilla_fonstret = 'on'                                            ###
-    ### A: script.kitchen_light_100                                                    ###
-    ######################################################################################
+
+    #####################################################################################
+    ### Tänder lampor 100% övrig tid vid rörelse i köket 0-150 lux när ingen är hemma ###
+    ### T: switch.rorelsevakt_kok = on                                                ###
+    ### C: group.track_for_home_devices = 'not_home'                                  ###
+    ###    sensor.ljusstyrka 0-150                                                    ###
+    ###    12:00:00 - 05:00:00                                                        ###
+    ###    switch.kok_lilla_fonstret = 'off'                                          ###
+    ### A: script.kitchen_light_100                                                   ###
+    #####################################################################################
   - alias: Kök 100% (sensor on, Borta, 0-150)
     trigger:
       platform: state
@@ -107,15 +107,15 @@
     action:
       - service: script.kitchen_light_100
 
-    #####################################################################################
-    ### Tänder lampor 25% övrig tid vid rörelse i köket 0-1500 lux när någon är hemma ###
-    ### T: switch.rorelsevakt_kok = on                                                ###
-    ### C: group.track_for_home_devices = 'home'                                      ###
-    ###    sensor.ljusstyrka 0-150                                                    ###
-    ###    12:00:00 - 05:00:00                                                        ###
-    ###    switch.kok_lilla_fonstret = 'on'                                           ###
-    ### A: switch.kok_lilla_fonstret                                                  ###
-    #####################################################################################
+    ####################################################################################
+    ### Tänder lampor 25% övrig tid vid rörelse i köket 0-150 lux när någon är hemma ###
+    ### T: switch.rorelsevakt_kok = on                                               ###
+    ### C: group.track_for_home_devices = 'home'                                     ###
+    ###    sensor.ljusstyrka 0-150                                                   ###
+    ###    12:00:00 - 05:00:00                                                       ###
+    ###    switch.kok_lilla_fonstret = 'off'                                         ###
+    ### A: script.kitchen_light_25                                                   ###
+    ####################################################################################
   - alias: Kök 25% (sensor on, Hemma, 0-150)
     trigger:
       platform: state
@@ -152,61 +152,61 @@
     action:
       - service: script.kitchen_light_off
 
-    ##################
-    ### TEST Start ###
-    ##################
     ############################################################
     ### Förvarnar genom att blinka en minut innan det släcks ###
-    ### T: switch.rorelsevakt_kok = on for 9 minutes         ###
+    ### T: switch.rorelsevakt_kok = on for 8 minutes         ###
     ### C: switch.kok_stora_fonstret = 'off'                 ###
     ### A: switch.kok_stora_fonstret = on                    ###
     ### A: delay 1 sek                                       ###
     ### A: switch.kok_stora_fonstret = off                   ###
     ############################################################
-  # - alias: Kök blinka off on off
-    # trigger:
-      # platform: state
-      # entity_id: switch.rorelsevakt_kok
-      # to: 'on'
-      # for:
-        # minutes: 9
-    # condition:
-      # condition: state
-      # entity_id: switch.kok_stora_fonstret
-      # state: 'off'      
-    # action:    
-      # - service: homeassistant.turn_on
-        # entity_id: switch.kok_stora_fonstret
-      # - delay: '00:00:01'
-      # - service: homeassistant.turn_off
-        # entity_id: switch.kok_stora_fonstret
+  - alias: Kök blinka off on off
+    trigger:
+      platform: state
+      entity_id: switch.rorelsevakt_kok
+      to: 'on'
+      for:
+        minutes: 8
+    condition:
+      condition: state
+      entity_id: switch.kok_stora_fonstret
+      state: 'off'      
+    action:    
+      - service: homeassistant.turn_on
+        entity_id: switch.kok_stora_fonstret
+      - delay: '00:00:01'
+      - service: homeassistant.turn_off
+        entity_id: switch.kok_stora_fonstret
 
     ############################################################
     ### Förvarnar genom att blinka en minut innan det släcks ###
-    ### T: switch.rorelsevakt_kok = on for 9 minutes         ###
+    ### T: switch.rorelsevakt_kok = on for 8 minutes         ###
     ### C: switch.kok_stora_fonstret = 'on'                  ###
     ### A: switch.kok_stora_fonstret = off                   ###
     ### A: delay 1 sek                                       ###
     ### A: switch.kok_stora_fonstret = on                    ###
     ############################################################
-  # - alias: Kök blinka on off on
-    # trigger:
-      # platform: state
-      # entity_id: switch.rorelsevakt_kok
-      # to: 'on'
-      # for:
-        # minutes: 9
-    # condition:
-      # condition: state
-      # entity_id: switch.kok_stora_fonstret
-      # state: 'on'      
-    # action:    
-      # - service: homeassistant.turn_off
-        # entity_id: switch.kok_stora_fonstret
-      # - delay: '00:00:01'
-      # - service: homeassistant.turn_on
-        # entity_id: switch.kok_stora_fonstret
+  - alias: Kök blinka on off on
+    trigger:
+      platform: state
+      entity_id: switch.rorelsevakt_kok
+      to: 'on'
+      for:
+        minutes: 8
+    condition:
+      condition: state
+      entity_id: switch.kok_stora_fonstret
+      state: 'on'      
+    action:    
+      - service: homeassistant.turn_off
+        entity_id: switch.kok_stora_fonstret
+      - delay: '00:00:01'
+      - service: homeassistant.turn_on
+        entity_id: switch.kok_stora_fonstret
 
+    ##################
+    ### TEST Start ###
+    ##################
     ########################################################
     ### Släcker lampor när ingen varit i köket på 10 min ###
     ### T: switch.rorelsevakt_kok = on for 10 minutes    ###
@@ -224,7 +224,7 @@
     #################
     ### TEST Slut ###
     #################
-    
+
     ######################################################
     ### Släcker lampor när sista åker hemifrån         ###
     ### T: group.track_for_home_devices to: 'not_home' ###
@@ -238,5 +238,3 @@
       to: 'not_home'
     action:
       - service: script.kitchen_light_off
-#      - service: homeassistant.turn_off
-#        entity_id: switch.rorelsevakt_kok

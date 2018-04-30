@@ -1,8 +1,3 @@
-    # Morgonbelysning on (sensor on, <1500)
-    # Morgonbelysning on (-> hemma, <1500)
-    # Morgonbelysning off (<1500, hemma)
-    # Morgonbelysning off (-> borta)
-
     #####################################################
     ### Tänder lampor på morgonen vid rörelse i köket ###
     ### T: switch.rorelsevakt_kok = on                ###
@@ -29,8 +24,6 @@
           before: '12:00:00'
     action:
       service: script.morning_lights_on
-      #service: homeassistant.turn_on
-      #entity_id: group.morning_lights
 
     ##########################################################
     ### Tänder lampor när första kommer hem på förmiddagen ###
@@ -56,8 +49,6 @@
           before: '12:00:00'
     action:
       service: script.morning_lights_on
-      #service: homeassistant.turn_on
-      #entity_id: group.morning_lights
 
     ############################################################
     ### Släcker lampor på förmiddagen när det blir ljust ute ###
@@ -82,8 +73,6 @@
           before: '12:00:00'      
     action:
       service: script.morning_lights_off
-      #service: homeassistant.turn_off
-      #entity_id: group.evening_lights
 
     #############################################################
     ### Släcker lampor på förmiddagen när sista åker hemifrån ###
@@ -103,5 +92,3 @@
       before: '12:00:00'
     action:
       service: script.morning_lights_off
-      #service: homeassistant.turn_off
-      #entity_id: group.evening_lights

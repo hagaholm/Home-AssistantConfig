@@ -2,9 +2,9 @@
     alias: Godnatt, släcker allt
     sequence:
       - service: homeassistant.turn_off
-        entity_id: group.evening_lights        
+        entity_id: group.evening_lights
       - service: homeassistant.turn_off
-        entity_id: group.kitchen_lights        
+        entity_id: group.kitchen_lights
       - service: homeassistant.turn_off
         entity_id: group.outside_lights
 
@@ -12,25 +12,24 @@
     alias: Släck i sovrummet
     sequence:
       - service: homeassistant.turn_off
-        entity_id: switch.sovrum_fonster        
+        entity_id: switch.sovrum_fonster
 
   extra_room_off:
     alias: Släck i lilla rummet
     sequence:
       - service: homeassistant.turn_off
-        entity_id: switch.extrarum_fonster        
+        entity_id: switch.extrarum_fonster
 
   andreas_room_off:
     alias: Släck i Andreas rum
     sequence:
       - service: homeassistant.turn_off
-        entity_id: switch.andreas_fonster        
+        entity_id: switch.andreas_fonster
       - service: homeassistant.turn_off
-        entity_id: switch.andreas_bokhylla        
+        entity_id: switch.andreas_bokhylla
       - service: homeassistant.turn_off
-        entity_id: switch.andreas_skrivbord       
-        
-  
+        entity_id: switch.andreas_skrivbord
+
   kitchen_light_100:
     alias: Köksbelysning 100%
     sequence:
@@ -45,8 +44,8 @@
       - service: light.turn_on
         data:
           entity_id: light.kok_vitrinskap
-          brightness_pct: 100  
-        
+          brightness_pct: 100
+
   kitchen_light_25:
     alias: Köksbelysning 25%
     sequence:
@@ -61,7 +60,7 @@
       - service: light.turn_on
         data:
           entity_id: light.kok_vitrinskap
-          brightness_pct: 25  
+          brightness_pct: 25
 
   kitchen_light_off:
     alias: Köksbelysning off
@@ -71,13 +70,11 @@
       - service: light.turn_off
         entity_id: light.kok_underskap_diskbank
       - service: light.turn_off
-        entity_id: light.kok_vitrinskap           
-          
+        entity_id: light.kok_vitrinskap
+
   morning_lights_on:
     alias: Morgonbelysning on
     sequence:
-#      - service: homeassistant.turn_on
-#        entity_id: group.morning_lights
       - service: homeassistant.turn_on
         entity_id: switch.kok_stora_fonstret
       - service: homeassistant.turn_on
@@ -90,18 +87,16 @@
         data:
           entity_id: light.vardagsrum_fonster_dimmer
           brightness_pct: 50
-        
+
   morning_lights_off:
     alias: Morgonbelysning off
     sequence:
       - service: homeassistant.turn_off
         entity_id: group.evening_lights
-        
+
   evening_lights_on:
     alias: Kvällsbelysning on
     sequence:
-#      - service: homeassistant.turn_on
-#        entity_id: group.evening_lights
       - service: homeassistant.turn_on
         entity_id: switch.kok_stora_fonstret
       - service: homeassistant.turn_on
@@ -135,11 +130,35 @@
       - service: homeassistant.turn_off
         entity_id: group.evening_lights
 
+  night_light_10:
+    alias: Nattbelysning 10%
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: light.hall_byra_dimmer
+          brightness_pct: 10
+      - service: light.turn_on
+        data:
+          entity_id: light.vardagsrum_fonster_dimmer
+          brightness_pct: 10
+      - service: light.turn_on
+        data:
+          entity_id: light.vardagsrum_byra_dimmer
+          brightness_pct: 10
+
+  night_light_off:
+    alias: Nattbelysning off
+    sequence:
+      - service: light.turn_off
+        entity_id: light.hall_byra_dimmer
+      - service: light.turn_off
+        entity_id: light.vardagsrum_fonster_dimmer
+      - service: light.turn_off
+        entity_id: light.vardagsrum_byra_dimmer
+
   away_lights_on:
     alias: Bortabelysning on
     sequence:
-#      - service: homeassistant.turn_on
-#        entity_id: group.away_lights
       - service: homeassistant.turn_on
         entity_id: switch.kok_stora_fonstret
       - service: homeassistant.turn_on
@@ -156,7 +175,7 @@
         data:
           entity_id: light.vardagsrum_fonster_dimmer
           brightness_pct: 50
-        
+
   away_lights_off:
     alias: Bortabelysning off
     sequence:
@@ -174,4 +193,3 @@
     sequence:
       - service: homeassistant.turn_on
         entity_id: switch.fan_speed
-        

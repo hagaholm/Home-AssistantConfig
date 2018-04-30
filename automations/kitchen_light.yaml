@@ -160,23 +160,23 @@
     ### A: delay 1 sek                                       ###
     ### A: switch.kok_stora_fonstret = off                   ###
     ############################################################
-  - alias: Kök blinka off on off
-    trigger:
-      platform: state
-      entity_id: switch.rorelsevakt_kok
-      to: 'on'
-      for:
-        minutes: 8
-    condition:
-      condition: state
-      entity_id: switch.kok_stora_fonstret
-      state: 'off'      
-    action:    
-      - service: homeassistant.turn_on
-        entity_id: switch.kok_stora_fonstret
-      - delay: '00:00:01'
-      - service: homeassistant.turn_off
-        entity_id: switch.kok_stora_fonstret
+  # - alias: Kök blinka off on off
+    # trigger:
+      # platform: state
+      # entity_id: switch.rorelsevakt_kok
+      # to: 'on'
+      # for:
+        # minutes: 8
+    # condition:
+      # condition: state
+      # entity_id: switch.kok_stora_fonstret
+      # state: 'off'
+    # action:    
+      # - service: homeassistant.turn_on
+        # entity_id: switch.kok_stora_fonstret
+      # - delay: '00:00:01'
+      # - service: homeassistant.turn_off
+        # entity_id: switch.kok_stora_fonstret
 
     ############################################################
     ### Förvarnar genom att blinka en minut innan det släcks ###
@@ -196,7 +196,7 @@
     condition:
       condition: state
       entity_id: switch.kok_stora_fonstret
-      state: 'on'      
+      state: 'on'
     action:    
       - service: homeassistant.turn_off
         entity_id: switch.kok_stora_fonstret

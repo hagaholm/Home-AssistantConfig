@@ -2,17 +2,17 @@
     ### Tänder lampor 100% när lux kommer under 2500                    ###
     ### För att förhindra att det inte tänds när någon redan är i köket ###
     ### T: sensor.ljusstyrka < 2500                                     ###
-    ### C: 05:00:00 - 22:00:00                                          ###
+    ### C: 12:00:00 - 22:00:00                                          ###
     ### A: script.kitchen_light_100                                     ###
     #######################################################################
   - alias: Kök 100% (<2500)
     trigger:
-      platform: state
+      platform: numeric_state
       entity_id: sensor.ljusstyrka
       below: 2500
     condition:
       condition: time
-      after: '05:00:00'
+      after: '12:00:00'
       before: '22:00:00'
     action:
       - service: script.kitchen_light_100
@@ -179,23 +179,31 @@
     ### A: delay 1 sek                                       ###
     ### A: switch.kok_stora_fonstret = off                   ###
     ############################################################
-  # - alias: Kök blinka off on off
-    # trigger:
-      # platform: state
-      # entity_id: switch.rorelsevakt_kok
-      # to: 'on'
-      # for:
-        # minutes: 8
-    # condition:
-      # condition: state
-      # entity_id: switch.kok_stora_fonstret
-      # state: 'off'
-    # action:    
-      # - service: homeassistant.turn_on
-        # entity_id: switch.kok_stora_fonstret
-      # - delay: '00:00:01'
-      # - service: homeassistant.turn_off
-        # entity_id: switch.kok_stora_fonstret
+  - alias: Kök blinka off on off
+    trigger:
+      platform: state
+      entity_id: switch.rorelsevakt_kok
+      to: 'on'
+      for:
+        minutes: 8   
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.kok_underskap_bank
+          state: 'on'
+        - condition: state
+          entity_id: switch.kok_stora_fonstret
+          state: 'off'
+        - condition: time
+          after: '05:00:00'
+          before: '22:00:00' 
+    action:    
+      - service: homeassistant.turn_on
+        entity_id: switch.kok_stora_fonstret
+      - delay: '00:00:01'
+      - service: homeassistant.turn_off
+        entity_id: switch.kok_stora_fonstret
 
     ############################################################
     ### Förvarnar genom att blinka en minut innan det släcks ###

@@ -1,4 +1,5 @@
 ﻿  - alias: Förråd frys off (< - 22)
+    initial_state: 'off'
     trigger:
       platform: numeric_state
       entity_id: sensor.forrad_frys_temperature
@@ -6,7 +7,7 @@
     action:
       service: homeassistant.turn_off
       entity_id: switch.forrad_frys
-      
+
   - alias: Förråd frys on (> - 17)
     trigger:
       platform: numeric_state
@@ -17,6 +18,7 @@
       entity_id: switch.forrad_frys
 
   - alias: Larm! Förråd frys off (< - 23)
+    initial_state: 'off'
     trigger:
       platform: numeric_state
       entity_id: sensor.forrad_frys_temperature
@@ -36,7 +38,7 @@
       - delay: '00:00:30'
       - service: homeassistant.turn_off
         entity_id: switch.forrad_frys
-      
+
   - alias: Larm! Förråd frys on (> - 16)
     trigger:
       platform: numeric_state

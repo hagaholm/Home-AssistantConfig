@@ -1,13 +1,13 @@
-    ###########################################################################################
-    ### Tänder nattbelysning 10% övrig tid vid rörelse i köket 0-150 lux när någon är hemma ###
-    ### T: switch.rorelsevakt_kok = on                                                      ###
-    ### C: group.track_for_home_devices = 'home'                                            ###
-    ###    sensor.ljusstyrka 0-150                                                          ###
-    ###    12:00:00 - 05:00:00                                                              ###
-    ###    switch.kok_lilla_fonstret = 'off'                                                ###
-    ### A: script.night_light_10                                                            ###
-    ###########################################################################################
-  - alias: Nattbelysning 10% (sensor on, Hemma, 0-150)
+    #######################################################################################
+    ### Tänder nattbelysning övrig tid vid rörelse i köket 0-150 lux när någon är hemma ###
+    ### T: switch.rorelsevakt_kok = on                                                  ###
+    ### C: group.track_for_home_devices = 'home'                                        ###
+    ###    sensor.ljusstyrka 0-150                                                      ###
+    ###    12:00:00 - 05:00:00                                                          ###
+    ###    switch.kok_lilla_fonstret = 'off'                                            ###
+    ### A: script.night_light_10                                                        ###
+    #######################################################################################
+  - alias: Nattbelysning (sensor on, Hemma, 0-150)
     trigger:
       platform: state
       entity_id: switch.rorelsevakt_kok
@@ -28,7 +28,7 @@
           entity_id: switch.kok_lilla_fonstret
           state: 'off'
     action:
-      - service: script.night_light_10
+      - service: script.night_light
 
     ##############################################################
     ### Släcker nattbelysning när ingen varit i köket på 9 min ###

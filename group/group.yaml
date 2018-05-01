@@ -339,6 +339,7 @@
       - group.automation_kitchen_light
       - group.automation_morning_light
       - group.automation_evening_light
+      - group.automation_night_light
       - group.automation_away_light
       - group.automation_outside_light
       - group.automation_temp_larm
@@ -352,11 +353,14 @@
     name: Köksbelysning
 #    control: hidden
     entities:
+      - automation.kok_100_2500
       - automation.kok_100_morgon_sensor_on_2500
       - automation.kok_100_sensor_on_0150
       - automation.kok_100_sensor_on_1502500
       - automation.kok_100_sensor_on_borta_0150
       - automation.kok_25_sensor_on_hemma_0150
+      - automation.kok_blinka_off_on_off
+      - automation.kok_blinka_on_off_on
       - automation.kok_off__borta
       - automation.kok_off_sensor_off
 
@@ -378,7 +382,15 @@
       - automation.kvallsbelysning_on__hemma_1500
       - automation.kvallsbelysning_off_1700_hemma
       - automation.kvallsbelysning_off__borta
- 
+
+  automation_night_light:
+    name: Nattbelysning
+#    control: hidden
+    entities:
+      - automation.nattbelysning_off_sensor_off
+      - automation.nattbelysning_sensor_on_hemma_0150
+
+
   automation_away_light:
     name: Bortabelysning
 #    control: hidden

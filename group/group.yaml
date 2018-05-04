@@ -81,6 +81,7 @@
   temperature_view:
     name: Temperatur
     view: yes
+    icon: mdi:thermometer
     entities:
       - group.temperature_view_current
 
@@ -335,6 +336,7 @@
   automation:
     name: Automation
     view: yes
+    icon: mdi:home-automation
     entities:
       - group.automation_kitchen_light
       - group.automation_morning_light
@@ -363,6 +365,7 @@
       - automation.kok_blinka_on_off_on
       - automation.kok_off__borta
       - automation.kok_off_sensor_off
+      - automation.kok_rorelsevakt_reset
 
   automation_morning_light:
     name: Morgonbelysning
@@ -389,7 +392,6 @@
     entities:
       - automation.nattbelysning_off_sensor_off
       - automation.nattbelysning_sensor_on_hemma_0150
-
 
   automation_away_light:
     name: Bortabelysning
@@ -485,7 +487,7 @@
 #      - input_number.lux_kitchen_home
 #      - input_number.lux_inside_home
 #      - input_number.lux_outside_home
-#  
+#
 #  setup_lux_away:
 #    name: Lux borta
 #    view: no

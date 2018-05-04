@@ -198,7 +198,7 @@
         - condition: time
           after: '05:00:00'
           before: '22:00:00' 
-    action:    
+    action:
       - service: homeassistant.turn_on
         entity_id: switch.kok_stora_fonstret
       - delay: '00:00:01'
@@ -224,7 +224,7 @@
       condition: state
       entity_id: switch.kok_stora_fonstret
       state: 'on'
-    action:    
+    action:
       - service: homeassistant.turn_off
         entity_id: switch.kok_stora_fonstret
       - delay: '00:00:01'
@@ -265,3 +265,24 @@
       to: 'not_home'
     action:
       - service: script.kitchen_light_off
+
+    #####################################################################
+    ### Sätter rörelsevakt till off, för att kunna detektera nästa on ###
+    ### Löser problemet med att lyset i vissa fall inte tänds i köket ###
+    ### T: light.kok_underskap_bank = off                             ###
+    ### C: switch.rorelsevakt_kok = on                                ###
+    ### A: switch.rorelsevakt_kok = off                               ###
+    #####################################################################
+  - alias: Kök Rörelsevakt reset
+    trigger:
+      - platform: state
+        entity_id:
+          - light.kok_underskap_bank
+        to: 'off'
+    condition:
+      condition: state
+      entity_id: switch.rorelsevakt_kok
+      state: 'on'
+    action:
+      - service: homeassistant.turn_off
+        entity_id: switch.rorelsevakt_kok

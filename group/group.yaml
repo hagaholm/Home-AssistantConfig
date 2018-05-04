@@ -92,9 +92,26 @@
     control: hidden
     entities:
       - sensor.ute
-      - sensor.hall_temperature
       - sensor.uterum
+      - sensor.hall_temperature
+      - sensor.hall_humidity
+      - sensor.vardagsrum_temperature
+      - sensor.sovrum
+      - sensor.andreas_rum_temperature
+      - sensor.badrum_temperature
+      - sensor.badrum_humidity
+      - sensor.tvattstuga_temperature
+      - sensor.tvattstuga_humidity
+      - sensor.pa_vinden
       - sensor.friggebod_temperature
+      - sensor.friggebod_humidity
+      - sensor.forrad_temperature
+      - sensor.forrad_humidity
+      - sensor.forrad_frys_temperature
+      - sensor.kyl_temperature
+      - sensor.frys_temperature            
+      - sensor.varmepump_temperature
+      - sensor.ljusstyrka
 
 ###############################
 ###############################
@@ -202,25 +219,25 @@
     name: Kök
     view: no
     entities:
+      - sensor.kyl_temperature
+      #- sensor.kyl_humidity # Onödigt att visa, kanska kan larma om ovanligt värde
+      - sensor.frys_temperature
+      #- sensor.frys_humidity # Onödigt att visa, kanska kan larma om ovanligt värde
       - switch.kok_stora_fonstret
       - switch.kok_lilla_fonstret
       - light.kok_underskap_bank
       - light.kok_underskap_diskbank
       - light.kok_vitrinskap 
       - switch.rorelsevakt_kok
-      - sensor.kyl_temperature
-      #- sensor.kyl_humidity # Onödigt att visa, kanska kan larma om ovanligt värde
-      - sensor.frys_temperature
-      #- sensor.frys_humidity # Onödigt att visa, kanska kan larma om ovanligt värde
 
   hall:
     name: Hall
     view: no
     entities:
-      - light.hall_byra_dimmer
-      - switch.hall_skap
       - sensor.hall_temperature
       - sensor.hall_humidity
+      - light.hall_byra_dimmer
+      - switch.hall_skap
 
   laundry:
     name: Tvättstuga
@@ -234,6 +251,7 @@
     name: Vardagsrum
     view: no
     entities:
+      - sensor.vardagsrum_temperature
       - light.vardagsrum_fonster_dimmer
       - light.vardagsrum_byra_dimmer
       - switch.vardagsrum_vitrinskap
@@ -254,13 +272,14 @@
     name: Sovrum
     view: no
     entities:
-      - switch.sovrum_fonster
       - sensor.sovrum
+      - switch.sovrum_fonster
 
   andreas_room:
     name: Andreas rum
     view: no
     entities:
+      - sensor.andreas_rum_temperature
       - switch.andreas_fonster
       - switch.andreas_bokhylla
       - switch.andreas_skrivbord
@@ -275,8 +294,8 @@
     name: Uterum
     view: no
     entities:
-      - switch.uterum_fonster
       - sensor.uterum
+      - switch.uterum_fonster
 
   attic:
     name: Vinden
@@ -294,10 +313,10 @@
     name: Friggebod
     view: no
     entities:
-      - switch.friggebod_lilla_fonstret
-      - switch.friggebod_stora_fonstret
       - sensor.friggebod_temperature
       - sensor.friggebod_humidity
+      - switch.friggebod_lilla_fonstret
+      - switch.friggebod_stora_fonstret
 
   garage:
     name: Garage
@@ -312,9 +331,9 @@
     name: Ute
     view: no
     entities:
-      - switch.friggebod_ute
       - sensor.ute
       - sensor.ljusstyrka
+      - switch.friggebod_ute
 
   fan:
     name: Ventilation

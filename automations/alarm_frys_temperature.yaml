@@ -4,7 +4,7 @@
     ### A: notify.pushetta "LARM! Hög temp i frysen" ###
     ####################################################
   - alias: Larm! Hög temp i frys
-    initial_state: 'off'
+    initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.frys_temperature
@@ -20,7 +20,7 @@
     ### A: notify.pushetta "LARM! Låg temp i Frys" ###
     ##################################################
   - alias: Larm! Låg temp i frys
-    initial_state: 'off'
+    initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.frys_temperature
@@ -35,13 +35,13 @@
     ### T: sensor.frys_humidity > 25                 ###
     ### A: notify.pushetta "LARM! Hög fukt i frysen" ###
     ####################################################
-  - alias: Larm! Hög fukt i frys
-    initial_state: 'off'
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.frys_humidity
-      above: '25'
-    action:
-      - service: notify.pushetta
-        data:
-          message: 'LARM! Hög fukt i frysen: {{ states.sensor.frys_humidity.state }} {{ states.sensor.frys_humidity.unit_of_measurement }}'
+  # - alias: Larm! Hög fukt i frys
+    # initial_state: 'off'
+    # trigger:
+      # platform: numeric_state
+      # entity_id: sensor.frys_humidity
+      # above: '25'
+    # action:
+      # - service: notify.pushetta
+        # data:
+          # message: 'LARM! Hög fukt i frysen: {{ states.sensor.frys_humidity.state }} {{ states.sensor.frys_humidity.unit_of_measurement }}'

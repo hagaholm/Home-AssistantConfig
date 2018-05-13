@@ -44,24 +44,24 @@
     unit_of_measurement: "°C"
   - platform: command_line
     command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.C517FF050000/temperature').text; print(str[12:])"
-    name: Ventagg1
+    name: Uteluft
     unit_of_measurement: "°C"
   - platform: command_line
     command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.B47DFF050000/temperature').text; print(str[12:])"
-    name: Ventagg2
+    name: Avluft
     unit_of_measurement: "°C"
   - platform: command_line
     command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.93F7FC050000/temperature').text; print(str[12:])"
-    name: Ventagg3
+    name: Tilluft
     unit_of_measurement: "°C"
   - platform: command_line
     command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.E485D9050000/temperature').text; print(str[12:])"
-    name: Ventagg4
+    name: Franluft
     unit_of_measurement: "°C"
     
   - platform: command_line
     command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/12.A84D7D000000/PIO.A').text; print(str[6:])"
-    name: VentSpeed
+    name: Forcerad
     unit_of_measurement: ""
 
 ################

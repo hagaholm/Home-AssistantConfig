@@ -319,13 +319,14 @@
       - switch.friggebod_stora_fonstret
 
   garage:
-    name: Garage
+    name: Garage/Förråd
     view: no
     entities:
       - sensor.forrad_temperature
       - sensor.forrad_humidity
       - sensor.forrad_frys_temperature
       - switch.forrad_frys
+      - switch.garage_luftavfuktare
 
   outside:
     name: Ute

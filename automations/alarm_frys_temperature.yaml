@@ -16,7 +16,7 @@
 
     ##################################################
     ### Varnar för låg temp i Frys                 ###
-    ### T: sensor.frys_temperature < - 22          ###
+    ### T: sensor.frys_temperature < - 23          ###
     ### A: notify.pushetta "LARM! Låg temp i Frys" ###
     ##################################################
   - alias: Larm! Låg temp i frys
@@ -24,7 +24,7 @@
     trigger:
       platform: numeric_state
       entity_id: sensor.frys_temperature
-      below: '-22'
+      below: '-23'
     action:
       - service: notify.pushetta
         data:

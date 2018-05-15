@@ -370,6 +370,7 @@
       - group.automation_hassbian
       - group.automation_doorbell
       - group.automation_forrad_frys
+      - group.automation_garage_air_dryer
 
   automation_kitchen_light:
     name: Köksbelysning
@@ -490,6 +491,13 @@
       - automation.forrad_frys_on___17
       - automation.larm_forrad_frys_off___23
       - automation.larm_forrad_frys_on___16
+
+  automation_garage_air_dryer:
+    name: Garage luftavfuktare
+#    control: hidden
+    entities:
+      - automation.starta_luftavfuktare
+      - automation.stoppa_luftavfuktare
 
 ###########################################################
 

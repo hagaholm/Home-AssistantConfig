@@ -5,6 +5,8 @@
       - sensor.hall_temperature
       - sensor.sovrum
       - sensor.badrum_temperature
+      - sensor.vardagsrum_temperature
+      - sensor.andreas_rum_temperature
     hours_to_show: 48
     refresh: 1800
     
@@ -12,6 +14,7 @@
     name: Temperatur ute 2 dagar
     entities:
       - sensor.ute
+      - sensor.ute_grannen
     hours_to_show: 48
     refresh: 1800
 
@@ -21,6 +24,8 @@
       - sensor.hall_temperature
       - sensor.sovrum
       - sensor.badrum_temperature
+      - sensor.vardagsrum_temperature
+      - sensor.andreas_rum_temperature
     hours_to_show: 168
     refresh: 1800
     
@@ -28,13 +33,6 @@
     name: Temperatur ute 7 dagar
     entities:
       - sensor.ute
-    hours_to_show: 168
+      - sensor.ute_grannen
+      hours_to_show: 168
     refresh: 1800
-
-  lux:
-    name: Ljusstyrka (lux)
-    entities:
-      - sensor.ljusstyrka
-      - sensor.filtrerad_ljusstyrka
-    hours_to_show: 24
-    refresh: 60

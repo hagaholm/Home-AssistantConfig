@@ -98,6 +98,7 @@
       - sensor.vardagsrum_temperature
       - sensor.sovrum
       - sensor.andreas_rum_temperature
+      - sensor.andreas_rum_humidity
       - sensor.badrum_temperature
       - sensor.badrum_humidity
       - sensor.tvattstuga_temperature
@@ -280,6 +281,7 @@
     view: no
     entities:
       - sensor.andreas_rum_temperature
+      - sensor.andreas_rum_humidity
       - switch.andreas_fonster
       - switch.andreas_bokhylla
       - switch.andreas_skrivbord

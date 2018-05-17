@@ -342,12 +342,13 @@
     name: Ventilation
     view: no
     entities:
-      - switches.fan_speed
-      - sensor.Forcerad # Fläkt hastighet
       - sensor.Uteluft
       - sensor.Tilluft
       - sensor.Franluft
       - sensor.Avluft
+      - sensor.Forcerad # Fläkt hastighet
+      - switch.fan_speed
+      - switch.ventilationsaggregat
       # Verkningsgrad
 
 ####################

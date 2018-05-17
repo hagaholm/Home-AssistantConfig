@@ -3,6 +3,7 @@
     ### För att förhindra att det inte tänds när någon redan är i köket ###
     ### T: sensor.ljusstyrka < 2500                                     ###
     ### C: 12:00:00 - 22:00:00                                          ###
+    ### C: group.track_for_home_devices = 'home'                        ###
     ### A: script.kitchen_light_100                                     ###
     #######################################################################
   - alias: Kök 100% (<2500)
@@ -11,12 +12,17 @@
       entity_id: sensor.ljusstyrka
       below: 2500
     condition:
-      condition: time
-      after: '12:00:00'
-      before: '22:00:00'
+      condition: and
+      conditions:
+        - condition: time
+          after: '12:00:00'
+          before: '22:00:00'
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'home'
     action:
       - service: script.kitchen_light_100
-      
+
     #####################################################################
     ### Tänder lampor 100% på morgonen vid rörelse i köket < 2500 lux ###
     ### T: switch.rorelsevakt_kok = on                                ###

@@ -272,6 +272,30 @@
     action:
       - service: script.kitchen_light_off
 
+    ################################################
+    ### Släcker lampor när lux kommer över 2500  ###
+    ### T: sensor.ljusstyrka > 2500              ###
+    ### C: 12:00:00 - 22:00:00                   ###
+    ### C: group.track_for_home_devices = 'home' ###
+    ### A: script.kitchen_light_off              ###
+    ################################################
+  - alias: Kök off (>2500)
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      above: 2500
+    condition:
+      condition: and
+      conditions:
+        - condition: time
+          after: '12:00:00'
+          before: '22:00:00'
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'home'
+    action:
+      - service: script.kitchen_light_off
+
     #####################################################################
     ### Sätter rörelsevakt till off, för att kunna detektera nästa on ###
     ### Löser problemet med att lyset i vissa fall inte tänds i köket ###

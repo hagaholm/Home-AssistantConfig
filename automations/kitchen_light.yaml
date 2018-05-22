@@ -186,6 +186,7 @@
     ### A: switch.kok_stora_fonstret = off                   ###
     ############################################################
   - alias: Kök blinka off on off
+    initial_state: 'off'
     trigger:
       platform: state
       entity_id: switch.rorelsevakt_kok
@@ -220,6 +221,7 @@
     ### A: switch.kok_stora_fonstret = on                    ###
     ############################################################
   - alias: Kök blinka on off on
+    initial_state: 'off'
     trigger:
       platform: state
       entity_id: switch.rorelsevakt_kok

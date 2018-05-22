@@ -4,6 +4,7 @@
     ### A: notify.pushetta "LARM! Hög temp i Friggebod" ###
     #######################################################
   - alias: Friggebod larm hög temp
+    initial_state: 'off'
     trigger:
       platform: numeric_state
       entity_id: sensor.friggebod_temperature
@@ -19,6 +20,7 @@
     ### A: notify.pushetta "LARM! Låg temp i Friggebod" ###
     #######################################################
   - alias: Friggebod larm låg temp
+    initial_state: 'off'
     trigger:
       platform: numeric_state
       entity_id: sensor.friggebod_temperature
@@ -27,13 +29,14 @@
       - service: notify.pushetta
         data:
           message: 'LARM! Låg temp i Friggebod: {{ states.sensor.friggebod_temperature.state }} {{ states.sensor.friggebod_temperature.unit_of_measurement }}'
-          
+
     #####################################################
     ### Frysvakt Friggebod                            ###
     ### T: sensor.friggebod_temperature < 3           ###
     ### A: notify.pushetta "LARM! Frysvakt Friggebod" ###
     #####################################################
   - alias: Friggebod frysvakt
+    initial_state: 'off'
     trigger:
       platform: numeric_state
       entity_id: sensor.friggebod_temperature

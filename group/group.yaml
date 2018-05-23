@@ -83,36 +83,81 @@
     view: yes
     icon: mdi:thermometer
     entities:
-      - group.temperature_view_current
+      - group.temperature_view_outside
+      - group.temperature_view_inside
+      - group.humidity_view_inside
+      - group.temperature_view_technology
+      - group.temperature_view_other
+      - group.temperature_view_ventilation
 
-  temperature_view_current:
-    name: Aktuell temperatur
+  temperature_view_outside:
+    name: Utomhus
     view: no
     icon: mdi:information-outline
     control: hidden
     entities:
       - sensor.ute
+      - sensor.ljusstyrka
       - sensor.uterum
+
+  temperature_view_inside:
+    name: Inomhus temperatur
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
       - sensor.hall_temperature
-      - sensor.hall_humidity
       - sensor.vardagsrum_temperature
       - sensor.sovrum
       - sensor.andreas_rum_temperature
-      - sensor.andreas_rum_humidity
       - sensor.badrum_temperature
-      - sensor.badrum_humidity
       - sensor.tvattstuga_temperature
+
+  humidity_view_inside:
+    name: Inomhus luftfuktighet
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - sensor.hall_humidity
+      - sensor.andreas_rum_humidity
+      - sensor.badrum_humidity
       - sensor.tvattstuga_humidity
-      - sensor.pa_vinden
+
+  temperature_view_technology:
+    name: Teknik
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - sensor.kyl_temperature
+      - sensor.frys_temperature            
+      - sensor.forrad_frys_temperature
+      - sensor.varmepump_temperature
+
+  temperature_view_other
+    name: Övrigt
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
       - sensor.friggebod_temperature
       - sensor.friggebod_humidity
       - sensor.forrad_temperature
       - sensor.forrad_humidity
-      - sensor.forrad_frys_temperature
-      - sensor.kyl_temperature
-      - sensor.frys_temperature            
-      - sensor.varmepump_temperature
-      - sensor.ljusstyrka
+      - sensor.pa_vinden
+
+  temperature_view_ventilation
+    name: Ventilation
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:     
+      - sensor.Uteluft
+      - sensor.Tilluft
+      - sensor.Franluft
+      - sensor.Avluft
+      - sensor.Forcerad # Fläkt hastighet
 
 ###############################
 ###############################

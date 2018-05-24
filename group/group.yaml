@@ -86,9 +86,9 @@
       - group.temperature_view_outside
       - group.temperature_view_inside
       - group.humidity_view_inside
-      - group.temperature_view_technology
+      - group.temperature_view_fridge_freezer
       - group.temperature_view_other
-      - group.temperature_view_ventilation
+      - group.temperature_view_heater_ventilation
 
   temperature_view_outside:
     name: Utomhus
@@ -124,8 +124,8 @@
       - sensor.badrum_humidity
       - sensor.tvattstuga_humidity
 
-  temperature_view_technology:
-    name: Teknik
+  temperature_view_fridge_freezer:
+    name: Kyl/Frys
     view: no
     icon: mdi:information-outline
     control: hidden
@@ -133,7 +133,6 @@
       - sensor.kyl_temperature
       - sensor.frys_temperature            
       - sensor.forrad_frys_temperature
-      - sensor.varmepump_temperature
 
   temperature_view_other:
     name: Övrigt
@@ -147,12 +146,13 @@
       - sensor.forrad_humidity
       - sensor.pa_vinden
 
-  temperature_view_ventilation:
-    name: Ventilation
+  temperature_view_heater_ventilation:
+    name: Värmepump/Ventilation
     view: no
     icon: mdi:information-outline
     control: hidden
     entities:     
+      - sensor.varmepump_temperature
       - sensor.Uteluft
       - sensor.Tilluft
       - sensor.Franluft

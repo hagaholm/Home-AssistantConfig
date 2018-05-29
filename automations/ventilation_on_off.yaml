@@ -150,7 +150,7 @@
     trigger:
       platform: numeric_state
       entity_id: sensor.fukt_badrumsfonster
-      abowe: '55'
+      above: '55'
     condition:
       condition: state
       entity_id: switch.ventilationsaggregat

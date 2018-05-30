@@ -54,7 +54,7 @@
       conditions:
         - condition: state
           entity_id: group.track_for_home_devices
-          state: 'home'
+          state: 'not_home'
         - condition: numeric_state
           entity_id: sensor.fukt_badrumsfonster
           below: '55'
@@ -87,7 +87,7 @@
       conditions:
         - condition: state
           entity_id: group.track_for_home_devices
-          state: 'home'
+          state: 'not_home'
         - condition: numeric_state
           entity_id: sensor.ute
           above: '23'

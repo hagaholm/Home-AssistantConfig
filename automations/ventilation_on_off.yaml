@@ -67,7 +67,7 @@
     ### C: sensor.ute > 25                           ###
     ### A: switch.ventilationsaggregat = off         ###
     ####################################################
-  - alias: Ventilation off (>25°C, Borta, <55%)
+  - alias: Ventilation off (<55%, Borta, >25°C)
     initial_state: 'off'
     trigger:
       platform: numeric_state

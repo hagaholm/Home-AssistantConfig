@@ -4,11 +4,11 @@
     ####################################################
     ### Ventilation off                              ###
     ### T: group.track_for_home_devices = 'not_home' ###
-    ### C: sensor.ute > 25                           ###
-    ### C sensor.fukt_badrumsfonster < 55            ###
+    ### C: sensor.ute > 24                           ###
+    ### C: sensor.fukt_badrumsfonster < 55           ###
     ### A: switch.ventilationsaggregat = off         ###
     ####################################################
-  - alias: Ventilation off (Borta, >25°C, <55%)
+  - alias: Ventilation off (Borta, >24°C, <55%)
     initial_state: 'off'
     trigger:
       platform: state
@@ -20,7 +20,7 @@
       conditions:
         - condition: numeric_state
           entity_id: sensor.ute
-          above: '25'
+          above: '24'
         - condition: numeric_state
           entity_id: sensor.fukt_badrumsfonster
           below: '55'
@@ -29,21 +29,21 @@
         entity_id: switch.ventilationsaggregat
       - service: notify.pushetta
         data:
-          message: 'Ventilation off (Borta, >25°C, <55%)'
+          message: 'Ventilation off (Borta, >24°C, <55%)'
 
     ####################################################
     ### Ventilation off                              ###
-    ### T: sensor.ute > 25                           ###
+    ### T: sensor.ute > 24                           ###
     ### C: group.track_for_home_devices = 'not_home' ###
     ### C: sensor.fukt_badrumsfonster < 55           ###
     ### A: switch.ventilationsaggregat = off         ###
     ####################################################
-  - alias: Ventilation off (>25°C, Borta, <55%)
+  - alias: Ventilation off (>24°C, Borta, <55%)
     initial_state: 'off'
     trigger:
       platform: numeric_state
       entity_id: sensor.ute
-      above: '25'
+      above: '24'
     condition:
       condition: and
       conditions:
@@ -58,16 +58,16 @@
         entity_id: switch.ventilationsaggregat
       - service: notify.pushetta
         data:
-          message: Ventilation off (>25°C, Borta, <55%)
+          message: Ventilation off (>24°C, Borta, <55%)
 
     ####################################################
     ### Ventilation off                              ###
     ### T: sensor.fukt_badrumsfonster < 55           ###
     ### C: group.track_for_home_devices = 'not_home' ###
-    ### C: sensor.ute > 25                           ###
+    ### C: sensor.ute > 24                           ###
     ### A: switch.ventilationsaggregat = off         ###
     ####################################################
-  - alias: Ventilation off (<55%, Borta, >25°C)
+  - alias: Ventilation off (<55%, Borta, >24°C)
     initial_state: 'off'
     trigger:
       platform: numeric_state
@@ -81,13 +81,13 @@
           state: 'home'
         - condition: numeric_state
           entity_id: sensor.ute
-          above: '25'
+          above: '24'
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ventilationsaggregat
       - service: notify.pushetta
         data:
-          message: 'Ventilation off (>25°C, Borta, <55%)'
+          message: 'Ventilation off (>24°C, Borta, <55%)'
 
     #######################
     ### Ventilation on  ###
@@ -118,16 +118,16 @@
 
     ################################################
     ### Ventilation on                           ###
-    ### T: sensor.ute < 25                       ###
+    ### T: sensor.ute < 24                       ###
     ### C: switch.ventilationsaggregat = off     ###
     ### A: switch.ventilationsaggregat = on      ###
     ################################################
-  - alias: Ventilation on (<25°C, Off)
+  - alias: Ventilation on (<24°C, Off)
     initial_state: 'off'
     trigger:
       platform: numeric_state
       entity_id: sensor.ute
-      below: '25'
+      below: '24'
     condition:
       condition: state
       entity_id: switch.ventilationsaggregat
@@ -137,7 +137,7 @@
         entity_id: switch.ventilationsaggregat
       - service: notify.pushetta
         data:
-          message: 'Ventilation on (<25°C, Off)'
+          message: 'Ventilation on (<24°C, Off)'
 
     ################################################
     ### Ventilation on                           ###

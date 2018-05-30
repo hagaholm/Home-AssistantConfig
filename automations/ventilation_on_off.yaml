@@ -4,8 +4,9 @@
     ####################################################
     ### Ventilation off                              ###
     ### T: group.track_for_home_devices = 'not_home' ###
-    ### C: sensor.ute > 24                           ###
+    ### C: sensor.ute > 23                           ###
     ### C: sensor.fukt_badrumsfonster < 55           ###
+    ### C: sensor.Franluft > 23                      ###
     ### A: switch.ventilationsaggregat = off         ###
     ####################################################
   - alias: Ventilation off (Borta, >24°C, <55%)
@@ -20,30 +21,34 @@
       conditions:
         - condition: numeric_state
           entity_id: sensor.ute
-          above: '24'
+          above: '23'
         - condition: numeric_state
           entity_id: sensor.fukt_badrumsfonster
           below: '55'
+        - condition: numeric_state
+          entity_id: sensor.Franluft
+          above: '23'
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ventilationsaggregat
       - service: notify.pushetta
         data:
-          message: 'Ventilation off (Borta, >24°C, <55%)'
+          message: 'Ventilation off (Borta, >23°C, <55%)'
 
     ####################################################
     ### Ventilation off                              ###
-    ### T: sensor.ute > 24                           ###
+    ### T: sensor.ute > 23                           ###
     ### C: group.track_for_home_devices = 'not_home' ###
     ### C: sensor.fukt_badrumsfonster < 55           ###
+    ### C: sensor.Franluft > 23                      ###
     ### A: switch.ventilationsaggregat = off         ###
     ####################################################
-  - alias: Ventilation off (>24°C, Borta, <55%)
+  - alias: Ventilation off (>23°C, Borta, <55%)
     initial_state: 'off'
     trigger:
       platform: numeric_state
       entity_id: sensor.ute
-      above: '24'
+      above: '23'
     condition:
       condition: and
       conditions:
@@ -53,21 +58,25 @@
         - condition: numeric_state
           entity_id: sensor.fukt_badrumsfonster
           below: '55'
+        - condition: numeric_state
+          entity_id: sensor.Franluft
+          above: '23'
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ventilationsaggregat
       - service: notify.pushetta
         data:
-          message: Ventilation off (>24°C, Borta, <55%)
+          message: Ventilation off (>23°C, Borta, <55%)
 
     ####################################################
     ### Ventilation off                              ###
     ### T: sensor.fukt_badrumsfonster < 55           ###
     ### C: group.track_for_home_devices = 'not_home' ###
-    ### C: sensor.ute > 24                           ###
+    ### C: sensor.ute > 23                           ###
+    ### C: sensor.Franluft > 23                      ###
     ### A: switch.ventilationsaggregat = off         ###
     ####################################################
-  - alias: Ventilation off (<55%, Borta, >24°C)
+  - alias: Ventilation off (<55%, Borta, >23°C)
     initial_state: 'off'
     trigger:
       platform: numeric_state
@@ -81,13 +90,16 @@
           state: 'home'
         - condition: numeric_state
           entity_id: sensor.ute
-          above: '24'
+          above: '23'
+        - condition: numeric_state
+          entity_id: sensor.Franluft
+          above: '23'
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ventilationsaggregat
       - service: notify.pushetta
         data:
-          message: 'Ventilation off (>24°C, Borta, <55%)'
+          message: 'Ventilation off (>23°C, Borta, <55%)'
 
     #######################
     ### Ventilation on  ###
@@ -118,16 +130,16 @@
 
     ################################################
     ### Ventilation on                           ###
-    ### T: sensor.ute < 24                       ###
+    ### T: sensor.ute < 23                       ###
     ### C: switch.ventilationsaggregat = off     ###
     ### A: switch.ventilationsaggregat = on      ###
     ################################################
-  - alias: Ventilation on (<24°C, Off)
+  - alias: Ventilation on (<23°C, Off)
     initial_state: 'off'
     trigger:
       platform: numeric_state
       entity_id: sensor.ute
-      below: '24'
+      below: '23'
     condition:
       condition: state
       entity_id: switch.ventilationsaggregat
@@ -137,7 +149,7 @@
         entity_id: switch.ventilationsaggregat
       - service: notify.pushetta
         data:
-          message: 'Ventilation on (<24°C, Off)'
+          message: 'Ventilation on (<23°C, Off)'
 
     ################################################
     ### Ventilation on                           ###

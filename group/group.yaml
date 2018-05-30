@@ -414,6 +414,7 @@
       - group.automation_outside_light
       - group.automation_temp_larm
       - group.automation_ventilation
+      - group.automation_ventilation_on_off
       - group.automation_mediaplayer
       - group.automation_hassbian
       - group.automation_doorbell
@@ -506,6 +507,17 @@
       - automation.badrumsfonster_hog_fukt
       - automation.badrum_lag_fukt
       - automation.badrumsfonster_lag_fukt
+
+  automation_ventilation_on_off
+    name: Ventilation On/Off
+#    control: hidden
+    entities:
+      - automation.ventailation_off_25c_borta_55
+      - automation.ventailation_off_55_borta_25c
+      - automation.ventailation_off_borta_25c_55
+      - automation.ventailation_on_25c_off
+      - automation.ventailation_on_55_off
+      - automation.ventailation_on_hemma_off
 
   automation_mediaplayer:
     name: Mediaspelare

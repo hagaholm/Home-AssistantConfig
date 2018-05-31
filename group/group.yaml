@@ -98,8 +98,7 @@
     entities:
       - sensor.ute
       - sensor.ljusstyrka
-      - sensor.regnmatare_rain_rate
-      - sensor.regnmatare_rain_total
+      - sensor.uterum
 
   temperature_view_inside:
     name: Inomhus temperatur
@@ -107,7 +106,6 @@
     icon: mdi:information-outline
     control: hidden
     entities:
-      - sensor.uterum
       - sensor.hall_temperature
       - sensor.vardagsrum_temperature
       - sensor.sovrum
@@ -133,7 +131,7 @@
     control: hidden
     entities:
       - sensor.kyl_temperature
-      - sensor.frys_temperature
+      - sensor.frys_temperature            
       - sensor.forrad_frys_temperature
 
   temperature_view_other:
@@ -153,7 +151,7 @@
     view: no
     icon: mdi:information-outline
     control: hidden
-    entities:
+    entities:     
       - sensor.varmepump_temperature
       - sensor.Uteluft
       - sensor.Tilluft
@@ -416,6 +414,7 @@
       - group.automation_outside_light
       - group.automation_temp_larm
       - group.automation_ventilation
+      - group.automation_ventilation_on_off
       - group.automation_mediaplayer
       - group.automation_hassbian
       - group.automation_doorbell
@@ -438,7 +437,7 @@
       - automation.kok_off_sensor_off
       - automation.kok_off_2500
       - automation.kok_rorelsevakt_reset
-
+      
   automation_morning_light:
     name: Morgonbelysning
 #    control: hidden
@@ -504,16 +503,21 @@
     name: Ventilation
 #    control: hidden
     entities:
-      - automation.ventailation_off_23c_borta_55
-      - automation.ventailation_off_55_borta_23c
-      - automation.ventailation_off_borta_23c_55
-      - automation.ventailation_on_23c_off
-      - automation.ventailation_on_55_off
-      - automation.ventailation_on_hemma_off
+      - automation.badrum_hog_fukt
       - automation.badrumsfonster_hog_fukt
+      - automation.badrum_lag_fukt
       - automation.badrumsfonster_lag_fukt
-#      - automation.badrum_hog_fukt
-#      - automation.badrum_lag_fukt
+
+  automation_ventilation_on_off:
+    name: Ventilation On/Off
+#    control: hidden
+    entities:
+      - automation.ventilation_off_23c_borta_55
+      - automation.ventilation_off_55_borta_23c
+      - automation.ventilation_off_borta_23c_55
+      - automation.ventilation_on_23c_off
+      - automation.ventilation_on_55_off
+      - automation.ventilation_on_hemma_off
 
   automation_mediaplayer:
     name: Mediaspelare

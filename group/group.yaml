@@ -131,7 +131,7 @@
     control: hidden
     entities:
       - sensor.kyl_temperature
-      - sensor.frys_temperature            
+      - sensor.frys_temperature
       - sensor.forrad_frys_temperature
 
   temperature_view_other:
@@ -503,10 +503,10 @@
     name: Ventilation
 #    control: hidden
     entities:
-      - automation.badrum_hog_fukt
       - automation.badrumsfonster_hog_fukt
-      - automation.badrum_lag_fukt
       - automation.badrumsfonster_lag_fukt
+#      - automation.badrum_hog_fukt
+#      - automation.badrum_lag_fukt
 
   automation_ventilation_on_off:
     name: Ventilation On/Off

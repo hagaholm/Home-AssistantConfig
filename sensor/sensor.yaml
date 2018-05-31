@@ -10,18 +10,73 @@
 #############
   - platform: tellstick
     only_named: False # False visar även andras sensorer
+
+    ######################################################
+    # Grannens regnmätare, visar senaste timme och total #
+    ######################################################
+    13: Regnmätare
+
+    ###############################
+    # Badrum, visar temp och fukt #
+    ###############################
     135: Badrum
-#    151: Frys        # Gammal termometer, krockade med grannens :-)
+
+    ###########################################
+    # Används inte, krockade med grannens :-) #
+    ###########################################
+    #151: Frys
+
+    ############################################
+    # Grannens ute givare, visar temp och fukt #
+    ############################################
     151: Ute_grannen
+
+    #######################################
+    # Andreas rum, visar på temp och fukt #
+    #######################################
     167: Andreas rum
-    180: Frys         # Ny termometer
-    182: Kyl          # Ny termometer
+
+    ###################################
+    # Frys i köket, visar temperature #
+    # Ny termometer                   #
+    ###################################
+    180: Frys
+
+    ##################################
+    # Kyl i köket, visar temperature #
+    # Ny termometer                  #
+    ##################################
+    182: Kyl
+
+    ####################################
+    # Tvättstuga, visar temp och fukt  #
+    # Värmepump, visar temp            #
+    ###################################
     183: Tvättstuga
     184: Värmepump
+
+    ###############################
+    # Förråd, visar temp och fukt #
+    # Förråd frys, visar temp     #
+    ###############################
     199: Förråd
     200: Förråd_frys
-    208: Vardagsrum   # Ny termometer
+
+    ###########################
+    # Andreas rum, visar temp #
+    # Ny termometer           #
+    ###########################
+    208: Vardagsrum
     215: Friggebod
+
+    #############################################
+    # Grannens inne givare, visar temp och fukt #
+    #############################################
+    231: Inne_grannen
+
+    ################################
+    # Hall, visar på temp och fukt #
+    ################################
     247: Hall
 
 #######################

@@ -12,7 +12,7 @@
       - service: notify.pushetta
         data:
           message: 'LARM! Hög temp i kylen: {{ states.sensor.kyl_temperature.state }} {{ states.sensor.kyl_temperature.unit_of_measurement }}'
-          
+
     ###################################################
     ### Varnar för låg temp i kylen                 ###
     ### T: sensor.kyl_temperature < 3               ###

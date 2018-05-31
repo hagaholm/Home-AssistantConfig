@@ -76,7 +76,7 @@
           before: '05:00:00'
     action:
       service: script.evening_lights_on
-     
+
     ##########################################################
     ### Släcker lampor om det blir för ljust ute övrig tid ###
     ### T: sensor.ljusstyrka > 1700                        ###
@@ -97,7 +97,7 @@
           state: 'home'
         - condition: time
           after: '12:00:00'
-          before: '05:00:00'          
+          before: '05:00:00'
     action:
       service: script.evening_lights_off
 

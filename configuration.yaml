@@ -21,7 +21,7 @@ homeassistant:
   customize: !include customize.yaml  
   # Package folder
   packages: !include_dir_named packages
-  
+
   customize_glob:
     "*.*":
       custom_ui_state_card: state-card-custom-ui
@@ -37,7 +37,7 @@ homeassistant:
 #      custom_ui_state_card: state-card-custom-ui
 #      show_last_changed: true
 
-  
+
 ####################################################
 #                                                  #
 #                     GENERAL                      #
@@ -173,7 +173,7 @@ tellstick:
 cover:
   - platform: tellstick
 
-  
+
 ####################################################
 #                                                  #
 #                     LIGHT                        #
@@ -182,7 +182,7 @@ cover:
 light:
   - platform: tellstick
 
-  
+
 ####################################################
 #                                                  #
 #                     SWITCH                       #
@@ -190,19 +190,19 @@ light:
 ####################################################
 switch:
   - platform: tellstick
-  
+
   - platform: command_line
     switches:
       fan_speed:
         command_on: python3 -c "import requests; requests.get('http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=on&PIO.A=CHANGE');"
         command_off: python3 -c "import requests; requests.get('http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=CHANGE');"
         friendly_name: Fläkthastighet Normal / Forcerad
-        
+
 # Hämta aktuell status: 'http://192.168.1.12:3001/text/12.A84D7D000000/PIO.A' 
 # Sätt till Off: 'http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=CHANGE'
 # Sätt till On: 'http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=on&PIO.A=CHANGE'
 
-  
+
 ####################################################
 #                                                  #
 #                TEXT TO SPEECH                    #
@@ -211,7 +211,7 @@ switch:
 tts:
   - platform: google
 
-  
+
 ####################################################
 #                                                  #
 #                  MEDIA PLAYER                    #
@@ -222,7 +222,7 @@ media_player:
     host: 192.168.1.13
     port: 9090
 
-    
+
 ####################################################
 #                                                  #
 #                    CLOUD                         #

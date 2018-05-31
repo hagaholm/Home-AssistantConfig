@@ -26,7 +26,7 @@
       service: script.away_lights_on
       #- service: homeassistant.turn_on
       #  entity_id: group.away_lights
-        
+
     ###########################################################
     ### Tänder lampor när ingen är hemma och det blir mörkt ###
     ### T: sensor.ljusstyrka < 200                          ###
@@ -52,7 +52,7 @@
       service: script.away_lights_on
       #service: homeassistant.turn_on
       #entity_id: group.away_lights
-      
+
     ####################################################################
     ### Sätter på lampor när ingen är hemma kl 12.00 om det är mörkt ###
     ### T: time = '12:00:00'                                         ###
@@ -73,12 +73,12 @@
           below: 200
         - condition: state
           entity_id: group.track_for_home_devices
-          state: 'not_home'          
+          state: 'not_home'
     action:
       service: script.away_lights_on
       #service: homeassistant.turn_on
       #entity_id: group.away_lights
-        
+
     #################################################
     ### Stänger av lampor när första kommer hem   ###
     ### T: group.track_for_home_devices to 'home' ###

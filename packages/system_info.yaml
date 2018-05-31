@@ -75,7 +75,7 @@ group:
     - sensor.switch_asus_friggebod
     - sensor.router
     - sensor.dns320
-    - sensor.raspberry_pi_2    
+    - sensor.raspberry_pi_2
     - sensor.raspberry_pi_3
     - sensor.hassbian    
 
@@ -85,7 +85,7 @@ group:
 #      - sensor.uptime
 #      - sensor.last_boot
 #      - sensor.since_last_boot
-      
+
 sensor:
   # - platform: systemmonitor
     # resources:
@@ -97,25 +97,25 @@ sensor:
     sensors:
       harmony_hub:
         friendly_name: 'Harmony hub'
-        value_template: "{{ 'Online' if is_state('device_tracker.harmony_hub', 'home') else 'Offline' }}"                
+        value_template: "{{ 'Online' if is_state('device_tracker.harmony_hub', 'home') else 'Offline' }}"
       canal_digital:
         friendly_name: 'Canal digital'
-        value_template: "{{ 'Online' if is_state('device_tracker.canal_digital', 'home') else 'Offline' }}"        
+        value_template: "{{ 'Online' if is_state('device_tracker.canal_digital', 'home') else 'Offline' }}"
       classic:
         friendly_name: 'SqueezeBox Classic'
         value_template: "{{ 'Online' if is_state('device_tracker.classic', 'home') else 'Offline' }}"
       raspberry_pi_2:
         friendly_name: 'Raspberry Pi 2 - 1-Wire'
-        value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_2', 'home') else 'Offline' }}"        
+        value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_2', 'home') else 'Offline' }}"
       dns320:
           friendly_name: 'Nas DNS-320'
           value_template: "{{ 'Online' if is_state('device_tracker.dns320', 'home') else 'Offline' }}"
       yamaha:
         friendly_name: 'Yamaha RX-A1030'
-        value_template: "{{ 'Online' if is_state('device_tracker.yamaha', 'home') else 'Offline' }}"        
+        value_template: "{{ 'Online' if is_state('device_tracker.yamaha', 'home') else 'Offline' }}"
       raspberry_pi_3:
         friendly_name: 'Raspberry Pi 3 - Nexahome'
-        value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_3', 'home') else 'Offline' }}"        
+        value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_3', 'home') else 'Offline' }}"
       chromecast:
         friendly_name: 'Chromecast'
         value_template: "{{ 'Online' if is_state('device_tracker.chromecast', 'home') else 'Offline' }}"
@@ -151,7 +151,7 @@ sensor:
         value_template: "{{ 'Online' if is_state('device_tracker.switch_asus_friggebod', 'home') else 'Offline' }}"
       chromecast_2:
         friendly_name: 'Chromecast Wifi'
-        value_template: "{{ 'Online' if is_state('device_tracker.chromecast_2', 'home') else 'Offline' }}"        
+        value_template: "{{ 'Online' if is_state('device_tracker.chromecast_2', 'home') else 'Offline' }}"
       mickes_laptop:
         friendly_name: 'Micke dator'
         value_template: "{{ 'Online' if is_state('device_tracker.mickes_laptop', 'home') else 'Offline' }}"

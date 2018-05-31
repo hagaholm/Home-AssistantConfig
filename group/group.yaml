@@ -98,7 +98,8 @@
     entities:
       - sensor.ute
       - sensor.ljusstyrka
-      - sensor.uterum
+      - sensor.regnmatare_rain_rate
+      - sensor.regnmatare_rain_total
 
   temperature_view_inside:
     name: Inomhus temperatur
@@ -106,6 +107,7 @@
     icon: mdi:information-outline
     control: hidden
     entities:
+      - sensor.uterum
       - sensor.hall_temperature
       - sensor.vardagsrum_temperature
       - sensor.sovrum
@@ -151,7 +153,7 @@
     view: no
     icon: mdi:information-outline
     control: hidden
-    entities:     
+    entities:
       - sensor.varmepump_temperature
       - sensor.Uteluft
       - sensor.Tilluft
@@ -437,7 +439,7 @@
       - automation.kok_off_sensor_off
       - automation.kok_off_2500
       - automation.kok_rorelsevakt_reset
-      
+
   automation_morning_light:
     name: Morgonbelysning
 #    control: hidden

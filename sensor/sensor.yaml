@@ -87,6 +87,11 @@
     name: På vinden
     unit_of_measurement: "°C"
   - platform: command_line
+    command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.9C97DA050000/temperature').text; print(str[12:])"
+    name: Test 1 decimal
+    unit_of_measurement: "°C"
+    value_template: '{{ value | round(1) }}'
+  - platform: command_line
     command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.DB5AFE050000/temperature').text; print(str[12:])"
     name: Ute
     unit_of_measurement: "°C"
@@ -190,13 +195,30 @@
 ######
   - platform: yr
 
+##################
+# Min/Max Sensor #
+##################
   
-  # - platform: min_max
-    # name: Inne min
-    # type: min
-    # entity_ids:
-      # - sensor.hall_temperature
-      # - sensor.sovrum
+  - platform: min_max
+    name: Ute min
+    type: min
+    entity_ids:
+      - sensor.ute
+      - sensor.ute_grannen_temperature
+
+  - platform: min_max
+    name: Ute medel
+    type: mean
+    entity_ids:
+      - sensor.ute
+      - sensor.ute_grannen_temperature
+
+  - platform: min_max
+    name: Ute max
+    type: max
+    entity_ids:
+      - sensor.ute
+      - sensor.ute_grannen_temperature
 
   # - platform: min_max
     # name: Inne medel

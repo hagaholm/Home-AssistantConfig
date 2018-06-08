@@ -4,7 +4,7 @@
     ### A: notify.pushetta "LARM! Hög temp i Uterum" ###
     ####################################################
   - alias: Uterum larm hög temp
-    initial_state: 'off'
+    initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.uterum

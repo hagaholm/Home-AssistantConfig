@@ -1,0 +1,15 @@
+﻿    ####################################################
+    ### Varnar för hög temp i Uterum                 ###
+    ### T: sensor.uterum > 35                        ###
+    ### A: notify.pushetta "LARM! Hög temp i Uterum" ###
+    ####################################################
+  - alias: Uterum larm hög temp
+    initial_state: 'off'
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.uterum
+      above: '35'
+    action:
+      - service: notify.pushetta
+        data:
+          message: 'LARM! Hög temp i Uterum: {{ states.sensor.uterum.state }} {{ states.sensor.uterum.unit_of_measurement }}'

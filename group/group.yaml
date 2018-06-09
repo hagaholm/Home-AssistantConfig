@@ -517,12 +517,14 @@
     name: Ventilation On/Off
 #    control: hidden
     entities:
-      - automation.ventilation_off_23c_borta_55
-      - automation.ventilation_off_55_borta_23c
-      - automation.ventilation_off_borta_23c_55
-      - automation.ventilation_on_23c_off
+      - automation.ventilation_off_55_borta_ute_23c_inne__23c
+      - automation.ventilation_off_borta_ute_23c_55_inne__23c
+      - automation.ventilation_off_inne_23c_borta_55_ute__23c
+      - automation.ventilation_off_ute_23c_borta_55_inne__23c
       - automation.ventilation_on_55_off
       - automation.ventilation_on_hemma_off
+      - automation.ventilation_on_inne_23c_off
+      - automation.ventilation_on_ute_23c_off
 
   automation_mediaplayer:
     name: Mediaspelare

@@ -53,9 +53,11 @@
     icon: mdi:information-outline
     control: hidden
     entities:
-      - sensor.Forcerad
       - sensor.badrum_humidity
       - sensor.fukt_badrumsfonster
+      - sensor.Forcerad # Fläkt hastighet
+      - switch.fan_speed
+      - switch.ventilationsaggregat
 
   default_view_temp_graph:
     name: Temperatur
@@ -162,6 +164,8 @@
       - sensor.Franluft
       - sensor.Avluft
       - sensor.Forcerad # Fläkt hastighet
+      - switch.fan_speed
+      - switch.ventilationsaggregat
 
 ###############################
 ###############################

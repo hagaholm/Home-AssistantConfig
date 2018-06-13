@@ -178,11 +178,11 @@
 
     ################################################
     ### Ventilation on                           ###
-    ### T: sensor.ute < 23                       ###
+    ### T: sensor.ute < 22                       ###
     ### C: switch.ventilationsaggregat = off     ###
     ### A: switch.ventilationsaggregat = on      ###
     ################################################
-  - alias: Ventilation on (Ute <23°C, Off)
+  - alias: Ventilation on (Ute <22°C, Off)
     initial_state: 'on'
     trigger:
       platform: numeric_state
@@ -200,7 +200,7 @@
         entity_id: switch.ventilationsaggregat
       - service: notify.pushetta
         data:
-          message: 'Ventilation on (Ute <23°C, Off)'
+          message: 'Ventilation on (Ute <22°C, Off)'
 
     ################################################
     ### Ventilation on                           ###

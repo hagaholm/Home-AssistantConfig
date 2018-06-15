@@ -18,7 +18,7 @@ homeassistant:
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: !secret time_zone
   # Customization file
-  customize: !include customize.yaml  
+  customize: !include customize.yaml
   # Package folder
   packages: !include_dir_named packages
 
@@ -75,7 +75,9 @@ logger:
 # http
 # https://home-assistant.io/components/http/
 http:
-  api_password: !secret http_password  
+  api_password: !secret http_password
+  ip_ban_enabled: True
+  login_attempts_threshold: 3
 
 #---------------------------------------------------
 # Checks for available updates

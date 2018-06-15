@@ -1,0 +1,9 @@
+﻿sensor:
+ 
+  - platform: trafikverket_weatherstation
+ 
+    name: Gröndal
+    api_key: !secret trafikverket_api
+ 
+    station: Gröndal
+    type: air

@@ -1,0 +1,14 @@
+﻿    ####################################
+    ### Ny enhet på nätverket        ###
+    ### T: device_tracker_new_device ###
+    ### A: notify.pushetta           ###
+    ####################################
+  - alias: Ny enhet på nätverket
+    initial_state: 'on'
+    trigger:
+      platform: event
+      event_type: device_tracker_new_device
+    action:
+      - service: notify.pushetta
+        data:
+          message: 'Ny enhet uppkopplad: {{trigger.event.data.host_name}} ({{trigger.event.data.entity_id}})'

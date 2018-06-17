@@ -79,16 +79,16 @@
 
     ##########################################################
     ### Släcker lampor om det blir för ljust ute övrig tid ###
-    ### T: sensor.ljusstyrka > 1700                        ###
+    ### T: sensor.ljusstyrka > 2500                        ###
     ### C: group.track_for_home_devices = 'home'           ###
     ###    12:00:00 - 05:00:00                             ###
     ### A: group.evening_lights = off                      ###
     ##########################################################
-  - alias: Kvällsbelysning off (>1700, hemma)
+  - alias: Kvällsbelysning off (>2500, hemma)
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      above: 1700
+      above: 2500
     condition:
       condition: and
       conditions:

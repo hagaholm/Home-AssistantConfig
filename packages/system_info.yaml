@@ -21,55 +21,55 @@ group:
   computer_states:
     name: Dator status
     entities:
-    - sensor.mickes_laptop
-    - sensor.mickes_work_laptop
-    - sensor.louise_dator
+      - sensor.mickes_laptop
+      - sensor.mickes_work_laptop
+      - sensor.louise_dator
 
   media_states:
     name: Mediaspelare status
     entities:
-    - sensor.harmony_hub
-    - sensor.yamaha
-    - sensor.classic
-    - sensor.panasonic_tv
-    - sensor.canal_digital
-    - sensor.chromecast
-    - sensor.chromecast_2
+      - sensor.harmony_hub
+      - sensor.yamaha
+      - sensor.classic
+      - sensor.panasonic_tv
+      - sensor.canal_digital
+      - sensor.chromecast
+      - sensor.chromecast_2
 
   mobile_states:
     name: Mobil status
     entities:
-    - sensor.mobil_louise
-    - sensor.mobil_annelie
-    - sensor.mobil_micke
-    - sensor.mobil_andreas
-    - sensor.mobil_margareta
-    - sensor.mobil_herbert
-    - sensor.mobil_erik
+      - sensor.mobil_louise
+      - sensor.mobil_annelie
+      - sensor.mobil_micke
+      - sensor.mobil_andreas
+      - sensor.mobil_margareta
+      - sensor.mobil_herbert
+      - sensor.mobil_erik
 
   network_states:
     name: Nätverks status
     entities:
-    - sensor.router_asuscom
-    - sensor.switch_asus_friggebod
-    - sensor.router
-    - sensor.dns320
-    - sensor.raspberry_pi_2
-    - sensor.raspberry_pi_3
-    - sensor.hassbian
+      - sensor.router_asuscom
+      - sensor.switch_asus_friggebod
+      - sensor.router
+      - sensor.dns320
+      - sensor.raspberry_pi_2
+      - sensor.raspberry_pi_3
+      - sensor.hassbian
 
-#  system_monitor_card:
-#    name: System Monitor Hass Rpi
-#    entities:
-#      - sensor.uptime
-#      - sensor.last_boot
-#      - sensor.since_last_boot
+  system_monitor_card:
+    name: System Monitor Hass Rpi
+    entities:
+      - sensor.uptime
+      - sensor.last_boot
+      - sensor.since_last_boot
 
 sensor:
-  # - platform: systemmonitor
-    # resources:
-      # - type: last_boot
-      # - type: since_last_boot
+  - platform: systemmonitor
+    resources:
+      - type: last_boot
+      - type: since_last_boot
   - platform: uptime
     unit_of_measurement: hours
   - platform: template

@@ -414,6 +414,7 @@
     view: yes
     icon: mdi:home-automation
     entities:
+      - group.automation_system
       - group.automation_kitchen_light
       - group.automation_morning_light
       - group.automation_evening_light
@@ -428,6 +429,15 @@
       - group.automation_doorbell
       - group.automation_forrad_frys
       - group.automation_garage_air_dryer
+
+  automation_system:
+    name: System
+#    control: hidden
+    entities:
+      - automation.hassbian_startad
+      - automation.hassbian_stoppad
+      - automation.hassbian_uppdatering
+      - automation.ny_enhet_hittad
 
   automation_kitchen_light:
     name: Köksbelysning
@@ -536,6 +546,7 @@
     entities:
       - automation.mediaspelare_on__hemma
       - automation.mediaspelare_off__borta
+      - automation.satt_pa_mediaspelare_om_off
       - automation.satt_pa_mediaspelare_vid_on
       - automation.stang_av_mediaspelare_vid_off
 

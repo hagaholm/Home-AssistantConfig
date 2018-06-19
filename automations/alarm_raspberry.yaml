@@ -8,6 +8,6 @@
       entity_id: sensor.cpu_temperature
       above: '70'
     action:
-      - service: notify.pushetta
+      - service: notify.pushbullet
         data:
           message: "Raspberry HOMEASS CPU hög temp"

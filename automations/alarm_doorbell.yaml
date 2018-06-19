@@ -6,7 +6,7 @@
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ringklocka_tvattstuga
-      - service: notify.pushetta
+      - service: notify.pushbullet
         data:
           title: "Ringklocka tvättstuga."
           message: "Det ringer på dörren..."
@@ -19,7 +19,7 @@
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ringklocka_hall
-      - service: notify.pushetta
+      - service: notify.pushbullet
         data:
           title: "Ringklocka hall."
           message: "Det ringer på dörren..."

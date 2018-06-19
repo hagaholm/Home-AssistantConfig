@@ -135,10 +135,14 @@ sun:
 # Notifier
 #https://home-assistant.io/components/notify.pushetta/
 notify:
-  name: pushetta
-  platform: pushetta
-  channel_name: !secret pushetta_channel_name
-  api_key: !secret pushetta_api_key
+  name: pushbullet
+  platform: pushbullet
+  api_key: !secret pushbullet_api_key
+
+#  name: pushetta
+#  platform: pushetta
+#  channel_name: !secret pushetta_channel_name
+#  api_key: !secret pushetta_api_key
 
 
 ####################################################

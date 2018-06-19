@@ -1,29 +1,29 @@
-﻿    ###################################################
-    ### Varnar för hög temp i kylen                 ###
-    ### T: sensor.kyl_temperature > 10              ###
-    ### A: notify.pushetta "LARM! Hög temp i kylen" ###
-    ###################################################
+﻿    #####################################################
+    ### Varnar för hög temp i kylen                   ###
+    ### T: sensor.kyl_temperature > 10                ###
+    ### A: notify.pushbullet "LARM! Hög temp i kylen" ###
+    #####################################################
   - alias: Larm! Hög temp i kyl
     trigger:
       platform: numeric_state
       entity_id: sensor.kyl_temperature
       above: '10'
     action:
-      - service: notify.pushetta
+      - service: notify.pushbullet
         data:
           message: 'LARM! Hög temp i kylen: {{ states.sensor.kyl_temperature.state }} {{ states.sensor.kyl_temperature.unit_of_measurement }}'
 
-    ###################################################
-    ### Varnar för låg temp i kylen                 ###
-    ### T: sensor.kyl_temperature < 3               ###
-    ### A: notify.pushetta "LARM! Låg temp i kylen" ###
-    ###################################################
+    #####################################################
+    ### Varnar för låg temp i kylen                   ###
+    ### T: sensor.kyl_temperature < 3                 ###
+    ### A: notify.pushbullet "LARM! Låg temp i kylen" ###
+    #####################################################
   - alias: Larm! Låg temp i kyl
     trigger:
       platform: numeric_state
       entity_id: sensor.kyl_temperature
       below: '3'
     action:
-      - service: notify.pushetta
+      - service: notify.pushbullet
         data:
           message: 'LARM! Låg temp i kylen: {{ states.sensor.kyl_temperature.state }} {{ states.sensor.kyl_temperature.unit_of_measurement }}'

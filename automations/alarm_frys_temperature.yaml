@@ -1,8 +1,8 @@
-﻿    ####################################################
-    ### Varnar för hög temp i frysen                 ###
-    ### T: sensor.frys_temperature > - 16            ###
-    ### A: notify.pushetta "LARM! Hög temp i frysen" ###
-    ####################################################
+﻿    ######################################################
+    ### Varnar för hög temp i frysen                   ###
+    ### T: sensor.frys_temperature > - 16              ###
+    ### A: notify.pushbullet "LARM! Hög temp i frysen" ###
+    ######################################################
   - alias: Larm! Hög temp i frys
     initial_state: 'on'
     trigger:
@@ -10,15 +10,15 @@
       entity_id: sensor.frys_temperature
       above: '-16'
     action:
-      - service: notify.pushetta
+      - service: notify.pushbullet
         data:
           message: 'LARM! Hög temp i frysen: {{ states.sensor.frys_temperature.state }} {{ states.sensor.frys_temperature.unit_of_measurement }}'
 
-    ##################################################
-    ### Varnar för låg temp i Frys                 ###
-    ### T: sensor.frys_temperature < - 24          ###
-    ### A: notify.pushetta "LARM! Låg temp i Frys" ###
-    ##################################################
+    ####################################################
+    ### Varnar för låg temp i Frys                   ###
+    ### T: sensor.frys_temperature < - 24            ###
+    ### A: notify.pushbullet "LARM! Låg temp i Frys" ###
+    ####################################################
   - alias: Larm! Låg temp i frys
     initial_state: 'on'
     trigger:
@@ -26,15 +26,15 @@
       entity_id: sensor.frys_temperature
       below: '-24'
     action:
-      - service: notify.pushetta
+      - service: notify.pushbullet
         data:
           message: 'LARM! Låg temp i frysen: {{ states.sensor.frys_temperature.state }} {{ states.sensor.frys_temperature.unit_of_measurement }}'
 
-    ####################################################
-    ### Varnar för hög fukt i frysen                 ###
-    ### T: sensor.frys_humidity > 25                 ###
-    ### A: notify.pushetta "LARM! Hög fukt i frysen" ###
-    ####################################################
+    ######################################################
+    ### Varnar för hög fukt i frysen                   ###
+    ### T: sensor.frys_humidity > 25                   ###
+    ### A: notify.pushbullet "LARM! Hög fukt i frysen" ###
+    ######################################################
   # - alias: Larm! Hög fukt i frys
     # initial_state: 'off'
     # trigger:
@@ -42,6 +42,6 @@
       # entity_id: sensor.frys_humidity
       # above: '25'
     # action:
-      # - service: notify.pushetta
+      # - service: notify.pushbullet
         # data:
           # message: 'LARM! Hög fukt i frysen: {{ states.sensor.frys_humidity.state }} {{ states.sensor.frys_humidity.unit_of_measurement }}'

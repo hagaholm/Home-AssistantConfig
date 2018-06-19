@@ -34,7 +34,7 @@
       - delay: '00:00:10'
       - service: homeassistant.turn_off
         entity_id: switch.ventilationsaggregat
-      - service: notify.pushetta
+      - service: notify.pushbullet
         data:
           message: 'Ventilation off (Borta, ute >24°C, <55%, Inne > 23°C)'
 
@@ -70,7 +70,7 @@
       - delay: '00:00:10'
       - service: homeassistant.turn_off
         entity_id: switch.ventilationsaggregat
-      - service: notify.pushetta
+      - service: notify.pushbullet
         data:
           message: Ventilation off (Ute >24°C, Borta, <55%, Inne > 23°C)
 
@@ -106,7 +106,7 @@
       - delay: '00:00:10'
       - service: homeassistant.turn_off
         entity_id: switch.ventilationsaggregat
-      - service: notify.pushetta
+      - service: notify.pushbullet
         data:
           message: 'Ventilation off (<55%, Borta, Ute >24°C, Inne > 23°C)'
 
@@ -142,7 +142,7 @@
       - delay: '00:00:10'
       - service: homeassistant.turn_off
         entity_id: switch.ventilationsaggregat
-      - service: notify.pushetta
+      - service: notify.pushbullet
         data:
           message: Ventilation off (Inne >23°C, Borta, <55%, Ute > 24°C)
 
@@ -172,7 +172,7 @@
       - delay: '00:00:10'
       - service: homeassistant.turn_on
         entity_id: switch.ventilationsaggregat
-      - service: notify.pushetta
+      - service: notify.pushbullet
         data:
           message: 'Ventilation on (Hemma, Off)'
 
@@ -198,7 +198,7 @@
       - delay: '00:00:10'
       - service: homeassistant.turn_on
         entity_id: switch.ventilationsaggregat
-      - service: notify.pushetta
+      - service: notify.pushbullet
         data:
           message: 'Ventilation on (Ute <22°C, Off)'
 
@@ -224,7 +224,7 @@
       - delay: '00:00:10'
       - service: homeassistant.turn_on
         entity_id: switch.ventilationsaggregat
-      - service: notify.pushetta
+      - service: notify.pushbullet
         data:
           message: 'Ventilation on (>55%, Off)'
 
@@ -250,6 +250,6 @@
       - delay: '00:00:10'
       - service: homeassistant.turn_on
         entity_id: switch.ventilationsaggregat
-      - service: notify.pushetta
+      - service: notify.pushbullet
         data:
           message: 'Ventilation on (Inne <23°C, Off)'

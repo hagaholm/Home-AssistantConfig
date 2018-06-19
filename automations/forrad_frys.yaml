@@ -24,7 +24,7 @@
       entity_id: sensor.forrad_frys_temperature
       below: '-23'
     action:
-      - service: notify.pushetta
+      - service: notify.pushbullet
         data:
           message: 'Larm! Slår av frysen i förrådet: {{ states.sensor.forrad_frys_temperature.state }} {{ states.sensor.forrad_frys_temperature.unit_of_measurement }}'
       - service: homeassistant.turn_off
@@ -45,7 +45,7 @@
       entity_id: sensor.forrad_frys_temperature
       above: '-16'
     action:
-      - service: notify.pushetta
+      - service: notify.pushbullet
         data:
           message: 'Larm! Slår på frysen i förrådet: {{ states.sensor.forrad_frys_temperature.state }} {{ states.sensor.forrad_frys_temperature.unit_of_measurement }}'
       - service: homeassistant.turn_on

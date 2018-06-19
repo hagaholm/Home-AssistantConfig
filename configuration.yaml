@@ -22,10 +22,10 @@ homeassistant:
   # Package folder
   packages: !include_dir_named packages
 
-  customize_glob:
-    "*.*":
-      custom_ui_state_card: state-card-custom-ui
-      show_last_changed: true
+###  customize_glob:
+###    "*.*":
+###      custom_ui_state_card: state-card-custom-ui
+###      show_last_changed: true
 
 #    light.*:
 #      custom_ui_state_card: state-card-custom-ui
@@ -52,11 +52,11 @@ homeassistant:
 
 #---------------------------------------------------
 # Enables the frontend
-frontend:
-  extra_html_url:
-    - /local/custom_ui/state-card-custom-ui.html
-  extra_html_url_es5:
-    - /local/custom_ui/state-card-custom-ui-es5.html
+###frontend:
+###  extra_html_url:
+###    - /local/custom_ui/state-card-custom-ui.html
+###  extra_html_url_es5:
+###    - /local/custom_ui/state-card-custom-ui-es5.html
 
 #---------------------------------------------------
 # Enables configuration UI

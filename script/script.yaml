@@ -8,6 +8,17 @@
       - service: homeassistant.turn_off
         entity_id: group.outside_lights
 
+  goodnight_in_10_min:
+    alias: Godnatt, släcker allt om 10 minuter
+    sequence:
+      - delay: '00:10:00'
+      - service: homeassistant.turn_off
+        entity_id: group.evening_lights
+      - service: homeassistant.turn_off
+        entity_id: group.kitchen_lights
+      - service: homeassistant.turn_off
+        entity_id: group.outside_lights
+
   bedroom_off:
     alias: Släck i sovrummet
     sequence:

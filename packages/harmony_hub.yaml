@@ -74,44 +74,43 @@ script:
           activity: '31360307'
 
 automation:
-  # - alias: "Stäng av mediaspelare vid off"
-    # trigger:
-      # platform: state
-      # entity_id: remote.harmony_hub
-    # condition:
-      # condition: template
-      # value_template: '{{ trigger.to_state.attributes.current_activity == "PowerOff" }}'
-    # action:
-      # - delay: '00:00:15'
-      # - service: homeassistant.turn_off
-        # entity_id: switch.vardagsrum_stereobank
-      # - service: homeassistant.turn_off
-        # entity_id: switch.vardagsrum_extra_subbas
+  - alias: "Stäng av mediaspelare vid off"
+    trigger:
+      platform: state
+      entity_id: remote.harmony_hub
+    condition:
+      condition: template
+      value_template: '{{ trigger.to_state.attributes.current_activity == "PowerOff" }}'
+    action:
+#      - delay: '00:00:15'
+#      - service: homeassistant.turn_off
+#        entity_id: switch.vardagsrum_stereobank
+      - service: homeassistant.turn_off
+        entity_id: switch.vardagsrum_extra_subbas
           
-  # - alias: "Sätt på mediaspelare vid on"
-    # trigger:
-      # platform: state
-      # entity_id: remote.harmony_hub
-    # condition:
-      # condition: and
-      # conditions:
-        # - condition: template
-          # value_template: '{{ trigger.to_state.attributes.current_activity != "PowerOff" }}'
-        # - condition: state
-          # entity_id: switch.vardagsrum_stereobank
-          # state: 'off'
-    # action:
-      # - service: homeassistant.turn_on
-        # entity_id: switch.vardagsrum_stereobank
-      # - delay: '00:00:15'
-      # - service: remote.turn_on
-        # entity_id: remote.harmony_hub
-        # data:
-          # activity: '{{ trigger.to_state.attributes.current_activity }}'
-      # - service: homeassistant.turn_on
-        # entity_id: switch.vardagsrum_extra_subbas
-        
-        
+  - alias: "Sätt på mediaspelare vid on"
+    trigger:
+      platform: state
+      entity_id: remote.harmony_hub
+    condition:
+      condition: and
+      conditions:
+        - condition: template
+          value_template: '{{ trigger.to_state.attributes.current_activity != "PowerOff" }}'
+#        - condition: state
+#          entity_id: switch.vardagsrum_stereobank
+#          state: 'off'
+    action:
+#      - service: homeassistant.turn_on
+#        entity_id: switch.vardagsrum_stereobank
+#      - delay: '00:00:15'
+#      - service: remote.turn_on
+#        entity_id: remote.harmony_hub
+#        data:
+#          activity: '{{ trigger.to_state.attributes.current_activity }}'
+      - service: homeassistant.turn_on
+        entity_id: switch.vardagsrum_extra_subbas
+
   - alias: "Sätt på mediaspelare om off"
     trigger:
       platform: state

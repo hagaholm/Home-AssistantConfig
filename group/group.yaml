@@ -139,7 +139,7 @@
     entities:
       - sensor.kyl_temperature
       - sensor.frys_temperature            
-      - sensor.forrad_frys_temperature
+      - sensor.forrad_kylfrys_temperature
 
   temperature_view_other:
     name: Övrigt
@@ -428,7 +428,7 @@
       - group.automation_mediaplayer
       - group.automation_hassbian
       - group.automation_doorbell
-      - group.automation_forrad_frys
+      - group.automation_forrad_kyl_frys
       - group.automation_garage_air_dryer
 
   automation_system:
@@ -567,10 +567,12 @@
       - automation.ringklocka_tvattstuga
       - automation.ringklocka_hall
 
-  automation_forrad_frys:
-    name: Förråd frys
+  automation_forrad_kyl_frys:
+    name: Förråd kyl/frys
 #    control: hidden
     entities:
+      - automation.larm_hog_temp_i_forrad_kyl
+      - automation.larm_lag_temp_i_forrad_kyl
       - automation.forrad_frys_off___22
       - automation.forrad_frys_on___17
       - automation.larm_forrad_frys_off___23

@@ -1,0 +1,91 @@
+﻿####################
+# Kylen i Förrådet #
+####################
+  - alias: Larm! Hög temp i Förråd kyl
+    initial_state: 'off'
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.forrad_kylfrys_temperature
+      below: '3'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Larm! Låg temp i kylen i förrådet: {{ states.sensor.forrad_kylfrys_temperature.state }} {{ states.sensor.forrad_kylfrys_temperature.unit_of_measurement }}'
+
+  - alias: Larm! Låg temp i Förråd kyl
+    initial_state: 'off'
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.forrad_kylfrys_temperature
+      above: '10'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Larm! Hög temp i kylen i förrådet: {{ states.sensor.forrad_kylfrys_temperature.state }} {{ states.sensor.forrad_kylfrys_temperature.unit_of_measurement }}'
+
+#####################
+# Frysen i Förrådet #
+#####################
+  - alias: Förråd frys off (< - 22)
+    initial_state: 'off'
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.forrad_kylfrys_temperature
+      below: '-22'
+    action:
+      service: homeassistant.turn_off
+      entity_id: switch.forrad_frys
+
+  - alias: Förråd frys on (> - 17)
+    initial_state: 'off'
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.forrad_kylfrys_temperature
+      above: '-17'
+    action:
+      service: homeassistant.turn_on
+      entity_id: switch.forrad_frys
+
+  - alias: Larm! Förråd frys off (< - 23)
+    initial_state: 'off'
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.forrad_kylfrys_temperature
+      below: '-23'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Larm! Slår av frysen i förrådet: {{ states.sensor.forrad_kylfrys_temperature.state }} {{ states.sensor.forrad_kylfrys_temperature.unit_of_measurement }}'
+      - service: homeassistant.turn_off
+        entity_id: switch.forrad_frys
+      - delay: '00:00:30'
+      - service: homeassistant.turn_off
+        entity_id: switch.forrad_frys
+      - delay: '00:00:30'
+      - service: homeassistant.turn_off
+        entity_id: switch.forrad_frys
+      - delay: '00:00:30'
+      - service: homeassistant.turn_off
+        entity_id: switch.forrad_frys
+
+  - alias: Larm! Förråd frys on (> - 16)
+    initial_state: 'off'
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.forrad_kylfrys_temperature
+      above: '-16'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Larm! Slår på frysen i förrådet: {{ states.sensor.forrad_kylfrys_temperature.state }} {{ states.sensor.forrad_kylfrys_temperature.unit_of_measurement }}'
+      - service: homeassistant.turn_on
+        entity_id: switch.forrad_frys
+      - delay: '00:00:30'
+      - service: homeassistant.turn_on
+        entity_id: switch.forrad_frys
+      - delay: '00:00:30'
+      - service: homeassistant.turn_on
+        entity_id: switch.forrad_frys
+      - delay: '00:00:30'
+      - service: homeassistant.turn_on
+        entity_id: switch.forrad_frys

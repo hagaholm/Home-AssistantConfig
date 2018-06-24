@@ -84,8 +84,8 @@ automation:
 #      - delay: '00:00:15'
 #      - service: homeassistant.turn_off
 #        entity_id: switch.vardagsrum_stereobank
-#      - service: homeassistant.turn_off
-#        entity_id: switch.vardagsrum_subbas
+      - service: homeassistant.turn_off
+        entity_id: switch.vardagsrum_subbas
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_extra_subbas
 
@@ -109,8 +109,8 @@ automation:
 #        entity_id: remote.harmony_hub
 #        data:
 #          activity: '{{ trigger.to_state.attributes.current_activity }}'
-#      - service: homeassistant.turn_on
-#        entity_id: switch.vardagsrum_subbas
+      - service: homeassistant.turn_on
+        entity_id: switch.vardagsrum_subbas
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_extra_subbas
 

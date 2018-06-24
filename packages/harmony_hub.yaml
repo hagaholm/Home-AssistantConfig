@@ -26,7 +26,6 @@ group:
       - media_player.chromecast
       - media_player.rxa1030_a47cf6
 
-
 sensor:
   - platform: template
     sensors:
@@ -40,7 +39,7 @@ script:
     sequence:
       - service: remote.turn_off
         entity_id: remote.harmony_hub
-        
+
   harmony_radio:
     alias: Starta radio
     sequence:
@@ -74,7 +73,7 @@ script:
           activity: '31360307'
 
 automation:
-  - alias: "Stäng av mediaspelare vid off"
+  - alias: "Stäng av subbasar vid mediaspelare off"
     trigger:
       platform: state
       entity_id: remote.harmony_hub
@@ -85,10 +84,12 @@ automation:
 #      - delay: '00:00:15'
 #      - service: homeassistant.turn_off
 #        entity_id: switch.vardagsrum_stereobank
+#      - service: homeassistant.turn_off
+#        entity_id: switch.vardagsrum_subbas
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_extra_subbas
-          
-  - alias: "Sätt på mediaspelare vid on"
+
+  - alias: "Sätt på subbasar vid mediaspelare on"
     trigger:
       platform: state
       entity_id: remote.harmony_hub
@@ -108,6 +109,8 @@ automation:
 #        entity_id: remote.harmony_hub
 #        data:
 #          activity: '{{ trigger.to_state.attributes.current_activity }}'
+#      - service: homeassistant.turn_on
+#        entity_id: switch.vardagsrum_subbas
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_extra_subbas
 
@@ -126,6 +129,8 @@ automation:
     action:
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_stereobank
+#      - service: homeassistant.turn_on
+#        entity_id: switch.vardagsrum_subbas
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_extra_subbas
-        
+

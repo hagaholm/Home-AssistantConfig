@@ -129,8 +129,8 @@ automation:
     action:
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_stereobank
-#      - service: homeassistant.turn_on
-#        entity_id: switch.vardagsrum_subbas
+      - service: homeassistant.turn_on
+        entity_id: switch.vardagsrum_subbas
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_extra_subbas
 

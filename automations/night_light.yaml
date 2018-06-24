@@ -33,6 +33,8 @@
     ##############################################################
     ### Släcker nattbelysning när ingen varit i köket på 9 min ###
     ### T: switch.rorelsevakt_kok = off                        ###
+    ### C: switch.kok_lilla_fonstret = off                     ###
+    ### C: switch.hall_skap = on                               ###
     ### A: script.night_light_off                              ###
     ##############################################################
   - alias: Nattbelysning off (sensor off)
@@ -41,8 +43,13 @@
       entity_id: switch.rorelsevakt_kok
       to: 'off'
     condition:
-      condition: state
-      entity_id: switch.kok_lilla_fonstret
-      state: 'off' 
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: switch.kok_lilla_fonstret
+          state: 'off' 
+        - condition: state
+          entity_id: switch.hall_skap
+          state: 'on' 
     action:
       - service: script.night_light_off

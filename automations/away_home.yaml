@@ -4,7 +4,8 @@
     ### A: switch.brytare_extra_1 = off                 ###
     #######################################################
   - alias: Mediaspelare off (-> borta)
-    trigger:
+      initial_state: 'on'
+      trigger:
       platform: state
       entity_id: group.track_for_home_devices
       to: 'not_home'
@@ -16,8 +17,10 @@
         entity_id: switch.vardagsrum_stereobank
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_tv
-#      - service: homeassistant.turn_off
-#        entity_id: switch.vardagsrum_extra_subbas  
+      - service: homeassistant.turn_off
+        entity_id: switch.vardagsrum_subbas
+      - service: homeassistant.turn_off
+        entity_id: switch.vardagsrum_extra_subbas
 
     ####################################################
     ### Sätter på mediaspelare när första kommer hem ###
@@ -25,6 +28,7 @@
     ### A: switch.brytare_extra_1 = off              ###
     ####################################################
   - alias: Mediaspelare on (-> hemma)
+    initial_state: 'on'
     trigger:
       platform: state
       entity_id: group.track_for_home_devices
@@ -34,5 +38,3 @@
         entity_id: switch.vardagsrum_stereobank
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_tv
-#      - service: homeassistant.turn_on
-#        entity_id: switch.vardagsrum_extra_subbas

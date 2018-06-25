@@ -8,6 +8,24 @@
       - service: homeassistant.turn_off
         entity_id: group.outside_lights
 
+  goodnight_all:
+    alias: Godnatt, stänger av allt
+    sequence:
+      - service: homeassistant.turn_off
+        entity_id: group.evening_lights
+      - service: homeassistant.turn_off
+        entity_id: group.kitchen_lights
+      - service: homeassistant.turn_off
+        entity_id: group.outside_lights
+      - service: homeassistant.turn_off
+        entity_id: switch.vardagsrum_stereobank
+      - service: homeassistant.turn_off
+        entity_id: switch.vardagsrum_tv
+      - service: homeassistant.turn_off
+        entity_id: switch.vardagsrum_subbas
+      - service: homeassistant.turn_off
+        entity_id: switch.vardagsrum_extra_subbas
+
   goodnight_in_10_min:
     alias: Godnatt, släcker allt om 10 minuter
     sequence:

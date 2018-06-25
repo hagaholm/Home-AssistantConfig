@@ -1,3 +1,9 @@
+#############################################
+### Ringklocka tvättstuga                 ###
+### T: switch.ringklocka_tvattstuga == on ###
+### A: switch.ringklocka_tvattstuga = off ###
+###    notify.pushbullet                  ###
+#############################################
   - alias: Ringklocka tvättstuga
     trigger:
       platform: state
@@ -11,6 +17,12 @@
           title: "Ringklocka tvättstuga."
           message: "Det ringer på dörren..."
 
+#######################################
+### Ringklocka hall                 ###
+### T: switch.ringklocka_hall == on ###
+### A: switch.ringklocka_hall = off ###
+###    notify.pushbullet            ###
+#######################################
   - alias: Ringklocka hall
     trigger:
       platform: state

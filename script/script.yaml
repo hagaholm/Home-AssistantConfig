@@ -2,6 +2,8 @@
     alias: Godnatt, släcker allt
     sequence:
       - service: homeassistant.turn_off
+        entity_id: switch.sovrum_fonster
+      - service: homeassistant.turn_off
         entity_id: group.evening_lights
       - service: homeassistant.turn_off
         entity_id: group.kitchen_lights
@@ -11,6 +13,8 @@
   goodnight_all:
     alias: Godnatt, stänger av allt
     sequence:
+      - service: homeassistant.turn_off
+        entity_id: switch.sovrum_fonster
       - service: homeassistant.turn_off
         entity_id: group.evening_lights
       - service: homeassistant.turn_off
@@ -30,6 +34,8 @@
     alias: Godnatt, släcker allt om 10 minuter
     sequence:
       - delay: '00:10:00'
+      - service: homeassistant.turn_off
+        entity_id: switch.sovrum_fonster
       - service: homeassistant.turn_off
         entity_id: group.evening_lights
       - service: homeassistant.turn_off

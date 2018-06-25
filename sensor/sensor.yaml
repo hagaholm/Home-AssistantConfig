@@ -198,6 +198,11 @@
 # YR #
 ######
   - platform: yr
+    monitored_conditions:
+      - temperature
+      - precipitation
+      - windSpeed
+      - humidity
 
 ##################
 # Min/Max Sensor #

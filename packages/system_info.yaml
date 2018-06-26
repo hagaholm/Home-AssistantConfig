@@ -61,6 +61,7 @@ group:
   system_monitor_card:
     name: System Monitor Hass Rpi
     entities:
+      - sensor.cpu_temperature
       - sensor.cpuspeed
       - sensor.uptime
       - sensor.last_boot

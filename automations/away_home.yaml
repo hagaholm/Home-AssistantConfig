@@ -28,7 +28,7 @@
     ### A: switch.brytare_extra_1 = off              ###
     ####################################################
   - alias: Mediaspelare on (-> hemma)
-    initial_state: 'on'
+    initial_state: 'off'
     trigger:
       platform: state
       entity_id: group.track_for_home_devices

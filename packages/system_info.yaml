@@ -3,7 +3,7 @@ homeassistant:
     sensor.disk_used_:
       friendly_name: Rpi Disk Used
     sensor.uptime:
-      friendly_name: 'Hass Uptime'
+      friendly_name: 'Hassbian Uptime'
 
 group:
   system_info_view:
@@ -61,17 +61,95 @@ group:
   system_monitor_card:
     name: System Monitor Hass Rpi
     entities:
+      - sensor.cpuspeed
       - sensor.uptime
       - sensor.last_boot
       - sensor.since_last_boot
+      - sensor.memory_free
+      - sensor.memory_use_percent
+      - sensor.processor_use
+      - sensor.disk_use_percent
+      - sensor.swap_use_percent
+      - sensor.load_1m
+      - sensor.load_5m
+      - sensor.load_15m
+      - sensor.api_streams
 
+##########
+# Sensor #
+##########
 sensor:
+    #####################
+    # HA server metrics #
+    #####################
+    # https://home-assistant.io/components/sensor.systemmonitor/
   - platform: systemmonitor
     resources:
-      - type: last_boot
+      - type: memory_free
+      - type: memory_use_percent
+      - type: processor_use
       - type: since_last_boot
+      - type: disk_use_percent
+        arg: /home
+      - type: swap_use_percent
+      - type: load_1m
+      - type: load_5m
+      - type: load_15m
+#      - type: network_in
+#        arg: ens32
+#      - type: network_out
+#        arg: ens32
+
+    ##########
+    # uptime #
+    ##########
   - platform: uptime
     unit_of_measurement: hours
+
+    #############
+    # CPU Speed #
+    #############
+    # https://home-assistant.io/components/sensor.cpuspeed/
+  - platform: cpuspeed
+    name: CPU
+
+    ###############
+    # API Streams #
+    ###############
+    # https://home-assistant.io/components/sensor.api_stream/
+  - platform: api_streams
+
+    ######################
+    # HA Current version #
+    ######################
+    # https://home-assistant.io/components/sensor.command_line/
+  - platform: command_line
+    command: python3 -c "import requests; print(requests.get('https://pypi.python.org/pypi/homeassistant/json').json()['info']['version'])"
+    name: Current HA Version
+
+    ########################
+    # HA Installed version #
+    ########################
+  - platform: command_line
+    name: Installed version
+    command: "head -5 /home/homeassistant/.homeassistant/.HA_VERSION"
+
+    ################################
+    # Internet performance metrics #
+    ################################
+    # https://home-assistant.io/components/sensor.speedtest/
+  - platform: speedtest
+    server_id: 2229
+    monitored_conditions:
+      - download
+      - upload
+      - ping
+    hour:
+      - 0
+      - 6
+      - 12
+      - 18
+
   - platform: template
     sensors:
       harmony_hub:

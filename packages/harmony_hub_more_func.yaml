@@ -46,11 +46,11 @@
         entity_id: switch.vardagsrum_stereobank
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_tv
-#      - delay: '00:00:30'
-#      - service: remote.turn_on
-#        entity_id: remote.harmony_hub
-#        data:
-#          activity: '{{ trigger.to_state.attributes.current_activity }}'
-#      - service: notify.pushbullet
-#        data:
-#          message: '{{ trigger.to_state.attributes.current_activity }}'
+      - delay: '00:00:30'
+      - service: remote.turn_on
+        entity_id: remote.harmony_hub
+        data:
+          activity: '{{ states.remote.harmony_hub.attributes.current_activity }}'
+      - service: notify.pushbullet
+        data:
+          message: '{{ states.remote.harmony_hub.attributes.current_activity }}'

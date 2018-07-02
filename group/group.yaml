@@ -139,7 +139,7 @@
     control: hidden
     entities:
       - sensor.kyl_temperature
-      - sensor.frys_temperature            
+      - sensor.frys_temperature
       - sensor.forrad_kylfrys_temperature
 
   temperature_view_other:
@@ -517,6 +517,7 @@
       - automation.friggebod_frysvakt
       - automation.larm_hog_temp_i_kyl
       - automation.larm_lag_temp_i_kyl
+      - automation.larm_varning_hog_temp_i_frys
       - automation.larm_hog_temp_i_frys
       - automation.larm_lag_temp_i_frys
       - automation.larm_hog_fukt_i_frys

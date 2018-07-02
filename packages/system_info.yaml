@@ -50,9 +50,6 @@ group:
   network_states:
     name: Nätverks status
     entities:
-      - sensor.router_asuscom
-      - sensor.switch_asus_friggebod
-      - sensor.router
       - sensor.dns320
       - sensor.raspberry_pi_2
       - sensor.raspberry_pi_3
@@ -178,9 +175,6 @@ sensor:
       chromecast:
         friendly_name: 'Chromecast'
         value_template: "{{ 'Online' if is_state('device_tracker.chromecast', 'home') else 'Offline' }}"
-      router_asuscom:
-        friendly_name: 'ASUS Router'
-        value_template: "{{ 'Online' if is_state('device_tracker.router_asuscom', 'home') else 'Offline' }}"
       mobil_louise:
         friendly_name: 'Louise mobil'
         value_template: "{{ 'Online' if is_state('device_tracker.mobil_louise', 'home') else 'Offline' }}"
@@ -208,9 +202,6 @@ sensor:
       mobil_erik:
         friendly_name: 'Erik mobil'
         value_template: "{{ 'Online' if is_state('device_tracker.v', 'home') else 'Offline' }}"
-      switch_asus_friggebod:
-        friendly_name: 'ASUS Switch friggebod'
-        value_template: "{{ 'Online' if is_state('device_tracker.switch_asus_friggebod', 'home') else 'Offline' }}"
       chromecast_2:
         friendly_name: 'Chromecast Wifi'
         value_template: "{{ 'Online' if is_state('device_tracker.chromecast_2', 'home') else 'Offline' }}"
@@ -223,9 +214,6 @@ sensor:
       mickes_work_laptop:
         friendly_name: 'Micke jobb dator'
         value_template: "{{ 'Online' if is_state('device_tracker.mickes_work_laptop', 'home') else 'Offline' }}"
-      router:
-        friendly_name: 'Router?'
-        value_template: "{{ 'Online' if is_state('device_tracker.Router?', 'home') else 'Offline' }}"
 
 automation:
     ################################

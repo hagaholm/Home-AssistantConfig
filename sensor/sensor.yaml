@@ -207,43 +207,6 @@
 ##################
 # Min/Max Sensor #
 ##################
-
-  - platform: min_max
-    name: Ute min
-    type: min
-    entity_ids:
-      - sensor.ute
-      - sensor.ute2
-    value_template: '{{ value | round(1) }}'
-
-  - platform: min_max
-    name: Ute medel
-    type: mean
-    entity_ids:
-      - sensor.ute
-      - sensor.ute2
-    value_template: '{{ value | round(1) }}'
-
-  - platform: min_max
-    name: Ute max
-    type: max
-    entity_ids:
-      - sensor.ute
-      - sensor.ute2
-    value_template: '{{ value | round(1) }}'
-
-  - platform: min_max
-    name: Inne min
-    type: min
-    entity_ids:
-      - sensor.hall_temperature
-      - sensor.vardagsrum_temperature
-      - sensor.sovrum
-      - sensor.andreas_rum_temperature
-      - sensor.badrum_temperature
-    value_template: '{{ value | round(1) }}'
-#      - sensor.tvattstuga_temperature
-
   - platform: min_max
     name: Inne medel
     type: mean
@@ -255,35 +218,6 @@
       - sensor.badrum_temperature
     value_template: '{{ value | round(1) }}'
 #      - sensor.tvattstuga_temperature
-
-  - platform: min_max
-    name: Inne max
-    type: max
-    entity_ids:
-      - sensor.hall_temperature
-      - sensor.vardagsrum_temperature
-      - sensor.sovrum
-      - sensor.andreas_rum_temperature
-      - sensor.badrum_temperature
-    value_template: '{{ value | round(1) }}'
-#      - sensor.tvattstuga_temperature
-
-  # - platform: min_max
-    # name: Inne medel
-    # type: mean
-    # entity_ids:
-      # - sensor.hall_temperature
-      # - sensor.sovrum
-
-  # - platform: min_max
-    # name: Inne max
-    # type: max
-    # entity_ids:
-      # - sensor.hall_temperature
-      # - sensor.sovrum
-
-#  - platform: file
-#    file_path: /tmp/tellcore-remote-spy_latest.txt
 
 ########
 # Moon #

@@ -1,9 +1,9 @@
     #####################################################
     ### Tänder lampor på morgonen vid rörelse i köket ###
-    ### T: switch.rorelsevakt_kok = on                ###
+    ### T: switch.rorelsevakt_kok == on               ###
     ### C: sensor.ljusstyrka < 1500                   ###
     ###    05:00:00 - 12:00:00                        ###
-    ### A: group.morning_lights = on                  ###
+    ### A: script.morning_lights_on                   ###
     #####################################################
   - alias: Morgonbelysning on (sensor on, <1500)
     trigger:
@@ -30,7 +30,7 @@
     ### T: group.track_for_home_devices to: 'home'         ###
     ### C: sensor.ljusstyrka < 1500                        ###
     ###    05:00:00 - 12:00:00                             ###
-    ### A: group.morning_lights = on                       ###
+    ### A: script.morning_lights_on                        ###
     ##########################################################
   - alias: Morgonbelysning on (-> hemma, <1500)
     trigger:
@@ -53,9 +53,9 @@
     ############################################################
     ### Släcker lampor på förmiddagen när det blir ljust ute ###
     ### T: sensor.ljusstyrka < 1500                          ###
-    ### C: group.track_for_home_devices = 'home'             ###
+    ### C: group.track_for_home_devices == 'home'            ###
     ###    05:00:00 - 12:00:00                               ###
-    ### A: group.evening_lights = off                        ###
+    ### A: script.morning_lights_off                         ###
     ############################################################
   - alias: Morgonbelysning off (<1500, hemma)
     trigger:
@@ -78,7 +78,7 @@
     ### Släcker lampor på förmiddagen när sista åker hemifrån ###
     ### T: group.track_for_home_devices to: 'not_home'        ###
     ### C: 05:00:00 - 12:00:00                                ###
-    ### A: group.evening_lights = off                         ###
+    ### A: script.morning_lights_off                          ###
     #############################################################
   - alias: Morgonbelysning off (-> borta)
     trigger:

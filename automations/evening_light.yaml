@@ -1,9 +1,9 @@
 ﻿    ########################################################
     ### Tänder lampor när det blir mörkt fram till 22:00 ###
     ### T: sensor.ljusstyrka < 1500                      ###
-    ### C: group.track_for_home_devices = 'home'         ###
+    ### C: group.track_for_home_devices == 'home'        ###
     ###    12:00:00 - 22:00:00                           ###
-    ### A: group.evening_lights = on                     ###
+    ### A: script.evening_lights_on                      ###
     ########################################################
   - alias: Kvällsbelysning on (<1500, hemma)
     trigger:
@@ -26,11 +26,11 @@
     ### Tänder lampor vid rörelse i köket övrigt tid     ###
     ### Används för att snabba på upptändning när första ###
     ### kommer hem innan status ändrats till 'hemma'     ###
-    ### T: switch.rorelsevakt_kok = on                   ###
-    ### C: group.track_for_home_devices = 'not_home'     ###
+    ### T: switch.rorelsevakt_kok == on                  ###
+    ### C: group.track_for_home_devices == 'not_home'    ###
     ###    sensor.ljusstyrka < 1500                      ###
     ###    12:00:00 - 05:00:00                           ###
-    ### A: group.evening_lights = on                     ###
+    ### A: script.evening_lights_on                      ###
     ########################################################
   - alias: Kvällsbelysning on (sensor on, borta, <1500)
     trigger:
@@ -57,7 +57,7 @@
     ### T: group.track_for_home_devices to 'home'     ###
     ### C: sensor.ljusstyrka < 1500                   ###
     ###    12:00:00 - 05:00:00                        ###
-    ### A: group.evening_lights = on                  ###
+    ### A: script.evening_lights_on                   ###
     #####################################################
   - alias: Kvällsbelysning on (-> hemma, <1500)
     trigger:
@@ -82,7 +82,7 @@
     ### T: sensor.ljusstyrka > 2500                        ###
     ### C: group.track_for_home_devices = 'home'           ###
     ###    12:00:00 - 05:00:00                             ###
-    ### A: group.evening_lights = off                      ###
+    ### A: script.evening_lights_off                       ###
     ##########################################################
   - alias: Kvällsbelysning off (>2500, hemma)
     trigger:
@@ -105,7 +105,7 @@
     ### Släcker lampor när sista åker hemifrån övrig tid ###
     ### T: group.track_for_home_devices to 'not_home'    ###
     ### C: 12:00:00 - 05:00:00                           ###
-    ### A: group.evening_lights = off                    ###
+    ### A: script.evening_lights_off                     ###
     ########################################################
   - alias: Kvällsbelysning off (-> borta)
     trigger:

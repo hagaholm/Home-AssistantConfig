@@ -1,7 +1,11 @@
     #######################################################
     ### Stänger av mediaspelare när sista åker hemifrån ###
     ### T: group.track_for_home_devices to 'not_home'   ###
-    ### A: switch.brytare_extra_1 = off                 ###
+    ### A: remote.harmony_hub = off                     ###
+    ###    switch.vardagsrum_stereobank                 ###
+    ###    switch.vardagsrum_tv                         ###
+    ###    switch.vardagsrum_subbas                     ###
+    ###    switch.vardagsrum_extra_subbas               ###
     #######################################################
   - alias: Mediaspelare off (-> borta)
     initial_state: 'on'
@@ -25,7 +29,8 @@
     ####################################################
     ### Sätter på mediaspelare när första kommer hem ###
     ### T: group.track_for_home_devices to 'home'    ###
-    ### A: switch.brytare_extra_1 = off              ###
+    ### A: switch.vardagsrum_stereobank              ###
+    ###    switch.vardagsrum_tv                      ###
     ####################################################
   - alias: Mediaspelare on (-> hemma)
     initial_state: 'off'

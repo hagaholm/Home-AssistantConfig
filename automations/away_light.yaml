@@ -24,8 +24,6 @@
           before: '22:30:00' 
     action:
       service: script.away_lights_on
-      #- service: homeassistant.turn_on
-      #  entity_id: group.away_lights
 
     ###########################################################
     ### Tänder lampor när ingen är hemma och det blir mörkt ###
@@ -50,8 +48,6 @@
           before: '22:30:00'      
     action:
       service: script.away_lights_on
-      #service: homeassistant.turn_on
-      #entity_id: group.away_lights
 
     ####################################################################
     ### Sätter på lampor när ingen är hemma kl 12.00 om det är mörkt ###
@@ -76,23 +72,6 @@
           state: 'not_home'
     action:
       service: script.away_lights_on
-      #service: homeassistant.turn_on
-      #entity_id: group.away_lights
-
-    #################################################
-    ### Stänger av lampor när första kommer hem   ###
-    ### T: group.track_for_home_devices to 'home' ###
-    ### A: group.away_lights = off                ###
-    #################################################
-#  - alias: Bortabelysning off (-> hemma)
-#    trigger:
-#      platform: state
-#      entity_id: group.track_for_home_devices
-#      from: 'not_home'
-#      to: 'home'
-#    action:
-#      - service: homeassistant.turn_off
-#        entity_id: group.away_lights
 
     #####################################################
     ### Stänger av lampor kl 23:00 om ingen är hemma  ###
@@ -110,5 +89,3 @@
       state: 'not_home'
     action:
       service: script.away_lights_off
-      #- service: homeassistant.turn_off
-      #  entity_id: group.away_lights

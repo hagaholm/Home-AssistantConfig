@@ -13,11 +13,11 @@
       - service: homeassistant.turn_on
         entity_id: switch.garage_luftavfuktare
 
-    ###########################################
-    ### Stoppa luftavfuktare                ###
-    ### T: sensor.forrad_humidity < 64      ###
-    ### A: switch.garage_luftavfuktare = on ###
-    ###########################################
+    ############################################
+    ### Stoppa luftavfuktare                 ###
+    ### T: sensor.forrad_humidity < 64       ###
+    ### A: switch.garage_luftavfuktare = off ###
+    ############################################
   - alias: Stoppa luftavfuktare
     initial_state: 'on'
     trigger:

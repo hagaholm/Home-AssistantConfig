@@ -70,7 +70,7 @@
     ##########################################################
     ### Släcker utebelysning på kvällen när ingen är hemma ###
     ### T: 12:00:00 - 21:45:00                             ###
-    ### C: group.track_for_home_devices = 'not_home'       ###
+    ### C: group.track_for_home_devices == 'not_home'      ###
     ### A: switch.uterum_fonster = off                     ###
     ###    light.spabad_vagg = off                         ###
     ###    switch.friggebod_lilla_fonstret = off           ###
@@ -115,7 +115,7 @@
     ##########################################################
     ### Släcker utebelysning på kvällen när någon är hemma ###
     ### T: 12:00:00 - 21:45:00                             ###
-    ### C: group.track_for_home_devices = 'home'           ###
+    ### C: group.track_for_home_devices == 'home'          ###
     ### A: light.spabad_vagg = off                         ###
     ###    switch.friggebod_lilla_fonstret = off           ###
     ###    switch.friggebod_stora_fonstret = off           ###
@@ -152,8 +152,8 @@
 
     ###############################################################
     ### Släcker uterum på kvällen när allt släcks inne av någon ### 
-    ### T: switch.kok_lilla_fonstret = off                      ###
-    ### C: group.track_for_home_devices = 'home'                ###
+    ### T: switch.kok_lilla_fonstret == off                     ###
+    ### C: group.track_for_home_devices == 'home'               ###
     ### A: switch.uterum_fonster = off                          ###
     ###############################################################
   - alias: Uterum off (All off, hemma)

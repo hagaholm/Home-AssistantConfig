@@ -31,6 +31,7 @@ group:
       - sensor.canal_digital
       - sensor.chromecast
       - sensor.chromecast_2
+      - sensor.dns320
 
   mobile_states:
     name: Mobil status
@@ -46,7 +47,9 @@ group:
   network_states:
     name: Nätverks status
     entities:
-      - sensor.dns320
+      - sensor.asus_rt_ac68u
+      - sensor.asus_n66u
+      - sensor.asus_unknown
       - sensor.raspberry_pi_2
       - sensor.raspberry_pi_3
       - sensor.hassbian
@@ -150,14 +153,14 @@ sensor:
     ###########
     # Network #
     ###########
-      router_asuscom:
+      asus_rt_ac68u:
         friendly_name: 'ASUS RT-AC68U'
         value_template: "{{ 'Online' if is_state('device_tracker.router_asuscom', 'home') else 'Offline' }}"
-      switch_asus_friggebod:
+      asus_n66u:
         friendly_name: 'ASUS N66U'
         value_template: "{{ 'Online' if is_state('device_tracker.switch_asus_friggebod', 'home') else 'Offline' }}"
-      router:
-        friendly_name: 'ASUS ???'
+      asus_unknown:
+        friendly_name: 'ASUS unknown'
         value_template: "{{ 'Online' if is_state('device_tracker.asus_router', 'home') else 'Offline' }}"
 
     ###############

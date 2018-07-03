@@ -3,7 +3,7 @@
     ### För att förhindra att det inte tänds när någon redan är i köket ###
     ### T: sensor.ljusstyrka < 2500                                     ###
     ### C: 12:00:00 - 22:00:00                                          ###
-    ### C: group.track_for_home_devices = 'home'                        ###
+    ### C: group.track_for_home_devices == 'home'                       ###
     ### A: script.kitchen_light_100                                     ###
     #######################################################################
   - alias: Kök 100% (<2500)
@@ -25,7 +25,7 @@
 
     #####################################################################
     ### Tänder lampor 100% på morgonen vid rörelse i köket < 2500 lux ###
-    ### T: switch.rorelsevakt_kok = on                                ###
+    ### T: switch.rorelsevakt_kok == on                               ###
     ### C: sensor.ljusstyrka < 2500                                   ###
     ###    05:00:00 - 12:00:00                                        ###
     ### A: script.kitchen_light_100                                   ###
@@ -49,7 +49,7 @@
 
     #####################################################################
     ### Tänder lampor 100% vid rörelse i köket 150-2500 lux övrig tid ###
-    ### T: switch.rorelsevakt_kok = on                                ###
+    ### T: switch.rorelsevakt_kok == on                               ###
     ### C: sensor.ljusstyrka 150-2500                                 ###
     ###    12:00:00 - 05:00:00                                        ###
     ### A: script.kitchen_light_100                                   ###
@@ -74,10 +74,10 @@
 
     ###################################################################
     ### Tänder lampor 100% övrig tid vid rörelse i köket 0-150 lux  ###
-    ### T: switch.rorelsevakt_kok = on                              ###
+    ### T: switch.rorelsevakt_kok == on                             ###
     ### C: sensor.ljusstyrka 0-150                                  ###
     ###    12:00:00 - 05:00:00                                      ###
-    ###    switch.kok_lilla_fonstret = 'on'                         ###
+    ###    switch.kok_lilla_fonstret == 'on'                        ###
     ### A: script.kitchen_light_100                                 ###
     ###################################################################
   - alias: Kök 100% (sensor on, 0-150)
@@ -102,11 +102,11 @@
 
     #####################################################################################
     ### Tänder lampor 100% övrig tid vid rörelse i köket 0-150 lux när ingen är hemma ###
-    ### T: switch.rorelsevakt_kok = on                                                ###
-    ### C: group.track_for_home_devices = 'not_home'                                  ###
+    ### T: switch.rorelsevakt_kok == on                                               ###
+    ### C: group.track_for_home_devices == 'not_home'                                 ###
     ###    sensor.ljusstyrka 0-150                                                    ###
     ###    12:00:00 - 05:00:00                                                        ###
-    ###    switch.kok_lilla_fonstret = 'off'                                          ###
+    ###    switch.kok_lilla_fonstret == 'off'                                         ###
     ### A: script.kitchen_light_100                                                   ###
     #####################################################################################
   - alias: Kök 100% (sensor on, Borta, 0-150)
@@ -134,11 +134,11 @@
 
     ####################################################################################
     ### Tänder lampor 25% övrig tid vid rörelse i köket 0-150 lux när någon är hemma ###
-    ### T: switch.rorelsevakt_kok = on                                               ###
-    ### C: group.track_for_home_devices = 'home'                                     ###
+    ### T: switch.rorelsevakt_kok == on                                              ###
+    ### C: group.track_for_home_devices == 'home'                                    ###
     ###    sensor.ljusstyrka 0-150                                                   ###
     ###    12:00:00 - 05:00:00                                                       ###
-    ###    switch.kok_lilla_fonstret = 'off'                                         ###
+    ###    switch.kok_lilla_fonstret == 'off'                                        ###
     ### A: script.kitchen_light_25                                                   ###
     ####################################################################################
   - alias: Kök 25% (sensor on, Hemma, 0-150)
@@ -166,7 +166,7 @@
 
     #######################################################
     ### Släcker lampor när ingen varit i köket på 9 min ###
-    ### T: switch.rorelsevakt_kok = off                 ###
+    ### T: switch.rorelsevakt_kok == off                ###
     ### A: script.kitchen_light_off                     ###
     #######################################################
   - alias: Kök off (sensor off)
@@ -180,7 +180,7 @@
     ######################################################
     ### Släcker lampor när sista åker hemifrån         ###
     ### T: group.track_for_home_devices to: 'not_home' ###
-    ### A: script.kitchen_light_off                    ###
+    ### A: switch.rorelsevakt_kok = off                ###
     ######################################################
   - alias: Kök off (-> borta)
     trigger:
@@ -189,15 +189,16 @@
       from: 'home'
       to: 'not_home'
     action:
-      - service: script.kitchen_light_off
+      - service: homeassistant.turn_off
+        entity_id: switch.rorelsevakt_kok
 
-    ################################################
-    ### Släcker lampor när lux kommer över 2500  ###
-    ### T: sensor.ljusstyrka > 2500              ###
-    ### C: 12:00:00 - 22:00:00                   ###
-    ### C: group.track_for_home_devices = 'home' ###
-    ### A: script.kitchen_light_off              ###
-    ################################################
+    #################################################
+    ### Släcker lampor när lux kommer över 2500   ###
+    ### T: sensor.ljusstyrka > 2500               ###
+    ### C: 12:00:00 - 22:00:00                    ###
+    ### C: group.track_for_home_devices == 'home' ###
+    ### A: switch.rorelsevakt_kok = off           ###
+    #################################################
   - alias: Kök off (>2500)
     trigger:
       platform: numeric_state
@@ -213,13 +214,14 @@
           entity_id: group.track_for_home_devices
           state: 'home'
     action:
-      - service: script.kitchen_light_off
+      - service: homeassistant.turn_off
+        entity_id: switch.rorelsevakt_kok
 
     #####################################################################
     ### Sätter rörelsevakt till off, för att kunna detektera nästa on ###
     ### Löser problemet med att lyset i vissa fall inte tänds i köket ###
-    ### T: light.kok_underskap_bank = off                             ###
-    ### C: switch.rorelsevakt_kok = on                                ###
+    ### T: light.kok_underskap_bank == off                            ###
+    ### C: switch.rorelsevakt_kok == on                               ###
     ### A: switch.rorelsevakt_kok = off                               ###
     #####################################################################
   - alias: Kök Rörelsevakt reset

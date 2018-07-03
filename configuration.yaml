@@ -22,22 +22,6 @@ homeassistant:
   # Package folder
   packages: !include_dir_named packages
 
-###  customize_glob:
-###    "*.*":
-###      custom_ui_state_card: state-card-custom-ui
-###      show_last_changed: true
-
-#    light.*:
-#      custom_ui_state_card: state-card-custom-ui
-#      show_last_changed: true
-#    switch.*:
-#      custom_ui_state_card: state-card-custom-ui
-#      show_last_changed: true
-#    sensor.*:
-#      custom_ui_state_card: state-card-custom-ui
-#      show_last_changed: true
-
-
 ####################################################
 #                                                  #
 #                     GENERAL                      #
@@ -55,12 +39,6 @@ homeassistant:
 # Add javascript_version: latest to see if it solve the current problem
 frontend:
   javascript_version: latest
-
-###frontend:
-###  extra_html_url:
-###    - /local/custom_ui/state-card-custom-ui.html
-###  extra_html_url_es5:
-###    - /local/custom_ui/state-card-custom-ui-es5.html
 
 #---------------------------------------------------
 # Enables configuration UI

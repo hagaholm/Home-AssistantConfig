@@ -418,6 +418,7 @@
     view: yes
     icon: mdi:home-automation
     entities:
+      - group.automation_larm
       - group.automation_system
       - group.automation_kitchen_light
       - group.automation_morning_light
@@ -433,6 +434,12 @@
       - group.automation_doorbell
       - group.automation_forrad_kyl_frys
       - group.automation_garage_air_dryer
+
+  automation_system:
+    name: Larm
+#    control: hidden
+    entities:
+      - automation.larm_rorelse_i_koket
 
   automation_system:
     name: System

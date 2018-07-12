@@ -17,7 +17,7 @@
       - media_player
       - remote
       - script
-      - sensor
+#      - sensor
       - sun
       - switch
       - zon
@@ -28,5 +28,6 @@
 #      - light
 #      - binary_sensor
     entities:
+      - sensor.inne_medel
       - sensor.ute
-#      - device_tracker.mobil_micke
+      - device_tracker.mobil_micke

@@ -4,6 +4,8 @@
 #----------------------------------------------------------------------------
   default: warning #critical
   logs:
-    homeassistant.components.media_player: critical #error
-#    homeassistant.components.device_tracker: debug
-#    root: warn
+    # Added to remove log records at startup
+    homeassistant.components.media_player.squeezebox: fatal
+    homeassistant.components.sensor.mold_indicator: fatal
+    homeassistant.components.sensor: error
+    netdisco.ssdp: error

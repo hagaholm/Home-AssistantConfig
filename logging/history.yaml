@@ -1,0 +1,32 @@
+﻿#-------------------------------------------------------
+# Enables support for tracking state changes over time
+# https://home-assistant.io/components/history/
+#-------------------------------------------------------
+  exclude:
+    domains:
+      - alert
+      - automation
+      - binary_sensor
+      - calendar
+      - camera
+      - device_tracker
+      - discovery
+      - group
+      - history_graph
+      - light
+      - media_player
+      - remote
+      - script
+      - sensor
+      - sun
+      - switch
+      - zon
+#    entities:
+#      - sensor.ute
+  include:
+#    domains:
+#      - light
+#      - binary_sensor
+    entities:
+      - sensor.ute
+#      - device_tracker.mobil_micke

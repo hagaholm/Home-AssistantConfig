@@ -32,8 +32,6 @@ homeassistant:
 # Show links to resources in log and frontend
 #introduction:
 
-#recorder:
-
 #---------------------------------------------------
 # Enables the frontend
 # Add javascript_version: latest to see if it solve the current problem
@@ -44,14 +42,6 @@ frontend:
 # Enables configuration UI
 # https://home-assistant.io/components/config/
 config:
-
-#---------------------------------------------------
-# https://home-assistant.io/components/logger/
-logger:
-  default: critical
-  logs:
-    homeassistant.components.media_player: critical #error
-#    homeassistant.components.device_tracker: debug
 
 #---------------------------------------------------
 # http
@@ -80,31 +70,6 @@ discovery:
 conversation:
 
 #---------------------------------------------------
-# Enables support for tracking state changes over time
-# https://home-assistant.io/components/history/
-history:
-
-#---------------------------------------------------
-# View all events in a logbook
-logbook:
-  include:
-    domains:
-      - sensor
-#      - switch
-      - media_player
-      - automation
-  exclude:
-    domains:
-      - switch
-    entities:
-#      - switch.rorelsevakt_kok
-      - sensor.yr_symbol
-      - sensor.since_last_boot 
-      - sensor.since_last_boot_templated
-      - sensor.ha_uptime
-
-
-#---------------------------------------------------
 # Enables a map showing the location of tracked devices
 #map:
 
@@ -126,6 +91,16 @@ notify:
 #  channel_name: !secret pushetta_channel_name
 #  api_key: !secret pushetta_api_key
 
+
+####################################################
+#                                                  #
+#                      LOGGING                     #
+#                                                  #
+####################################################
+recorder: !include logging/recorder.yaml
+history: !include logging/history.yaml
+logbook: !include logging/logbook.yaml
+logger: !include logging/logger.yaml
 
 ####################################################
 #                                                  #

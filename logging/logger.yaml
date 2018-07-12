@@ -1,0 +1,9 @@
+﻿#----------------------------------------------------------------------------
+# https://home-assistant.io/components/logger/
+# Log Severities: notset, debug, info, warn, warning, error, fatal, critical
+#----------------------------------------------------------------------------
+  default: warning #critical
+  logs:
+    homeassistant.components.media_player: critical #error
+#    homeassistant.components.device_tracker: debug
+#    root: warn

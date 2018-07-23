@@ -48,10 +48,10 @@ group:
     name: Nätverks status
     entities:
       - sensor.asus_rt_ac68u
-      - sensor.asus_n66u
-      - sensor.asus_unknown
+      # - sensor.asus_n66u
+      # - sensor.asus_unknown
       - sensor.raspberry_pi_2
-      - sensor.raspberry_pi_3
+      - sensor.raspberry_pi_3b
       - sensor.hassbian
 
   system_monitor_card:
@@ -155,13 +155,13 @@ sensor:
     ###########
       asus_rt_ac68u:
         friendly_name: 'ASUS RT-AC68U'
-        value_template: "{{ 'Online' if is_state('device_tracker.router_asuscom', 'home') else 'Offline' }}"
-      asus_n66u:
-        friendly_name: 'ASUS N66U'
-        value_template: "{{ 'Online' if is_state('device_tracker.switch_asus_friggebod', 'home') else 'Offline' }}"
-      asus_unknown:
-        friendly_name: 'ASUS unknown'
         value_template: "{{ 'Online' if is_state('device_tracker.asus_router', 'home') else 'Offline' }}"
+      # asus_n66u:
+        # friendly_name: 'ASUS N66U'
+        # value_template: "{{ 'Online' if is_state('device_tracker.switch_asus_friggebod', 'home') else 'Offline' }}"
+      # asus_unknown:
+        # friendly_name: 'ASUS unknown'
+        # value_template: "{{ 'Online' if is_state('device_tracker.asus_router', 'home') else 'Offline' }}"
 
     ###############
     # Mediaplayer #
@@ -195,13 +195,13 @@ sensor:
     # Raspberry #
     #############
       raspberry_pi_2:
-        friendly_name: 'Raspberry Pi 2 - 1-Wire'
+#        friendly_name: 'Raspberry Pi 2 - 1-Wire'
         value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_2', 'home') else 'Offline' }}"
-      raspberry_pi_3:
-        friendly_name: 'Raspberry Pi 3 - Nexahome'
-        value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_3', 'home') else 'Offline' }}"
+      raspberry_pi_3b:
+#        friendly_name: 'Raspberry Pi 3 - Nexahome'
+        value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_3b', 'home') else 'Offline' }}"
       hassbian:
-        friendly_name: 'Raspberry Pi 3 - Hassbian'
+#        friendly_name: 'Raspberry Pi 3 - Hassbian'
         value_template: "{{ 'Online' if is_state('device_tracker.hassbian', 'home') else 'Offline' }}"
 
     ##########

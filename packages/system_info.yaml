@@ -51,7 +51,7 @@ group:
       # - sensor.asus_n66u
       # - sensor.asus_unknown
       - sensor.raspberry_pi_2
-      - sensor.raspberry_pi_3b
+      - sensor.raspberry_pi_3
       - sensor.hassbian
 
   system_monitor_card:
@@ -197,7 +197,7 @@ sensor:
       raspberry_pi_2:
 #        friendly_name: 'Raspberry Pi 2 - 1-Wire'
         value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_2', 'home') else 'Offline' }}"
-      raspberry_pi_3b:
+      raspberry_pi_3:
 #        friendly_name: 'Raspberry Pi 3 - Nexahome'
         value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_3b', 'home') else 'Offline' }}"
       hassbian:

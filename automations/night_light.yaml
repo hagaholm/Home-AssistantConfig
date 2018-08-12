@@ -49,7 +49,7 @@
           entity_id: switch.kok_lilla_fonstret
           state: 'off' 
         - condition: state
-          entity_id: switch.hall_skap
+          entity_id: light.hall_byra_dimmer
           state: 'on' 
     action:
       - service: script.night_light_off

@@ -65,3 +65,17 @@
       # - service: notify.pushbullet
         # data:
           # message: 'LARM! Hög fukt i frysen: {{ states.sensor.frys_humidity.state }} {{ states.sensor.frys_humidity.unit_of_measurement }}'
+
+    ###############################################################
+    ### Inga värden från Frys på 1 timme                        ###
+    ### T: last_updated > 5 timmar                              ###
+    ### A: notify.pushbullet "Inga värden från Frys på 1 timme" ###
+    ###############################################################
+  - alias: Info: Inga värden från Frys på 1 timme
+    trigger:
+      platform: template
+      value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.frys_temperature.last_updated) > 1*60 %}true{% endif %}"
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Inga värden från Frys på 1 timme'

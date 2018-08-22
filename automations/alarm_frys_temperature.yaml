@@ -71,11 +71,11 @@
     ### T: last_updated > 5 timmar                                    ###
     ### A: notify.pushbullet "Info! Inga värden från Frys på 1 timme" ###
     #####################################################################
-  - alias: Info! Inga värden från Frys på 1 timme
-    trigger:
-      platform: template
-      value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.frys_temperature.last_updated) > 1*60 %}true{% endif %}"
-    action:
-      - service: notify.pushbullet
-        data:
-          message: 'Info! Inga värden från Frys på 1 timme'
+#  - alias: Info! Inga värden från Frys på 1 timme
+#    trigger:
+#      platform: template
+#      value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.frys_temperature.last_updated) > 1*60 %}true{% endif %}"
+#    action:
+#      - service: notify.pushbullet
+#        data:
+#          message: 'Info! Inga värden från Frys på 1 timme'

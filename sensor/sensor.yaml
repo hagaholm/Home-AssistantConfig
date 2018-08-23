@@ -200,9 +200,18 @@
   - platform: yr
     monitored_conditions:
       - temperature
+      - symbol
       - precipitation
       - windSpeed
+      - pressure
+      - windDirection
       - humidity
+      - fog
+      - cloudiness
+      - lowClouds
+      - mediumClouds
+      - highClouds
+      - dewpointTemperature
 
 ##################
 # Min/Max Sensor #

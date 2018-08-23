@@ -88,6 +88,7 @@
     icon: mdi:thermometer
     entities:
       - group.temperature_view_outside
+      - group.temperature_view_yr
       - group.temperature_view_inside
       - group.humidity_view_inside
       - group.temperature_view_fridge_freezer
@@ -102,13 +103,30 @@
     entities:
       - sensor.ute
       - sensor.ute2_temperature
-      - sensor.yr_temperature
       - sensor.ute2_humidity
-      - sensor.yr_humidity
-      - sensor.yr_wind_speed
       - sensor.ljusstyrka
       - sensor.regnmatare_rain_rate
       - sensor.regnmatare_rain_total
+
+  temperature_view_yr:
+    name: YR
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - sensor.yr_temperature
+      - sensor.yr_symbol
+      - sensor.yr_precipitation
+      - sensor.yr_windSpeed
+      - sensor.yr_windDirection
+      - sensor.yr_pressure
+      - sensor.yr_humidity
+      - sensor.yr_fog
+      - sensor.yr_cloudiness
+      - sensor.yr_lowClouds
+      - sensor.yr_mediumClouds
+      - sensor.yr_highClouds
+      - sensor.yr_dewpointTemperature
 
   temperature_view_inside:
     name: Inomhus temperatur

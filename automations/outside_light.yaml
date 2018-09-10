@@ -33,8 +33,8 @@
       after: '12:00:00'
       before: '21:45:00' 
     action:
-      service: homeassistant.turn_on
-      entity_id: switch.uterum_fonster
+      - service: homeassistant.turn_on
+        entity_id: switch.uterum_fonster
       - service: notify.pushbullet
         data:
           message: '1 Uterum belysning on (<100)'
@@ -323,6 +323,7 @@
         entity_id: switch.uterum_fonster
       - delay: '00:00:01'
       - service: homeassistant.turn_off
-    entity_id: switch.uterum_fonster
-      data:
-        message: '6 Uterum off (All off, hemma)'
+        entity_id: switch.uterum_fonster
+      - service: notify.pushbullet
+        data:
+          message: '6 Uterum off (All off, hemma)'

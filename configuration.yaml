@@ -242,12 +242,8 @@ binary_sensor:
     sensors:
       workday_light:
         value_template: >-
-          {% if is_state('binary_sensor.workday', 'on') 
-             and is_state('binary_sensor.workday_tomorrow', 'on') }%
-            on
-          {& else &}
-            off
-          {% endif %}
+          {{ is_state('binary_sensor.workday', 'on') }}
+#             and is_state('binary_sensor.workday_tomorrow', 'off') }}
 
 ####################################################
 #                                                  #

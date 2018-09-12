@@ -237,11 +237,11 @@ binary_sensor:
     country: SE
     name: workday_tomorrow
     days_offset: 1
-    
-  - platform: template
-    sensors:
-      workday_light:
-        value_template: '{% if is_state("binary_sensor.workday", "on") and is_state('binary_sensor.workday_tomorrow', 'on') %}on{% else %}off{% endif %}'
+
+#  - platform: template
+#    sensors:
+#      workday_light:
+#        value_template: '{% if is_state("binary_sensor.workday_today", "on") and is_state("binary_sensor.workday_tomorrow", "on") %}on{% else %}on{% endif %}'
 
 ####################################################
 #                                                  #

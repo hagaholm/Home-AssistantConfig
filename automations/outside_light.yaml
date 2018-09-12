@@ -163,7 +163,7 @@
     ###    switch.friggebod_stora_fonstret = off           ###
     ##########################################################
   - alias: Utebelysning off (>22:00:00, hemma)
-    initial_state: 'on'
+    initial_state: 'off'
     trigger:
       platform: time
       at: '22:00:00'
@@ -208,7 +208,7 @@
     ###    switch.friggebod_stora_fonstret = off                  ###
     #################################################################
   - alias: Utebelysning off (>22:00:00, hemma, vardag)
-    initial_state: 'off'
+    initial_state: 'on'
     trigger:
       platform: time
       at: '22:00:00'
@@ -219,7 +219,7 @@
           entity_id: group.track_for_home_devices
           state: 'home'
         - condition: state
-          entity_id: binary_sensor.workday_light
+          entity_id: binary_sensor.workday_tomorrow
           state: 'true'
     action:
       - service: light.turn_off
@@ -258,7 +258,7 @@
     ###    switch.friggebod_stora_fonstret = off               ###
     ##############################################################
   - alias: Utebelysning off (All off, hemma, helg)
-    initial_state: 'off'
+    initial_state: 'on'
     trigger:
       platform: state
       entity_id: switch.kok_lilla_fonstret
@@ -270,7 +270,7 @@
           entity_id: group.track_for_home_devices
           state: 'home'
         - condition: state
-          entity_id: binary_sensor.workday_light
+          entity_id: binary_sensor.workday_tomorrow
           state: 'false'
     action:
       - service: light.turn_off

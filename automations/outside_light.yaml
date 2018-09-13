@@ -202,7 +202,7 @@
     ### Släcker utebelysning på vardagskvällar när någon är hemma ###
     ### T: 22:00:00                                               ###
     ### C: group.track_for_home_devices == 'home'                 ###
-    ###    workday == true                                        ###
+    ###    workday_tomorrow == on                                 ###
     ### A: light.spabad_vagg = off                                ###
     ###    switch.friggebod_lilla_fonstret = off                  ###
     ###    switch.friggebod_stora_fonstret = off                  ###
@@ -220,7 +220,7 @@
           state: 'home'
         - condition: state
           entity_id: binary_sensor.workday_tomorrow
-          state: 'true'
+          state: 'on'
     action:
       - service: light.turn_off
         entity_id: light.spabad_vagg
@@ -252,7 +252,7 @@
     ### Släcker utebelysning på helgkvällar när någon är hemma ###
     ### T: switch.kok_lilla_fonstret == off                    ###
     ### C: group.track_for_home_devices == 'home'              ###
-    ###    workday == false                                    ###
+    ###    workday_tomorrow == off                             ###
     ### A: light.spabad_vagg = off                             ###
     ###    switch.friggebod_lilla_fonstret = off               ###
     ###    switch.friggebod_stora_fonstret = off               ###
@@ -271,7 +271,7 @@
           state: 'home'
         - condition: state
           entity_id: binary_sensor.workday_tomorrow
-          state: 'false'
+          state: 'off'
     action:
       - service: light.turn_off
         entity_id: light.spabad_vagg

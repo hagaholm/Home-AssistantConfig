@@ -1,21 +1,3 @@
-#-----------------------------------------------------------------------------------------
-# Befintligt
-#-----------------------------------------------------------------------------------------
-# 1   Tänder uterum < 100 lux
-# 2   Tänder spabelysning < 5 lux
-# 3   Tänder friggebod < 1 lux
-# 4   Släcker uterum, spabelysning och friggebod kl 22:00 när ingen är hemma
-# 5   Släcker spabelysning och friggebod kl 22:00 när någon är hemma
-# 6   Släcker uterum på kvällen när allt släcks inne av någon
-#-----------------------------------------------------------------------------------------
-# Ändras
-#-----------------------------------------------------------------------------------------
-# 5.1 Släcker utebelysning på vardagskvällar när någon är hemma
-# 5.2 Släcker utebelysning på helgkvällar när någon är hemma
-#-----------------------------------------------------------------------------------------
-
-    ##################################################
-    ### 1                                          ###
     ##################################################
     ### Tänder belysning i uterum på eftermiddagen ###
     ### T: sensor.ljusstyrka < 100                 ###
@@ -35,13 +17,7 @@
     action:
       - service: homeassistant.turn_on
         entity_id: switch.uterum_fonster
-      - service: notify.pushbullet
-        data:
-          message: '1 Uterum belysning on (<100)'
 
-    ####################################################
-    ### 2                                            ###
-    ####################################################
     ### Tänder belysning vid Spabad på eftermiddagen ###
     ### T: sensor.ljusstyrka < 5                     ###
     ### C: 12:00:00 - 21:45:00                       ###
@@ -69,12 +45,7 @@
         data:
           entity_id: light.spabad_vagg
           brightness_pct: 20
-      - service: notify.pushbullet
-        data:
-          message: '2 Spabelysning on (<5)'
 
-    #####################################################
-    ### 3                                             ###
     #####################################################
     ### Tänder belysning i Friggebod på eftermiddagen ###
     ### T: sensor.ljusstyrka < 1                      ###
@@ -97,12 +68,7 @@
         entity_id: switch.friggebod_lilla_fonstret
       - service: homeassistant.turn_on
         entity_id: switch.friggebod_stora_fonstret
-      - service: notify.pushbullet
-        data:
-          message: '3 Friggebod belysning on (<1)'
 
-    ##########################################################
-    ### 4                                                  ###
     ##########################################################
     ### Släcker utebelysning på kvällen när ingen är hemma ###
     ### T: 22:00:00                                        ###
@@ -148,56 +114,7 @@
         entity_id: switch.friggebod_lilla_fonstret
       - service: homeassistant.turn_off
         entity_id: switch.friggebod_stora_fonstret
-      - service: notify.pushbullet
-        data:
-          message: '4 Utebelysning off (>22:00:00, borta)'
 
-    ##########################################################
-    ### 5                                                  ###
-    ##########################################################
-    ### Släcker utebelysning på kvällen när någon är hemma ###
-    ### T: 22:00:00                                        ###
-    ### C: group.track_for_home_devices == 'home'          ###
-    ### A: light.spabad_vagg = off                         ###
-    ###    switch.friggebod_lilla_fonstret = off           ###
-    ###    switch.friggebod_stora_fonstret = off           ###
-    ##########################################################
-  - alias: Utebelysning off (>22:00:00, hemma)
-    initial_state: 'off'
-    trigger:
-      platform: time
-      at: '22:00:00'
-    condition:
-      condition: state
-      entity_id: group.track_for_home_devices
-      state: 'home'
-    action:
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_lilla_fonstret
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_stora_fonstret
-      - delay: '00:00:01'
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_lilla_fonstret
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_stora_fonstret
-      - delay: '00:00:01'
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_lilla_fonstret
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_stora_fonstret
-      - service: notify.pushbullet
-        data:
-          message: '5 Utebelysning off (>22:00:00, hemma)'
-
-    #################################################################
-    ### 5.1                                                       ###
     #################################################################
     ### Släcker utebelysning på vardagskvällar när någon är hemma ###
     ### T: 22:00:00                                               ###
@@ -242,12 +159,7 @@
         entity_id: switch.friggebod_lilla_fonstret
       - service: homeassistant.turn_off
         entity_id: switch.friggebod_stora_fonstret
-      - service: notify.pushbullet
-        data:
-          message: '5.1 Utebelysning off (>22:00:00, hemma, vardag)'
 
-    ##############################################################
-    ### 5.2                                                    ###
     ##############################################################
     ### Släcker utebelysning på helgkvällar när någon är hemma ###
     ### T: switch.kok_lilla_fonstret == off                    ###
@@ -293,12 +205,7 @@
         entity_id: switch.friggebod_lilla_fonstret
       - service: homeassistant.turn_off
         entity_id: switch.friggebod_stora_fonstret
-      - service: notify.pushbullet
-        data:
-          message: '5.2 Utebelysning off (All off, hemma, helgkväll)'
 
-    ###############################################################
-    ### 6                                                       ###
     ###############################################################
     ### Släcker uterum på kvällen när allt släcks inne av någon ###
     ### T: switch.kok_lilla_fonstret == off                     ###
@@ -324,6 +231,3 @@
       - delay: '00:00:01'
       - service: homeassistant.turn_off
         entity_id: switch.uterum_fonster
-      - service: notify.pushbullet
-        data:
-          message: '6 Uterum off (All off, hemma)'

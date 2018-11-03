@@ -27,3 +27,45 @@
     action:
       - service: homeassistant.turn_off
         entity_id: switch.garage_luftavfuktare
+
+    ###########################################
+    ### Synka luftavfuktare on varje timme  ###
+    ### T: time minutes: 1                  ###
+    ### C: sensor.forrad_humidity > 66      ###
+    ### A: switch.garage_luftavfuktare = on ###
+    ###########################################
+  - alias: Synka luftavfuktare on
+    initial_state: 'off'
+    trigger:
+      platform: time
+      # Matches every hour at 1 minutes past whole
+      minutes: 1
+      seconds: 00
+    condition:
+      condition: numeric_state
+      entity_id: sensor.forrad_humidity
+      above: '66'
+    action:
+      - service: homeassistant.turn_on
+        entity_id: switch.garage_luftavfuktare
+
+    ############################################
+    ### Synka luftavfuktare off varje timme  ###
+    ### T: time minutes: 2                   ###
+    ### C: sensor.forrad_humidity < 64       ###
+    ### A: switch.garage_luftavfuktare = off ###
+    ############################################
+  - alias: Synka luftavfuktare off
+    initial_state: 'off'
+    trigger:
+      platform: time
+      # Matches every hour at 2 minutes past whole
+      minutes: 2
+      seconds: 00
+    condition:
+      condition: numeric_state
+      entity_id: sensor.forrad_humidity
+      below: '64'
+    action:
+      - service: homeassistant.turn_off
+        entity_id: switch.garage_luftavfuktare

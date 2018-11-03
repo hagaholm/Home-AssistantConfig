@@ -136,17 +136,17 @@ sensor:
     # Internet performance metrics #
     ################################
     # https://home-assistant.io/components/sensor.speedtest/
-  - platform: speedtest
-    server_id: 2229
-    monitored_conditions:
-      - download
-      - upload
-      - ping
-    hour:
-      - 0
-      - 6
-      - 12
-      - 18
+#  - platform: speedtest
+#    server_id: 2229
+#    monitored_conditions:
+#      - download
+#      - upload
+#      - ping
+#    hour:
+#      - 0
+#      - 6
+#      - 12
+#      - 18
 
   - platform: template
     sensors:

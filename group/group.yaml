@@ -445,7 +445,8 @@
       - group.automation_morning_light
       - group.automation_evening_light
       - group.automation_night_light
-      - group.automation_away_light
+      - group.automation_away_light_morning
+      - group.automation_away_light_evening
       - group.automation_outside_light
       - group.automation_temp_larm
       - group.automation_ventilation
@@ -512,8 +513,17 @@
       - automation.nattbelysning_off_sensor_off
       - automation.nattbelysning_sensor_on_hemma_0150
 
-  automation_away_light:
-    name: Bortabelysning
+  automation_away_light_morning:
+    name: Bortabelysning morgon
+#    control: hidden
+    entities:
+      - automation.bortabelysning_off_110000_borta
+      - automation.bortabelysning_off_250_borta_morgon
+      - automation.bortabelysning_on_070000_200_borta
+      - automation.bortabelysning_on__borta_200_morgon
+
+  automation_away_light_evening:
+    name: Bortabelysning kväll
 #    control: hidden
     entities:
       - automation.bortabelysning_on_120000_200_borta
@@ -616,6 +626,8 @@
     entities:
       - automation.starta_luftavfuktare
       - automation.stoppa_luftavfuktare
+      - automation.synka_luftavfuktare_on
+      - automation.synka_luftavfuktare_off
 
 ###########################################################
 

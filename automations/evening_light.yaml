@@ -1,4 +1,27 @@
-﻿    ########################################################
+    #################################################
+    ### Tänder lampor kl 12:00 om det är mörkt    ###
+    ### T: Time = 12:00:00                        ###
+    ### C: sensor.ljusstyrka < 1500               ###
+    ###    group.track_for_home_devices == 'home' ###
+    ### A: script.evening_lights_on               ###
+    #################################################
+- alias: Kvällsbelysning on (=12:00:00, <1500, hemma)
+    trigger:
+      platform: time
+      at: '12:00:00'
+    condition:
+      condition: and
+      conditions:
+        - condition: numeric_state
+          entity_id: sensor.ljusstyrka
+          below: 1500
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'home'
+    action:
+      service: script.evening_lights_on
+    
+    ########################################################
     ### Tänder lampor när det blir mörkt fram till 22:00 ###
     ### T: sensor.ljusstyrka < 1500                      ###
     ### C: group.track_for_home_devices == 'home'        ###

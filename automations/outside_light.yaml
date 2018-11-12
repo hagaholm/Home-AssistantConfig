@@ -1,10 +1,10 @@
-    ##################################################
-    ### Tänder belysning i uterum på eftermiddagen ###
-    ### T: sensor.ljusstyrka < 100                 ###
-    ### C: 12:00:00 - 21:45:00                     ###
-    ### A: switch.uterum_fonster = on              ###
-    ##################################################
-  - alias: Uterum belysning on (<100)
+    ##########################################################
+    ### Tänder belysning i uterumsfönster på eftermiddagen ###
+    ### T: sensor.ljusstyrka < 100                         ###
+    ### C: 12:00:00 - 21:45:00                             ###
+    ### A: switch.uterum_fonster = on                      ###
+    ##########################################################
+  - alias: Uterumsfönster belysning on (<100)
     initial_state: 'on'
     trigger:
       platform: numeric_state
@@ -18,6 +18,7 @@
       - service: homeassistant.turn_on
         entity_id: switch.uterum_fonster
 
+    ####################################################
     ### Tänder belysning vid Spabad på eftermiddagen ###
     ### T: sensor.ljusstyrka < 5                     ###
     ### C: 12:00:00 - 21:45:00                       ###
@@ -206,13 +207,13 @@
       - service: homeassistant.turn_off
         entity_id: switch.friggebod_stora_fonstret
 
-    ###############################################################
-    ### Släcker uterum på kvällen när allt släcks inne av någon ###
-    ### T: switch.kok_lilla_fonstret == off                     ###
-    ### C: group.track_for_home_devices == 'home'               ###
-    ### A: switch.uterum_fonster = off                          ###
-    ###############################################################
-  - alias: Uterum off (All off, hemma)
+    #######################################################################
+    ### Släcker uterumsfönster på kvällen när allt släcks inne av någon ###
+    ### T: switch.kok_lilla_fonstret == off                             ###
+    ### C: group.track_for_home_devices == 'home'                       ###
+    ### A: switch.uterum_fonster = off                                  ###
+    #######################################################################
+  - alias: Uterumsfönster off (All off, hemma)
     initial_state: 'on'
     trigger:
       platform: state

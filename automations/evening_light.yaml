@@ -5,7 +5,7 @@
     ###    group.track_for_home_devices == 'home' ###
     ### A: script.evening_lights_on               ###
     #################################################
-- alias: Kvällsbelysning on (=12:00:00, <1500, hemma)
+  - alias: Kvällsbelysning on (=12:00:00, <1500, hemma)
     trigger:
       platform: time
       at: '12:00:00'

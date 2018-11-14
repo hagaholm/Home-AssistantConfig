@@ -1,6 +1,6 @@
     #########################################################
     ### Tänder ledbelysning i uterum när någon kommer hem ###
-    ### T: group.track_for_home_devices == 'home'         ###
+    ### T: group.track_for_home_devices == home           ###
     ### C: 12:00:00 - 21:45:00                            ###
     ###    sensor.ljusstyrka < 50                         ###
     ###    sensor.uterum > 20                             ###
@@ -37,7 +37,7 @@
     ### T: sensor.uterum > 20                           ###
     ### C: 12:00:00 - 21:45:00                          ###
     ###    sensor.ljusstyrka < 50                       ###
-    ###    group.track_for_home_devices == 'home'       ###
+    ###    group.track_for_home_devices == home         ###
     ### A: switch.uterum_led = on                       ###
     #######################################################
   - alias: Uterums ledbelysning on (>20)
@@ -70,7 +70,7 @@
     ### T: sensor.ljusstyrka < 50                       ###
     ### C: 12:00:00 - 21:45:00                          ###
     ###    sensor.uterum > 20                           ###
-    ###    group.track_for_home_devices == 'home'       ###
+    ###    group.track_for_home_devices == home         ###
     ### A: switch.uterum_led = on                       ###
     #######################################################
   - alias: Uterums ledbelysning on (<50)
@@ -92,8 +92,8 @@
           entity_id: group.track_for_home_devices
           state: 'home'
     action:
-#      - service: homeassistant.turn_on
-#        entity_id: switch.uterum_led
+      - service: homeassistant.turn_on
+        entity_id: switch.uterum_led
       - service: notify.pushbullet
         data:
           message: 'Uterums ledbelysning on (<50)'
@@ -123,7 +123,7 @@
     ### T: sensor.ljusstyrka < 5                     ###
     ### C: 12:00:00 - 21:45:00                       ###
     ### A: light.spabad_vagg = 100%                  ###
-    ###    delay: '00:10:00'                         ###
+    ###    delay: 00:10:00                           ###
     ###    light.spabad_vagg = 20%                   ###
     ####################################################
   - alias: Spabelysning on (<5)
@@ -173,7 +173,7 @@
     ##########################################################
     ### Släcker utebelysning på kvällen när ingen är hemma ###
     ### T: 22:00:00                                        ###
-    ### C: group.track_for_home_devices == 'not_home'      ###
+    ### C: group.track_for_home_devices == not_home        ###
     ### A: switch.uterum_fonster = off                     ###
     ###    light.spabad_vagg = off                         ###
     ###    switch.friggebod_lilla_fonstret = off           ###
@@ -219,7 +219,7 @@
     #################################################################
     ### Släcker utebelysning på vardagskvällar när någon är hemma ###
     ### T: 22:00:00                                               ###
-    ### C: group.track_for_home_devices == 'home'                 ###
+    ### C: group.track_for_home_devices == home                   ###
     ###    workday_tomorrow == on                                 ###
     ### A: light.spabad_vagg = off                                ###
     ###    switch.friggebod_lilla_fonstret = off                  ###
@@ -264,7 +264,7 @@
     ##############################################################
     ### Släcker utebelysning på helgkvällar när någon är hemma ###
     ### T: switch.kok_lilla_fonstret == off                    ###
-    ### C: group.track_for_home_devices == 'home'              ###
+    ### C: group.track_for_home_devices == home                ###
     ###    workday_tomorrow == off                             ###
     ### A: light.spabad_vagg = off                             ###
     ###    switch.friggebod_lilla_fonstret = off               ###
@@ -310,7 +310,7 @@
     #######################################################################
     ### Släcker uterumsfönster på kvällen när allt släcks inne av någon ###
     ### T: switch.kok_lilla_fonstret == off                             ###
-    ### C: group.track_for_home_devices == 'home'                       ###
+    ### C: group.track_for_home_devices == home                         ###
     ### A: switch.uterum_fonster = off                                  ###
     #######################################################################
   - alias: Uterumsfönster off (All off, hemma)
@@ -336,7 +336,8 @@
     #############################################################################
     ### Släcker uterums ledbelysning på kvällen när allt släcks inne av någon ###
     ### T: switch.kok_lilla_fonstret == off                                   ###
-    ### C: group.track_for_home_devices == 'home'                             ###
+    ### C: group.track_for_home_devices == home                               ###
+    ###    switch.uterum_led = on                                             ###
     ### A: switch.uterum_led = off                                            ###
     #############################################################################
   - alias: Uterums ledbelysning off (All off, hemma)
@@ -346,9 +347,14 @@
       entity_id: switch.kok_lilla_fonstret
       to: 'off'
     condition:
-      condition: state
-      entity_id: group.track_for_home_devices
-      state: 'home'
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'home'
+        - condition: state
+          entity_id: switch.uterum_led
+          state: 'on'
     action:
       - service: homeassistant.turn_off
         entity_id: switch.uterum_led
@@ -364,8 +370,8 @@
 
     ##################################################################
     ### Släcker uterums ledbelysning på kvällen när ingen är hemma ###
-    ### T: group.track_for_home_devices == 'not_home'              ###
-    ### C: switch.uterum_led = 'on'                                ###
+    ### T: group.track_for_home_devices == not_home                ###
+    ### C: switch.uterum_led = on                                  ###
     ### A: switch.uterum_led = off                                 ###
     ##################################################################
   - alias: Uterums ledbelysning off (Borta)
@@ -395,7 +401,7 @@
     ###########################################################
     ### Släcker uterums ledbelysning när det blir för kallt ###
     ### T: sensor.uterum < 20                               ###
-    ### C: switch.uterum_led = 'on'                         ###
+    ### C: switch.uterum_led = on                           ###
     ### A: switch.uterum_led = off                          ###
     ###########################################################
   - alias: Uterums ledbelysning off (<20)
@@ -420,4 +426,3 @@
       - service: notify.pushbullet
         data:
           message: 'Uterums ledbelysning off (<20)'
-

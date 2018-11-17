@@ -3,7 +3,7 @@
     ### T: group.track_for_home_devices == home           ###
     ### C: 12:00:00 - 21:45:00                            ###
     ###    sensor.ljusstyrka < 50                         ###
-    ###    sensor.uterum > 20                             ###
+    ###    sensor.uterum > 19                             ###
     ### A: switch.uterum_led = on                         ###
     #########################################################
   - alias: Uterums ledbelysning on (home)
@@ -24,7 +24,7 @@
           below: 50
         - condition: numeric_state
           entity_id: sensor.uterum
-          above: 20
+          above: 19
     action:
       - service: homeassistant.turn_on
         entity_id: switch.uterum_led
@@ -34,18 +34,18 @@
 
     #######################################################
     ### Tänder ledbelysning i uterum när det blir varmt ###
-    ### T: sensor.uterum > 20                           ###
+    ### T: sensor.uterum > 19                           ###
     ### C: 12:00:00 - 21:45:00                          ###
     ###    sensor.ljusstyrka < 50                       ###
     ###    group.track_for_home_devices == home         ###
     ### A: switch.uterum_led = on                       ###
     #######################################################
-  - alias: Uterums ledbelysning on (>20)
+  - alias: Uterums ledbelysning on (>19)
     initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.uterum
-      above: 20
+      above: 19
     condition:
       condition: and
       conditions:
@@ -63,13 +63,13 @@
         entity_id: switch.uterum_led
       - service: notify.pushbullet
         data:
-          message: 'Uterums ledbelysning on (>20)'
+          message: 'Uterums ledbelysning on (>19)'
 
     #######################################################
     ### Tänder ledbelysning i uterum när det blir mörkt ###
     ### T: sensor.ljusstyrka < 50                       ###
     ### C: 12:00:00 - 21:45:00                          ###
-    ###    sensor.uterum > 20                           ###
+    ###    sensor.uterum > 19                           ###
     ###    group.track_for_home_devices == home         ###
     ### A: switch.uterum_led = on                       ###
     #######################################################
@@ -87,7 +87,7 @@
           before: '21:45:00' 
         - condition: numeric_state
           entity_id: sensor.uterum
-          above: '20'
+          above: '19'
         - condition: state
           entity_id: group.track_for_home_devices
           state: 'home'
@@ -400,16 +400,16 @@
 
     ###########################################################
     ### Släcker uterums ledbelysning när det blir för kallt ###
-    ### T: sensor.uterum < 20                               ###
+    ### T: sensor.uterum < 18                               ###
     ### C: switch.uterum_led = on                           ###
     ### A: switch.uterum_led = off                          ###
     ###########################################################
-  - alias: Uterums ledbelysning off (<20)
+  - alias: Uterums ledbelysning off (<18)
     initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.uterum
-      below: 20
+      below: 18
     condition:
       condition: state
       entity_id: switch.uterum_led
@@ -425,4 +425,4 @@
         entity_id: switch.uterum_led
       - service: notify.pushbullet
         data:
-          message: 'Uterums ledbelysning off (<20)'
+          message: 'Uterums ledbelysning off (<18)'

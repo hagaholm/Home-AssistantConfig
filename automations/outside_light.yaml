@@ -3,7 +3,7 @@
     ### T: group.track_for_home_devices == home           ###
     ### C: 12:00:00 - 21:45:00                            ###
     ###    sensor.ljusstyrka < 250                        ###
-    ###    sensor.uterum > 19                             ###
+    ###    sensor.uterum > 18                             ###
     ### A: switch.uterum_led = on                         ###
     #########################################################
   - alias: Uterums ledbelysning on (home)
@@ -24,28 +24,28 @@
           below: 250
         - condition: numeric_state
           entity_id: sensor.uterum
-          above: 19
+          above: 18
     action:
       - service: homeassistant.turn_on
         entity_id: switch.uterum_led
-      - service: notify.pushbullet
-        data:
-          message: 'Uterums ledbelysning on (home)'
+#      - service: notify.pushbullet
+#        data:
+#          message: 'Uterums ledbelysning on (home)'
 
     #######################################################
     ### Tänder ledbelysning i uterum när det blir varmt ###
-    ### T: sensor.uterum > 19                           ###
+    ### T: sensor.uterum > 18                           ###
     ### C: 12:00:00 - 21:45:00                          ###
     ###    sensor.ljusstyrka < 250                      ###
     ###    group.track_for_home_devices == home         ###
     ### A: switch.uterum_led = on                       ###
     #######################################################
-  - alias: Uterums ledbelysning on (>19)
+  - alias: Uterums ledbelysning on (>18)
     initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.uterum
-      above: 19
+      above: 18
     condition:
       condition: and
       conditions:
@@ -61,15 +61,15 @@
     action:
       - service: homeassistant.turn_on
         entity_id: switch.uterum_led
-      - service: notify.pushbullet
-        data:
-          message: 'Uterums ledbelysning on (>19)'
+#      - service: notify.pushbullet
+#        data:
+#          message: 'Uterums ledbelysning on (>18)'
 
     #######################################################
     ### Tänder ledbelysning i uterum när det blir mörkt ###
     ### T: sensor.ljusstyrka < 250                      ###
     ### C: 12:00:00 - 21:45:00                          ###
-    ###    sensor.uterum > 19                           ###
+    ###    sensor.uterum > 18                           ###
     ###    group.track_for_home_devices == home         ###
     ### A: switch.uterum_led = on                       ###
     #######################################################
@@ -87,16 +87,16 @@
           before: '21:45:00' 
         - condition: numeric_state
           entity_id: sensor.uterum
-          above: '19'
+          above: '18'
         - condition: state
           entity_id: group.track_for_home_devices
           state: 'home'
     action:
       - service: homeassistant.turn_on
         entity_id: switch.uterum_led
-      - service: notify.pushbullet
-        data:
-          message: 'Uterums ledbelysning on (<250)'
+#      - service: notify.pushbullet
+#        data:
+#          message: 'Uterums ledbelysning on (<250)'
 
     ##########################################################
     ### Tänder belysning i uterumsfönster på eftermiddagen ###
@@ -400,16 +400,16 @@
 
     ###########################################################
     ### Släcker uterums ledbelysning när det blir för kallt ###
-    ### T: sensor.uterum < 18                               ###
+    ### T: sensor.uterum < 15                               ###
     ### C: switch.uterum_led = on                           ###
     ### A: switch.uterum_led = off                          ###
     ###########################################################
-  - alias: Uterums ledbelysning off (<18)
+  - alias: Uterums ledbelysning off (<15)
     initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.uterum
-      below: 18
+      below: 15
     condition:
       condition: state
       entity_id: switch.uterum_led
@@ -425,4 +425,4 @@
         entity_id: switch.uterum_led
       - service: notify.pushbullet
         data:
-          message: 'Uterums ledbelysning off (<18)'
+          message: 'Uterums ledbelysning off (<15)'

@@ -513,17 +513,17 @@
     name: Nattbelysning
 #    control: hidden
     entities:
-      - automation.nattbelysning_off_sensor_off
       - automation.nattbelysning_sensor_on_hemma_0150
+      - automation.nattbelysning_off_sensor_off
 
   automation_away_light_morning:
     name: Bortabelysning morgon
 #    control: hidden
     entities:
-      - automation.bortabelysning_off_110000_borta
-      - automation.bortabelysning_off_250_borta_morgon
       - automation.bortabelysning_on_070000_200_borta
       - automation.bortabelysning_on__borta_200_morgon
+      - automation.bortabelysning_off_110000_borta
+      - automation.bortabelysning_off_250_borta_morgon
 
   automation_away_light_evening:
     name: Bortabelysning kväll
@@ -538,19 +538,19 @@
     name: Utebelysning
 #    control: hidden
     entities:
+      - automation.uterumsfonster_off_all_off_hemma
+      - automation.uterumsfonster_belysning_on_250
+      - automation.uterums_ledbelysning_on_18
+      - automation.uterums_ledbelysning_on_250
+      - automation.uterums_ledbelysning_on_home
+      - automation.uterums_ledbelysning_off_15
+      - automation.uterums_ledbelysning_off_all_off_hemma
+      - automation.uterums_ledbelysning_off_borta
       - automation.friggebod_belysning_on_1
       - automation.spabelysning_on_5
       - automation.utebelysning_off_220000_borta
-      - automation.uterumsfonster_belysning_on_100
       - automation.utebelysning_off_220000_hemma_vardag
       - automation.utebelysning_off_all_off_hemma_helg
-      - automation.uterumsfonster_off_all_off_hemma
-      - automation.uterums_ledbelysning_off_18
-      - automation.uterums_ledbelysning_off_all_off_hemma
-      - automation.uterums_ledbelysning_off_borta
-      - automation.uterums_ledbelysning_on_19
-      - automation.uterums_ledbelysning_on_50
-      - automation.uterums_ledbelysning_on_home
 
   automation_temp_larm:
     name: Larm temperatur

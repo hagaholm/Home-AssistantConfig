@@ -73,7 +73,7 @@
     ###    group.track_for_home_devices == home         ###
     ### A: switch.uterum_led = on                       ###
     #######################################################
-  - alias: Uterums ledbelysning on (<50)
+  - alias: Uterums ledbelysning on (<250)
     initial_state: 'on'
     trigger:
       platform: numeric_state

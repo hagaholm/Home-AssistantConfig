@@ -12,3 +12,35 @@
       - service: notify.pushbullet
         data:
           message: "Raspberry HOMEASS CPU hög temp"
+
+    #####################################################
+    ### Raspberry Pi 2 - Offline                      ###
+    ### T: group.track_for_home_devices to 'not_home' ###
+    ### A: notify.pushbullet                          ###
+    #####################################################
+  - alias: Raspberry Pi 2 Offline
+    initial_state: 'on'
+    trigger:
+      platform: state
+      entity_id: device_tracker.raspberry_pi_2
+      to: 'not_home'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: "Raspberry Pi 2 - Offline"
+
+    ######################################################
+    ### Raspberry Pi 3B - Offline                      ###
+    ### T: group.track_for_home_devices to 'not_home'  ###
+    ### A: notify.pushbullet                           ###
+    ######################################################
+  - alias: Raspberry Pi 3B Offline
+    initial_state: 'on'
+    trigger:
+      platform: state
+      entity_id: device_tracker.raspberry_pi_3b
+      to: 'not_home'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: "Raspberry Pi 3B - Offline"

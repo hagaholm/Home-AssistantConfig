@@ -1,3 +1,6 @@
+  #############################
+  ### Godnatt, släcker allt ###
+  #############################
   goodnight:
     alias: Godnatt, släcker allt
     sequence:
@@ -10,6 +13,9 @@
       - service: homeassistant.turn_off
         entity_id: group.outside_lights
 
+  ################################
+  ### Godnatt, stänger av allt ###
+  ################################
   goodnight_all:
     alias: Godnatt, stänger av allt
     sequence:
@@ -30,6 +36,9 @@
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_extra_subbas
 
+  ###########################################
+  ### Godnatt, släcker allt om 10 minuter ###
+  ###########################################
   goodnight_in_10_min:
     alias: Godnatt, släcker allt om 10 minuter
     sequence:
@@ -43,6 +52,9 @@
       - service: homeassistant.turn_off
         entity_id: group.outside_lights
 
+  #########################
+  ### Släck i sovrummet ###
+  #########################
   bedroom_off:
     alias: Släck i sovrummet
     sequence:
@@ -216,15 +228,117 @@
     sequence:
       - service: homeassistant.turn_off
         entity_id: group.away_lights
-        
+
   fan_normal:
     alias: Fläkt normal
     sequence:
       - service: homeassistant.turn_off
         entity_id: switch.fan_speed
-        
+
   fan_forced:
     alias: Fläkt forcerad
     sequence:
       - service: homeassistant.turn_on
         entity_id: switch.fan_speed
+
+  spa_light_on:
+    alias: Spabelysning on
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: light.spabad_vagg
+          brightness_pct: 100
+      - delay: '00:01:00'
+      - service: light.turn_on
+        data:
+          entity_id: light.spabad_vagg
+          brightness_pct: 100
+      - delay: '00:01:00'
+      - service: light.turn_on
+        data:
+          entity_id: light.spabad_vagg
+          brightness_pct: 100
+      - delay: '00:01:00'
+      - service: light.turn_on
+        data:
+          entity_id: light.spabad_vagg
+          brightness_pct: 100
+      - delay: '00:01:00'
+      - service: light.turn_on
+        data:
+          entity_id: light.spabad_vagg
+          brightness_pct: 100
+      - delay: '00:01:00'
+      - service: light.turn_on
+        data:
+          entity_id: light.spabad_vagg
+          brightness_pct: 100
+      - delay: '00:01:00'
+      - service: light.turn_on
+        data:
+          entity_id: light.spabad_vagg
+          brightness_pct: 100
+      - delay: '00:01:00'
+      - service: light.turn_on
+        data:
+          entity_id: light.spabad_vagg
+          brightness_pct: 100
+      - delay: '00:01:00'
+      - service: light.turn_on
+        data:
+          entity_id: light.spabad_vagg
+          brightness_pct: 100
+      - delay: '00:01:00'
+      - service: light.turn_on
+        data:
+          entity_id: light.spabad_vagg
+          brightness_pct: 100
+      - delay: '00:01:00'
+      - service: light.turn_on
+        data:
+          entity_id: light.spabad_vagg
+          brightness_pct: 20
+
+  friggebod_light_on:
+    alias: Friggebod belysning on
+    sequence:
+      - service: homeassistant.turn_on
+        entity_id: switch.friggebod_lilla_fonstret
+      - service: homeassistant.turn_on
+        entity_id: switch.friggebod_stora_fonstret
+
+  outside_light_off:
+    alias: Utebelysning off
+    sequence:
+      - service: light.turn_off
+        entity_id: light.spabad_vagg
+      - service: homeassistant.turn_off
+        entity_id: switch.friggebod_lilla_fonstret
+      - service: homeassistant.turn_off
+        entity_id: switch.friggebod_stora_fonstret
+      - delay: '00:00:01'
+      - service: light.turn_off
+        entity_id: light.spabad_vagg
+      - service: homeassistant.turn_off
+        entity_id: switch.friggebod_lilla_fonstret
+      - service: homeassistant.turn_off
+        entity_id: switch.friggebod_stora_fonstret
+      - delay: '00:00:01'
+      - service: light.turn_off
+        entity_id: light.spabad_vagg
+      - service: homeassistant.turn_off
+        entity_id: switch.friggebod_lilla_fonstret
+      - service: homeassistant.turn_off
+        entity_id: switch.friggebod_stora_fonstret
+
+  uterum_window_light_off:
+    alias: Uterumsfönster off
+    sequence:
+      - service: homeassistant.turn_off
+        entity_id: switch.uterum_fonster
+      - delay: '00:00:01'
+      - service: homeassistant.turn_off
+        entity_id: switch.uterum_fonster
+      - delay: '00:00:01'
+      - service: homeassistant.turn_off
+        entity_id: switch.uterum_fonster

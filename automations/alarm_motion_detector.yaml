@@ -5,7 +5,7 @@
     ### A: notify                                                  ###
     ##################################################################
   - alias: Larm rörelse i köket
-    initial_state: 'off'
+    initial_state: 'on'
     trigger:
       platform: state
       entity_id: switch.rorelsevakt_kok

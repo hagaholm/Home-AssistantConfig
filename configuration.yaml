@@ -169,7 +169,6 @@ switch:
 # Sätt till Off: 'http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=CHANGE'
 # Sätt till On: 'http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=on&PIO.A=CHANGE'
 
-
 ####################################################
 #                                                  #
 #                TEXT TO SPEECH                    #
@@ -242,6 +241,19 @@ binary_sensor:
 #    sensors:
 #      workday_light:
 #        value_template: '{% if is_state("binary_sensor.workday_today", "on") and is_state("binary_sensor.workday_tomorrow", "on") %}on{% else %}on{% endif %}'
+
+
+####################################################
+#                                                  #
+#                     INPUT_BOOLEAN                #
+#                                                  #
+####################################################
+
+input_boolean:
+  christmas_light:
+    name: Använd julbelysning
+    initial: off
+    icon: mdi:pine-tree
 
 ####################################################
 #                                                  #

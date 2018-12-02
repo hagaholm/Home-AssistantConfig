@@ -16,6 +16,7 @@
     entities:
       - group.default_view_info
       - group.default_view_lights
+      - group.default_view_setup
       - group.default_view_ventilation
       - group.default_view_temp_graph
       - group.default_view_lux_graph
@@ -48,6 +49,13 @@
       - script.bedroom_off
       - script.extra_room_off
       - script.andreas_room_off
+
+  default_view_setup:
+    name: Inställningar
+    view: no
+    control: hidden
+    entities:
+      - input_boolean.christmas_light
 
   default_view_ventilation:
     name: Ventilation badrum

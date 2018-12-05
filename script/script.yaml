@@ -135,6 +135,31 @@
           entity_id: light.vardagsrum_fonster_dimmer
           brightness_pct: 40
 
+  ### Julbelysning ###
+  morning_lights_christmas_on:
+    alias: morgonjulbelysning on
+    sequence:
+      - service: homeassistant.turn_on
+        entity_id: switch.kok_stora_fonstret
+      - service: homeassistant.turn_on
+        entity_id: switch.kok_lilla_fonstret
+      # Updated
+      - service: light.turn_on
+        data:
+          entity_id: light.hall_byra_dimmer
+          brightness_pct: 75
+      # Updated
+      - service: light.turn_on
+        data:
+          entity_id: light.vardagsrum_fonster_dimmer
+          brightness_pct: 100
+      # Added
+      - service: homeassistant.turn_on
+        entity_id: switch.extrarum_fonster
+      # Added
+      - service: homeassistant.turn_on
+        entity_id: switch.andreas_fonster          
+
   morning_lights_off:
     alias: Morgonbelysning off
     sequence:
@@ -161,15 +186,48 @@
       - service: light.turn_on
         data:
           entity_id: light.hall_byra_dimmer
-          brightness_pct: 40 #75
+          brightness_pct: 40
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_fonster_dimmer
-          brightness_pct: 50 #75
+          brightness_pct: 50
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_byra_dimmer
-          brightness_pct: 50 #75
+          brightness_pct: 50
+
+  ### Julbelysning ###
+  evening_lights_christmas_on:
+    alias: Kvällsjulbelysning on
+    sequence:
+      - service: homeassistant.turn_on
+        entity_id: switch.kok_stora_fonstret
+      - service: homeassistant.turn_on
+        entity_id: switch.kok_lilla_fonstret
+      - service: homeassistant.turn_on
+        entity_id: switch.hall_skap
+      - service: homeassistant.turn_on
+        entity_id: switch.vardagsrum_vitrinskap
+      - service: homeassistant.turn_on
+        entity_id: switch.sovrum_fonster
+      - service: homeassistant.turn_on
+        entity_id: switch.extrarum_fonster
+      - service: homeassistant.turn_on
+        entity_id: switch.andreas_fonster
+      # Updated
+      - service: light.turn_on
+        data:
+          entity_id: light.hall_byra_dimmer
+          brightness_pct: 75
+      # Updated
+      - service: light.turn_on
+        data:
+          entity_id: light.vardagsrum_fonster_dimmer
+          brightness_pct: 100
+      - service: light.turn_on
+        data:
+          entity_id: light.vardagsrum_byra_dimmer
+          brightness_pct: 50
 
   evening_lights_off:
     alias: Kvällsbelysning off
@@ -222,6 +280,31 @@
         data:
           entity_id: light.vardagsrum_fonster_dimmer
           brightness_pct: 50
+
+  ### Julbelysning ###
+  away_lights_christmas_on:
+    alias: Bortajulbelysning on
+    sequence:
+      - service: homeassistant.turn_on
+        entity_id: switch.kok_stora_fonstret
+      - service: homeassistant.turn_on
+        entity_id: switch.kok_lilla_fonstret
+      - service: homeassistant.turn_on
+        entity_id: switch.sovrum_fonster
+      - service: homeassistant.turn_on
+        entity_id: switch.extrarum_fonster
+      - service: homeassistant.turn_on
+        entity_id: switch.andreas_fonster
+      # Updated
+      - service: light.turn_on
+        data:
+          entity_id: light.hall_byra_dimmer
+          brightness_pct: 75
+      # Updated
+      - service: light.turn_on
+        data:
+          entity_id: light.vardagsrum_fonster_dimmer
+          brightness_pct: 100
 
   away_lights_off:
     alias: Bortabelysning off
@@ -306,10 +389,44 @@
         entity_id: switch.friggebod_lilla_fonstret
       - service: homeassistant.turn_on
         entity_id: switch.friggebod_stora_fonstret
+      - delay: '00:00:01'
+      - service: homeassistant.turn_on
+        entity_id: switch.friggebod_lilla_fonstret
+      - service: homeassistant.turn_on
+        entity_id: switch.friggebod_stora_fonstret
+      - delay: '00:00:01'
+      - service: homeassistant.turn_on
+        entity_id: switch.friggebod_lilla_fonstret
+      - service: homeassistant.turn_on
+        entity_id: switch.friggebod_stora_fonstret
+      - delay: '00:00:01'
+      - service: homeassistant.turn_on
+        entity_id: switch.friggebod_lilla_fonstret
+      - service: homeassistant.turn_on
+        entity_id: switch.friggebod_stora_fonstret
+      - delay: '00:00:01'
+      - service: homeassistant.turn_on
+        entity_id: switch.friggebod_lilla_fonstret
+      - service: homeassistant.turn_on
+        entity_id: switch.friggebod_stora_fonstret
 
   outside_light_off:
     alias: Utebelysning off
     sequence:
+      - service: light.turn_off
+        entity_id: light.spabad_vagg
+      - service: homeassistant.turn_off
+        entity_id: switch.friggebod_lilla_fonstret
+      - service: homeassistant.turn_off
+        entity_id: switch.friggebod_stora_fonstret
+      - delay: '00:00:01'
+      - service: light.turn_off
+        entity_id: light.spabad_vagg
+      - service: homeassistant.turn_off
+        entity_id: switch.friggebod_lilla_fonstret
+      - service: homeassistant.turn_off
+        entity_id: switch.friggebod_stora_fonstret
+      - delay: '00:00:01'
       - service: light.turn_off
         entity_id: light.spabad_vagg
       - service: homeassistant.turn_off

@@ -118,6 +118,26 @@
       - service: homeassistant.turn_on
         entity_id: switch.uterum_fonster
 
+    #######################################################
+    ### Tänder belysning friggebod ute på eftermiddagen ###
+    ### T: sensor.ljusstyrka < 5                        ###
+    ### C: 12:00:00 - 21:45:00                          ###
+    ### A: switch.friggebod_ute = on                    ###
+    #######################################################
+  - alias: Friggebod belysning ute on (<5)
+    initial_state: 'on'
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      below: 5
+    condition:
+      condition: time
+      after: '12:00:00'
+      before: '21:45:00' 
+    action:
+      - service: homeassistant.turn_on
+        entity_id: switch.friggebod_ute
+
     #########################################################
     ### Tänder belysning vid Spabad på eftermiddagen      ###
     ### T: sensor.ljusstyrka < 5                          ###

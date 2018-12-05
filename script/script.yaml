@@ -419,6 +419,8 @@
         entity_id: switch.friggebod_lilla_fonstret
       - service: homeassistant.turn_off
         entity_id: switch.friggebod_stora_fonstret
+      - service: homeassistant.turn_off
+        entity_id: switch.friggebod_ute
       - delay: '00:00:01'
       - service: light.turn_off
         entity_id: light.spabad_vagg
@@ -426,6 +428,8 @@
         entity_id: switch.friggebod_lilla_fonstret
       - service: homeassistant.turn_off
         entity_id: switch.friggebod_stora_fonstret
+      - service: homeassistant.turn_off
+        entity_id: switch.friggebod_ute
       - delay: '00:00:01'
       - service: light.turn_off
         entity_id: light.spabad_vagg
@@ -433,6 +437,8 @@
         entity_id: switch.friggebod_lilla_fonstret
       - service: homeassistant.turn_off
         entity_id: switch.friggebod_stora_fonstret
+      - service: homeassistant.turn_off
+        entity_id: switch.friggebod_ute        
       - delay: '00:00:01'
       - service: light.turn_off
         entity_id: light.spabad_vagg
@@ -440,6 +446,8 @@
         entity_id: switch.friggebod_lilla_fonstret
       - service: homeassistant.turn_off
         entity_id: switch.friggebod_stora_fonstret
+      - service: homeassistant.turn_off
+        entity_id: switch.friggebod_ute        
       - delay: '00:00:01'
       - service: light.turn_off
         entity_id: light.spabad_vagg
@@ -447,6 +455,8 @@
         entity_id: switch.friggebod_lilla_fonstret
       - service: homeassistant.turn_off
         entity_id: switch.friggebod_stora_fonstret
+      - service: homeassistant.turn_off
+        entity_id: switch.friggebod_ute
 
   uterum_window_light_off:
     alias: Uterumsfönster off

@@ -193,7 +193,7 @@
         entity_id: switch.extrarum_fonster
       # Added
       - service: homeassistant.turn_on
-        entity_id: switch.andreas_fonster          
+        entity_id: switch.andreas_fonster
 
   ###########################
   ### Morgonbelysning off ###
@@ -223,7 +223,7 @@
   ### Kvällsbelysning default on ###
   ### -------------------------- ###
   evening_lights_default_on:
-    alias: Kvällsbelysning on
+    alias: Kvällsbelysning default on
     sequence:
       - service: homeassistant.turn_on
         entity_id: switch.kok_stora_fonstret
@@ -251,6 +251,9 @@
         data:
           entity_id: light.vardagsrum_byra_dimmer
           brightness_pct: 50
+#      - service: notify.pushbullet
+#        data:
+#          message: "Kvällsbelysning default on"
 
   ### --------------------- ###
   ### Kvällsjulbelysning on ###
@@ -286,6 +289,9 @@
         data:
           entity_id: light.vardagsrum_byra_dimmer
           brightness_pct: 50
+#      - service: notify.pushbullet
+#        data:
+#          message: "Kvällsjulbelysning on"
 
   ###########################
   ### Kvällsbelysning off ###
@@ -365,6 +371,9 @@
         data:
           entity_id: light.vardagsrum_fonster_dimmer
           brightness_pct: 50
+#      - service: notify.pushbullet
+#        data:
+#          message: "Bortabelysning default on"
 
   ### -------------------- ###
   ### Bortajulbelysning on ###
@@ -392,6 +401,9 @@
         data:
           entity_id: light.vardagsrum_fonster_dimmer
           brightness_pct: 100
+#      - service: notify.pushbullet
+#        data:
+#          message: "Bortajulbelysning on"
 
   ##########################
   ### Bortabelysning off ###

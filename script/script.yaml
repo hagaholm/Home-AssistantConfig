@@ -61,12 +61,18 @@
       - service: homeassistant.turn_off
         entity_id: switch.sovrum_fonster
 
+  ############################
+  ### Släck i lilla rummet ###
+  ############################
   extra_room_off:
     alias: Släck i lilla rummet
     sequence:
       - service: homeassistant.turn_off
         entity_id: switch.extrarum_fonster
 
+  ###########################
+  ### Släck i Andreas rum ###
+  ###########################
   andreas_room_off:
     alias: Släck i Andreas rum
     sequence:
@@ -77,6 +83,9 @@
       - service: homeassistant.turn_off
         entity_id: switch.andreas_skrivbord
 
+  ##########################
+  ### Köksbelysning 100% ###
+  ##########################
   kitchen_light_100:
     alias: Köksbelysning 100%
     sequence:
@@ -93,6 +102,9 @@
           entity_id: light.kok_vitrinskap
           brightness_pct: 100
 
+  #########################
+  ### Köksbelysning 25% ###
+  #########################
   kitchen_light_25:
     alias: Köksbelysning 25%
     sequence:
@@ -109,6 +121,9 @@
           entity_id: light.kok_vitrinskap
           brightness_pct: 25
 
+  #########################
+  ### Köksbelysning off ###
+  #########################
   kitchen_light_off:
     alias: Köksbelysning off
     sequence:
@@ -119,8 +134,26 @@
       - service: light.turn_off
         entity_id: light.kok_vitrinskap
 
+  ##########################
+  ### Morgonbelysning on ###
+  ##########################
   morning_lights_on:
     alias: Morgonbelysning on
+    sequence:
+      - service: script.turn_on
+        data_template:
+          entity_id: >
+            {% if is_state('input_boolean.christmas_light', 'on') %}
+              script.morning_lights_christmas_on
+            {% else %}
+              script.morning_lights_default_on
+            {% endif %}
+
+  ### -------------------------- ###
+  ### Morgonbelysning default on ###
+  ### -------------------------- ###
+  morning_lights_default_on:
+    alias: Morgonbelysning default on
     sequence:
       - service: homeassistant.turn_on
         entity_id: switch.kok_stora_fonstret
@@ -135,9 +168,11 @@
           entity_id: light.vardagsrum_fonster_dimmer
           brightness_pct: 40
 
-  ### Julbelysning ###
+  ### --------------------- ###
+  ### Morgonjulbelysning on ###
+  ### --------------------- ###
   morning_lights_christmas_on:
-    alias: morgonjulbelysning on
+    alias: Morgonjulbelysning on
     sequence:
       - service: homeassistant.turn_on
         entity_id: switch.kok_stora_fonstret
@@ -160,13 +195,34 @@
       - service: homeassistant.turn_on
         entity_id: switch.andreas_fonster          
 
+  ###########################
+  ### Morgonbelysning off ###
+  ###########################
   morning_lights_off:
     alias: Morgonbelysning off
     sequence:
       - service: homeassistant.turn_off
         entity_id: group.evening_lights
 
+  ##########################
+  ### Kvällsbelysning on ###
+  ##########################
   evening_lights_on:
+    alias: Kvällsbelysning on
+    sequence:
+      - service: script.turn_on
+        data_template:
+          entity_id: >
+            {% if is_state('input_boolean.christmas_light', 'on') %}
+              script.evening_lights_christmas_on
+            {% else %}
+              script.evening_lights_default_on
+            {% endif %}
+
+  ### -------------------------- ###
+  ### Kvällsbelysning default on ###
+  ### -------------------------- ###
+  evening_lights_default_on:
     alias: Kvällsbelysning on
     sequence:
       - service: homeassistant.turn_on
@@ -196,7 +252,9 @@
           entity_id: light.vardagsrum_byra_dimmer
           brightness_pct: 50
 
-  ### Julbelysning ###
+  ### --------------------- ###
+  ### Kvällsjulbelysning on ###
+  ### --------------------- ###
   evening_lights_christmas_on:
     alias: Kvällsjulbelysning on
     sequence:
@@ -229,12 +287,18 @@
           entity_id: light.vardagsrum_byra_dimmer
           brightness_pct: 50
 
+  ###########################
+  ### Kvällsbelysning off ###
+  ###########################
   evening_lights_off:
     alias: Kvällsbelysning off
     sequence:
       - service: homeassistant.turn_off
         entity_id: group.evening_lights
 
+  #####################
+  ### Nattbelysning ###
+  #####################
   night_light:
     alias: Nattbelysning
     sequence:
@@ -251,6 +315,9 @@
           entity_id: light.vardagsrum_byra_dimmer
           brightness_pct: 1
 
+  #########################
+  ### Nattbelysning off ###
+  #########################
   night_light_off:
     alias: Nattbelysning off
     sequence:
@@ -261,8 +328,26 @@
       - service: light.turn_off
         entity_id: light.vardagsrum_byra_dimmer
 
+  #########################
+  ### Bortabelysning on ###
+  #########################
   away_lights_on:
     alias: Bortabelysning on
+    sequence:
+      - service: script.turn_on
+        data_template:
+          entity_id: >
+            {% if is_state('input_boolean.christmas_light', 'on') %}
+              script.away_lights_christmas_on
+            {% else %}
+              script.away_lights_default_on
+            {% endif %}
+
+  ### ------------------------- ###
+  ### Bortabelysning default on ###
+  ### ------------------------- ###
+  away_lights_default_on:
+    alias: Bortabelysning default on
     sequence:
       - service: homeassistant.turn_on
         entity_id: switch.kok_stora_fonstret
@@ -281,7 +366,9 @@
           entity_id: light.vardagsrum_fonster_dimmer
           brightness_pct: 50
 
-  ### Julbelysning ###
+  ### -------------------- ###
+  ### Bortajulbelysning on ###
+  ### -------------------- ###
   away_lights_christmas_on:
     alias: Bortajulbelysning on
     sequence:
@@ -306,24 +393,36 @@
           entity_id: light.vardagsrum_fonster_dimmer
           brightness_pct: 100
 
+  ##########################
+  ### Bortabelysning off ###
+  ##########################
   away_lights_off:
     alias: Bortabelysning off
     sequence:
       - service: homeassistant.turn_off
         entity_id: group.away_lights
 
+  ####################
+  ### Fläkt normal ###
+  ####################
   fan_normal:
     alias: Fläkt normal
     sequence:
       - service: homeassistant.turn_off
         entity_id: switch.fan_speed
 
+  ######################
+  ### Fläkt forcerad ###
+  ######################
   fan_forced:
     alias: Fläkt forcerad
     sequence:
       - service: homeassistant.turn_on
         entity_id: switch.fan_speed
 
+  #######################
+  ### Spabelysning on ###
+  #######################
   spa_light_on:
     alias: Spabelysning on
     sequence:
@@ -382,6 +481,9 @@
           entity_id: light.spabad_vagg
           brightness_pct: 20
 
+  ##############################
+  ### Friggebod belysning on ###
+  ##############################
   friggebod_light_on:
     alias: Friggebod belysning on
     sequence:
@@ -410,6 +512,9 @@
       - service: homeassistant.turn_on
         entity_id: switch.friggebod_stora_fonstret
 
+  ########################
+  ### Utebelysning off ###
+  ########################
   outside_light_off:
     alias: Utebelysning off
     sequence:
@@ -458,6 +563,9 @@
       - service: homeassistant.turn_off
         entity_id: switch.friggebod_ute
 
+  #########################
+  ### Uterumsfönster off ###
+  ##########################
   uterum_window_light_off:
     alias: Uterumsfönster off
     sequence:

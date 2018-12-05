@@ -56,6 +56,8 @@
     control: hidden
     entities:
       - input_boolean.christmas_light
+      - binary_sensor.workday_today
+      - binary_sensor.workday_tomorrow
 
   default_view_ventilation:
     name: Ventilation badrum
@@ -113,8 +115,8 @@
       - sensor.ute2_temperature
       - sensor.ute2_humidity
       - sensor.ljusstyrka
-      - sensor.regnmatare_rain_rate
-      - sensor.regnmatare_rain_total
+#      - sensor.regnmatare_rain_rate
+#      - sensor.regnmatare_rain_total
 
   temperature_view_yr:
     name: Yr
@@ -194,7 +196,7 @@
       - sensor.Tilluft
       - sensor.Franluft
       - sensor.Avluft
-      - sensor.Forcerad # Fläkt hastighet
+#      - sensor.Forcerad # Fläkt hastighet
       - switch.fan_speed
       - switch.ventilationsaggregat
 
@@ -354,7 +356,7 @@
       - sensor.badrum_humidity
       - sensor.fukt_badrumsfonster
       - switch.fan_speed
-      - sensor.Forcerad
+#      - sensor.Forcerad
 
   bedroom:
     name: Sovrum
@@ -434,7 +436,7 @@
       - sensor.Tilluft
       - sensor.Franluft
       - sensor.Avluft
-      - sensor.Forcerad # Fläkt hastighet
+#      - sensor.Forcerad # Fläkt hastighet
       - switch.fan_speed
       - switch.ventilationsaggregat
       # Verkningsgrad

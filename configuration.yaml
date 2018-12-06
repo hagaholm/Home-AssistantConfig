@@ -248,12 +248,22 @@ binary_sensor:
 #                     INPUT_BOOLEAN                #
 #                                                  #
 ####################################################
-
 input_boolean:
   christmas_light:
     name: Använd julbelysning
     initial: off
     icon: mdi:pine-tree
+
+####################################################
+#                                                  #
+#                       ASUSWRT                    #
+#                                                  #
+####################################################
+asuswrt:
+    host: 192.168.1.1
+    username: admin
+    ssh_key: /home/homeassistant/.ssh/id_rsa
+
 
 ####################################################
 #                                                  #

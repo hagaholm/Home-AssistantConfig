@@ -253,7 +253,7 @@ input_boolean:
 #                                                  #
 ####################################################
 input_select:
-  inside_lights
+  inside_lights:
     name: Innebelysning
     options:
      - Off
@@ -265,7 +265,7 @@ input_select:
     initial: Off
     icon: mdi:lightbulb
 
-  kitchen_lights
+  kitchen_lights:
     name: Köksbelysning
     options:
      - Off
@@ -273,7 +273,7 @@ input_select:
     initial: Off
     icon: mdi:lightbulb
 
-  outside_lights
+  outside_lights:
     name: Utebelysning
     options:
      - Off

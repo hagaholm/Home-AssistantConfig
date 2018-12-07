@@ -118,14 +118,32 @@
       - service: homeassistant.turn_on
         entity_id: switch.uterum_fonster
 
-    ####################################################
-    ### Tänder belysning vid Spabad på eftermiddagen ###
-    ### T: sensor.ljusstyrka < 5                     ###
-    ### C: 12:00:00 - 21:45:00                       ###
-    ### A: light.spabad_vagg = 100%                  ###
-    ###    delay: 00:10:00                           ###
-    ###    light.spabad_vagg = 20%                   ###
-    ####################################################
+    #######################################################
+    ### Tänder belysning friggebod ute på eftermiddagen ###
+    ### T: sensor.ljusstyrka < 5                        ###
+    ### C: 12:00:00 - 21:45:00                          ###
+    ### A: switch.friggebod_ute = on                    ###
+    #######################################################
+  - alias: Friggebod belysning ute on (<5)
+    initial_state: 'on'
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      below: 5
+    condition:
+      condition: time
+      after: '12:00:00'
+      before: '21:45:00' 
+    action:
+      - service: homeassistant.turn_on
+        entity_id: switch.friggebod_ute
+
+    #########################################################
+    ### Tänder belysning vid Spabad på eftermiddagen      ###
+    ### T: sensor.ljusstyrka < 5                          ###
+    ### C: 12:00:00 - 21:45:00                            ###
+    ### A: script.night_light                             ###
+    #########################################################
   - alias: Spabelysning on (<5)
     initial_state: 'on'
     trigger:
@@ -137,22 +155,13 @@
       after: '12:00:00'
       before: '21:45:00' 
     action:
-      - service: light.turn_on
-        data:
-          entity_id: light.spabad_vagg
-          brightness_pct: 100
-      - delay: '00:10:00'
-      - service: light.turn_on
-        data:
-          entity_id: light.spabad_vagg
-          brightness_pct: 20
+      - service: script.spa_light_on
 
     #####################################################
     ### Tänder belysning i Friggebod på eftermiddagen ###
     ### T: sensor.ljusstyrka < 1                      ###
     ### C: 12:00:00 - 21:45:00                        ###
-    ### A: switch.friggebod_lilla_fonstret = on       ###
-    ###    switch.friggebod_stora_fonstret = on       ###
+    ### A: script.friggebod_light_on                  ###
     #####################################################
   - alias: Friggebod belysning on (<1)
     initial_state: 'on'
@@ -165,19 +174,14 @@
       after: '12:00:00'
       before: '21:45:00' 
     action:
-      - service: homeassistant.turn_on
-        entity_id: switch.friggebod_lilla_fonstret
-      - service: homeassistant.turn_on
-        entity_id: switch.friggebod_stora_fonstret
+      - service: script.friggebod_light_on
 
     ##########################################################
     ### Släcker utebelysning på kvällen när ingen är hemma ###
     ### T: 22:00:00                                        ###
     ### C: group.track_for_home_devices == not_home        ###
-    ### A: switch.uterum_fonster = off                     ###
-    ###    light.spabad_vagg = off                         ###
-    ###    switch.friggebod_lilla_fonstret = off           ###
-    ###    switch.friggebod_stora_fonstret = off           ###
+    ### A: service: script.outside_light_off               ###
+    ###    Service: script.uterum_window_light_off         ###
     ##########################################################
   - alias: Utebelysning off (>22:00:00, borta)
     initial_state: 'on'
@@ -189,41 +193,15 @@
       entity_id: group.track_for_home_devices
       state: 'not_home'
     action:
-      - service: homeassistant.turn_off
-        entity_id: switch.uterum_fonster
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_lilla_fonstret
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_stora_fonstret
-      - delay: '00:01:00'
-      - service: homeassistant.turn_off
-        entity_id: switch.uterum_fonster
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_lilla_fonstret
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_stora_fonstret
-      - delay: '00:01:00'
-      - service: homeassistant.turn_off
-        entity_id: switch.uterum_fonster
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_lilla_fonstret
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_stora_fonstret
+      - service: script.outside_light_off
+      - service: script.uterum_window_light_off
 
     #################################################################
     ### Släcker utebelysning på vardagskvällar när någon är hemma ###
     ### T: 22:00:00                                               ###
     ### C: group.track_for_home_devices == home                   ###
     ###    workday_tomorrow == on                                 ###
-    ### A: light.spabad_vagg = off                                ###
-    ###    switch.friggebod_lilla_fonstret = off                  ###
-    ###    switch.friggebod_stora_fonstret = off                  ###
+    ### A: service: script.outside_light_off                      ###
     #################################################################
   - alias: Utebelysning off (>22:00:00, hemma, vardag)
     initial_state: 'on'
@@ -240,35 +218,15 @@
           entity_id: binary_sensor.workday_tomorrow
           state: 'on'
     action:
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_lilla_fonstret
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_stora_fonstret
-      - delay: '00:00:01'
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_lilla_fonstret
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_stora_fonstret
-      - delay: '00:00:01'
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_lilla_fonstret
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_stora_fonstret
+      - service: script.outside_light_off
 
     ##############################################################
     ### Släcker utebelysning på helgkvällar när någon är hemma ###
     ### T: switch.kok_lilla_fonstret == off                    ###
     ### C: group.track_for_home_devices == home                ###
     ###    workday_tomorrow == off                             ###
-    ### A: light.spabad_vagg = off                             ###
-    ###    switch.friggebod_lilla_fonstret = off               ###
-    ###    switch.friggebod_stora_fonstret = off               ###
+    ### A: service: script.outside_light_off                   ###
+    ###    Service: script.uterum_window_light_off             ###
     ##############################################################
   - alias: Utebelysning off (All off, hemma, helg)
     initial_state: 'on'
@@ -286,32 +244,14 @@
           entity_id: binary_sensor.workday_tomorrow
           state: 'off'
     action:
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_lilla_fonstret
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_stora_fonstret
-      - delay: '00:00:01'
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_lilla_fonstret
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_stora_fonstret
-      - delay: '00:00:01'
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_lilla_fonstret
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_stora_fonstret
+      - service: script.outside_light_off
+      - service: script.uterum_window_light_off
 
     #######################################################################
     ### Släcker uterumsfönster på kvällen när allt släcks inne av någon ###
     ### T: switch.kok_lilla_fonstret == off                             ###
     ### C: group.track_for_home_devices == home                         ###
-    ### A: switch.uterum_fonster = off                                  ###
+    ### A: service: script.uterum_window_light_off                      ###
     #######################################################################
   - alias: Uterumsfönster off (All off, hemma)
     initial_state: 'on'
@@ -324,14 +264,7 @@
       entity_id: group.track_for_home_devices
       state: 'home'
     action:
-      - service: homeassistant.turn_off
-        entity_id: switch.uterum_fonster
-      - delay: '00:00:01'
-      - service: homeassistant.turn_off
-        entity_id: switch.uterum_fonster
-      - delay: '00:00:01'
-      - service: homeassistant.turn_off
-        entity_id: switch.uterum_fonster
+      - service: script.uterum_window_light_off
 
     #############################################################################
     ### Släcker uterums ledbelysning på kvällen när allt släcks inne av någon ###
@@ -364,9 +297,9 @@
       - delay: '00:00:01'
       - service: homeassistant.turn_off
         entity_id: switch.uterum_led
-      - service: notify.pushbullet
-        data:
-          message: 'Uterums ledbelysning off (All off, hemma)'
+#      - service: notify.pushbullet
+#        data:
+#          message: 'Uterums ledbelysning off (All off, hemma)'
 
     ##################################################################
     ### Släcker uterums ledbelysning på kvällen när ingen är hemma ###
@@ -394,9 +327,9 @@
       - delay: '00:00:01'
       - service: homeassistant.turn_off
         entity_id: switch.uterum_led
-      - service: notify.pushbullet
-        data:
-          message: 'Uterums ledbelysning off (Borta)'
+#      - service: notify.pushbullet
+#        data:
+#          message: 'Uterums ledbelysning off (Borta)'
 
     ###########################################################
     ### Släcker uterums ledbelysning när det blir för kallt ###
@@ -423,6 +356,6 @@
       - delay: '00:00:01'
       - service: homeassistant.turn_off
         entity_id: switch.uterum_led
-      - service: notify.pushbullet
-        data:
-          message: 'Uterums ledbelysning off (<15)'
+#      - service: notify.pushbullet
+#        data:
+#          message: 'Uterums ledbelysning off (<15)'

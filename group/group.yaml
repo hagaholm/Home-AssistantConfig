@@ -55,9 +55,10 @@
     view: no
     control: hidden
     entities:
+      - input_select.inside_lights
+      - input_select.kitchen_lights
+      - input_select.outside_lights
       - input_boolean.christmas_light
-      - binary_sensor.workday_today
-      - binary_sensor.workday_tomorrow
 
   default_view_ventilation:
     name: Ventilation badrum

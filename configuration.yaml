@@ -145,6 +145,43 @@ cover:
 light:
   - platform: tellstick
 
+  - platform: switch
+    name: Andreas fönster
+    entity_id: switch.andreas_fonster
+  - platform: switch
+    name: Extrarum fönster
+    entity_id: switch.extrarum_fonster
+  - platform: switch
+    name: Friggebod lila fönstret
+    entity_id: switch.friggebod_lilla_fonstret
+  - platform: switch
+    name: Friggebod stora fönstret
+    entity_id: switch.friggebod_stora_fonstret
+  - platform: switch
+    name: Friggebod ute
+    entity_id: switch.friggebod_ute
+  - platform: switch
+    name: Hall skåp
+    entity_id: switch.hall_skap
+  - platform: switch
+    name: Kök lilla fönstret
+    entity_id: switch.kok_lilla_fonstret
+  - platform: switch
+    name: Kök stora fönstret
+    entity_id: switch.kok_stora_fonstret
+  - platform: switch
+    name: Sovrum fönster
+    entity_id: switch.sovrum_fonster
+  - platform: switch
+    name: Uterum fönster
+    entity_id: switch.uterum_fonster
+  - platform: switch
+    name: Uterum led
+    entity_id: switch.uterum_led
+  - platform: switch
+    name: Vardagsrum vitrinskåp
+    entity_id: switch.vardagsrum_vitrinskap
+
 ####################################################
 #                                                  #
 #                     SWITCH                       #

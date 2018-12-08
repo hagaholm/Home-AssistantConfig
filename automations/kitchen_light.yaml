@@ -77,7 +77,7 @@
     ### T: switch.rorelsevakt_kok == on                             ###
     ### C: sensor.ljusstyrka 0-150                                  ###
     ###    12:00:00 - 05:00:00                                      ###
-    ###    switch.kok_lilla_fonstret == 'on'                        ###
+    ###    light.kok_lilla_fonstret == 'on'                         ###
     ### A: script.kitchen_light_100                                 ###
     ###################################################################
   - alias: Kök 100% (sensor on, 0-150)
@@ -95,7 +95,7 @@
           after: '12:00:00'
           before: '05:00:00'
         - condition: state
-          entity_id: switch.kok_lilla_fonstret
+          entity_id: light.kok_lilla_fonstret
           state: 'on'
     action:
       - service: script.kitchen_light_100
@@ -106,7 +106,7 @@
     ### C: group.track_for_home_devices == 'not_home'                                 ###
     ###    sensor.ljusstyrka 0-150                                                    ###
     ###    12:00:00 - 05:00:00                                                        ###
-    ###    switch.kok_lilla_fonstret == 'off'                                         ###
+    ###    light.kok_lilla_fonstret == 'off'                                          ###
     ### A: script.kitchen_light_100                                                   ###
     #####################################################################################
   - alias: Kök 100% (sensor on, Borta, 0-150)
@@ -127,7 +127,7 @@
           after: '12:00:00'
           before: '05:00:00'
         - condition: state
-          entity_id: switch.kok_lilla_fonstret
+          entity_id: light.kok_lilla_fonstret
           state: 'off'
     action:
       - service: script.kitchen_light_100
@@ -138,7 +138,7 @@
     ### C: group.track_for_home_devices == 'home'                                    ###
     ###    sensor.ljusstyrka 0-150                                                   ###
     ###    12:00:00 - 05:00:00                                                       ###
-    ###    switch.kok_lilla_fonstret == 'off'                                        ###
+    ###    light.kok_lilla_fonstret == 'off'                                         ###
     ### A: script.kitchen_light_25                                                   ###
     ####################################################################################
   - alias: Kök 25% (sensor on, Hemma, 0-150)
@@ -159,7 +159,7 @@
           after: '12:00:00'
           before: '05:00:00'
         - condition: state
-          entity_id: switch.kok_lilla_fonstret
+          entity_id: light.kok_lilla_fonstret
           state: 'off'
     action:
       - service: script.kitchen_light_25

@@ -230,8 +230,8 @@
     name: Morgonbelysning
     view: no
     entities:
-      - switch.kok_stora_fonstret
-      - switch.kok_lilla_fonstret
+      - light.kok_stora_fonstret
+      - light.kok_lilla_fonstret
       - light.hall_byra_dimmer
       - light.vardagsrum_fonster_dimmer
 
@@ -239,16 +239,16 @@
     name: Kvällsbelysning
     view: no
     entities:
-      - switch.kok_stora_fonstret
-      - switch.kok_lilla_fonstret
+      - light.kok_stora_fonstret
+      - light.kok_lilla_fonstret
       - light.hall_byra_dimmer
-      - switch.hall_skap
+      - light.hall_skap
       - light.vardagsrum_fonster_dimmer
       - light.vardagsrum_byra_dimmer
-      - switch.vardagsrum_vitrinskap
-      - switch.sovrum_fonster
-      - switch.extrarum_fonster
-      - switch.andreas_fonster
+      - light.vardagsrum_vitrinskap
+      - light.sovrum_fonster
+      - light.extrarum_fonster
+      - light.andreas_fonster
 
   night_lights:
     name: Nattbelysning
@@ -262,22 +262,22 @@
     name: Utomhusbelysning
     view: no
     entities:
-      - switch.friggebod_stora_fonstret
-      - switch.friggebod_lilla_fonstret
-      - switch.uterum_fonster
-      - switch.uterum_led
+      - light.friggebod_stora_fonstret
+      - light.friggebod_lilla_fonstret
+      - light.uterum_fonster
+      - light.uterum_led
       - light.spabad_vagg
 
   away_lights:
     name: Bortabelysning
     view: no
     entities:
-      - switch.kok_stora_fonstret
-      - switch.kok_lilla_fonstret
+      - light.kok_stora_fonstret
+      - light.kok_lilla_fonstret
       - light.hall_byra_dimmer
       - light.vardagsrum_fonster_dimmer
-      - switch.sovrum_fonster
-      - switch.andreas_fonster
+      - light.sovrum_fonster
+      - light.andreas_fonster
 
 #############
 #############
@@ -312,8 +312,8 @@
       #- sensor.kyl_humidity # Onödigt att visa, kanska kan larma om ovanligt värde
       - sensor.frys_temperature
       #- sensor.frys_humidity # Onödigt att visa, kanska kan larma om ovanligt värde
-      - switch.kok_stora_fonstret
-      - switch.kok_lilla_fonstret
+      - light.kok_stora_fonstret
+      - light.kok_lilla_fonstret
       - light.kok_underskap_bank
       - light.kok_underskap_diskbank
       - light.kok_vitrinskap 
@@ -326,7 +326,7 @@
       - sensor.hall_temperature
       - sensor.hall_humidity
       - light.hall_byra_dimmer
-      - switch.hall_skap
+      - light.hall_skap
 
   laundry:
     name: Tvättstuga
@@ -343,7 +343,7 @@
       - sensor.vardagsrum_temperature
       - light.vardagsrum_fonster_dimmer
       - light.vardagsrum_byra_dimmer
-      - switch.vardagsrum_vitrinskap
+      - light.vardagsrum_vitrinskap
       - switch.vardagsrum_stereobank
       - switch.vardagsrum_tv
       - switch.vardagsrum_subbas
@@ -364,7 +364,7 @@
     view: no
     entities:
       - sensor.sovrum
-      - switch.sovrum_fonster
+      - light.sovrum_fonster
 
   andreas_room:
     name: Andreas rum
@@ -372,23 +372,21 @@
     entities:
       - sensor.andreas_rum_temperature
       - sensor.andreas_rum_humidity
-      - switch.andreas_fonster
-      - switch.andreas_bokhylla
-      - switch.andreas_skrivbord
+      - light.andreas_fonster
 
   extra_room:
     name: Extrarum
     view: no
     entities:
-      - switch.extrarum_fonster
+      - light.extrarum_fonster
 
   conservatory:
     name: Uterum
     view: no
     entities:
       - sensor.uterum
-      - switch.uterum_fonster
-      - switch.uterum_led
+      - light.uterum_fonster
+      - light.uterum_led
 
   attic:
     name: Vinden
@@ -408,8 +406,8 @@
     entities:
       - sensor.friggebod_temperature
       - sensor.friggebod_humidity
-      - switch.friggebod_lilla_fonstret
-      - switch.friggebod_stora_fonstret
+      - light.friggebod_lilla_fonstret
+      - light.friggebod_stora_fonstret
 
   garage:
     name: Garage/Förråd
@@ -427,7 +425,7 @@
     entities:
       - sensor.ute
       - sensor.ljusstyrka
-      - switch.friggebod_ute
+      - light.friggebod_ute
 
   fan:
     name: Ventilation

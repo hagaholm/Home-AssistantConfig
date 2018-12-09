@@ -163,6 +163,8 @@
         data:
           entity_id: light.vardagsrum_fonster_dimmer
           brightness_pct: 40
+      - service: homeassistant.turn_on
+        entity_id: light.uterum_fonster
 
   ### --------------------- ###
   ### Morgonjulbelysning on ###
@@ -190,6 +192,8 @@
       # Added
       - service: homeassistant.turn_on
         entity_id: light.andreas_fonster
+      - service: homeassistant.turn_on
+        entity_id: light.uterum_fonster
 
   ###########################
   ### Morgonbelysning off ###
@@ -247,9 +251,8 @@
         data:
           entity_id: light.vardagsrum_byra_dimmer
           brightness_pct: 50
-#      - service: notify.pushbullet
-#        data:
-#          message: "Kvällsbelysning default on"
+      - service: homeassistant.turn_on
+        entity_id: light.uterum_fonster
 
   ### --------------------- ###
   ### Kvällsjulbelysning on ###
@@ -285,9 +288,8 @@
         data:
           entity_id: light.vardagsrum_byra_dimmer
           brightness_pct: 50
-#      - service: notify.pushbullet
-#        data:
-#          message: "Kvällsjulbelysning on"
+      - service: homeassistant.turn_on
+        entity_id: light.uterum_fonster
 
   ###########################
   ### Kvällsbelysning off ###
@@ -323,12 +325,8 @@
   night_light_off:
     alias: Nattbelysning off
     sequence:
-      - service: light.turn_off
-        entity_id: light.hall_byra_dimmer
-      - service: light.turn_off
-        entity_id: light.vardagsrum_fonster_dimmer
-      - service: light.turn_off
-        entity_id: light.vardagsrum_byra_dimmer
+      - service: homeassistant.turn_off
+        entity_id: group.night_lights
 
   #########################
   ### Bortabelysning on ###
@@ -367,9 +365,8 @@
         data:
           entity_id: light.vardagsrum_fonster_dimmer
           brightness_pct: 50
-#      - service: notify.pushbullet
-#        data:
-#          message: "Bortabelysning default on"
+      - service: homeassistant.turn_on
+        entity_id: light.uterum_fonster
 
   ### -------------------- ###
   ### Bortajulbelysning on ###
@@ -397,9 +394,8 @@
         data:
           entity_id: light.vardagsrum_fonster_dimmer
           brightness_pct: 100
-#      - service: notify.pushbullet
-#        data:
-#          message: "Bortajulbelysning on"
+      - service: homeassistant.turn_on
+        entity_id: light.uterum_fonster
 
   ##########################
   ### Bortabelysning off ###
@@ -570,18 +566,3 @@
         entity_id: light.friggebod_stora_fonstret
       - service: homeassistant.turn_off
         entity_id: light.friggebod_ute
-
-  ##########################
-  ### Uterumsfönster off ###
-  ##########################
-  uterum_window_light_off:
-    alias: Uterumsfönster off
-    sequence:
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_fonster
-      - delay: '00:00:01'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_fonster
-      - delay: '00:00:01'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_fonster

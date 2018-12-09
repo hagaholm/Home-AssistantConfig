@@ -148,12 +148,11 @@ light:
   - platform: switch
     name: Andreas fönster
     entity_id: switch.andreas_fonster
-# didn't work    icon: mdi:lightbulb
   - platform: switch
     name: Extrarum fönster
     entity_id: switch.extrarum_fonster
   - platform: switch
-    name: Friggebod lila fönstret
+    name: Friggebod lilla fönstret
     entity_id: switch.friggebod_lilla_fonstret
   - platform: switch
     name: Friggebod stora fönstret
@@ -305,6 +304,14 @@ input_select:
 
   kitchen_lights:
     name: Köksbelysning
+    options:
+     - Off
+     - On
+    initial: Off
+    icon: mdi:lightbulb
+
+  uterum_led_lights:
+    name: Uterum ledbelysning
     options:
      - Off
      - On

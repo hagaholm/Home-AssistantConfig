@@ -299,15 +299,16 @@ input_select:
      - Kvällsbelysning
      - Nattbelysning
      - Bortabelysning
-    initial: Off
+#    initial: Off
     icon: mdi:lightbulb
 
   kitchen_lights:
     name: Köksbelysning
     options:
      - Off
-     - On
-    initial: Off
+     - 25%
+     - 100%
+#    initial: Off
     icon: mdi:lightbulb
 
   uterum_led_lights:
@@ -315,7 +316,7 @@ input_select:
     options:
      - Off
      - On
-    initial: Off
+#    initial: Off
     icon: mdi:lightbulb
 
   outside_lights:
@@ -323,7 +324,7 @@ input_select:
     options:
      - Off
      - On
-    initial: Off
+#    initial: Off
     icon: mdi:lightbulb
 
 ####################################################

@@ -26,6 +26,10 @@
           entity_id: sensor.uterum
           above: 18
     action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.uterum_led_lights
+          option: On
       - service: light.turn_on
         entity_id: light.uterum_led
 
@@ -56,6 +60,10 @@
           entity_id: group.track_for_home_devices
           state: 'home'
     action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.uterum_led_lights
+          option: On
       - service: light.turn_on
         entity_id: light.uterum_led
 
@@ -86,6 +94,10 @@
           entity_id: group.track_for_home_devices
           state: 'home'
     action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.uterum_led_lights
+          option: On
       - service: light.turn_on
         entity_id: light.uterum_led
 
@@ -239,6 +251,10 @@
           entity_id: light.uterum_led
           state: 'on'
     action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.uterum_led_lights
+          option: Off
       - service: homeassistant.turn_off
         entity_id: light.uterum_led
       - delay: '00:00:01'
@@ -266,6 +282,10 @@
       entity_id: light.uterum_led
       state: 'on'
     action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.uterum_led_lights
+          option: Off
       - service: homeassistant.turn_off
         entity_id: light.uterum_led
       - delay: '00:00:01'
@@ -292,6 +312,10 @@
       entity_id: light.uterum_led
       state: 'on'
     action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.uterum_led_lights
+          option: Off
       - service: homeassistant.turn_off
         entity_id: light.uterum_led
       - delay: '00:00:01'

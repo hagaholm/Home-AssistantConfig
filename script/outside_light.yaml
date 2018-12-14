@@ -69,22 +69,46 @@
         entity_id: light.friggebod_lilla_fonstret
       - service: light.turn_on
         entity_id: light.friggebod_stora_fonstret
-      - delay: '00:00:01'
+      - delay: '00:01:00'
       - service: light.turn_on
         entity_id: light.friggebod_lilla_fonstret
       - service: light.turn_on
         entity_id: light.friggebod_stora_fonstret
-      - delay: '00:00:01'
+      - delay: '00:01:00'
       - service: light.turn_on
         entity_id: light.friggebod_lilla_fonstret
       - service: light.turn_on
         entity_id: light.friggebod_stora_fonstret
-      - delay: '00:00:01'
+      - delay: '00:01:00'
       - service: light.turn_on
         entity_id: light.friggebod_lilla_fonstret
       - service: light.turn_on
         entity_id: light.friggebod_stora_fonstret
-      - delay: '00:00:01'
+      - delay: '00:01:0'
+      - service: light.turn_on
+        entity_id: light.friggebod_lilla_fonstret
+      - service: light.turn_on
+        entity_id: light.friggebod_stora_fonstret
+      - service: light.turn_on
+        entity_id: light.friggebod_lilla_fonstret
+      - service: light.turn_on
+        entity_id: light.friggebod_stora_fonstret
+      - delay: '00:01:00'
+      - service: light.turn_on
+        entity_id: light.friggebod_lilla_fonstret
+      - service: light.turn_on
+        entity_id: light.friggebod_stora_fonstret
+      - delay: '00:01:00'
+      - service: light.turn_on
+        entity_id: light.friggebod_lilla_fonstret
+      - service: light.turn_on
+        entity_id: light.friggebod_stora_fonstret
+      - delay: '00:01:00'
+      - service: light.turn_on
+        entity_id: light.friggebod_lilla_fonstret
+      - service: light.turn_on
+        entity_id: light.friggebod_stora_fonstret
+      - delay: '00:01:00'
       - service: light.turn_on
         entity_id: light.friggebod_lilla_fonstret
       - service: light.turn_on
@@ -104,7 +128,7 @@
         entity_id: light.friggebod_stora_fonstret
       - service: homeassistant.turn_off
         entity_id: light.friggebod_ute
-      - delay: '00:00:01'
+      - delay: '00:01:00'
       - service: light.turn_off
         entity_id: light.spabad_vagg
       - service: homeassistant.turn_off
@@ -113,7 +137,7 @@
         entity_id: light.friggebod_stora_fonstret
       - service: homeassistant.turn_off
         entity_id: light.friggebod_ute
-      - delay: '00:00:01'
+      - delay: '00:01:00'
       - service: light.turn_off
         entity_id: light.spabad_vagg
       - service: homeassistant.turn_off
@@ -122,7 +146,7 @@
         entity_id: light.friggebod_stora_fonstret
       - service: homeassistant.turn_off
         entity_id: light.friggebod_ute
-      - delay: '00:00:01'
+      - delay: '00:01:00'
       - service: light.turn_off
         entity_id: light.spabad_vagg
       - service: homeassistant.turn_off
@@ -131,7 +155,51 @@
         entity_id: light.friggebod_stora_fonstret
       - service: homeassistant.turn_off
         entity_id: light.friggebod_ute
-      - delay: '00:00:01'
+      - delay: '00:01:00'
+      - service: light.turn_off
+        entity_id: light.spabad_vagg
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_lilla_fonstret
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_stora_fonstret
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_ute
+      - service: light.turn_off
+        entity_id: light.spabad_vagg
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_lilla_fonstret
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_stora_fonstret
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_ute
+      - delay: '00:01:00'
+      - service: light.turn_off
+        entity_id: light.spabad_vagg
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_lilla_fonstret
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_stora_fonstret
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_ute
+      - delay: '00:01:00'
+      - service: light.turn_off
+        entity_id: light.spabad_vagg
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_lilla_fonstret
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_stora_fonstret
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_ute
+      - delay: '00:01:00'
+      - service: light.turn_off
+        entity_id: light.spabad_vagg
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_lilla_fonstret
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_stora_fonstret
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_ute
+      - delay: '00:01:00'
       - service: light.turn_off
         entity_id: light.spabad_vagg
       - service: homeassistant.turn_off

@@ -1,0 +1,50 @@
+﻿  ##########################
+  ### Köksbelysning 100% ###
+  ##########################
+  kitchen_light_100:
+    alias: Köksbelysning 100%
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: light.kok_underskap_bank
+          brightness_pct: 100
+      - service: light.turn_on
+        data:
+          entity_id: light.kok_underskap_diskbank
+          brightness_pct: 100
+      - service: light.turn_on
+        data:
+          entity_id: light.kok_vitrinskap
+          brightness_pct: 100
+
+  #########################
+  ### Köksbelysning 25% ###
+  #########################
+  kitchen_light_25:
+    alias: Köksbelysning 25%
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: light.kok_underskap_bank
+          brightness_pct: 25
+      - service: light.turn_on
+        data:
+          entity_id: light.kok_underskap_diskbank
+          brightness_pct: 25
+      - service: light.turn_on
+        data:
+          entity_id: light.kok_vitrinskap
+          brightness_pct: 25
+
+  #########################
+  ### Köksbelysning off ###
+  #########################
+  kitchen_light_off:
+    alias: Köksbelysning off
+    sequence:
+      - service: light.turn_off
+        entity_id: light.kok_underskap_bank
+      - service: light.turn_off
+        entity_id: light.kok_underskap_diskbank
+      - service: light.turn_off
+        entity_id: light.kok_vitrinskap

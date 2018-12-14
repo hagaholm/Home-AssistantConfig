@@ -1,0 +1,27 @@
+﻿  #####################
+  ### Nattbelysning ###
+  #####################
+  night_light:
+    alias: Nattbelysning
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: light.hall_byra_dimmer
+          brightness_pct: 1
+      - service: light.turn_on
+        data:
+          entity_id: light.vardagsrum_fonster_dimmer
+          brightness_pct: 1
+      - service: light.turn_on
+        data:
+          entity_id: light.vardagsrum_byra_dimmer
+          brightness_pct: 1
+
+  #########################
+  ### Nattbelysning off ###
+  #########################
+  night_light_off:
+    alias: Nattbelysning off
+    sequence:
+      - service: homeassistant.turn_off
+        entity_id: group.night_lights

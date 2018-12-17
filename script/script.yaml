@@ -5,7 +5,23 @@
     alias: Godnatt, släcker allt
     sequence:
       - service: homeassistant.turn_off
-        entity_id: switch.sovrum_fonster
+        entity_id: light.sovrum_fonster
+      - service: homeassistant.turn_off
+        entity_id: group.evening_lights
+      - service: homeassistant.turn_off
+        entity_id: group.kitchen_lights
+      - service: homeassistant.turn_off
+        entity_id: group.outside_lights
+
+  ###########################################
+  ### Godnatt, släcker allt om 10 minuter ###
+  ###########################################
+  goodnight_10_min:
+    alias: Godnatt, släcker allt om 10 minuter
+    sequence:
+      - delay: '00:10:00'
+      - service: homeassistant.turn_off
+        entity_id: light.sovrum_fonster
       - service: homeassistant.turn_off
         entity_id: group.evening_lights
       - service: homeassistant.turn_off
@@ -20,7 +36,7 @@
     alias: Godnatt, stänger av allt
     sequence:
       - service: homeassistant.turn_off
-        entity_id: switch.sovrum_fonster
+        entity_id: light.sovrum_fonster
       - service: homeassistant.turn_off
         entity_id: group.evening_lights
       - service: homeassistant.turn_off
@@ -36,21 +52,53 @@
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_extra_subbas
 
-  ###########################################
-  ### Godnatt, släcker allt om 10 minuter ###
-  ###########################################
-  goodnight_in_10_min:
-    alias: Godnatt, släcker allt om 10 minuter
+  ##############################################
+  ### Godnatt, stänger av allt om 10 minuter ###
+  ##############################################
+  goodnight_all_10_min:
+    alias: Godnatt, stänger av allt om 10 minuter
     sequence:
       - delay: '00:10:00'
       - service: homeassistant.turn_off
-        entity_id: switch.sovrum_fonster
+        entity_id: light.sovrum_fonster
       - service: homeassistant.turn_off
         entity_id: group.evening_lights
       - service: homeassistant.turn_off
         entity_id: group.kitchen_lights
       - service: homeassistant.turn_off
         entity_id: group.outside_lights
+      - service: homeassistant.turn_off
+        entity_id: switch.vardagsrum_stereobank
+      - service: homeassistant.turn_off
+        entity_id: switch.vardagsrum_tv
+      - service: homeassistant.turn_off
+        entity_id: switch.vardagsrum_subbas
+      - service: homeassistant.turn_off
+        entity_id: switch.vardagsrum_extra_subbas
+
+  ###################################################
+  ### Godnatt, stänger av allt (tv om 10 minuter) ###
+  ###################################################
+  goodnight_all_tv_10_min:
+    alias: Godnatt, stänger av allt (tv om 10 minuter)
+    sequence:
+      - service: homeassistant.turn_off
+        entity_id: light.sovrum_fonster
+      - service: homeassistant.turn_off
+        entity_id: group.evening_lights
+      - service: homeassistant.turn_off
+        entity_id: group.kitchen_lights
+      - service: homeassistant.turn_off
+        entity_id: group.outside_lights
+      - delay: '00:10:00'
+      - service: homeassistant.turn_off
+        entity_id: switch.vardagsrum_stereobank
+      - service: homeassistant.turn_off
+        entity_id: switch.vardagsrum_tv
+      - service: homeassistant.turn_off
+        entity_id: switch.vardagsrum_subbas
+      - service: homeassistant.turn_off
+        entity_id: switch.vardagsrum_extra_subbas
 
   #########################
   ### Släck i sovrummet ###
@@ -59,7 +107,7 @@
     alias: Släck i sovrummet
     sequence:
       - service: homeassistant.turn_off
-        entity_id: switch.sovrum_fonster
+        entity_id: light.sovrum_fonster
 
   ############################
   ### Släck i lilla rummet ###
@@ -68,7 +116,7 @@
     alias: Släck i lilla rummet
     sequence:
       - service: homeassistant.turn_off
-        entity_id: switch.extrarum_fonster
+        entity_id: light.extrarum_fonster
 
   ###########################
   ### Släck i Andreas rum ###
@@ -77,515 +125,5 @@
     alias: Släck i Andreas rum
     sequence:
       - service: homeassistant.turn_off
-        entity_id: switch.andreas_fonster
-      - service: homeassistant.turn_off
-        entity_id: switch.andreas_bokhylla
-      - service: homeassistant.turn_off
-        entity_id: switch.andreas_skrivbord
+        entity_id: light.andreas_fonster
 
-  ##########################
-  ### Köksbelysning 100% ###
-  ##########################
-  kitchen_light_100:
-    alias: Köksbelysning 100%
-    sequence:
-      - service: light.turn_on
-        data:
-          entity_id: light.kok_underskap_bank
-          brightness_pct: 100
-      - service: light.turn_on
-        data:
-          entity_id: light.kok_underskap_diskbank
-          brightness_pct: 100
-      - service: light.turn_on
-        data:
-          entity_id: light.kok_vitrinskap
-          brightness_pct: 100
-
-  #########################
-  ### Köksbelysning 25% ###
-  #########################
-  kitchen_light_25:
-    alias: Köksbelysning 25%
-    sequence:
-      - service: light.turn_on
-        data:
-          entity_id: light.kok_underskap_bank
-          brightness_pct: 25
-      - service: light.turn_on
-        data:
-          entity_id: light.kok_underskap_diskbank
-          brightness_pct: 25
-      - service: light.turn_on
-        data:
-          entity_id: light.kok_vitrinskap
-          brightness_pct: 25
-
-  #########################
-  ### Köksbelysning off ###
-  #########################
-  kitchen_light_off:
-    alias: Köksbelysning off
-    sequence:
-      - service: light.turn_off
-        entity_id: light.kok_underskap_bank
-      - service: light.turn_off
-        entity_id: light.kok_underskap_diskbank
-      - service: light.turn_off
-        entity_id: light.kok_vitrinskap
-
-  ##########################
-  ### Morgonbelysning on ###
-  ##########################
-  morning_lights_on:
-    alias: Morgonbelysning on
-    sequence:
-      - service: script.turn_on
-        data_template:
-          entity_id: >
-            {% if is_state('input_boolean.christmas_light', 'on') %}
-              script.morning_lights_christmas_on
-            {% else %}
-              script.morning_lights_default_on
-            {% endif %}
-
-  ### -------------------------- ###
-  ### Morgonbelysning default on ###
-  ### -------------------------- ###
-  morning_lights_default_on:
-    alias: Morgonbelysning default on
-    sequence:
-      - service: homeassistant.turn_on
-        entity_id: switch.kok_stora_fonstret
-      - service: homeassistant.turn_on
-        entity_id: switch.kok_lilla_fonstret
-      - service: light.turn_on
-        data:
-          entity_id: light.hall_byra_dimmer
-          brightness_pct: 40
-      - service: light.turn_on
-        data:
-          entity_id: light.vardagsrum_fonster_dimmer
-          brightness_pct: 40
-
-  ### --------------------- ###
-  ### Morgonjulbelysning on ###
-  ### --------------------- ###
-  morning_lights_christmas_on:
-    alias: Morgonjulbelysning on
-    sequence:
-      - service: homeassistant.turn_on
-        entity_id: switch.kok_stora_fonstret
-      - service: homeassistant.turn_on
-        entity_id: switch.kok_lilla_fonstret
-      # Updated
-      - service: light.turn_on
-        data:
-          entity_id: light.hall_byra_dimmer
-          brightness_pct: 75
-      # Updated
-      - service: light.turn_on
-        data:
-          entity_id: light.vardagsrum_fonster_dimmer
-          brightness_pct: 100
-      # Added
-      - service: homeassistant.turn_on
-        entity_id: switch.extrarum_fonster
-      # Added
-      - service: homeassistant.turn_on
-        entity_id: switch.andreas_fonster
-
-  ###########################
-  ### Morgonbelysning off ###
-  ###########################
-  morning_lights_off:
-    alias: Morgonbelysning off
-    sequence:
-      - service: homeassistant.turn_off
-        entity_id: group.evening_lights
-
-  ##########################
-  ### Kvällsbelysning on ###
-  ##########################
-  evening_lights_on:
-    alias: Kvällsbelysning on
-    sequence:
-      - service: script.turn_on
-        data_template:
-          entity_id: >
-            {% if is_state('input_boolean.christmas_light', 'on') %}
-              script.evening_lights_christmas_on
-            {% else %}
-              script.evening_lights_default_on
-            {% endif %}
-
-  ### -------------------------- ###
-  ### Kvällsbelysning default on ###
-  ### -------------------------- ###
-  evening_lights_default_on:
-    alias: Kvällsbelysning default on
-    sequence:
-      - service: homeassistant.turn_on
-        entity_id: switch.kok_stora_fonstret
-      - service: homeassistant.turn_on
-        entity_id: switch.kok_lilla_fonstret
-      - service: homeassistant.turn_on
-        entity_id: switch.hall_skap
-      - service: homeassistant.turn_on
-        entity_id: switch.vardagsrum_vitrinskap
-      - service: homeassistant.turn_on
-        entity_id: switch.sovrum_fonster
-      - service: homeassistant.turn_on
-        entity_id: switch.extrarum_fonster
-      - service: homeassistant.turn_on
-        entity_id: switch.andreas_fonster
-      - service: light.turn_on
-        data:
-          entity_id: light.hall_byra_dimmer
-          brightness_pct: 40
-      - service: light.turn_on
-        data:
-          entity_id: light.vardagsrum_fonster_dimmer
-          brightness_pct: 50
-      - service: light.turn_on
-        data:
-          entity_id: light.vardagsrum_byra_dimmer
-          brightness_pct: 50
-#      - service: notify.pushbullet
-#        data:
-#          message: "Kvällsbelysning default on"
-
-  ### --------------------- ###
-  ### Kvällsjulbelysning on ###
-  ### --------------------- ###
-  evening_lights_christmas_on:
-    alias: Kvällsjulbelysning on
-    sequence:
-      - service: homeassistant.turn_on
-        entity_id: switch.kok_stora_fonstret
-      - service: homeassistant.turn_on
-        entity_id: switch.kok_lilla_fonstret
-      - service: homeassistant.turn_on
-        entity_id: switch.hall_skap
-      - service: homeassistant.turn_on
-        entity_id: switch.vardagsrum_vitrinskap
-      - service: homeassistant.turn_on
-        entity_id: switch.sovrum_fonster
-      - service: homeassistant.turn_on
-        entity_id: switch.extrarum_fonster
-      - service: homeassistant.turn_on
-        entity_id: switch.andreas_fonster
-      # Updated
-      - service: light.turn_on
-        data:
-          entity_id: light.hall_byra_dimmer
-          brightness_pct: 75
-      # Updated
-      - service: light.turn_on
-        data:
-          entity_id: light.vardagsrum_fonster_dimmer
-          brightness_pct: 100
-      - service: light.turn_on
-        data:
-          entity_id: light.vardagsrum_byra_dimmer
-          brightness_pct: 50
-#      - service: notify.pushbullet
-#        data:
-#          message: "Kvällsjulbelysning on"
-
-  ###########################
-  ### Kvällsbelysning off ###
-  ###########################
-  evening_lights_off:
-    alias: Kvällsbelysning off
-    sequence:
-      - service: homeassistant.turn_off
-        entity_id: group.evening_lights
-
-  #####################
-  ### Nattbelysning ###
-  #####################
-  night_light:
-    alias: Nattbelysning
-    sequence:
-      - service: light.turn_on
-        data:
-          entity_id: light.hall_byra_dimmer
-          brightness_pct: 1
-      - service: light.turn_on
-        data:
-          entity_id: light.vardagsrum_fonster_dimmer
-          brightness_pct: 1
-      - service: light.turn_on
-        data:
-          entity_id: light.vardagsrum_byra_dimmer
-          brightness_pct: 1
-
-  #########################
-  ### Nattbelysning off ###
-  #########################
-  night_light_off:
-    alias: Nattbelysning off
-    sequence:
-      - service: light.turn_off
-        entity_id: light.hall_byra_dimmer
-      - service: light.turn_off
-        entity_id: light.vardagsrum_fonster_dimmer
-      - service: light.turn_off
-        entity_id: light.vardagsrum_byra_dimmer
-
-  #########################
-  ### Bortabelysning on ###
-  #########################
-  away_lights_on:
-    alias: Bortabelysning on
-    sequence:
-      - service: script.turn_on
-        data_template:
-          entity_id: >
-            {% if is_state('input_boolean.christmas_light', 'on') %}
-              script.away_lights_christmas_on
-            {% else %}
-              script.away_lights_default_on
-            {% endif %}
-
-  ### ------------------------- ###
-  ### Bortabelysning default on ###
-  ### ------------------------- ###
-  away_lights_default_on:
-    alias: Bortabelysning default on
-    sequence:
-      - service: homeassistant.turn_on
-        entity_id: switch.kok_stora_fonstret
-      - service: homeassistant.turn_on
-        entity_id: switch.kok_lilla_fonstret
-      - service: homeassistant.turn_on
-        entity_id: switch.sovrum_fonster
-      - service: homeassistant.turn_on
-        entity_id: switch.andreas_fonster
-      - service: light.turn_on
-        data:
-          entity_id: light.hall_byra_dimmer
-          brightness_pct: 40
-      - service: light.turn_on
-        data:
-          entity_id: light.vardagsrum_fonster_dimmer
-          brightness_pct: 50
-#      - service: notify.pushbullet
-#        data:
-#          message: "Bortabelysning default on"
-
-  ### -------------------- ###
-  ### Bortajulbelysning on ###
-  ### -------------------- ###
-  away_lights_christmas_on:
-    alias: Bortajulbelysning on
-    sequence:
-      - service: homeassistant.turn_on
-        entity_id: switch.kok_stora_fonstret
-      - service: homeassistant.turn_on
-        entity_id: switch.kok_lilla_fonstret
-      - service: homeassistant.turn_on
-        entity_id: switch.sovrum_fonster
-      - service: homeassistant.turn_on
-        entity_id: switch.extrarum_fonster
-      - service: homeassistant.turn_on
-        entity_id: switch.andreas_fonster
-      # Updated
-      - service: light.turn_on
-        data:
-          entity_id: light.hall_byra_dimmer
-          brightness_pct: 75
-      # Updated
-      - service: light.turn_on
-        data:
-          entity_id: light.vardagsrum_fonster_dimmer
-          brightness_pct: 100
-#      - service: notify.pushbullet
-#        data:
-#          message: "Bortajulbelysning on"
-
-  ##########################
-  ### Bortabelysning off ###
-  ##########################
-  away_lights_off:
-    alias: Bortabelysning off
-    sequence:
-      - service: homeassistant.turn_off
-        entity_id: group.away_lights
-
-  ####################
-  ### Fläkt normal ###
-  ####################
-  fan_normal:
-    alias: Fläkt normal
-    sequence:
-      - service: homeassistant.turn_off
-        entity_id: switch.fan_speed
-
-  ######################
-  ### Fläkt forcerad ###
-  ######################
-  fan_forced:
-    alias: Fläkt forcerad
-    sequence:
-      - service: homeassistant.turn_on
-        entity_id: switch.fan_speed
-
-  #######################
-  ### Spabelysning on ###
-  #######################
-  spa_light_on:
-    alias: Spabelysning on
-    sequence:
-      - service: light.turn_on
-        data:
-          entity_id: light.spabad_vagg
-          brightness_pct: 100
-      - delay: '00:01:00'
-      - service: light.turn_on
-        data:
-          entity_id: light.spabad_vagg
-          brightness_pct: 100
-      - delay: '00:01:00'
-      - service: light.turn_on
-        data:
-          entity_id: light.spabad_vagg
-          brightness_pct: 100
-      - delay: '00:01:00'
-      - service: light.turn_on
-        data:
-          entity_id: light.spabad_vagg
-          brightness_pct: 100
-      - delay: '00:01:00'
-      - service: light.turn_on
-        data:
-          entity_id: light.spabad_vagg
-          brightness_pct: 100
-      - delay: '00:01:00'
-      - service: light.turn_on
-        data:
-          entity_id: light.spabad_vagg
-          brightness_pct: 100
-      - delay: '00:01:00'
-      - service: light.turn_on
-        data:
-          entity_id: light.spabad_vagg
-          brightness_pct: 100
-      - delay: '00:01:00'
-      - service: light.turn_on
-        data:
-          entity_id: light.spabad_vagg
-          brightness_pct: 100
-      - delay: '00:01:00'
-      - service: light.turn_on
-        data:
-          entity_id: light.spabad_vagg
-          brightness_pct: 100
-      - delay: '00:01:00'
-      - service: light.turn_on
-        data:
-          entity_id: light.spabad_vagg
-          brightness_pct: 100
-      - delay: '00:01:00'
-      - service: light.turn_on
-        data:
-          entity_id: light.spabad_vagg
-          brightness_pct: 20
-
-  ##############################
-  ### Friggebod belysning on ###
-  ##############################
-  friggebod_light_on:
-    alias: Friggebod belysning on
-    sequence:
-      - service: homeassistant.turn_on
-        entity_id: switch.friggebod_lilla_fonstret
-      - service: homeassistant.turn_on
-        entity_id: switch.friggebod_stora_fonstret
-      - delay: '00:00:01'
-      - service: homeassistant.turn_on
-        entity_id: switch.friggebod_lilla_fonstret
-      - service: homeassistant.turn_on
-        entity_id: switch.friggebod_stora_fonstret
-      - delay: '00:00:01'
-      - service: homeassistant.turn_on
-        entity_id: switch.friggebod_lilla_fonstret
-      - service: homeassistant.turn_on
-        entity_id: switch.friggebod_stora_fonstret
-      - delay: '00:00:01'
-      - service: homeassistant.turn_on
-        entity_id: switch.friggebod_lilla_fonstret
-      - service: homeassistant.turn_on
-        entity_id: switch.friggebod_stora_fonstret
-      - delay: '00:00:01'
-      - service: homeassistant.turn_on
-        entity_id: switch.friggebod_lilla_fonstret
-      - service: homeassistant.turn_on
-        entity_id: switch.friggebod_stora_fonstret
-
-  ########################
-  ### Utebelysning off ###
-  ########################
-  outside_light_off:
-    alias: Utebelysning off
-    sequence:
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_lilla_fonstret
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_stora_fonstret
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_ute
-      - delay: '00:00:01'
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_lilla_fonstret
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_stora_fonstret
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_ute
-      - delay: '00:00:01'
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_lilla_fonstret
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_stora_fonstret
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_ute        
-      - delay: '00:00:01'
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_lilla_fonstret
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_stora_fonstret
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_ute        
-      - delay: '00:00:01'
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_lilla_fonstret
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_stora_fonstret
-      - service: homeassistant.turn_off
-        entity_id: switch.friggebod_ute
-
-  #########################
-  ### Uterumsfönster off ###
-  ##########################
-  uterum_window_light_off:
-    alias: Uterumsfönster off
-    sequence:
-      - service: homeassistant.turn_off
-        entity_id: switch.uterum_fonster
-      - delay: '00:00:01'
-      - service: homeassistant.turn_off
-        entity_id: switch.uterum_fonster
-      - delay: '00:00:01'
-      - service: homeassistant.turn_off
-        entity_id: switch.uterum_fonster

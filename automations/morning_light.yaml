@@ -23,7 +23,11 @@
           after: '05:00:00'
           before: '12:00:00'
     action:
-      service: script.morning_lights_on
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Morgonbelysning
+      - service: script.morning_lights_on
 
     ##########################################################
     ### Tänder lampor när första kommer hem på förmiddagen ###
@@ -48,7 +52,11 @@
           after: '05:00:00'
           before: '12:00:00'
     action:
-      service: script.morning_lights_on
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Morgonbelysning
+      - service: script.morning_lights_on
 
     ############################################################
     ### Släcker lampor på förmiddagen när det blir ljust ute ###
@@ -72,7 +80,11 @@
           after: '05:00:00'
           before: '12:00:00'
     action:
-      service: script.morning_lights_off
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Off
+      - service: script.morning_lights_off
 
     #############################################################
     ### Släcker lampor på förmiddagen när sista åker hemifrån ###
@@ -91,4 +103,8 @@
       after: '05:00:00'
       before: '12:00:00'
     action:
-      service: script.morning_lights_off
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Off
+      - service: script.morning_lights_off

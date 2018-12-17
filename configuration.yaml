@@ -91,7 +91,6 @@ notify:
 #  channel_name: !secret pushetta_channel_name
 #  api_key: !secret pushetta_api_key
 
-
 ####################################################
 #                                                  #
 #                      LOGGING                     #
@@ -122,7 +121,6 @@ group: !include_dir_merge_named group
 script: !include_dir_merge_named script
 #---------------------------------------------------
 
-
 ####################################################
 #                                                  #
 #                    TELLSTICK                     #
@@ -130,7 +128,6 @@ script: !include_dir_merge_named script
 ####################################################
 tellstick:
   signal_repetitions: 3
-
 
 ####################################################
 #                                                  #
@@ -140,7 +137,6 @@ tellstick:
 cover:
   - platform: tellstick
 
-
 ####################################################
 #                                                  #
 #                     LIGHT                        #
@@ -149,6 +145,42 @@ cover:
 light:
   - platform: tellstick
 
+  - platform: switch
+    name: Andreas fönster
+    entity_id: switch.andreas_fonster
+  - platform: switch
+    name: Extrarum fönster
+    entity_id: switch.extrarum_fonster
+  - platform: switch
+    name: Friggebod lilla fönstret
+    entity_id: switch.friggebod_lilla_fonstret
+  - platform: switch
+    name: Friggebod stora fönstret
+    entity_id: switch.friggebod_stora_fonstret
+  - platform: switch
+    name: Friggebod ute
+    entity_id: switch.friggebod_ute
+  - platform: switch
+    name: Hall skåp
+    entity_id: switch.hall_skap
+  - platform: switch
+    name: Kök lilla fönstret
+    entity_id: switch.kok_lilla_fonstret
+  - platform: switch
+    name: Kök stora fönstret
+    entity_id: switch.kok_stora_fonstret
+  - platform: switch
+    name: Sovrum fönster
+    entity_id: switch.sovrum_fonster
+  - platform: switch
+    name: Uterum fönster
+    entity_id: switch.uterum_fonster
+  - platform: switch
+    name: Uterum led
+    entity_id: switch.uterum_led
+  - platform: switch
+    name: Vardagsrum vitrinskåp
+    entity_id: switch.vardagsrum_vitrinskap
 
 ####################################################
 #                                                  #
@@ -177,7 +209,6 @@ switch:
 tts:
   - platform: google
 
-
 ####################################################
 #                                                  #
 #                  MEDIA PLAYER                    #
@@ -187,7 +218,6 @@ media_player:
   - platform: squeezebox
     host: 192.168.1.13
     port: 9090
-
 
 ####################################################
 #                                                  #
@@ -232,6 +262,7 @@ binary_sensor:
   - platform: workday
     country: SE
     name: workday_today
+
   - platform: workday
     country: SE
     name: workday_tomorrow
@@ -242,7 +273,6 @@ binary_sensor:
 #      workday_light:
 #        value_template: '{% if is_state("binary_sensor.workday_today", "on") and is_state("binary_sensor.workday_tomorrow", "on") %}on{% else %}on{% endif %}'
 
-
 ####################################################
 #                                                  #
 #                     INPUT_BOOLEAN                #
@@ -251,8 +281,51 @@ binary_sensor:
 input_boolean:
   christmas_light:
     name: Använd julbelysning
-    initial: off
+    initial: on
     icon: mdi:pine-tree
+
+####################################################
+#                                                  #
+#                     INPUT_SELECT                 #
+#                                                  #
+####################################################
+input_select:
+  inside_lights:
+    name: Innebelysning
+    options:
+     - Off
+     - Morgonbelysning
+     - Förmiddagsbelysning
+     - Kvällsbelysning
+     - Nattbelysning
+     - Bortabelysning
+#    initial: Off
+    icon: mdi:lightbulb
+
+  kitchen_lights:
+    name: Köksbelysning
+    options:
+     - Off
+     - 25%
+     - 100%
+#    initial: Off
+    icon: mdi:lightbulb
+
+  uterum_led_lights:
+    name: Uterum ledbelysning
+    options:
+     - Off
+     - On
+#    initial: Off
+    icon: mdi:lightbulb
+
+  outside_lights:
+    name: Utebelysning
+    options:
+     - Off
+     - On
+#    initial: Off
+    icon: mdi:lightbulb
 
 ####################################################
 #                                                  #
@@ -263,7 +336,6 @@ asuswrt:
     host: 192.168.1.1
     username: admin
     ssh_key: /home/homeassistant/.ssh/id_rsa
-
 
 ####################################################
 #                                                  #

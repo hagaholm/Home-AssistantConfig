@@ -4,7 +4,7 @@
     ### C: 12:00:00 - 21:45:00                            ###
     ###    sensor.ljusstyrka < 250                        ###
     ###    sensor.uterum > 18                             ###
-    ### A: switch.uterum_led = on                         ###
+    ### A: light.uterum_led = on                          ###
     #########################################################
   - alias: Uterums ledbelysning on (home)
     initial_state: 'on'
@@ -26,11 +26,12 @@
           entity_id: sensor.uterum
           above: 18
     action:
-      - service: homeassistant.turn_on
-        entity_id: switch.uterum_led
-#      - service: notify.pushbullet
-#        data:
-#          message: 'Uterums ledbelysning on (home)'
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.uterum_led_lights
+          option: On
+      - service: light.turn_on
+        entity_id: light.uterum_led
 
     #######################################################
     ### Tänder ledbelysning i uterum när det blir varmt ###
@@ -38,7 +39,7 @@
     ### C: 12:00:00 - 21:45:00                          ###
     ###    sensor.ljusstyrka < 250                      ###
     ###    group.track_for_home_devices == home         ###
-    ### A: switch.uterum_led = on                       ###
+    ### A: light.uterum_led = on                        ###
     #######################################################
   - alias: Uterums ledbelysning on (>18)
     initial_state: 'on'
@@ -59,11 +60,12 @@
           entity_id: group.track_for_home_devices
           state: 'home'
     action:
-      - service: homeassistant.turn_on
-        entity_id: switch.uterum_led
-#      - service: notify.pushbullet
-#        data:
-#          message: 'Uterums ledbelysning on (>18)'
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.uterum_led_lights
+          option: On
+      - service: light.turn_on
+        entity_id: light.uterum_led
 
     #######################################################
     ### Tänder ledbelysning i uterum när det blir mörkt ###
@@ -71,7 +73,7 @@
     ### C: 12:00:00 - 21:45:00                          ###
     ###    sensor.uterum > 18                           ###
     ###    group.track_for_home_devices == home         ###
-    ### A: switch.uterum_led = on                       ###
+    ### A: light.uterum_led = on                        ###
     #######################################################
   - alias: Uterums ledbelysning on (<250)
     initial_state: 'on'
@@ -92,37 +94,18 @@
           entity_id: group.track_for_home_devices
           state: 'home'
     action:
-      - service: homeassistant.turn_on
-        entity_id: switch.uterum_led
-#      - service: notify.pushbullet
-#        data:
-#          message: 'Uterums ledbelysning on (<250)'
-
-    ##########################################################
-    ### Tänder belysning i uterumsfönster på eftermiddagen ###
-    ### T: sensor.ljusstyrka < 250                         ###
-    ### C: 12:00:00 - 21:45:00                             ###
-    ### A: switch.uterum_fonster = on                      ###
-    ##########################################################
-  - alias: Uterumsfönster belysning on (<250)
-    initial_state: 'on'
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.ljusstyrka
-      below: 250
-    condition:
-      condition: time
-      after: '12:00:00'
-      before: '21:45:00' 
-    action:
-      - service: homeassistant.turn_on
-        entity_id: switch.uterum_fonster
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.uterum_led_lights
+          option: On
+      - service: light.turn_on
+        entity_id: light.uterum_led
 
     #######################################################
     ### Tänder belysning friggebod ute på eftermiddagen ###
     ### T: sensor.ljusstyrka < 5                        ###
     ### C: 12:00:00 - 21:45:00                          ###
-    ### A: switch.friggebod_ute = on                    ###
+    ### A: light.friggebod_ute = on                     ###
     #######################################################
   - alias: Friggebod belysning ute on (<5)
     initial_state: 'on'
@@ -135,8 +118,8 @@
       after: '12:00:00'
       before: '21:45:00' 
     action:
-      - service: homeassistant.turn_on
-        entity_id: switch.friggebod_ute
+      - service: light.turn_on
+        entity_id: light.friggebod_ute
 
     #########################################################
     ### Tänder belysning vid Spabad på eftermiddagen      ###
@@ -194,7 +177,6 @@
       state: 'not_home'
     action:
       - service: script.outside_light_off
-      - service: script.uterum_window_light_off
 
     #################################################################
     ### Släcker utebelysning på vardagskvällar när någon är hemma ###
@@ -245,39 +227,19 @@
           state: 'off'
     action:
       - service: script.outside_light_off
-      - service: script.uterum_window_light_off
-
-    #######################################################################
-    ### Släcker uterumsfönster på kvällen när allt släcks inne av någon ###
-    ### T: switch.kok_lilla_fonstret == off                             ###
-    ### C: group.track_for_home_devices == home                         ###
-    ### A: service: script.uterum_window_light_off                      ###
-    #######################################################################
-  - alias: Uterumsfönster off (All off, hemma)
-    initial_state: 'on'
-    trigger:
-      platform: state
-      entity_id: switch.kok_lilla_fonstret
-      to: 'off'
-    condition:
-      condition: state
-      entity_id: group.track_for_home_devices
-      state: 'home'
-    action:
-      - service: script.uterum_window_light_off
 
     #############################################################################
     ### Släcker uterums ledbelysning på kvällen när allt släcks inne av någon ###
-    ### T: switch.kok_lilla_fonstret == off                                   ###
+    ### T: light.kok_lilla_fonstret == off                                    ###
     ### C: group.track_for_home_devices == home                               ###
-    ###    switch.uterum_led = on                                             ###
-    ### A: switch.uterum_led = off                                            ###
+    ###    light.uterum_led = on                                              ###
+    ### A: light.uterum_led = off                                             ###
     #############################################################################
   - alias: Uterums ledbelysning off (All off, hemma)
     initial_state: 'on'
     trigger:
       platform: state
-      entity_id: switch.kok_lilla_fonstret
+      entity_id: light.kok_lilla_fonstret
       to: 'off'
     condition:
       condition: and
@@ -286,26 +248,27 @@
           entity_id: group.track_for_home_devices
           state: 'home'
         - condition: state
-          entity_id: switch.uterum_led
+          entity_id: light.uterum_led
           state: 'on'
     action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.uterum_led_lights
+          option: Off
       - service: homeassistant.turn_off
-        entity_id: switch.uterum_led
+        entity_id: light.uterum_led
       - delay: '00:00:01'
       - service: homeassistant.turn_off
-        entity_id: switch.uterum_led
+        entity_id: light.uterum_led
       - delay: '00:00:01'
       - service: homeassistant.turn_off
-        entity_id: switch.uterum_led
-#      - service: notify.pushbullet
-#        data:
-#          message: 'Uterums ledbelysning off (All off, hemma)'
+        entity_id: light.uterum_led
 
     ##################################################################
     ### Släcker uterums ledbelysning på kvällen när ingen är hemma ###
     ### T: group.track_for_home_devices == not_home                ###
-    ### C: switch.uterum_led = on                                  ###
-    ### A: switch.uterum_led = off                                 ###
+    ### C: light.uterum_led = on                                   ###
+    ### A: light.uterum_led = off                                  ###
     ##################################################################
   - alias: Uterums ledbelysning off (Borta)
     initial_state: 'on'
@@ -316,26 +279,27 @@
       to: 'not_home'
     condition:
       condition: state
-      entity_id: switch.uterum_led
+      entity_id: light.uterum_led
       state: 'on'
     action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.uterum_led_lights
+          option: Off
       - service: homeassistant.turn_off
-        entity_id: switch.uterum_led
+        entity_id: light.uterum_led
       - delay: '00:00:01'
       - service: homeassistant.turn_off
-        entity_id: switch.uterum_led
+        entity_id: light.uterum_led
       - delay: '00:00:01'
       - service: homeassistant.turn_off
-        entity_id: switch.uterum_led
-#      - service: notify.pushbullet
-#        data:
-#          message: 'Uterums ledbelysning off (Borta)'
+        entity_id: light.uterum_led
 
     ###########################################################
     ### Släcker uterums ledbelysning när det blir för kallt ###
     ### T: sensor.uterum < 15                               ###
-    ### C: switch.uterum_led = on                           ###
-    ### A: switch.uterum_led = off                          ###
+    ### C: light.uterum_led = on                            ###
+    ### A: light.uterum_led = off                           ###
     ###########################################################
   - alias: Uterums ledbelysning off (<15)
     initial_state: 'on'
@@ -345,17 +309,18 @@
       below: 15
     condition:
       condition: state
-      entity_id: switch.uterum_led
+      entity_id: light.uterum_led
       state: 'on'
     action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.uterum_led_lights
+          option: Off
       - service: homeassistant.turn_off
-        entity_id: switch.uterum_led
+        entity_id: light.uterum_led
       - delay: '00:00:01'
       - service: homeassistant.turn_off
-        entity_id: switch.uterum_led
+        entity_id: light.uterum_led
       - delay: '00:00:01'
       - service: homeassistant.turn_off
-        entity_id: switch.uterum_led
-#      - service: notify.pushbullet
-#        data:
-#          message: 'Uterums ledbelysning off (<15)'
+        entity_id: light.uterum_led

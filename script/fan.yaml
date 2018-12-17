@@ -1,0 +1,17 @@
+﻿  #################### 
+  ### Fläkt normal ### 
+  #################### 
+  fan_normal: 
+    alias: Fläkt normal 
+    sequence: 
+      - service: homeassistant.turn_off 
+        entity_id: switch.fan_speed 
+ 
+  ###################### 
+  ### Fläkt forcerad ### 
+  ###################### 
+  fan_forced: 
+    alias: Fläkt forcerad 
+    sequence: 
+      - service: homeassistant.turn_on 
+        entity_id: switch.fan_speed 

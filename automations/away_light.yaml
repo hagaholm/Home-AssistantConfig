@@ -29,7 +29,11 @@
           after: '07:00:00'
           before: '10:45:00' 
     action:
-      service: script.away_lights_on
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Bortabelysning
+      - service: script.away_lights_on
 
     #################################################################
     ### Tänder lampor när ingen är hemma kl 07.00 om det är mörkt ###
@@ -52,7 +56,11 @@
           entity_id: group.track_for_home_devices
           state: 'not_home'
     action:
-      service: script.away_lights_on
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Bortabelysning
+      - service: script.away_lights_on
 
     #####################################################
     ### Släcker lampor kl 11:00 om ingen är hemma     ###
@@ -69,7 +77,11 @@
       entity_id: group.track_for_home_devices
       state: 'not_home'
     action:
-      service: script.away_lights_off
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Off
+      - service: script.away_lights_off
 
     ############################################################
     ### Släcker lampor på förmiddagen när det blir ljust ute ###
@@ -93,7 +105,11 @@
           after: '07:00:00'
           before: '11:00:00'
     action:
-      service: script.away_lights_off
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Off
+      - service: script.away_lights_off
 
     ###################
     ###################
@@ -126,7 +142,11 @@
           after: '12:00:00'
           before: '22:30:00' 
     action:
-      service: script.away_lights_on
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Bortabelysning
+      - service: script.away_lights_on
 
     ###########################################################
     ### Tänder lampor när ingen är hemma och det blir mörkt ###
@@ -150,7 +170,11 @@
           after: '12:00:00'
           before: '22:30:00'      
     action:
-      service: script.away_lights_on
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Bortabelysning
+      - service: script.away_lights_on
 
     #################################################################
     ### Tänder lampor när ingen är hemma kl 12.00 om det är mörkt ###
@@ -173,7 +197,11 @@
           entity_id: group.track_for_home_devices
           state: 'not_home'
     action:
-      service: script.away_lights_on
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Bortabelysning
+      - service: script.away_lights_on
 
     #####################################################
     ### Släcker lampor kl 23:00 om ingen är hemma     ###
@@ -190,4 +218,8 @@
       entity_id: group.track_for_home_devices
       state: 'not_home'
     action:
-      service: script.away_lights_off
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Off
+      - service: script.away_lights_off

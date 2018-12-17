@@ -44,8 +44,10 @@
     control: hidden
     entities:
       - script.goodnight
+      - script.goodnight_10_min
       - script.goodnight_all
-      - script.goodnight_in_10_min
+      - script.goodnight_all_10_min
+      - script.goodnight_all_tv_10_min
       - script.bedroom_off
       - script.extra_room_off
       - script.andreas_room_off
@@ -55,9 +57,11 @@
     view: no
     control: hidden
     entities:
+      - input_select.inside_lights
+      - input_select.kitchen_lights
+      - input_select.uterum_led_lights
+      - input_select.outside_lights
       - input_boolean.christmas_light
-      - binary_sensor.workday_today
-      - binary_sensor.workday_tomorrow
 
   default_view_ventilation:
     name: Ventilation badrum
@@ -115,8 +119,6 @@
       - sensor.ute2_temperature
       - sensor.ute2_humidity
       - sensor.ljusstyrka
-#      - sensor.regnmatare_rain_rate
-#      - sensor.regnmatare_rain_total
 
   temperature_view_yr:
     name: Yr
@@ -133,9 +135,6 @@
       - sensor.yr_humidity
       - sensor.yr_fog
       - sensor.yr_cloudiness
-#      - sensor.yr_low_clouds
-#      - sensor.yr_medium_clouds
-#      - sensor.yr_high_clouds
       - sensor.yr_dewpoint_temperature
 
   temperature_view_inside:
@@ -196,17 +195,16 @@
       - sensor.Tilluft
       - sensor.Franluft
       - sensor.Avluft
-#      - sensor.Forcerad # Fläkt hastighet
       - switch.fan_speed
       - switch.ventilationsaggregat
 
-###############################
-###############################
-# View: Belysning och brytare #
-###############################
-###############################
+###################
+###################
+# View: Belysning #
+###################
+###################
   switch_view:
-    name: Belysning och brytare
+    name: Belysning
     view: yes
     icon: mdi:lightbulb
     entities:
@@ -214,6 +212,7 @@
       - group.morning_lights
       - group.evening_lights
       - group.night_lights
+      - group.uterums_led_lights
       - group.outside_lights
       - group.away_lights
 
@@ -229,25 +228,27 @@
     name: Morgonbelysning
     view: no
     entities:
-      - switch.kok_stora_fonstret
-      - switch.kok_lilla_fonstret
+      - light.kok_stora_fonstret
+      - light.kok_lilla_fonstret
       - light.hall_byra_dimmer
       - light.vardagsrum_fonster_dimmer
+      - light.uterum_fonster
 
   evening_lights:
     name: Kvällsbelysning
     view: no
     entities:
-      - switch.kok_stora_fonstret
-      - switch.kok_lilla_fonstret
+      - light.kok_stora_fonstret
+      - light.kok_lilla_fonstret
       - light.hall_byra_dimmer
-      - switch.hall_skap
+      - light.hall_skap
       - light.vardagsrum_fonster_dimmer
       - light.vardagsrum_byra_dimmer
-      - switch.vardagsrum_vitrinskap
-      - switch.sovrum_fonster
-      - switch.extrarum_fonster
-      - switch.andreas_fonster
+      - light.vardagsrum_vitrinskap
+      - light.sovrum_fonster
+      - light.extrarum_fonster
+      - light.andreas_fonster
+      - light.uterum_fonster
 
   night_lights:
     name: Nattbelysning
@@ -257,26 +258,31 @@
       - light.vardagsrum_byra_dimmer
       - light.vardagsrum_fonster_dimmer
 
+  uterums_led_lights:
+    name: Uterum ledbelysning
+    view: no
+    entities:
+      - light.uterum_led
+
   outside_lights:
     name: Utomhusbelysning
     view: no
     entities:
-      - switch.friggebod_stora_fonstret
-      - switch.friggebod_lilla_fonstret
-      - switch.uterum_fonster
-      - switch.uterum_led
+      - light.friggebod_stora_fonstret
+      - light.friggebod_lilla_fonstret
       - light.spabad_vagg
 
   away_lights:
     name: Bortabelysning
     view: no
     entities:
-      - switch.kok_stora_fonstret
-      - switch.kok_lilla_fonstret
+      - light.kok_stora_fonstret
+      - light.kok_lilla_fonstret
       - light.hall_byra_dimmer
       - light.vardagsrum_fonster_dimmer
-      - switch.sovrum_fonster
-      - switch.andreas_fonster
+      - light.sovrum_fonster
+      - light.andreas_fonster
+      - light.uterum_fonster
 
 #############
 #############
@@ -311,8 +317,8 @@
       #- sensor.kyl_humidity # Onödigt att visa, kanska kan larma om ovanligt värde
       - sensor.frys_temperature
       #- sensor.frys_humidity # Onödigt att visa, kanska kan larma om ovanligt värde
-      - switch.kok_stora_fonstret
-      - switch.kok_lilla_fonstret
+      - light.kok_stora_fonstret
+      - light.kok_lilla_fonstret
       - light.kok_underskap_bank
       - light.kok_underskap_diskbank
       - light.kok_vitrinskap 
@@ -325,7 +331,7 @@
       - sensor.hall_temperature
       - sensor.hall_humidity
       - light.hall_byra_dimmer
-      - switch.hall_skap
+      - light.hall_skap
 
   laundry:
     name: Tvättstuga
@@ -335,14 +341,14 @@
       - sensor.tvattstuga_humidity
       - sensor.varmepump_temperature
 
-  livingroom:   
+  livingroom:
     name: Vardagsrum
     view: no
     entities:
       - sensor.vardagsrum_temperature
       - light.vardagsrum_fonster_dimmer
       - light.vardagsrum_byra_dimmer
-      - switch.vardagsrum_vitrinskap
+      - light.vardagsrum_vitrinskap
       - switch.vardagsrum_stereobank
       - switch.vardagsrum_tv
       - switch.vardagsrum_subbas
@@ -356,14 +362,13 @@
       - sensor.badrum_humidity
       - sensor.fukt_badrumsfonster
       - switch.fan_speed
-#      - sensor.Forcerad
 
   bedroom:
     name: Sovrum
     view: no
     entities:
       - sensor.sovrum
-      - switch.sovrum_fonster
+      - light.sovrum_fonster
 
   andreas_room:
     name: Andreas rum
@@ -371,23 +376,21 @@
     entities:
       - sensor.andreas_rum_temperature
       - sensor.andreas_rum_humidity
-      - switch.andreas_fonster
-      - switch.andreas_bokhylla
-      - switch.andreas_skrivbord
+      - light.andreas_fonster
 
   extra_room:
     name: Extrarum
     view: no
     entities:
-      - switch.extrarum_fonster
+      - light.extrarum_fonster
 
   conservatory:
     name: Uterum
     view: no
     entities:
       - sensor.uterum
-      - switch.uterum_fonster
-      - switch.uterum_led
+      - light.uterum_fonster
+      - light.uterum_led
 
   attic:
     name: Vinden
@@ -407,8 +410,8 @@
     entities:
       - sensor.friggebod_temperature
       - sensor.friggebod_humidity
-      - switch.friggebod_lilla_fonstret
-      - switch.friggebod_stora_fonstret
+      - light.friggebod_lilla_fonstret
+      - light.friggebod_stora_fonstret
 
   garage:
     name: Garage/Förråd
@@ -426,7 +429,7 @@
     entities:
       - sensor.ute
       - sensor.ljusstyrka
-      - switch.friggebod_ute
+      - light.friggebod_ute
 
   fan:
     name: Ventilation
@@ -436,7 +439,6 @@
       - sensor.Tilluft
       - sensor.Franluft
       - sensor.Avluft
-#      - sensor.Forcerad # Fläkt hastighet
       - switch.fan_speed
       - switch.ventilationsaggregat
       # Verkningsgrad
@@ -459,6 +461,7 @@
       - group.automation_night_light
       - group.automation_away_light_morning
       - group.automation_away_light_evening
+      - group.automation_uterums_light
       - group.automation_outside_light
       - group.automation_temp_larm
       - group.automation_ventilation
@@ -545,18 +548,21 @@
       - automation.bortabelysning_on__borta_200 
       - automation.bortabelysning_off_230000_borta
 
-  automation_outside_light:
-    name: Utebelysning
+  automation_uterums_light:
+    name: Uterumsbelysning
 #    control: hidden
     entities:
-      - automation.uterumsfonster_off_all_off_hemma
-      - automation.uterumsfonster_belysning_on_250
       - automation.uterums_ledbelysning_on_18
       - automation.uterums_ledbelysning_on_250
       - automation.uterums_ledbelysning_on_home
       - automation.uterums_ledbelysning_off_15
       - automation.uterums_ledbelysning_off_all_off_hemma
       - automation.uterums_ledbelysning_off_borta
+
+  automation_outside_light:
+    name: Utebelysning
+#    control: hidden
+    entities:
       - automation.friggebod_belysning_on_1
       - automation.friggebod_belysning_ute_on_5
       - automation.spabelysning_on_5
@@ -657,30 +663,6 @@
       - automation.synka_luftavfuktare_on
       - automation.synka_luftavfuktare_off
 
-###########################################################
-
-#  setup:
-#    name: Setup
-#    view: yes
-#    entities:
-#      - group.setup_lux_home
-#      - group.setup_lux_away
-#
-#  setup_lux_home:
-#    name: Lux hemma
-#    view: no
-#    entities:
-#      - input_number.lux_kitchen_home
-#      - input_number.lux_inside_home
-#      - input_number.lux_outside_home
-#
-#  setup_lux_away:
-#    name: Lux borta
-#    view: no
-#    entities:
-#      - input_number.lux_inside_away
-#      - input_number.lux_outside_away
-
   family:
     name: Familj
     entities:
@@ -704,7 +686,6 @@
     - sensor.cpu_used
     - sensor.disk_use_home
     - sensor.ram_used
-#    - sensor.since_last_boot_templated
     - sensor.ha_uptime
     - sensor.sent_ens32
     - sensor.received_ens32

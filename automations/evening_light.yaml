@@ -19,7 +19,11 @@
           entity_id: group.track_for_home_devices
           state: 'home'
     action:
-      service: script.evening_lights_on
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Kvällsbelysning
+      - service: script.evening_lights_on
     
     ########################################################
     ### Tänder lampor när det blir mörkt fram till 22:00 ###
@@ -43,7 +47,11 @@
           after: '12:00:00'
           before: '22:00:00'
     action:
-      service: script.evening_lights_on
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Kvällsbelysning
+      - service: script.evening_lights_on
 
     ########################################################
     ### Tänder lampor vid rörelse i köket övrigt tid     ###
@@ -73,7 +81,11 @@
           after: '12:00:00'
           before: '05:00:00'
     action:
-      service: script.evening_lights_on
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Kvällsbelysning
+      - service: script.evening_lights_on
 
     #####################################################
     ### Tänder lampor när första kommer hem övrig tid ###
@@ -98,7 +110,11 @@
           after: '12:00:00'
           before: '05:00:00'
     action:
-      service: script.evening_lights_on
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Kvällsbelysning
+      - service: script.evening_lights_on
 
     ##########################################################
     ### Släcker lampor om det blir för ljust ute övrig tid ###
@@ -122,7 +138,11 @@
           after: '12:00:00'
           before: '05:00:00'
     action:
-      service: script.evening_lights_off
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Off
+      - service: script.evening_lights_off
 
     ########################################################
     ### Släcker lampor när sista åker hemifrån övrig tid ###
@@ -141,4 +161,8 @@
       after: '12:00:00'
       before: '05:00:00'
     action:
-      service: script.evening_lights_off
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Off
+      - service: script.evening_lights_off

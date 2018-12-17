@@ -21,6 +21,10 @@
           entity_id: group.track_for_home_devices
           state: 'home'
     action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.kitchen_lights
+          option: 100%
       - service: script.kitchen_light_100
 
     #####################################################################
@@ -45,6 +49,10 @@
           after: '05:00:00'
           before: '12:00:00'
     action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.kitchen_lights
+          option: 100%
       - service: script.kitchen_light_100
 
     #####################################################################
@@ -70,6 +78,10 @@
           after: '12:00:00'
           before: '05:00:00'
     action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.kitchen_lights
+          option: 100%
       - service: script.kitchen_light_100
 
     ###################################################################
@@ -98,6 +110,10 @@
           entity_id: light.kok_lilla_fonstret
           state: 'on'
     action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.kitchen_lights
+          option: 100%
       - service: script.kitchen_light_100
 
     #####################################################################################
@@ -130,6 +146,10 @@
           entity_id: light.kok_lilla_fonstret
           state: 'off'
     action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.kitchen_lights
+          option: 100%
       - service: script.kitchen_light_100
 
     ####################################################################################
@@ -162,7 +182,12 @@
           entity_id: light.kok_lilla_fonstret
           state: 'off'
     action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.kitchen_lights
+          option: 25%
       - service: script.kitchen_light_25
+
 
     #######################################################
     ### Släcker lampor när ingen varit i köket på 9 min ###
@@ -175,6 +200,10 @@
       entity_id: switch.rorelsevakt_kok
       to: 'off'
     action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.kitchen_lights
+          option: Off
       - service: script.kitchen_light_off
 
     ######################################################

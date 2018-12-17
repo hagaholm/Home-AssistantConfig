@@ -1,0 +1,73 @@
+﻿  ##########################
+  ### Morgonbelysning on ###
+  ##########################
+  morning_lights_on:
+    alias: Morgonbelysning on
+    sequence:
+      - service: script.turn_on
+        data_template:
+          entity_id: >
+            {% if is_state('input_boolean.christmas_light', 'on') %}
+              script.morning_lights_christmas_on
+            {% else %}
+              script.morning_lights_default_on
+            {% endif %}
+
+  ### -------------------------- ###
+  ### Morgonbelysning default on ###
+  ### -------------------------- ###
+  morning_lights_default_on:
+    alias: Morgonbelysning default on
+    sequence:
+      - service: light.turn_on
+        entity_id: light.kok_stora_fonstret
+      - service: light.turn_on
+        entity_id: light.kok_lilla_fonstret
+      - service: light.turn_on
+        data:
+          entity_id: light.hall_byra_dimmer
+          brightness_pct: 40
+      - service: light.turn_on
+        data:
+          entity_id: light.vardagsrum_fonster_dimmer
+          brightness_pct: 40
+      - service: light.turn_on
+        entity_id: light.uterum_fonster
+
+  ### --------------------- ###
+  ### Morgonjulbelysning on ###
+  ### --------------------- ###
+  morning_lights_christmas_on:
+    alias: Morgonjulbelysning on
+    sequence:
+      - service: light.turn_on
+        entity_id: light.kok_stora_fonstret
+      - service: light.turn_on
+        entity_id: light.kok_lilla_fonstret
+      # Updated
+      - service: light.turn_on
+        data:
+          entity_id: light.hall_byra_dimmer
+          brightness_pct: 75
+      # Updated
+      - service: light.turn_on
+        data:
+          entity_id: light.vardagsrum_fonster_dimmer
+          brightness_pct: 100
+      # Added
+      - service: light.turn_on
+        entity_id: light.extrarum_fonster
+      # Added
+      - service: light.turn_on
+        entity_id: light.andreas_fonster
+      - service: light.turn_on
+        entity_id: light.uterum_fonster
+
+  ###########################
+  ### Morgonbelysning off ###
+  ###########################
+  morning_lights_off:
+    alias: Morgonbelysning off
+    sequence:
+      - service: homeassistant.turn_off
+        entity_id: group.evening_lights

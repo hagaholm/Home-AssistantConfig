@@ -61,15 +61,6 @@
       - service: homeassistant.turn_off
         entity_id: light.sovrum_fonster
 
-  ############################
-  ### Släck i lilla rummet ###
-  ############################
-  extra_room_off:
-    alias: Släck i lilla rummet
-    sequence:
-      - service: homeassistant.turn_off
-        entity_id: light.extrarum_fonster
-
   ###########################
   ### Släck i Andreas rum ###
   ###########################
@@ -78,4 +69,13 @@
     sequence:
       - service: homeassistant.turn_off
         entity_id: light.andreas_fonster
+
+  ##########################
+  ### Släck i Louise rum ###
+  ##########################
+  louise_room_off:
+    alias: Släck i Louise rum
+    sequence:
+      - service: homeassistant.turn_off
+        entity_id: light.louise_fonster
 

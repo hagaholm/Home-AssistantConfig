@@ -1,0 +1,59 @@
+    #####################################
+    ### Låg temp ventilation frånluft ###
+    ### T: sensor.Franluft < 18       ###
+    ### A: notify.pushbullet          ###
+    #####################################
+  - alias: Låg temp frånluft
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.Franluft
+      below: '18'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Larm! Låg temp frånluft ventilation: {{ states.sensor.Franluft.state }} {{ states.sensor.Franluft.unit_of_measurement }}'
+
+    #####################################
+    ### Hög temp ventilation frånluft ###
+    ### T: sensor.Franluft > 35       ###
+    ### A: notify.pushbullet          ###
+    #####################################
+  - alias: Hög temp frånluft
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.Franluft
+      above: '35'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Larm! Hög temp frånluft ventilation: {{ states.sensor.Franluft.state }} {{ states.sensor.Franluft.unit_of_measurement }}'
+
+    ####################################
+    ### Låg temp ventilation tilluft ###
+    ### T: sensor.Tilluft < 15       ###
+    ### A: notify.pushbullet         ###
+    ####################################
+  - alias: Låg temp tilluft
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.Tilluft
+      below: '15'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Larm! Låg temp tilluft ventilation: {{ states.sensor.Tilluft.state }} {{ states.sensor.Tilluft.unit_of_measurement }}'
+
+    ####################################
+    ### Hög temp ventilation tilluft ###
+    ### T: sensor.Tilluft > 35       ###
+    ### A: notify.pushbullet         ###
+    ####################################
+  - alias: Hög temp tilluft
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.Tilluft
+      above: '35'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Larm! Hög temp tilluft ventilation: {{ states.sensor.Tilluft.state }} {{ states.sensor.Tilluft.unit_of_measurement }}'

@@ -1,0 +1,29 @@
+    ############################################
+    ### Låg temp ackumulatortank             ###
+    ### T: sensor.varmepump_temperature < 20 ###
+    ### A: notify.pushbullet                 ###
+    ############################################
+  - alias: Låg temp ackumulatortank
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.varmepump_temperature
+      below: '20'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Larm! Låg temp ackumulatortank: {{ states.sensor.varmepump_temperature.state }} {{ states.sensor.varmepump_temperature.unit_of_measurement }}'
+
+    ############################################
+    ### Hög temp ackumulatortank             ###
+    ### T: sensor.varmepump_temperature > 50 ###
+    ### A: notify.pushbullet                 ###
+    ############################################
+  - alias: Hög temp ackumulatortank
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.varmepump_temperature
+      above: '50'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Larm! Hög temp ackumulatortank: {{ states.sensor.varmepump_temperature.state }} {{ states.sensor.varmepump_temperature.unit_of_measurement }}'

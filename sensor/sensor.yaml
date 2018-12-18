@@ -32,10 +32,10 @@
     ############################################
     151: Ute2
 
-    #######################################
-    # Andreas rum, visar på temp och fukt #
-    #######################################
-    167: Andreas rum
+    ######################################
+    # Louise rum, visar på temp och fukt #
+    ######################################
+    167: Louise rum
 
     ###################################
     # Frys i köket, visar temperature #
@@ -49,9 +49,9 @@
     ##################################
     182: Kyl
 
-    ####################################
-    # Tvättstuga, visar temp och fukt  #
-    # Värmepump, visar temp            #
+    ###################################
+    # Tvättstuga, visar temp och fukt #
+    # Värmepump, visar temp           #
     ###################################
     183: Tvättstuga
     184: Värmepump
@@ -63,10 +63,10 @@
     199: Förråd
     200: Förråd kyl/frys
 
-    ###########################
-    # Andreas rum, visar temp #
-    # Ny termometer           #
-    ###########################
+    ##########################
+    # Louise rum, visar temp #
+    # Ny termometer          #
+    ##########################
     208: Vardagsrum
     215: Friggebod
 
@@ -224,7 +224,7 @@
       - sensor.hall_temperature
       - sensor.vardagsrum_temperature
       - sensor.sovrum
-      - sensor.andreas_rum_temperature
+      - sensor.louise_rum_temperature
       - sensor.badrum_temperature
     value_template: '{{ value | round(1) }}'
 #      - sensor.tvattstuga_temperature

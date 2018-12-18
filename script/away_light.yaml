@@ -26,7 +26,7 @@
       - service: light.turn_on
         entity_id: light.sovrum_fonster
       - service: light.turn_on
-        entity_id: light.andreas_fonster
+        entity_id: light.louise_fonster
       - service: light.turn_on
         data:
           entity_id: light.hall_byra_dimmer
@@ -51,9 +51,9 @@
       - service: light.turn_on
         entity_id: light.sovrum_fonster
       - service: light.turn_on
-        entity_id: light.extrarum_fonster
-      - service: light.turn_on
         entity_id: light.andreas_fonster
+      - service: light.turn_on
+        entity_id: light.louise_fonster
       # Updated
       - service: light.turn_on
         data:

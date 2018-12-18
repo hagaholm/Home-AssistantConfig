@@ -49,8 +49,8 @@
       - script.goodnight_all_10_min
       - script.goodnight_all_tv_10_min
       - script.bedroom_off
-      - script.extra_room_off
       - script.andreas_room_off
+      - script.louise_room_off
 
   default_view_setup:
     name: Inställningar
@@ -147,7 +147,7 @@
       - sensor.hall_temperature
       - sensor.vardagsrum_temperature
       - sensor.sovrum
-      - sensor.andreas_rum_temperature
+      - sensor.louise_rum_temperature
       - sensor.badrum_temperature
       - sensor.tvattstuga_temperature
 
@@ -158,7 +158,7 @@
     control: hidden
     entities:
       - sensor.hall_humidity
-      - sensor.andreas_rum_humidity
+      - sensor.louise_rum_humidity
       - sensor.badrum_humidity
       - sensor.tvattstuga_humidity
 
@@ -246,8 +246,8 @@
       - light.vardagsrum_byra_dimmer
       - light.vardagsrum_vitrinskap
       - light.sovrum_fonster
-      - light.extrarum_fonster
       - light.andreas_fonster
+      - light.louise_fonster
       - light.uterum_fonster
 
   night_lights:
@@ -281,7 +281,7 @@
       - light.hall_byra_dimmer
       - light.vardagsrum_fonster_dimmer
       - light.sovrum_fonster
-      - light.andreas_fonster
+      - light.louise_fonster
       - light.uterum_fonster
 
 #############
@@ -299,8 +299,8 @@
       - group.livingroom
       - group.bathroom
       - group.bedroom
+      - group.louise_room
       - group.andreas_room
-      - group.extra_room
       - group.conservatory # uterum
       - group.attic        # vinden
       - group.spa
@@ -370,19 +370,19 @@
       - sensor.sovrum
       - light.sovrum_fonster
 
+  louise_room:
+    name: Louise rum
+    view: no
+    entities:
+      - sensor.louise_rum_temperature
+      - sensor.louise_rum_humidity
+      - light.louise_fonster
+
   andreas_room:
     name: Andreas rum
     view: no
     entities:
-      - sensor.andreas_rum_temperature
-      - sensor.andreas_rum_humidity
       - light.andreas_fonster
-
-  extra_room:
-    name: Extrarum
-    view: no
-    entities:
-      - light.extrarum_fonster
 
   conservatory:
     name: Uterum

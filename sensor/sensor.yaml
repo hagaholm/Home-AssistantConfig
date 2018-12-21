@@ -1,4 +1,4 @@
-﻿####################################################
+####################################################
 #                                                  #
 #                     SENSOR                       #
 #                                                  #
@@ -234,3 +234,19 @@
 ########
 # https://www.home-assistant.io/components/sensor.moon/
   - platform: moon
+
+####################
+# Waze Travel Time #
+####################
+# https://www.home-assistant.io/components/sensor.waze_travel_time/
+  - platform: waze_travel_time
+    name: Annelie till jobbet
+    origin: !secret gps_coordinates_home
+    destination: !secret gps_coordinates_work
+    region: EU
+
+  - platform: waze_travel_time
+    name: Annelie hem från jobbet
+    origin: !secret gps_coordinates_work
+    destination: !secret gps_coordinates_home
+    region: EU

@@ -1,4 +1,4 @@
-﻿  ##########################
+  ##########################
   ### Morgonbelysning on ###
   ##########################
   morning_lights_on:
@@ -54,6 +54,8 @@
         data:
           entity_id: light.vardagsrum_fonster_dimmer
           brightness_pct: 100
+      - service: light.turn_on
+        entity_id: light.vardagsrum_julgran
       # Added
       - service: light.turn_on
         entity_id: light.andreas_fonster

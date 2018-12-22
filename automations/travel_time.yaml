@@ -1,15 +1,61 @@
-    ##########################################################
-    ### Resa längre till SEB                               ###
-    ### T: states.sensor.annelie_till_jobbet.distance > 40 ###
-    ### A: notify.pushbullet                               ###
-    ##########################################################
+    ##########################################
+    ### Restid till SEB                    ###
+    ### T: sensor.annelie_till_jobbet > 30 ###
+    ### A: notify.pushbullet               ###
+    ##########################################
   - alias: Resa längre till SEB
     trigger:
       platform: numeric_state
-      entity_id: states.sensor.annelie_till_jobbet.distance
-      above: '40'
-#      below: '39'
+      entity_id: sensor.annelie_till_jobbet
+      above: '30'
     action:
       - service: notify.pushbullet
         data:
-          message: 'Kontrollera hemresa! Tid (28): {{ states.sensor.annelie_till_jobbet.duration }} Sträcka (40): {{ states.sensor.annelie_till_jobbet.distance }}'
+          message: 'Lång restid till jobbet(28): {{ states.sensor.annelie_till_jobbet.duration }} Distans (40): {{ states.sensor.annelie_till_jobbet.distance }}'
+
+    ##############################################
+    ### Restid hem                             ###
+    ### T: sensor.annelie_hem_fran_jobbet > 30 ###
+    ### A: notify.pushbullet                   ###
+    ##############################################
+  - alias: Resa längre hem
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.annelie_hem_fran_jobbet
+      above: '30'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Lång restid till jobbet(28): {{ states.sensor.annelie_hem_fran_jobbet.duration }} Distans (40): {{ states.sensor.annelie_hem_fran_jobbet.distance }}'
+
+    ###################################################
+    ### Distans till SEB                            ###
+    ### T: sensor.annelie_till_jobbet.distance > 40 ###
+    ### A: notify.pushbullet                        ###
+    ###################################################
+  - alias: Distans längre till SEB
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.annelie_till_jobbet
+      value_template: "{{ state.attributes.distance }}"
+      above: '40'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Långre sträcka till jobbet (40): {{ states.sensor.annelie_till_jobbet.distance }} Tid (28): {{ states.sensor.annelie_till_jobbet.duration }}'
+
+    #######################################################
+    ### Distans hem                                     ###
+    ### T: sensor.annelie_hem_fran_jobbet.distance > 40 ###
+    ### A: notify.pushbullet                            ###
+    #######################################################
+  - alias: Distans längre till SEB
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.annelie_hem_fran_jobbet
+      value_template: "{{ state.attributes.distance }}"
+      above: '40'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Långre sträcka till jobbet (40): {{ states.sensor.annelie_hem_fran_jobbet.distance }} Tid (28): {{ states.sensor.annelie_hem_fran_jobbet.duration }}'

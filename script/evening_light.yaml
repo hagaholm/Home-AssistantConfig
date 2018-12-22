@@ -1,4 +1,4 @@
-﻿  ##########################
+  ##########################
   ### Kvällsbelysning on ###
   ##########################
   evening_lights_on:
@@ -62,6 +62,8 @@
         entity_id: light.hall_skap
       - service: light.turn_on
         entity_id: light.vardagsrum_vitrinskap
+      - service: light.turn_on
+        entity_id: light.vardagsrum_gran
       - service: light.turn_on
         entity_id: light.sovrum_fonster
       - service: light.turn_on

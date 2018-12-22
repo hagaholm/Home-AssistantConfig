@@ -1,0 +1,15 @@
+    ##########################################################
+    ### Resa längre till SEB                               ###
+    ### T: states.sensor.annelie_till_jobbet.distance > 40 ###
+    ### A: notify.pushbullet                               ###
+    ##########################################################
+  - alias: Resa längre till SEB
+    trigger:
+      platform: numeric_state
+      entity_id: states.sensor.annelie_till_jobbet.distance
+      above: '40'
+#      below: '39'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Kontrollera hemresa! Tid (28): {{ states.sensor.annelie_till_jobbet.duration }} Sträcka (40): {{ states.sensor.annelie_till_jobbet.distance }}'

@@ -94,6 +94,10 @@ automation:
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_extra_subbas
 
+      - service: notify.pushbullet
+        data:
+          message: 'Stäng av subbasar vid mediaspelare off'
+
     ##############################################
     ### Sätt på subbasar vid mediaspelare on   ###
     ### T: remote.harmony_hub                  ###
@@ -116,6 +120,10 @@ automation:
         entity_id: switch.vardagsrum_subbas
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_extra_subbas
+
+      - service: notify.pushbullet
+        data:
+          message: 'Sätt på subbasar vid mediaspelare on'
 
     ##################################################################
     ### Sätt på mediaspelare om off                                ###
@@ -145,6 +153,10 @@ automation:
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_tv
 
+      - service: notify.pushbullet
+        data:
+          message: 'Sätt på mediaspelare om off'
+
     ##################################################
     ### Stäng av mediaspelare vid mediaspelare off ###
     ### T: remote.harmony_hub                      ###
@@ -166,6 +178,10 @@ automation:
         entity_id: switch.vardagsrum_stereobank
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_tv
+
+      - service: notify.pushbullet
+        data:
+          message: 'Stäng av mediaspelare vid mediaspelare off'
 
     ################################################
     ### Sätt på mediaspelare vid mediaspelare on ###
@@ -196,3 +212,7 @@ automation:
       - service: script.harmony_off
       - delay: '00:00:10'
       - service: script.harmony_tv
+
+      - service: notify.pushbullet
+        data:
+          message: 'Sätt på mediaspelare vid mediaspelare on'

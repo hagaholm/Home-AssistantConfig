@@ -15,7 +15,8 @@
     icon: mdi:information-outline
     entities:
       - group.default_view_info
-      - group.default_view_lights
+      - group.default_view_lights_off
+      - group.default_view_lights_on
       - group.default_view_setup
       - group.default_view_ventilation
       - group.default_view_temp_graph
@@ -37,8 +38,8 @@
       - sensor.friggebod_temperature
       - sensor.ljusstyrka
 
-  default_view_lights:
-    name: Belysning
+  default_view_lights_off:
+    name: Släck belysning
     view: no
     icon: mdi:information-outline
     control: hidden
@@ -51,6 +52,19 @@
       - script.bedroom_off
       - script.andreas_room_off
       - script.louise_room_off
+
+  default_view_lights_on:
+    name: Tänd belysning
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - script.morning_lights_on
+      - script.evening_lights_on
+      - script.night_light
+      - script.kitchen_light_100
+      - script.spa_light_on
+      - script.away_lights_on
 
   default_view_setup:
     name: Inställningar

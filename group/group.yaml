@@ -620,9 +620,7 @@
     name: Ventilation
 #    control: hidden
     entities:
-      - automation.badrum_hog_fukt
       - automation.badrumsfonster_hog_fukt
-      - automation.badrum_lag_fukt
       - automation.badrumsfonster_lag_fukt
 
   automation_ventilation_on_off:
@@ -643,11 +641,9 @@
 #    control: hidden
     entities:
       - automation.mediaspelare_off__borta
-      - automation.mediaspelare_on__hemma
       - automation.satt_pa_mediaspelare_om_off
       - automation.satt_pa_mediaspelare_vid_mediaspelare_on
       - automation.satt_pa_subbasar_vid_mediaspelare_on
-      - automation.stang_av_mediaspelare_vid_mediaspelare_off
       - automation.stang_av_subbasar_vid_mediaspelare_off
 
   automation_hassbian:
@@ -667,7 +663,7 @@
       - automation.ringklocka_hall
 
   automation_forrad_kyl_frys:
-    name: Förråd kyl/frys
+    name: Förråd kyl/frys - Används ej
 #    control: hidden
     entities:
       - automation.larm_hog_temp_i_forrad_kyl
@@ -683,8 +679,6 @@
     entities:
       - automation.starta_luftavfuktare
       - automation.stoppa_luftavfuktare
-      - automation.synka_luftavfuktare_on
-      - automation.synka_luftavfuktare_off
 
   family:
     name: Familj

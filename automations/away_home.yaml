@@ -25,21 +25,3 @@
         entity_id: switch.vardagsrum_subbas
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_extra_subbas
-
-    ####################################################
-    ### Sätter på mediaspelare när första kommer hem ###
-    ### T: group.track_for_home_devices to 'home'    ###
-    ### A: switch.vardagsrum_stereobank              ###
-    ###    switch.vardagsrum_tv                      ###
-    ####################################################
-  - alias: Mediaspelare on (-> hemma)
-    initial_state: 'off'
-    trigger:
-      platform: state
-      entity_id: group.track_for_home_devices
-      to: 'home'
-    action:
-      - service: homeassistant.turn_on
-        entity_id: switch.vardagsrum_stereobank
-      - service: homeassistant.turn_on
-        entity_id: switch.vardagsrum_tv

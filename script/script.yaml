@@ -10,8 +10,20 @@
         entity_id: group.evening_lights
       - service: homeassistant.turn_off
         entity_id: group.kitchen_lights
+# Removed
+#      - service: homeassistant.turn_off
+#        entity_id: group.outside_lights
+# Added
       - service: homeassistant.turn_off
-        entity_id: group.outside_lights
+        entity_id: light.friggebod_fasad
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_ute
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_stora_fonstret
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_lilla_fonstret
+      - service: homeassistant.turn_off
+        entity_id: light.spabad_vagg
 
   ###########################################
   ### Godnatt, släcker allt om 10 minuter ###
@@ -26,8 +38,20 @@
         entity_id: group.evening_lights
       - service: homeassistant.turn_off
         entity_id: group.kitchen_lights
+# Removed
+#      - service: homeassistant.turn_off
+#        entity_id: group.outside_lights
+# Added
       - service: homeassistant.turn_off
-        entity_id: group.outside_lights
+        entity_id: light.friggebod_fasad
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_ute
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_stora_fonstret
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_lilla_fonstret
+      - service: homeassistant.turn_off
+        entity_id: light.spabad_vagg
 
   ################################
   ### Godnatt, stänger av allt ###
@@ -41,8 +65,21 @@
         entity_id: group.evening_lights
       - service: homeassistant.turn_off
         entity_id: group.kitchen_lights
+# Removed
+#      - service: homeassistant.turn_off
+#        entity_id: group.outside_lights
+# Added
       - service: homeassistant.turn_off
-        entity_id: group.outside_lights
+        entity_id: light.friggebod_fasad
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_ute
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_stora_fonstret
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_lilla_fonstret
+      - service: homeassistant.turn_off
+        entity_id: light.spabad_vagg
+
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_stereobank
       - service: homeassistant.turn_off
@@ -65,8 +102,21 @@
         entity_id: group.evening_lights
       - service: homeassistant.turn_off
         entity_id: group.kitchen_lights
+# Removed
+#      - service: homeassistant.turn_off
+#        entity_id: group.outside_lights
+# Added
       - service: homeassistant.turn_off
-        entity_id: group.outside_lights
+        entity_id: light.friggebod_fasad
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_ute
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_stora_fonstret
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_lilla_fonstret
+      - service: homeassistant.turn_off
+        entity_id: light.spabad_vagg
+
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_stereobank
       - service: homeassistant.turn_off
@@ -88,8 +138,21 @@
         entity_id: group.evening_lights
       - service: homeassistant.turn_off
         entity_id: group.kitchen_lights
+# Removed
+#      - service: homeassistant.turn_off
+#        entity_id: group.outside_lights
+# Added
       - service: homeassistant.turn_off
-        entity_id: group.outside_lights
+        entity_id: light.friggebod_fasad
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_ute
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_stora_fonstret
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_lilla_fonstret
+      - service: homeassistant.turn_off
+        entity_id: light.spabad_vagg
+
       - delay: '00:10:00'
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_stereobank

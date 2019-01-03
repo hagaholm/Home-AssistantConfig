@@ -1,39 +1,39 @@
     ##########################################
-    ### Restid till SEB                    ###
-    ### T: sensor.annelie_till_jobbet > 30 ###
+    ### Lång restid till SEB (28 min)      ###
+    ### T: sensor.annelie_till_jobbet > 35 ###
     ### A: notify.pushbullet               ###
     ##########################################
-  - alias: Resa längre till SEB
+  - alias: Lång restid till SEB
     trigger:
       platform: numeric_state
       entity_id: sensor.annelie_till_jobbet
-      above: '30'
+      above: '35'
     action:
       - service: notify.pushbullet
         data:
-          message: 'Lång restid till jobbet(28): {{ states.sensor.annelie_till_jobbet.duration }} Distans (40): {{ states.sensor.annelie_till_jobbet.distance }}'
+          message: 'Lång restid till jobbet. Kontrollera resväg'
 
     ##############################################
-    ### Restid hem                             ###
-    ### T: sensor.annelie_hem_fran_jobbet > 30 ###
+    ### Lång restid hem (28 min)               ###
+    ### T: sensor.annelie_hem_fran_jobbet > 35 ###
     ### A: notify.pushbullet                   ###
     ##############################################
-  - alias: Resa längre hem
+  - alias: Lång restid hem
     trigger:
       platform: numeric_state
       entity_id: sensor.annelie_hem_fran_jobbet
-      above: '30'
+      above: '35'
     action:
       - service: notify.pushbullet
         data:
-          message: 'Lång restid till jobbet(28): {{ states.sensor.annelie_hem_fran_jobbet.duration }} Distans (40): {{ states.sensor.annelie_hem_fran_jobbet.distance }}'
+          message: 'Lång restid hem. Kontrollera resväg'
 
     ###################################################
-    ### Distans till SEB                            ###
+    ### Kör annan väg till SEB (40 km)              ###
     ### T: sensor.annelie_till_jobbet.distance > 40 ###
     ### A: notify.pushbullet                        ###
     ###################################################
-  - alias: Distans längre till SEB
+  - alias: Kör annan väg till SEB
     trigger:
       platform: numeric_state
       entity_id: sensor.annelie_till_jobbet
@@ -42,14 +42,14 @@
     action:
       - service: notify.pushbullet
         data:
-          message: 'Långre sträcka till jobbet (40): {{ states.sensor.annelie_till_jobbet.distance }} Tid (28): {{ states.sensor.annelie_till_jobbet.duration }}'
+          message: 'Längre sträcka till jobbet. Kontrollera resväg'
 
     #######################################################
-    ### Distans hem                                     ###
+    ### Kör annan väg hem (40 km)                       ###
     ### T: sensor.annelie_hem_fran_jobbet.distance > 40 ###
     ### A: notify.pushbullet                            ###
     #######################################################
-  - alias: Distans längre till SEB
+  - alias: Kör annan väg hem
     trigger:
       platform: numeric_state
       entity_id: sensor.annelie_hem_fran_jobbet
@@ -58,4 +58,4 @@
     action:
       - service: notify.pushbullet
         data:
-          message: 'Långre sträcka till jobbet (40): {{ states.sensor.annelie_hem_fran_jobbet.distance }} Tid (28): {{ states.sensor.annelie_hem_fran_jobbet.duration }}'
+          message: 'Längre sträcka hem. Kontrollera resväg'

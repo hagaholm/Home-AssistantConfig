@@ -40,7 +40,7 @@
     #####################################################################
     ### Tänder förråd fasadbelysning när ledbelysning i uterum släcks ###
     ### T: light.uterum_led = off                                     ###
-    ### T: sensor.ljusstyrka < 40                                     ###
+    ### C: sensor.ljusstyrka < 40                                     ###
     ### A: light.forrad_fasad = on                                    ###
     #####################################################################
   - alias: Förråd fasadbelysning on (led off, <40)

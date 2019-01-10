@@ -1,29 +1,132 @@
   # Add an entry for each entity that you want to overwrite.
-    sensor.Badrum:
-      hidden: true
-    sensor.Friggebod:
-      hidden: true
-    sensor.Frys:
-      hidden: true
-    sensor.Förråd:
-      hidden: true
-    sensor.Garage:
-      hidden: true
-    sensor.Hall:
-      hidden: true
-    sensor.Kyl:
-      hidden: true
-    sensor.Tvättstuga:
-      hidden: true
-    sensor.Ventagg_1:
-      hidden: true
-    sensor.Ventagg_2:
-      hidden: true
-    sensor.Ventagg_3:
-      hidden: true
-    sensor.Ventagg_4:
-      hidden: true
-    sensor.Vinden:
-      hidden: true
-    sensor.Värmepump:
-      hidden: true
+#    sensor.Badrum:
+#      hidden: true
+#    sensor.Friggebod:
+#      hidden: true
+#    sensor.Frys:
+#      hidden: true
+#    sensor.Förråd:
+#      hidden: true
+#    sensor.Garage:
+#      hidden: true
+#    sensor.Hall:
+#      hidden: true
+#    sensor.Kyl:
+#      hidden: true
+#    sensor.Tvättstuga:
+#      hidden: true
+#    sensor.Ventagg_1:
+#      hidden: true
+#    sensor.Ventagg_2:
+#      hidden: true
+#    sensor.Ventagg_3:
+#      hidden: true
+#    sensor.Ventagg_4:
+#      hidden: true
+#    sensor.Vinden:
+#      hidden: true
+#    sensor.Värmepump:
+#      hidden: true
+
+    sensor.ute2_humidity:
+      friendly_name: Ute
+      icon: mdi:water-percent
+    sensor.badrum_humidity:
+      friendly_name: Badrum
+      icon: mdi:water-percent
+    sensor.forrad_humidity:
+      friendly_name: Förråd
+      icon: mdi:water-percent
+    sensor.forrad_kylfrys_temperature:
+      friendly_name: Förråd kyl/frys
+    sensor.forrad_temperature:
+      friendly_name: Förråd
+    sensor.franluft:
+      friendly_name: Frånluft
+    sensor.friggebod_humidity:
+      friendly_name: Friggebod
+      icon: mdi:water-percent
+    sensor.friggebod_temperature:
+      friendly_name: Friggebod
+    sensor.frys_temperature:
+      friendly_name: Frys
+    sensor.fukt_badrumsfonster:
+      friendly_name: Badrumsfönster
+      icon: mdi:water-percent
+    sensor.hall_humidity:
+      friendly_name: Hall
+      icon: mdi:water-percent
+    sensor.hall_temperature:
+      friendly_name: Hall
+    sensor.inne_medel:
+      friendly_name: Inne
+      icon: mdi:thermometer
+    sensor.inne_grannen_humidity:
+      friendly_name: Inne grannen
+      icon: mdi:water-percent
+    sensor.inne_grannen_temperature:
+      friendly_name: Inne grannen
+    sensor.kyl_temperature:
+      friendly_name: Kyl
+    sensor.louise_rum_humidity:
+      friendly_name: Louise rum
+      icon: mdi:water-percent
+    sensor.louise_rum_temperature:
+      friendly_name: Louise rum
+    sensor.tvattstuga_humidity:
+      friendly_name: Tvättstuga
+      icon: mdi:water-percent
+    sensor.tvattstuga_temperature:
+      friendly_name: Tvättstuga
+    sensor.vardagsrum_temperature:
+      friendly_name: Vardagsrum
+    sensor.varmepump_temperature:
+      friendly_name: Värmepump
+
+    sensor.mickes_laptop:
+      icon: mdi:laptop
+    sensor.mickes_work_laptop:
+      icon: mdi:laptop
+    sensor.louise_dator:
+      icon: mdi:laptop
+
+    sensor.harmony_hub:
+      icon: mdi:remote
+    sensor.yamaha:
+      icon: mdi:audio-video
+    sensor.classic:
+      icon: mdi:audio-video
+    sensor.panasonic_tv:
+      icon: mdi:television
+    sensor.canal_digital:
+      icon: mdi:audio-video
+    sensor.chromecast:
+      icon: mdi:audio-video
+    sensor.chromecast2:
+      icon: mdi:audio-video
+    sensor.dns320:
+      icon: mdi:nas
+
+    sensor.mobil_louise:
+      icon: mdi:cellphone-android
+    sensor.mobil_annelie:
+      icon: mdi:cellphone-android
+    sensor.mobil_micke:
+      icon: mdi:cellphone-android
+    sensor.mobil_andreas:
+      icon: mdi:cellphone-android
+    sensor.mobil_margareta:
+      icon: mdi:cellphone-android
+    sensor.mobil_herbert:
+      icon: mdi:cellphone-android
+    sensor.mobil_erik:
+      icon: mdi:cellphone-android
+
+    sensor.asus_rt_ac68u:
+      icon: mdi:router-wireless
+    sensor.raspberry_pi_2:
+      icon: mdi:raspberrypi
+    sensor.raspberry_pi_3:
+      icon: mdi:raspberrypi
+    sensor.hassbian:
+      icon: mdi:raspberrypi

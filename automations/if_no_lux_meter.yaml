@@ -1,0 +1,28 @@
+# Check if Lux sensor not working
+# Runs every 5 minutes
+  - alias: Check if Lux sensor not working
+    initial_state: True
+    trigger:
+      - platform: time
+        minutes: '/5'
+        seconds: 00
+    condition:
+      condition: and
+      conditions:
+#        - condition: state
+#          entity_id: input_boolean.lux_sensor_active
+#          state: 'on'
+        - condition: state
+          entity_id: sun.sun
+          value_template: '{{ state.attributes.elevation }}'
+          above: 0
+        - condition: template
+          value_template: >
+            {{ (as_timestamp(now())-as_timestamp(states.sensor.ljusstyrka.last_updated)) > 600 }} # 600 = 10 minuter
+    action:
+#      - service: homeassistant.turn_off
+#        entity_id: input_boolean.lux_sensor_active
+      - service: notify.pushbullet
+        data:
+          title: "Luxmätare"
+          message: "Inga nya lux värden på 10 minuter!"

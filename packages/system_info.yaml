@@ -14,6 +14,13 @@ group:
       - group.network_states
       - group.system_monitor_card
 
+  device_states:
+    name: Enheter status
+    entities:
+      - sensor.raspberry_pi_2
+      - sensor.raspberry_pi_3
+      - sensor.hassbian
+
   computer_states:
     name: Dator status
     entities:
@@ -38,6 +45,7 @@ group:
     entities:
       - sensor.mobil_louise
       - sensor.mobil_annelie
+      - sensor.mobil_annelie_jobb
       - sensor.mobil_micke
       - sensor.mobil_andreas
       - sensor.mobil_margareta
@@ -48,11 +56,8 @@ group:
     name: Nätverks status
     entities:
       - sensor.asus_rt_ac68u
-      # - sensor.asus_n66u
+      - sensor.asus_n66u
       # - sensor.asus_unknown
-      - sensor.raspberry_pi_2
-      - sensor.raspberry_pi_3
-      - sensor.hassbian
 
   system_monitor_card:
     name: System Monitor Hass Rpi
@@ -167,10 +172,10 @@ sensor:
     # Mediaplayer #
     ###############
       harmony_hub:
-        friendly_name: 'Harmony hub'
+        friendly_name: 'Harmony Hub'
         value_template: "{{ 'Online' if is_state('device_tracker.harmony_hub', 'home') else 'Offline' }}"
       canal_digital:
-        friendly_name: 'Canal digital'
+        friendly_name: 'Canal Digital'
         value_template: "{{ 'Online' if is_state('device_tracker.canal_digital', 'home') else 'Offline' }}"
       classic:
         friendly_name: 'SqueezeBox Classic'
@@ -213,6 +218,9 @@ sensor:
       mobil_annelie:
         friendly_name: 'Annelie mobil'
         value_template: "{{ 'Online' if is_state('device_tracker.mobil_annelie', 'home') else 'Offline' }}"
+      mobil_annelie_jobb:
+        friendly_name: 'Annelie mobil jobb'
+        value_template: "{{ 'Online' if is_state('device_tracker.mobil_annelie_jobb', 'home') else 'Offline' }}"
       mobil_micke:
         friendly_name: 'Micke mobil'
         value_template: "{{ 'Online' if is_state('device_tracker.mobil_micke', 'home') else 'Offline' }}"

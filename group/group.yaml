@@ -284,6 +284,9 @@
     name: Utomhusbelysning
     view: no
     entities:
+      - light.forrad_fasad
+      - light.friggebod_fasad
+      - light.friggebod_ute
       - light.friggebod_stora_fonstret
       - light.friggebod_lilla_fonstret
       - light.spabad_vagg
@@ -445,7 +448,10 @@
     view: no
     entities:
       - sensor.ute
+      - sensor.ute2_humidity
       - sensor.ljusstyrka
+      - light.forrad_fasad
+      - light.friggebod_fasad
       - light.friggebod_ute
 
   fan:
@@ -480,6 +486,7 @@
       - group.automation_away_light_evening
       - group.automation_uterums_light
       - group.automation_outside_light
+      - group.automation_outside_facade_light
       - group.automation_temp_larm
       - group.automation_ventilation
       - group.automation_ventilation_on_off
@@ -586,6 +593,17 @@
       - automation.utebelysning_off_220000_borta
       - automation.utebelysning_off_220000_hemma_vardag
       - automation.utebelysning_off_all_off_hemma_helg
+
+  automation_outside_facade_light:
+    name: Fasadbelysning
+#    control: hidden
+    entities:
+      - automation.forrad_fasadbelysning_on_40_led_off
+      - automation.forrad_fasadbelysning_on_led_off_40
+      - automation.friggebod_fasadbelysning_on_40
+      - automation.fasadbelysning_off_60
+      - automation.forrad_fasadbelysning_off
+      - automation.friggebod_fasadbelysning_off
 
   automation_temp_larm:
     name: Larm temperatur

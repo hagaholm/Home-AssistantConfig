@@ -58,6 +58,18 @@ group:
       - sensor.asus_rt_ac68u
       - sensor.asus_n66u
       # - sensor.asus_unknown
+      - sensor.asuswrt_download
+      - sensor.asuswrt_download_speed
+      - sensor.asuswrt_upload
+      - sensor.asuswrt_upload_speed
+      - sensor.rt_ac68u_bytes_received
+      - sensor.rt_ac68u_bytes_sent
+      - sensor.rt_ac68u_kbyte_sec_received
+      - sensor.rt_ac68u_kbyte_sec_sent
+      - sensor.rt_ac68u_packets_received
+      - sensor.rt_ac68u_packets_sec_received
+      - sensor.rt_ac68u_packets_sec_sent
+      - sensor.rt_ac68u_packets_sent
 
   system_monitor_card:
     name: Raspberry Hassbian System Monitor

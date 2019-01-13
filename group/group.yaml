@@ -233,7 +233,7 @@
   kitchen_lights:
     name: Köksbelysning
     view: no
-    entities:      
+    entities:
       - light.kok_underskap_bank
       - light.kok_underskap_diskbank
       - light.kok_vitrinskap
@@ -258,7 +258,7 @@
       - light.hall_byra_dimmer
       - light.hall_skap
       - light.vardagsrum_fonster_dimmer
-      - light.vardagsrum_byra_dimmer
+      - light.vardagsrum_skank_dimmer
       - light.vardagsrum_vitrinskap
       - light.vardagsrum_gran
       - light.sovrum_fonster
@@ -271,7 +271,7 @@
     view: no
     entities:
       - light.hall_byra_dimmer
-      - light.vardagsrum_byra_dimmer
+      - light.vardagsrum_skank_dimmer
       - light.vardagsrum_fonster_dimmer
 
   uterums_led_lights:
@@ -366,7 +366,7 @@
     entities:
       - sensor.vardagsrum_temperature
       - light.vardagsrum_fonster_dimmer
-      - light.vardagsrum_byra_dimmer
+      - light.vardagsrum_skank_dimmer
       - light.vardagsrum_vitrinskap
       - light.vardagsrum_gran
       - switch.vardagsrum_stereobank

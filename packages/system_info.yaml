@@ -60,7 +60,7 @@ group:
       # - sensor.asus_unknown
 
   system_monitor_card:
-    name: System Monitor Hass Rpi
+    name: Raspberry Hassbian System Monitor
     entities:
       - sensor.cpu_temperature
       - sensor.cpuspeed
@@ -161,9 +161,9 @@ sensor:
       asus_rt_ac68u:
         friendly_name: 'ASUS RT-AC68U'
         value_template: "{{ 'Online' if is_state('device_tracker.asus_router', 'home') else 'Offline' }}"
-      # asus_n66u:
-        # friendly_name: 'ASUS N66U'
-        # value_template: "{{ 'Online' if is_state('device_tracker.switch_asus_friggebod', 'home') else 'Offline' }}"
+      asus_n66u:
+        friendly_name: 'ASUS N66U'
+        value_template: "{{ 'Online' if is_state('device_tracker.switch_asus_friggebod', 'home') else 'Offline' }}"
       # asus_unknown:
         # friendly_name: 'ASUS unknown'
         # value_template: "{{ 'Online' if is_state('device_tracker.asus_router', 'home') else 'Offline' }}"

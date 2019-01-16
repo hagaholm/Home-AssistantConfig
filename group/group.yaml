@@ -496,6 +496,7 @@
       - group.automation_forrad_kyl_frys
       - group.automation_garage_air_dryer
       - group.automation_unit_offline
+      - group.automation_travel_time
 
   automation_larm:
     name: Larm
@@ -606,7 +607,7 @@
       - automation.forrad_fasadbelysning_off
       - automation.forrad_fasadbelysning_off_60
       - automation.ingen_kontakt_med_friggebod_fasadbelysning
-      - automation.ingen_kontakt_med_förråd_fasadbelysning
+      - automation.ingen_kontakt_med_forrad_fasadbelysning
 
   automation_temp_larm:
     name: Larm temperatur
@@ -637,6 +638,15 @@
       - automation.raspberry_pi_2_offline
       - automation.raspberry_pi_3b_offline
 
+  automation_travel_time:
+    name: Restid till och från jobbet
+#    control: hidden
+    entities:
+      - automation.kor_annan_vag_hem
+      - automation.kor_annan_vag_till_seb
+      - automation.lang_restid_hem
+      - automation.lang_restid_till_seb
+
   automation_ventilation:
     name: Ventilation
 #    control: hidden
@@ -649,7 +659,7 @@
 #    control: hidden
     entities:
       - automation.ventilation_off_60_borta_ute_24degc_inne_23degc
-      - automation.ventilation_off_borta_ute_24c_60_inne_23degc
+      - automation.ventilation_off_borta_ute_24degc_60_inne_23degc
       - automation.ventilation_off_inne_23degc_borta_60_ute_24degc
       - automation.ventilation_off_ute_24degc_borta_60_inne_23degc
       - automation.ventilation_on_60_off

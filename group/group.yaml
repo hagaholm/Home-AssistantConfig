@@ -518,10 +518,10 @@
     entities:
       - automation.kok_100_2500
       - automation.kok_100_morgon_sensor_on_2500
-      - automation.kok_100_sensor_on_0150
-      - automation.kok_100_sensor_on_1502500
-      - automation.kok_100_sensor_on_borta_0150
-      - automation.kok_25_sensor_on_hemma_0150
+      - automation.kok_100_sensor_on_0_150
+      - automation.kok_100_sensor_on_150_2500
+      - automation.kok_100_sensor_on_borta_0_150
+      - automation.kok_25_sensor_on_hemma_0_150
       - automation.kok_off_borta
       - automation.kok_off_sensor_off
       - automation.kok_off_2500
@@ -540,7 +540,7 @@
     name: Kvällsbelysning
 #    control: hidden
     entities:
-      - automation.kvallsbelysning_on_120000_1500_hemma
+      - automation.kvallsbelysning_on_12_00_00_1500_hemma
       - automation.kvallsbelysning_on_1500_hemma
       - automation.kvallsbelysning_on_sensor_on_borta_1500
       - automation.kvallsbelysning_on_hemma_1500
@@ -551,14 +551,14 @@
     name: Nattbelysning
 #    control: hidden
     entities:
-      - automation.nattbelysning_sensor_on_hemma_0150
+      - automation.nattbelysning_sensor_on_hemma_0_150
       - automation.nattbelysning_off_sensor_off
 
   automation_away_light_morning:
     name: Bortabelysning morgon
 #    control: hidden
     entities:
-      - automation.bortabelysning_on_070000_200_borta
+      - automation.bortabelysning_on_07_00_00_200_borta
       - automation.bortabelysning_on_borta_200_morgon
       - automation.bortabelysning_off_11_00_00_borta
       - automation.bortabelysning_off_250_borta_morgon
@@ -567,7 +567,7 @@
     name: Bortabelysning kväll
 #    control: hidden
     entities:
-      - automation.bortabelysning_on_120000_200_borta
+      - automation.bortabelysning_on_12_00_00_200_borta
       - automation.bortabelysning_on_200_borta
       - automation.bortabelysning_on_borta_200
       - automation.bortabelysning_off_23_00_00_borta
@@ -590,8 +590,8 @@
       - automation.friggebod_belysning_on_1
       - automation.friggebod_belysning_ute_on_5
       - automation.spabelysning_on_5
-      - automation.utebelysning_off_220000_borta
-      - automation.utebelysning_off_220000_hemma_vardag
+      - automation.utebelysning_off_22_00_00_borta
+      - automation.utebelysning_off_22_00_00_hemma_vardag
       - automation.utebelysning_off_all_off_hemma_helg
 
   automation_outside_facade_light:
@@ -648,14 +648,14 @@
     name: Ventilation On/Off
 #    control: hidden
     entities:
-      - automation.ventilation_off_60_borta_ute_24c_inne_23c
-      - automation.ventilation_off_borta_ute_24c_60_inne_23c
-      - automation.ventilation_off_inne_23c_borta_60_ute_24c
-      - automation.ventilation_off_ute_24c_borta_60_inne_23c
+      - automation.ventilation_off_60_borta_ute_24degc_inne_23degc
+      - automation.ventilation_off_borta_ute_24c_60_inne_23degc
+      - automation.ventilation_off_inne_23degc_borta_60_ute_24degc
+      - automation.ventilation_off_ute_24degc_borta_60_inne_23degc
       - automation.ventilation_on_60_off
       - automation.ventilation_on_hemma_off
-      - automation.ventilation_on_inne_23c_off
-      - automation.ventilation_on_ute_22c_off
+      - automation.ventilation_on_inne_23degc_off
+      - automation.ventilation_on_ute_22degc_off
 
   automation_mediaplayer:
     name: Mediaspelare

@@ -171,10 +171,10 @@ sensor:
     ###########
       asus_rt_ac68u:
         friendly_name: 'Asus RT-AC68U'
-        value_template: "{{ 'Online' if is_state('device_tracker.asus_router', 'home') else 'Offline' }}"
+        value_template: "{{ 'Online' if is_state('device_tracker.asus_rt_ac68u', 'home') else 'Offline' }}"
       asus_n66u:
         friendly_name: 'Asus EA-N66U'
-        value_template: "{{ 'Online' if is_state('device_tracker.switch_asus_friggebod', 'home') else 'Offline' }}"
+        value_template: "{{ 'Online' if is_state('device_tracker.asus_n66u', 'home') else 'Offline' }}"
 
     ###############
     # Mediaplayer #
@@ -210,7 +210,7 @@ sensor:
       raspberry_pi_2:
         friendly_name: 'Raspberry Pi 2 (1-Wire)'
         value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_2', 'home') else 'Offline' }}"
-      raspberry_pi_3:
+      raspberry_pi_3b:
         friendly_name: 'Raspberry Pi 3B (hagaholm)'
         value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_3b', 'home') else 'Offline' }}"
       hassbian:
@@ -218,7 +218,7 @@ sensor:
         value_template: "{{ 'Online' if is_state('device_tracker.hassbian', 'home') else 'Offline' }}"
       hassio:
         friendly_name: 'Raspberry Pi 3B+ (hassio)'
-        value_template: "{{ 'Online' if is_state('device_tracker.hassbio', 'home') else 'Offline' }}"
+        value_template: "{{ 'Online' if is_state('device_tracker.hassio', 'home') else 'Offline' }}"
 
     ##########
     # Mobile #

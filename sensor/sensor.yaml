@@ -233,6 +233,14 @@
 # https://www.home-assistant.io/components/sensor.moon/
   - platform: moon
 
+###########
+# Glances #
+###########
+# https://www.home-assistant.io/components/sensor.glances/
+  - platform: glances
+    host: IP_ADDRESS
+    resources:
+      - 'disk_use_percent'
 ####################
 # Waze Travel Time #
 ####################

@@ -10,7 +10,7 @@
       entity_id: group.track_for_home_devices
       to: 'home'
     action:
-      - service: python_scripts.flash_lights_friggebod_facade
+      - service: python_script.flash_lights_friggebod_facade
 
     ###################################################
     ### Blinkar med lyset inne när någon kommer hem ###
@@ -33,4 +33,4 @@
         entity_id: device_tracker.mobil_andreas
         to: 'home'
     action:
-      - service: python_scripts.flash_lights_hall_byra
+      - service: python_script.flash_lights_hall_byra

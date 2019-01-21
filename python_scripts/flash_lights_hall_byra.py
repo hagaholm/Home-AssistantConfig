@@ -1,4 +1,4 @@
-entity_id = 'light.hall_byra'
+entity_id = 'light.hall_byra_dimmer'
 light = hass.states.get(entity_id)
 
 original_state = light.state

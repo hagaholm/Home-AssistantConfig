@@ -238,9 +238,12 @@
 ###########
 # https://www.home-assistant.io/components/sensor.glances/
   - platform: glances
-    host: IP_ADDRESS
+    host: 192.168.1.10
     resources:
-      - 'disk_use_percent'
+      - disk_use_percent
+      - memory_use_percent
+      - cpu_temp
+
 ####################
 # Waze Travel Time #
 ####################

@@ -32,5 +32,9 @@
       - platform: state
         entity_id: device_tracker.mobil_andreas
         to: 'home'
+    condition:
+      condition: time
+      after: '07:00:00'
+      before: '22:00:00'
     action:
       - service: python_script.flash_lights_hall_byra

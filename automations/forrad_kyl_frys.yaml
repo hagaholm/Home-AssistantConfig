@@ -84,13 +84,22 @@
           message: 'Larm! Slår av frysen i förrådet: {{ states.sensor.forrad_kyl_frys_temperature.state }} {{ states.sensor.forrad_kyl_frys_temperature.unit_of_measurement }}'
       - service: homeassistant.turn_off
         entity_id: switch.forrad_frys
-      - delay: '00:00:30'
+      - delay: '00:00:05'
       - service: homeassistant.turn_off
         entity_id: switch.forrad_frys
-      - delay: '00:00:30'
+      - delay: '00:00:05'
       - service: homeassistant.turn_off
         entity_id: switch.forrad_frys
-      - delay: '00:00:30'
+      - delay: '00:00:05'
+      - service: homeassistant.turn_off
+        entity_id: switch.forrad_frys
+      - delay: '00:00:05'
+      - service: homeassistant.turn_off
+        entity_id: switch.forrad_frys
+      - delay: '00:00:05'
+      - service: homeassistant.turn_off
+        entity_id: switch.forrad_frys
+      - delay: '00:00:05'
       - service: homeassistant.turn_off
         entity_id: switch.forrad_frys
 
@@ -112,12 +121,21 @@
           message: 'Larm! Slår på frysen i förrådet: {{ states.sensor.forrad_kyl_frys_temperature.state }} {{ states.sensor.forrad_kyl_frys_temperature.unit_of_measurement }}'
       - service: homeassistant.turn_on
         entity_id: switch.forrad_frys
-      - delay: '00:00:30'
+      - delay: '00:00:05'
       - service: homeassistant.turn_on
         entity_id: switch.forrad_frys
-      - delay: '00:00:30'
+      - delay: '00:00:05'
       - service: homeassistant.turn_on
         entity_id: switch.forrad_frys
-      - delay: '00:00:30'
+      - delay: '00:00:05'
+      - service: homeassistant.turn_on
+        entity_id: switch.forrad_frys
+      - delay: '00:00:05'
+      - service: homeassistant.turn_on
+        entity_id: switch.forrad_frys
+      - delay: '00:00:05'
+      - service: homeassistant.turn_on
+        entity_id: switch.forrad_frys
+      - delay: '00:00:05'
       - service: homeassistant.turn_on
         entity_id: switch.forrad_frys

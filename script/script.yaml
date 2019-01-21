@@ -190,3 +190,13 @@
       - service: homeassistant.turn_off
         entity_id: light.louise_fonster
 
+  #######################
+  ### Start switch tv ###
+  #######################
+  start_tv:
+    alias: Starta tv
+    sequence:
+      - service: homeassistant.turn_on
+        entity_id: switch.vardagsrum_stereobank
+      - service: homeassistant.turn_on
+        entity_id: switch.vardagsrum_tv

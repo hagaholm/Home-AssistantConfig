@@ -1,13 +1,24 @@
-    ##########################################
-    ### Lång restid till SEB (28 min)      ###
-    ### T: sensor.annelie_till_jobbet > 35 ###
-    ### A: notify.pushbullet               ###
-    ##########################################
+    ###########################################
+    ### Lång restid till SEB (28 min)       ###
+    ### T: sensor.annelie_till_jobbet > 35  ###
+    ### C: binary_sensor.workday_today = on ###
+    ###    time = 06:30:00 - 08:30:00       ###
+    ### A: notify.pushbullet                ###
+    ###########################################
   - alias: Lång restid till SEB
     trigger:
       platform: numeric_state
       entity_id: sensor.annelie_till_jobbet
       above: '35'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: binary_sensor.workday_today
+          state: 'on'
+        - condition: time
+          after: '06:30:00'
+          before: '08:30:00'
     action:
       - service: notify.pushbullet
         data:
@@ -16,6 +27,8 @@
     ##############################################
     ### Lång restid hem (28 min)               ###
     ### T: sensor.annelie_hem_fran_jobbet > 35 ###
+    ### C: binary_sensor.workday_today = on    ###
+    ###    time = 15:30:00 - 18:30:00          ###
     ### A: notify.pushbullet                   ###
     ##############################################
   - alias: Lång restid hem
@@ -23,6 +36,15 @@
       platform: numeric_state
       entity_id: sensor.annelie_hem_fran_jobbet
       above: '35'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: binary_sensor.workday_today
+          state: 'on'
+        - condition: time
+          after: '15:30:00'
+          before: '18:30:00'
     action:
       - service: notify.pushbullet
         data:
@@ -31,6 +53,8 @@
     ###################################################
     ### Kör annan väg till SEB (40 km)              ###
     ### T: sensor.annelie_till_jobbet.distance > 40 ###
+    ### C: binary_sensor.workday_today = on         ###
+    ###    time = 06:30:00 - 08:30:00               ###
     ### A: notify.pushbullet                        ###
     ###################################################
   - alias: Kör annan väg till SEB
@@ -39,6 +63,15 @@
       entity_id: sensor.annelie_till_jobbet
       value_template: "{{ state.attributes.distance }}"
       above: '40'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: binary_sensor.workday_today
+          state: 'on'
+        - condition: time
+          after: '06:30:00'
+          before: '08:30:00'
     action:
       - service: notify.pushbullet
         data:
@@ -47,6 +80,8 @@
     #######################################################
     ### Kör annan väg hem (40 km)                       ###
     ### T: sensor.annelie_hem_fran_jobbet.distance > 40 ###
+    ### C: binary_sensor.workday_today = on             ###
+    ###    time = 15:30:00 - 18:30:00                   ###
     ### A: notify.pushbullet                            ###
     #######################################################
   - alias: Kör annan väg hem
@@ -55,6 +90,15 @@
       entity_id: sensor.annelie_hem_fran_jobbet
       value_template: "{{ state.attributes.distance }}"
       above: '40'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: binary_sensor.workday_today
+          state: 'on'
+        - condition: time
+          after: '15:30:00'
+          before: '18:30:00'
     action:
       - service: notify.pushbullet
         data:

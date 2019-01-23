@@ -76,7 +76,6 @@
       - input_select.kitchen_lights
       - input_select.uterum_led_lights
       - input_select.outside_lights
-      - input_boolean.christmas_light
 
   default_view_ventilation:
     name: Ventilation badrum
@@ -714,6 +713,43 @@
       - automation.starta_luftavfuktare
       - automation.stoppa_luftavfuktare
 
+###############
+###############
+# View: Setup #
+###############
+###############
+  setup:
+    name: Inställningar
+    view: yes
+    entities:
+      - group.setup_automation
+      - group.setup_christmas
+
+  setup_automation:
+    name: Inställningar automation
+    entities:
+      - input_boolean.turn_off_automation
+
+  setup_christmas:
+    name: Inställningar julbelysning
+    entities:
+      - input_boolean.christmas_light
+
+###############
+###############
+# View: Extra #
+###############
+################
+  extra:
+    name: Extra
+    view: yes
+    entities:
+      - group.family
+      - group.track_for_home_devices
+      - group.ha_server_monitor
+      - group.ha_version_info
+      - group.network_performance
+
   family:
     name: Familj
     entities:
@@ -733,7 +769,9 @@
     - device_tracker.mobil_herbert
     - device_tracker.mobil_erik
 
-  HA Server Monitor:
+  ha_server_monitor:
+    name: HA Server Monitor
+    entities:
     - sensor.cpu_used
     - sensor.disk_use_home
     - sensor.ram_used
@@ -745,11 +783,15 @@
     - sensor.battery
     - sensor.lets_encrypt_expiration
 
-  HA Version Info:
+  ha_version_info:
+    name: HA Version Info
+    entities:
     - sensor.installed_version
     - sensor.current_ha_version
 
-  Network Performance:
+  network_performance:
+    name: Network Performance
+    entities:
     - sensor.speedtest_download
     - sensor.speedtest_upload
     - sensor.speedtest_ping

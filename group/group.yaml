@@ -771,6 +771,7 @@
 
   ha_server_monitor:
     name: HA Server Monitor
+    entities:
     - sensor.cpu_used
     - sensor.disk_use_home
     - sensor.ram_used
@@ -783,12 +784,14 @@
     - sensor.lets_encrypt_expiration
 
   ha_version_info:
-    name: HA Version Info:
+    name: HA Version Info
+    entities:
     - sensor.installed_version
     - sensor.current_ha_version
 
   network_performance:
     name: Network Performance
+    entities:
     - sensor.speedtest_download
     - sensor.speedtest_upload
     - sensor.speedtest_ping

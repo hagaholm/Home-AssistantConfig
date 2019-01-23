@@ -76,7 +76,6 @@
       - input_select.kitchen_lights
       - input_select.uterum_led_lights
       - input_select.outside_lights
-      - input_boolean.christmas_light
 
   default_view_ventilation:
     name: Ventilation badrum
@@ -713,6 +712,30 @@
     entities:
       - automation.starta_luftavfuktare
       - automation.stoppa_luftavfuktare
+
+###############
+###############
+# View: Setup #
+###############
+#################
+  setup:
+    name: Inställningar
+    view: yes
+    entities:
+      - group.setup_automation
+      - group.setup_christmas
+
+  setup_automation:
+    name: Inställningar automation
+    entities:
+      - input_boolean.turn_off_automation
+
+  setup_christmas:
+    name: Inställningar julbelysning
+    entities:
+      - input_boolean.christmas_light
+
+##########################################
 
   family:
     name: Familj

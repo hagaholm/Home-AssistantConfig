@@ -1,4 +1,4 @@
-﻿    ##########################################
+    ##########################################
     ### Hög fukt badrumsfönster            ###
     ### T: sensor.fukt_badrumsfonster > 69 ###
     ### A: switch.fan_speed = on           ###
@@ -57,3 +57,24 @@
     # action:
       # - service: homeassistant.turn_on
         # entity_id: switch.fan_speed
+
+    ######################################################
+    ### Larm! Hög fukt i badrummet, ingen hemma        ###
+    ### T: sensor.fukt_badrumsfonster > 69             ###
+    ### C: group.track_for_home_devices = 'not_home'   ###
+    ### A: switch.fan_speed = on                       ###
+    ######################################################
+  - alias: Badrumsfönster hög fukt larm
+    initial_state: 'on'
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.fukt_badrumsfonster
+      above: '69'
+    condition:
+      condition: state
+      entity_id: group.track_for_home_devices
+      state: 'not_home'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'LARM! Hög fukt i badrummet, ingen är hemma...'

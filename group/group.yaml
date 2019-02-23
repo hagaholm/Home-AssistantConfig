@@ -20,7 +20,6 @@
       - group.default_view_setup
       - group.default_view_ventilation
       - group.default_view_temp_graph
-      - group.default_view_lux_graph
 
   default_view_info:
     name: Info
@@ -97,14 +96,6 @@
     control: hidden
     entities:
       - history_graph.temperatur_ute_2_dagar
-
-  default_view_lux_graph:
-    name: Ljusstyrka (lux)
-    view: no
-    icon: mdi:information-outline
-    control: hidden
-    entities:
-      - history_graph.lux
 
 #####################
 #####################

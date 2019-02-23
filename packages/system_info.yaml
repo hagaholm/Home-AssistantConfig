@@ -14,6 +14,13 @@ group:
       - group.network_states
       - group.system_monitor_card
 
+  device_states:
+    name: Enheter status
+    entities:
+      - sensor.raspberry_pi_2
+      - sensor.raspberry_pi_3
+      - sensor.hassbian
+
   computer_states:
     name: Dator status
     entities:
@@ -38,6 +45,7 @@ group:
     entities:
       - sensor.mobil_louise
       - sensor.mobil_annelie
+      - sensor.mobil_annelie_jobb
       - sensor.mobil_micke
       - sensor.mobil_andreas
       - sensor.mobil_margareta
@@ -48,14 +56,22 @@ group:
     name: Nätverks status
     entities:
       - sensor.asus_rt_ac68u
-      # - sensor.asus_n66u
-      # - sensor.asus_unknown
-      - sensor.raspberry_pi_2
-      - sensor.raspberry_pi_3
-      - sensor.hassbian
+      - sensor.asus_n66u
+      - sensor.asuswrt_download
+      - sensor.asuswrt_download_speed
+      - sensor.asuswrt_upload
+      - sensor.asuswrt_upload_speed
+      - sensor.rt_ac68u_bytes_received
+      - sensor.rt_ac68u_bytes_sent
+      - sensor.rt_ac68u_kbyte_sec_received
+      - sensor.rt_ac68u_kbyte_sec_sent
+      - sensor.rt_ac68u_packets_received
+      - sensor.rt_ac68u_packets_sec_received
+      - sensor.rt_ac68u_packets_sec_sent
+      - sensor.rt_ac68u_packets_sent
 
   system_monitor_card:
-    name: System Monitor Hass Rpi
+    name: Raspberry Hassbian System Monitor
     entities:
       - sensor.cpu_temperature
       - sensor.cpuspeed
@@ -154,23 +170,20 @@ sensor:
     # Network #
     ###########
       asus_rt_ac68u:
-        friendly_name: 'ASUS RT-AC68U'
-        value_template: "{{ 'Online' if is_state('device_tracker.asus_router', 'home') else 'Offline' }}"
-      # asus_n66u:
-        # friendly_name: 'ASUS N66U'
-        # value_template: "{{ 'Online' if is_state('device_tracker.switch_asus_friggebod', 'home') else 'Offline' }}"
-      # asus_unknown:
-        # friendly_name: 'ASUS unknown'
-        # value_template: "{{ 'Online' if is_state('device_tracker.asus_router', 'home') else 'Offline' }}"
+        friendly_name: 'Asus RT-AC68U'
+        value_template: "{{ 'Online' if is_state('device_tracker.asus_rt_ac68u', 'home') else 'Offline' }}"
+      asus_n66u:
+        friendly_name: 'Asus EA-N66U'
+        value_template: "{{ 'Online' if is_state('device_tracker.asus_n66u', 'home') else 'Offline' }}"
 
     ###############
     # Mediaplayer #
     ###############
       harmony_hub:
-        friendly_name: 'Harmony hub'
+        friendly_name: 'Harmony Hub'
         value_template: "{{ 'Online' if is_state('device_tracker.harmony_hub', 'home') else 'Offline' }}"
       canal_digital:
-        friendly_name: 'Canal digital'
+        friendly_name: 'Canal Digital'
         value_template: "{{ 'Online' if is_state('device_tracker.canal_digital', 'home') else 'Offline' }}"
       classic:
         friendly_name: 'SqueezeBox Classic'
@@ -195,52 +208,61 @@ sensor:
     # Raspberry #
     #############
       raspberry_pi_2:
-#        friendly_name: 'Raspberry Pi 2 - 1-Wire'
+        friendly_name: 'Raspberry Pi 2 (1-Wire)'
         value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_2', 'home') else 'Offline' }}"
-      raspberry_pi_3:
-#        friendly_name: 'Raspberry Pi 3 - Nexahome'
+      raspberry_pi_3b:
+        friendly_name: 'Raspberry Pi 3B (hagaholm)'
         value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_3b', 'home') else 'Offline' }}"
       hassbian:
-#        friendly_name: 'Raspberry Pi 3 - Hassbian'
+        friendly_name: 'Raspberry Pi 3B (hassbian)'
         value_template: "{{ 'Online' if is_state('device_tracker.hassbian', 'home') else 'Offline' }}"
+      hassio:
+        friendly_name: 'Raspberry Pi 3B+ (hassio)'
+        value_template: "{{ 'Online' if is_state('device_tracker.hassio', 'home') else 'Offline' }}"
 
     ##########
     # Mobile #
     ##########
       mobil_louise:
-        friendly_name: 'Louise mobil'
+        friendly_name: 'Louise'
         value_template: "{{ 'Online' if is_state('device_tracker.mobil_louise', 'home') else 'Offline' }}"
       mobil_annelie:
-        friendly_name: 'Annelie mobil'
+        friendly_name: 'Annelie'
         value_template: "{{ 'Online' if is_state('device_tracker.mobil_annelie', 'home') else 'Offline' }}"
+      mobil_annelie_jobb:
+        friendly_name: 'Annelie jobb'
+        value_template: "{{ 'Online' if is_state('device_tracker.mobil_annelie_jobb', 'home') else 'Offline' }}"
       mobil_micke:
-        friendly_name: 'Micke mobil'
+        friendly_name: 'Micke'
         value_template: "{{ 'Online' if is_state('device_tracker.mobil_micke', 'home') else 'Offline' }}"
       mobil_andreas:
-        friendly_name: 'Andreas mobil'
+        friendly_name: 'Andreas'
         value_template: "{{ 'Online' if is_state('device_tracker.mobil_andreas', 'home') else 'Offline' }}"
       mobil_margareta:
-        friendly_name: 'Margareta mobil'
+        friendly_name: 'Margareta'
         value_template: "{{ 'Online' if is_state('device_tracker.mobil_margareta', 'home') else 'Offline' }}"
       mobil_herbert:
-        friendly_name: 'Herbert mobil'
+        friendly_name: 'Herbert'
         value_template: "{{ 'Online' if is_state('device_tracker.v', 'home') else 'Offline' }}"
       mobil_erik:
-        friendly_name: 'Erik mobil'
+        friendly_name: 'Erik'
         value_template: "{{ 'Online' if is_state('device_tracker.v', 'home') else 'Offline' }}"
 
       ##########
       # Laptop #
       ##########
       mickes_laptop:
-        friendly_name: 'Micke dator'
+        friendly_name: 'Mickes dator'
         value_template: "{{ 'Online' if is_state('device_tracker.mickes_laptop', 'home') else 'Offline' }}"
       mickes_work_laptop:
-        friendly_name: 'Micke jobb dator'
+        friendly_name: 'Mickes jobb dator'
         value_template: "{{ 'Online' if is_state('device_tracker.mickes_work_laptop', 'home') else 'Offline' }}"
       louise_dator:
         friendly_name: 'Louise dator'
         value_template: "{{ 'Online' if is_state('device_tracker.louise_dator', 'home') else 'Offline' }}"
+      herberts_dator:
+        friendly_name: 'Louise dator'
+        value_template: "{{ 'Online' if is_state('device_tracker.herberts_dator', 'home') else 'Offline' }}"
 
 ##############
 # Automation #

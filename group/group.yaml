@@ -59,6 +59,7 @@
     icon: mdi:information-outline
     control: hidden
     entities:
+      - script.start_tv
       - script.morning_lights_on
       - script.evening_lights_on
       - script.night_light
@@ -184,7 +185,7 @@
     entities:
       - sensor.kyl_temperature
       - sensor.frys_temperature
-      - sensor.forrad_kylfrys_temperature
+      - sensor.forrad_kyl_frys_temperature
 
   temperature_view_other:
     name: Övrigt
@@ -233,7 +234,7 @@
   kitchen_lights:
     name: Köksbelysning
     view: no
-    entities:      
+    entities:
       - light.kok_underskap_bank
       - light.kok_underskap_diskbank
       - light.kok_vitrinskap
@@ -258,7 +259,7 @@
       - light.hall_byra_dimmer
       - light.hall_skap
       - light.vardagsrum_fonster_dimmer
-      - light.vardagsrum_byra_dimmer
+      - light.vardagsrum_skank_dimmer
       - light.vardagsrum_vitrinskap
       - light.vardagsrum_gran
       - light.sovrum_fonster
@@ -271,7 +272,7 @@
     view: no
     entities:
       - light.hall_byra_dimmer
-      - light.vardagsrum_byra_dimmer
+      - light.vardagsrum_skank_dimmer
       - light.vardagsrum_fonster_dimmer
 
   uterums_led_lights:
@@ -366,7 +367,7 @@
     entities:
       - sensor.vardagsrum_temperature
       - light.vardagsrum_fonster_dimmer
-      - light.vardagsrum_byra_dimmer
+      - light.vardagsrum_skank_dimmer
       - light.vardagsrum_vitrinskap
       - light.vardagsrum_gran
       - switch.vardagsrum_stereobank
@@ -496,12 +497,15 @@
       - group.automation_forrad_kyl_frys
       - group.automation_garage_air_dryer
       - group.automation_unit_offline
+      - group.automation_travel_time
 
   automation_larm:
     name: Larm
 #    control: hidden
     entities:
       - automation.larm_rorelse_i_koket
+      - automation.blinkar_inne_hem
+      - automation.blinkar_ute_hem
 
   automation_system:
     name: System
@@ -518,11 +522,11 @@
     entities:
       - automation.kok_100_2500
       - automation.kok_100_morgon_sensor_on_2500
-      - automation.kok_100_sensor_on_0150
-      - automation.kok_100_sensor_on_1502500
-      - automation.kok_100_sensor_on_borta_0150
-      - automation.kok_25_sensor_on_hemma_0150
-      - automation.kok_off__borta
+      - automation.kok_100_sensor_on_0_150
+      - automation.kok_100_sensor_on_150_2500
+      - automation.kok_100_sensor_on_borta_0_150
+      - automation.kok_25_sensor_on_hemma_0_150
+      - automation.kok_off_borta
       - automation.kok_off_sensor_off
       - automation.kok_off_2500
       - automation.kok_rorelsevakt_reset
@@ -532,45 +536,45 @@
 #    control: hidden
     entities:
       - automation.morgonbelysning_on_sensor_on_1500
-      - automation.morgonbelysning_on__hemma_1500
+      - automation.morgonbelysning_on_hemma_1500
       - automation.morgonbelysning_off_1500_hemma
-      - automation.morgonbelysning_off__borta
+      - automation.morgonbelysning_off_borta
 
   automation_evening_light:
     name: Kvällsbelysning
 #    control: hidden
     entities:
-      - automation.kvallsbelysning_on_120000_1500_hemma
+      - automation.kvallsbelysning_on_12_00_00_1500_hemma
       - automation.kvallsbelysning_on_1500_hemma
       - automation.kvallsbelysning_on_sensor_on_borta_1500
-      - automation.kvallsbelysning_on__hemma_1500
+      - automation.kvallsbelysning_on_hemma_1500
       - automation.kvallsbelysning_off_2500_hemma
-      - automation.kvallsbelysning_off__borta
+      - automation.kvallsbelysning_off_borta
 
   automation_night_light:
     name: Nattbelysning
 #    control: hidden
     entities:
-      - automation.nattbelysning_sensor_on_hemma_0150
+      - automation.nattbelysning_sensor_on_hemma_0_150
       - automation.nattbelysning_off_sensor_off
 
   automation_away_light_morning:
     name: Bortabelysning morgon
 #    control: hidden
     entities:
-      - automation.bortabelysning_on_070000_200_borta
-      - automation.bortabelysning_on__borta_200_morgon
-      - automation.bortabelysning_off_110000_borta
+      - automation.bortabelysning_on_07_00_00_200_borta
+      - automation.bortabelysning_on_borta_200_morgon
+      - automation.bortabelysning_off_11_00_00_borta
       - automation.bortabelysning_off_250_borta_morgon
 
   automation_away_light_evening:
     name: Bortabelysning kväll
 #    control: hidden
     entities:
-      - automation.bortabelysning_on_120000_200_borta
+      - automation.bortabelysning_on_12_00_00_200_borta
       - automation.bortabelysning_on_200_borta
-      - automation.bortabelysning_on__borta_200 
-      - automation.bortabelysning_off_230000_borta
+      - automation.bortabelysning_on_borta_200
+      - automation.bortabelysning_off_23_00_00_borta
 
   automation_uterums_light:
     name: Uterumsbelysning
@@ -590,20 +594,23 @@
       - automation.friggebod_belysning_on_1
       - automation.friggebod_belysning_ute_on_5
       - automation.spabelysning_on_5
-      - automation.utebelysning_off_220000_borta
-      - automation.utebelysning_off_220000_hemma_vardag
+      - automation.utebelysning_off_22_00_00_borta
+      - automation.utebelysning_off_22_00_00_hemma_vardag
       - automation.utebelysning_off_all_off_hemma_helg
 
   automation_outside_facade_light:
     name: Fasadbelysning
 #    control: hidden
     entities:
+      - automation.friggebod_fasadbelysning_on_40
       - automation.forrad_fasadbelysning_on_40_led_off
       - automation.forrad_fasadbelysning_on_led_off_40
-      - automation.friggebod_fasadbelysning_on_40
-      - automation.fasadbelysning_off_60
-      - automation.forrad_fasadbelysning_off
       - automation.friggebod_fasadbelysning_off
+      - automation.friggebod_fasadbelysning_off_60
+      - automation.forrad_fasadbelysning_off
+      - automation.forrad_fasadbelysning_off_60
+      - automation.ingen_kontakt_med_friggebod_fasadbelysning
+      - automation.ingen_kontakt_med_forrad_fasadbelysning
 
   automation_temp_larm:
     name: Larm temperatur
@@ -634,31 +641,41 @@
       - automation.raspberry_pi_2_offline
       - automation.raspberry_pi_3b_offline
 
+  automation_travel_time:
+    name: Restid till och från jobbet
+#    control: hidden
+    entities:
+      - automation.kor_annan_vag_hem
+      - automation.kor_annan_vag_till_seb
+      - automation.lang_restid_hem
+      - automation.lang_restid_till_seb
+
   automation_ventilation:
     name: Ventilation
 #    control: hidden
     entities:
       - automation.badrumsfonster_hog_fukt
       - automation.badrumsfonster_lag_fukt
+      - automation.badrumsfonster_hög_fukt_larm
 
   automation_ventilation_on_off:
     name: Ventilation On/Off
 #    control: hidden
     entities:
-      - automation.ventilation_off_60_borta_ute_24c_inne__23c
-      - automation.ventilation_off_borta_ute_24c_60_inne__23c
-      - automation.ventilation_off_inne_23c_borta_60_ute__24c
-      - automation.ventilation_off_ute_24c_borta_60_inne__23c
+      - automation.ventilation_off_60_borta_ute_24degc_inne_23degc
+      - automation.ventilation_off_borta_ute_24degc_60_inne_23degc
+      - automation.ventilation_off_inne_23degc_borta_60_ute_24degc
+      - automation.ventilation_off_ute_24degc_borta_60_inne_23degc
       - automation.ventilation_on_60_off
       - automation.ventilation_on_hemma_off
-      - automation.ventilation_on_inne_23c_off
-      - automation.ventilation_on_ute_22c_off
+      - automation.ventilation_on_inne_23degc_off
+      - automation.ventilation_on_ute_22degc_off
 
   automation_mediaplayer:
     name: Mediaspelare
 #    control: hidden
     entities:
-      - automation.mediaspelare_off__borta
+      - automation.mediaspelare_off_borta
       - automation.satt_pa_mediaspelare_om_off
       - automation.satt_pa_mediaspelare_vid_mediaspelare_on
       - automation.satt_pa_subbasar_vid_mediaspelare_on
@@ -686,10 +703,10 @@
     entities:
       - automation.larm_hog_temp_i_forrad_kyl
       - automation.larm_lag_temp_i_forrad_kyl
-      - automation.forrad_frys_off___22
-      - automation.forrad_frys_on___17
-      - automation.larm_forrad_frys_off___23
-      - automation.larm_forrad_frys_on___16
+      - automation.forrad_frys_off_22
+      - automation.forrad_frys_on_17
+      - automation.larm_forrad_frys_off_23
+      - automation.larm_forrad_frys_on_16
 
   automation_garage_air_dryer:
     name: Garage luftavfuktare
@@ -716,24 +733,3 @@
     - device_tracker.mobil_margareta
     - device_tracker.mobil_herbert
     - device_tracker.mobil_erik
-
-  HA Server Monitor:
-    - sensor.cpu_used
-    - sensor.disk_use_home
-    - sensor.ram_used
-    - sensor.ha_uptime
-    - sensor.sent_ens32
-    - sensor.received_ens32
-    - sensor.cpu
-    - sensor.connected_clients
-    - sensor.battery
-    - sensor.lets_encrypt_expiration
-
-  HA Version Info:
-    - sensor.installed_version
-    - sensor.current_ha_version
-
-  Network Performance:
-    - sensor.speedtest_download
-    - sensor.speedtest_upload
-    - sensor.speedtest_ping

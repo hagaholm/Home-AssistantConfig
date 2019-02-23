@@ -63,7 +63,7 @@ updater:
 
 #---------------------------------------------------
 # Discover some devices automatically
-discovery:
+#discovery:
 
 #---------------------------------------------------
 # Allows you to issue voice commands from the frontend in enabled browsers
@@ -254,6 +254,14 @@ media_player:
 ####################################################
 #openuv:
 #  api_key: !secret open_uv_api_key
+
+####################################################
+#                                                  #
+#                  PYTHON_SCRIPT                   #
+#                                                  #
+####################################################
+# https://www.home-assistant.io/components/python_script/
+python_script:
 
 ####################################################
 #                                                  #

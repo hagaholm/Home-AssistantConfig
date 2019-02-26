@@ -97,7 +97,7 @@ automation:
     ##############################################
     ### Sätt på subbasar vid mediaspelare on   ###
     ### T: remote.harmony_hub                  ###
-    ### C: current_activity != "PowerOff"      ###
+    ### C: current_activity == "Watch TV"      ###
     ###    switch.vardagsrum_subbas = off      ###
     ### A: switch.vardagsrum_subbas = on       ###
     ###    switch.vardagsrum_extra_subbas = on ###
@@ -111,7 +111,7 @@ automation:
       condition: and
       conditions:
         - condition: template
-          value_template: '{{ trigger.to_state.attributes.current_activity != "PowerOff" }}'
+          value_template: '{{ trigger.to_state.attributes.current_activity == "Watch TV" }}'
         - condition: state
           entity_id: switch.vardagsrum_subbas
           state: 'off'
@@ -125,7 +125,7 @@ automation:
     ### Sätt på mediaspelare om off                                ###
     ### En extra kontroll görs ifall påslag inte tidigare fungerat ###
     ### T: remote.harmony_hub                                      ###
-    ### C: current_activity != "PowerOff"                          ###
+    ### C: current_activity == "Watch TV"                          ###
     ###    sensor.yamaha == offline                                ###
     ###    switch.vardagsrum_stereobank = off                      ###
     ### A: switch.vardagsrum_stereobank = on                       ###
@@ -140,7 +140,7 @@ automation:
       condition: and
       conditions:
         - condition: template
-          value_template: '{{ trigger.to_state.attributes.current_activity != "PowerOff" }}'
+          value_template: '{{ trigger.to_state.attributes.current_activity == "Watch TV" }}'
         - condition: state
           entity_id: sensor.yamaha
           state: 'Offline'
@@ -178,7 +178,7 @@ automation:
     ################################################
     ### Sätt på mediaspelare vid mediaspelare on ###
     ### T: remote.harmony_hub                    ###
-    ### C: current_activity != "PowerOff"        ###
+    ### C: current_activity == "Watch TV"        ###
     ###    switch.vardagsrum_stereobank = off    ###
     ### A: switch.vardagsrum_extra_subbas = on   ###
     ################################################
@@ -191,7 +191,7 @@ automation:
       condition: and
       conditions:
         - condition: template
-          value_template: '{{ trigger.to_state.attributes.current_activity != "PowerOff" }}'
+          value_template: '{{ trigger.to_state.attributes.current_activity == "Watch TV" }}'
         - condition: state
           entity_id: switch.vardagsrum_stereobank
           state: 'off'

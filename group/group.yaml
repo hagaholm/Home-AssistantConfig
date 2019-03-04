@@ -20,7 +20,6 @@
       - group.default_view_setup
       - group.default_view_ventilation
       - group.default_view_temp_graph
-      - group.default_view_lux_graph
 
   default_view_info:
     name: Info
@@ -59,7 +58,8 @@
     icon: mdi:information-outline
     control: hidden
     entities:
-      - script.start_tv
+      - script.start_tv      
+      - automation.kok_off_sensor_off
       - script.morning_lights_on
       - script.evening_lights_on
       - script.night_light
@@ -97,14 +97,6 @@
     control: hidden
     entities:
       - history_graph.temperatur_ute_2_dagar
-
-  default_view_lux_graph:
-    name: Ljusstyrka (lux)
-    view: no
-    icon: mdi:information-outline
-    control: hidden
-    entities:
-      - history_graph.lux
 
 #####################
 #####################
@@ -625,7 +617,6 @@
       - automation.larm_varning_hog_temp_i_frys
       - automation.larm_hog_temp_i_frys
       - automation.larm_lag_temp_i_frys
-      - automation.larm_hog_fukt_i_frys
       - automation.hog_temp_raspberry
       - automation.lag_temp_ackumulatortank
       - automation.hog_temp_ackumulatortank
@@ -656,7 +647,7 @@
     entities:
       - automation.badrumsfonster_hog_fukt
       - automation.badrumsfonster_lag_fukt
-      - automation.badrumsfonster_hög_fukt_larm
+      - automation.badrumsfonster_hog_fukt_larm
 
   automation_ventilation_on_off:
     name: Ventilation On/Off

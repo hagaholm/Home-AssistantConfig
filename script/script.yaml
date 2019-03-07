@@ -32,6 +32,7 @@
     alias: Godnatt, släcker allt om 10 minuter
     sequence:
       - delay: '00:10:00'
+
       - service: homeassistant.turn_off
         entity_id: light.sovrum_fonster
       - service: homeassistant.turn_off
@@ -80,6 +81,10 @@
       - service: homeassistant.turn_off
         entity_id: light.spabad_vagg
 
+      - service: remote.turn_off
+        entity_id: remote.harmony_hub
+      - delay: '00:00:15'
+
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_stereobank
       - service: homeassistant.turn_off
@@ -96,6 +101,7 @@
     alias: Godnatt, stänger av allt om 10 minuter
     sequence:
       - delay: '00:10:00'
+
       - service: homeassistant.turn_off
         entity_id: light.sovrum_fonster
       - service: homeassistant.turn_off
@@ -116,6 +122,10 @@
         entity_id: light.friggebod_lilla_fonstret
       - service: homeassistant.turn_off
         entity_id: light.spabad_vagg
+
+      - service: remote.turn_off
+        entity_id: remote.harmony_hub
+      - delay: '00:00:15'
 
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_stereobank
@@ -152,8 +162,12 @@
         entity_id: light.friggebod_lilla_fonstret
       - service: homeassistant.turn_off
         entity_id: light.spabad_vagg
-
       - delay: '00:10:00'
+
+      - service: remote.turn_off
+        entity_id: remote.harmony_hub
+      - delay: '00:00:15'
+
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_stereobank
       - service: homeassistant.turn_off

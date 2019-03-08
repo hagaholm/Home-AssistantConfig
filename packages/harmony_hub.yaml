@@ -222,3 +222,102 @@ automation:
       - service: script.harmony_off
       - delay: '00:00:05'
       - service: script.harmony_tv
+
+    #####################################################
+    ### Sätt på mediaspelare vid Listen to Radio      ###
+    ### T: remote.harmony_hub                         ###
+    ### C: from current_activity == "PowerOff"        ###
+    ###    to   current_activity == "Listen to Radio" ###
+    ###    switch.vardagsrum_stereobank = off         ###
+    ### A: switch.vardagsrum_extra_subbas = on        ###
+    #####################################################
+  - alias: "Sätt på mediaspelare vid Listen to Radio"
+    initial_state: 'on'
+    trigger:
+      platform: state
+      entity_id: remote.harmony_hub
+    condition:
+      condition: and
+      conditions:
+        - condition: template
+          value_template: '{{ trigger.from_state.attributes.current_activity == "PowerOff" }}'
+        - condition: template
+          value_template: '{{ trigger.to_state.attributes.current_activity == "Listen to Radio" }}'
+        - condition: state
+          entity_id: switch.vardagsrum_stereobank
+          state: 'off'
+    action:
+      - service: homeassistant.turn_on
+        entity_id: switch.vardagsrum_stereobank
+      - service: homeassistant.turn_on
+        entity_id: switch.vardagsrum_tv
+      - delay: '00:00:05'
+      - service: script.harmony_off
+      - delay: '00:00:05'
+      - service: script.harmony_radio
+
+    ######################################################
+    ### Sätt på mediaspelare vid Watch ChromeCast      ###
+    ### T: remote.harmony_hub                          ###
+    ### C: from current_activity == "PowerOff"         ###
+    ###    to   current_activity == "Watch ChromeCast" ###
+    ###    switch.vardagsrum_stereobank = off          ###
+    ### A: switch.vardagsrum_extra_subbas = on         ###
+    ######################################################
+  - alias: "Sätt på mediaspelare vid Watch ChromeCast"
+    initial_state: 'on'
+    trigger:
+      platform: state
+      entity_id: remote.harmony_hub
+    condition:
+      condition: and
+      conditions:
+        - condition: template
+          value_template: '{{ trigger.from_state.attributes.current_activity == "PowerOff" }}'
+        - condition: template
+          value_template: '{{ trigger.to_state.attributes.current_activity == "Watch ChromeCast" }}'
+        - condition: state
+          entity_id: switch.vardagsrum_stereobank
+          state: 'off'
+    action:
+      - service: homeassistant.turn_on
+        entity_id: switch.vardagsrum_stereobank
+      - service: homeassistant.turn_on
+        entity_id: switch.vardagsrum_tv
+      - delay: '00:00:05'
+      - service: script.harmony_off
+      - delay: '00:00:05'
+      - service: script.harmony_chromecast
+
+    #######################################################
+    ### Sätt på mediaspelare vid Listen to Spotify      ###
+    ### T: remote.harmony_hub                           ###
+    ### C: from current_activity == "PowerOff"          ###
+    ###    to   current_activity == "Listen to Spotify" ###
+    ###    switch.vardagsrum_stereobank = off           ###
+    ### A: switch.vardagsrum_extra_subbas = on          ###
+    #######################################################
+  - alias: "Sätt på mediaspelare vid Listen to Spotify"
+    initial_state: 'on'
+    trigger:
+      platform: state
+      entity_id: remote.harmony_hub
+    condition:
+      condition: and
+      conditions:
+        - condition: template
+          value_template: '{{ trigger.from_state.attributes.current_activity == "PowerOff" }}'
+        - condition: template
+          value_template: '{{ trigger.to_state.attributes.current_activity == "Listen to Spotify" }}'
+        - condition: state
+          entity_id: switch.vardagsrum_stereobank
+          state: 'off'
+    action:
+      - service: homeassistant.turn_on
+        entity_id: switch.vardagsrum_stereobank
+      - service: homeassistant.turn_on
+        entity_id: switch.vardagsrum_tv
+      - delay: '00:00:05'
+      - service: script.harmony_off
+      - delay: '00:00:05'
+      - service: script.harmony_spotify

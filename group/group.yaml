@@ -58,8 +58,9 @@
     icon: mdi:information-outline
     control: hidden
     entities:
-      - script.start_tv      
-      - automation.kok_off_sensor_off
+      - script.start_tv
+      - automation.kok_off_sensor_off_9_min
+      - automation.kok_off_sensor_off_30_min
       - script.morning_lights_on
       - script.evening_lights_on
       - script.night_light
@@ -519,7 +520,8 @@
       - automation.kok_100_sensor_on_borta_0_150
       - automation.kok_25_sensor_on_hemma_0_150
       - automation.kok_off_borta
-      - automation.kok_off_sensor_off
+      - automation.kok_off_sensor_off_9_min
+      - automation.kok_off_sensor_off_30_min
       - automation.kok_off_2500
       - automation.kok_rorelsevakt_reset
 

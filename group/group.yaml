@@ -668,9 +668,12 @@
     entities:
       - automation.mediaspelare_off_borta
       - automation.satt_pa_mediaspelare_om_off
-      - automation.satt_pa_mediaspelare_vid_mediaspelare_on
-      - automation.satt_pa_subbasar_vid_mediaspelare_on
-      - automation.stang_av_subbasar_vid_mediaspelare_off
+      - automation.satt_pa_mediaspelare_vid_watch_tv
+      - automation.satt_pa_mediaspelare_vid_listen_to_radio
+      - automation.satt_pa_mediaspelare_vid_watch_chromecast
+      - automation.satt_pa_mediaspelare_vid_listen_to_Spotify
+      - automation.satt_pa_subbasar_vid_poweron
+      - automation.stang_av_subbasar_vid_poweroff
 
   automation_hassbian:
     name: Hassbian

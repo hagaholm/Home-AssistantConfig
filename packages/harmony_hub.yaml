@@ -74,14 +74,15 @@ script:
 
 automation:
     ###############################################
-    ### Stäng av subbasar vid mediaspelare off  ###
+    ### Stäng av subbasar vid PowerOff          ###
     ### T: remote.harmony_hub                   ###
-    ### C: current_activity == "PowerOff"       ###
-    ###    switch.vardagsrum_subbas = on        ###    
+    ### C: from current_activity != "PowerOff"  ###
+    ###    to   current_activity == "PowerOff"  ###
+    ###    switch.vardagsrum_subbas = on        ###
     ### A: switch.vardagsrum_subbas = off       ###
     ###    switch.vardagsrum_extra_subbas = off ###
     ###############################################
-  - alias: "Stäng av subbasar vid mediaspelare off"
+  - alias: "Stäng av subbasar vid PowerOff"
     initial_state: 'on'
     trigger:
       platform: state
@@ -89,6 +90,8 @@ automation:
     condition:
       condition: and
       conditions:
+        - condition: template
+          value_template: '{{ trigger.from_state.attributes.current_activity != "PowerOff" }}'
         - condition: template
           value_template: '{{ trigger.to_state.attributes.current_activity == "PowerOff" }}'
         - condition: state
@@ -101,14 +104,15 @@ automation:
         entity_id: switch.vardagsrum_extra_subbas
 
     ##############################################
-    ### Sätt på subbasar vid mediaspelare on   ###
+    ### Sätt på subbasar vid PowerOn           ###
     ### T: remote.harmony_hub                  ###
-    ### C: current_activity == "Watch TV"      ###
+    ### C: from current_activity == "PowerOff" ###
+    ###    to   current_activity != "PowerOff" ###
     ###    switch.vardagsrum_subbas = off      ###
     ### A: switch.vardagsrum_subbas = on       ###
     ###    switch.vardagsrum_extra_subbas = on ###
     ##############################################
-  - alias: "Sätt på subbasar vid mediaspelare on"
+  - alias: "Sätt på subbasar vid PowerOn"
     initial_state: 'on'
     trigger:
       platform: state
@@ -117,7 +121,9 @@ automation:
       condition: and
       conditions:
         - condition: template
-          value_template: '{{ trigger.to_state.attributes.current_activity == "Watch TV" }}'
+          value_template: '{{ trigger.from_state.attributes.current_activity == "PowerOff" }}'
+        - condition: template
+          value_template: '{{ trigger.to_state.attributes.current_activity != "PowerOff" }}'
         - condition: state
           entity_id: switch.vardagsrum_subbas
           state: 'off'
@@ -137,8 +143,11 @@ automation:
     ### A: switch.vardagsrum_stereobank = on                       ###
     ###    switch.vardagsrum_tv = on                               ###
     ##################################################################
+    #
+    # Do not use!!!
+    #
   - alias: "Sätt på mediaspelare om off"
-    initial_state: 'on'
+    initial_state: 'off'
     trigger:
       platform: state
       entity_id: remote.harmony_hub
@@ -159,14 +168,14 @@ automation:
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_tv
 
-    ##################################################
-    ### Stäng av mediaspelare vid mediaspelare off ###
-    ### T: remote.harmony_hub                      ###
-    ### C: current_activity == "PowerOff"          ###
-    ### A: switch.vardagsrum_stereobank = off      ###
-    ###    switch.vardagsrum_tv = off              ###
-    ##################################################
-  # - alias: "Stäng av mediaspelare vid mediaspelare off"
+    #############################################
+    ### Stäng av mediaspelare vid PowerOff    ###
+    ### T: remote.harmony_hub                 ###
+    ### C: current_activity == "PowerOff"     ###
+    ### A: switch.vardagsrum_stereobank = off ###
+    ###    switch.vardagsrum_tv = off         ###
+    #############################################
+  # - alias: "Stäng av mediaspelare vid PowerOff"
     # initial_state: 'off'
     # trigger:
       # platform: state
@@ -181,14 +190,15 @@ automation:
       # - service: homeassistant.turn_off
         # entity_id: switch.vardagsrum_tv
 
-    ################################################
-    ### Sätt på mediaspelare vid mediaspelare on ###
-    ### T: remote.harmony_hub                    ###
-    ### C: current_activity == "Watch TV"        ###
-    ###    switch.vardagsrum_stereobank = off    ###
-    ### A: switch.vardagsrum_extra_subbas = on   ###
-    ################################################
-  - alias: "Sätt på mediaspelare vid mediaspelare on"
+    ##############################################
+    ### Sätt på mediaspelare vid Watch TV      ###
+    ### T: remote.harmony_hub                  ###
+    ### C: from current_activity == "PowerOff" ###
+    ###    to   current_activity == "Watch TV" ###
+    ###    switch.vardagsrum_stereobank = off  ###
+    ### A: switch.vardagsrum_extra_subbas = on ###
+    ##############################################
+  - alias: "Sätt på mediaspelare vid Watch TV"
     initial_state: 'on'
     trigger:
       platform: state
@@ -196,6 +206,8 @@ automation:
     condition:
       condition: and
       conditions:
+        - condition: template
+          value_template: '{{ trigger.from_state.attributes.current_activity == "PowerOff" }}'
         - condition: template
           value_template: '{{ trigger.to_state.attributes.current_activity == "Watch TV" }}'
         - condition: state
@@ -208,5 +220,104 @@ automation:
         entity_id: switch.vardagsrum_tv
       - delay: '00:00:05'
       - service: script.harmony_off
-      - delay: '00:00:10'
+      - delay: '00:00:05'
       - service: script.harmony_tv
+
+    #####################################################
+    ### Sätt på mediaspelare vid Listen to Radio      ###
+    ### T: remote.harmony_hub                         ###
+    ### C: from current_activity == "PowerOff"        ###
+    ###    to   current_activity == "Listen to Radio" ###
+    ###    switch.vardagsrum_stereobank = off         ###
+    ### A: switch.vardagsrum_extra_subbas = on        ###
+    #####################################################
+  - alias: "Sätt på mediaspelare vid Listen to Radio"
+    initial_state: 'on'
+    trigger:
+      platform: state
+      entity_id: remote.harmony_hub
+    condition:
+      condition: and
+      conditions:
+        - condition: template
+          value_template: '{{ trigger.from_state.attributes.current_activity == "PowerOff" }}'
+        - condition: template
+          value_template: '{{ trigger.to_state.attributes.current_activity == "Listen to Radio" }}'
+        - condition: state
+          entity_id: switch.vardagsrum_stereobank
+          state: 'off'
+    action:
+      - service: homeassistant.turn_on
+        entity_id: switch.vardagsrum_stereobank
+      - service: homeassistant.turn_on
+        entity_id: switch.vardagsrum_tv
+      - delay: '00:00:05'
+      - service: script.harmony_off
+      - delay: '00:00:05'
+      - service: script.harmony_radio
+
+    ######################################################
+    ### Sätt på mediaspelare vid Watch ChromeCast      ###
+    ### T: remote.harmony_hub                          ###
+    ### C: from current_activity == "PowerOff"         ###
+    ###    to   current_activity == "Watch ChromeCast" ###
+    ###    switch.vardagsrum_stereobank = off          ###
+    ### A: switch.vardagsrum_extra_subbas = on         ###
+    ######################################################
+  - alias: "Sätt på mediaspelare vid Watch ChromeCast"
+    initial_state: 'on'
+    trigger:
+      platform: state
+      entity_id: remote.harmony_hub
+    condition:
+      condition: and
+      conditions:
+        - condition: template
+          value_template: '{{ trigger.from_state.attributes.current_activity == "PowerOff" }}'
+        - condition: template
+          value_template: '{{ trigger.to_state.attributes.current_activity == "Watch ChromeCast" }}'
+        - condition: state
+          entity_id: switch.vardagsrum_stereobank
+          state: 'off'
+    action:
+      - service: homeassistant.turn_on
+        entity_id: switch.vardagsrum_stereobank
+      - service: homeassistant.turn_on
+        entity_id: switch.vardagsrum_tv
+      - delay: '00:00:05'
+      - service: script.harmony_off
+      - delay: '00:00:05'
+      - service: script.harmony_chromecast
+
+    #######################################################
+    ### Sätt på mediaspelare vid Listen to Spotify      ###
+    ### T: remote.harmony_hub                           ###
+    ### C: from current_activity == "PowerOff"          ###
+    ###    to   current_activity == "Listen to Spotify" ###
+    ###    switch.vardagsrum_stereobank = off           ###
+    ### A: switch.vardagsrum_extra_subbas = on          ###
+    #######################################################
+  - alias: "Sätt på mediaspelare vid Listen to Spotify"
+    initial_state: 'on'
+    trigger:
+      platform: state
+      entity_id: remote.harmony_hub
+    condition:
+      condition: and
+      conditions:
+        - condition: template
+          value_template: '{{ trigger.from_state.attributes.current_activity == "PowerOff" }}'
+        - condition: template
+          value_template: '{{ trigger.to_state.attributes.current_activity == "Listen to Spotify" }}'
+        - condition: state
+          entity_id: switch.vardagsrum_stereobank
+          state: 'off'
+    action:
+      - service: homeassistant.turn_on
+        entity_id: switch.vardagsrum_stereobank
+      - service: homeassistant.turn_on
+        entity_id: switch.vardagsrum_tv
+      - delay: '00:00:05'
+      - service: script.harmony_off
+      - delay: '00:00:05'
+      - service: script.harmony_spotify

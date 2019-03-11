@@ -210,14 +210,15 @@
     ### Släcker lampor när ingen varit i köket på 30 min ###
     ### T: switch.rorelsevakt_kok == off                 ###
     ### A: script.kitchen_light_off                      ###
+    ### ------- Add test for 3 minutes ----------------- ###
     ########################################################
   - alias: Kök off (sensor off 30 min)
     trigger:
       platform: state
       entity_id: switch.rorelsevakt_kok
-      to: 'off'
+      to: 'on'
       for:
-        minutes: 21
+        minutes: 3
     action:
       - service: input_select.select_option
         data:

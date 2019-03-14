@@ -1,0 +1,91 @@
+﻿    ###############################################
+    ### Ingen kontakt med förråd fasadbelysning ###
+    ### T: light.forrad_fasad == unavailable    ###
+    ### A: notify.pushbullet                    ###
+    ###############################################
+  - alias: Ingen kontakt med förråd fasadbelysning
+    trigger:
+      platform: state
+      entity_id: light.forrad_fasad
+      to: 'unavailable'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Ingen kontakt med förråd fasadbelysning'
+
+    ##################################################
+    ### Ingen kontakt med friggebod fasadbelysning ###
+    ### T: light.friggebod_fasad == unavailable    ###
+    ### A: notify.pushbullet                       ###
+    ##################################################
+  - alias: Ingen kontakt med friggebod fasadbelysning
+    trigger:
+      platform: state
+      entity_id: light.friggebod_fasad
+      to: 'unavailable'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Ingen kontakt med friggebod fasadbelysning'
+
+    #############################################################
+    ### Ingen kontakt med vardagsrum skänk dimmer             ###
+    ### T: light.light.vardagsrum_skank_dimmer == unavailable ###
+    ### A: notify.pushbullet                                  ###
+    #############################################################
+  - alias: Ingen kontakt med vardagsrum skänk dimmer
+    trigger:
+      platform: state
+      entity_id: light.vardagsrum_skank_dimmer
+      to: 'unavailable'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Ingen kontakt med vardagsrum skänk dimmer'
+
+##################################################################
+
+    ############################################
+    ### Kontakt med förråd fasadbelysning    ###
+    ### T: light.forrad_fasad != unavailable ###
+    ### A: notify.pushbullet                 ###
+    ############################################
+  - alias: Kontakt med förråd fasadbelysning
+    trigger:
+      platform: state
+      entity_id: light.forrad_fasad
+      from: 'unavailable'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Kontakt med förråd fasadbelysning'
+
+    ###############################################
+    ### Kontakt med friggebod fasadbelysning    ###
+    ### T: light.friggebod_fasad != unavailable ###
+    ### A: notify.pushbullet                    ###
+    ###############################################
+  - alias: Kontakt med friggebod fasadbelysning
+    trigger:
+      platform: state
+      entity_id: light.friggebod_fasad
+      from: 'unavailable'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Kontakt med friggebod fasadbelysning'
+
+    #######################################################
+    ### Kontakt med vardagsrum skänk dimmer             ###
+    ### T: light.vardagsrum_skank_dimmer != unavailable ###
+    ### A: notify.pushbullet                            ###
+    #######################################################
+  - alias: Kontakt med vardagsrum skänk dimmer
+    trigger:
+      platform: state
+      entity_id: light.vardagsrum_skank_dimmer
+      from: 'unavailable'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Kontakt med vardagsrum skänk dimmer'

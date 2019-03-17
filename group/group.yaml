@@ -241,7 +241,7 @@
       - light.hall_byra_dimmer
       - light.vardagsrum_fonster_dimmer
       - light.vardagsrum_gran
-      - light.uterum_fonster
+      - light.uterum_fonster_ikea
 
   evening_lights:
     name: Kvällsbelysning
@@ -258,7 +258,7 @@
       - light.sovrum_fonster
       - light.andreas_fonster
       - light.louise_fonster
-      - light.uterum_fonster
+      - light.uterum_fonster_ikea
 
   night_lights:
     name: Nattbelysning
@@ -294,7 +294,7 @@
       - light.vardagsrum_fonster_dimmer
       - light.sovrum_fonster
       - light.louise_fonster
-      - light.uterum_fonster
+      - light.uterum_fonster_ikea
 
 #############
 #############
@@ -402,7 +402,7 @@
     view: no
     entities:
       - sensor.uterum
-      - light.uterum_fonster
+      - light.uterum_fonster_ikea
       - light.uterum_led
 
   attic:

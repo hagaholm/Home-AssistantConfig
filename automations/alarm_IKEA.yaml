@@ -43,15 +43,15 @@
         data:
           message: 'Ingen kontakt med vardagsrum skänk dimmer'
 
-    #########################################################
-    ### Ingen kontakt med uterum fönster                  ###
-    ### T: light.light.uterum_fonster_ikea == unavailable ###
-    ### A: notify.pushbullet                              ###
-    #########################################################
+    ###################################################
+    ### Ingen kontakt med uterum fönster            ###
+    ### T: light.uterum_fonster_ikea == unavailable ###
+    ### A: notify.pushbullet                        ###
+    ###################################################
   - alias: Ingen kontakt med uterum fönster 
     trigger:
       platform: state
-      entity_id: light.light.uterum_fonster_ikea
+      entity_id: light.uterum_fonster_ikea
       to: 'unavailable'
     action:
       - service: notify.pushbullet
@@ -137,15 +137,15 @@
         data:
           message: 'Kontakt med vardagsrum skänk dimmer'
 
-    #########################################################
-    ### Kontakt med uterum fönster                        ###
-    ### T: light.light.uterum_fonster_ikea != unavailable ###
-    ### A: notify.pushbullet                              ###
-    #########################################################
+    ###################################################
+    ### Kontakt med uterum fönster                  ###
+    ### T: light.uterum_fonster_ikea != unavailable ###
+    ### A: notify.pushbullet                        ###
+    ###################################################
   - alias: Kontakt med uterum fönster 
     trigger:
       platform: state
-      entity_id: light.light.uterum_fonster_ikea
+      entity_id: light.uterum_fonster_ikea
       from: 'unavailable'
     action:
       - service: notify.pushbullet

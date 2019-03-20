@@ -194,31 +194,11 @@
     ### T: switch.rorelsevakt_kok == off                ###
     ### A: script.kitchen_light_off                     ###
     #######################################################
-  - alias: Kök off (sensor off 9 min)
+  - alias: Kök off (sensor off)
     trigger:
       platform: state
       entity_id: switch.rorelsevakt_kok
       to: 'off'
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.kitchen_lights
-          option: Off
-      - service: script.kitchen_light_off
-
-    ########################################################
-    ### Släcker lampor när ingen varit i köket på 30 min ###
-    ### T: switch.rorelsevakt_kok == off                 ###
-    ### A: script.kitchen_light_off                      ###
-    ### ------- Add test for 3 minutes ----------------- ###
-    ########################################################
-  - alias: Kök off (sensor off 30 min)
-    trigger:
-      platform: state
-      entity_id: switch.rorelsevakt_kok
-      to: 'on'
-      for:
-        minutes: 3
     action:
       - service: input_select.select_option
         data:

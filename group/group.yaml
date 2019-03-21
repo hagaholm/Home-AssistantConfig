@@ -220,7 +220,7 @@
       - group.morning_lights
       - group.evening_lights
       - group.night_lights
-      - group.uterums_led_lights
+      - group.uterums
       - group.outside_lights
       - group.away_lights
 
@@ -267,11 +267,12 @@
       - light.hall_byra_dimmer
       - light.vardagsrum_fonster_dimmer
 
-  uterums_led_lights:
-    name: Uterum ledbelysning
+  uterums:
+    name: Uterum
     view: no
     entities:
       - light.uterum_led
+      - light.uterum_fotogenlampa
 
   outside_lights:
     name: Utomhusbelysning
@@ -404,6 +405,7 @@
       - sensor.uterum
       - light.uterum_fonster_ikea
       - light.uterum_led
+      - light.uterum_fotogenlampa
 
   attic:
     name: Vinden
@@ -572,6 +574,12 @@
     name: Uterumsbelysning
 #    control: hidden
     entities:
+      - automation.uterums_fotogenlampa_on_18
+      - automation.uterums_fotogenlampa_on_250
+      - automation.uterums_fotogenlampa_on_home
+      - automation.uterums_fotogenlampa_off_15
+      - automation.uterums_fotogenlampa_off_all_off_hemma
+      - automation.uterums_fotogenlampa_off_borta
       - automation.uterums_ledbelysning_on_18
       - automation.uterums_ledbelysning_on_250
       - automation.uterums_ledbelysning_on_home

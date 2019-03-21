@@ -9,18 +9,20 @@
 # Tellstick #
 #############
   - platform: tellstick
-    only_named: False # False visar även andras sensorer
+    only_named:
 
     ######################################################
     # Grannens regnmätare, visar senaste timme och total #
     ######################################################
     #13: Regnmätare
-    23: Regnmätare
+      - id: 18
+        name: Regnmätare
 
     ###############################
     # Badrum, visar temp och fukt #
     ###############################
-    135: Badrum
+      - id: 135
+        name: Badrum
 
     ###########################################
     # Används inte, krockade med grannens :-) #
@@ -30,55 +32,67 @@
     ############################################
     # Grannens ute givare, visar temp och fukt #
     ############################################
-    151: Ute2
+      - id: 151
+        name: Ute2
 
     ######################################
     # Louise rum, visar på temp och fukt #
     ######################################
-    167: Louise rum
+      - id: 167 
+        name: Louise rum
 
     ###################################
     # Frys i köket, visar temperature #
     # Ny termometer                   #
     ###################################
-    180: Frys
+      - id: 180
+        name: Frys
 
     ##################################
     # Kyl i köket, visar temperature #
     # Ny termometer                  #
     ##################################
-    182: Kyl
+      - id: 182
+        name: Kyl
 
     ###################################
     # Tvättstuga, visar temp och fukt #
     # Värmepump, visar temp           #
     ###################################
-    183: Tvättstuga
-    184: Värmepump
+      - id: 183
+        name: Tvättstuga
+      - id: 184
+        name: Värmepump
 
     #####################################
     # Förråd, visar temp och fukt       #
     # Förråd frys eller kyl, visar temp #
     #####################################
-    199: Förråd
-    200: Förråd kyl/frys
+      - id: 199
+        name: Förråd
+      - id: 200
+        name: Förråd kyl/frys
 
     ##########################
     # Louise rum, visar temp #
     # Ny termometer          #
     ##########################
-    208: Vardagsrum
-    215: Friggebod
+      - id: 208
+        name: Vardagsrum
+      - id: 215
+        name: Friggebod
 
     #############################################
     # Grannens inne givare, visar temp och fukt #
     #############################################
-    231: Inne grannen
+      - id: 231
+        name: Inne grannen
 
     ################################
     # Hall, visar på temp och fukt #
     ################################
-    247: Hall
+      - id: 247
+        name: Hall
 
 #######################
 # command_line 1-Wire #

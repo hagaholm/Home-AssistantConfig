@@ -159,7 +159,7 @@ light:
     entity_id: switch.friggebod_lilla_fonstret
   - platform: switch
     name: Friggebod stora fönstret
-    entity_id: switch.friggebod_stora_fonstret
+    entity_id: switch.friggebod_fonster
   - platform: switch
     name: Friggebod ute
     entity_id: switch.friggebod_ute
@@ -175,9 +175,9 @@ light:
   - platform: switch
     name: Sovrum fönster
     entity_id: switch.sovrum_fonster
-  - platform: switch
-    name: Uterum fönster
-    entity_id: switch.uterum_fonster
+#  - platform: switch
+#    name: Uterum fönster
+#    entity_id: switch.uterum_fonster
   - platform: switch
     name: Uterum led
     entity_id: switch.uterum_led

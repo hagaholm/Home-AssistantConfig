@@ -59,8 +59,7 @@
     control: hidden
     entities:
       - script.start_tv
-      - automation.kok_off_sensor_off_9_min
-      - automation.kok_off_sensor_off_30_min
+      - automation.kok_off_sensor_off
       - script.morning_lights_on
       - script.evening_lights_on
       - script.night_light
@@ -241,7 +240,7 @@
       - light.hall_byra_dimmer
       - light.vardagsrum_fonster_dimmer
       - light.vardagsrum_gran
-      - light.uterum_fonster
+      - light.uterum_fonster_ikea
 
   evening_lights:
     name: Kvällsbelysning
@@ -258,7 +257,7 @@
       - light.sovrum_fonster
       - light.andreas_fonster
       - light.louise_fonster
-      - light.uterum_fonster
+      - light.uterum_fonster_ikea
 
   night_lights:
     name: Nattbelysning
@@ -294,7 +293,7 @@
       - light.vardagsrum_fonster_dimmer
       - light.sovrum_fonster
       - light.louise_fonster
-      - light.uterum_fonster
+      - light.uterum_fonster_ikea
 
 #############
 #############
@@ -402,7 +401,7 @@
     view: no
     entities:
       - sensor.uterum
-      - light.uterum_fonster
+      - light.uterum_fonster_ikea
       - light.uterum_led
 
   attic:
@@ -434,7 +433,7 @@
       - sensor.forrad_humidity
       - sensor.forrad_frys_temperature
       - switch.forrad_frys
-      - switch.garage_luftavfuktare
+      - switch.garage_luftavfuktare_2
 
   outside:
     name: Ute
@@ -519,8 +518,7 @@
       - automation.kok_100_sensor_on_borta_0_150
       - automation.kok_25_sensor_on_hemma_0_150
       - automation.kok_off_borta
-      - automation.kok_off_sensor_off_9_min
-      - automation.kok_off_sensor_off_30_min
+      - automation.kok_off_sensor_off
       - automation.kok_off_2500
       - automation.kok_rorelsevakt_reset
 

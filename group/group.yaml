@@ -58,7 +58,7 @@
     icon: mdi:information-outline
     control: hidden
     entities:
-      - script.start_tv      
+      - script.start_tv
       - automation.kok_off_sensor_off
       - script.morning_lights_on
       - script.evening_lights_on
@@ -240,7 +240,7 @@
       - light.hall_byra_dimmer
       - light.vardagsrum_fonster_dimmer
       - light.vardagsrum_gran
-      - light.uterum_fonster
+      - light.uterum_fonster_ikea
 
   evening_lights:
     name: Kvällsbelysning
@@ -257,14 +257,13 @@
       - light.sovrum_fonster
       - light.andreas_fonster
       - light.louise_fonster
-      - light.uterum_fonster
+      - light.uterum_fonster_ikea
 
   night_lights:
     name: Nattbelysning
     view: no
     entities:
       - light.hall_byra_dimmer
-      - light.vardagsrum_skank_dimmer
       - light.vardagsrum_fonster_dimmer
 
   uterums_led_lights:
@@ -294,7 +293,7 @@
       - light.vardagsrum_fonster_dimmer
       - light.sovrum_fonster
       - light.louise_fonster
-      - light.uterum_fonster
+      - light.uterum_fonster_ikea
 
 #############
 #############
@@ -402,7 +401,7 @@
     view: no
     entities:
       - sensor.uterum
-      - light.uterum_fonster
+      - light.uterum_fonster_ikea
       - light.uterum_led
 
   attic:
@@ -434,7 +433,7 @@
       - sensor.forrad_humidity
       - sensor.forrad_frys_temperature
       - switch.forrad_frys
-      - switch.garage_luftavfuktare
+      - switch.garage_luftavfuktare_2
 
   outside:
     name: Ute
@@ -668,9 +667,12 @@
     entities:
       - automation.mediaspelare_off_borta
       - automation.satt_pa_mediaspelare_om_off
-      - automation.satt_pa_mediaspelare_vid_mediaspelare_on
-      - automation.satt_pa_subbasar_vid_mediaspelare_on
-      - automation.stang_av_subbasar_vid_mediaspelare_off
+      - automation.satt_pa_mediaspelare_vid_watch_tv
+      - automation.satt_pa_mediaspelare_vid_listen_to_radio
+      - automation.satt_pa_mediaspelare_vid_watch_chromecast
+      - automation.satt_pa_mediaspelare_vid_listen_to_Spotify
+      - automation.satt_pa_subbasar_vid_poweron
+      - automation.stang_av_subbasar_vid_poweroff
 
   automation_hassbian:
     name: Hassbian

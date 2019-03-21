@@ -1,4 +1,4 @@
-﻿  #####################
+  #####################
   ### Nattbelysning ###
   #####################
   night_light:
@@ -11,10 +11,6 @@
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_fonster_dimmer
-          brightness_pct: 1
-      - service: light.turn_on
-        data:
-          entity_id: light.vardagsrum_skank_dimmer
           brightness_pct: 1
 
   #########################

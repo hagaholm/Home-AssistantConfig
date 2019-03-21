@@ -32,7 +32,9 @@
           entity_id: light.vardagsrum_fonster_dimmer
           brightness_pct: 40
       - service: light.turn_on
-        entity_id: light.uterum_fonster
+        data:
+          entity_id: light.uterum_fonster_ikea
+          brightness_pct: 80
 
   ### --------------------- ###
   ### Morgonjulbelysning on ###
@@ -63,7 +65,9 @@
       - service: light.turn_on
         entity_id: light.louise_fonster
       - service: light.turn_on
-        entity_id: light.uterum_fonster
+        data:
+          entity_id: light.uterum_fonster_ikea
+          brightness_pct: 80
 
   ###########################
   ### Morgonbelysning off ###

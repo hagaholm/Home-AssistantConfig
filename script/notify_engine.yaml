@@ -1,0 +1,16 @@
+#############################################################################
+###                                                                       ###
+### Script to send notifications to pushbullet to notify me on the mobile ###
+###                                                                       ###
+#############################################################################
+notify_engine:
+  sequence:
+#    - condition: or
+#      conditions:
+#        - condition: state
+#          entity_id: input_boolean.text_notifications
+#          state: 'on'
+    - service: notify.pushbullet
+      data:
+        title: "Hagaholm {{now().strftime('%Y-%m-%d %I:%M %p')}}"
+        message: "{{ value1 }} {{ value2 }} {{ value3 }}"

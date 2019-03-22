@@ -279,10 +279,9 @@ automation:
       platform: homeassistant
       event: start
     action:
-      - service: notify.pushbullet
-        data:
-          title: "Hassbian startad!"
-          message: ""
+      - service: script.notify_engine
+        data_template:
+          value1: 'Hassbian startad!'
 
     ###################################
     ### Hassbian stoppad            ###
@@ -295,10 +294,9 @@ automation:
       platform: homeassistant
       event: shutdown
     action:
-      - service: notify.pushbullet
-        data:
-          title: "Hassbian stoppad!"
-          message: ""
+      - service: script.notify_engine
+        data_template:
+          value1: 'Hassbian stoppad!'
 
     ############################
     ### Hassbian uppdatering ###
@@ -311,10 +309,10 @@ automation:
       - platform: state
         entity_id: updater.updater
     action:
-      - service: notify.pushbullet
-        data: 
-          title: 'Ny Home Assistant Release'
-          message: "Home Assistant {{ states.updater.updater.state }}"
+      - service: script.notify_engine
+        data_template:
+          value1: 'Ny Home Assistant Release.'
+          value2: 'Home Assistant {{ states.updater.updater.state }}'
 
     ####################################
     ### Ny enhet hittad              ###
@@ -327,7 +325,7 @@ automation:
       platform: event
       event_type: device_tracker_new_device
     action:
-      - service: notify.pushbullet
-        data:
-          title: "Ny enhet hittad"
-          message: "Enhet: {{trigger.event.data.host_name}} ({{trigger.event.data.entity_id}})"
+      - service: script.notify_engine
+        data_template:
+          value1: 'Ny enhet hittad.'
+          value2: 'Enhet: {{trigger.event.data.host_name}} ({{trigger.event.data.entity_id}})'

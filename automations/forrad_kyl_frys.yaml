@@ -13,9 +13,9 @@
       entity_id: sensor.forrad_kyl_frys_temperature
       below: '3'
     action:
-      - service: notify.pushbullet
-        data:
-          message: 'Larm! Låg temp i kylen i förrådet: {{ states.sensor.forrad_kyl_frys_temperature.state }} {{ states.sensor.forrad_kyl_frys_temperature.unit_of_measurement }}'
+      - service: script.notify_engine
+        data_template:
+          value1: 'Larm! Låg temp i kylen i förrådet: {{ states.sensor.forrad_kyl_frys_temperature.state }} {{ states.sensor.forrad_kyl_frys_temperature.unit_of_measurement }}'
 
     ##################################################
     ### Larm! Låg temp i Förråd kyl                ###
@@ -29,9 +29,9 @@
       entity_id: sensor.forrad_kyl_frys_temperature
       above: '10'
     action:
-      - service: notify.pushbullet
-        data:
-          message: 'Larm! Hög temp i kylen i förrådet: {{ states.sensor.forrad_kyl_frys_temperature.state }} {{ states.sensor.forrad_kyl_frys_temperature.unit_of_measurement }}'
+      - service: script.notify_engine
+        data_template:
+          value1: 'Larm! Hög temp i kylen i förrådet: {{ states.sensor.forrad_kyl_frys_temperature.state }} {{ states.sensor.forrad_kyl_frys_temperature.unit_of_measurement }}'
 
 #####################
 # Frysen i Förrådet #
@@ -79,9 +79,9 @@
       entity_id: sensor.forrad_kyl_frys_temperature
       below: '-23'
     action:
-      - service: notify.pushbullet
-        data:
-          message: 'Larm! Slår av frysen i förrådet: {{ states.sensor.forrad_kyl_frys_temperature.state }} {{ states.sensor.forrad_kyl_frys_temperature.unit_of_measurement }}'
+      - service: script.notify_engine
+        data_template:
+          value1: 'Larm! Slår av frysen i förrådet: {{ states.sensor.forrad_kyl_frys_temperature.state }} {{ states.sensor.forrad_kyl_frys_temperature.unit_of_measurement }}'
       - service: homeassistant.turn_off
         entity_id: switch.forrad_frys
       - delay: '00:00:05'
@@ -116,9 +116,9 @@
       entity_id: sensor.forrad_kyl_frys_temperature
       above: '-16'
     action:
-      - service: notify.pushbullet
-        data:
-          message: 'Larm! Slår på frysen i förrådet: {{ states.sensor.forrad_kyl_frys_temperature.state }} {{ states.sensor.forrad_kyl_frys_temperature.unit_of_measurement }}'
+      - service: script.notify_engine
+        data_template:
+          value1: 'Larm! Slår på frysen i förrådet: {{ states.sensor.forrad_kyl_frys_temperature.state }} {{ states.sensor.forrad_kyl_frys_temperature.unit_of_measurement }}'
       - service: homeassistant.turn_on
         entity_id: switch.forrad_frys
       - delay: '00:00:05'

@@ -10,6 +10,6 @@
       entity_id: sensor.uterum
       above: '35'
     action:
-      - service: notify.pushbullet
-        data:
-          message: 'LARM! Hög temp i Uterum: {{ states.sensor.uterum.state }} {{ states.sensor.uterum.unit_of_measurement }}'
+      - service: script.notify_engine
+        data_template:
+          value1: 'LARM! Hög temp i Uterum: {{ states.sensor.uterum.state }} {{ states.sensor.uterum.unit_of_measurement }}'

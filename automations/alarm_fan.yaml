@@ -9,9 +9,9 @@
       entity_id: sensor.Franluft
       below: '18'
     action:
-      - service: notify.pushbullet
-        data:
-          message: 'Larm! Låg temp frånluft ventilation: {{ states.sensor.Franluft.state }} {{ states.sensor.Franluft.unit_of_measurement }}'
+      - service: script.notify_engine
+        data_template:
+          value1: 'Larm! Låg temp frånluft ventilation: {{ states.sensor.Franluft.state }} {{ states.sensor.Franluft.unit_of_measurement }}'
 
     #####################################
     ### Hög temp ventilation frånluft ###
@@ -24,9 +24,9 @@
       entity_id: sensor.Franluft
       above: '35'
     action:
-      - service: notify.pushbullet
-        data:
-          message: 'Larm! Hög temp frånluft ventilation: {{ states.sensor.Franluft.state }} {{ states.sensor.Franluft.unit_of_measurement }}'
+      - service: script.notify_engine
+        data_template:
+          value1: 'Larm! Hög temp frånluft ventilation: {{ states.sensor.Franluft.state }} {{ states.sensor.Franluft.unit_of_measurement }}'
 
     ####################################
     ### Låg temp ventilation tilluft ###
@@ -39,9 +39,9 @@
       entity_id: sensor.Tilluft
       below: '15'
     action:
-      - service: notify.pushbullet
-        data:
-          message: 'Larm! Låg temp tilluft ventilation: {{ states.sensor.Tilluft.state }} {{ states.sensor.Tilluft.unit_of_measurement }}'
+      - service: script.notify_engine
+        data_template:
+          value1: 'Larm! Låg temp tilluft ventilation: {{ states.sensor.Tilluft.state }} {{ states.sensor.Tilluft.unit_of_measurement }}'
 
     ####################################
     ### Hög temp ventilation tilluft ###
@@ -54,6 +54,6 @@
       entity_id: sensor.Tilluft
       above: '35'
     action:
-      - service: notify.pushbullet
-        data:
-          message: 'Larm! Hög temp tilluft ventilation: {{ states.sensor.Tilluft.state }} {{ states.sensor.Tilluft.unit_of_measurement }}'
+      - service: script.notify_engine
+        data_template:
+          value1: 'Larm! Hög temp tilluft ventilation: {{ states.sensor.Tilluft.state }} {{ states.sensor.Tilluft.unit_of_measurement }}'

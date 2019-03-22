@@ -9,9 +9,9 @@
       entity_id: light.forrad_fasad
       to: 'unavailable'
     action:
-      - service: notify.pushbullet
-        data:
-          message: 'Ingen kontakt med förråd fasadbelysning'
+      - service: script.notify_engine
+        data_template:
+          value1: 'Ingen kontakt med förråd fasadbelysning'
 
     ##################################################
     ### Ingen kontakt med friggebod fasadbelysning ###
@@ -24,9 +24,9 @@
       entity_id: light.friggebod_fasad
       to: 'unavailable'
     action:
-      - service: notify.pushbullet
-        data:
-          message: 'Ingen kontakt med friggebod fasadbelysning'
+      - service: script.notify_engine
+        data_template:
+          value1: 'Ingen kontakt med friggebod fasadbelysning'
 
     #######################################################
     ### Ingen kontakt med vardagsrum skänk dimmer       ###
@@ -39,9 +39,9 @@
       entity_id: light.vardagsrum_skank_dimmer
       to: 'unavailable'
     action:
-      - service: notify.pushbullet
-        data:
-          message: 'Ingen kontakt med vardagsrum skänk dimmer'
+      - service: script.notify_engine
+        data_template:
+          value1: 'Ingen kontakt med vardagsrum skänk dimmer'
 
     ###################################################
     ### Ingen kontakt med uterum fönster            ###
@@ -54,9 +54,9 @@
       entity_id: light.uterum_fonster_ikea
       to: 'unavailable'
     action:
-      - service: notify.pushbullet
-        data:
-          message: 'Ingen kontakt med uterum fönster'
+      - service: script.notify_engine
+        data_template:
+          value1: 'Ingen kontakt med uterum fönster'
 
     ##############################################################
     ### Ingen kontakt med friggebod brytare vid stora fönstret ###
@@ -69,9 +69,9 @@
       entity_id: switch.friggebod_fonster
       to: 'unavailable'
     action:
-      - service: notify.pushbullet
-        data:
-          message: 'Ingen kontakt med friggebod brytare vid stora fönstret'
+      - service: script.notify_engine
+        data_template:
+          value1: 'Ingen kontakt med friggebod brytare vid stora fönstret'
 
     #######################################################
     ### Ingen kontakt med garage avfuktare              ###
@@ -84,9 +84,9 @@
       entity_id: switch.garage_luftavfuktare_2
       to: 'unavailable'
     action:
-      - service: notify.pushbullet
-        data:
-          message: 'Ingen kontakt med garage avfuktare'
+      - service: script.notify_engine
+        data_template:
+          value1: 'Ingen kontakt med garage avfuktare'
 
 ##################################################################
 ##################################################################
@@ -103,9 +103,9 @@
       entity_id: light.forrad_fasad
       from: 'unavailable'
     action:
-      - service: notify.pushbullet
-        data:
-          message: 'Kontakt med förråd fasadbelysning'
+      - service: script.notify_engine
+        data_template:
+          value1: 'Kontakt med förråd fasadbelysning'
 
     ###############################################
     ### Kontakt med friggebod fasadbelysning    ###
@@ -118,9 +118,9 @@
       entity_id: light.friggebod_fasad
       from: 'unavailable'
     action:
-      - service: notify.pushbullet
-        data:
-          message: 'Kontakt med friggebod fasadbelysning'
+      - service: script.notify_engine
+        data_template:
+          value1: 'Kontakt med friggebod fasadbelysning'
 
     #######################################################
     ### Kontakt med vardagsrum skänk dimmer             ###
@@ -133,9 +133,9 @@
       entity_id: light.vardagsrum_skank_dimmer
       from: 'unavailable'
     action:
-      - service: notify.pushbullet
-        data:
-          message: 'Kontakt med vardagsrum skänk dimmer'
+      - service: script.notify_engine
+        data_template:
+          value1: 'Kontakt med vardagsrum skänk dimmer'
 
     ###################################################
     ### Kontakt med uterum fönster                  ###
@@ -148,9 +148,9 @@
       entity_id: light.uterum_fonster_ikea
       from: 'unavailable'
     action:
-      - service: notify.pushbullet
-        data:
-          message: 'Kontakt med uterum fönster'
+      - service: script.notify_engine
+        data_template:
+          value1: 'Kontakt med uterum fönster'
 
     ########################################################
     ### Kontakt med friggebod brytare vid stora fönstret ###
@@ -163,9 +163,9 @@
       entity_id: switch.friggebod_fonster
       from: 'unavailable'
     action:
-      - service: notify.pushbullet
-        data:
-          message: 'Kontakt med friggebod brytare vid stora fönstret'
+      - service: script.notify_engine
+        data_template:
+          value1: 'Kontakt med friggebod brytare vid stora fönstret'
 
     #######################################################
     ### Kontakt med garage avfuktare                    ###
@@ -178,6 +178,6 @@
       entity_id: switch.garage_luftavfuktare_2
       from: 'unavailable'
     action:
-      - service: notify.pushbullet
-        data:
-          message: 'Kontakt med garage avfuktare'
+      - service: script.notify_engine
+        data_template:
+          value1: 'Kontakt med garage avfuktare'

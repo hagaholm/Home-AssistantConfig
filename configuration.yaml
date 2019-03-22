@@ -366,6 +366,18 @@ input_number:
 
 ####################################################
 #                                                  #
+#                     COUNTER                      #
+#                                                  #
+####################################################
+#https://www.home-assistant.io/components/counter/
+counter:
+  notify_counter:
+    name: Antal meddelanden idag
+    initial: 0
+    step: 1
+
+####################################################
+#                                                  #
 #                       ASUSWRT                    #
 #                                                  #
 ####################################################

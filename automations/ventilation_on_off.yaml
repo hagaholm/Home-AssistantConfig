@@ -53,9 +53,9 @@
       - delay: '00:00:05'
       - service: homeassistant.turn_off
         entity_id: switch.ventilationsaggregat
-      - service: notify.pushbullet
-        data:
-          message: 'Ventilation off (Borta, ute >24°C, <60%, Inne > 23°C)'
+      - service: script.notify_engine
+        data_template:
+          value1: 'Ventilation off (Borta, ute >24°C, <60%, Inne > 23°C)'
 
     #####################################################
     ### Ventilation off                               ###
@@ -108,9 +108,9 @@
       - delay: '00:00:05'
       - service: homeassistant.turn_off
         entity_id: switch.ventilationsaggregat
-      - service: notify.pushbullet
-        data:
-          message: Ventilation off (Ute >24°C, Borta, <60%, Inne > 23°C)
+      - service: script.notify_engine
+        data_template:
+          value1: 'Ventilation off (Ute >24°C, Borta, <60%, Inne > 23°C)'
 
     #####################################################
     ### Ventilation off                               ###
@@ -163,9 +163,9 @@
       - delay: '00:00:05'
       - service: homeassistant.turn_off
         entity_id: switch.ventilationsaggregat
-      - service: notify.pushbullet
-        data:
-          message: 'Ventilation off (<60%, Borta, Ute >24°C, Inne > 23°C)'
+      - service: script.notify_engine
+        data_template:
+          value1: 'Ventilation off (<60%, Borta, Ute >24°C, Inne > 23°C)'
 
     #####################################################
     ### Ventilation off                               ###
@@ -218,9 +218,9 @@
       - delay: '00:00:05'
       - service: homeassistant.turn_off
         entity_id: switch.ventilationsaggregat
-      - service: notify.pushbullet
-        data:
-          message: Ventilation off (Inne >23°C, Borta, <60%, Ute > 24°C)
+      - service: script.notify_engine
+        data_template:
+          value1: 'Ventilation off (Inne >23°C, Borta, <60%, Ute > 24°C)'
 
     #######################
     ### Ventilation on  ###
@@ -263,9 +263,9 @@
       - delay: '00:00:05'
       - service: homeassistant.turn_on
         entity_id: switch.ventilationsaggregat
-      - service: notify.pushbullet
-        data:
-          message: 'Ventilation on (Hemma, Off)'
+      - service: script.notify_engine
+        data_template:
+          value1: 'Ventilation on (Hemma, Off)'
 
     #############################################
     ### Ventilation on                        ###
@@ -304,9 +304,9 @@
       - delay: '00:00:05'
       - service: homeassistant.turn_on
         entity_id: switch.ventilationsaggregat
-      - service: notify.pushbullet
-        data:
-          message: 'Ventilation on (Ute <22°C, Off)'
+      - service: script.notify_engine
+        data_template:
+          value1: 'Ventilation on (Ute <22°C, Off)'
 
     #############################################
     ### Ventilation on                        ###
@@ -345,9 +345,9 @@
       - delay: '00:00:05'
       - service: homeassistant.turn_on
         entity_id: switch.ventilationsaggregat
-      - service: notify.pushbullet
-        data:
-          message: 'Ventilation on (>60%, Off)'
+      - service: script.notify_engine
+        data_template:
+          value1: 'Ventilation on (>60%, Off)'
 
     #############################################
     ### Ventilation on                        ###
@@ -386,6 +386,6 @@
       - delay: '00:00:05'
       - service: homeassistant.turn_on
         entity_id: switch.ventilationsaggregat
-      - service: notify.pushbullet
-        data:
-          message: 'Ventilation on (Inne <23°C, Off)'
+      - service: script.notify_engine
+        data_template:
+          value1: 'Ventilation on (Inne <23°C, Off)'

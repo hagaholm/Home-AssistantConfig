@@ -15,6 +15,6 @@
       entity_id: group.track_for_home_devices
       state: 'not_home'
     action:
-      - service: notify.pushbullet
-        data:
-          message: 'LARM! Rörelse i köket, ingen är hemma...'
+      - service: script.notify_engine
+        data_template:
+          value1: 'LARM! Rörelse i köket, ingen är hemma...'

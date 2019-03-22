@@ -20,9 +20,9 @@
           after: '06:30:00'
           before: '08:30:00'
     action:
-      - service: notify.pushbullet
-        data:
-          message: 'Lång restid till jobbet. Kontrollera resväg'
+      - service: script.notify_engine
+        data_template:
+          value1: 'Lång restid till jobbet. Kontrollera resväg'
 
     ##############################################
     ### Lång restid hem (28 min)               ###
@@ -46,9 +46,9 @@
           after: '15:30:00'
           before: '18:30:00'
     action:
-      - service: notify.pushbullet
-        data:
-          message: 'Lång restid hem. Kontrollera resväg'
+      - service: script.notify_engine
+        data_template:
+          value1: 'Lång restid hem. Kontrollera resväg'
 
     ###################################################
     ### Kör annan väg till SEB (40 km)              ###
@@ -73,9 +73,9 @@
           after: '06:30:00'
           before: '08:30:00'
     action:
-      - service: notify.pushbullet
-        data:
-          message: 'Längre sträcka till jobbet. Kontrollera resväg'
+      - service: script.notify_engine
+        data_template:
+          value1: 'Längre sträcka till jobbet. Kontrollera resväg'
 
     #######################################################
     ### Kör annan väg hem (40 km)                       ###
@@ -100,6 +100,6 @@
           after: '15:30:00'
           before: '18:30:00'
     action:
-      - service: notify.pushbullet
-        data:
-          message: 'Längre sträcka hem. Kontrollera resväg'
+      - service: script.notify_engine
+        data_template:
+          value1: 'Längre sträcka hem. Kontrollera resväg'

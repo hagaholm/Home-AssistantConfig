@@ -10,9 +10,9 @@
       entity_id: sensor.friggebod_temperature
       above: '23'
     action:
-      - service: notify.pushbullet
-        data:
-          message: 'LARM! Hög temp i Friggebod: {{ states.sensor.friggebod_temperature.state }} {{ states.sensor.friggebod_temperature.unit_of_measurement }}'
+      - service: script.notify_engine
+        data_template:
+          value1: 'LARM! Hög temp i Friggebod: {{ states.sensor.friggebod_temperature.state }} {{ states.sensor.friggebod_temperature.unit_of_measurement }}'
 
     #########################################################
     ### Varnar för låg temp i Friggebod                   ###
@@ -26,9 +26,9 @@
       entity_id: sensor.friggebod_temperature
       below: '19'
     action:
-      - service: notify.pushbullet
-        data:
-          message: 'LARM! Låg temp i Friggebod: {{ states.sensor.friggebod_temperature.state }} {{ states.sensor.friggebod_temperature.unit_of_measurement }}'
+      - service: script.notify_engine
+        data_template:
+          value1: 'LARM! Låg temp i Friggebod: {{ states.sensor.friggebod_temperature.state }} {{ states.sensor.friggebod_temperature.unit_of_measurement }}'
 
     #######################################################
     ### Frysvakt Friggebod                              ###
@@ -42,6 +42,6 @@
       entity_id: sensor.friggebod_temperature
       below: '3'
     action:
-      - service: notify.pushbullet
-        data:
-          message: 'LARM! Frysvakt Friggebod: {{ states.sensor.friggebod_temperature.state }} {{ states.sensor.friggebod_temperature.unit_of_measurement }}'
+      - service: script.notify_engine
+        data_template:
+          value1: 'LARM! Frysvakt Friggebod: {{ states.sensor.friggebod_temperature.state }} {{ states.sensor.friggebod_temperature.unit_of_measurement }}'

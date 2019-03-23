@@ -101,6 +101,97 @@
       - service: light.turn_on
         entity_id: light.uterum_led
 
+    #########################################################
+    ### Tänder fotogenlampa i uterum när någon kommer hem ###
+    ### T: group.track_for_home_devices == home           ###
+    ### C: 12:00:00 - 21:45:00                            ###
+    ###    sensor.ljusstyrka < 250                        ###
+    ###    sensor.uterum > 18                             ###
+    ### A: light.uterum_fotogenlampa = on                 ###
+    #########################################################
+  - alias: Uterums fotogenlampa on (home)
+    initial_state: 'on'
+    trigger:
+      platform: state
+      entity_id: group.track_for_home_devices
+      from: 'not_home'
+      to: 'home'
+    condition:
+      condition: and
+      conditions:
+        - condition: time
+          after: '12:00:00'
+          before: '21:45:00' 
+        - condition: numeric_state
+          entity_id: sensor.ljusstyrka
+          below: 250
+        - condition: numeric_state
+          entity_id: sensor.uterum
+          above: 18
+    action:
+      - service: light.turn_on
+        entity_id: light.uterum_fotogenlampa
+
+    #######################################################
+    ### Tänder fotogenlampa i uterum när det blir varmt ###
+    ### T: sensor.uterum > 18                           ###
+    ### C: 12:00:00 - 21:45:00                          ###
+    ###    sensor.ljusstyrka < 250                      ###
+    ###    group.track_for_home_devices == home         ###
+    ### A: light.uterum_fotogenlampa = on               ###
+    #######################################################
+  - alias: Uterums fotogenlampa on (>18)
+    initial_state: 'on'
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.uterum
+      above: 18
+    condition:
+      condition: and
+      conditions:
+        - condition: time
+          after: '12:00:00'
+          before: '21:45:00' 
+        - condition: numeric_state
+          entity_id: sensor.ljusstyrka
+          below: 250
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'home'
+    action:
+      - service: light.turn_on
+        entity_id: light.uterum_fotogenlampa
+
+    #######################################################
+    ### Tänder fotogenlampa i uterum när det blir mörkt ###
+    ### T: sensor.ljusstyrka < 250                      ###
+    ### C: 12:00:00 - 21:45:00                          ###
+    ###    sensor.uterum > 18                           ###
+    ###    group.track_for_home_devices == home         ###
+    ### A: light.uterum_fotogenlampa = on               ###
+    #######################################################
+  - alias: Uterums fotogenlampa on (<250)
+    initial_state: 'on'
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      below: 250
+    condition:
+      condition: and
+      conditions:
+        - condition: time
+          after: '12:00:00'
+          before: '21:45:00' 
+        - condition: numeric_state
+          entity_id: sensor.uterum
+          above: '18'
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'home'
+    action:
+      - service: light.turn_on
+        entity_id: light.uterum_fotogenlampa
+
     #######################################################
     ### Tänder belysning friggebod ute på eftermiddagen ###
     ### T: sensor.ljusstyrka < 5                        ###
@@ -360,3 +451,124 @@
       - delay: '00:00:05'
       - service: homeassistant.turn_off
         entity_id: light.uterum_led
+
+    #############################################################################
+    ### Släcker uterums fotogenlampa på kvällen när allt släcks inne av någon ###
+    ### T: light.kok_lilla_fonstret == off                                    ###
+    ### C: group.track_for_home_devices == home                               ###
+    ###    light.uterum_fotogenlampa = on                                     ###
+    ### A: light.uterum_fotogenlampa = off                                    ###
+    #############################################################################
+  - alias: Uterums fotogenlampa off (All off, hemma)
+    initial_state: 'on'
+    trigger:
+      platform: state
+      entity_id: light.kok_lilla_fonstret
+      to: 'off'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'home'
+        - condition: state
+          entity_id: light.uterum_fotogenlampa
+          state: 'on'
+    action:
+      - service: homeassistant.turn_off
+        entity_id: light.uterum_fotogenlampa
+      - delay: '00:00:05'
+      - service: homeassistant.turn_off
+        entity_id: light.uterum_fotogenlampa
+      - delay: '00:00:05'
+      - service: homeassistant.turn_off
+        entity_id: light.uterum_fotogenlampa
+      - delay: '00:00:05'
+      - service: homeassistant.turn_off
+        entity_id: light.uterum_fotogenlampa
+      - delay: '00:00:05'
+      - service: homeassistant.turn_off
+        entity_id: light.uterum_fotogenlampa
+      - delay: '00:00:05'
+      - service: homeassistant.turn_off
+        entity_id: light.uterum_fotogenlampa
+      - delay: '00:00:05'
+      - service: homeassistant.turn_off
+        entity_id: light.uterum_fotogenlampa
+
+    ##################################################################
+    ### Släcker uterums fotogenlampa på kvällen när ingen är hemma ###
+    ### T: group.track_for_home_devices == not_home                ###
+    ### C: light.uterum_fotogenlampa = on                          ###
+    ### A: light.uterum_fotogenlampa = off                         ###
+    ##################################################################
+  - alias: Uterums fotogenlampa off (Borta)
+    initial_state: 'on'
+    trigger:
+      platform: state
+      entity_id: group.track_for_home_devices
+      from: 'home'
+      to: 'not_home'
+    condition:
+      condition: state
+      entity_id: light.uterum_fotogenlampa
+      state: 'on'
+    action:
+      - service: homeassistant.turn_off
+        entity_id: light.uterum_fotogenlampa
+      - delay: '00:00:05'
+      - service: homeassistant.turn_off
+        entity_id: light.uterum_fotogenlampa
+      - delay: '00:00:05'
+      - service: homeassistant.turn_off
+        entity_id: light.uterum_fotogenlampa
+      - delay: '00:00:05'
+      - service: homeassistant.turn_off
+        entity_id: light.uterum_fotogenlampa
+      - delay: '00:00:05'
+      - service: homeassistant.turn_off
+        entity_id: light.uterum_fotogenlampa
+      - delay: '00:00:05'
+      - service: homeassistant.turn_off
+        entity_id: light.uterum_fotogenlampa
+      - delay: '00:00:05'
+      - service: homeassistant.turn_off
+        entity_id: light.uterum_fotogenlampa
+
+    ###########################################################
+    ### Släcker uterums fotogenlampa när det blir för kallt ###
+    ### T: sensor.uterum < 15                               ###
+    ### C: light.uterum_fotogenlampa = on                   ###
+    ### A: light.uterum_fotogenlampa = off                  ###
+    ###########################################################
+  - alias: Uterums fotogenlampa off (<15)
+    initial_state: 'on'
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.uterum
+      below: 15
+    condition:
+      condition: state
+      entity_id: light.uterum_fotogenlampa
+      state: 'on'
+    action:
+      - service: homeassistant.turn_off
+        entity_id: light.uterum_fotogenlampa
+      - delay: '00:00:05'
+      - service: homeassistant.turn_off
+        entity_id: light.uterum_fotogenlampa
+      - delay: '00:00:05'
+      - service: homeassistant.turn_off
+        entity_id: light.uterum_fotogenlampa
+      - delay: '00:00:05'
+      - service: homeassistant.turn_off
+        entity_id: light.uterum_fotogenlampa
+      - delay: '00:00:05'
+      - service: homeassistant.turn_off
+        entity_id: light.uterum_fotogenlampa
+      - delay: '00:00:05'
+      - service: homeassistant.turn_off
+        entity_id: light.uterum_fotogenlampa
+      - delay: '00:00:05'
+      - service: homeassistant.turn_off
+        entity_id: light.uterum_fotogenlampa

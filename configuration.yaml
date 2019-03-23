@@ -182,6 +182,9 @@ light:
     name: Uterum fotogenlampa
     entity_id: switch.uterum_fotogenlampa
   - platform: switch
+    name: Uterum fotogenlampa
+    entity_id: switch.uterum_fotogenlampa
+  - platform: switch
     name: Uterum led
     entity_id: switch.uterum_led
   - platform: switch
@@ -299,6 +302,10 @@ input_boolean:
     name: Använd julbelysning
     initial: off
     icon: mdi:pine-tree
+
+  rorelsevakt_kok_aktiv:
+    name: Rörelsevakt kök aktiv
+    initial: off
 
 ####################################################
 #                                                  #

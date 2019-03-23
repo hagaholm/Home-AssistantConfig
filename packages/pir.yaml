@@ -1,10 +1,10 @@
 timer:
-  timer_rorelsevakt_kok_short:
-    duration: '00:01:00'
+  # timer_rorelsevakt_kok_short:
+    # duration: '00:01:00'
   timer_rorelsevakt_kok_medium:
     duration: '00:10:00'
-  timer_rorelsevakt_kok_long:
-    duration: '00:30:00'
+  # timer_rorelsevakt_kok_long:
+    # duration: '00:30:00'
 
 automation:
   - alias: Set timers when there is movement in kitchen
@@ -23,29 +23,27 @@ automation:
           entity_id: input_boolean.rorelsevakt_kok_aktiv
 
       # Cancel timers
-      - service: timer.cancel
-        entity_id: timer.timer_rorelsevakt_kok_short
+      # - service: timer.cancel
+        # entity_id: timer.timer_rorelsevakt_kok_short
       - service: timer.cancel
         entity_id: timer.timer_rorelsevakt_kok_medium
-      - service: timer.cancel
-        entity_id: timer.timer_rorelsevakt_kok_long
-
-      #- delay: '00:00:01'
+      # - service: timer.cancel
+        # entity_id: timer.timer_rorelsevakt_kok_long
 
       # Start timers
-      - service: timer.start
-        entity_id: timer.timer_rorelsevakt_kok_short
+      # - service: timer.start
+        # entity_id: timer.timer_rorelsevakt_kok_short
       - service: timer.start
         entity_id: timer.timer_rorelsevakt_kok_medium
-      - service: timer.start
-        entity_id: timer.timer_rorelsevakt_kok_long
+      # - service: timer.start
+        # entity_id: timer.timer_rorelsevakt_kok_long
  
   - alias: Turn off pir at end of timer
     trigger:
       - platform: event
         event_type: timer.finished
         event_data:
-          entity_id: timer.timer_rorelsevakt_kok_short
+          entity_id: timer.timer_rorelsevakt_kok_medium
     action:
       - service: input_boolean.turn_off
         data:

@@ -266,3 +266,20 @@
     action:
       - service: homeassistant.turn_off
         entity_id: switch.rorelsevakt_kok
+
+    #######################################################
+    ### Släcker lampor när ingen varit i köket på 1 min ###
+    ### T: switch.rorelsevakt_kok == off                ###
+    ### A: script.kitchen_light_off                     ###
+    #######################################################
+  - alias: Kök off (sensor off 1 min)
+    trigger:
+      platform: state
+      entity_id: switch.rorelsevakt_kok
+      to: 'on'
+      for:
+        minutes: 1
+    action:
+      - service: homeassistant.turn_off
+        entity_id: switch.rorelsevakt_kok
+

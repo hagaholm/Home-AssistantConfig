@@ -7,7 +7,7 @@ automation:
     action:
       - service: timer.start
         entity_id: timer.timer_kitchen
-       - service: notify.pushbullet
+      - service: notify.pushbullet
         data:
           title: "Start timer"
 

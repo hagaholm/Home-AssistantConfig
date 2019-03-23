@@ -5,6 +5,9 @@ automation:
         entity_id: switch.rorelsevakt_kok
         to: 'on'
     action:
+      - service: timer.cancel
+        entity_id: timer.timer_kitchen
+      - delay: '00:00:02'
       - service: timer.start
         entity_id: timer.timer_kitchen
       - service: notify.pushbullet
@@ -26,4 +29,4 @@ automation:
 
 timer:
   timer_kitchen:
-    duration: '00:00:30'
+    duration: '00:01:00'

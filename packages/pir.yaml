@@ -1,0 +1,22 @@
+automation:
+  - alias: Set timer when there is movement in kitchen
+    trigger:
+      - platform: state
+        entity_id: switch.rorelsevakt_kok
+        to: 'on'
+    action:
+      - service: timer.start
+        entity_id: timer.timer_kitchen
+  - alias: Turn off pir at end of timer
+    trigger:
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.timer_kitchen
+    action:
+      service: homeassistant.turn_off
+      entity_id: switch.rorelsevakt_kok
+
+timer:
+  timer_kitchen:
+    duration: '00:00:30'

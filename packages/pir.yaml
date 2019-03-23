@@ -20,7 +20,7 @@ automation:
       # Aktiverar rorelsevakt_kok_aktiv
       - service: input_boolean.turn_on
         data:
-        entity_id: input_boolean.rorelsevakt_kok_aktiv
+          entity_id: input_boolean.rorelsevakt_kok_aktiv
 
       # Cancel timers
       - service: timer.cancel
@@ -49,5 +49,5 @@ automation:
     action:
       - service: input_boolean.turn_off
         data:
-        entity_id: input_boolean.rorelsevakt_kok_aktiv
+          entity_id: input_boolean.rorelsevakt_kok_aktiv
 

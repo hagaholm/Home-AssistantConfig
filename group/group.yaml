@@ -231,6 +231,8 @@
       - light.kok_underskap_bank
       - light.kok_underskap_diskbank
       - light.kok_vitrinskap
+      - input_boolean.rorelsevakt_kok_aktiv
+      - timer.timer_rorelsevakt_kok_medium
 
   morning_lights:
     name: Morgonbelysning
@@ -334,8 +336,9 @@
       - light.kok_lilla_fonstret
       - light.kok_underskap_bank
       - light.kok_underskap_diskbank
-      - light.kok_vitrinskap 
-      - switch.rorelsevakt_kok
+      - light.kok_vitrinskap
+      - input_boolean.rorelsevakt_kok_aktiv
+      - timer.timer_rorelsevakt_kok_medium
 
   hall:
     name: Hall

@@ -1,0 +1,213 @@
+input_number:
+  solar_angle_down_2500_lux:
+    name: "Solvinkel ner under 2500 lux"
+    unit_of_measurement: "degrees"
+    min: -10
+    max: 45
+    initial: 0
+  solar_angle_down_1500_lux:
+    name: "Solvinkel ner under 1500 lux"
+    unit_of_measurement: "degrees"
+    min: -10
+    max: 45
+    initial: 0
+  solar_angle_down_250_lux:
+    name: "Solvinkel ner under 250 lux"
+    unit_of_measurement: "degrees"
+    min: -10
+    max: 45
+    initial: 0
+  solar_angle_down_200_lux:
+    name: "Solvinkel ner under 200 lux"
+    unit_of_measurement: "degrees"
+    min: -10
+    max: 45
+    initial: 0
+  solar_angle_down_150_lux:
+    name: "Solvinkel ner under 100 lux"
+    unit_of_measurement: "degrees"
+    min: -10
+    max: 45
+    initial: 0
+  solar_angle_down_40_lux:
+    name: "Solvinkel ner under 40 lux"
+    unit_of_measurement: "degrees"
+    min: -10
+    max: 45
+    initial: 0
+  solar_angle_down_5_lux:
+    name: "Solvinkel ner under 5 lux"
+    unit_of_measurement: "degrees"
+    min: -10
+    max: 45
+    initial: 0
+  solar_angle_down_1_lux:
+    name: "Solvinkel ner under 1 lux"
+    unit_of_measurement: "degrees"
+    min: -10
+    max: 45
+    initial: 0
+############################
+  solar_angle_up_2500_lux:
+    name: "Solvinkel upp över 2500 lux"
+    unit_of_measurement: "degrees"
+    min: -10
+    max: 45
+    initial: 0
+  solar_angle_up_1500_lux:
+    name: "Solvinkel upp över 1500 lux"
+    unit_of_measurement: "degrees"
+    min: -10
+    max: 45
+    initial: 0
+  solar_angle_up_250_lux:
+    name: "Solvinkel upp över 250 lux"
+    unit_of_measurement: "degrees"
+    min: -10
+    max: 45
+    initial: 0
+  solar_angle_up_150_lux:
+    name: "Solvinkel upp över 100 lux"
+    unit_of_measurement: "degrees"
+    min: -10
+    max: 45
+    initial: 0
+  solar_angle_up_60_lux:
+    name: "Solvinkel upp över 60 lux"
+    unit_of_measurement: "degrees"
+    min: -10
+    max: 45
+    initial: 0
+
+automation:
+  - alias: Spara solvinkel ner under 2500 lux
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      below: 2500
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.solar_angle_down_2500_lux
+          value: "{{ states.sun.sun.attributes.elevation }}"
+  - alias: Spara solvinkel ner under 1500 lux
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      below: 1500
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.solar_angle_down_1500_lux
+          value: "{{ states.sun.sun.attributes.elevation }}"
+  - alias: Spara solvinkel ner under 250 lux
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      below: 250
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.solar_angle_down_250_lux
+          value: "{{ states.sun.sun.attributes.elevation }}"
+  - alias: Spara solvinkel ner under 200 lux
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      below: 200
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.solar_angle_down_200_lux
+          value: "{{ states.sun.sun.attributes.elevation }}"
+  - alias: Spara solvinkel ner under 150 lux
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      below: 150
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.solar_angle_down_150_lux
+          value: "{{ states.sun.sun.attributes.elevation }}"
+  - alias: Spara solvinkel ner under 40 lux
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      below: 40
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.solar_angle_down_40_lux
+          value: "{{ states.sun.sun.attributes.elevation }}"
+  - alias: Spara solvinkel ner under 5 lux
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      below: 5
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.solar_angle_down_5_lux
+          value: "{{ states.sun.sun.attributes.elevation }}"
+  - alias: Spara solvinkel ner under 1 lux
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      below: 1
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.solar_angle_down_1_lux
+          value: "{{ states.sun.sun.attributes.elevation }}"
+############################################################
+  - alias: Spara solvinkel upp över 2500 lux
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      above: 2500
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.solar_angle_up_2500_lux
+          value: "{{ states.sun.sun.attributes.elevation }}"
+  - alias: Spara solvinkel upp över 1500 lux
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      above: 1500
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.solar_angle_up_1500_lux
+          value: "{{ states.sun.sun.attributes.elevation }}"
+  - alias: Spara solvinkel upp över 250 lux
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      above: 250
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.solar_angle_up_250_lux
+          value: "{{ states.sun.sun.attributes.elevation }}"
+  - alias: Spara solvinkel upp över 150 lux
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      above: 150
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.solar_angle_up_150_lux
+          value: "{{ states.sun.sun.attributes.elevation }}"
+  - alias: Spara solvinkel upp över 60 lux
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      above: 60
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.solar_angle_up_60_lux
+          value: "{{ states.sun.sun.attributes.elevation }}"

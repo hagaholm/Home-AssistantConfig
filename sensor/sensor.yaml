@@ -239,7 +239,7 @@
       - sensor.vardagsrum_temperature
       - sensor.sovrum
       - sensor.louise_rum_temperature
-    value_template: '{{ value | round(1) }}'
+    round_digits: 1
 
 ########
 # Moon #

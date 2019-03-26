@@ -85,6 +85,14 @@ automation:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
       below: 2500
+    condition:
+      condition: and
+      conditions:
+        - condition: time
+          after: '12:00:00'
+          before: '23:59:00' 
+        - condition: template
+          value_template: '{{ (as_timestamp(now())-as_timestamp(states.sun.sun.last_updated)) > 12*3600 }}'
     action:
       - service: input_number.set_value
         data_template:
@@ -95,6 +103,14 @@ automation:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
       below: 1500
+    condition:
+      condition: and
+      conditions:
+        - condition: time
+          after: '12:00:00'
+          before: '23:59:00' 
+        - condition: template
+          value_template: '{{ (as_timestamp(now())-as_timestamp(states.sun.sun.last_updated)) > 12*3600 }}'
     action:
       - service: input_number.set_value
         data_template:
@@ -105,6 +121,14 @@ automation:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
       below: 250
+    condition:
+      condition: and
+      conditions:
+        - condition: time
+          after: '12:00:00'
+          before: '23:59:00' 
+        - condition: template
+          value_template: '{{ (as_timestamp(now())-as_timestamp(states.sun.sun.last_updated)) > 12*3600 }}'
     action:
       - service: input_number.set_value
         data_template:
@@ -115,6 +139,14 @@ automation:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
       below: 200
+    condition:
+      condition: and
+      conditions:
+        - condition: time
+          after: '12:00:00'
+          before: '23:59:00' 
+        - condition: template
+          value_template: '{{ (as_timestamp(now())-as_timestamp(states.sun.sun.last_updated)) > 12*3600 }}'
     action:
       - service: input_number.set_value
         data_template:
@@ -125,6 +157,14 @@ automation:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
       below: 150
+    condition:
+      condition: and
+      conditions:
+        - condition: time
+          after: '12:00:00'
+          before: '23:59:00' 
+        - condition: template
+          value_template: '{{ (as_timestamp(now())-as_timestamp(states.sun.sun.last_updated)) > 12*3600 }}'
     action:
       - service: input_number.set_value
         data_template:
@@ -135,6 +175,14 @@ automation:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
       below: 40
+    condition:
+      condition: and
+      conditions:
+        - condition: time
+          after: '12:00:00'
+          before: '23:59:00' 
+        - condition: template
+          value_template: '{{ (as_timestamp(now())-as_timestamp(states.sun.sun.last_updated)) > 12*3600 }}'
     action:
       - service: input_number.set_value
         data_template:
@@ -145,6 +193,14 @@ automation:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
       below: 5
+    condition:
+      condition: and
+      conditions:
+        - condition: time
+          after: '12:00:00'
+          before: '23:59:00' 
+        - condition: template
+          value_template: '{{ (as_timestamp(now())-as_timestamp(states.sun.sun.last_updated)) > 12*3600 }}'
     action:
       - service: input_number.set_value
         data_template:
@@ -155,6 +211,14 @@ automation:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
       below: 1
+    condition:
+      condition: and
+      conditions:
+        - condition: time
+          after: '12:00:00'
+          before: '23:59:00' 
+        - condition: template
+          value_template: '{{ (as_timestamp(now())-as_timestamp(states.sun.sun.last_updated)) > 12*3600 }}'
     action:
       - service: input_number.set_value
         data_template:
@@ -166,6 +230,14 @@ automation:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
       above: 2500
+    condition:
+      condition: and
+      conditions:
+        - condition: time
+          after: '00:00:00'
+          before: '12:00:00' 
+        - condition: template
+          value_template: '{{ (as_timestamp(now())-as_timestamp(states.sun.sun.last_updated)) > 12*3600 }}'
     action:
       - service: input_number.set_value
         data_template:
@@ -176,6 +248,14 @@ automation:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
       above: 1500
+    condition:
+      condition: and
+      conditions:
+        - condition: time
+          after: '00:00:00'
+          before: '12:00:00' 
+        - condition: template
+          value_template: '{{ (as_timestamp(now())-as_timestamp(states.sun.sun.last_updated)) > 12*3600 }}'
     action:
       - service: input_number.set_value
         data_template:
@@ -186,6 +266,14 @@ automation:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
       above: 250
+    condition:
+      condition: and
+      conditions:
+        - condition: time
+          after: '00:00:00'
+          before: '12:00:00' 
+        - condition: template
+          value_template: '{{ (as_timestamp(now())-as_timestamp(states.sun.sun.last_updated)) > 12*3600 }}'
     action:
       - service: input_number.set_value
         data_template:
@@ -196,6 +284,14 @@ automation:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
       above: 150
+    condition:
+      condition: and
+      conditions:
+        - condition: time
+          after: '00:00:00'
+          before: '12:00:00' 
+        - condition: template
+          value_template: '{{ (as_timestamp(now())-as_timestamp(states.sun.sun.last_updated)) > 12*3600 }}'
     action:
       - service: input_number.set_value
         data_template:
@@ -206,6 +302,14 @@ automation:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
       above: 60
+    condition:
+      condition: and
+      conditions:
+        - condition: time
+          after: '00:00:00'
+          before: '12:00:00' 
+        - condition: template
+          value_template: '{{ (as_timestamp(now())-as_timestamp(states.sun.sun.last_updated)) > 12*3600 }}'
     action:
       - service: input_number.set_value
         data_template:

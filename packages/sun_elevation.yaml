@@ -103,18 +103,7 @@ automation:
     action:
       - service: notify.file_sun_elevation
         data_template: 
-          message: ",{{ states.input_number.solar_angle_up_60_lux.state }}," + 
-                    "{{ states.input_number.solar_angle_up_150_lux.state }}," +
-                    "{{ states.input_number.solar_angle_up_250_lux.state }}," +
-                    "{{ states.input_number.solar_angle_up_1500_lux.state }}," +
-                    "{{ states.input_number.solar_angle_up_2500_lux.state }}," +
-                    "{{ states.input_number.solar_angle_down_2500_lux.state }}," +
-                    "{{ states.input_number.solar_angle_down_1500_lux.state }}," +
-                    "{{ states.input_number.solar_angle_down_250_lux.state }}," +
-                    "{{ states.input_number.solar_angle_down_150_lux.state }}," +
-                    "{{ states.input_number.solar_angle_down_40_lux.state }}," +
-                    "{{ states.input_number.solar_angle_down_5_lux.state }}," +
-                    "{{ states.input_number.solar_angle_down_1_lux.state }}"
+          message: ", {{ states.input_number.solar_angle_up_60_lux.state }}, {{ states.input_number.solar_angle_up_150_lux.state }}, {{ states.input_number.solar_angle_up_250_lux.state }}, {{ states.input_number.solar_angle_up_1500_lux.state }}, {{ states.input_number.solar_angle_up_2500_lux.state }}, {{ states.input_number.solar_angle_down_2500_lux.state }}, {{ states.input_number.solar_angle_down_1500_lux.state }}, {{ states.input_number.solar_angle_down_250_lux.state }}, {{ states.input_number.solar_angle_down_150_lux.state }}, {{ states.input_number.solar_angle_down_40_lux.state }}, {{ states.input_number.solar_angle_down_5_lux.state }}, {{ states.input_number.solar_angle_down_1_lux.state }}"
 ############################################################
   - alias: Spara solvinkel ner under 2500 lux
     trigger:

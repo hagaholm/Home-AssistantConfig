@@ -50,7 +50,7 @@ config:
 # http
 # https://home-assistant.io/components/http/
 http:
-  api_password: !secret http_password
+#  api_password: !secret http_password
   ip_ban_enabled: True
   login_attempts_threshold: 3
 

@@ -5,15 +5,13 @@
     alias: Godnatt, släcker allt
     sequence:
       - service: homeassistant.turn_off
+        entity_id: light.sovrum_fonster
+      - service: homeassistant.turn_off
         entity_id: light.sovrum_sang
       - service: homeassistant.turn_off
         entity_id: group.evening_lights
       - service: homeassistant.turn_off
         entity_id: group.kitchen_lights
-# Removed
-#      - service: homeassistant.turn_off
-#        entity_id: group.outside_lights
-# Added
       - service: homeassistant.turn_off
         entity_id: light.friggebod_fasad
       - service: homeassistant.turn_off
@@ -34,15 +32,13 @@
       - delay: '00:10:00'
 
       - service: homeassistant.turn_off
+        entity_id: light.sovrum_fonster
+      - service: homeassistant.turn_off
         entity_id: light.sovrum_sang
       - service: homeassistant.turn_off
         entity_id: group.evening_lights
       - service: homeassistant.turn_off
         entity_id: group.kitchen_lights
-# Removed
-#      - service: homeassistant.turn_off
-#        entity_id: group.outside_lights
-# Added
       - service: homeassistant.turn_off
         entity_id: light.friggebod_fasad
       - service: homeassistant.turn_off
@@ -61,15 +57,13 @@
     alias: Godnatt, stänger av allt
     sequence:
       - service: homeassistant.turn_off
+        entity_id: light.sovrum_fonster
+      - service: homeassistant.turn_off
         entity_id: light.sovrum_sang
       - service: homeassistant.turn_off
         entity_id: group.evening_lights
       - service: homeassistant.turn_off
         entity_id: group.kitchen_lights
-# Removed
-#      - service: homeassistant.turn_off
-#        entity_id: group.outside_lights
-# Added
       - service: homeassistant.turn_off
         entity_id: light.friggebod_fasad
       - service: homeassistant.turn_off
@@ -103,15 +97,13 @@
       - delay: '00:10:00'
 
       - service: homeassistant.turn_off
+        entity_id: light.sovrum_fonster
+      - service: homeassistant.turn_off
         entity_id: light.sovrum_sang
       - service: homeassistant.turn_off
         entity_id: group.evening_lights
       - service: homeassistant.turn_off
         entity_id: group.kitchen_lights
-# Removed
-#      - service: homeassistant.turn_off
-#        entity_id: group.outside_lights
-# Added
       - service: homeassistant.turn_off
         entity_id: light.friggebod_fasad
       - service: homeassistant.turn_off
@@ -143,15 +135,13 @@
     alias: Godnatt, stänger av allt (tv om 10 minuter)
     sequence:
       - service: homeassistant.turn_off
+        entity_id: light.sovrum_fonster
+      - service: homeassistant.turn_off
         entity_id: light.sovrum_sang
       - service: homeassistant.turn_off
         entity_id: group.evening_lights
       - service: homeassistant.turn_off
         entity_id: group.kitchen_lights
-# Removed
-#      - service: homeassistant.turn_off
-#        entity_id: group.outside_lights
-# Added
       - service: homeassistant.turn_off
         entity_id: light.friggebod_fasad
       - service: homeassistant.turn_off
@@ -183,6 +173,8 @@
   bedroom_off:
     alias: Släck i sovrummet
     sequence:
+      - service: homeassistant.turn_off
+        entity_id: light.sovrum_fonster
       - service: homeassistant.turn_off
         entity_id: light.sovrum_sang
 
@@ -218,3 +210,23 @@
         entity_id: switch.vardagsrum_subbas
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_extra_subbas
+
+  #############################
+  ### Tänd sänglampa sovrum ###
+  #############################
+  sovrum_sang_light_on:
+    alias: Tänd sänglampa sovrum
+    sequence:
+      - service: homeassistant.turn_on
+        entity_id: light.sovrum_sang
+
+  #################################
+  ### Tänd lampa fönster sovrum ###
+  #################################
+  sovrum_fonster_light_on:
+    alias: Tänd lampa fönster sovrum
+    sequence:
+      - service: light.turn_on 
+        data: 
+          entity_id: light.sovrum_fonster
+          brightness_pct: 100

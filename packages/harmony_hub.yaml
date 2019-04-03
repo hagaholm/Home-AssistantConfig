@@ -76,9 +76,7 @@ automation:
     ###############################################
     ### Stäng av subbasar vid PowerOff          ###
     ### T: remote.harmony_hub                   ###
-    ### C: from current_activity != "PowerOff"  ###
-    ###    from current_activity != "PowerOn"   ###
-    ###    to   current_activity == "PowerOff"  ###
+    ### C: to current_activity == "PowerOff"    ###
     ###    switch.vardagsrum_subbas = on        ###
     ### A: switch.vardagsrum_subbas = off       ###
     ###    switch.vardagsrum_extra_subbas = off ###
@@ -92,10 +90,6 @@ automation:
       condition: and
       conditions:
         - condition: template
-          value_template: '{{ trigger.from_state.attributes.current_activity != "PowerOff" }}'
-        - condition: template
-          value_template: '{{ trigger.from_state.attributes.current_activity != "PowerOn" }}'
-        - condition: template
           value_template: '{{ trigger.to_state.attributes.current_activity == "PowerOff" }}'
         - condition: state
           entity_id: switch.vardagsrum_subbas
@@ -106,16 +100,15 @@ automation:
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_extra_subbas
 
-    ##############################################
-    ### Sätt på subbasar vid PowerOn           ###
-    ### T: remote.harmony_hub                  ###
-    ### C: from current_activity == "PowerOff" ###
-    ###    to   current_activity != "PowerOff" ###
-    ###    to   current_activity != "PowerOn"  ###
-    ###    switch.vardagsrum_subbas = off      ###
-    ### A: switch.vardagsrum_subbas = on       ###
-    ###    switch.vardagsrum_extra_subbas = on ###
-    ##############################################
+    #########################################################################
+    ### Sätt på subbasar vid PowerOn                                      ###
+    ### Får använda "Watch TV" för att få det att fungera på ett bra sätt ###
+    ### T: remote.harmony_hub                                             ###
+    ### C: to current_activity == "Watch TV"                              ###
+    ###    switch.vardagsrum_subbas = off                                 ###
+    ### A: switch.vardagsrum_subbas = on                                  ###
+    ###    switch.vardagsrum_extra_subbas = on                            ###
+    #########################################################################
   - alias: "Sätt på subbasar vid PowerOn"
     initial_state: 'on'
     trigger:
@@ -125,12 +118,8 @@ automation:
       condition: and
       conditions:
         - condition: template
-          value_template: '{{ trigger.from_state.attributes.current_activity == "PowerOff" }}'
+          value_template: '{{ trigger.to_state.attributes.current_activity != ""Watch TV"" }}'
         - condition: template
-          value_template: '{{ trigger.to_state.attributes.current_activity != "PowerOff" }}'
-        - condition: template
-          value_template: '{{ trigger.to_state.attributes.current_activity != "PowerOn" }}'
-        - condition: state
           entity_id: switch.vardagsrum_subbas
           state: 'off'
     action:

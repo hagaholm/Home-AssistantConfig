@@ -42,7 +42,7 @@
       entity_id: sensor.ljusstyrka
       above: 60
     condition:
-      condition: time
+      condition: state
       entity_id: light.friggebod_fasad
       state: 'on'
     action:

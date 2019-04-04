@@ -1,7 +1,11 @@
+    #################
+    ### Friggebod ###
+    #################
     ##########################################################
     ### Tänder friggebod fasadbelysning när det blir mörkt ###
     ### T: sensor.ljusstyrka < 40                          ###
     ### C: time: 12:00 - 22:00                             ###
+    ###    light.friggebod_fasad == off                    ###
     ### A: light.friggebod_fasad = on                      ###
     ##########################################################
   - alias: Friggebod fasadbelysning on (<40)
@@ -11,9 +15,14 @@
       entity_id: sensor.ljusstyrka
       below: 40
     condition:
-      condition: time
-      after: '12:00:00'
-      before: '22:00:00'
+      condition: and
+      conditions:
+        - condition: time
+          after: '12:00:00'
+          before: '22:00:00'
+        - condition: state
+          entity_id: light.friggebod_fasad
+          state: 'off'
     action:
       - service: light.turn_on
         data:
@@ -23,6 +32,7 @@
     ###########################################################
     ### Släcker friggebod fasadbelysning när det blir ljust ###
     ### T: sensor.ljusstyrka > 60                           ###
+    ### C: light.friggebod_fasad == on                      ###
     ### A: light.friggebod_fasad = off                      ###
     ###########################################################
   - alias: Friggebod fasadbelysning off (>60)
@@ -31,6 +41,10 @@
       platform: numeric_state
       entity_id: sensor.ljusstyrka
       above: 60
+    condition:
+      condition: state
+      entity_id: light.friggebod_fasad
+      state: 'on'
     action:
       - service: light.turn_off
         entity_id: light.friggebod_fasad
@@ -39,6 +53,7 @@
     ### Släcker friggebod fasadbelysning när det släcks inne ###
     ### T: light.kok_lilla_fonstret == off                   ###
     ### C: time: 21:00 - 06:00                               ###
+    ###    light.friggebod_fasad == on                       ###
     ### A: light.friggebod_fasad = off                       ###
     ############################################################
   - alias: Friggebod fasadbelysning off
@@ -48,9 +63,14 @@
       entity_id: light.kok_lilla_fonstret
       to: 'off'
     condition:
-      condition: time
-      after: '21:00:00'
-      before: '06:00:00'
+      condition: and
+      conditions:
+        - condition: time
+          after: '21:00:00'
+          before: '06:00:00'
+        - condition: state
+          entity_id: light.friggebod_fasad
+          state: 'on'
     action:
       - service: light.turn_off
         entity_id: light.friggebod_fasad
@@ -59,10 +79,14 @@
 ###############################################################################
 ###############################################################################
 
+    ##############
+    ### Förråd ###
+    ##############
     #######################################################
     ### Tänder förråd fasadbelysning när det blir mörkt ###
     ### T: sensor.ljusstyrka < 40                       ###
     ### C: light.uterum_led = off                       ###
+    ###    light.forrad_fasad == off                    ###
     ### A: light.forrad_fasad = on                      ###
     #######################################################
   - alias: Förråd fasadbelysning on (<40, led off)
@@ -72,9 +96,14 @@
       entity_id: sensor.ljusstyrka
       below: 40
     condition:
-      condition: state
-      entity_id: light.uterum_led
-      state: 'off'
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.uterum_led
+          state: 'off'
+        - condition: state
+          entity_id: light.forrad_fasad
+          state: 'off'
     action:
       - service: light.turn_on
         data:
@@ -85,6 +114,7 @@
     ### Tänder förråd fasadbelysning när ledbelysning i uterum släcks ###
     ### T: light.uterum_led = off                                     ###
     ### C: sensor.ljusstyrka < 40                                     ###
+    ###    light.forrad_fasad == off                                  ###
     ### A: light.forrad_fasad = on                                    ###
     #####################################################################
   - alias: Förråd fasadbelysning on (led off, <40)
@@ -94,9 +124,14 @@
       entity_id: light.uterum_led
       to: 'off'
     condition:
-      condition: numeric_state
-      entity_id: sensor.ljusstyrka
-      below: 40
+      condition: and
+      conditions:
+        - condition: numeric_state
+          entity_id: sensor.ljusstyrka
+          below: 40
+        - condition: state
+          entity_id: light.forrad_fasad
+          state: 'off'
     action:
       - service: light.turn_on
         data:
@@ -106,6 +141,7 @@
     ########################################################
     ### Släcker förråd fasadbelysning när det blir ljust ###
     ### T: sensor.ljusstyrka > 60                        ###
+    ### C: light.forrad_fasad == on                      ###
     ### A: light.forrad_fasad = off                      ###
     ########################################################
   - alias: Förråd fasadbelysning off (>60)
@@ -114,6 +150,10 @@
       platform: numeric_state
       entity_id: sensor.ljusstyrka
       above: 60
+    condition:
+      condition: state
+      entity_id: light.forrad_fasad
+      state: 'on'
     action:
       - service: light.turn_off
         entity_id: light.forrad_fasad
@@ -121,6 +161,7 @@
     #####################################################################
     ### Släcker förråd fasadbelysning när ledbelysning i uterum tänds ###
     ### T: light.uterum_led == on                                     ###
+    ### C: light.forrad_fasad == on                                   ###
     ### A: light.forrad_fasad = off                                   ###
     #####################################################################
   - alias: Förråd fasadbelysning off
@@ -129,6 +170,10 @@
       platform: state
       entity_id: light.uterum_led
       to: 'on'
+    condition:
+      condition: state
+      entity_id: light.forrad_fasad
+      state: 'on'
     action:
       - service: light.turn_off
         entity_id: light.forrad_fasad

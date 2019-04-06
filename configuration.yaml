@@ -383,13 +383,37 @@ input_number:
 
 ####################################################
 #                                                  #
-#                       ASUSWRT                    #
+#                      ASUSWRT                     #
 #                                                  #
 ####################################################
 asuswrt:
     host: 192.168.1.1
     username: admin
     ssh_key: /home/homeassistant/.ssh/id_rsa
+
+####################################################
+#                                                  #
+#                      PERSON                      #
+#                                                  #
+####################################################
+# https://www.home-assistant.io/components/person/
+person:
+  - name: Micke
+    id: person_1
+    device_trackers:
+      - device_tracker.mobil_micke
+  - name: Annelie
+    id: person_2
+    device_trackers:
+      - device_tracker.mobil_annelie
+  - name: Andreas
+    id: person_3
+    device_trackers:
+      - device_tracker.mobil_andreas
+  - name: Louise
+    id: person_4
+    device_trackers:
+      - device_tracker.mobil_louise
 
 ####################################################
 #                                                  #

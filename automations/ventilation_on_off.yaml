@@ -54,7 +54,7 @@
       - service: homeassistant.turn_off
         entity_id: switch.ventilationsaggregat
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Ventilation off (Borta, ute >24°C, <60%, Inne > 23°C)'
 
     #####################################################
@@ -109,7 +109,7 @@
       - service: homeassistant.turn_off
         entity_id: switch.ventilationsaggregat
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Ventilation off (Ute >24°C, Borta, <60%, Inne > 23°C)'
 
     #####################################################
@@ -164,7 +164,7 @@
       - service: homeassistant.turn_off
         entity_id: switch.ventilationsaggregat
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Ventilation off (<60%, Borta, Ute >24°C, Inne > 23°C)'
 
     #####################################################
@@ -219,7 +219,7 @@
       - service: homeassistant.turn_off
         entity_id: switch.ventilationsaggregat
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Ventilation off (Inne >23°C, Borta, <60%, Ute > 24°C)'
 
     #######################
@@ -264,7 +264,7 @@
       - service: homeassistant.turn_on
         entity_id: switch.ventilationsaggregat
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Ventilation on (Hemma, Off)'
 
     #############################################
@@ -305,7 +305,7 @@
       - service: homeassistant.turn_on
         entity_id: switch.ventilationsaggregat
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Ventilation on (Ute <22°C, Off)'
 
     #############################################
@@ -346,7 +346,7 @@
       - service: homeassistant.turn_on
         entity_id: switch.ventilationsaggregat
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Ventilation on (>60%, Off)'
 
     #############################################
@@ -387,5 +387,5 @@
       - service: homeassistant.turn_on
         entity_id: switch.ventilationsaggregat
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Ventilation on (Inne <23°C, Off)'

@@ -10,7 +10,7 @@
       above: '10'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'LARM! Hög temp i kylen: {{ states.sensor.kyl_temperature.state }} {{ states.sensor.kyl_temperature.unit_of_measurement }}'
 
     #####################################################
@@ -25,5 +25,5 @@
       below: '3'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'LARM! Låg temp i kylen: {{ states.sensor.kyl_temperature.state }} {{ states.sensor.kyl_temperature.unit_of_measurement }}'

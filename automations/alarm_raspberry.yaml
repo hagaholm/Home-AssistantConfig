@@ -10,7 +10,7 @@
       above: '70'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: "Raspberry HOMEASS CPU hög temp"
 
     #####################################################
@@ -26,7 +26,7 @@
       to: 'not_home'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: "Raspberry Pi 2 - Offline"
 
     ######################################################
@@ -42,5 +42,5 @@
       to: 'not_home'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: "Raspberry Pi 3B - Offline"

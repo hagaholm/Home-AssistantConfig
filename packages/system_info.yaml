@@ -280,7 +280,7 @@ automation:
       event: start
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Hassbian startad!'
 
     ###################################
@@ -295,7 +295,7 @@ automation:
       event: shutdown
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Hassbian stoppad!'
 
     ############################
@@ -310,7 +310,7 @@ automation:
         entity_id: updater.updater
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Ny Home Assistant Release.'
           value2: 'Home Assistant {{ states.updater.updater.state }}'
 
@@ -326,6 +326,6 @@ automation:
       event_type: device_tracker_new_device
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Ny enhet hittad.'
           value2: 'Enhet: {{trigger.event.data.host_name}} ({{trigger.event.data.entity_id}})'

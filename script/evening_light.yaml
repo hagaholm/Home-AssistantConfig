@@ -5,7 +5,7 @@
     alias: Kvällsbelysning on
     sequence:
       - service: script.turn_on
-        data_template:
+        data:
           entity_id: >
             {% if is_state('input_boolean.christmas_light', 'on') %}
               script.evening_lights_christmas_on

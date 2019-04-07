@@ -10,7 +10,7 @@
       to: 'unavailable'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Ingen kontakt med förråd fasadbelysning'
 
     ##################################################
@@ -25,7 +25,7 @@
       to: 'unavailable'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Ingen kontakt med friggebod fasadbelysning'
 
     #######################################################
@@ -40,7 +40,7 @@
       to: 'unavailable'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Ingen kontakt med vardagsrum skänk dimmer'
 
     ###################################################
@@ -55,7 +55,7 @@
       to: 'unavailable'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Ingen kontakt med uterum fönster'
 
     ##############################################################
@@ -70,7 +70,7 @@
       to: 'unavailable'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Ingen kontakt med friggebod brytare vid stora fönstret'
 
     #######################################################
@@ -85,7 +85,7 @@
       to: 'unavailable'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Ingen kontakt med garage avfuktare'
 
 ##################################################################
@@ -104,7 +104,7 @@
       from: 'unavailable'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Kontakt med förråd fasadbelysning'
 
     ###############################################
@@ -119,7 +119,7 @@
       from: 'unavailable'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Kontakt med friggebod fasadbelysning'
 
     #######################################################
@@ -134,7 +134,7 @@
       from: 'unavailable'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Kontakt med vardagsrum skänk dimmer'
 
     ###################################################
@@ -149,7 +149,7 @@
       from: 'unavailable'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Kontakt med uterum fönster'
 
     ########################################################
@@ -164,7 +164,7 @@
       from: 'unavailable'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Kontakt med friggebod brytare vid stora fönstret'
 
     #######################################################
@@ -179,5 +179,5 @@
       from: 'unavailable'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Kontakt med garage avfuktare'

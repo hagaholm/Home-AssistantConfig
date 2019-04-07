@@ -21,7 +21,7 @@
           before: '08:30:00'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Lång restid till jobbet. Kontrollera resväg'
 
     ##############################################
@@ -47,7 +47,7 @@
           before: '18:30:00'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Lång restid hem. Kontrollera resväg'
 
     ###################################################
@@ -74,7 +74,7 @@
           before: '08:30:00'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Längre sträcka till jobbet. Kontrollera resväg'
 
     #######################################################
@@ -101,5 +101,5 @@
           before: '18:30:00'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Längre sträcka hem. Kontrollera resväg'

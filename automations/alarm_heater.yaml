@@ -10,7 +10,7 @@
       below: '20'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Larm! Låg temp ackumulatortank: {{ states.sensor.varmepump_temperature.state }} {{ states.sensor.varmepump_temperature.unit_of_measurement }}'
 
     ############################################
@@ -25,5 +25,5 @@
       above: '50'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Larm! Hög temp ackumulatortank: {{ states.sensor.varmepump_temperature.state }} {{ states.sensor.varmepump_temperature.unit_of_measurement }}'

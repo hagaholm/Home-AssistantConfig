@@ -11,11 +11,11 @@
       above: '-12'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'LARM! Varning hög temp i frysen: {{ states.sensor.frys_temperature.state }} {{ states.sensor.frys_temperature.unit_of_measurement }}'
       - delay: '00:00:10'
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'LARM! Varning hög temp i frysen: {{ states.sensor.frys_temperature.state }} {{ states.sensor.frys_temperature.unit_of_measurement }}'
 
     ######################################################
@@ -31,7 +31,7 @@
       above: '-16'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'LARM! Hög temp i frysen: {{ states.sensor.frys_temperature.state }} {{ states.sensor.frys_temperature.unit_of_measurement }}'
 
     ####################################################
@@ -47,5 +47,5 @@
       below: '-25'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'LARM! Låg temp i frysen: {{ states.sensor.frys_temperature.state }} {{ states.sensor.frys_temperature.unit_of_measurement }}'

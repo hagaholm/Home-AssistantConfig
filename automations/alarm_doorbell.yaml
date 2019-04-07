@@ -13,7 +13,7 @@
       - service: homeassistant.turn_off
         entity_id: switch.ringklocka_tvattstuga
       - service: script.notify_engine
-        data_template:
+        data:
           value1: "Ringklocka tvättstuga."
           value2: "Det ringer på dörren..."
           
@@ -34,7 +34,7 @@
       - service: homeassistant.turn_off
         entity_id: switch.ringklocka_hall
       - service: script.notify_engine
-        data_template:
+        data:
           value1: "Ringklocka hall."
           value2: "Det ringer på dörren..."          
       - service: python_script.flash_light_vardagsrum_skank

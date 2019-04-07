@@ -10,7 +10,7 @@
       below: '18'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Larm! Låg temp frånluft ventilation: {{ states.sensor.Franluft.state }} {{ states.sensor.Franluft.unit_of_measurement }}'
 
     #####################################
@@ -25,7 +25,7 @@
       above: '35'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Larm! Hög temp frånluft ventilation: {{ states.sensor.Franluft.state }} {{ states.sensor.Franluft.unit_of_measurement }}'
 
     ####################################
@@ -40,7 +40,7 @@
       below: '15'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Larm! Låg temp tilluft ventilation: {{ states.sensor.Tilluft.state }} {{ states.sensor.Tilluft.unit_of_measurement }}'
 
     ####################################
@@ -55,5 +55,5 @@
       above: '35'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'Larm! Hög temp tilluft ventilation: {{ states.sensor.Tilluft.state }} {{ states.sensor.Tilluft.unit_of_measurement }}'

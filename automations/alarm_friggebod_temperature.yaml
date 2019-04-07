@@ -11,7 +11,7 @@
       above: '23'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'LARM! Hög temp i Friggebod: {{ states.sensor.friggebod_temperature.state }} {{ states.sensor.friggebod_temperature.unit_of_measurement }}'
 
     #########################################################
@@ -27,7 +27,7 @@
       below: '19'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'LARM! Låg temp i Friggebod: {{ states.sensor.friggebod_temperature.state }} {{ states.sensor.friggebod_temperature.unit_of_measurement }}'
 
     #######################################################
@@ -43,5 +43,5 @@
       below: '3'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'LARM! Frysvakt Friggebod: {{ states.sensor.friggebod_temperature.state }} {{ states.sensor.friggebod_temperature.unit_of_measurement }}'

@@ -11,5 +11,5 @@
       above: '35'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'LARM! Hög temp i Uterum: {{ states.sensor.uterum.state }} {{ states.sensor.uterum.unit_of_measurement }}'

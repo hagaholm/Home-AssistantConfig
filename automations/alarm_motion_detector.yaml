@@ -16,5 +16,5 @@
       state: 'not_home'
     action:
       - service: script.notify_engine
-        data_template:
+        data:
           value1: 'LARM! Rörelse i köket, ingen är hemma...'

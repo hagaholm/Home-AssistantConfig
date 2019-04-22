@@ -59,6 +59,7 @@
     control: hidden
     entities:
       - script.start_tv
+      - script.cleaning_lights_on
       - automation.kok_off_sensor_off
       - script.morning_lights_on
       - script.evening_lights_on
@@ -219,7 +220,7 @@
       - group.morning_lights
       - group.evening_lights
       - group.night_lights
-      - group.uterums_led_lights
+      - group.uterums
       - group.outside_lights
       - group.away_lights
 
@@ -230,6 +231,8 @@
       - light.kok_underskap_bank
       - light.kok_underskap_diskbank
       - light.kok_vitrinskap
+      - input_boolean.rorelsevakt_kok_aktiv
+      - timer.timer_rorelsevakt_kok_medium
 
   morning_lights:
     name: Morgonbelysning
@@ -265,12 +268,14 @@
     entities:
       - light.hall_byra_dimmer
       - light.vardagsrum_fonster_dimmer
+      - timer.timer_rorelsevakt_kok_short
 
-  uterums_led_lights:
-    name: Uterum ledbelysning
+  uterums:
+    name: Uterum
     view: no
     entities:
       - light.uterum_led
+      - light.uterum_fotogenlampa
 
   outside_lights:
     name: Utomhusbelysning
@@ -332,8 +337,9 @@
       - light.kok_lilla_fonstret
       - light.kok_underskap_bank
       - light.kok_underskap_diskbank
-      - light.kok_vitrinskap 
-      - switch.rorelsevakt_kok
+      - light.kok_vitrinskap
+      - input_boolean.rorelsevakt_kok_aktiv
+      - timer.timer_rorelsevakt_kok_medium
 
   hall:
     name: Hall
@@ -403,6 +409,7 @@
       - sensor.uterum
       - light.uterum_fonster_ikea
       - light.uterum_led
+      - light.uterum_fotogenlampa
 
   attic:
     name: Vinden
@@ -571,6 +578,12 @@
     name: Uterumsbelysning
 #    control: hidden
     entities:
+      - automation.uterums_fotogenlampa_on_18
+      - automation.uterums_fotogenlampa_on_250
+      - automation.uterums_fotogenlampa_on_home
+      - automation.uterums_fotogenlampa_off_15
+      - automation.uterums_fotogenlampa_off_all_off_hemma
+      - automation.uterums_fotogenlampa_off_borta
       - automation.uterums_ledbelysning_on_18
       - automation.uterums_ledbelysning_on_250
       - automation.uterums_ledbelysning_on_home

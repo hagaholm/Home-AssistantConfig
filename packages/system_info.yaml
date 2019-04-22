@@ -87,7 +87,7 @@ group:
       - sensor.load_1m
       - sensor.load_5m
       - sensor.load_15m
-      - sensor.api_streams
+      - sensor.websocket_api
 
 ##########
 # Sensor #
@@ -127,11 +127,11 @@ sensor:
   - platform: cpuspeed
     name: CPU
 
-    ###############
-    # API Streams #
-    ###############
-    # https://home-assistant.io/components/sensor.api_stream/
-  - platform: api_streams
+    #################
+    # Websocket API #
+    #################
+    # https://www.home-assistant.io/components/websocket_api/
+  - platform: websocket_api
 
     ######################
     # HA Current version #

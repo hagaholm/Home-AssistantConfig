@@ -58,6 +58,21 @@
         data:
           message: 'Ingen kontakt med uterum fönster'
 
+    ###################################################
+    ### Ingen kontakt med fotogenlampa i uterum     ###
+    ### T: light.uterum_fotogenlampa == unavailable ###
+    ### A: notify.pushbullet                        ###
+    ###################################################
+  - alias: Ingen kontakt med fotogenlampa i uterum
+    trigger:
+      platform: state
+      entity_id: light.uterum_fotogenlampa
+      to: 'unavailable'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Ingen kontakt med fotogenlampa i uterum'
+
     ##############################################################
     ### Ingen kontakt med friggebod brytare vid stora fönstret ###
     ### T: switch.friggebod_fonster == unavailable             ###
@@ -151,6 +166,21 @@
       - service: notify.pushbullet
         data:
           message: 'Kontakt med uterum fönster'
+
+    ###################################################
+    ### Kontakt med fotogenlampa i uterum           ###
+    ### T: light.uterum_fotogenlampa != unavailable ###
+    ### A: notify.pushbullet                        ###
+    ###################################################
+  - alias: Kontakt med fotogenlampa i uterum
+    trigger:
+      platform: state
+      entity_id: light.uterum_fotogenlampa
+      from: 'unavailable'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Kontakt med fotogenlampa i uterum'
 
     ########################################################
     ### Kontakt med friggebod brytare vid stora fönstret ###

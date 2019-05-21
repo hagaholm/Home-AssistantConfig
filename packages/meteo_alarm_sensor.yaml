@@ -1,0 +1,16 @@
+binary_sensor:
+  - platform: meteoalarm
+    country: 'SV'
+    province: 'Sörmland'
+
+automation:
+  - alias: Väder varningar
+    trigger:
+      platform: state
+      entity_id: binary_sensor.meteoalarm
+      from: 'off'
+    action:
+      - service: notify.notify
+        data_template:
+          title: '{{state_attr('binary_sensor.meteoalarm', 'headline')}}'
+          message: "{{state_attr('binary_sensor.meteoalarm', 'description')}} is effective on {{state_attr('binary_sensor.meteoalarm', 'effective')}}"

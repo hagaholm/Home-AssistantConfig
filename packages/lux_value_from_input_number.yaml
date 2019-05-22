@@ -1,0 +1,137 @@
+input_boolean:
+  boolean_away_light:
+    name: Bortabelysning
+
+  boolean_evening_light:
+    name: Kvällsbelysning
+
+  boolean_kitchen_light:
+    name: Köksbelysning
+
+  boolean_morning_light:
+    name: Morgonbelysning
+
+  boolean_night_light:
+    name: Nattbelysning
+
+  boolean_outside_facade_light:
+    name: Fasadbelysning
+  
+  boolean_uterum_light:
+    name: Uterumbelysning
+
+  boolean_outside_light:
+    name: Utebelysning
+
+  boolean_spa_light:
+    name: Spabelysning
+
+  boolean_friggebod_light:
+    name: Friggebodbelysning
+    
+
+input_number:
+  number_away_light_on:
+    name: Slider
+    initial: 200
+    max: 300
+    min: 100
+    step: 25
+
+  number_away_light_off:
+    name: Slider
+    initial: 250
+    max: 350
+    min: 150
+    step: 25
+    
+  number_evening_light_on:
+    name: Slider
+    initial: 1500
+    max: 2000
+    min: 1000
+    step: 100
+
+  number_evening_light_off:
+    name: Slider
+    initial: 2500
+    max: 3000
+    min: 2000
+    step: 100
+    
+  number_kitchen_light_on:
+    name: Slider
+    initial: 2500
+    max: 3000
+    min: 2000
+    step: 100
+
+  number_kitchen_light_off:
+    name: Slider
+    initial: 3500
+    max: 4000
+    min: 3000
+    step: 100
+
+  number_morning_light_on:
+    name: Slider
+    initial: 1500
+    max: 2000
+    min: 1000
+    step: 100
+
+  number_morning_light_off:
+    name: Slider
+    initial: 1600
+    max: 2000
+    min: 1000
+    step: 100
+
+  number_night_light_on:
+    name: Slider
+    initial: 150
+    max: 200
+    min: 100
+    step: 10
+
+  number_outside_facade_light_on:
+    name: Slider
+    initial: 40
+    max: 70
+    min: 10
+    step: 10
+
+  number_outside_facade_light_off:
+    name: Slider
+    initial: 60
+    max: 90
+    min: 30
+    step: 10
+
+  number_uterum_light_on:
+    name: Slider
+    initial: 250
+    max: 300
+    min: 100
+    step: 25
+
+  number_outside_light_on:
+    name: Slider
+    initial: 5
+    max: 10
+    min: 1
+    step: 1
+
+  number_spa_light_on:
+    name: Slider
+    initial: 5
+    max: 10
+    min: 1
+    step: 1
+
+  number_friggebod_light_on:
+    name: Slider
+    initial: 1
+    max: 10
+    min: 1
+    step: 1

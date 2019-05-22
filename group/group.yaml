@@ -220,7 +220,8 @@
       - group.morning_lights
       - group.evening_lights
       - group.night_lights
-      - group.uterums
+      - group.uterum_light
+      - group.friggebod_lights
       - group.outside_lights
       - group.away_lights
 
@@ -228,6 +229,9 @@
     name: Köksbelysning
     view: no
     entities:
+      - input_boolean.boolean_kitchen_light
+      - input_number.number_kitchen_light_on
+      - input_number.number_kitchen_light_off
       - light.kok_underskap_bank
       - light.kok_underskap_diskbank
       - light.kok_vitrinskap
@@ -238,6 +242,9 @@
     name: Morgonbelysning
     view: no
     entities:
+      - input_boolean.boolean_morning_light
+      - input_number.number_morning_light_on
+      - input_number.number_morning_light_off
       - light.kok_stora_fonstret
       - light.kok_lilla_fonstret
       - light.hall_byra_dimmer
@@ -249,6 +256,9 @@
     name: Kvällsbelysning
     view: no
     entities:
+      - input_boolean.boolean_evening_light
+      - input_number.number_evening_light_on
+      - input_number.number_evening_light_off
       - light.kok_stora_fonstret
       - light.kok_lilla_fonstret
       - light.hall_byra_dimmer
@@ -266,32 +276,51 @@
     name: Nattbelysning
     view: no
     entities:
+      - input_boolean.boolean_night_light
+      - input_number.number_night_light_on
       - light.hall_byra_dimmer
       - light.vardagsrum_fonster_dimmer
-      - timer.timer_rorelsevakt_kok_short
+      - timer.timer_rorelsevakt_kok_short  
 
-  uterums:
-    name: Uterum
+  uterum_light:
+    name: Uterumsbelysning
     view: no
     entities:
+      - input_boolean.boolean_uterum_light
+      - input_number.number_uterum_light_on
       - light.uterum_led
       - light.uterum_fotogenlampa
+
+  friggebod_lights:
+    name: Friggebodsbelysning
+    view: no
+    entities:
+      - input_boolean.boolean_friggebod_light
+      - input_number.number_friggebod_light_on
+      - light.friggebod_stora_fonstret
+      - light.friggebod_lilla_fonstret
 
   outside_lights:
     name: Utomhusbelysning
     view: no
     entities:
+      - input_boolean.boolean_outside_facade_light
+      - input_boolean.boolean_outside_light
+      - input_boolean.boolean_spa_light
+      - input_number.number_outside_light_on
+      - input_number.number_spa_light_on
       - light.forrad_fasad
       - light.friggebod_fasad
       - light.friggebod_ute
-      - light.friggebod_stora_fonstret
-      - light.friggebod_lilla_fonstret
       - light.spabad_vagg
 
   away_lights:
     name: Bortabelysning
     view: no
     entities:
+      - input_boolean.boolean_away_light
+      - input_number.number_away_light_on
+      - input_number.number_away_light_off
       - light.kok_stora_fonstret
       - light.kok_lilla_fonstret
       - light.hall_byra_dimmer

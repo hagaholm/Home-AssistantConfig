@@ -1,4 +1,143 @@
-﻿    #######################
+##############
+### switch ###
+##############
+switch:
+  - platform: command_line
+    switches:
+      fan_speed:
+        command_on: python3 -c "import requests; requests.get('http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=on&PIO.A=CHANGE');"
+        command_off: python3 -c "import requests; requests.get('http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=CHANGE');"
+        friendly_name: Fläkthastighet Normal / Forcerad
+
+# Hämta aktuell status: 'http://192.168.1.12:3001/text/12.A84D7D000000/PIO.A' 
+# Sätt till Off: 'http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=CHANGE'
+# Sätt till On: 'http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=on&PIO.A=CHANGE'
+
+##################
+### autoamtion ###
+##################
+automation:
+    #############
+    ### Larm ####
+    #############
+    ####################################################
+    ### Larm! Hög fukt i badrummet, ingen hemma      ###
+    ### T: sensor.fukt_badrumsfonster > 69           ###
+    ### C: group.track_for_home_devices = 'not_home' ###
+    ### A: switch.fan_speed = on                     ###
+    ####################################################
+  - alias: Badrumsfönster hög fukt larm
+    initial_state: 'on'
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.fukt_badrumsfonster
+      above: '69'
+    condition:
+      condition: state
+      entity_id: group.track_for_home_devices
+      state: 'not_home'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Larm! Hög fukt i badrummet, ingen är hemma'
+
+    #####################################
+    ### Låg temp ventilation frånluft ###
+    ### T: sensor.Franluft < 18       ###
+    ### A: notify.pushbullet          ###
+    #####################################
+  - alias: Låg temp frånluft
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.Franluft
+      below: '18'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Larm! Låg temp frånluft ventilation: {{ states.sensor.Franluft.state }} {{ states.sensor.Franluft.unit_of_measurement }}'
+
+    #####################################
+    ### Hög temp ventilation frånluft ###
+    ### T: sensor.Franluft > 35       ###
+    ### A: notify.pushbullet          ###
+    #####################################
+  - alias: Hög temp frånluft
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.Franluft
+      above: '35'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Larm! Hög temp frånluft ventilation: {{ states.sensor.Franluft.state }} {{ states.sensor.Franluft.unit_of_measurement }}'
+
+    ####################################
+    ### Låg temp ventilation tilluft ###
+    ### T: sensor.Tilluft < 15       ###
+    ### A: notify.pushbullet         ###
+    ####################################
+  - alias: Låg temp tilluft
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.Tilluft
+      below: '15'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Larm! Låg temp tilluft ventilation: {{ states.sensor.Tilluft.state }} {{ states.sensor.Tilluft.unit_of_measurement }}'
+
+    ####################################
+    ### Hög temp ventilation tilluft ###
+    ### T: sensor.Tilluft > 35       ###
+    ### A: notify.pushbullet         ###
+    ####################################
+  - alias: Hög temp tilluft
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.Tilluft
+      above: '35'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Larm! Hög temp tilluft ventilation: {{ states.sensor.Tilluft.state }} {{ states.sensor.Tilluft.unit_of_measurement }}'
+
+    ################
+    ### Hög fukt ###
+    ################
+    ##########################################
+    ### Hög fukt badrumsfönster            ###
+    ### T: sensor.fukt_badrumsfonster > 69 ###
+    ### A: switch.fan_speed = on           ###
+    ##########################################
+  - alias: Badrumsfönster hög fukt
+    initial_state: 'on'
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.fukt_badrumsfonster
+      above: '69'
+    action:
+      - service: homeassistant.turn_on
+        entity_id: switch.fan_speed
+
+    ################
+    ### Låg fukt ###
+    ################
+    ##########################################
+    ### Låg fukt badrumsfönster            ###
+    ### T: sensor.fukt_badrumsfonster < 68 ###
+    ### A: switch.fan_speed = off          ###
+    ##########################################
+  - alias: Badrumsfönster låg fukt
+    initial_state: 'on'
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.fukt_badrumsfonster
+      below: '68'
+    action:
+      - service: homeassistant.turn_off
+        entity_id: switch.fan_speed
+
+    #######################
     ### Ventilation off ###
     #######################
     #####################################################
@@ -222,9 +361,9 @@
         data:
           message: Ventilation off (Inne >23°C, Borta, <60%, Ute > 24°C)
 
-    #######################
-    ### Ventilation on  ###
-    #######################
+    ######################
+    ### Ventilation on ###
+    ######################
     #################################################
     ### Ventilation on                            ###
     ### T: group.track_for_home_devices == 'home' ###

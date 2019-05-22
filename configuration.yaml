@@ -201,17 +201,6 @@ light:
 switch:
   - platform: tellstick
 
-  - platform: command_line
-    switches:
-      fan_speed:
-        command_on: python3 -c "import requests; requests.get('http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=on&PIO.A=CHANGE');"
-        command_off: python3 -c "import requests; requests.get('http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=CHANGE');"
-        friendly_name: Fläkthastighet Normal / Forcerad
-
-# Hämta aktuell status: 'http://192.168.1.12:3001/text/12.A84D7D000000/PIO.A' 
-# Sätt till Off: 'http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=CHANGE'
-# Sätt till On: 'http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=on&PIO.A=CHANGE'
-
 ####################################################
 #                                                  #
 #                TEXT TO SPEECH                    #

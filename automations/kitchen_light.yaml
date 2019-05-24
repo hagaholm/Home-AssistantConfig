@@ -191,7 +191,7 @@
 
     #######################################################
     ### Släcker lampor när ingen varit i köket på 9 min ###
-    ### T: input_boolean.rorelsevakt_kok_aktiv == off   ##
+    ### T: input_boolean.rorelsevakt_kok_aktiv == off   ###
     ### A: script.kitchen_light_off                     ###
     #######################################################
   - alias: Kök off (sensor off)
@@ -222,26 +222,20 @@
         entity_id: input_boolean.rorelsevakt_kok_aktiv
 
     ####################################################
-    ### Släcker lampor när lux kommer över 2500      ###
-    ### T: sensor.ljusstyrka > 2500                  ###
-    ### C: 12:00:00 - 22:00:00                       ###
+    ### Släcker lampor när lux kommer över 3000      ###
+    ### T: sensor.ljusstyrka > 3000                  ###
     ### C: group.track_for_home_devices == 'home'    ###
     ### A: input_boolean.rorelsevakt_kok_aktiv = off ###
     ####################################################
-  - alias: Kök off (>2500)
+  - alias: Kök off (>3000)
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      above: 2500
+      above: 3000
     condition:
-      condition: and
-      conditions:
-        - condition: time
-          after: '12:00:00'
-          before: '22:00:00'
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'home'
+      condition: state
+      entity_id: group.track_for_home_devices
+      state: 'home'
     action:
       - service: homeassistant.turn_off
         entity_id: input_boolean.rorelsevakt_kok_aktiv

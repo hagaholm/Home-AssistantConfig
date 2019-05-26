@@ -496,6 +496,8 @@
       - group.automation_garage_air_dryer
       - group.automation_unit_offline
       - group.automation_travel_time
+      - group.automation_ikea
+      - group.automation_pir
 
   automation_larm:
     name: Larm
@@ -613,8 +615,6 @@
       - automation.friggebod_fasadbelysning_off_60
       - automation.forrad_fasadbelysning_off
       - automation.forrad_fasadbelysning_off_60
-      - automation.ingen_kontakt_med_friggebod_fasadbelysning
-      - automation.ingen_kontakt_med_forrad_fasadbelysning
 
   automation_temp_larm:
     name: Larm temperatur
@@ -652,6 +652,33 @@
       - automation.kor_annan_vag_till_seb
       - automation.lang_restid_hem
       - automation.lang_restid_till_seb
+
+  automation_ikea:
+    name: IKEA
+#    control: hidden
+    entities:
+      - automation.ingen_kontakt_med_forrad_fasadbelysning
+      - automation.ingen_kontakt_med_fotogenlampa_i_uterum
+      - automation.ingen_kontakt_med_friggebod_brytare_vid_stora_fonstret
+      - automation.ingen_kontakt_med_friggebod_fasadbelysning
+      - automation.ingen_kontakt_med_garage_avfuktare
+      - automation.ingen_kontakt_med_uterum_fonster
+      - automation.ingen_kontakt_med_vardagsrum_skank_dimmer
+      - automation.kontakt_med_forrad_fasadbelysning
+      - automation.kontakt_med_fotogenlampa_i_uterum
+      - automation.kontakt_med_friggebod_brytare_vid_stora_fonstret
+      - automation.kontakt_med_friggebod_fasadbelysning
+      - automation.kontakt_med_garage_avfuktare
+      - automation.kontakt_med_uterum_fonster
+      - automation.kontakt_med_vardagsrum_skank_dimmer
+
+  automation_pir:
+    name: Rörelsedetektor i kök
+#    control: hidden
+    entities:
+      - automation.startar_timers
+      - automation.stanger_av_rorelsevakt_kok_aktiv_for_nattbelysning
+      - automation.stanger_av_rorelsevakt_kok_aktiv_om_aktiv
 
   automation_ventilation:
     name: Ventilation

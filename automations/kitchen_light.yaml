@@ -10,7 +10,7 @@
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      below: 2500
+      below: input_number.number_kitchen_light_on
     condition:
       condition: and
       conditions:
@@ -44,7 +44,7 @@
       conditions:
         - condition: numeric_state
           entity_id: sensor.ljusstyrka
-          below: 2500
+          below: input_number.number_kitchen_light_on
         - condition: time
           after: '05:00:00'
           before: '12:00:00'
@@ -73,7 +73,7 @@
         - condition: numeric_state
           entity_id: sensor.ljusstyrka
           above: 150
-          below: 2500
+          below: input_number.number_kitchen_light_on
         - condition: time
           after: '12:00:00'
           before: '05:00:00'
@@ -231,7 +231,7 @@
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      above: 3000
+      above: input_number.number_kitchen_light_off
     condition:
       condition: state
       entity_id: group.track_for_home_devices

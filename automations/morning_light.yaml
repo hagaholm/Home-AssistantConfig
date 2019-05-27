@@ -60,16 +60,16 @@
 
     ############################################################
     ### Släcker lampor på förmiddagen när det blir ljust ute ###
-    ### T: sensor.ljusstyrka > 1500                          ###
+    ### T: sensor.ljusstyrka > 1700                          ###
     ### C: group.track_for_home_devices == 'home'            ###
     ###    05:00:00 - 12:00:00                               ###
     ### A: script.morning_lights_off                         ###
     ############################################################
-  - alias: Morgonbelysning off (>1500, hemma)
+  - alias: Morgonbelysning off (>1700, hemma)
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      above: 1500
+      above: 1700
     condition:
       condition: and
       conditions:

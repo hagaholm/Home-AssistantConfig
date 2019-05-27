@@ -32,7 +32,7 @@ input_boolean:
 
 input_number:
   number_away_light_on:
-    name: Bortabelysning på
+    name: On (200)
     initial: 200
     max: 300
     min: 100
@@ -40,7 +40,7 @@ input_number:
     mode: box
 
   number_away_light_off:
-    name: Bortabelysning av
+    name: Off (250)
     initial: 250
     max: 350
     min: 150
@@ -48,7 +48,7 @@ input_number:
     mode: box
     
   number_evening_light_on:
-    name: Kvällsbelysning på
+    name: On (1500)
     initial: 1500
     max: 2000
     min: 1000
@@ -56,7 +56,7 @@ input_number:
     mode: box
 
   number_evening_light_off:
-    name: Kvällsbelysning av
+    name: Off (2500)
     initial: 2500
     max: 3000
     min: 2000
@@ -64,7 +64,7 @@ input_number:
     mode: box
     
   number_kitchen_light_on:
-    name: Köksbelysning på
+    name: On (2500)
     initial: 2500
     max: 3000
     min: 2000
@@ -72,15 +72,15 @@ input_number:
     mode: box
 
   number_kitchen_light_off:
-    name: Köksbelysning av
-    initial: 3500
+    name: Off (3000)
+    initial: 3000
     max: 4000
-    min: 3500
+    min: 3000
     step: 100
     mode: box
 
   number_morning_light_on:
-    name: Morgonbelysning på
+    name: Off (1500)
     initial: 1500
     max: 2000
     min: 1000
@@ -88,7 +88,7 @@ input_number:
     mode: box
 
   number_morning_light_off:
-    name: Morgonbelysning av
+    name: Off (1600)
     initial: 1600
     max: 2000
     min: 1000
@@ -96,7 +96,7 @@ input_number:
     mode: box
 
   number_night_light_on:
-    name: Nattbelysning på
+    name: On (150)
     initial: 150
     max: 200
     min: 100
@@ -104,7 +104,7 @@ input_number:
     mode: box
 
   number_outside_facade_light_on:
-    name: Fasadbelysning på
+    name: On (40)
     initial: 40
     max: 70
     min: 10
@@ -112,7 +112,7 @@ input_number:
     mode: box
 
   number_outside_facade_light_off:
-    name: Fasadbelysning av
+    name: Off (60)
     initial: 60
     max: 90
     min: 30
@@ -120,7 +120,7 @@ input_number:
     mode: box
 
   number_uterum_light_on:
-    name: Uterumbelysning på
+    name: On (250)
     initial: 250
     max: 300
     min: 100
@@ -128,7 +128,7 @@ input_number:
     mode: box
 
   number_outside_light_on:
-    name: Utebelysning på
+    name: utomhus On (5)
     initial: 5
     max: 10
     min: 1
@@ -136,7 +136,7 @@ input_number:
     mode: box
 
   number_spa_light_on:
-    name: Spabelysning på
+    name: Spa On (5)
     initial: 5
     max: 10
     min: 1
@@ -144,7 +144,7 @@ input_number:
     mode: box
 
   number_friggebod_light_on:
-    name: Friggebodbelysning på
+    name: On (1)
     initial: 1
     max: 10
     min: 1

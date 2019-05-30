@@ -476,7 +476,6 @@
     icon: mdi:home-automation
     entities:
       - group.automation_larm
-      - group.automation_system
       - group.automation_kitchen_light
       - group.automation_morning_light
       - group.automation_evening_light
@@ -506,15 +505,6 @@
       - automation.larm_rorelse_i_koket
       - automation.blinkar_inne_hem
       - automation.blinkar_ute_hem
-
-  automation_system:
-    name: System
-#    control: hidden
-    entities:
-      - automation.hassbian_startad
-      - automation.hassbian_stoppad
-      - automation.hassbian_uppdatering
-      - automation.ny_enhet_hittad
 
   automation_kitchen_light:
     name: Köksbelysning

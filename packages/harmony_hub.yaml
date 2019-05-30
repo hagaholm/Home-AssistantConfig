@@ -316,3 +316,30 @@ automation:
       - service: script.harmony_off
       - delay: '00:00:05'
       - service: script.harmony_spotify
+
+    #############################################
+    ### Låg ljudvolym                         ###
+    ### T: media_player.yamaha_receiver == On ###
+    ### C: 22:00:00 - 10:00:00                ###
+    ### A: volume_level: 0.4 (60)             ###
+    #############################################
+  - alias: "Låg ljudvolym"
+    trigger:
+      platform: state
+      entity_id: media_player.yamaha_receiver
+      to: 'on'
+    condition:
+      condition: time
+      after: '22:00:00'
+      before: '10:00:00'  
+     
+    action:
+      - service: media_player.volume_set
+        data:
+          entity_id: media_player.yamaha_receiver
+          volume_level: 0.4
+      - delay: '00:00:05'
+      - service: media_player.volume_set
+        data:
+          entity_id: media_player.yamaha_receiver
+          volume_level: 0.4

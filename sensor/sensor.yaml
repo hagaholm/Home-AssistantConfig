@@ -158,7 +158,7 @@
   # Lux från Thomas #
   ###################  
   - platform: command_line
-    command: python3 -c "import requests; str = requests.get('http://chef.suka.se/lux/current.php').text; print(str)"
+    command: !secret chef_lux
     name: Ljusstyrka
     unit_of_measurement: "lux"
 

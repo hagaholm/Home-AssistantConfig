@@ -6,12 +6,12 @@ sensor:
 
   - platform: command_line
     name: Pi2 CPU Temperature
-    command: ssh “192.168.1.12 "cat /sys/class/thermal/thermal_zone0/temp"
+    command: ssh 192.168.1.12 "cat /sys/class/thermal/thermal_zone0/temp"
     unit_of_measurement: "°C"
     value_template: ‘{{ value | multiply(0.001) }}’
 
   - platform: command_line
     name: Pi3 CPU Temperature
-    command: ssh “192.168.1.10 "cat /sys/class/thermal/thermal_zone0/temp"
+    command: ssh 192.168.1.10 "cat /sys/class/thermal/thermal_zone0/temp"
     unit_of_measurement: "°C"
     value_template: ‘{{ value | multiply(0.001) }}’

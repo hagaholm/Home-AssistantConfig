@@ -12,7 +12,7 @@ group:
       - group.mobile_states
       - group.network_states
       - group.system_monitor_card_pi_hassbian
-      - group.system_monitor_card_pi_1-wire
+      - group.system_monitor_card_pi_1_wire
       - group.system_monitor_card_pi_hagaholm
 
   computer_states:
@@ -84,7 +84,7 @@ group:
       - sensor.load_15m
       - sensor.websocket_api
 
-  system_monitor_card_pi_1-wire:
+  system_monitor_card_pi_1_wire:
     name: Raspberry Pi 2 (1-Wire)
     entities:
       - sensor.raspberry_pi_2

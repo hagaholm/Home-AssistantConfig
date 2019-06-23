@@ -88,13 +88,13 @@ group:
     name: Raspberry Pi 2 (1-Wire)
     entities:
       - sensor.raspberry_pi_2
-      - sensor.raspberry_pi_2_cpu_temp
+      - sensor.raspberry_pi_2_temperature
 
   system_monitor_card_pi_hagaholm:
     name: Raspberry Pi 3B (hagaholm)
     entities:
       - sensor.raspberry_pi_3b
-      - sensor.raspberry_pi_3b_cpu_temp
+      - sensor.raspberry_pi_3b_temperature
 
 ##########
 # Sensor #
@@ -159,15 +159,13 @@ sensor:
     # Sensor #
     ##########
   - platform: command_line
-    name: raspberry_pi_2_cpu_temp
-    friendly_name: Raspberry Pi 2 (hassbian) CPU Temperture
+    name: Raspberry Pi 2 temperature
     command: ssh pi@192.168.1.12 "cat /sys/class/thermal/thermal_zone0/temp"
     unit_of_measurement: "°C"
     value_template: '{{ value | multiply(0.001) | round(1) }}'
 
   - platform: command_line
-    name: raspberry_Pi3b_cpu_temp
-    friendly_name: Raspberry Pi 3B (hagaholm) CPU Temperture
+    name: Raspberry Pi 3b temperature
     command: ssh pi@192.168.1.10 "cat /sys/class/thermal/thermal_zone0/temp"
     unit_of_measurement: "°C"
     value_template: '{{ value | multiply(0.001) | round(1) }}'

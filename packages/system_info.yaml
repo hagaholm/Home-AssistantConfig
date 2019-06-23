@@ -7,7 +7,6 @@ group:
     icon: mdi:lan
     view: yes
     entities:
-      - group.device_states
       - group.computer_states
       - group.media_states
       - group.mobile_states
@@ -15,13 +14,6 @@ group:
       - group.system_monitor_card_pi_hassbian
       - group.system_monitor_card_pi_1-wire
       - group.system_monitor_card_pi_hagaholm
-
-  device_states:
-    name: Enheter status
-    entities:
-      - sensor.raspberry_pi_2
-      - sensor.raspberry_pi_3b
-      - sensor.hassbian
 
   computer_states:
     name: Dator status
@@ -96,13 +88,13 @@ group:
     name: Raspberry Pi 2 (1-Wire)
     entities:
       - sensor.raspberry_pi_2
-      - sensor.cpu_temperature
+      - sensor.raspberry_pi_2_cpu_temp
 
   system_monitor_card_pi_hagaholm:
-    name: Raspberry Pi 3B (hagaholmn)
+    name: Raspberry Pi 3B (hagaholm)
     entities:
       - sensor.raspberry_pi_3b
-      - sensor.cpu_temperature
+      - sensor.raspberry_pi_3b_cpu_temp
 
 ##########
 # Sensor #

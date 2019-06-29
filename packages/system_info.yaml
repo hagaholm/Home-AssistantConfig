@@ -158,11 +158,11 @@ sensor:
     ##########
     # Sensor #
     ##########
-  - platform: command_line
-    name: Raspberry Pi 2 temperature
-    command: ssh pi@192.168.1.12 "cat /sys/class/thermal/thermal_zone0/temp"
-    unit_of_measurement: "°C"
-    value_template: '{{ value | multiply(0.001) | round(1) }}'
+#  - platform: command_line
+#    name: Raspberry Pi 2 temperature
+#    command: ssh pi@192.168.1.12 "cat /sys/class/thermal/thermal_zone0/temp"
+#    unit_of_measurement: "°C"
+#    value_template: '{{ value | multiply(0.001) | round(1) }}'
 
   - platform: command_line
     name: Raspberry Pi 3b temperature

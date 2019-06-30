@@ -17,8 +17,8 @@ input_number:
     min: -10
     max: 45
     initial: 0
-  solar_angle_down_1500_lux:
-    name: "Solvinkel ner under 1500 lux"
+  solar_angle_down_1800_lux:
+    name: "Solvinkel ner under 1800 lux"
     unit_of_measurement: "degrees"
     min: -10
     max: 45
@@ -66,8 +66,8 @@ input_number:
     min: -10
     max: 45
     initial: 0
-  solar_angle_up_1500_lux:
-    name: "Solvinkel upp över 1500 lux"
+  solar_angle_up_1800_lux:
+    name: "Solvinkel upp över 1800 lux"
     unit_of_measurement: "degrees"
     min: -10
     max: 45
@@ -103,7 +103,7 @@ automation:
     action:
       - service: notify.file_sun_elevation
         data_template: 
-          message: ", {{ states.input_number.solar_angle_up_60_lux.state }}, {{ states.input_number.solar_angle_up_150_lux.state }}, {{ states.input_number.solar_angle_up_250_lux.state }}, {{ states.input_number.solar_angle_up_1500_lux.state }}, {{ states.input_number.solar_angle_up_2500_lux.state }}, {{ states.input_number.solar_angle_down_2500_lux.state }}, {{ states.input_number.solar_angle_down_1500_lux.state }}, {{ states.input_number.solar_angle_down_250_lux.state }}, {{ states.input_number.solar_angle_down_150_lux.state }}, {{ states.input_number.solar_angle_down_40_lux.state }}, {{ states.input_number.solar_angle_down_5_lux.state }}, {{ states.input_number.solar_angle_down_1_lux.state }}"
+          message: ", {{ states.input_number.solar_angle_up_60_lux.state }}, {{ states.input_number.solar_angle_up_150_lux.state }}, {{ states.input_number.solar_angle_up_250_lux.state }}, {{ states.input_number.solar_angle_up_1800_lux.state }}, {{ states.input_number.solar_angle_up_2500_lux.state }}, {{ states.input_number.solar_angle_down_2500_lux.state }}, {{ states.input_number.solar_angle_down_1800_lux.state }}, {{ states.input_number.solar_angle_down_250_lux.state }}, {{ states.input_number.solar_angle_down_150_lux.state }}, {{ states.input_number.solar_angle_down_40_lux.state }}, {{ states.input_number.solar_angle_down_5_lux.state }}, {{ states.input_number.solar_angle_down_1_lux.state }}"
 ############################################################
   - alias: Spara solvinkel ner under 2500 lux
     trigger:
@@ -123,11 +123,11 @@ automation:
         data_template:
           entity_id: input_number.solar_angle_down_2500_lux
           value: "{{ states.sun.sun.attributes.elevation }}"
-  - alias: Spara solvinkel ner under 1500 lux
+  - alias: Spara solvinkel ner under 1800 lux
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      below: 1500
+      below: 1800
     condition:
       condition: and
       conditions:
@@ -135,11 +135,11 @@ automation:
           after: '12:00:00'
           before: '23:59:00' 
         - condition: template
-          value_template: '{{ (as_timestamp(now())-as_timestamp(states.input_number.solar_angle_down_1500_lux.last_updated)) > 12*3600 }}'
+          value_template: '{{ (as_timestamp(now())-as_timestamp(states.input_number.solar_angle_down_1800_lux.last_updated)) > 12*3600 }}'
     action:
       - service: input_number.set_value
         data_template:
-          entity_id: input_number.solar_angle_down_1500_lux
+          entity_id: input_number.solar_angle_down_1800_lux
           value: "{{ states.sun.sun.attributes.elevation }}"
   - alias: Spara solvinkel ner under 250 lux
     trigger:
@@ -268,11 +268,11 @@ automation:
         data_template:
           entity_id: input_number.solar_angle_up_2500_lux
           value: "{{ states.sun.sun.attributes.elevation }}"
-  - alias: Spara solvinkel upp över 1500 lux
+  - alias: Spara solvinkel upp över 1800 lux
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      above: 1500
+      above: 1800
     condition:
       condition: and
       conditions:
@@ -280,11 +280,11 @@ automation:
           after: '00:00:00'
           before: '12:00:00' 
         - condition: template
-          value_template: '{{ (as_timestamp(now())-as_timestamp(states.input_number.solar_angle_up_1500_lux.last_updated)) > 12*3600 }}'
+          value_template: '{{ (as_timestamp(now())-as_timestamp(states.input_number.solar_angle_up_1800_lux.last_updated)) > 12*3600 }}'
     action:
       - service: input_number.set_value
         data_template:
-          entity_id: input_number.solar_angle_up_1500_lux
+          entity_id: input_number.solar_angle_up_1800_lux
           value: "{{ states.sun.sun.attributes.elevation }}"
   - alias: Spara solvinkel upp över 250 lux
     trigger:

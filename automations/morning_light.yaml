@@ -1,11 +1,11 @@
     #####################################################
     ### Tänder lampor på morgonen vid rörelse i köket ###
     ### T: input_boolean.rorelsevakt_kok_aktiv == on  ###
-    ### C: sensor.ljusstyrka < 1500                   ###
+    ### C: sensor.ljusstyrka < 1800                   ###
     ###    05:00:00 - 12:00:00                        ###
     ### A: script.morning_lights_on                   ###
     #####################################################
-  - alias: Morgonbelysning on (sensor on, <1500)
+  - alias: Morgonbelysning on (sensor on, <1800)
     trigger:
       platform: state
       entity_id: input_boolean.rorelsevakt_kok_aktiv
@@ -15,7 +15,7 @@
       conditions:
         - condition: numeric_state
           entity_id: sensor.ljusstyrka
-          below: 1500
+          below: 1800
         - condition: state
           entity_id: group.morning_lights
           state: 'off'
@@ -32,11 +32,11 @@
     ##########################################################
     ### Tänder lampor när första kommer hem på förmiddagen ###
     ### T: group.track_for_home_devices to: 'home'         ###
-    ### C: sensor.ljusstyrka < 1500                        ###
+    ### C: sensor.ljusstyrka < 1800                        ###
     ###    05:00:00 - 12:00:00                             ###
     ### A: script.morning_lights_on                        ###
     ##########################################################
-  - alias: Morgonbelysning on (-> hemma, <1500)
+  - alias: Morgonbelysning on (-> hemma, <1800)
     trigger:
       platform: state
       entity_id: group.track_for_home_devices
@@ -47,7 +47,7 @@
       conditions:
         - condition: numeric_state
           entity_id: sensor.ljusstyrka
-          below: 1500
+          below: 1800
         - condition: time
           after: '05:00:00'
           before: '12:00:00'
@@ -60,16 +60,16 @@
 
     ############################################################
     ### Släcker lampor på förmiddagen när det blir ljust ute ###
-    ### T: sensor.ljusstyrka > 1700                          ###
+    ### T: sensor.ljusstyrka > 2000                          ###
     ### C: group.track_for_home_devices == 'home'            ###
     ###    05:00:00 - 12:00:00                               ###
     ### A: script.morning_lights_off                         ###
     ############################################################
-  - alias: Morgonbelysning off (>1700, hemma)
+  - alias: Morgonbelysning off (>2000, hemma)
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      above: 1700
+      above: 2000
     condition:
       condition: and
       conditions:

@@ -1,11 +1,11 @@
     #################################################
     ### Tänder lampor kl 12:00 om det är mörkt    ###
     ### T: Time = 12:00:00                        ###
-    ### C: sensor.ljusstyrka < 1500               ###
+    ### C: sensor.ljusstyrka < 1800               ###
     ###    group.track_for_home_devices == 'home' ###
     ### A: script.evening_lights_on               ###
     #################################################
-  - alias: Kvällsbelysning on (=12:00:00, <1500, hemma)
+  - alias: Kvällsbelysning on (=12:00:00, <1800, hemma)
     trigger:
       platform: time
       at: '12:00:00'
@@ -14,7 +14,7 @@
       conditions:
         - condition: numeric_state
           entity_id: sensor.ljusstyrka
-          below: 1500
+          below: 1800
         - condition: state
           entity_id: group.track_for_home_devices
           state: 'home'
@@ -27,16 +27,16 @@
     
     ########################################################
     ### Tänder lampor när det blir mörkt fram till 22:00 ###
-    ### T: sensor.ljusstyrka < 1500                      ###
+    ### T: sensor.ljusstyrka < 1800                      ###
     ### C: group.track_for_home_devices == 'home'        ###
     ###    12:00:00 - 22:00:00                           ###
     ### A: script.evening_lights_on                      ###
     ########################################################
-  - alias: Kvällsbelysning on (<1500, hemma)
+  - alias: Kvällsbelysning on (<1800, hemma)
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      below: 1500
+      below: 1800
     condition:
       condition: and
       conditions:
@@ -59,11 +59,11 @@
     ### kommer hem innan status ändrats till 'hemma'     ###
     ### T: input_boolean.rorelsevakt_kok_aktiv == on     ###
     ### C: group.track_for_home_devices == 'not_home'    ###
-    ###    sensor.ljusstyrka < 1500                      ###
+    ###    sensor.ljusstyrka < 1800                      ###
     ###    12:00:00 - 05:00:00                           ###
     ### A: script.evening_lights_on                      ###
     ########################################################
-  - alias: Kvällsbelysning on (sensor on, borta, <1500)
+  - alias: Kvällsbelysning on (sensor on, borta, <1800)
     trigger:
       platform: state
       entity_id: input_boolean.rorelsevakt_kok_aktiv
@@ -76,7 +76,7 @@
           state: 'not_home'
         - condition: numeric_state
           entity_id: sensor.ljusstyrka
-          below: 1500
+          below: 1800
         - condition: time
           after: '12:00:00'
           before: '05:00:00'
@@ -90,11 +90,11 @@
     #####################################################
     ### Tänder lampor när första kommer hem övrig tid ###
     ### T: group.track_for_home_devices to 'home'     ###
-    ### C: sensor.ljusstyrka < 1500                   ###
+    ### C: sensor.ljusstyrka < 1800                   ###
     ###    12:00:00 - 05:00:00                        ###
     ### A: script.evening_lights_on                   ###
     #####################################################
-  - alias: Kvällsbelysning on (-> hemma, <1500)
+  - alias: Kvällsbelysning on (-> hemma, <1800)
     trigger:
       platform: state
       entity_id: group.track_for_home_devices
@@ -105,7 +105,7 @@
       conditions:
         - condition: numeric_state
           entity_id: sensor.ljusstyrka
-          below: 1500
+          below: 1800
         - condition: time
           after: '12:00:00'
           before: '05:00:00'

@@ -525,19 +525,19 @@
     name: Morgonbelysning
 #    control: hidden
     entities:
-      - automation.morgonbelysning_on_sensor_on_1500
-      - automation.morgonbelysning_on_hemma_1500
-      - automation.morgonbelysning_off_1700_hemma
+      - automation.morgonbelysning_on_sensor_on_1800
+      - automation.morgonbelysning_on_hemma_1800
+      - automation.morgonbelysning_off_2000_hemma
       - automation.morgonbelysning_off_borta
 
   automation_evening_light:
     name: Kvällsbelysning
 #    control: hidden
     entities:
-      - automation.kvallsbelysning_on_12_00_00_1500_hemma
-      - automation.kvallsbelysning_on_1500_hemma
-      - automation.kvallsbelysning_on_sensor_on_borta_1500
-      - automation.kvallsbelysning_on_hemma_1500
+      - automation.kvallsbelysning_on_12_00_00_1800_hemma
+      - automation.kvallsbelysning_on_1800_hemma
+      - automation.kvallsbelysning_on_sensor_on_borta_1800
+      - automation.kvallsbelysning_on_hemma_1800
       - automation.kvallsbelysning_off_2500_hemma
       - automation.kvallsbelysning_off_borta
 

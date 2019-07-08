@@ -7,19 +7,13 @@ group:
     icon: mdi:lan
     view: yes
     entities:
-      - group.device_states
       - group.computer_states
       - group.media_states
       - group.mobile_states
       - group.network_states
-      - group.system_monitor_card
-
-  device_states:
-    name: Enheter status
-    entities:
-      - sensor.raspberry_pi_2
-      - sensor.raspberry_pi_3
-      - sensor.hassbian
+      - group.system_monitor_card_pi_hassbian
+      - group.system_monitor_card_pi_1_wire
+      - group.system_monitor_card_pi_hagaholm
 
   computer_states:
     name: Dator status
@@ -70,9 +64,10 @@ group:
       - sensor.rt_ac68u_packets_sec_sent
       - sensor.rt_ac68u_packets_sent
 
-  system_monitor_card:
-    name: Raspberry Hassbian System Monitor
+  system_monitor_card_pi_hassbian:
+    name: Raspberry Pi 3B (hassbian)
     entities:
+      - sensor.hassbian
       - sensor.cpu_temperature
       - sensor.cpuspeed
       - sensor.uptime
@@ -88,6 +83,18 @@ group:
       - sensor.load_5m
       - sensor.load_15m
       - sensor.websocket_api
+
+  system_monitor_card_pi_1_wire:
+    name: Raspberry Pi 2 (1-Wire)
+    entities:
+      - sensor.raspberry_pi_2
+      - sensor.raspberry_pi_2_temperature
+
+  system_monitor_card_pi_hagaholm:
+    name: Raspberry Pi 3B (hagaholm)
+    entities:
+      - sensor.raspberry_pi_3b
+      - sensor.raspberry_pi_3b_temperature
 
 ##########
 # Sensor #
@@ -147,6 +154,21 @@ sensor:
   - platform: command_line
     name: Installed version
     command: "head -5 /home/homeassistant/.homeassistant/.HA_VERSION"
+
+    ##########
+    # Sensor #
+    ##########
+#  - platform: command_line
+#    name: Raspberry Pi 2 Temperature
+#    command: ssh pi@192.168.1.12 "cat /sys/class/thermal/thermal_zone0/temp"
+#    unit_of_measurement: "°C"
+#    value_template: '{{ value | multiply(0.001) | round(1) }}'
+
+  - platform: command_line
+    name: Raspberry Pi 3B Temperature
+    command: ssh pi@192.168.1.10 "cat /sys/class/thermal/thermal_zone0/temp"
+    unit_of_measurement: "°C"
+    value_template: '{{ value | multiply(0.001) | round(1) }}'
 
     ################################
     # Internet performance metrics #

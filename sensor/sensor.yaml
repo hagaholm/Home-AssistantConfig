@@ -162,6 +162,26 @@
     name: Ljusstyrka
     unit_of_measurement: "lux"
 
+########
+# mqtt #
+########
+  - platform: mqtt
+    name: Ljusstyrka (tsl2591)
+    state_topic: "tsl2591/lux"
+    unit_of_measurement: "lux"
+  - platform: mqtt
+    name: Inraröd (tsl2591)
+    state_topic: "tsl2591/infrared"
+    unit_of_measurement: ""
+  - platform: mqtt
+    name: Synligt (tsl2591)
+    state_topic: "tsl2591/visible"
+    unit_of_measurement: ""
+  - platform: mqtt
+    name: Fullt spectrum (tsl2591)
+    state_topic: "tsl2591/full_spectrum"
+    unit_of_measurement: ""
+
 ##############
 # statistics #
 ##############   

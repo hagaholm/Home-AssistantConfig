@@ -369,6 +369,17 @@ asuswrt:
     host: 192.168.1.1
     username: admin
     ssh_key: /home/homeassistant/.ssh/id_rsa
+    
+####################################################
+#                                                  #
+#                       MQTT                       #
+#                                                  #
+####################################################
+# Add broker used on Raspberry Pi 3B used for lux values 
+# https://www.home-assistant.io/docs/mqtt/broker/
+mqtt:
+  broker: 192.168.1.14
+  port: 1883
 
 ####################################################
 #                                                  #

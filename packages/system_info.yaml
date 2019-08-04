@@ -65,7 +65,7 @@ group:
       - sensor.rt_ac68u_packets_sent
 
   system_monitor_card_pi_hassbian:
-    name: Raspberry Pi 3B (hassbian)
+    name: Raspberry Pi 4 Model B Rev 1.1 4GB (Hassbian)
     entities:
       - sensor.hassbian
       - sensor.cpu_temperature
@@ -85,17 +85,23 @@ group:
       - sensor.websocket_api
 
   system_monitor_card_pi_1_wire:
-    name: Raspberry Pi 2 (1-Wire)
+    name: Raspberry Pi Model B+ (1-wire)
     entities:
       - sensor.raspberry_pi_2
       - sensor.raspberry_pi_2_temperature
 
   system_monitor_card_pi_hagaholm:
-    name: Raspberry Pi 3B (hagaholm)
+    name: Raspberry Pi 3 Model B Rev 1.2 (hagaholm)
     entities:
       - sensor.raspberry_pi_3b
       - sensor.raspberry_pi_3b_temperature
 
+  system_monitor_card_pi_lux:
+    name: Raspberry Pi 3 Model B Rev 1.2 (Lux)
+    entities:
+#      - sensor.raspberry_pi_3b
+#      - sensor.raspberry_pi_3b_temperature
+ 
 ##########
 # Sensor #
 ##########

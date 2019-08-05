@@ -369,7 +369,11 @@ asuswrt:
     host: 192.168.1.1
     username: admin
     ssh_key: /home/homeassistant/.ssh/id_rsa
-    
+    sensors:
+    - upload
+    - download
+    - upload_speed
+    - download_speed
 ####################################################
 #                                                  #
 #                       MQTT                       #

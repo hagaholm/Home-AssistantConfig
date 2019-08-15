@@ -20,6 +20,7 @@
       - group.default_view_setup
       - group.default_view_ventilation
       - group.default_view_temp_graph
+      - group.default_view_ljusstyrka_graph
 
   default_view_info:
     name: Info
@@ -98,6 +99,14 @@
     control: hidden
     entities:
       - history_graph.temperatur_ute_2_dagar
+
+  default_view_ljusstyrka_graph:
+    name: Ljusstyrka
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - history_graph.ljusstyrka_ute_1_day
 
 #####################
 #####################

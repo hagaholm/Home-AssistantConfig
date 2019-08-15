@@ -165,15 +165,15 @@
 ########
 # mqtt #
 ########
-  - platform:
-    name: Ljusstyrka Hagaholm
+  - platform: mqtt
+    name: Ljusstyrka
     state_topic: "hassbian/tsl2591/lux10"
     unit_of_measurement: "lux"
   - platform: mqtt
     name: Ljusstyrka2
     state_topic: "hassbian/tsl2591/lux"
     unit_of_measurement: "lux"
-  - platform:
+  - platform: mqtt
     name: Infrarött ljus
     state_topic: "hassbian/tsl2591/infrared"
     unit_of_measurement: ""

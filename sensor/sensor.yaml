@@ -159,53 +159,28 @@
   ###################  
   - platform: command_line
     command: !secret chef_lux
-    name: Ljusstyrka
+    name: Ljusstyrka Flacksta
     unit_of_measurement: "lux"
 
 ########
 # mqtt #
 ########
   - platform: mqtt
-    name: Ljusstyrka 2 (tsl2591)
-    state_topic: "hassbian/tsl2591/lux_2"
+    name: Ljusstyrka
+    state_topic: "hassbian/tsl2591/lux10"
     unit_of_measurement: "lux"
-  - platform: mqtt
-    name: Ljusstyrka (tsl2591)
-    state_topic: "hassbian/tsl2591/lux"
-    unit_of_measurement: "lux"
-  - platform: mqtt
-    name: Inraröd (tsl2591)
+    name: Inrarött ljus
     state_topic: "hassbian/tsl2591/infrared"
     unit_of_measurement: ""
   - platform: mqtt
-    name: Synligt (tsl2591)
+    name: Synligt ljus
     state_topic: "hassbian/tsl2591/visible"
     unit_of_measurement: ""
   - platform: mqtt
-    name: Fullt spectrum (tsl2591)
+    name: Fullt spectrum ljus
     state_topic: "hassbian/tsl2591/full_spectrum"
     unit_of_measurement: ""
   - platform: mqtt
-####
-    name: tsl2591 total
-    state_topic: "hassbian/tsl2591/total"
-    unit_of_measurement: ""
-  - platform: mqtt
-    name: tsl2591 total good
-    state_topic: "hassbian/tsl2591/total_good"
-    unit_of_measurement: ""
-  - platform: mqtt
-    name: tsl2591 total bad
-    state_topic: "hassbian/tsl2591/total_bad"
-    unit_of_measurement: ""
-  - platform: mqtt
-    name: tsl2591 current good
-    state_topic: "hassbian/tsl2591/current_good"
-    unit_of_measurement: ""
-  - platform: mqtt
-    name: tsl2591 current bad
-    state_topic: "hassbian/tsl2591/current_bad"
-    unit_of_measurement: ""
 
 ##############
 # statistics #

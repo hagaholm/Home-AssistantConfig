@@ -36,3 +36,11 @@
       - sensor.ute_grannen
     hours_to_show: 168
     refresh: 1800
+
+  ljusstyrka_ute_1_day:
+    name: Ljusstyrka ute
+    entities:
+      - sensor.ljusstyrka
+      - sensor.ljusstyrka_flacksta
+    hours_to_show: 24
+ 

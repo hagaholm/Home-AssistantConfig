@@ -169,6 +169,10 @@
     name: Ljusstyrka
     state_topic: "hassbian/tsl2591/lux10"
     unit_of_measurement: "lux"
+  - platform: mqtt
+    name: Ljusstyrka (original)
+    state_topic: "hassbian/tsl2591/lux"
+    unit_of_measurement: "lux"
   - platform:
     name: Inrarött ljus
     state_topic: "hassbian/tsl2591/infrared"

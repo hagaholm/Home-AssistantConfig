@@ -186,6 +186,11 @@
     state_topic: "hassbian/tsl2591/full_spectrum"
     unit_of_measurement: ""
 
+  - platform: template
+    sensors:
+      diff:
+        value_template: '{{(states.sensor.ljusstyrka_flacksta.state | float ) - (states.sensor.ljusstyrka.state | float)}}'
+
 ##############
 # statistics #
 ##############   

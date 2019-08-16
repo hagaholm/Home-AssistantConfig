@@ -190,6 +190,7 @@
     sensors:
       diff:
         value_template: '{{(states.sensor.ljusstyrka_flacksta.state | float ) / (states.sensor.ljusstyrka2.state | float)}}'
+        unit_of_measurement: "Faktor"
 
 ##############
 # statistics #

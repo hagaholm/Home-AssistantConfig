@@ -20,9 +20,9 @@
       - group.default_view_setup
       - group.default_view_ventilation
       - group.default_view_temp_graph
-      - group.default_view_ljusstyrka_graph_1_day
-      - group.default_view_ljusstyrka_graph_6_hours
-      - group.default_view_ljusstyrka_graph_1_hour
+      - group.default_view_ljusstyrka_graph_1_dag
+      - group.default_view_ljusstyrka_graph_6_timmar
+      - group.default_view_ljusstyrka_graph_1_timme
 
   default_view_info:
     name: Info
@@ -103,29 +103,29 @@
     entities:
       - history_graph.temperatur_ute_2_dagar
 
-  default_view_ljusstyrka_graph_1_day:
+  default_view_ljusstyrka_graph_1_dag:
     name: Ljusstyrka
     view: no
     icon: mdi:information-outline
     control: hidden
     entities:
-      - history_graph.ljusstyrka_ute_1_day
+      - history_graph.ljusstyrka_ute_1_dag
 
-  default_view_ljusstyrka_graph_6_hours:
+  default_view_ljusstyrka_graph_6_timmar:
     name: Ljusstyrka
     view: no
     icon: mdi:information-outline
     control: hidden
     entities:
-      - history_graph.ljusstyrka_ute_6_hours
+      - history_graph.ljusstyrka_ute_6_timmar
 
-  default_view_ljusstyrka_graph_1_hour:
+  default_view_ljusstyrka_graph_1_timme:
     name: Ljusstyrka
     view: no
     icon: mdi:information-outline
     control: hidden
     entities:
-      - history_graph.ljusstyrka_ute_1_hour
+      - history_graph.ljusstyrka_ute_1_timme
 
 #####################
 #####################

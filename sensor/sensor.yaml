@@ -189,7 +189,7 @@
   - platform: template
     sensors:
       diff:
-        value_template: '{{(states.sensor.ljusstyrka_flacksta.state | float ) / (states.sensor.ljusstyrka.state | float)}}'
+        value_template: '{{(states.sensor.ljusstyrka_flacksta.state | float ) / (states.sensor.ljusstyrka2.state | float)}}'
 
 ##############
 # statistics #

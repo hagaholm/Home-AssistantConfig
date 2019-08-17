@@ -146,7 +146,8 @@ automation:
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka_flacksta
-      above: 250    action:
+      above: 250 
+    action:
       - service: notify.pushbullet
         data:
           message: 'Över 250 lux: {{ states.sensor.ljusstyrka2.state }}'

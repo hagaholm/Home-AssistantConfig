@@ -19,10 +19,10 @@ automation:
     action:
       - service: notify.pushbullet
         data:
-          message: 'Under 2500 lux: {{ states.sensor.ljusstyrka2.state }}'
+          message: 'Under 2500 lux ({{ states.sensor.ljusstyrka_flacksta.state }}): {{ states.sensor.ljusstyrka2.state }}'
       - service: notify.file_lux
         data_template: 
-          message: 'Under 2500 lux: {{ states.sensor.ljusstyrka2.state }}'
+          message: 'Under 2500 lux ({{ states.sensor.ljusstyrka_flacksta.state }}): {{ states.sensor.ljusstyrka2.state }}'
 
   - alias: Under 1800 lux
     trigger:
@@ -32,10 +32,10 @@ automation:
     action:
       - service: notify.pushbullet
         data:
-          message: 'Under 1800 lux: {{ states.sensor.ljusstyrka2.state }}'
+          message: 'Under 1800 lux ({{ states.sensor.ljusstyrka_flacksta.state }}): {{ states.sensor.ljusstyrka2.state }}'
       - service: notify.file_lux
         data_template: 
-          message: 'Under 1800 lux: {{ states.sensor.ljusstyrka2.state }}'
+          message: 'Under 1800 lux ({{ states.sensor.ljusstyrka_flacksta.state }}): {{ states.sensor.ljusstyrka2.state }}'
 
   - alias: Under 250 lux
     trigger:
@@ -45,10 +45,10 @@ automation:
     action:
       - service: notify.pushbullet
         data:
-          message: 'Under 250 lux: {{ states.sensor.ljusstyrka2.state }}'
+          message: 'Under 250 lux ({{ states.sensor.ljusstyrka_flacksta.state }}): {{ states.sensor.ljusstyrka2.state }}'
       - service: notify.file_lux
         data_template: 
-          message: 'Under 250 lux: {{ states.sensor.ljusstyrka2.state }}'
+          message: 'Under 250 lux ({{ states.sensor.ljusstyrka_flacksta.state }}): {{ states.sensor.ljusstyrka2.state }}'
 
   - alias: Under 200 lux
     trigger:
@@ -58,10 +58,10 @@ automation:
     action:
       - service: notify.pushbullet
         data:
-          message: 'Under 200 lux: {{ states.sensor.ljusstyrka2.state }}'
+          message: 'Under 200 lux ({{ states.sensor.ljusstyrka_flacksta.state }}): {{ states.sensor.ljusstyrka2.state }}'
       - service: notify.file_lux
         data_template: 
-          message: 'Under 200 lux: {{ states.sensor.ljusstyrka2.state }}'
+          message: 'Under 200 lux ({{ states.sensor.ljusstyrka_flacksta.state }}): {{ states.sensor.ljusstyrka2.state }}'
 
   - alias: Under 150 lux
     trigger:
@@ -71,10 +71,10 @@ automation:
     action:
       - service: notify.pushbullet
         data:
-          message: 'Under 150 lux: {{ states.sensor.ljusstyrka2.state }}'
+          message: 'Under 150 lux ({{ states.sensor.ljusstyrka_flacksta.state }}): {{ states.sensor.ljusstyrka2.state }}'
       - service: notify.file_lux
         data_template: 
-          message: 'Under 150 lux: {{ states.sensor.ljusstyrka2.state }}'
+          message: 'Under 150 lux ({{ states.sensor.ljusstyrka_flacksta.state }}): {{ states.sensor.ljusstyrka2.state }}'
 
   - alias: Under 40 lux
     trigger:
@@ -84,10 +84,10 @@ automation:
     action:
       - service: notify.pushbullet
         data:
-          message: 'Under 40 lux: {{ states.sensor.ljusstyrka2.state }}'
+          message: 'Under 40 lux ({{ states.sensor.ljusstyrka_flacksta.state }}): {{ states.sensor.ljusstyrka2.state }}'
       - service: notify.file_lux
         data_template: 
-          message: 'Under 40 lux: {{ states.sensor.ljusstyrka2.state }}'
+          message: 'Under 40 lux ({{ states.sensor.ljusstyrka_flacksta.state }}): {{ states.sensor.ljusstyrka2.state }}'
 
   - alias: Under 5 lux
     trigger:
@@ -97,10 +97,10 @@ automation:
     action:
       - service: notify.pushbullet
         data:
-          message: 'Under 5 lux: {{ states.sensor.ljusstyrka2.state }}'
+          message: 'Under 5 lux ({{ states.sensor.ljusstyrka_flacksta.state }}): {{ states.sensor.ljusstyrka2.state }}'
       - service: notify.file_lux
         data_template: 
-          message: 'Under 5 lux: {{ states.sensor.ljusstyrka2.state }}'
+          message: 'Under 5 lux ({{ states.sensor.ljusstyrka_flacksta.state }}): {{ states.sensor.ljusstyrka2.state }}'
 
   - alias: Under 1 lux
     trigger:
@@ -110,10 +110,10 @@ automation:
     action:
       - service: notify.pushbullet
         data:
-          message: 'Under 1 lux: {{ states.sensor.ljusstyrka2.state }}'
+          message: 'Under 1 lux ({{ states.sensor.ljusstyrka_flacksta.state }}): {{ states.sensor.ljusstyrka2.state }}'
       - service: notify.file_lux
         data_template: 
-          message: 'Under 1 lux: {{ states.sensor.ljusstyrka2.state }}'
+          message: 'Under 1 lux ({{ states.sensor.ljusstyrka_flacksta.state }}): {{ states.sensor.ljusstyrka2.state }}'
 
 ############################################################
   - alias: Över 2500 lux
@@ -124,10 +124,10 @@ automation:
     action:
       - service: notify.pushbullet
         data:
-          message: 'Över 2500 lux: {{ states.sensor.ljusstyrka2.state }}'
+          message: 'Över 2500 lux ({{ states.sensor.ljusstyrka_flacksta.state }}): {{ states.sensor.ljusstyrka2.state }}'
       - service: notify.file_lux
         data_template: 
-          message: 'Över 2500 lux: {{ states.sensor.ljusstyrka2.state }}'
+          message: 'Över 2500 lux ({{ states.sensor.ljusstyrka_flacksta.state }}): {{ states.sensor.ljusstyrka2.state }}'
 
   - alias: Över 1800 lux
     trigger:
@@ -137,10 +137,10 @@ automation:
     action:
       - service: notify.pushbullet
         data:
-          message: 'Över 1800 lux: {{ states.sensor.ljusstyrka2.state }}'
+          message: 'Över 1800 lux ({{ states.sensor.ljusstyrka_flacksta.state }}): {{ states.sensor.ljusstyrka2.state }}'
       - service: notify.file_lux
         data_template: 
-          message: 'Över 1800 lux: {{ states.sensor.ljusstyrka2.state }}'
+          message: 'Över 1800 lux ({{ states.sensor.ljusstyrka_flacksta.state }}): {{ states.sensor.ljusstyrka2.state }}'
 
   - alias: Över 250 lux
     trigger:
@@ -150,10 +150,10 @@ automation:
     action:
       - service: notify.pushbullet
         data:
-          message: 'Över 250 lux: {{ states.sensor.ljusstyrka2.state }}'
+          message: 'Över 250 lux ({{ states.sensor.ljusstyrka_flacksta.state }}): {{ states.sensor.ljusstyrka2.state }}'
       - service: notify.file_lux
         data_template: 
-          message: 'Över 250 lux: {{ states.sensor.ljusstyrka2.state }}'
+          message: 'Över 250 lux ({{ states.sensor.ljusstyrka_flacksta.state }}): {{ states.sensor.ljusstyrka2.state }}'
 
   - alias: Över 150 lux
     trigger:
@@ -163,10 +163,10 @@ automation:
     action:
       - service: notify.pushbullet
         data:
-          message: 'Över 150 lux: {{ states.sensor.ljusstyrka2.state }}'
+          message: 'Över 150 lux ({{ states.sensor.ljusstyrka_flacksta.state }}): {{ states.sensor.ljusstyrka2.state }}'
       - service: notify.file_lux
         data_template: 
-          message: 'Över 150 lux: {{ states.sensor.ljusstyrka2.state }}'
+          message: 'Över 150 lux ({{ states.sensor.ljusstyrka_flacksta.state }}): {{ states.sensor.ljusstyrka2.state }}'
 
   - alias: Över 60 lux
     trigger:
@@ -176,7 +176,7 @@ automation:
     action:
       - service: notify.pushbullet
         data:
-          message: 'Över 60 lux: {{ states.sensor.ljusstyrka2.state }}'
+          message: 'Över 60 lux ({{ states.sensor.ljusstyrka_flacksta.state }}): {{ states.sensor.ljusstyrka2.state }}'
       - service: notify.file_lux
         data_template: 
-          message: 'Över 60 lux: {{ states.sensor.ljusstyrka2.state }}'
+          message: 'Över 60 lux ({{ states.sensor.ljusstyrka_flacksta.state }}): {{ states.sensor.ljusstyrka2.state }}'

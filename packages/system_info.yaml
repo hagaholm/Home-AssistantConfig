@@ -77,7 +77,7 @@ group:
       - sensor.websocket_api
 
   system_monitor_card_pi_1_wire:
-    name: Raspberry Pi B+ (1-wire)
+    name: Raspberry Pi B+ (1-Wire)
     entities:
       - sensor.raspberry_pi_2
       - sensor.raspberry_pi_2_temperature
@@ -157,7 +157,7 @@ sensor:
     # Sensor #
     ##########
 #  - platform: command_line
-#    name: Raspberry Pi 2 Temperature
+#    name: Raspberry Pi B+ Temperature
 #    command: ssh pi@192.168.1.12 "cat /sys/class/thermal/thermal_zone0/temp"
 #    unit_of_measurement: "°C"
 #    value_template: '{{ value | multiply(0.001) | round(1) }}'
@@ -227,9 +227,9 @@ sensor:
     #############
     # Raspberry #
     #############
-      raspberry_pi_2:
-        friendly_name: 'Raspberry Pi 2 (1-Wire)'
-        value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_2', 'home') else 'Offline' }}"
+      raspberry_pi_b_plus:
+        friendly_name: 'Raspberry Pi B+ (1-Wire)'
+        value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_b_plus', 'home') else 'Offline' }}"
       raspberry_pi_3b:
         friendly_name: 'Raspberry Pi 3B (hagaholm)'
         value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_3b', 'home') else 'Offline' }}"

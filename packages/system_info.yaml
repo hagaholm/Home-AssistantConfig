@@ -294,7 +294,6 @@ automation:
     ### A: notify.pushbullet     ###
     ################################
   - alias: 'Hassbian startad'
-    initial_state: 'on'
     trigger:
       platform: homeassistant
       event: start
@@ -310,7 +309,6 @@ automation:
     ### A: notify.pushbullet        ###
     ###################################
   - alias: 'Hassbian stoppad'
-    initial_state: 'on'
     trigger:
       platform: homeassistant
       event: shutdown
@@ -326,7 +324,6 @@ automation:
     ### A: notify.pushbullet ###
     ############################
   - alias: Hassbian uppdatering
-    initial_state: 'on'
     trigger:
       - platform: state
         entity_id: updater.updater
@@ -342,7 +339,6 @@ automation:
     ### A: notify.pushbullet         ###
     ####################################
   - alias: Ny enhet hittad
-    initial_state: 'on'
     trigger:
       platform: event
       event_type: device_tracker_new_device

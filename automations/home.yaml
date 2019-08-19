@@ -4,7 +4,7 @@
     ### A: python_script.flash_lights_friggebod_facade ###
     ######################################################
   - alias: Blinkar ute(-> hem)
-    initial_state: 'on'
+    initial_state: 'off'
     trigger:
       platform: state
       entity_id: group.track_for_home_devices
@@ -18,7 +18,7 @@
     ### A: python_script.flash_lights_hall_byra     ###
     ###################################################
   - alias: Blinkar inne(-> hem)
-    initial_state: 'on'
+    initial_state: 'off'
     trigger:
       - platform: state
         entity_id: device_tracker.mobil_micke

@@ -7,7 +7,6 @@
     ### A: light.uterum_led = on                          ###
     #########################################################
   - alias: Uterums ledbelysning on (home)
-    initial_state: 'on'
     trigger:
       platform: state
       entity_id: group.track_for_home_devices
@@ -42,7 +41,6 @@
     ### A: light.uterum_led = on                        ###
     #######################################################
   - alias: Uterums ledbelysning on (>18)
-    initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.uterum
@@ -76,7 +74,6 @@
     ### A: light.uterum_led = on                        ###
     #######################################################
   - alias: Uterums ledbelysning on (<250)
-    initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
@@ -110,7 +107,6 @@
     ### A: light.uterum_fotogenlampa = on                 ###
     #########################################################
   - alias: Uterums fotogenlampa on (home)
-    initial_state: 'on'
     trigger:
       platform: state
       entity_id: group.track_for_home_devices
@@ -141,7 +137,6 @@
     ### A: light.uterum_fotogenlampa = on               ###
     #######################################################
   - alias: Uterums fotogenlampa on (>18)
-    initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.uterum
@@ -171,7 +166,6 @@
     ### A: light.uterum_fotogenlampa = on               ###
     #######################################################
   - alias: Uterums fotogenlampa on (<250)
-    initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
@@ -199,7 +193,6 @@
     ### A: light.friggebod_ute = on                     ###
     #######################################################
   - alias: Friggebod belysning ute on (<5)
-    initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
@@ -219,7 +212,6 @@
     ### A: script.night_light                             ###
     #########################################################
   - alias: Spabelysning on (<5)
-    initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
@@ -238,7 +230,6 @@
     ### A: script.friggebod_light_on                  ###
     #####################################################
   - alias: Friggebod belysning on (<1)
-    initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
@@ -258,7 +249,6 @@
     ###    Service: script.uterum_window_light_off         ###
     ##########################################################
   - alias: Utebelysning off (>22:00:00, borta)
-    initial_state: 'on'
     trigger:
       platform: time
       at: '22:00:00'
@@ -277,7 +267,6 @@
     ### A: service: script.outside_light_off                      ###
     #################################################################
   - alias: Utebelysning off (>22:00:00, hemma, vardag)
-    initial_state: 'on'
     trigger:
       platform: time
       at: '22:00:00'
@@ -302,7 +291,6 @@
     ###    Service: script.uterum_window_light_off             ###
     ##############################################################
   - alias: Utebelysning off (All off, hemma, helg)
-    initial_state: 'on'
     trigger:
       platform: state
       entity_id: switch.kok_lilla_fonstret
@@ -327,7 +315,6 @@
     ### A: light.uterum_led = off                                             ###
     #############################################################################
   - alias: Uterums ledbelysning off (All off, hemma)
-    initial_state: 'on'
     trigger:
       platform: state
       entity_id: light.kok_lilla_fonstret
@@ -374,7 +361,6 @@
     ### A: light.uterum_led = off                                  ###
     ##################################################################
   - alias: Uterums ledbelysning off (Borta)
-    initial_state: 'on'
     trigger:
       platform: state
       entity_id: group.track_for_home_devices
@@ -417,7 +403,6 @@
     ### A: light.uterum_led = off                           ###
     ###########################################################
   - alias: Uterums ledbelysning off (<15)
-    initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.uterum
@@ -460,7 +445,6 @@
     ### A: light.uterum_fotogenlampa = off                                    ###
     #############################################################################
   - alias: Uterums fotogenlampa off (All off, hemma)
-    initial_state: 'on'
     trigger:
       platform: state
       entity_id: light.kok_lilla_fonstret
@@ -503,7 +487,6 @@
     ### A: light.uterum_fotogenlampa = off                         ###
     ##################################################################
   - alias: Uterums fotogenlampa off (Borta)
-    initial_state: 'on'
     trigger:
       platform: state
       entity_id: group.track_for_home_devices
@@ -542,7 +525,6 @@
     ### A: light.uterum_fotogenlampa = off                  ###
     ###########################################################
   - alias: Uterums fotogenlampa off (<15)
-    initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.uterum

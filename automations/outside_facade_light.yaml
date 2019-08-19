@@ -9,7 +9,6 @@
     ### A: light.friggebod_fasad = on                      ###
     ##########################################################
   - alias: Friggebod fasadbelysning on (<40)
-    initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
@@ -36,7 +35,6 @@
     ### A: light.friggebod_fasad = off                      ###
     ###########################################################
   - alias: Friggebod fasadbelysning off (>60)
-    initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
@@ -57,7 +55,6 @@
     ### A: light.friggebod_fasad = off                       ###
     ############################################################
   - alias: Friggebod fasadbelysning off
-    initial_state: 'on'
     trigger:
       platform: state
       entity_id: light.kok_lilla_fonstret
@@ -90,7 +87,6 @@
     ### A: light.forrad_fasad = on                      ###
     #######################################################
   - alias: Förråd fasadbelysning on (<40, led off)
-    initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
@@ -118,7 +114,6 @@
     ### A: light.forrad_fasad = on                                    ###
     #####################################################################
   - alias: Förråd fasadbelysning on (led off, <40)
-    initial_state: 'on'
     trigger:
       platform: state
       entity_id: light.uterum_led
@@ -145,7 +140,6 @@
     ### A: light.forrad_fasad = off                      ###
     ########################################################
   - alias: Förråd fasadbelysning off (>60)
-    initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
@@ -165,7 +159,6 @@
     ### A: light.forrad_fasad = off                                   ###
     #####################################################################
   - alias: Förråd fasadbelysning off
-    initial_state: 'on'
     trigger:
       platform: state
       entity_id: light.uterum_led

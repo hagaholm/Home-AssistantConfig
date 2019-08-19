@@ -19,7 +19,6 @@
     ### A: notify.pushbullet                          ###
     #####################################################
   - alias: Raspberry Pi 2 Offline
-    initial_state: 'off'
     trigger:
       platform: state
       entity_id: device_tracker.raspberry_pi_2
@@ -35,7 +34,6 @@
     ### A: notify.pushbullet                           ###
     ######################################################
   - alias: Raspberry Pi 3B Offline
-    initial_state: 'on'
     trigger:
       platform: state
       entity_id: device_tracker.raspberry_pi_3b

@@ -5,7 +5,6 @@ automation:
     ### A: switch.garage_luftavfuktare_2 = on ###
     #############################################
   - alias: Starta luftavfuktare
-    initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.forrad_humidity
@@ -20,7 +19,6 @@ automation:
     ### A: switch.garage_luftavfuktare_2 = off ###
     ##############################################
   - alias: Stoppa luftavfuktare
-    initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.forrad_humidity

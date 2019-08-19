@@ -27,7 +27,6 @@ automation:
     ### A: switch.fan_speed = on                     ###
     ####################################################
   - alias: Badrumsfönster hög fukt larm
-    initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.fukt_badrumsfonster
@@ -110,7 +109,6 @@ automation:
     ### A: switch.fan_speed = on           ###
     ##########################################
   - alias: Badrumsfönster hög fukt
-    initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.fukt_badrumsfonster
@@ -128,7 +126,6 @@ automation:
     ### A: switch.fan_speed = off          ###
     ##########################################
   - alias: Badrumsfönster låg fukt
-    initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.fukt_badrumsfonster
@@ -150,7 +147,6 @@ automation:
     ### A: switch.ventilationsaggregat = off          ###
     #####################################################
   - alias: Ventilation off (Borta, ute >24°C, <60%, Inne > 23°C)
-    initial_state: 'on'
     trigger:
       platform: state
       entity_id: group.track_for_home_devices
@@ -206,7 +202,6 @@ automation:
     ### A: switch.ventilationsaggregat = off          ###
     #####################################################
   - alias: Ventilation off (Ute >24°C, Borta, <60%, Inne > 23°C)
-    initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.ute
@@ -261,7 +256,6 @@ automation:
     ### A: switch.ventilationsaggregat = off          ###
     #####################################################
   - alias: Ventilation off (<60%, Borta, Ute >24°C, Inne > 23°C)
-    initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.fukt_badrumsfonster
@@ -316,7 +310,6 @@ automation:
     ### A: switch.ventilationsaggregat = off          ###
     #####################################################
   - alias: Ventilation off (Inne >23°C, Borta, <60%, Ute > 24°C)
-    initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.inne_medel
@@ -371,7 +364,6 @@ automation:
     ### A: switch.ventilationsaggregat = on       ###
     #################################################
   - alias: Ventilation on (Hemma, Off)
-    initial_state: 'on'
     trigger:
       platform: state
       entity_id: group.track_for_home_devices
@@ -413,7 +405,6 @@ automation:
     ### A: switch.ventilationsaggregat = on   ###
     #############################################
   - alias: Ventilation on (Ute <22°C, Off)
-    initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.ute
@@ -454,7 +445,6 @@ automation:
     ### A: switch.ventilationsaggregat = on   ###
     #############################################
   - alias: Ventilation on (>60%, Off)
-    initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.fukt_badrumsfonster
@@ -495,7 +485,6 @@ automation:
     ### A: switch.ventilationsaggregat = on   ###
     #############################################
   - alias: Ventilation on (Inne <23°C, Off)
-    initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.inne_medel

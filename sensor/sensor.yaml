@@ -159,28 +159,38 @@
   ###################  
   - platform: command_line
     command: !secret chef_lux
-    name: Ljusstyrka
+    name: Ljusstyrka Flacksta
     unit_of_measurement: "lux"
 
 ########
 # mqtt #
 ########
   - platform: mqtt
-    name: Ljusstyrka (tsl2591)
-    state_topic: "hassbian/tsl2591/lux"
+    name: Ljusstyrka
+    state_topic: "hassbian/tsl2591/lux_calibrated"
     unit_of_measurement: "lux"
   - platform: mqtt
-    name: Inraröd (tsl2591)
+    name: Ljusstyrka2
+    state_topic: "hassbian/tsl2591/lux_5"
+    unit_of_measurement: "lux"
+  - platform: mqtt
+    name: Infrarött ljus
     state_topic: "hassbian/tsl2591/infrared"
     unit_of_measurement: ""
   - platform: mqtt
-    name: Synligt (tsl2591)
+    name: Synligt ljus
     state_topic: "hassbian/tsl2591/visible"
     unit_of_measurement: ""
   - platform: mqtt
-    name: Fullt spectrum (tsl2591)
+    name: Fullt spectrum ljus
     state_topic: "hassbian/tsl2591/full_spectrum"
     unit_of_measurement: ""
+
+  - platform: template
+    sensors:
+      diff:
+        value_template: '{{(states.sensor.ljusstyrka_flacksta.state | float ) / (states.sensor.ljusstyrka2.state | float)}}'
+        unit_of_measurement: "Faktor"
 
 ##############
 # statistics #

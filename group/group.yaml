@@ -756,3 +756,68 @@
     - device_tracker.mobil_margareta
     - device_tracker.mobil_herbert
     - device_tracker.mobil_erik
+
+###############
+###############
+# View: Extra #
+###############
+###############
+  extra_view:
+    name: Extra
+    view: yes
+    entities:
+      - group.extra_view_info
+      - group.extra_view_ljusstyrka_graph_1_dag
+      - group.extra_view_ljusstyrka_graph_6_timmar
+      - group.extra_view_ljusstyrka_graph_1_timme
+      - group.extra_view_diff_graph_6_timmar
+      - group.extra_view_diff_graph_1_timme
+
+  extra_view_info:
+    name: Info
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - sensor.ljusstyrka
+      - sensor.ljusstyrka_flacksta
+
+  extra_view_ljusstyrka_graph_1_dag:
+    name: Ljusstyrka
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - history_graph.ljusstyrka_ute_1_dag
+
+  extra_view_ljusstyrka_graph_6_timmar:
+    name: Ljusstyrka
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - history_graph.ljusstyrka_ute_6_timmar
+
+  extra_view_ljusstyrka_graph_1_timme:
+    name: Ljusstyrka
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - history_graph.ljusstyrka_ute_1_timme
+
+  extra_view_diff_graph_6_timmar:
+    name: Diff
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - history_graph.diff_6_timmar
+
+  extra_view_diff_graph_1_timme:
+    name: Diff
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - history_graph.Diff_1_timme

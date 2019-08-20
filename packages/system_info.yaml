@@ -61,12 +61,6 @@ group:
       - sensor.asuswrt_upload
       - sensor.asuswrt_upload_speed
 
-      - group.system_monitor_card_pi_b_plus
-      - group.system_monitor_card_pi_3b_1
-      - group.system_monitor_card_pi_3b_2
-      - group.system_monitor_card_pi_3b_plus
-      - group.system_monitor_card_pi_4b
-
   system_monitor_card_pi_b_plus:
     name: Raspberry Pi B+ (1-Wire)
     entities:
@@ -82,8 +76,8 @@ group:
   system_monitor_card_pi_3b_2:
     name: Raspberry Pi 3B (Lux)
     entities:
-#      - sensor.raspberry_pi_3b_2
-#      - sensor.raspberry_pi_3b_2_temperature
+      - sensor.raspberry_pi_3b_2
+      - sensor.raspberry_pi_3b_2_temperature
 
   system_monitor_card_pi_3b_plus:
     name: Raspberry Pi 3B+

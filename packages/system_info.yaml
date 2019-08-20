@@ -242,10 +242,10 @@ sensor:
         value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_b_plus', 'home') else 'Offline' }}"
       raspberry_pi_3b_1:
         friendly_name: 'Raspberry Pi 3B (Hagaholm)'
-        value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_3b', 'home') else 'Offline' }}"
+        value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_3b_1', 'home') else 'Offline' }}"
       raspberry_pi_3b_2:
         friendly_name: 'Raspberry Pi 3B (Lux)'
-        value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_3b', 'home') else 'Offline' }}"
+        value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_3b_2', 'home') else 'Offline' }}"
       raspberry_pi_3b_plus:
         friendly_name: 'Raspberry Pi 3B+'
         value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_3b_plus', 'home') else 'Offline' }}"

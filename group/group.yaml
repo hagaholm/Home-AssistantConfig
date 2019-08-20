@@ -493,7 +493,7 @@
       - group.automation_doorbell
       - group.automation_forrad_kyl_frys
       - group.automation_garage_air_dryer
-      - group.automation_unit_offline
+      - group.automation_pi_offline
       - group.automation_travel_time
       - group.automation_ikea
       - group.automation_pir
@@ -627,12 +627,15 @@
       - automation.lag_temp_tilluft
       - automation.hog_temp_tilluft
 
-  automation_unit_offline:
-    name: Larm enheter offline
+  automation_pi_offline:
+    name: Larm Raspberry Pi offline
 #    control: hidden
     entities:
       - automation.raspberry_pi_b_1_wire_offline
-      - automation.raspberry_pi_3b_offline
+      - automation.raspberry_pi_3b_1_offline
+      - automation.raspberry_pi_3b_2_offline
+      - automation.raspberry_pi_3b_plus_offline
+      - automation.raspberry_pi_4b_offline
 
   automation_travel_time:
     name: Restid till och från jobbet

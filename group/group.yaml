@@ -497,6 +497,7 @@
       - group.automation_travel_time
       - group.automation_ikea
       - group.automation_pir
+      - group.automation_sensor
 
   automation_larm:
     name: Larm
@@ -736,6 +737,37 @@
     entities:
       - automation.starta_luftavfuktare
       - automation.stoppa_luftavfuktare
+
+  automation_sensor:
+    name: Sensor avläsning saknas
+    entities:
+      - automation.avluft_avlasning_saknas
+      - automation.badrum_fukt_avlasning_saknas
+      - automation.badrum_temp_avlasning_saknas
+      - automation.forrad_fukt_avlasning_saknas
+      - automation.forrad_temp_avlasning_saknas
+      - automation.forrad_kyl_frys_temp_avlasning_saknas
+      - automation.franluft_temp_avlasning_saknas
+      - automation.friggebod_fukt_avlasning_saknas
+      - automation.friggebod_temp_avlasning_saknas
+      - automation.frys_temp_avlasning_saknas
+      - automation.hall_fukt_avlasning_saknas
+      - automation.hall_temp_avlasning_saknas
+      - automation.kyl_temp_avlasning_saknas
+      - automation.louise_rum_fukt_avlasning_saknas
+      - automation.louise_rum_temp_avlasning_saknas
+      - automation.pa_vinden_temp_avlasning_saknas
+      - automation.sovrum_temp_avlasning_saknas
+      - automation.tilluft_temp_avlasning_saknas
+      - automation.tvattstuga_fukt_avlasning_saknas
+      - automation.tvattstuga_temp_avlasning_saknas
+      - automation.ute_temp_avlasning_saknas
+      - automation.uteluft_temp_avlasning_saknas
+      - automation.uterum_temp_avlasning_saknas
+      - automation.vardagsrum_temp_avlasning_saknas
+      - automation.varmepump_temp_avlasning_saknas
+
+##############################################################
 
   family:
     name: Familj

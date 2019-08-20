@@ -173,7 +173,8 @@ sensor:
 #    value_template: '{{ value | multiply(0.001) | round(1) }}'
 
   - platform: command_line
-    name: Raspberry Pi 3B (Hagaholm) Temperature
+    name: Raspberry Pi 3B 1 Temperature
+    friendly_name: "Raspberry Pi 3B (Hagaholm) Temperature"
     command: ssh pi@192.168.1.10 "cat /sys/class/thermal/thermal_zone0/temp"
     unit_of_measurement: "°C"
     value_template: '{{ value | multiply(0.001) | round(1) }}'

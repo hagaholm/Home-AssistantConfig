@@ -297,8 +297,7 @@
     sensors:
       frys updated:
         entity_id: sensor.frys_temperature
-#        friendly_name: 'Car Last Seen'
-        icon_template: mdi:clock-outline
-        value_template: "{{relative_time(states.sensor.frys_temperature.last_changed)}}"
-#        value_template: "{{relative_time(states.sensor.frys_temperature.last_updated)}}"
-        entity_id: sensor.date_time
+#        value_template: "{{relative_time(states.sensor.frys_temperature.last_changed)}}"
+        value_template: "{{relative_time(states.sensor.frys_temperature.last_updated)}}"
+        entity_id: sensor.time
+

@@ -1,0 +1,316 @@
+########################################
+### XXX avläsning saknas             ###
+### T: Ingen avläsning på 10 minuter ###
+### A: notify.pushbullet             ###
+########################################
+
+##############
+### Avluft ###
+##############
+  - alias: Avluft avläsning saknas
+    trigger:
+      platform: template
+      value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.avluft.last_updated) > 10*60 %}true{% endif %}"
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Avluft. Avläsning saknas'
+
+###################
+### Badrum fukt ###
+###################
+  - alias: Badrum fukt avläsning saknas
+    trigger:
+      platform: template
+      value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.badrum_humidity.last_updated) > 10*60 %}true{% endif %}"
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Badrum fukt. Avläsning saknas'
+
+###################
+### Badrum temp ###
+###################
+  - alias: Badrum temp avläsning saknas
+    trigger:
+      platform: template
+      value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.badrum_temperature.last_updated) > 10*60 %}true{% endif %}"
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Badrum temp. Avläsning saknas'
+
+###################
+### Förråd fukt ###
+###################
+  - alias: Förråd fukt avläsning saknas
+    trigger:
+      platform: template
+      value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.forrad_humidity.last_updated) > 10*60 %}true{% endif %}"
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Förråd fukt. Avläsning saknas'
+
+###################
+### Förråd temp ###
+###################
+  - alias: Förråd temp avläsning saknas
+    trigger:
+      platform: template
+      value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.forrad_temperature.last_updated) > 10*60 %}true{% endif %}"
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Förråd temp. Avläsning saknas'
+
+############################
+### Förråd kyl frys temp ###
+############################
+  - alias: Förråd kyl frys temp avläsning saknas
+    trigger:
+      platform: template
+      value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.forrad_kyl_frys_temperature.last_updated) > 10*60 %}true{% endif %}"
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Förråd kyl frys temp. Avläsning saknas'
+
+#####################
+### Frånluft temp ###
+#####################
+  - alias: Frånluft temp avläsning saknas
+    trigger:
+      platform: template
+      value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.franluft.last_updated) > 10*60 %}true{% endif %}"
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Frånluft temp. Avläsning saknas'
+
+######################
+### Friggebod fukt ###
+######################
+  - alias: Friggebod fukt avläsning saknas
+    trigger:
+      platform: template
+      value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.friggebod_humidity.last_updated) > 10*60 %}true{% endif %}"
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Friggebod fukt. Avläsning saknas'
+
+######################
+### Friggebod temp ###
+######################
+  - alias: Friggebod temp avläsning saknas
+    trigger:
+      platform: template
+      value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.friggebod_temperature.last_updated) > 10*60 %}true{% endif %}"
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Friggebod temp. Avläsning saknas'
+
+#################
+### Frys temp ###
+#################
+  - alias: Frys temp avläsning saknas
+    trigger:
+      platform: template
+      value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.frys_temperature.last_updated) > 10*60 %}true{% endif %}"
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Frys temp. Avläsning saknas'
+
+#################
+### Hall fukt ###
+#################
+  - alias: Hall fukt avläsning saknas
+    trigger:
+      platform: template
+      value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.hall_humidity.last_updated) > 10*60 %}true{% endif %}"
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Hall fukt. Avläsning saknas'
+
+#################
+### Hall temp ###
+#################
+  - alias: Hall temp avläsning saknas
+    trigger:
+      platform: template
+      value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.hall_temperature.last_updated) > 10*60 %}true{% endif %}"
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Hall temp. Avläsning saknas'
+
+################
+### Kyl temp ###
+################
+  - alias: Kyl temp avläsning saknas
+    trigger:
+      platform: template
+      value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.kyl_temperature.last_updated) > 10*60 %}true{% endif %}"
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Kyl temp. Avläsning saknas'
+
+#######################
+### Louise rum fukt ###
+#######################
+  - alias: Louise rum fukt avläsning saknas
+    trigger:
+      platform: template
+      value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.louise_rum_humidity.last_updated) > 10*60 %}true{% endif %}"
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Louise rum fukt. Avläsning saknas'
+
+#######################
+### Louise rum temp ###
+#######################
+  - alias: Louise rum temp avläsning saknas
+    trigger:
+      platform: template
+      value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.louise_rum_temperature.last_updated) > 10*60 %}true{% endif %}"
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Louise rum temp. Avläsning saknas'
+
+##########################
+### På vinden rum temp ###
+##########################
+  - alias: På vinden temp avläsning saknas
+    trigger:
+      platform: template
+      value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.pa_vinden.last_updated) > 10*60 %}true{% endif %}"
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'På vinden temp. Avläsning saknas'
+
+###################
+### Sovrum temp ###
+###################
+  - alias: Sovrum temp avläsning saknas
+    trigger:
+      platform: template
+      value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.sovrum.last_updated) > 10*60 %}true{% endif %}"
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Sovrum temp. Avläsning saknas'
+
+####################
+### Tilluft temp ###
+####################
+  - alias: Tilluft temp avläsning saknas
+    trigger:
+      platform: template
+      value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.tilluft.last_updated) > 10*60 %}true{% endif %}"
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Tilluft temp. Avläsning saknas'
+
+#######################
+### Tvättstuga fukt ###
+#######################
+  - alias: Tvättstuga fukt avläsning saknas
+    trigger:
+      platform: template
+      value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.tvattstuga_humidity.last_updated) > 10*60 %}true{% endif %}"
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Tvättstuga fukt. Avläsning saknas'
+
+#######################
+### Tvättstuga temp ###
+#######################
+  - alias: Tvättstuga temp avläsning saknas
+    trigger:
+      platform: template
+      value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.tvattstuga_temperature.last_updated) > 10*60 %}true{% endif %}"
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Tvättstuga temp. Avläsning saknas'
+
+################
+### Ute temp ###
+################
+  - alias: Ute temp avläsning saknas
+    trigger:
+      platform: template
+      value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.ute.last_updated) > 10*60 %}true{% endif %}"
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Ute temp. Avläsning saknas'
+
+####################
+### Uteluft temp ###
+####################
+  - alias: Uteluft temp avläsning saknas
+    trigger:
+      platform: template
+      value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.uteluft.last_updated) > 10*60 %}true{% endif %}"
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Uteluft temp. Avläsning saknas'
+
+###################
+### Uterum temp ###
+###################
+  - alias: Uterum temp avläsning saknas
+    trigger:
+      platform: template
+      value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.uterum.last_updated) > 10*60 %}true{% endif %}"
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Uterum temp. Avläsning saknas'
+
+#######################
+### Vardagsrum temp ###
+#######################
+  - alias: Vardagsrum temp avläsning saknas
+    trigger:
+      platform: template
+      value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.vardagsrum_temperature.last_updated) > 10*60 %}true{% endif %}"
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Vardagsrum temp. Avläsning saknas'
+
+######################
+### Värmepump temp ###
+######################
+  - alias: Värmepump temp avläsning saknas
+    trigger:
+      platform: template
+      value_template: "{% if as_timestamp(states.sensor.date__time.last_updated) - as_timestamp(states.sensor.varmepump_temperature.last_updated) > 10*60 %}true{% endif %}"
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Värmepump temp. Avläsning saknas'
+
+### Could be used later:
+### sensor.inne_grannen_humidity
+### sensor.inne_grannen_temperature
+### sensor.ljusstyrka
+### sensor.ljusstyrka_flacksta
+### sensor.regnmatare_rain_rate
+### sensor.regnmatare_rain_total
+### sensor.ute2_humidity
+### sensor.ute2_temperature
+

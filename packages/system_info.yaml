@@ -11,9 +11,13 @@ group:
       - group.media_states
       - group.mobile_states
       - group.network_states
-      - group.system_monitor_card_pi_hassbian
-      - group.system_monitor_card_pi_1_wire
-      - group.system_monitor_card_pi_hagaholm
+      - group.system_monitor_card_pi_b_plus
+      - group.system_monitor_card_pi_3b_1
+      - group.system_monitor_card_pi_3b_2
+      - group.system_monitor_card_pi_3b_plus
+      - group.system_monitor_card_pi_4b
+
+####
 
   computer_states:
     name: Dator status
@@ -57,10 +61,34 @@ group:
       - sensor.asuswrt_upload
       - sensor.asuswrt_upload_speed
 
-  system_monitor_card_pi_hassbian:
+  system_monitor_card_pi_b_plus:
+    name: Raspberry Pi B+ (1-Wire)
+    entities:
+      - sensor.raspberry_pi_b_plus
+#      - sensor.raspberry_pi_b_plus_temperature
+
+  system_monitor_card_pi_3b_1:
+    name: Raspberry Pi 3B (Hagaholm)
+    entities:
+      - sensor.raspberry_pi_3b_1
+      - sensor.raspberry_pi_3b_1_temperature
+
+  system_monitor_card_pi_3b_2:
+    name: Raspberry Pi 3B (Lux)
+    entities:
+      - sensor.raspberry_pi_3b_2
+      - sensor.raspberry_pi_3b_2_temperature
+
+  system_monitor_card_pi_3b_plus:
+    name: Raspberry Pi 3B+
+    entities:
+      - sensor.raspberry_pi_3b_plus
+      - sensor.raspberry_pi_3b_plus_temperature
+
+  system_monitor_card_pi_4b:
     name: Raspberry Pi 4B (Hassbian)
     entities:
-      - sensor.hassbian
+      - sensor.raspberry_pi_4b
       - sensor.uptime
       - sensor.cpu_temperature
       - sensor.cpu
@@ -75,24 +103,6 @@ group:
       - sensor.connected_clients
       - sensor.installed_version
       - sensor.current_ha_version
-
-  system_monitor_card_pi_1_wire:
-    name: Raspberry Pi B+ (1-Wire)
-    entities:
-      - sensor.raspberry_pi_b_plus
-#      - sensor.raspberry_pi_b_plus_temperature
-
-  system_monitor_card_pi_hagaholm:
-    name: Raspberry Pi 3B (Hagaholm)
-    entities:
-      - sensor.raspberry_pi_3b
-      - sensor.raspberry_pi_3b_temperature
-
-  system_monitor_card_pi_lux:
-    name: Raspberry Pi 3B (Lux)
-    entities:
-#      - sensor.raspberry_pi_3b
-#      - sensor.raspberry_pi_3b_temperature
  
 ##########
 # Sensor #
@@ -157,14 +167,26 @@ sensor:
     # Sensor #
     ##########
 #  - platform: command_line
-#    name: Raspberry Pi B+ Temperature
+#    name: Raspberry Pi B+ (1-Wire) Temperature
 #    command: ssh pi@192.168.1.12 "cat /sys/class/thermal/thermal_zone0/temp"
 #    unit_of_measurement: "°C"
 #    value_template: '{{ value | multiply(0.001) | round(1) }}'
 
   - platform: command_line
-    name: Raspberry Pi 3B Temperature
+    name: Raspberry Pi 3B 1 Temperature
     command: ssh pi@192.168.1.10 "cat /sys/class/thermal/thermal_zone0/temp"
+    unit_of_measurement: "°C"
+    value_template: '{{ value | multiply(0.001) | round(1) }}'
+
+  - platform: command_line
+    name: Raspberry Pi 3B 2 Temperature
+    command: ssh pi@192.168.1.14 "cat /sys/class/thermal/thermal_zone0/temp"
+    unit_of_measurement: "°C"
+    value_template: '{{ value | multiply(0.001) | round(1) }}'
+
+  - platform: command_line
+    name: Raspberry Pi 3B Plus Temperature
+    command: ssh pi@192.168.1.15 "cat /sys/class/thermal/thermal_zone0/temp"
     unit_of_measurement: "°C"
     value_template: '{{ value | multiply(0.001) | round(1) }}'
 
@@ -230,15 +252,18 @@ sensor:
       raspberry_pi_b_plus:
         friendly_name: 'Raspberry Pi B+ (1-Wire)'
         value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_b_plus', 'home') else 'Offline' }}"
-      raspberry_pi_3b:
-        friendly_name: 'Raspberry Pi 3B (hagaholm)'
-        value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_3b', 'home') else 'Offline' }}"
-      hassbian:
-        friendly_name: 'Raspberry Pi 3B (hassbian)'
-        value_template: "{{ 'Online' if is_state('device_tracker.hassbian', 'home') else 'Offline' }}"
-      hassio:
-        friendly_name: 'Raspberry Pi 3B+ (hassio)'
-        value_template: "{{ 'Online' if is_state('device_tracker.hassio', 'home') else 'Offline' }}"
+      raspberry_pi_3b_1:
+        friendly_name: 'Raspberry Pi 3B (Hagaholm)'
+        value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_3b_1', 'home') else 'Offline' }}"
+      raspberry_pi_3b_2:
+        friendly_name: 'Raspberry Pi 3B (Lux)'
+        value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_3b_2', 'home') else 'Offline' }}"
+      raspberry_pi_3b_plus:
+        friendly_name: 'Raspberry Pi 3B+'
+        value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_3b_plus', 'home') else 'Offline' }}"
+      raspberry_pi_4b:
+        friendly_name: 'Raspberry Pi 4B (Hassbian)'
+        value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_4b', 'home') else 'Offline' }}"
 
     ##########
     # Mobile #
@@ -281,7 +306,7 @@ sensor:
         friendly_name: 'Louise dator'
         value_template: "{{ 'Online' if is_state('device_tracker.louise_dator', 'home') else 'Offline' }}"
       herberts_dator:
-        friendly_name: 'Louise dator'
+        friendly_name: 'Herberts dator'
         value_template: "{{ 'Online' if is_state('device_tracker.herberts_dator', 'home') else 'Offline' }}"
 
 ##############

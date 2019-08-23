@@ -82,17 +82,33 @@ conversation:
 sun:
 
 #---------------------------------------------------
-# Notifier
-#https://home-assistant.io/components/notify.pushetta/
-notify:
-  name: pushbullet
-  platform: pushbullet
-  api_key: !secret pushbullet_api_key
+# Telegram
+# https://www.home-assistant.io/components/telegram/
+# telegram_bot:
+#  - platform: polling
+#    api_key: !secret telegram_api_key
+#    allowed_chat_ids:
+#      - CHAT_ID_1
+#      - CHAT_ID_2
+#      - CHAT_ID_3
 
+#---------------------------------------------------
+# Notifier
+# https://home-assistant.io/components/notify.pushetta/
 #  name: pushetta
 #  platform: pushetta
 #  channel_name: !secret pushetta_channel_name
 #  api_key: !secret pushetta_api_key
+
+#---------------------------------------------------
+notify:
+  - name: pushbullet
+    platform: pushbullet
+    api_key: !secret pushbullet_api_key
+
+#  - name: telegram
+#    platform: telegram
+#    chat_id: CHAT_ID_2
 
 ####################################################
 #                                                  #

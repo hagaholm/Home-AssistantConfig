@@ -343,20 +343,20 @@ automation:
           title: "Hassbian stoppad!"
           message: ""
 
-    ############################
-    ### Hassbian uppdatering ###
-    ### T: updater.updater   ###
-    ### A: notify.pushbullet ###
-    ############################
+    ###############################
+    ### Hassbian uppdatering    ###
+    ### T:binary_sensor.updater ###
+    ### A: notify.pushbullet    ###
+    ###############################
   - alias: Hassbian uppdatering
     trigger:
       - platform: state
-        entity_id: updater.updater
+        entity_id: binary_sensor.updater
     action:
       - service: notify.pushbullet
         data: 
           title: 'Ny Home Assistant Release'
-          message: "Home Assistant {{ states.updater.updater.state }}"
+          message: "Home Assistant {{ sensor.installed_version }} --> {{ sensor.current_ha_version }}"
 
     ####################################
     ### Ny enhet hittad              ###

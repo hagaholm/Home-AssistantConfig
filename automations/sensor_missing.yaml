@@ -1,0 +1,20 @@
+  - alias: Frys - avläsning saknas
+    trigger:
+      - platform: time
+        minutes: '/5'
+        seconds: 06
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.frys_reading_missing_alarm
+          state: 'off'
+        - condition: template
+          value_template: >
+            {{ (as_timestamp(now())-as_timestamp(states.sensor.frys_temperature.last_updated)) > 7200 }}
+    action:
+      - service: homeassistant.turn_on
+        entity_id: input_boolean.frys_reading_missing_alarm
+      - service: notify.pushbullet
+        data:
+          message: 'Frys - ingen avläsning på 2 dagar'

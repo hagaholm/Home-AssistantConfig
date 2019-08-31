@@ -1,8 +1,7 @@
   - alias: Frys - avläsning saknas
     trigger:
-      - platform: time
-        minutes: '/5'
-        seconds: 06
+      - platform: time_pattern
+        minutes: "/5"
     condition:
       condition: and
       conditions:

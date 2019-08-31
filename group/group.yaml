@@ -837,6 +837,7 @@
     name: Extra
     view: yes
     entities:
+      - group.time_to_clean
       - group.xiaomi_vacuum_cleaner
       - group.extra_view_info
       - group.extra_view_ljusstyrka_graph_1_dag
@@ -844,6 +845,17 @@
       - group.extra_view_ljusstyrka_graph_1_timme
       - group.extra_view_diff_graph_6_timmar
       - group.extra_view_diff_graph_1_timme
+
+  time_to_clean:
+    name: Städdags
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - script.kitchen
+      - script.hall
+      - script.tvattstuga
+      - script.uterum
 
   xiaomi_vacuum_cleaner:
     name: Dammsugare

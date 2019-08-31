@@ -79,7 +79,7 @@ sensor:
         unit_of_measurement: 'h'
         entity_id:
           - vacuum.xiaomi_vacuum_cleaner
-        value_template: 'Sensor: {{ states.vacuum.xiaomi_vacuum_cleaner.attributes.sensor_dirty_left }}'
+        value_template: 'Sensor:  {{ states.vacuum.xiaomi_vacuum_cleaner.attributes.sensor_dirty_left }}'
         icon_template: 'mdi:screwdriver'
       vacuum_do_not_disturb:
         friendly_name: Do Not Disturb
@@ -97,3 +97,16 @@ sensor:
         value_template: 'Operation'
       vacuum_accessories:
         value_template: 'Maintenance'
+
+script:
+  - alias: Dammsug köket
+    trigger:
+    - event: start
+      platform: homeassistant
+    condition: []
+    action:
+    - service: vacuum.xiaomi_clean_zone
+      data_template:
+        entity_id: vacuum.xiaomi_vacuum
+        repeats: 1
+        zone: [[30914,26007,35514,28807], [20232,22496,26032,26496]]

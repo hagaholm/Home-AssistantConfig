@@ -107,3 +107,11 @@ script:
           entity_id: vacuum.xiaomi_vacuum_cleaner
           command: app_zoned_clean
           params: [[23851,35758,27801,40258,1]]
+  vacuum_uterum:
+    alias: "Dammsug uterum"
+    sequence:
+      - service: vacuum.send_command
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+          command: app_zoned_clean
+          params: [[32037,29915,35487,36865,1]]

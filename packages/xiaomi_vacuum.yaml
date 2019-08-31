@@ -98,21 +98,12 @@ sensor:
       vacuum_accessories:
         value_template: 'Maintenance'
 
-automation:
-  - alias: Dammsug köket
-    trigger:
-      platform: state
-      entity_id: input_boolean.clean_kitchen
-      to: 'on'
-    condition: []
-    action:
-    - service: vacuum.xiaomi_clean_zone
-      data_template:
-        entity_id: vacuum.xiaomi_vacuum
-        repeats: 1
-        zone: [[23851,35758,27801,40258]]
-
-input_boolean:
-  clean_kitchen:
-    name: Dammsug köket
-    initial: off
+script:
+  vacuum_kitchen:
+    alias: "Dammsug köket"
+    sequence:
+      - service: vacuum.send_command
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+          command: app_zoned_clean
+          params: [[23851,35758,27801,40258,1]]

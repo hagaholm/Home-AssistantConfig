@@ -1,4 +1,4 @@
-﻿history_graph:
+history_graph:
   temp_inne_2_days:
     name: Temperatur inne 2 dagar
     entities:
@@ -36,3 +36,36 @@
       - sensor.ute_grannen
     hours_to_show: 168
     refresh: 1800
+
+  ljusstyrka_ute_1_dag:
+    name: Ljusstyrka ute 1 dag
+    entities:
+      - sensor.ljusstyrka
+      - sensor.ljusstyrka_flacksta
+    hours_to_show: 24
+ 
+  ljusstyrka_ute_6_timmar:
+    name: Ljusstyrka ute 6 timmar
+    entities:
+      - sensor.ljusstyrka
+      - sensor.ljusstyrka_flacksta
+    hours_to_show: 6
+ 
+  ljusstyrka_ute_1_timme:
+    name: Ljusstyrka ute 1 timme
+    entities:
+      - sensor.ljusstyrka
+      - sensor.ljusstyrka_flacksta
+    hours_to_show: 1
+
+  diff_6_timmar:
+    name: Diff 6 timmar
+    entities:
+      - sensor.diff
+    hours_to_show: 6
+
+  diff_1_timme:
+    name: Diff 1 timme
+    entities:
+      - sensor.diff
+    hours_to_show: 1

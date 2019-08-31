@@ -1,14 +1,13 @@
 ﻿    ##############################################################
     ### Extra varning för hög temp i frysen                    ###
-    ### T: sensor.frys_temperature > - 12                      ###
+    ### T: sensor.frys_temperature > - 13                      ###
     ### A: notify.pushbullet "LARM! Varning hög temp i frysen" ###
     ##############################################################
   - alias: Larm! Varning hög temp i frys
-    initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.frys_temperature
-      above: '-12'
+      above: '-13'
     action:
       - service: notify.pushbullet
         data:
@@ -20,15 +19,14 @@
 
     ######################################################
     ### Varnar för hög temp i frysen                   ###
-    ### T: sensor.frys_temperature > - 16              ###
+    ### T: sensor.frys_temperature > - 15              ###
     ### A: notify.pushbullet "LARM! Hög temp i frysen" ###
     ######################################################
   - alias: Larm! Hög temp i frys
-    initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.frys_temperature
-      above: '-16'
+      above: '-15'
     action:
       - service: notify.pushbullet
         data:
@@ -40,7 +38,6 @@
     ### A: notify.pushbullet "LARM! Låg temp i Frys" ###
     ####################################################
   - alias: Larm! Låg temp i frys
-    initial_state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.frys_temperature

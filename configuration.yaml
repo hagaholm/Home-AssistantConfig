@@ -182,9 +182,6 @@ light:
     name: Uterum fotogenlampa
     entity_id: switch.uterum_fotogenlampa
   - platform: switch
-    name: Uterum fotogenlampa
-    entity_id: switch.uterum_fotogenlampa
-  - platform: switch
     name: Uterum led
     entity_id: switch.uterum_led
   - platform: switch
@@ -372,6 +369,21 @@ asuswrt:
     host: 192.168.1.1
     username: admin
     ssh_key: /home/homeassistant/.ssh/id_rsa
+    sensors:
+    - upload
+    - download
+    - upload_speed
+    - download_speed
+####################################################
+#                                                  #
+#                       MQTT                       #
+#                                                  #
+####################################################
+# Add broker used on Raspberry Pi 3B used for lux values 
+# https://www.home-assistant.io/docs/mqtt/broker/
+mqtt:
+  broker: 192.168.1.17
+  port: 1883
 
 ####################################################
 #                                                  #

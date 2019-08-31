@@ -11,9 +11,13 @@ group:
       - group.media_states
       - group.mobile_states
       - group.network_states
-      - group.system_monitor_card_pi_hassbian
-      - group.system_monitor_card_pi_1_wire
-      - group.system_monitor_card_pi_hagaholm
+      - group.system_monitor_card_pi_b_plus
+      - group.system_monitor_card_pi_3b_1
+      - group.system_monitor_card_pi_3b_2
+      - group.system_monitor_card_pi_3b_plus
+      - group.system_monitor_card_pi_4b
+
+####
 
   computer_states:
     name: Dator status
@@ -21,6 +25,7 @@ group:
       - sensor.mickes_laptop
       - sensor.mickes_work_laptop
       - sensor.louise_dator
+      - sensor.herberts_dator
 
   media_states:
     name: Mediaspelare status
@@ -55,47 +60,50 @@ group:
       - sensor.asuswrt_download_speed
       - sensor.asuswrt_upload
       - sensor.asuswrt_upload_speed
-      - sensor.rt_ac68u_bytes_received
-      - sensor.rt_ac68u_bytes_sent
-      - sensor.rt_ac68u_kbyte_sec_received
-      - sensor.rt_ac68u_kbyte_sec_sent
-      - sensor.rt_ac68u_packets_received
-      - sensor.rt_ac68u_packets_sec_received
-      - sensor.rt_ac68u_packets_sec_sent
-      - sensor.rt_ac68u_packets_sent
 
-  system_monitor_card_pi_hassbian:
-    name: Raspberry Pi 3B (hassbian)
+  system_monitor_card_pi_b_plus:
+    name: Raspberry Pi B+ (1-Wire)
     entities:
-      - sensor.hassbian
-      - sensor.cpu_temperature
-      - sensor.cpuspeed
+      - sensor.raspberry_pi_b_plus
+#      - sensor.raspberry_pi_b_plus_temperature
+
+  system_monitor_card_pi_3b_1:
+    name: Raspberry Pi 3B (Hagaholm)
+    entities:
+      - sensor.raspberry_pi_3b_1
+      - sensor.raspberry_pi_3b_1_temperature
+
+  system_monitor_card_pi_3b_2:
+    name: Raspberry Pi 3B (Lux)
+    entities:
+      - sensor.raspberry_pi_3b_2
+      - sensor.raspberry_pi_3b_2_temperature
+
+  system_monitor_card_pi_3b_plus:
+    name: Raspberry Pi 3B+
+    entities:
+      - sensor.raspberry_pi_3b_plus
+      - sensor.raspberry_pi_3b_plus_temperature
+
+  system_monitor_card_pi_4b:
+    name: Raspberry Pi 4B (Hassbian)
+    entities:
+      - sensor.raspberry_pi_4b
       - sensor.uptime
-      - sensor.last_boot
-#      - sensor.since_last_boot
-      - sensor.memory_free
-      - sensor.memory_use_percent
-      - sensor.processor_use
-      - sensor.disk_use_percent
-      - sensor.disk_use_percent_home
-      - sensor.swap_use_percent
+      - sensor.cpu_temperature
+      - sensor.cpu
       - sensor.load_1m
       - sensor.load_5m
       - sensor.load_15m
-      - sensor.websocket_api
-
-  system_monitor_card_pi_1_wire:
-    name: Raspberry Pi 2 (1-Wire)
-    entities:
-      - sensor.raspberry_pi_2
-      - sensor.raspberry_pi_2_temperature
-
-  system_monitor_card_pi_hagaholm:
-    name: Raspberry Pi 3B (hagaholm)
-    entities:
-      - sensor.raspberry_pi_3b
-      - sensor.raspberry_pi_3b_temperature
-
+      - sensor.memory_free
+      - sensor.memory_use_percent
+      - sensor.disk_use_percent_home
+      - sensor.swap_use_percent
+      - sensor.processor_use
+      - sensor.connected_clients
+      - sensor.installed_version
+      - sensor.current_ha_version
+ 
 ##########
 # Sensor #
 ##########
@@ -159,14 +167,26 @@ sensor:
     # Sensor #
     ##########
 #  - platform: command_line
-#    name: Raspberry Pi 2 Temperature
+#    name: Raspberry Pi B+ (1-Wire) Temperature
 #    command: ssh pi@192.168.1.12 "cat /sys/class/thermal/thermal_zone0/temp"
 #    unit_of_measurement: "°C"
 #    value_template: '{{ value | multiply(0.001) | round(1) }}'
 
   - platform: command_line
-    name: Raspberry Pi 3B Temperature
+    name: Raspberry Pi 3B 1 Temperature
     command: ssh pi@192.168.1.10 "cat /sys/class/thermal/thermal_zone0/temp"
+    unit_of_measurement: "°C"
+    value_template: '{{ value | multiply(0.001) | round(1) }}'
+
+  - platform: command_line
+    name: Raspberry Pi 3B 2 Temperature
+    command: ssh pi@192.168.1.14 "cat /sys/class/thermal/thermal_zone0/temp"
+    unit_of_measurement: "°C"
+    value_template: '{{ value | multiply(0.001) | round(1) }}'
+
+  - platform: command_line
+    name: Raspberry Pi 3B Plus Temperature
+    command: ssh pi@192.168.1.15 "cat /sys/class/thermal/thermal_zone0/temp"
     unit_of_measurement: "°C"
     value_template: '{{ value | multiply(0.001) | round(1) }}'
 
@@ -229,18 +249,21 @@ sensor:
     #############
     # Raspberry #
     #############
-      raspberry_pi_2:
-        friendly_name: 'Raspberry Pi 2 (1-Wire)'
-        value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_2', 'home') else 'Offline' }}"
-      raspberry_pi_3b:
-        friendly_name: 'Raspberry Pi 3B (hagaholm)'
-        value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_3b', 'home') else 'Offline' }}"
-      hassbian:
-        friendly_name: 'Raspberry Pi 3B (hassbian)'
-        value_template: "{{ 'Online' if is_state('device_tracker.hassbian', 'home') else 'Offline' }}"
-      hassio:
-        friendly_name: 'Raspberry Pi 3B+ (hassio)'
-        value_template: "{{ 'Online' if is_state('device_tracker.hassio', 'home') else 'Offline' }}"
+      raspberry_pi_b_plus:
+        friendly_name: 'Raspberry Pi B+ (1-Wire)'
+        value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_b_plus', 'home') else 'Offline' }}"
+      raspberry_pi_3b_1:
+        friendly_name: 'Raspberry Pi 3B (Hagaholm)'
+        value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_3b_1', 'home') else 'Offline' }}"
+      raspberry_pi_3b_2:
+        friendly_name: 'Raspberry Pi 3B (Lux)'
+        value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_3b_2', 'home') else 'Offline' }}"
+      raspberry_pi_3b_plus:
+        friendly_name: 'Raspberry Pi 3B+'
+        value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_3b_plus', 'home') else 'Offline' }}"
+      raspberry_pi_4b:
+        friendly_name: 'Raspberry Pi 4B (Hassbian)'
+        value_template: "{{ 'Online' if is_state('device_tracker.raspberry_pi_4b', 'home') else 'Offline' }}"
 
     ##########
     # Mobile #
@@ -283,7 +306,7 @@ sensor:
         friendly_name: 'Louise dator'
         value_template: "{{ 'Online' if is_state('device_tracker.louise_dator', 'home') else 'Offline' }}"
       herberts_dator:
-        friendly_name: 'Louise dator'
+        friendly_name: 'Herberts dator'
         value_template: "{{ 'Online' if is_state('device_tracker.herberts_dator', 'home') else 'Offline' }}"
 
 ##############
@@ -296,7 +319,6 @@ automation:
     ### A: notify.pushbullet     ###
     ################################
   - alias: 'Hassbian startad'
-    initial_state: 'on'
     trigger:
       platform: homeassistant
       event: start
@@ -312,7 +334,6 @@ automation:
     ### A: notify.pushbullet        ###
     ###################################
   - alias: 'Hassbian stoppad'
-    initial_state: 'on'
     trigger:
       platform: homeassistant
       event: shutdown
@@ -322,21 +343,20 @@ automation:
           title: "Hassbian stoppad!"
           message: ""
 
-    ############################
-    ### Hassbian uppdatering ###
-    ### T: updater.updater   ###
-    ### A: notify.pushbullet ###
-    ############################
+    ###############################
+    ### Hassbian uppdatering    ###
+    ### T:binary_sensor.updater ###
+    ### A: notify.pushbullet    ###
+    ###############################
   - alias: Hassbian uppdatering
-    initial_state: 'on'
     trigger:
       - platform: state
-        entity_id: updater.updater
+        entity_id: binary_sensor.updater
     action:
       - service: notify.pushbullet
         data: 
           title: 'Ny Home Assistant Release'
-          message: "Home Assistant {{ states.updater.updater.state }}"
+          message: "Home Assistant {{ sensor.installed_version }} --> {{ sensor.current_ha_version }}"
 
     ####################################
     ### Ny enhet hittad              ###
@@ -344,7 +364,6 @@ automation:
     ### A: notify.pushbullet         ###
     ####################################
   - alias: Ny enhet hittad
-    initial_state: 'on'
     trigger:
       platform: event
       event_type: device_tracker_new_device

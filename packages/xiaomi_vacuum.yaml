@@ -115,6 +115,14 @@ script:
           entity_id: vacuum.xiaomi_vacuum_cleaner
           command: app_zoned_clean
           params: [[27853,38491,31753,40991,1]]
+  vacuum_tvattstuga_matta:
+    alias: "Dammsug mattan i tvättstugan"
+    sequence:
+      - service: vacuum.send_command
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+          command: app_zoned_clean
+          params: [[27903,39379,29453,41029,2]]
   vacuum_hall:
     alias: "Dammsug hall"
     sequence:

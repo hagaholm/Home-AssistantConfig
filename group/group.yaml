@@ -456,6 +456,50 @@
       - switch.ventilationsaggregat
       # Verkningsgrad
 
+####################
+####################
+# View: Dammsugare #
+####################
+####################
+  extra_view:
+    name: Dammsugare
+    view: yes
+    entities:
+      - group.time_to_clean
+      - group.xiaomi_vacuum_cleaner
+
+  time_to_clean:
+    name: Städdags
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - script.vacuum_kitchen
+      - script.vacuum_hall
+      - script.vacuum_tvattstuga
+      - script.vacuum_tvattstuga_matta
+      - script.vacuum_uterum
+
+  xiaomi_vacuum_cleaner:
+    name: Xiaomi S50
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - vacuum.xiaomi_vacuum_cleaner
+      - sensor.vacuum_status
+      - sensor.vacuum_fan_speed
+      - sensor.vacuum_battery
+      - sensor.vacuum_cleaning_time
+      - sensor.vacuum_cleaned_area
+      - sensor.vacuum_cleanmainbrush
+      - sensor.vacuum_cleansidebrush
+      - sensor.vacuum_cleanfilter
+      - sensor.vacuum_sensordirtyleft
+      - sensor.vacuum_do_not_disturb
+      - sensor.vacuum_operation
+      - sensor.vacuum_accessories
+
 ################
 ################
 # View: Grafer #
@@ -837,46 +881,12 @@
     name: Extra
     view: yes
     entities:
-      - group.time_to_clean
-      - group.xiaomi_vacuum_cleaner
       - group.extra_view_info
       - group.extra_view_ljusstyrka_graph_1_dag
       - group.extra_view_ljusstyrka_graph_6_timmar
       - group.extra_view_ljusstyrka_graph_1_timme
       - group.extra_view_diff_graph_6_timmar
       - group.extra_view_diff_graph_1_timme
-
-  time_to_clean:
-    name: Städdags
-    view: no
-    icon: mdi:information-outline
-    control: hidden
-    entities:
-      - script.vacuum_kitchen
-      - script.vacuum_hall
-      - script.vacuum_tvattstuga
-      - script.vacuum_tvattstuga_matta
-      - script.vacuum_uterum
-
-  xiaomi_vacuum_cleaner:
-    name: Dammsugare
-    view: no
-    icon: mdi:information-outline
-    control: hidden
-    entities:
-      - vacuum.xiaomi_vacuum_cleaner
-      - sensor.vacuum_status
-      - sensor.vacuum_fan_speed
-      - sensor.vacuum_battery
-      - sensor.vacuum_cleaning_time
-      - sensor.vacuum_cleaned_area
-      - sensor.vacuum_cleanmainbrush
-      - sensor.vacuum_cleansidebrush
-      - sensor.vacuum_cleanfilter
-      - sensor.vacuum_sensordirtyleft
-      - sensor.vacuum_do_not_disturb
-      - sensor.vacuum_operation
-      - sensor.vacuum_accessories
 
   extra_view_info:
     name: Info

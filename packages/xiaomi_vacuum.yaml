@@ -98,7 +98,7 @@ sensor:
       vacuum_accessories:
         value_template: 'Maintenance'
 
-script:
+automation:
   - alias: Dammsug köket
     trigger:
     - event: start

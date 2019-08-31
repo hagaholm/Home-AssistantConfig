@@ -101,8 +101,9 @@ sensor:
 automation:
   - alias: Dammsug köket
     trigger:
-    - event: start
-      platform: homeassistant
+      platform: state
+      entity_id: input_boolean.clean_kitchen
+      to: 'on'
     condition: []
     action:
     - service: vacuum.xiaomi_clean_zone
@@ -110,3 +111,8 @@ automation:
         entity_id: vacuum.xiaomi_vacuum
         repeats: 1
         zone: [[30914,26007,35514,28807], [20232,22496,26032,26496]]
+
+input_boolean:
+  clean_kitchen:
+    name: Dammsug köket
+    initial: off

@@ -102,11 +102,9 @@ script:
   vacuum_house:
     alias: "Huset"
     sequence:
-      - service: vacuum.send_command
+      - service: vacuum.start
         data:
           entity_id: vacuum.xiaomi_vacuum_cleaner
-          command: app_zoned_clean
-          params: [[23199,24502,36699,41602,1]]
 
   vacuum_kitchen:
     alias: "Köket"

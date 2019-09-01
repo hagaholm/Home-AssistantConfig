@@ -99,40 +99,71 @@ sensor:
         value_template: 'Maintenance'
 
 script:
+  vacuum_house:
+    alias: "Huset"
+    sequence:
+      - service: vacuum.send_command
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+          command: app_zoned_clean
+          params: [[23199,24502,36699,41602,1]]
+
   vacuum_kitchen:
-    alias: "Dammsug köket"
+    alias: "Köket"
     sequence:
       - service: vacuum.send_command
         data:
           entity_id: vacuum.xiaomi_vacuum_cleaner
           command: app_zoned_clean
           params: [[23851,35758,27801,40258,1]]
-  vacuum_tvattstuga:
-    alias: "Dammsug tvättstuga"
+
+  vacuum_kitchen_carpet
+    alias: "Köksmattan"
+    sequence:
+      - service: vacuum.send_command
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+          command: app_zoned_clean
+          params: [[24215,38583,27815,40283,1]]
+
+  vacuum_laundry:
+    alias: "Tvättstugan"
     sequence:
       - service: vacuum.send_command
         data:
           entity_id: vacuum.xiaomi_vacuum_cleaner
           command: app_zoned_clean
           params: [[27853,38491,31753,40991,1]]
-  vacuum_tvattstuga_matta:
-    alias: "Dammsug mattan i tvättstugan"
+
+  vacuum_laundry_carpet:
+    alias: "Mattan i tvättstugan"
     sequence:
       - service: vacuum.send_command
         data:
           entity_id: vacuum.xiaomi_vacuum_cleaner
           command: app_zoned_clean
           params: [[27903,39379,29453,41029,2]]
+
   vacuum_hall:
-    alias: "Dammsug hall"
+    alias: "Hallen"
     sequence:
       - service: vacuum.send_command
         data:
           entity_id: vacuum.xiaomi_vacuum_cleaner
           command: app_zoned_clean
           params: [[27008,26977,28058,32227,1],[23778,32252,28028,34052,1],[26128,34092,27978,35792,1]]
+
+  vacuum_sovrum:
+    alias: "Sovrummet"
+    sequence:
+      - service: vacuum.send_command
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+          command: app_zoned_clean
+          params: [[28167,25130,32167,29130,1]]
+
   vacuum_uterum:
-    alias: "Dammsug uterum"
+    alias: "Uterum"
     sequence:
       - service: vacuum.send_command
         data:

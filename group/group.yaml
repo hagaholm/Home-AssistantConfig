@@ -443,15 +443,17 @@
       - group.xiaomi_vacuum_cleaner
 
   time_to_clean:
-    name: Städdags
+    name: Dammsug
     view: no
     icon: mdi:information-outline
     control: hidden
     entities:
       - script.vacuum_kitchen
+      - script.vacuum_kitchen_carpet
       - script.vacuum_hall
-      - script.vacuum_tvattstuga
-      - script.vacuum_tvattstuga_matta
+      - script.vacuum_laundry
+      - script.vacuum_laundry_carpet
+      - script.vacuum_sovrum
       - script.vacuum_uterum
 
   xiaomi_vacuum_cleaner:

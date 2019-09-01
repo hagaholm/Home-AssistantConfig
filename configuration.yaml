@@ -385,6 +385,10 @@ mqtt:
   broker: 192.168.1.17
   port: 1883
 
+
+volvooncall:
+  username: !secret voc_username
+  password: !secret voc_password
 ####################################################
 #                                                  #
 #            END OF CONFIGURATION FILE             #

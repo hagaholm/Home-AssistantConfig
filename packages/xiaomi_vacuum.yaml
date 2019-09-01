@@ -117,7 +117,7 @@ script:
           command: app_zoned_clean
           params: [[23851,35758,27801,40258,1]]
 
-  vacuum_kitchen_carpet
+  vacuum_kitchen_carpet:
     alias: "Köksmattan"
     sequence:
       - service: vacuum.send_command

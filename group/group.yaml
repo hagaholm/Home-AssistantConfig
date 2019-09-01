@@ -17,8 +17,6 @@
       - group.default_view_info
       - group.default_view_lights_off
       - group.default_view_lights_on
-      - group.default_view_setup
-      - group.default_view_ventilation
 
   default_view_info:
     name: Info
@@ -66,29 +64,6 @@
       - script.kitchen_light_100
       - script.spa_light_on
       - script.away_lights_on
-
-  default_view_setup:
-    name: Inställningar
-    view: no
-    control: hidden
-    entities:
-      - input_select.inside_lights
-      - input_select.kitchen_lights
-      - input_select.uterum_led_lights
-      - input_select.outside_lights
-      - input_boolean.christmas_light
-
-  default_view_ventilation:
-    name: Ventilation badrum
-    view: no
-    icon: mdi:information-outline
-    control: hidden
-    entities:
-      - sensor.badrum_humidity
-      - sensor.fukt_badrumsfonster
-#      - sensor.Forcerad # Fläkt hastighet
-      - switch.fan_speed
-      - switch.ventilationsaggregat
 
 #####################
 #####################
@@ -844,6 +819,8 @@
       - group.extra_view_ljusstyrka_graph_1_timme
       - group.extra_view_diff_graph_6_timmar
       - group.extra_view_diff_graph_1_timme
+      - group.extra_view_setup
+      - group.extra_view_ventilation
 
   extra_view_info:
     name: Info
@@ -893,3 +870,26 @@
     control: hidden
     entities:
       - history_graph.Diff_1_timme
+
+  extra_view_setup:
+    name: Inställningar
+    view: no
+    control: hidden
+    entities:
+      - input_select.inside_lights
+      - input_select.kitchen_lights
+      - input_select.uterum_led_lights
+      - input_select.outside_lights
+      - input_boolean.christmas_light
+
+  extra_view_ventilation:
+    name: Ventilation badrum
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - sensor.badrum_humidity
+      - sensor.fukt_badrumsfonster
+#      - sensor.Forcerad # Fläkt hastighet
+      - switch.fan_speed
+      - switch.ventilationsaggregat

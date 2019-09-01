@@ -169,7 +169,6 @@
     entities:
       - sensor.kyl_temperature
       - sensor.frys_temperature
-      - sensor.forrad_kyl_frys_temperature
 
   temperature_view_other:
     name: Övrigt
@@ -181,6 +180,7 @@
       - sensor.friggebod_humidity
       - sensor.forrad_temperature
       - sensor.forrad_humidity
+      - sensor.garage_temperature
       - sensor.pa_vinden
 
   temperature_view_heater_ventilation:
@@ -429,8 +429,7 @@
     entities:
       - sensor.forrad_temperature
       - sensor.forrad_humidity
-      - sensor.forrad_frys_temperature
-      - switch.forrad_frys
+      - sensor.garage_temperature
       - switch.garage_luftavfuktare_2
 
   outside:
@@ -528,13 +527,11 @@
       - group.automation_mediaplayer
       - group.automation_hassbian
       - group.automation_doorbell
-      - group.automation_forrad_kyl_frys
       - group.automation_garage_air_dryer
       - group.automation_pi_offline
       - group.automation_travel_time
       - group.automation_ikea
       - group.automation_pir
-      - group.automation_sensor
 
   automation_larm:
     name: Larm
@@ -760,52 +757,12 @@
       - automation.ringklocka_tvattstuga
       - automation.ringklocka_hall
 
-  automation_forrad_kyl_frys:
-    name: Förråd kyl/frys - Används ej
-#    control: hidden
-    entities:
-      - automation.larm_hog_temp_i_forrad_kyl
-      - automation.larm_lag_temp_i_forrad_kyl
-      - automation.forrad_frys_off_22
-      - automation.forrad_frys_on_17
-      - automation.larm_forrad_frys_off_23
-      - automation.larm_forrad_frys_on_16
-
   automation_garage_air_dryer:
     name: Garage luftavfuktare
 #    control: hidden
     entities:
       - automation.starta_luftavfuktare
       - automation.stoppa_luftavfuktare
-
-  automation_sensor:
-    name: Sensor avläsning saknas
-    entities:
-      - automation.avluft_avlasning_saknas
-      - automation.badrum_fukt_avlasning_saknas
-      - automation.badrum_temp_avlasning_saknas
-      - automation.forrad_fukt_avlasning_saknas
-      - automation.forrad_temp_avlasning_saknas
-      - automation.forrad_kyl_frys_temp_avlasning_saknas
-      - automation.franluft_temp_avlasning_saknas
-      - automation.friggebod_fukt_avlasning_saknas
-      - automation.friggebod_temp_avlasning_saknas
-      - automation.frys_temp_avlasning_saknas
-      - automation.hall_fukt_avlasning_saknas
-      - automation.hall_temp_avlasning_saknas
-      - automation.kyl_temp_avlasning_saknas
-      - automation.louise_rum_fukt_avlasning_saknas
-      - automation.louise_rum_temp_avlasning_saknas
-      - automation.pa_vinden_temp_avlasning_saknas
-      - automation.sovrum_temp_avlasning_saknas
-      - automation.tilluft_temp_avlasning_saknas
-      - automation.tvattstuga_fukt_avlasning_saknas
-      - automation.tvattstuga_temp_avlasning_saknas
-      - automation.ute_temp_avlasning_saknas
-      - automation.uteluft_temp_avlasning_saknas
-      - automation.uterum_temp_avlasning_saknas
-      - automation.vardagsrum_temp_avlasning_saknas
-      - automation.varmepump_temp_avlasning_saknas
 
 ##############################################################
 

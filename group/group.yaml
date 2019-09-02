@@ -534,6 +534,7 @@
     icon: mdi:home-automation
     entities:
       - group.automation_larm
+      - group.automation_larm_reading
       - group.automation_kitchen_light
       - group.automation_morning_light
       - group.automation_evening_light
@@ -562,8 +563,17 @@
       - automation.larm_rorelse_i_koket
       - automation.blinkar_inne_hem
       - automation.blinkar_ute_hem
-      - automation.frys_avlasning_saknas
+
+  automation_larm_reading:
+    name: Larm avläsningar saknas
+#    control: hidden
+    entities:
       - input_boolean.frys_reading_missing_alarm
+      - input_boolean.kyl_reading_missing_alarm
+      - input_boolean.badrum_reading_missing_alarm
+      - automation.frys_avlasning_saknas
+      - automation.kyl_avlasning_saknas
+      - automation.badrum_avlasning_saknas
 
   automation_kitchen_light:
     name: Köksbelysning

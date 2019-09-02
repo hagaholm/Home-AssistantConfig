@@ -349,21 +349,21 @@ input_select:
 #                     INPUT_NUMBER                 #
 #                                                  #
 ####################################################
-input_number:
-  facade_light_on:
-    name: Fasad belysning on
-    initial: 40
-    min: 1
-    max: 100
-    step: 1
-    mode: box
-  facade_light_off:
-    name: Fasad belysning off
-    initial: 60
-    min: 1
-    max: 100
-    step: 1
-    mode: box
+# input_number:
+  # facade_light_on:
+    # name: Fasad belysning on
+    # initial: 40
+    # min: 1
+    # max: 100
+    # step: 1
+    # mode: box
+  # facade_light_off:
+    # name: Fasad belysning off
+    # initial: 60
+    # min: 1
+    # max: 100
+    # step: 1
+    # mode: box
 
 ####################################################
 #                                                  #
@@ -390,6 +390,10 @@ mqtt:
   broker: 192.168.1.17
   port: 1883
 
+
+volvooncall:
+  username: !secret voc_username
+  password: !secret voc_password
 ####################################################
 #                                                  #
 #            END OF CONFIGURATION FILE             #

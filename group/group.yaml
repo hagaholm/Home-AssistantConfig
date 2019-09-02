@@ -571,9 +571,11 @@
       - input_boolean.frys_reading_missing_alarm
       - input_boolean.kyl_reading_missing_alarm
       - input_boolean.badrum_reading_missing_alarm
+      - input_boolean.tvattstuga_reading_missing_alarm
       - automation.avlasning_saknas_frys
       - automation.avlasning_saknas_kyl
       - automation.avlasning_saknas_badrum
+      - automation.avlasning_saknastvattstuga
 
   automation_kitchen_light:
     name: Köksbelysning

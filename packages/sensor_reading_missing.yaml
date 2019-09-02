@@ -71,7 +71,7 @@ automation:
           state: 'off'
         - condition: template
           value_template: >
-            {{ (as_timestamp(now())-as_timestamp(states.sensor.frys_temperature.last_updated)) > 10 }}
+            {{ (as_timestamp(now())-as_timestamp(states.sensor.frys_temperature.last_updated)) > 120 }}
     action:
       - service: homeassistant.turn_on
         entity_id: input_boolean.frys_reading_missing_alarm
@@ -91,7 +91,7 @@ automation:
           state: 'off'
         - condition: template
           value_template: >
-            {{ (as_timestamp(now())-as_timestamp(states.sensor.kyl_temperature.last_updated)) > 10 }}
+            {{ (as_timestamp(now())-as_timestamp(states.sensor.kyl_temperature.last_updated)) > 120 }}
     action:
       - service: homeassistant.turn_on
         entity_id: input_boolean.kyl_reading_missing_alarm
@@ -113,10 +113,10 @@ automation:
           conditions:
             - condition: template
               value_template: > 
-                {{ (as_timestamp(now())-as_timestamp(states.sensor.badrum_temperature.last_updated)) > 10 }}
+                {{ (as_timestamp(now())-as_timestamp(states.sensor.badrum_temperature.last_updated)) > 720 }}
             - condition: template
               value_template: > 
-                {{ (as_timestamp(now())-as_timestamp(states.sensor.badrum_humidity.last_updated)) > 10 }}
+                {{ (as_timestamp(now())-as_timestamp(states.sensor.badrum_humidity.last_updated)) > 720 }}
     action:
       - service: homeassistant.turn_on
         entity_id: input_boolean.badrum_reading_missing_alarm

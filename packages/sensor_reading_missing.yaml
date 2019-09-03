@@ -111,10 +111,10 @@ automation:
           conditions:
             - condition: template
               value_template: > 
-                {{ (as_timestamp(now())-as_timestamp(states.sensor.badrum_temperature.last_updated)) > 7200 }}
+                {{ (as_timestamp(now())-as_timestamp(states.sensor.badrum_temperature.last_updated)) > 10800 }}
             - condition: template
               value_template: > 
-                {{ (as_timestamp(now())-as_timestamp(states.sensor.badrum_humidity.last_updated)) > 7200 }}
+                {{ (as_timestamp(now())-as_timestamp(states.sensor.badrum_humidity.last_updated)) > 10800 }}
     action:
       - service: homeassistant.turn_on
         entity_id: input_boolean.badrum_reading_missing_alarm
@@ -136,10 +136,10 @@ automation:
           conditions:
             - condition: template
               value_template: > 
-                {{ (as_timestamp(now())-as_timestamp(states.sensor.tvattstuga_temperature.last_updated)) > 7200 }}
+                {{ (as_timestamp(now())-as_timestamp(states.sensor.tvattstuga_temperature.last_updated)) > 10800 }}
             - condition: template
               value_template: > 
-                {{ (as_timestamp(now())-as_timestamp(states.sensor.tvattstuga_humidity.last_updated)) > 7200 }}
+                {{ (as_timestamp(now())-as_timestamp(states.sensor.tvattstuga_humidity.last_updated)) > 10800 }}
     action:
       - service: homeassistant.turn_on
         entity_id: input_boolean.tvattstuga_reading_missing_alarm

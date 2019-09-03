@@ -490,6 +490,7 @@
       - group.grafer_view_temp_graph_ute_7_dagar      
       - group.grafer_view_temp_graph_inne_2_dagar
       - group.grafer_view_temp_graph_inne_7_dagar      
+      - group.grafer_view_alla_tradlosa_2_timmar
 
   grafer_view_temp_graph_ute_2_dagar:
     name: Temperatur
@@ -522,6 +523,14 @@
     control: hidden
     entities:
       - history_graph.temperatur_inne_7_dagar
+
+  grafer_view_temp_graph_inne_7_dagar:
+    name: Temperatur
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - history_graph.alla_sensorer_2_hours
 
 ####################
 ####################

@@ -572,10 +572,22 @@
       - input_boolean.kyl_reading_missing_alarm
       - input_boolean.badrum_reading_missing_alarm
       - input_boolean.tvattstuga_reading_missing_alarm
+      - input_boolean.varmepump_reading_missing_alarm:
+      - input_boolean.vardagsrum_reading_missing_alarm:
+      - input_boolean.hall_reading_missing_alarm:      
+      - input_boolean.forrad_reading_missing_alarm:
+      - input_boolean.garage_reading_missing_alarm:
+      - input_boolean.friggebod_reading_missing_alarm:
       - automation.avlasning_saknas_frys
       - automation.avlasning_saknas_kyl
       - automation.avlasning_saknas_badrum
       - automation.avlasning_saknas_tvattstuga
+      - automation.avlasning_saknas_varmepump
+      - automation.avlasning_saknas_vardagsrum
+      - automation.avlasning_saknas_hall
+      - automation.avlasning_saknas_forrad
+      - automation.avlasning_saknas_garage
+      - automation.avlasning_saknas_friggebod
 
   automation_kitchen_light:
     name: Köksbelysning

@@ -1,0 +1,284 @@
+#Sensorer:
+#Regnmätare
+# Badrum
+#Ute2
+#Louise rum
+# Frys
+# Kyl
+# Tvättstuga
+# Värmepump
+# Förråd
+# Garage
+# Vardagsrum
+# Friggebod
+#Inne grannen
+# Hall
+#På vinden
+#Ute
+#Uterum
+#Sovrum
+#Uteluft
+#Avluft
+#Tilluft
+#Franluft
+#Ljusstyrka
+
+input_boolean:
+  frys_reading_missing_alarm:
+    name: Frys avläsning saknas larm aktiverat
+    initial: off
+  kyl_reading_missing_alarm:
+    name: Kyl avläsning saknas larm aktiverat
+    initial: off
+  badrum_reading_missing_alarm:
+    name: Badrum avläsning saknas larm aktiverat
+    initial: off
+  tvattstuga_reading_missing_alarm:
+    name: Tvättstuga avläsning saknas larm aktiverat
+    initial: off
+  varmepump_reading_missing_alarm:
+    name: Värmepump avläsning saknas larm aktiverat
+    initial: off
+  vardagsrum_reading_missing_alarm:
+    name: Vardagsrum avläsning saknas larm aktiverat
+    initial: off
+  hall_reading_missing_alarm:
+    name: Hall avläsning saknas larm aktiverat
+    initial: off
+  forrad_reading_missing_alarm:
+    name: Förråd avläsning saknas larm aktiverat
+    initial: off
+  garage_reading_missing_alarm:
+    name: Garage avläsning saknas larm aktiverat
+    initial: off
+  friggebod_reading_missing_alarm:
+    name: Friggebod avläsning saknas larm aktiverat
+    initial: off
+
+#########################################################
+automation:
+  - alias: Avläsning saknas, frys
+    trigger:
+      - platform: time_pattern
+        minutes: "/5"
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.frys_reading_missing_alarm
+          state: 'off'
+        - condition: template
+          value_template: >
+            {{ (as_timestamp(now())-as_timestamp(states.sensor.frys_temperature.last_updated)) > 7200 }}
+    action:
+      - service: homeassistant.turn_on
+        entity_id: input_boolean.frys_reading_missing_alarm
+#      - service: notify.pushbullet
+#        data:
+#          message: 'Frys - ingen avläsning på 2 timmar'
+#########################################################
+  - alias: Avläsning saknas, kyl
+    trigger:
+      - platform: time_pattern
+        minutes: "/5"
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.kyl_reading_missing_alarm
+          state: 'off'
+        - condition: template
+          value_template: >
+            {{ (as_timestamp(now())-as_timestamp(states.sensor.kyl_temperature.last_updated)) > 7200 }}
+    action:
+      - service: homeassistant.turn_on
+        entity_id: input_boolean.kyl_reading_missing_alarm
+#      - service: notify.pushbullet
+#        data:
+#          message: 'Kyl - ingen avläsning på 2 timmar'
+#########################################################
+  - alias: Avläsning saknas, badrum
+    trigger:
+      - platform: time_pattern
+        minutes: "/5"
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.badrum_reading_missing_alarm
+          state: 'off'
+        - condition: or
+          conditions:
+            - condition: template
+              value_template: > 
+                {{ (as_timestamp(now())-as_timestamp(states.sensor.badrum_temperature.last_updated)) > 10800 }}
+            - condition: template
+              value_template: > 
+                {{ (as_timestamp(now())-as_timestamp(states.sensor.badrum_humidity.last_updated)) > 10800 }}
+    action:
+      - service: homeassistant.turn_on
+        entity_id: input_boolean.badrum_reading_missing_alarm
+#      - service: notify.pushbullet
+#        data:
+#          message: 'Badrum - ingen avläsning på 2 timmar'
+#########################################################
+  - alias: Avläsning saknas, tvättstuga
+    trigger:
+      - platform: time_pattern
+        minutes: "/5"
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.tvattstuga_reading_missing_alarm
+          state: 'off'
+        - condition: or
+          conditions:
+            - condition: template
+              value_template: > 
+                {{ (as_timestamp(now())-as_timestamp(states.sensor.tvattstuga_temperature.last_updated)) > 10800 }}
+            - condition: template
+              value_template: > 
+                {{ (as_timestamp(now())-as_timestamp(states.sensor.tvattstuga_humidity.last_updated)) > 10800 }}
+    action:
+      - service: homeassistant.turn_on
+        entity_id: input_boolean.tvattstuga_reading_missing_alarm
+#      - service: notify.pushbullet
+#        data:
+#          message: 'Badrum - ingen avläsning på 2 timmar'
+#########################################################
+  - alias: Avläsning saknas, värmepump
+    trigger:
+      - platform: time_pattern
+        minutes: "/5"
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.varmepump_reading_missing_alarm
+          state: 'off'
+        - condition: template
+          value_template: >
+            {{ (as_timestamp(now())-as_timestamp(states.sensor.varmepump_temperature.last_updated)) > 7200 }}
+    action:
+      - service: homeassistant.turn_on
+        entity_id: input_boolean.varmepump_reading_missing_alarm
+#      - service: notify.pushbullet
+#        data:
+#          message: 'Värmepump - ingen avläsning på 2 timmar'
+#########################################################
+  - alias: Avläsning saknas, vardagsrum
+    trigger:
+      - platform: time_pattern
+        minutes: "/5"
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.vardagsrum_reading_missing_alarm
+          state: 'off'
+        - condition: template
+          value_template: >
+            {{ (as_timestamp(now())-as_timestamp(states.sensor.vardagsrum_temperature.last_updated)) > 7200 }}
+    action:
+      - service: homeassistant.turn_on
+        entity_id: input_boolean.vardagsrum_reading_missing_alarm
+#      - service: notify.pushbullet
+#        data:
+#          message: 'Vardagsrum - ingen avläsning på 2 timmar'
+#########################################################
+  - alias: Avläsning saknas, hall
+    trigger:
+      - platform: time_pattern
+        minutes: "/5"
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.hall_reading_missing_alarm
+          state: 'off'
+        - condition: or
+          conditions:
+            - condition: template
+              value_template: > 
+                {{ (as_timestamp(now())-as_timestamp(states.sensor.hall_temperature.last_updated)) > 7200 }}
+            - condition: template
+              value_template: > 
+                {{ (as_timestamp(now())-as_timestamp(states.sensor.hall_humidity.last_updated)) > 7200 }}
+    action:
+      - service: homeassistant.turn_on
+        entity_id: input_boolean.hall_reading_missing_alarm
+#      - service: notify.pushbullet
+#        data:
+#          message: 'Hall - ingen avläsning på 2 timmar'
+#########################################################
+  - alias: Avläsning saknas, förråd
+    trigger:
+      - platform: time_pattern
+        minutes: "/5"
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.forrad_reading_missing_alarm
+          state: 'off'
+        - condition: or
+          conditions:
+            - condition: template
+              value_template: > 
+                {{ (as_timestamp(now())-as_timestamp(states.sensor.forrad_temperature.last_updated)) > 7200 }}
+            - condition: template
+              value_template: > 
+                {{ (as_timestamp(now())-as_timestamp(states.sensor.forrad_humidity.last_updated)) > 7200 }}
+    action:
+      - service: homeassistant.turn_on
+        entity_id: input_boolean.forrad_reading_missing_alarm
+#      - service: notify.pushbullet
+#        data:
+#          message: 'Förråd - ingen avläsning på 2 timmar'
+#########################################################
+  - alias: Avläsning saknas, garage
+    trigger:
+      - platform: time_pattern
+        minutes: "/5"
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.garage_reading_missing_alarm
+          state: 'off'
+        - condition: template
+          value_template: >
+            {{ (as_timestamp(now())-as_timestamp(states.sensor.garage_temperature.last_updated)) > 7200 }}
+    action:
+      - service: homeassistant.turn_on
+        entity_id: input_boolean.garage_reading_missing_alarm
+#      - service: notify.pushbullet
+#        data:
+#          message: 'Garage - ingen avläsning på 2 timmar'
+#########################################################
+  - alias: Avläsning saknas, friggebod
+    trigger:
+      - platform: time_pattern
+        minutes: "/5"
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.friggebod_reading_missing_alarm
+          state: 'off'
+        - condition: or
+          conditions:
+            - condition: template
+              value_template: > 
+                {{ (as_timestamp(now())-as_timestamp(states.sensor.friggebod_temperature.last_updated)) > 7200 }}
+            - condition: template
+              value_template: > 
+                {{ (as_timestamp(now())-as_timestamp(states.sensor.friggebod_humidity.last_updated)) > 7200 }}
+    action:
+      - service: homeassistant.turn_on
+        entity_id: input_boolean.friggebod_reading_missing_alarm
+#      - service: notify.pushbullet
+#        data:
+#          message: 'Friggebod - ingen avläsning på 2 timmar'
+#########################################################

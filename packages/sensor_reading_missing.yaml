@@ -183,7 +183,7 @@ sensor:
             mdi:progress-check
           {% endif %}
 
-     friggebod_temp_lastupdated:
+      friggebod_temp_lastupdated:
         friendly_name: Friggebod temp senast uppdaterad
         value_template: >-
           {{ states.sensor.friggebod_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
@@ -195,7 +195,7 @@ sensor:
             mdi:progress-check
           {% endif %}
 
-     friggebod_fukt_lastupdated:
+      friggebod_fukt_lastupdated:
         friendly_name: Friggebod fukt senast uppdaterad
         value_template: >-
           {{ states.sensor.friggebod_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z

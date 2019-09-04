@@ -27,6 +27,30 @@
 sensor:
   - platform: template
     sensors:
+      frys_temp_lastupdated:
+        friendly_name: Frys temp senast uppdaterad
+        value_template: >-
+          {{ states.sensor.frys_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+        icon_template: >-
+          {% if (as_timestamp(now()) - as_timestamp(states.sensor.frys_temperature.last_updated) > 100) %}
+            mdi:progress-alert
+          {% else %}
+            mdi:progress-check
+          {% endif %}
+
+      kyl_temp_lastupdated:
+        friendly_name: Kyl temp senast uppdaterad
+        value_template: >-
+          {{ states.sensor.kyl_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+        icon_template: >-
+          {% if (as_timestamp(now()) - as_timestamp(states.sensor.kyl_temperature.last_updated) > 100) %}
+            mdi:progress-alert
+          {% else %}
+            mdi:progress-check
+          {% endif %}
+
       badrum_temp_lastupdated:
         friendly_name: Badrum temp senast uppdaterad
         value_template: >-
@@ -38,6 +62,151 @@ sensor:
           {% else %}
             mdi:progress-check
           {% endif %}
+
+      badrum_fukt_lastupdated:
+        friendly_name: Badrum fukt senast uppdaterad
+        value_template: >-
+          {{ states.sensor.badrum_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+        icon_template: >-
+          {% if (as_timestamp(now()) - as_timestamp(states.sensor.badrum_humidity.last_updated) > 100) %}
+            mdi:progress-alert
+          {% else %}
+            mdi:progress-check
+          {% endif %}
+
+      tvattstuga_temp_lastupdated:
+        friendly_name: Tvättstuga temp senast uppdaterad
+        value_template: >-
+          {{ states.sensor.tvattstuga_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+        icon_template: >-
+          {% if (as_timestamp(now()) - as_timestamp(states.sensor.tvattstuga_temperature.last_updated) > 100) %}
+            mdi:progress-alert
+          {% else %}
+            mdi:progress-check
+          {% endif %}
+
+      tvattstuga_fukt_lastupdated:
+        friendly_name: Tvättstuga fukt senast uppdaterad
+        value_template: >-
+          {{ states.sensor.tvattstuga_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+        icon_template: >-
+          {% if (as_timestamp(now()) - as_timestamp(states.sensor.tvattstuga_humidity.last_updated) > 100) %}
+            mdi:progress-alert
+          {% else %}
+            mdi:progress-check
+          {% endif %}
+
+      varmepump_temp_lastupdated:
+        friendly_name: Värmepump temp senast uppdaterad
+        value_template: >-
+          {{ states.sensor.varmepump_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+        icon_template: >-
+          {% if (as_timestamp(now()) - as_timestamp(states.sensor.varmepump_temperature.last_updated) > 100) %}
+            mdi:progress-alert
+          {% else %}
+            mdi:progress-check
+          {% endif %}
+
+      vardagsrum_temp_lastupdated:
+        friendly_name: Vardagsum temp senast uppdaterad
+        value_template: >-
+          {{ states.sensor.vardagsrum_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+        icon_template: >-
+          {% if (as_timestamp(now()) - as_timestamp(states.sensor.vardagsrum_temperature.last_updated) > 100) %}
+            mdi:progress-alert
+          {% else %}
+            mdi:progress-check
+          {% endif %}
+
+      hall_temp_lastupdated:
+        friendly_name: Hall temp senast uppdaterad
+        value_template: >-
+          {{ states.sensor.hall_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+        icon_template: >-
+          {% if (as_timestamp(now()) - as_timestamp(states.sensor.hall_temperature.last_updated) > 100) %}
+            mdi:progress-alert
+          {% else %}
+            mdi:progress-check
+          {% endif %}
+
+      hall_fukt_lastupdated:
+        friendly_name: Hall fukt senast uppdaterad
+        value_template: >-
+          {{ states.sensor.hall_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+        icon_template: >-
+          {% if (as_timestamp(now()) - as_timestamp(states.sensor.hall_humidity.last_updated) > 100) %}
+            mdi:progress-alert
+          {% else %}
+            mdi:progress-check
+          {% endif %}
+
+      forrad_temp_lastupdated:
+        friendly_name: Förråd temp senast uppdaterad
+        value_template: >-
+          {{ states.sensor.forrad_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+        icon_template: >-
+          {% if (as_timestamp(now()) - as_timestamp(states.sensor.forrad_temperature.last_updated) > 100) %}
+            mdi:progress-alert
+          {% else %}
+            mdi:progress-check
+          {% endif %}
+
+      forrad_fukt_lastupdated:
+        friendly_name: Förråd fukt senast uppdaterad
+        value_template: >-
+          {{ states.sensor.forrad_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+        icon_template: >-
+          {% if (as_timestamp(now()) - as_timestamp(states.sensor.forrad_humidity.last_updated) > 100) %}
+            mdi:progress-alert
+          {% else %}
+            mdi:progress-check
+          {% endif %}
+
+      garage_temp_lastupdated:
+        friendly_name: Garage temp senast uppdaterad
+        value_template: >-
+          {{ states.sensor.garage_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+        icon_template: >-
+          {% if (as_timestamp(now()) - as_timestamp(states.sensor.garage_temperature.last_updated) > 100) %}
+            mdi:progress-alert
+          {% else %}
+            mdi:progress-check
+          {% endif %}
+
+     friggebod_temp_lastupdated:
+        friendly_name: Friggebod temp senast uppdaterad
+        value_template: >-
+          {{ states.sensor.friggebod_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+        icon_template: >-
+          {% if (as_timestamp(now()) - as_timestamp(states.sensor.friggebod_temperature.last_updated) > 100) %}
+            mdi:progress-alert
+          {% else %}
+            mdi:progress-check
+          {% endif %}
+
+     friggebod_fukt_lastupdated:
+        friendly_name: Friggebod fukt senast uppdaterad
+        value_template: >-
+          {{ states.sensor.friggebod_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+        icon_template: >-
+          {% if (as_timestamp(now()) - as_timestamp(states.sensor.friggebod_humidity.last_updated) > 100) %}
+            mdi:progress-alert
+          {% else %}
+            mdi:progress-check
+          {% endif %}
+
 #########################################################
 ##############
 # statistics #

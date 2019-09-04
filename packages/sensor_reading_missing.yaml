@@ -23,6 +23,102 @@
 #Franluft
 #Ljusstyrka
 
+#########################################################
+sensor:
+  - platform: template
+    sensors:
+      badrum_temp_lastupdated:
+        friendly_name: Badrum temp senast uppdaterad
+        value_template: >-
+          {{ states.sensor.badrum_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+        icon_template: >-
+          {% if (as_timestamp(now()) - as_timestamp(states.sensor.badrum_temperature.last_updated) > 100) %}
+            mdi:progress-alert
+          {% else %}
+            mdi:progress-check
+          {% endif %}
+#########################################################
+##############
+# statistics #
+##############   
+  - platform: statistics
+    name: Frys temp statistik
+    entity_id: sensor.frys_temperature
+    max_age:
+      hours: 24
+  - platform: statistics
+    name: Kyl temp statistik
+    entity_id: sensor.kyl_temperature
+    max_age:
+      hours: 24
+  - platform: statistics
+    name: Badrum temp statistik
+    entity_id: sensor.badrum_temperature
+    max_age:
+      hours: 24
+  - platform: statistics
+    name: Badrum fuft statistik
+    entity_id: sensor.badrum_humidity
+    max_age:
+      hours: 24
+  - platform: statistics
+    name: Tvättstuga temp statistik
+    entity_id: sensor.tvattstuga_temperature
+    max_age:
+      hours: 24
+  - platform: statistics
+    name: Tvättstuga fukt statistik
+    entity_id: sensor.tvattstuga_humidity
+    max_age:
+      hours: 24
+  - platform: statistics
+    name: Värmepump temp statistik
+    entity_id: sensor.varmepump_temperature
+    max_age:
+      hours: 24
+  - platform: statistics
+    name: Vardagsrum temp statistik
+    entity_id: sensor.vardagsrum_temperature
+    max_age:
+      hours: 24
+  - platform: statistics
+    name: Hall temp statistik
+    entity_id: sensor.hall_temperature
+    max_age:
+      hours: 24
+  - platform: statistics
+    name: Hall fukt statistik
+    entity_id: sensor.hall_humidity
+    max_age:
+      hours: 24
+  - platform: statistics
+    name: Förråd temp statistik
+    entity_id: sensor.forrad_temperature
+    max_age:
+      hours: 24
+  - platform: statistics
+    name: Förråd fukt statistik
+    entity_id: sensor.forrad_humidity
+    max_age:
+      hours: 24
+  - platform: statistics
+    name: Garage temp statistik
+    entity_id: sensor.garage_temperature
+    max_age:
+      hours: 24
+  - platform: statistics
+    name: Friggebod temp statistik
+    entity_id: sensor.friggebod_temperature
+    max_age:
+      hours: 24
+  - platform: statistics
+    name: Friggebod fukt statistik
+    entity_id: sensor.friggebod_humidity
+    max_age:
+      hours: 24
+
+#########################################################
 input_boolean:
   frys_reading_missing_alarm:
     name: Frys avläsning saknas larm aktiverat

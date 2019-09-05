@@ -490,6 +490,7 @@
       - group.grafer_view_temp_graph_ute_7_dagar      
       - group.grafer_view_temp_graph_inne_2_dagar
       - group.grafer_view_temp_graph_inne_7_dagar      
+      - group.grafer_view_alla_tradlosa_2_timmar
 
   grafer_view_temp_graph_ute_2_dagar:
     name: Temperatur
@@ -522,6 +523,14 @@
     control: hidden
     entities:
       - history_graph.temperatur_inne_7_dagar
+
+  grafer_view_temp_graph_inne_7_dagar:
+    name: Temperatur
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - history_graph.alla_tradlosa_sensorer_2_timmar
 
 ####################
 ####################
@@ -842,6 +851,7 @@
     name: Extra
     view: yes
     entities:
+      - group.extra_view_sensor_latest
       - group.extra_view_info
       - group.extra_view_ljusstyrka_graph_1_dag
       - group.extra_view_ljusstyrka_graph_6_timmar
@@ -851,6 +861,28 @@
       - group.extra_view_setup
       - group.extra_view_ventilation
 
+  extra_view_sensor_latest:
+    name: Info
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - sensor.frys_temp_lastupdated
+      - sensor.kyl_temp_lastupdated
+      - sensor.badrum_temp_lastupdated
+      - sensor.badrum_fukt_lastupdated
+      - sensor.tvattstuga_temp_lastupdated
+      - sensor.tvattstuga_fukt_lastupdated
+      - sensor.varmepump_temp_lastupdated
+      - sensor.vardagsrum_temp_lastupdated
+      - sensor.hall_temp_lastupdated
+      - sensor.hall_fukt_lastupdated
+      - sensor.forrad_temp_lastupdated
+      - sensor.forrad_fukt_lastupdated
+      - sensor.garage_temp_lastupdated
+      - sensor.friggebod_temp_lastupdated
+      - sensor.friggebod_fukt_lastupdated
+      
   extra_view_info:
     name: Info
     view: no

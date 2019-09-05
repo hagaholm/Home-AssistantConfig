@@ -37,6 +37,27 @@ history_graph:
     hours_to_show: 168
     refresh: 1800
 
+  alla_sensorer_2_hours:
+    name: Alla trådlösa sensorer 2 timmar
+    entities:
+      - sensor.frys_temperature
+      - sensor.kyl_temperature
+      - sensor.badrum_temperature
+      - sensor.badrum_humidity
+      - sensor.tvattstuga_temperature
+      - sensor.tvattstuga_humidity
+      - sensor.varmepump_temperature
+      - sensor.vardagsrum_temperature
+      - sensor.hall_temperature
+      - sensor.hall_humidity
+      - sensor.forrad_temperature
+      - sensor.forrad_humidity
+      - sensor.garage_temperature
+      - sensor.friggebod_temperature
+      - sensor.friggebod_humidity
+    hours_to_show: 2
+    refresh: 1800
+
   ljusstyrka_ute_1_dag:
     name: Ljusstyrka ute 1 dag
     entities:

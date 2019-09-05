@@ -17,8 +17,6 @@
       - group.default_view_info
       - group.default_view_lights_off
       - group.default_view_lights_on
-      - group.default_view_setup
-      - group.default_view_ventilation
 
   default_view_info:
     name: Info
@@ -66,29 +64,6 @@
       - script.kitchen_light_100
       - script.spa_light_on
       - script.away_lights_on
-
-  default_view_setup:
-    name: Inställningar
-    view: no
-    control: hidden
-    entities:
-      - input_select.inside_lights
-      - input_select.kitchen_lights
-      - input_select.uterum_led_lights
-      - input_select.outside_lights
-      - input_boolean.christmas_light
-
-  default_view_ventilation:
-    name: Ventilation badrum
-    view: no
-    icon: mdi:information-outline
-    control: hidden
-    entities:
-      - sensor.badrum_humidity
-      - sensor.fukt_badrumsfonster
-#      - sensor.Forcerad # Fläkt hastighet
-      - switch.fan_speed
-      - switch.ventilationsaggregat
 
 #####################
 #####################
@@ -169,7 +144,6 @@
     entities:
       - sensor.kyl_temperature
       - sensor.frys_temperature
-      - sensor.forrad_kyl_frys_temperature
 
   temperature_view_other:
     name: Övrigt
@@ -181,6 +155,7 @@
       - sensor.friggebod_humidity
       - sensor.forrad_temperature
       - sensor.forrad_humidity
+      - sensor.garage_temperature
       - sensor.pa_vinden
 
   temperature_view_heater_ventilation:
@@ -429,8 +404,7 @@
     entities:
       - sensor.forrad_temperature
       - sensor.forrad_humidity
-      - sensor.forrad_frys_temperature
-      - switch.forrad_frys
+      - sensor.garage_temperature
       - switch.garage_luftavfuktare_2
 
   outside:
@@ -456,6 +430,53 @@
       - switch.ventilationsaggregat
       # Verkningsgrad
 
+####################
+####################
+# View: Dammsugare #
+####################
+####################
+  cleaner_view:
+    name: Dammsugare
+    view: yes
+    entities:
+      - group.time_to_clean
+      - group.xiaomi_vacuum_cleaner
+
+  time_to_clean:
+    name: Dammsug
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - script.vacuum_house
+      - script.vacuum_kitchen
+      - script.vacuum_kitchen_carpet
+      - script.vacuum_hall
+      - script.vacuum_laundry
+      - script.vacuum_laundry_carpet
+      - script.vacuum_sovrum
+      - script.vacuum_uterum
+
+  xiaomi_vacuum_cleaner:
+    name: Xiaomi S50
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - vacuum.xiaomi_vacuum_cleaner
+      - sensor.vacuum_status
+      - sensor.vacuum_fan_speed
+      - sensor.vacuum_battery
+      - sensor.vacuum_cleaning_time
+      - sensor.vacuum_cleaned_area
+      - sensor.vacuum_cleanmainbrush
+      - sensor.vacuum_cleansidebrush
+      - sensor.vacuum_cleanfilter
+      - sensor.vacuum_sensordirtyleft
+      - sensor.vacuum_do_not_disturb
+      - sensor.vacuum_operation
+      - sensor.vacuum_accessories
+
 ################
 ################
 # View: Grafer #
@@ -469,6 +490,7 @@
       - group.grafer_view_temp_graph_ute_7_dagar      
       - group.grafer_view_temp_graph_inne_2_dagar
       - group.grafer_view_temp_graph_inne_7_dagar      
+      - group.grafer_view_alla_tradlosa_2_timmar
 
   grafer_view_temp_graph_ute_2_dagar:
     name: Temperatur
@@ -502,6 +524,14 @@
     entities:
       - history_graph.temperatur_inne_7_dagar
 
+  grafer_view_temp_graph_inne_7_dagar:
+    name: Temperatur
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - history_graph.alla_tradlosa_sensorer_2_timmar
+
 ####################
 ####################
 # View: Automation #
@@ -513,6 +543,7 @@
     icon: mdi:home-automation
     entities:
       - group.automation_larm
+      - group.automation_larm_reading
       - group.automation_kitchen_light
       - group.automation_morning_light
       - group.automation_evening_light
@@ -528,13 +559,11 @@
       - group.automation_mediaplayer
       - group.automation_hassbian
       - group.automation_doorbell
-      - group.automation_forrad_kyl_frys
       - group.automation_garage_air_dryer
       - group.automation_pi_offline
       - group.automation_travel_time
       - group.automation_ikea
       - group.automation_pir
-      - group.automation_sensor
 
   automation_larm:
     name: Larm
@@ -543,6 +572,31 @@
       - automation.larm_rorelse_i_koket
       - automation.blinkar_inne_hem
       - automation.blinkar_ute_hem
+
+  automation_larm_reading:
+    name: Larm avläsningar saknas
+#    control: hidden
+    entities:
+      - input_boolean.frys_reading_missing_alarm
+      - input_boolean.kyl_reading_missing_alarm
+      - input_boolean.badrum_reading_missing_alarm
+      - input_boolean.tvattstuga_reading_missing_alarm
+      - input_boolean.varmepump_reading_missing_alarm
+      - input_boolean.vardagsrum_reading_missing_alarm
+      - input_boolean.hall_reading_missing_alarm
+      - input_boolean.forrad_reading_missing_alarm
+      - input_boolean.garage_reading_missing_alarm
+      - input_boolean.friggebod_reading_missing_alarm
+      - automation.avlasning_saknas_frys
+      - automation.avlasning_saknas_kyl
+      - automation.avlasning_saknas_badrum
+      - automation.avlasning_saknas_tvattstuga
+      - automation.avlasning_saknas_varmepump
+      - automation.avlasning_saknas_vardagsrum
+      - automation.avlasning_saknas_hall
+      - automation.avlasning_saknas_forrad
+      - automation.avlasning_saknas_garage
+      - automation.avlasning_saknas_friggebod
 
   automation_kitchen_light:
     name: Köksbelysning
@@ -670,10 +724,10 @@
 #    control: hidden
     entities:
       - automation.raspberry_pi_b_1_wire_offline
-      - automation.raspberry_pi_3b_1_offline
-      - automation.raspberry_pi_3b_2_offline
-      - automation.raspberry_pi_3b_plus_offline
-      - automation.raspberry_pi_4b_offline
+      - automation.raspberry_pi_3b_hagaholm_offline
+      - automation.raspberry_pi_3b_lux_offline
+      - automation.raspberry_pi_3b_offline
+      - automation.raspberry_pi_4b_hassbian_offline
 
   automation_travel_time:
     name: Restid till och från jobbet
@@ -760,52 +814,12 @@
       - automation.ringklocka_tvattstuga
       - automation.ringklocka_hall
 
-  automation_forrad_kyl_frys:
-    name: Förråd kyl/frys - Används ej
-#    control: hidden
-    entities:
-      - automation.larm_hog_temp_i_forrad_kyl
-      - automation.larm_lag_temp_i_forrad_kyl
-      - automation.forrad_frys_off_22
-      - automation.forrad_frys_on_17
-      - automation.larm_forrad_frys_off_23
-      - automation.larm_forrad_frys_on_16
-
   automation_garage_air_dryer:
     name: Garage luftavfuktare
 #    control: hidden
     entities:
       - automation.starta_luftavfuktare
       - automation.stoppa_luftavfuktare
-
-  automation_sensor:
-    name: Sensor avläsning saknas
-    entities:
-      - automation.avluft_avlasning_saknas
-      - automation.badrum_fukt_avlasning_saknas
-      - automation.badrum_temp_avlasning_saknas
-      - automation.forrad_fukt_avlasning_saknas
-      - automation.forrad_temp_avlasning_saknas
-      - automation.forrad_kyl_frys_temp_avlasning_saknas
-      - automation.franluft_temp_avlasning_saknas
-      - automation.friggebod_fukt_avlasning_saknas
-      - automation.friggebod_temp_avlasning_saknas
-      - automation.frys_temp_avlasning_saknas
-      - automation.hall_fukt_avlasning_saknas
-      - automation.hall_temp_avlasning_saknas
-      - automation.kyl_temp_avlasning_saknas
-      - automation.louise_rum_fukt_avlasning_saknas
-      - automation.louise_rum_temp_avlasning_saknas
-      - automation.pa_vinden_temp_avlasning_saknas
-      - automation.sovrum_temp_avlasning_saknas
-      - automation.tilluft_temp_avlasning_saknas
-      - automation.tvattstuga_fukt_avlasning_saknas
-      - automation.tvattstuga_temp_avlasning_saknas
-      - automation.ute_temp_avlasning_saknas
-      - automation.uteluft_temp_avlasning_saknas
-      - automation.uterum_temp_avlasning_saknas
-      - automation.vardagsrum_temp_avlasning_saknas
-      - automation.varmepump_temp_avlasning_saknas
 
 ##############################################################
 
@@ -837,13 +851,38 @@
     name: Extra
     view: yes
     entities:
+      - group.extra_view_sensor_latest
       - group.extra_view_info
       - group.extra_view_ljusstyrka_graph_1_dag
       - group.extra_view_ljusstyrka_graph_6_timmar
       - group.extra_view_ljusstyrka_graph_1_timme
       - group.extra_view_diff_graph_6_timmar
       - group.extra_view_diff_graph_1_timme
+      - group.extra_view_setup
+      - group.extra_view_ventilation
 
+  extra_view_sensor_latest:
+    name: Info
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - sensor.frys_temp_lastupdated
+      - sensor.kyl_temp_lastupdated
+      - sensor.badrum_temp_lastupdated
+      - sensor.badrum_fukt_lastupdated
+      - sensor.tvattstuga_temp_lastupdated
+      - sensor.tvattstuga_fukt_lastupdated
+      - sensor.varmepump_temp_lastupdated
+      - sensor.vardagsrum_temp_lastupdated
+      - sensor.hall_temp_lastupdated
+      - sensor.hall_fukt_lastupdated
+      - sensor.forrad_temp_lastupdated
+      - sensor.forrad_fukt_lastupdated
+      - sensor.garage_temp_lastupdated
+      - sensor.friggebod_temp_lastupdated
+      - sensor.friggebod_fukt_lastupdated
+      
   extra_view_info:
     name: Info
     view: no
@@ -892,3 +931,26 @@
     control: hidden
     entities:
       - history_graph.Diff_1_timme
+
+  extra_view_setup:
+    name: Inställningar
+    view: no
+    control: hidden
+    entities:
+      - input_select.inside_lights
+      - input_select.kitchen_lights
+      - input_select.uterum_led_lights
+      - input_select.outside_lights
+      - input_boolean.christmas_light
+
+  extra_view_ventilation:
+    name: Ventilation badrum
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - sensor.badrum_humidity
+      - sensor.fukt_badrumsfonster
+#      - sensor.Forcerad # Fläkt hastighet
+      - switch.fan_speed
+      - switch.ventilationsaggregat

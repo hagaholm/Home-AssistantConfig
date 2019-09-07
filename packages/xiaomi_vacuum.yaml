@@ -106,6 +106,15 @@ script:
         data:
           entity_id: vacuum.xiaomi_vacuum_cleaner
 
+  vacuum_daily:
+    alias: "Dagligen"
+    sequence:
+      - service: vacuum.send_command
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+          command: app_zoned_clean
+          params: [[27008,26977,28058,32227,1],[23778,32252,28028,34052,1],[26128,34092,27978,35792,1],[23851,35758,27801,40258,1],[27903,39379,29453,41029,2]]
+
   vacuum_kitchen:
     alias: "Köket"
     sequence:
@@ -168,3 +177,39 @@ script:
           entity_id: vacuum.xiaomi_vacuum_cleaner
           command: app_zoned_clean
           params: [[32037,29915,35487,36865,1]]
+
+  vacuum_louise_rum:
+    alias: "Louise rum"
+    sequence:
+      - service: vacuum.send_command
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+          command: app_zoned_clean
+          params: [[24011,25173,26861,29373,1]]
+
+  vacuum_andreas_rum:
+    alias: "Andreas rum"
+    sequence:
+      - service: vacuum.send_command
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+          command: app_zoned_clean
+          params: [[28030,29476,31930,31976,1]]
+
+  vacuum_vardagsrum:
+    alias: "Vardagsrum"
+    sequence:
+      - service: vacuum.send_command
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+          command: app_zoned_clean
+          params: [[27928,32039,31928,38639,1]]
+
+  vacuum_toalett:
+    alias: "Toalett"
+    sequence:
+      - service: vacuum.send_command
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+          command: app_zoned_clean
+          params: [[23816,34397,25366,36047,1]]

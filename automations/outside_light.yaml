@@ -224,7 +224,7 @@
           after: '12:00:00'
           before: '21:45:00'
         - condition: state
-          entity_id: light.ight.spabad_vagg
+          entity_id: light.spabad_vagg
           state: 'off'
     action:
       - service: script.spa_light_on

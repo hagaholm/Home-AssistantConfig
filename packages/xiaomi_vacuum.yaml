@@ -169,16 +169,16 @@ script:
           command: app_zoned_clean
           params: [[28167,25130,32167,29130,1]]
 
-  vacuum_uterum:
-    alias: "Till uterum"
-    sequence:
-      - service: vacuum.send_command
-        data:
-          entity_id: vacuum.xiaomi_vacuum_cleaner
-          command: app_zoned_clean
-          params: [[31423,33524,31923,34024,1]]
-      - delay: '00:01:10'
-      - service: vacuum.stop
+#  vacuum_uterum:
+#    alias: "Uterum"
+#    sequence:
+#      - service: vacuum.send_command
+#        data:
+#          entity_id: vacuum.xiaomi_vacuum_cleaner
+#          command: app_zoned_clean
+#          params: [[31423,33524,31923,34024,1]]
+#      - delay: '00:01:10'
+#      - service: vacuum.stop
 
   vacuum_louise_rum:
     alias: "Louise rum"

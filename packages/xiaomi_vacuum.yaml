@@ -220,7 +220,7 @@ automation:
   - alias: Dagligen måndag
     trigger:
       -platform: time
-       at: '10:00:00'
+        at: '10:00:00'
   condition:
     - condition: time
       weekday:

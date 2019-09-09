@@ -221,35 +221,14 @@ automation:
     trigger:
       - platform: time
         at: '10:00:00'
-  condition:
-    - condition: time
-      weekday:
-        - mon
-#        - tue
-#        - wed
-#        - thu
-#        - fri
-  action:
-    - service: script.vacuum_daily
+    condition:
+      - condition: time
+        weekday:
+          - mon
+#          - tue
+#          - wed
+#          - thu
+#          - fri
+    action:
+      - service: script.vacuum_daily
 
-  - alias: Dagligen onsdag
-    trigger:
-      - platform: time
-        at: '10:00:00'
-  condition:
-    - condition: time
-      weekday:
-        - wed
-  action:
-    - service: script.vacuum_daily
-
-  - alias: Dagligen fredag
-    trigger:
-      - platform: time
-        at: '10:00:00'
-  condition:
-    - condition: time
-      weekday:
-        - fri
-  action:
-    - service: script.vacuum_daily        

@@ -51,8 +51,8 @@
           message: 'Lång restid hem. Kontrollera resväg'
 
     ###################################################
-    ### Kör annan väg till SEB (40 km)              ###
-    ### T: sensor.annelie_till_jobbet.distance > 40 ###
+    ### Kör annan väg till SEB (41 km)              ###
+    ### T: sensor.annelie_till_jobbet.distance > 41 ###
     ### C: binary_sensor.workday_today = on         ###
     ###    time = 06:30:00 - 08:30:00               ###
     ### A: notify.pushbullet                        ###
@@ -62,7 +62,7 @@
       platform: numeric_state
       entity_id: sensor.annelie_till_jobbet
       value_template: "{{ state.attributes.distance }}"
-      above: '40'
+      above: '41'
     condition:
       condition: and
       conditions:
@@ -78,8 +78,8 @@
           message: 'Längre sträcka till jobbet. Kontrollera resväg'
 
     #######################################################
-    ### Kör annan väg hem (40 km)                       ###
-    ### T: sensor.annelie_hem_fran_jobbet.distance > 40 ###
+    ### Kör annan väg hem (41 km)                       ###
+    ### T: sensor.annelie_hem_fran_jobbet.distance > 1 ###
     ### C: binary_sensor.workday_today = on             ###
     ###    time = 15:30:00 - 18:30:00                   ###
     ### A: notify.pushbullet                            ###
@@ -89,7 +89,7 @@
       platform: numeric_state
       entity_id: sensor.annelie_hem_fran_jobbet
       value_template: "{{ state.attributes.distance }}"
-      above: '40'
+      above: '41'
     condition:
       condition: and
       conditions:

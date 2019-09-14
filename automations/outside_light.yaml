@@ -209,6 +209,7 @@
     ### Tänder belysning vid Spabad på eftermiddagen      ###
     ### T: sensor.ljusstyrka < 5                          ###
     ### C: 12:00:00 - 21:45:00                            ###
+    ### C: light.ight.spabad_vagg = off                   ###
     ### A: script.night_light                             ###
     #########################################################
   - alias: Spabelysning on (<5)
@@ -217,9 +218,14 @@
       entity_id: sensor.ljusstyrka
       below: 5
     condition:
-      condition: time
-      after: '12:00:00'
-      before: '21:45:00' 
+      condition: and
+      conditions:
+        - condition: time
+          after: '12:00:00'
+          before: '21:45:00'
+        - condition: state
+          entity_id: light.spabad_vagg
+          state: 'off'
     action:
       - service: script.spa_light_on
 

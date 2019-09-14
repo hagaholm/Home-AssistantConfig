@@ -441,6 +441,7 @@
     entities:
       - group.time_to_clean
       - group.xiaomi_vacuum_cleaner
+      - group.automation_cleaner
 
   time_to_clean:
     name: Dammsug
@@ -449,13 +450,18 @@
     control: hidden
     entities:
       - script.vacuum_house
+      - script.vacuum_daily
       - script.vacuum_kitchen
       - script.vacuum_kitchen_carpet
       - script.vacuum_hall
       - script.vacuum_laundry
       - script.vacuum_laundry_carpet
       - script.vacuum_sovrum
-      - script.vacuum_uterum
+      - script.vacuum_louise_rum
+      - script.vacuum_andreas_rum
+      - script.vacuum_vardagsrum
+      - script.vacuum_toalett
+#      - script.vaccum_uterum
 
   xiaomi_vacuum_cleaner:
     name: Xiaomi S50
@@ -476,6 +482,16 @@
       - sensor.vacuum_do_not_disturb
       - sensor.vacuum_operation
       - sensor.vacuum_accessories
+
+  automation_cleaner:
+    name: Automation
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - automation.dagligen_mandag
+      - automation.dagligen_onsdag
+      - automation.dagligen_fredag
 
 ################
 ################

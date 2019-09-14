@@ -106,6 +106,15 @@ script:
         data:
           entity_id: vacuum.xiaomi_vacuum_cleaner
 
+  vacuum_daily:
+    alias: "Dagligen"
+    sequence:
+      - service: vacuum.send_command
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+          command: app_zoned_clean
+          params: [[25006,28117,25706,28617,1],[27008,26977,28058,32227,1],[23778,32252,28028,34052,1],[26128,34092,27978,35792,1],[23851,35758,27801,40258,1],[27903,39379,29453,41029,2]]
+
   vacuum_kitchen:
     alias: "Köket"
     sequence:
@@ -160,11 +169,88 @@ script:
           command: app_zoned_clean
           params: [[28167,25130,32167,29130,1]]
 
-  vacuum_uterum:
-    alias: "Uterum"
+#  vacuum_uterum:
+#    alias: "Uterum"
+#    sequence:
+#      - service: vacuum.send_command
+#        data:
+#          entity_id: vacuum.xiaomi_vacuum_cleaner
+#          command: app_zoned_clean
+#          params: [[31423,33524,31923,34024,1]]
+#      - delay: '00:01:10'
+#      - service: vacuum.stop
+
+  vacuum_louise_rum:
+    alias: "Louise rum"
     sequence:
       - service: vacuum.send_command
         data:
           entity_id: vacuum.xiaomi_vacuum_cleaner
           command: app_zoned_clean
-          params: [[32037,29915,35487,36865,1]]
+          params: [[24011,25173,26861,29373,1]]
+
+  vacuum_andreas_rum:
+    alias: "Andreas rum"
+    sequence:
+      - service: vacuum.send_command
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+          command: app_zoned_clean
+          params: [[28030,29476,31930,31976,1]]
+
+  vacuum_vardagsrum:
+    alias: "Vardagsrum"
+    sequence:
+      - service: vacuum.send_command
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+          command: app_zoned_clean
+          params: [[27928,32039,31928,38639,1]]
+
+  vacuum_toalett:
+    alias: "Toalett"
+    sequence:
+      - service: vacuum.send_command
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+          command: app_zoned_clean
+          params: [[23816,34397,25366,36047,1]]
+
+automation:
+  - alias: Dagligen måndag
+    trigger:
+      - platform: time
+        at: '10:00:00'
+    condition:
+      - condition: time
+        weekday:
+          - mon
+#          - tue
+#          - wed
+#          - thu
+#          - fri
+    action:
+      - service: script.vacuum_daily
+
+  - alias: Dagligen onsdag
+    trigger:
+      - platform: time
+        at: '10:00:00'
+    condition:
+      - condition: time
+        weekday:
+          - wed
+    action:
+      - service: script.vacuum_daily
+
+  - alias: Dagligen fredag
+    trigger:
+      - platform: time
+        at: '10:00:00'
+    condition:
+      - condition: time
+        weekday:
+          - fri
+    action:
+      - service: script.vacuum_daily        
+

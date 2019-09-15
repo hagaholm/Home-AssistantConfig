@@ -186,11 +186,21 @@
     state_topic: "hassbian/tsl2591/full_spectrum"
     unit_of_measurement: ""
 
+### Add for comparing 2 lux sensors
   - platform: template
     sensors:
       diff:
         value_template: '{{(states.sensor.ljusstyrka_flacksta.state | float ) / (states.sensor.ljusstyrka2.state | float)}}'
         unit_of_measurement: "Faktor"
+
+### Added for test of different gain on lux sensor
+  - platform: mqtt
+    name: Ljusstyrka3
+    state_topic: "hassbian/tsl2591/lux_test_value"
+    unit_of_measurement: "lux"
+  - platform: mqtt
+    name: Ljusstyrka4
+    state_topic: "hassbian/tsl2591/lux_test_gain"
 
 ##############
 # statistics #

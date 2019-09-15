@@ -195,11 +195,11 @@
 
 ### Added for test of different gain on lux sensor
   - platform: mqtt
-    name: Ljusstyrka3
+    name: Ljusstyrka Dynamic gain
     state_topic: "hassbian/tsl2591/lux_test_value"
     unit_of_measurement: "lux"
   - platform: mqtt
-    name: Ljusstyrka4
+    name: Gain (MAX, HIGH, MED, LOW)
     state_topic: "hassbian/tsl2591/lux_test_gain"
 
 ##############

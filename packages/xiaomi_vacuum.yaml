@@ -121,9 +121,14 @@ script:
   vacuum_daily:
     alias: "Dagligen"
     sequence:
-      - service: script.turn_on
-        entity_id:
-          - script.vacuum_init
+      - service: vacuum.start
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+      - delay: '00:01:00'
+      - service: vacuum.stop
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+      - delay: '00:00:02'
       - service: vacuum.send_command
         data:
           entity_id: vacuum.xiaomi_vacuum_cleaner

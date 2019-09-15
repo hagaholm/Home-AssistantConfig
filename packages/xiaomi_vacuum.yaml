@@ -112,7 +112,11 @@ script:
       - service: vacuum.start
         data:
           entity_id: vacuum.xiaomi_vacuum_cleaner
-      - delay: '00:01:00'
+      - delay: '00:00:30'
+      - service: vacuum.stop
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+      - delay: '00:00:10'
       - service: vacuum.send_command
         data:
           entity_id: vacuum.xiaomi_vacuum_cleaner

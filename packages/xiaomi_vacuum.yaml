@@ -99,18 +99,6 @@ sensor:
         value_template: 'Maintenance'
 
 script:
-  vacuum_init:
-    alias: "Initiering"
-    sequence:
-      - service: vacuum.start
-        data:
-          entity_id: vacuum.xiaomi_vacuum_cleaner
-      - delay: '00:01:00'
-      - service: vacuum.stop
-        data:
-          entity_id: vacuum.xiaomi_vacuum_cleaner
-      - delay: '00:00:02'
-
   vacuum_house:
     alias: "Huset"
     sequence:
@@ -133,14 +121,19 @@ script:
         data:
           entity_id: vacuum.xiaomi_vacuum_cleaner
           command: app_zoned_clean
-          params: [[27008,26977,28058,32227,1],[23778,32252,28028,34052,1],[26128,34092,27978,35792,1],[23786,36098,27836,40998,1],[27903,39379,29453,41029,2]]
+          params: [[25006,28117,25706,28617,1],[27008,26977,28058,32227,1],[23778,32252,28028,34052,1],[26128,34092,27978,35792,1],[23786,36098,27836,40998,1],[27903,39379,29453,41029,2]]
 
   vacuum_kitchen:
     alias: "Köket"
     sequence:
-      - service: script.turn_on
-        entity_id:
-          - script.vacuum_init
+      - service: vacuum.start
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+      - delay: '00:01:00'
+      - service: vacuum.stop
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+      - delay: '00:00:02'
       - service: vacuum.send_command
         data:
           entity_id: vacuum.xiaomi_vacuum_cleaner
@@ -150,9 +143,14 @@ script:
   vacuum_kitchen_carpet:
     alias: "Köksmattan"
     sequence:
-      - service: script.turn_on
-        entity_id:
-          - script.vacuum_init
+      - service: vacuum.start
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+      - delay: '00:01:00'
+      - service: vacuum.stop
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+      - delay: '00:00:02'
       - service: vacuum.send_command
         data:
           entity_id: vacuum.xiaomi_vacuum_cleaner
@@ -162,9 +160,14 @@ script:
   vacuum_laundry:
     alias: "Tvättstugan"
     sequence:
-      - service: script.turn_on
-        entity_id:
-          - script.vacuum_init
+      - service: vacuum.start
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+      - delay: '00:01:00'
+      - service: vacuum.stop
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+      - delay: '00:00:02'
       - service: vacuum.send_command
         data:
           entity_id: vacuum.xiaomi_vacuum_cleaner
@@ -174,9 +177,14 @@ script:
   vacuum_laundry_carpet:
     alias: "Mattan i tvättstugan"
     sequence:
-      - service: script.turn_on
-        entity_id:
-          - script.vacuum_init
+      - service: vacuum.start
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+      - delay: '00:01:00'
+      - service: vacuum.stop
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+      - delay: '00:00:02'
       - service: vacuum.send_command
         data:
           entity_id: vacuum.xiaomi_vacuum_cleaner
@@ -186,9 +194,14 @@ script:
   vacuum_hall:
     alias: "Hallen"
     sequence:
-      - service: script.turn_on
-        entity_id:
-          - script.vacuum_init
+      - service: vacuum.start
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+      - delay: '00:01:00'
+      - service: vacuum.stop
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+      - delay: '00:00:02'
       - service: vacuum.send_command
         data:
           entity_id: vacuum.xiaomi_vacuum_cleaner
@@ -198,9 +211,14 @@ script:
   vacuum_sovrum:
     alias: "Sovrummet"
     sequence:
-      - service: script.turn_on
-        entity_id:
-          - script.vacuum_init
+      - service: vacuum.start
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+      - delay: '00:01:00'
+      - service: vacuum.stop
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+      - delay: '00:00:02'
       - service: vacuum.send_command
         data:
           entity_id: vacuum.xiaomi_vacuum_cleaner
@@ -221,9 +239,14 @@ script:
   vacuum_louise_rum:
     alias: "Louise rum"
     sequence:
-      - service: script.turn_on
-        entity_id:
-          - script.vacuum_init
+      - service: vacuum.start
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+      - delay: '00:01:00'
+      - service: vacuum.stop
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+      - delay: '00:00:02'
       - service: vacuum.send_command
         data:
           entity_id: vacuum.xiaomi_vacuum_cleaner
@@ -233,9 +256,14 @@ script:
   vacuum_andreas_rum:
     alias: "Andreas rum"
     sequence:
-      - service: script.turn_on
-        entity_id:
-          - script.vacuum_init
+      - service: vacuum.start
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+      - delay: '00:01:00'
+      - service: vacuum.stop
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+      - delay: '00:00:02'
       - service: vacuum.send_command
         data:
           entity_id: vacuum.xiaomi_vacuum_cleaner
@@ -245,9 +273,14 @@ script:
   vacuum_vardagsrum:
     alias: "Vardagsrum"
     sequence:
-      - service: script.turn_on
-        entity_id:
-          - script.vacuum_init
+      - service: vacuum.start
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+      - delay: '00:01:00'
+      - service: vacuum.stop
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+      - delay: '00:00:02'
       - service: vacuum.send_command
         data:
           entity_id: vacuum.xiaomi_vacuum_cleaner
@@ -257,9 +290,13 @@ script:
   vacuum_toalett:
     alias: "Toalett"
     sequence:
-      - service: script.turn_on
-        entity_id:
-          - script.vacuum_init
+      - service: vacuum.start
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+      - delay: '00:01:00'
+      - service: vacuum.stop
+        data:
+          entity_id: vacuum.xiaomi_vacuum_cleaner
       - delay: '00:00:02'
       - service: vacuum.send_command
         data:

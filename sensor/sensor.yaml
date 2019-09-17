@@ -202,6 +202,24 @@
     name: Ljusstyrka4
     state_topic: "hassbian/tsl2591/lux_test_gain"
 
+### Added for mote tests
+  - platform: mqtt
+    name: Ljusstyrka_max
+    state_topic: "hassbian/tsl2591/lux_max"
+    unit_of_measurement: "lux"
+  - platform: mqtt
+    name: Ljusstyrka_high
+    state_topic: "hassbian/tsl2591/lux_high"
+    unit_of_measurement: "lux"
+  - platform: mqtt
+    name: Ljusstyrka_med
+    state_topic: "hassbian/tsl2591/lux_med"
+    unit_of_measurement: "lux"
+  - platform: mqtt
+    name: Ljusstyrka_low
+    state_topic: "hassbian/tsl2591/lux_low"
+    unit_of_measurement: "lux"
+
 ##############
 # statistics #
 ##############   

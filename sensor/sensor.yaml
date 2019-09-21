@@ -193,33 +193,6 @@
         value_template: '{{(states.sensor.ljusstyrka_flacksta.state | float ) / (states.sensor.ljusstyrka2.state | float)}}'
         unit_of_measurement: "Faktor"
 
-### Added for test of different gain on lux sensor
-  - platform: mqtt
-    name: Ljusstyrka3
-    state_topic: "hassbian/tsl2591/lux_test_value"
-    unit_of_measurement: "lux"
-  - platform: mqtt
-    name: Ljusstyrka4
-    state_topic: "hassbian/tsl2591/lux_test_gain"
-
-### Added for mote tests
-  - platform: mqtt
-    name: Ljusstyrka_max
-    state_topic: "hassbian/tsl2591/lux_max"
-    unit_of_measurement: "lux"
-  - platform: mqtt
-    name: Ljusstyrka_high
-    state_topic: "hassbian/tsl2591/lux_high"
-    unit_of_measurement: "lux"
-  - platform: mqtt
-    name: Ljusstyrka_med
-    state_topic: "hassbian/tsl2591/lux_med"
-    unit_of_measurement: "lux"
-  - platform: mqtt
-    name: Ljusstyrka_low
-    state_topic: "hassbian/tsl2591/lux_low"
-    unit_of_measurement: "lux"
-
 ##############
 # statistics #
 ##############   

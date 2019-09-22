@@ -26,7 +26,7 @@ binary_sensor:
 sensor:
   - platform: rest
     name: FR24 Feeder
-    resource: http://<raspberry pi>:8754/monitor.json
+    resource: http:/192.168.1.15:8754/monitor.json
     value_template: '{{ value_json.feed_alias }}'
     method: GET
     scan_interval: 60

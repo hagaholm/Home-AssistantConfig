@@ -53,3 +53,6 @@ sensor:
       fr24_feeder_version:
         friendly_name: Version
         value_template: '{{ states.sensor.fr24_feeder.attributes["build_version"] }}'
+
+  - platform: opensky
+    radius: 10

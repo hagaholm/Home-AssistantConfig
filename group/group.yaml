@@ -867,6 +867,7 @@
     name: Extra
     view: yes
     entities:
+      - group.extra_view_fr24
       - group.extra_view_sensor_latest
       - group.extra_view_info
       - group.extra_view_ljusstyrka_graph_1_dag
@@ -876,6 +877,21 @@
       - group.extra_view_diff_graph_1_timme
       - group.extra_view_setup
       - group.extra_view_ventilation
+
+  extra_view_fr24:
+    name: Flightradar24
+    view: no
+    icon: mdi:airplane
+    control: hidden
+    entities:
+      - binary_sensor.fr24_feeder_link_connected
+      - binary_sensor.fr24_feeder_receiver_connected
+      - sensor.fr24_feeder
+      - sensor.fr24_feeder_aircraft_tracked
+      - sensor.fr24_feeder_aircraft_uploaded
+      - sensor.fr24_feeder_radar_code
+      - sensor.fr24_feeder_version
+      - sensor.opensky
 
   extra_view_sensor_latest:
     name: Info

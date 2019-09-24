@@ -1,7 +1,42 @@
-﻿sensor:
+sensor:
   - platform: trafikverket_weatherstation
     name: Trafikverket Gröndal
     api_key: !secret trafikverket_api
     station: Gröndal
     monitored_conditions:
       - air_temp
+
+## Add only for test
+  - platform: trafikverket_weatherstation
+    name: Trafikverket Kungälv
+    api_key: !secret trafikverket_api
+    station: Kungälv
+    monitored_conditions:
+        - air_temp
+        - road_temp
+        - humidity
+        - precipitation
+        - wind_direction
+        - wind_direction_text
+        - wind_speed
+
+  - platform: trafikverket_weatherstation
+    name: Trafikverket Lanna
+    api_key: !secret trafikverket_api
+    station: Lanna
+    monitored_conditions:
+        - air_temp
+        - road_temp
+        - humidity
+
+  - platform: trafikverket_weatherstation
+    name: Trafikverket Nöbbele
+    api_key: !secret trafikverket_api
+    station: Nöbbele
+    monitored_conditions:
+        - air_temp
+        - road_temp
+        - humidity
+        - precipitation
+        - precipitation_amount
+        - precipitation_amountname

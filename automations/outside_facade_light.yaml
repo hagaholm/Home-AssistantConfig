@@ -8,7 +8,7 @@
     ###    05:00:00 - 12:00:00                                          ###
     ### A: light.friggebod_fasad = on                                   ###
     #######################################################################
-  - alias: Friggebod fasadbelysning on (sensor, <40)
+  - alias: Friggebod fasadbelysning on (sensor on, <40)
     trigger:
       platform: state
       entity_id: input_boolean.rorelsevakt_kok_aktiv

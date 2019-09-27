@@ -186,13 +186,6 @@
     state_topic: "hassbian/tsl2591/full_spectrum"
     unit_of_measurement: ""
 
-### Add for comparing 2 lux sensors
-  - platform: template
-    sensors:
-      diff:
-        value_template: '{{(states.sensor.ljusstyrka_flacksta.state | float ) / (states.sensor.ljusstyrka2.state | float)}}'
-        unit_of_measurement: "Faktor"
-
 ##############
 # statistics #
 ##############   

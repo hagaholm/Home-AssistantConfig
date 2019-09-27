@@ -874,8 +874,6 @@
       - group.extra_view_ljusstyrka_graph_1_dag
       - group.extra_view_ljusstyrka_graph_6_timmar
       - group.extra_view_ljusstyrka_graph_1_timme
-      - group.extra_view_diff_graph_6_timmar
-      - group.extra_view_diff_graph_1_timme
       - group.extra_view_setup
       - group.extra_view_ventilation
 
@@ -949,22 +947,6 @@
     control: hidden
     entities:
       - history_graph.ljusstyrka_ute_1_timme
-
-  extra_view_diff_graph_6_timmar:
-    name: Diff
-    view: no
-    icon: mdi:information-outline
-    control: hidden
-    entities:
-      - history_graph.diff_6_timmar
-
-  extra_view_diff_graph_1_timme:
-    name: Diff
-    view: no
-    icon: mdi:information-outline
-    control: hidden
-    entities:
-      - history_graph.Diff_1_timme
 
   extra_view_setup:
     name: Inställningar

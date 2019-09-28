@@ -1,0 +1,18 @@
+ switch.fjarrkontroll_tvattstuga
+
+automation:
+  - alias: Fjärrkonotroll tvättstuga on
+    trigger:
+      - platform: state
+        entity_id: switch.fjarrkontroll_tvattstuga
+        to: 'on'
+    action:
+      - service: script.evening_lights_on
+
+  - alias: Fjärrkonotroll tvättstuga off
+    trigger:
+      - platform: state
+        entity_id: switch.fjarrkontroll_tvattstuga
+        to: 'off'
+    action:
+      - service: script.evening_lights_off

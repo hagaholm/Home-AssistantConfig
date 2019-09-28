@@ -503,9 +503,12 @@
     view: yes
     entities:
       - group.grafer_view_temp_graph_ute_2_dagar
-      - group.grafer_view_temp_graph_ute_7_dagar      
+      - group.grafer_view_temp_graph_ute_7_dagar
       - group.grafer_view_temp_graph_inne_2_dagar
-      - group.grafer_view_temp_graph_inne_7_dagar      
+      - group.grafer_view_temp_graph_inne_7_dagar
+      - group.grafer_view_ljusstyrka_graph_1_dag
+      - group.grafer_view_ljusstyrka_graph_6_timmar
+      - group.grafer_view_ljusstyrka_graph_1_timme
       - group.grafer_view_alla_tradlosa_2_timmar
 
   grafer_view_temp_graph_ute_2_dagar:
@@ -539,6 +542,30 @@
     control: hidden
     entities:
       - history_graph.temperatur_inne_7_dagar
+
+  grafer_view_ljusstyrka_graph_1_dag:
+    name: Ljusstyrka
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - history_graph.ljusstyrka_ute_1_dag
+
+  grafer_view_ljusstyrka_graph_6_timmar:
+    name: Ljusstyrka
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - history_graph.ljusstyrka_ute_6_timmar
+
+  grafer_view_ljusstyrka_graph_1_timme:
+    name: Ljusstyrka
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - history_graph.ljusstyrka_ute_1_timme
 
   grafer_view_alla_tradlosa_2_timmar:
     name: Temperatur
@@ -871,9 +898,6 @@
       - group.extra_view_fr24
       - group.extra_view_sensor_latest
       - group.extra_view_info
-      - group.extra_view_ljusstyrka_graph_1_dag
-      - group.extra_view_ljusstyrka_graph_6_timmar
-      - group.extra_view_ljusstyrka_graph_1_timme
       - group.extra_view_setup
       - group.extra_view_ventilation
 
@@ -913,7 +937,7 @@
       - sensor.garage_temp_lastupdated
       - sensor.friggebod_temp_lastupdated
       - sensor.friggebod_fukt_lastupdated
-      
+
   extra_view_info:
     name: Info
     view: no
@@ -923,30 +947,6 @@
       - sensor.ljusstyrka
       - sensor.ljusstyrka_flacksta
       - sensor.ljusstyrka2     
-
-  extra_view_ljusstyrka_graph_1_dag:
-    name: Ljusstyrka
-    view: no
-    icon: mdi:information-outline
-    control: hidden
-    entities:
-      - history_graph.ljusstyrka_ute_1_dag
-
-  extra_view_ljusstyrka_graph_6_timmar:
-    name: Ljusstyrka
-    view: no
-    icon: mdi:information-outline
-    control: hidden
-    entities:
-      - history_graph.ljusstyrka_ute_6_timmar
-
-  extra_view_ljusstyrka_graph_1_timme:
-    name: Ljusstyrka
-    view: no
-    icon: mdi:information-outline
-    control: hidden
-    entities:
-      - history_graph.ljusstyrka_ute_1_timme
 
   extra_view_setup:
     name: Inställningar

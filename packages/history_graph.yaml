@@ -1,4 +1,15 @@
 history_graph:
+  temp_inne_1_day:
+    name: Temperatur inne 1 dag
+    entities:
+      - sensor.hall_temperature
+      - sensor.sovrum
+      - sensor.badrum_temperature
+      - sensor.vardagsrum_temperature
+      - sensor.louise_rum_temperature
+    hours_to_show: 24
+    refresh: 1800
+
   temp_inne_2_days:
     name: Temperatur inne 2 dagar
     entities:
@@ -7,14 +18,6 @@ history_graph:
       - sensor.badrum_temperature
       - sensor.vardagsrum_temperature
       - sensor.louise_rum_temperature
-    hours_to_show: 48
-    refresh: 1800
-
-  temp_ute_2_days:
-    name: Temperatur ute 2 dagar
-    entities:
-      - sensor.ute
-      - sensor.ute_grannen
     hours_to_show: 48
     refresh: 1800
 
@@ -27,6 +30,22 @@ history_graph:
       - sensor.vardagsrum_temperature
       - sensor.louise_rum_temperature
     hours_to_show: 168
+    refresh: 1800
+
+  temp_ute_1_day:
+    name: Temperatur ute 1 dag
+    entities:
+      - sensor.ute
+      - sensor.ute_grannen
+    hours_to_show: 48
+    refresh: 1800
+
+  temp_ute_2_days:
+    name: Temperatur ute 2 dagar
+    entities:
+      - sensor.ute
+      - sensor.ute_grannen
+    hours_to_show: 48
     refresh: 1800
 
   temp_ute_7_days:

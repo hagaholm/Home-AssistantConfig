@@ -1,16 +1,17 @@
-﻿#----------------------------------------------------------------------------
+#----------------------------------------------------------------------------
 # https://home-assistant.io/components/logger/
 # Log Severities: notset, debug, info, warn, warning, error, fatal, critical
 #----------------------------------------------------------------------------
-  default: warning #critical
-  logs:
-    # Added to remove some log records at startup
-    homeassistant.components.media_player.squeezebox: fatal
-    homeassistant.components.sensor.mold_indicator: fatal
-    homeassistant.components.sensor: error
-    netdisco.ssdp: error
 
-    # Added to remove: 
-    # WARNING (MainThread) [homeassistant.components.media_player] Updating yamaha media_player took longer than the scheduled update interval 0:00:10
-    homeassistant.components.media_player: warning
+  default: warn
+#  logs:
+#    # Added to remove some log records at startup
+#    homeassistant.components.media_player.squeezebox: fatal
+#    homeassistant.components.sensor.mold_indicator: fatal
+#    homeassistant.components.sensor: error
+#    netdisco.ssdp: error
+
+#    # Added to remove: 
+#    # WARNING (MainThread) [homeassistant.components.media_player] Updating yamaha media_player took longer than the scheduled update interval 0:00:10
+#    homeassistant.components.media_player: warning
 

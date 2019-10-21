@@ -1,6 +1,36 @@
     #################
     ### Friggebod ###
     #################
+    #######################################################################
+    ### Tänder friggebod fasadbelysning på morgonen vid rörelse i köket ###
+    ### T: input_boolean.rorelsevakt_kok_aktiv == on                    ###
+    ### C: sensor.ljusstyrka < 40                                       ###
+    ###    05:00:00 - 12:00:00                                          ###
+    ### A: light.friggebod_fasad = on                                   ###
+    #######################################################################
+  - alias: Friggebod fasadbelysning on (sensor on, <40)
+    trigger:
+      platform: state
+      entity_id: input_boolean.rorelsevakt_kok_aktiv
+      to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: numeric_state
+          entity_id: sensor.ljusstyrka
+          below: 40
+        - condition: state
+          entity_id: light.friggebod_fasad
+          state: 'off'
+        - condition: time
+          after: '05:00:00'
+          before: '12:00:00'
+    action:
+      - service: light.turn_on
+        data:
+          entity_id: light.friggebod_fasad
+          brightness_pct: 30
+
     ##########################################################
     ### Tänder friggebod fasadbelysning när det blir mörkt ###
     ### T: sensor.ljusstyrka < 40                          ###
@@ -51,6 +81,7 @@
     ### Släcker friggebod fasadbelysning när det släcks inne ###
     ### T: light.kok_lilla_fonstret == off                   ###
     ### C: time: 21:00 - 06:00                               ###
+    ###    group.track_for_home_devices = 'home'             ###
     ###    light.friggebod_fasad == on                       ###
     ### A: light.friggebod_fasad = off                       ###
     ############################################################
@@ -65,6 +96,9 @@
         - condition: time
           after: '21:00:00'
           before: '06:00:00'
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'home'
         - condition: state
           entity_id: light.friggebod_fasad
           state: 'on'

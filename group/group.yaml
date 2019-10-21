@@ -31,7 +31,6 @@
       - sensor.ute
       - sensor.uterum
       - sensor.inne_medel
-      - sensor.friggebod_temperature
       - sensor.ljusstyrka
 
   default_view_lights_off:
@@ -502,11 +501,48 @@
     name: Grafer
     view: yes
     entities:
-      - group.grafer_view_temp_graph_ute_2_dagar
-      - group.grafer_view_temp_graph_ute_7_dagar      
+      - group.grafer_view_temp_graph_inne_1_dag
       - group.grafer_view_temp_graph_inne_2_dagar
-      - group.grafer_view_temp_graph_inne_7_dagar      
+      - group.grafer_view_temp_graph_inne_7_dagar
+      - group.grafer_view_temp_graph_ute_1_dag
+      - group.grafer_view_temp_graph_ute_2_dagar
+      - group.grafer_view_temp_graph_ute_7_dagar
+      - group.grafer_view_ljusstyrka_graph_1_dag
+      - group.grafer_view_ljusstyrka_graph_6_timmar
+      - group.grafer_view_ljusstyrka_graph_1_timme
       - group.grafer_view_alla_tradlosa_2_timmar
+
+  grafer_view_temp_graph_inne_1_dag:
+    name: Temperatur
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - history_graph.temperatur_inne_1_dag
+
+  grafer_view_temp_graph_inne_2_dagar:
+    name: Temperatur
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - history_graph.temperatur_inne_2_dagar
+
+  grafer_view_temp_graph_inne_7_dagar:
+    name: Temperatur
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - history_graph.temperatur_inne_7_dagar
+
+  grafer_view_temp_graph_ute_1_dag:
+    name: Temperatur
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - history_graph.temperatur_ute_1_dag
 
   grafer_view_temp_graph_ute_2_dagar:
     name: Temperatur
@@ -524,21 +560,29 @@
     entities:
       - history_graph.temperatur_ute_7_dagar
 
-  grafer_view_temp_graph_inne_2_dagar:
-    name: Temperatur
+  grafer_view_ljusstyrka_graph_1_dag:
+    name: Ljusstyrka
     view: no
     icon: mdi:information-outline
     control: hidden
     entities:
-      - history_graph.temperatur_inne_2_dagar
+      - history_graph.ljusstyrka_ute_1_dag
 
-  grafer_view_temp_graph_inne_7_dagar:
-    name: Temperatur
+  grafer_view_ljusstyrka_graph_6_timmar:
+    name: Ljusstyrka
     view: no
     icon: mdi:information-outline
     control: hidden
     entities:
-      - history_graph.temperatur_inne_7_dagar
+      - history_graph.ljusstyrka_ute_6_timmar
+
+  grafer_view_ljusstyrka_graph_1_timme:
+    name: Ljusstyrka
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - history_graph.ljusstyrka_ute_1_timme
 
   grafer_view_alla_tradlosa_2_timmar:
     name: Temperatur
@@ -706,6 +750,7 @@
     name: Fasadbelysning
 #    control: hidden
     entities:
+      - automation.friggebod_fasadbelysning_on_sensor_on_40
       - automation.friggebod_fasadbelysning_on_40
       - automation.forrad_fasadbelysning_on_40_led_off
       - automation.forrad_fasadbelysning_on_led_off_40
@@ -867,15 +912,26 @@
     name: Extra
     view: yes
     entities:
+      - group.extra_view_fr24
       - group.extra_view_sensor_latest
       - group.extra_view_info
-      - group.extra_view_ljusstyrka_graph_1_dag
-      - group.extra_view_ljusstyrka_graph_6_timmar
-      - group.extra_view_ljusstyrka_graph_1_timme
-      - group.extra_view_diff_graph_6_timmar
-      - group.extra_view_diff_graph_1_timme
       - group.extra_view_setup
       - group.extra_view_ventilation
+
+  extra_view_fr24:
+    name: Flightradar24
+    view: no
+    icon: mdi:airplane
+    control: hidden
+    entities:
+      - binary_sensor.fr24_feeder_link_connected
+      - binary_sensor.fr24_feeder_receiver_connected
+      - sensor.fr24_feeder
+      - sensor.fr24_feeder_aircraft_tracked
+      - sensor.fr24_feeder_aircraft_uploaded
+      - sensor.fr24_feeder_radar_code
+      - sensor.fr24_feeder_version
+      - sensor.opensky
 
   extra_view_sensor_latest:
     name: Info
@@ -898,7 +954,7 @@
       - sensor.garage_temp_lastupdated
       - sensor.friggebod_temp_lastupdated
       - sensor.friggebod_fukt_lastupdated
-      
+
   extra_view_info:
     name: Info
     view: no
@@ -908,46 +964,6 @@
       - sensor.ljusstyrka
       - sensor.ljusstyrka_flacksta
       - sensor.ljusstyrka2     
-
-  extra_view_ljusstyrka_graph_1_dag:
-    name: Ljusstyrka
-    view: no
-    icon: mdi:information-outline
-    control: hidden
-    entities:
-      - history_graph.ljusstyrka_ute_1_dag
-
-  extra_view_ljusstyrka_graph_6_timmar:
-    name: Ljusstyrka
-    view: no
-    icon: mdi:information-outline
-    control: hidden
-    entities:
-      - history_graph.ljusstyrka_ute_6_timmar
-
-  extra_view_ljusstyrka_graph_1_timme:
-    name: Ljusstyrka
-    view: no
-    icon: mdi:information-outline
-    control: hidden
-    entities:
-      - history_graph.ljusstyrka_ute_1_timme
-
-  extra_view_diff_graph_6_timmar:
-    name: Diff
-    view: no
-    icon: mdi:information-outline
-    control: hidden
-    entities:
-      - history_graph.diff_6_timmar
-
-  extra_view_diff_graph_1_timme:
-    name: Diff
-    view: no
-    icon: mdi:information-outline
-    control: hidden
-    entities:
-      - history_graph.Diff_1_timme
 
   extra_view_setup:
     name: Inställningar

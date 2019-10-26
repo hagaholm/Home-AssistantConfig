@@ -39,7 +39,7 @@
           brightness_pct: 40
       - service: light.turn_on
         data:
-          entity_id: light.vardagsrum_fonster_dimmer
+          entity_id: light.vardagsrum_fonster
           brightness_pct: 50
       - service: light.turn_on
         data:
@@ -81,7 +81,7 @@
       # Updated
       - service: light.turn_on
         data:
-          entity_id: light.vardagsrum_fonster_dimmer
+          entity_id: light.vardagsrum_fonster
           brightness_pct: 100
       - service: light.turn_on
         data:

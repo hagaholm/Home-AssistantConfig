@@ -29,7 +29,7 @@
         entity_id: light.louise_fonster
       - service: light.turn_on
         data:
-          entity_id: light.hall_byra_dimmer
+          entity_id: light.hall_byra
           brightness_pct: 40
       - service: light.turn_on
         data:
@@ -59,7 +59,7 @@
       # Updated
       - service: light.turn_on
         data:
-          entity_id: light.hall_byra_dimmer
+          entity_id: light.hall_byra
           brightness_pct: 75
       # Updated
       - service: light.turn_on

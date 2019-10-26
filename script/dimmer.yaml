@@ -3,7 +3,7 @@
     sequence:
       - service: light.turn_on
         data:
-          entity_id: light.vardagsrum_skank_dimmer
+          entity_id: light.vardagsrum_skank
           brightness_pct: 100
       - service: light.turn_on
         data:
@@ -19,7 +19,7 @@
     sequence:
       - service: light.turn_on
         data:
-          entity_id: light.vardagsrum_skank_dimmer
+          entity_id: light.vardagsrum_skank
           brightness_pct: 75
       - service: light.turn_on
         data:
@@ -35,7 +35,7 @@
     sequence:
       - service: light.turn_on
         data:
-          entity_id: light.vardagsrum_skank_dimmer
+          entity_id: light.vardagsrum_skank
           brightness_pct: 50
       - service: light.turn_on
         data:
@@ -50,7 +50,7 @@
     alias: Tv lampor off
     sequence:
       - service: light.turn_off
-        entity_id: light.vardagsrum_skank_dimmer
+        entity_id: light.vardagsrum_skank
       - service: light.turn_off
         entity_id: light.vardagsrum_fonster_dimmer
       - service: light.turn_off

@@ -28,20 +28,20 @@
         data:
           message: 'Ingen kontakt med friggebod fasadbelysning'
 
-    #######################################################
-    ### Ingen kontakt med vardagsrum skänk dimmer       ###
-    ### T: light.vardagsrum_skank_dimmer == unavailable ###
-    ### A: notify.pushbullet                            ###
-    #######################################################
-  - alias: Ingen kontakt med vardagsrum skänk dimmer
+    ################################################
+    ### Ingen kontakt med vardagsrum skänk       ###
+    ### T: light.vardagsrum_skank == unavailable ###
+    ### A: notify.pushbullet                     ###
+    ################################################
+  - alias: Ingen kontakt med vardagsrum skänk
     trigger:
       platform: state
-      entity_id: light.vardagsrum_skank_dimmer
+      entity_id: light.vardagsrum_skank
       to: 'unavailable'
     action:
       - service: notify.pushbullet
         data:
-          message: 'Ingen kontakt med vardagsrum skänk dimmer'
+          message: 'Ingen kontakt med vardagsrum skänk'
 
     ##############################################
     ### Ingen kontakt med uterum fönster       ###
@@ -137,20 +137,20 @@
         data:
           message: 'Kontakt med friggebod fasadbelysning'
 
-    #######################################################
-    ### Kontakt med vardagsrum skänk dimmer             ###
-    ### T: light.vardagsrum_skank_dimmer != unavailable ###
-    ### A: notify.pushbullet                            ###
-    #######################################################
-  - alias: Kontakt med vardagsrum skänk dimmer
+    ################################################
+    ### Kontakt med vardagsrum skänk             ###
+    ### T: light.vardagsrum_skank != unavailable ###
+    ### A: notify.pushbullet                     ###
+    ################################################
+  - alias: Kontakt med vardagsrum skänk
     trigger:
       platform: state
-      entity_id: light.vardagsrum_skank_dimmer
+      entity_id: light.vardagsrum_skank
       from: 'unavailable'
     action:
       - service: notify.pushbullet
         data:
-          message: 'Kontakt med vardagsrum skänk dimmer'
+          message: 'Kontakt med vardagsrum skänk
 
     ##############################################
     ### Kontakt med uterum fönster             ###

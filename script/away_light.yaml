@@ -20,7 +20,9 @@
     alias: Bortabelysning default on
     sequence:
       - service: light.turn_on
-        entity_id: light.kok_stora_fonstret
+        data:
+          entity_id: light.kok_stora_fonstret
+          brightness_pct: 50
       - service: light.turn_on
         entity_id: light.kok_lilla_fonstret
       - service: light.turn_on
@@ -57,9 +59,7 @@
       - service: light.turn_on
         entity_id: light.andreas_fonster
       - service: light.turn_on
-        data:
-          entity_id: light.louise_fonster
-          brightness_pct: 50
+        entity_id: light.louise_fonster
       # Updated
       - service: light.turn_on
         data:

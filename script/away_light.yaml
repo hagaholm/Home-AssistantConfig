@@ -26,7 +26,9 @@
       - service: light.turn_on
         entity_id: light.sovrum_fonster
       - service: light.turn_on
-        entity_id: light.louise_fonster
+        data:
+          entity_id: light.louise_fonster
+          brightness_pct: 50
       - service: light.turn_on
         data:
           entity_id: light.hall_byra
@@ -55,7 +57,9 @@
       - service: light.turn_on
         entity_id: light.andreas_fonster
       - service: light.turn_on
-        entity_id: light.louise_fonster
+        data:
+          entity_id: light.louise_fonster
+          brightness_pct: 50
       # Updated
       - service: light.turn_on
         data:

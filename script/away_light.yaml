@@ -21,7 +21,7 @@
     sequence:
       - service: light.turn_on
         data:
-          entity_id: light.kok_stora_fonstret
+          entity_id: light.kok_stora_fonstret_2
           brightness_pct: 50
       - service: light.turn_on
         entity_id: light.kok_lilla_fonstret
@@ -51,7 +51,7 @@
     alias: Bortajulbelysning on
     sequence:
       - service: light.turn_on
-        entity_id: light.kok_stora_fonstret
+        entity_id: light.kok_stora_fonstret_2
       - service: light.turn_on
         entity_id: light.kok_lilla_fonstret
       - service: light.turn_on

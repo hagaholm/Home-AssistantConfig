@@ -5,7 +5,9 @@
     alias: Städbelysning on
     sequence:
       - service: light.turn_on
-        entity_id: light.kok_stora_fonstret
+        data:
+          entity_id: light.kok_stora_fonstret_2
+          brightness_pct: 100
       - service: light.turn_on
         entity_id: light.kok_lilla_fonstret
       - service: light.turn_on
@@ -17,18 +19,20 @@
       - service: light.turn_on
         entity_id: light.andreas_fonster
       - service: light.turn_on
-        entity_id: light.louise_fonster
-      - service: light.turn_on
         data:
-          entity_id: light.hall_byra_dimmer
+          entity_id: light.louise_fonster
           brightness_pct: 100
       - service: light.turn_on
         data:
-          entity_id: light.vardagsrum_fonster_dimmer
+          entity_id: light.hall_byra
           brightness_pct: 100
       - service: light.turn_on
         data:
-          entity_id: light.vardagsrum_skank_dimmer
+          entity_id: light.vardagsrum_fonster
+          brightness_pct: 100
+      - service: light.turn_on
+        data:
+          entity_id: light.vardagsrum_skank
           brightness_pct: 100
       - service: light.turn_on
         data:

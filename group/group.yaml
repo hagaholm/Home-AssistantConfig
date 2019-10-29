@@ -203,10 +203,10 @@
     name: Morgonbelysning
     view: no
     entities:
-      - light.kok_stora_fonstret
+      - light.kok_stora_fonstret_2
       - light.kok_lilla_fonstret
-      - light.hall_byra_dimmer
-      - light.vardagsrum_fonster_dimmer
+      - light.hall_byra
+      - light.vardagsrum_fonster
       - light.vardagsrum_gran
       - light.uterum_fonster
 
@@ -214,12 +214,12 @@
     name: Kvällsbelysning
     view: no
     entities:
-      - light.kok_stora_fonstret
+      - light.kok_stora_fonstret_2
       - light.kok_lilla_fonstret
-      - light.hall_byra_dimmer
+      - light.hall_byra
       - light.hall_skap
-      - light.vardagsrum_fonster_dimmer
-      - light.vardagsrum_skank_dimmer
+      - light.vardagsrum_fonster
+      - light.vardagsrum_skank
       - light.vardagsrum_vitrinskap
       - light.vardagsrum_gran
       - light.sovrum_fonster
@@ -231,8 +231,8 @@
     name: Nattbelysning
     view: no
     entities:
-      - light.hall_byra_dimmer
-      - light.vardagsrum_fonster_dimmer
+      - light.hall_byra
+      - light.vardagsrum_fonster
       - timer.timer_rorelsevakt_kok_short
 
   uterums:
@@ -257,10 +257,10 @@
     name: Bortabelysning
     view: no
     entities:
-      - light.kok_stora_fonstret
+      - light.kok_stora_fonstret_2
       - light.kok_lilla_fonstret
-      - light.hall_byra_dimmer
-      - light.vardagsrum_fonster_dimmer
+      - light.hall_byra
+      - light.vardagsrum_fonster
       - light.sovrum_fonster
       - light.louise_fonster
       - light.uterum_fonster
@@ -298,7 +298,7 @@
       #- sensor.kyl_humidity # Onödigt att visa, kanska kan larma om ovanligt värde
       - sensor.frys_temperature
       #- sensor.frys_humidity # Onödigt att visa, kanska kan larma om ovanligt värde
-      - light.kok_stora_fonstret
+      - light.kok_stora_fonstret_2
       - light.kok_lilla_fonstret
       - light.kok_underskap_bank
       - light.kok_underskap_diskbank
@@ -312,7 +312,7 @@
     entities:
       - sensor.hall_temperature
       - sensor.hall_humidity
-      - light.hall_byra_dimmer
+      - light.hall_byra
       - light.hall_skap
 
   laundry:
@@ -328,8 +328,8 @@
     view: no
     entities:
       - sensor.vardagsrum_temperature
-      - light.vardagsrum_fonster_dimmer
-      - light.vardagsrum_skank_dimmer
+      - light.vardagsrum_fonster
+      - light.vardagsrum_skank
       - light.vardagsrum_vitrinskap
       - light.vardagsrum_gran
       - switch.vardagsrum_stereobank
@@ -809,14 +809,14 @@
       - automation.ingen_kontakt_med_friggebod_fasadbelysning
       - automation.ingen_kontakt_med_garage_avfuktare
       - automation.ingen_kontakt_med_uterum_fonster
-      - automation.ingen_kontakt_med_vardagsrum_skank_dimmer
+      - automation.ingen_kontakt_med_vardagsrum_skank
       - automation.kontakt_med_forrad_fasadbelysning
       - automation.kontakt_med_fotogenlampa_i_uterum
       - automation.kontakt_med_friggebod_brytare_vid_stora_fonstret
       - automation.kontakt_med_friggebod_fasadbelysning
       - automation.kontakt_med_garage_avfuktare
       - automation.kontakt_med_uterum_fonster
-      - automation.kontakt_med_vardagsrum_skank_dimmer
+      - automation.kontakt_med_vardagsrum_skank
 
   automation_pir:
     name: Rörelsedetektor i kök

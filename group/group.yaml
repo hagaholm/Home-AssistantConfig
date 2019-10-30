@@ -198,6 +198,7 @@
       - light.kok_vitrinskap
       - input_boolean.rorelsevakt_aktiv
       - timer.timer_rorelsevakt_1_medium
+      - timer.timer_rorelsevakt_2_medium
 
   morning_lights:
     name: Morgonbelysning
@@ -234,6 +235,7 @@
       - light.hall_byra
       - light.vardagsrum_fonster
       - timer.timer_rorelsevakt_1_short
+      - timer.timer_rorelsevakt_2_short
 
   uterums:
     name: Uterum
@@ -822,7 +824,8 @@
     name: Rörelsedetektor i kök
 #    control: hidden
     entities:
-      - automation.startar_timers
+      - automation.startar_timers_1
+      - automation.startar_timers_2
       - automation.stanger_av_rorelsevakt_aktiv_for_nattbelysning
       - automation.stanger_av_rorelsevakt_aktiv_om_aktiv
 

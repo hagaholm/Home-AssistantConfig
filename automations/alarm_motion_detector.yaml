@@ -1,13 +1,13 @@
 ﻿    ##################################################################
     ### Skickar notification vid rörelse i köket om ingen är hemma ###
-    ### T: switch.rorelsevakt_kok == on                            ###
+    ### T: switch.rorelsevakt_1 == on                              ###
     ### C: group.track_for_home_devices == not_home                ###
     ### A: notify                                                  ###
     ##################################################################
   - alias: Larm rörelse i köket
     trigger:
       platform: state
-      entity_id: switch.rorelsevakt_kok
+      entity_id: switch.rorelsevakt_1
       to: 'on'
     condition:
       condition: state

@@ -57,7 +57,7 @@
     ### Tänder lampor vid rörelse i köket övrigt tid     ###
     ### Används för att snabba på upptändning när första ###
     ### kommer hem innan status ändrats till 'hemma'     ###
-    ### T: input_boolean.rorelsevakt_kok_aktiv == on     ###
+    ### T: input_boolean.rorelsevakt_1_aktiv == on       ###
     ### C: group.track_for_home_devices == 'not_home'    ###
     ###    sensor.ljusstyrka < 1800                      ###
     ###    12:00:00 - 05:00:00                           ###
@@ -66,7 +66,7 @@
   - alias: Kvällsbelysning on (sensor on, borta, <1800)
     trigger:
       platform: state
-      entity_id: input_boolean.rorelsevakt_kok_aktiv
+      entity_id: input_boolean.rorelsevakt_1_aktiv
       to: 'on'
     condition:
       condition: and

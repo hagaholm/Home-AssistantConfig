@@ -13,7 +13,7 @@ automation:
     ### Startar båda timers vid rörelse i kök        ###
     ### T: switch.rorelsevakt_1 == on                ###
     ### A: switch.rorelsevakt_1 = off                ###
-    ###    input_boolean.rorelsevakt_1_aktiv = on    ###
+    ###    input_boolean.rorelsevakt_aktiv = on      ###
     ###    timer.timer_rorelsevakt_1_short = cancel  ###
     ###    timer.timer_rorelsevakt_1_medium = cancel ###
     ###    timer.timer_rorelsevakt_1_short = start   ###
@@ -29,10 +29,10 @@ automation:
       - service: homeassistant.turn_off
         entity_id: switch.rorelsevakt_1
 
-      # Aktiverar rorelsevakt_1_aktiv
+      # Aktiverar rorelsevakt_aktiv
       - service: input_boolean.turn_on
         data:
-          entity_id: input_boolean.rorelsevakt_1_aktiv
+          entity_id: input_boolean.rorelsevakt_aktiv
 
       # Cancel timers, återställer till maxtid
       - service: timer.cancel
@@ -47,12 +47,12 @@ automation:
         entity_id: timer.timer_rorelsevakt_1_medium
 
     #######################################################
-    ### Stänger av rorelsevakt_1_aktiv (om aktiv)       ###
+    ### Stänger av rorelsevakt_aktiv (om aktiv)         ###
     ### T: timer.timer_rorelsevakt_1_medium == finished ###
-    ### C: input_boolean.rorelsevakt_1_aktiv == on      ###
-    ### A: input_boolean.rorelsevakt_1_aktiv = off      ###
+    ### C: input_boolean.rorelsevakt_aktiv == on        ###
+    ### A: input_boolean.rorelsevakt_aktiv = off        ###
     #######################################################
-  - alias: Stänger av rorelsevakt_1_aktiv (om aktiv)
+  - alias: Stänger av rorelsevakt_aktiv (om aktiv)
     trigger:
       - platform: event
         event_type: timer.finished
@@ -60,20 +60,20 @@ automation:
           entity_id: timer.timer_rorelsevakt_1_medium
     condition:
       - condition: state
-        entity_id: input_boolean.rorelsevakt_1_aktiv
+        entity_id: input_boolean.rorelsevakt_aktiv
         state: 'on'
     action:
       - service: input_boolean.turn_off
         data:
-          entity_id: input_boolean.rorelsevakt_1_aktiv
+          entity_id: input_boolean.rorelsevakt_aktiv
 
-    #########################################################
-    ### Stänger av rorelsevakt_1_aktiv  för nattbelysning ###
-    ### T: timer.timer_rorelsevakt_1_short == finished    ###
-    ### C: input_select.inside_lights == 'Nattbelysning'  ###
-    ### A: input_boolean.rorelsevakt_1_aktiv = off        ###
-    #########################################################
-  - alias: Stänger av rorelsevakt_1_aktiv för nattbelysning
+    ########################################################
+    ### Stänger av rorelsevakt_aktiv  för nattbelysning  ###
+    ### T: timer.timer_rorelsevakt_1_short == finished   ###
+    ### C: input_select.inside_lights == 'Nattbelysning' ###
+    ### A: input_boolean.rorelsevakt_aktiv = off         ###
+    ########################################################
+  - alias: Stänger av rorelsevakt_aktiv för nattbelysning
     trigger:
       - platform: event
         event_type: timer.finished
@@ -86,4 +86,4 @@ automation:
     action:
       - service: input_boolean.turn_off
         data:
-          entity_id: input_boolean.rorelsevakt_1_aktiv
+          entity_id: input_boolean.rorelsevakt_aktiv

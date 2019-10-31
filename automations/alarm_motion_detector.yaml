@@ -1,7 +1,8 @@
-﻿    ##################################################################
+    ##################################################################
     ### Skickar notification vid rörelse i köket om ingen är hemma ###
     ### T: switch.rorelsevakt_1 == on                              ###
     ### C: group.track_for_home_devices == not_home                ###
+    ###    switch.rorelsevakt_2 == off                             ###
     ### A: notify                                                  ###
     ##################################################################
   - alias: Larm rörelse i köket
@@ -10,9 +11,14 @@
       entity_id: switch.rorelsevakt_1
       to: 'on'
     condition:
-      condition: state
-      entity_id: group.track_for_home_devices
-      state: 'not_home'
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
+        - condition: state
+          entity_id: switch.rorelsevakt_2
+          state: 'off'
     action:
       - service: notify.pushbullet
         data:

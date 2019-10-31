@@ -113,7 +113,7 @@ automation:
           state: 'on'
         - condition: state
           entity_id: timer.timer_rorelsevakt_2_medium
-          state: finished
+          state: idle
     action:
       - service: input_boolean.turn_off
         data:
@@ -140,7 +140,7 @@ automation:
           state: 'on'
         - condition: state
           entity_id: timer.timer_rorelsevakt_1_medium
-          state: finished
+          state: idle
     action:
       - service: input_boolean.turn_off
         data:

@@ -47,7 +47,7 @@
 ### A: script.cleaning_lights_on                  ###
 ###    script.harmony_tv                          ###
 ###    delay: '00:10:00'                          ###
-###    script.harmony_off                         ###
+###    script.goodnight_all                       ###
 ###    script.away_lights_on                      ###
 #####################################################
   - alias: Ringklocka tänd allt lyse 1
@@ -71,7 +71,7 @@
       - service: script.cleaning_lights_on
       - service: script.harmony_tv
       - delay: '00:10:00'
-      - service: script.harmony_off
+      - service: script.goodnight_all
       - service: script.away_lights_on
 
 #####################################################

@@ -51,14 +51,13 @@
 ###    script.away_lights_on                      ###
 #####################################################
   - alias: Ringklocka tänd allt lyse 1
-    - trigger:
-        platform: state
-        entity_id: switch.ringklocka_tvattstuga
-        to: 'on'
-    - trigger:
-        platform: state
-        entity_id: switch.hall_tvattstuga
-        to: 'on'
+    trigger:
+        - platform: state
+          entity_id: switch.ringklocka_tvattstuga
+          to: 'on'
+        - platform: state
+          entity_id: switch.hall_tvattstuga
+          to: 'on'
     condition:
       condition: and
       conditions:
@@ -88,13 +87,12 @@
 #####################################################
   - alias: Ringklocka tänd allt lyse 2
     - trigger:
-        platform: state
-        entity_id: switch.ringklocka_tvattstuga
-        to: 'on'
-    - trigger:
-        platform: state
-        entity_id: switch.hall_tvattstuga
-        to: 'on'
+        - platform: state
+          entity_id: switch.ringklocka_tvattstuga
+          to: 'on'
+        - platform: state
+          entity_id: switch.hall_tvattstuga
+          to: 'on'
     condition:
       condition: and
       conditions:

@@ -44,7 +44,8 @@
 ###    switch.ringklocka_hall == on               ###
 ### C: group.track_for_home_devices == 'not_home' ###
 ###    light.kok_lilla_fonstret == on             ###
-### A: script.cleaning_lights_on                  ###
+### A: script.kitchen_light_100                   ###
+###    script.cleaning_lights_on                  ###
 ###    script.harmony_tv                          ###
 ###    delay: '00:10:00'                          ###
 ###    script.goodnight_all                       ###
@@ -68,6 +69,7 @@
           entity_id: light.kok_lilla_fonstret
           state: 'on'
     action:
+      - service: script.kitchen_light_100
       - service: script.cleaning_lights_on
       - service: script.harmony_tv
       - delay: '00:10:00'
@@ -80,7 +82,8 @@
 ###    switch.ringklocka_hall == on               ###
 ### C: group.track_for_home_devices == 'not_home' ###
 ###    light.kok_lilla_fonstret == on             ###
-### A: script.cleaning_lights_on                  ###
+### A: script.kitchen_light_100                   ###
+###    script.cleaning_lights_on                  ###
 ###    script.harmony_tv                          ###
 ###    delay: '00:10:00'                          ###
 ###    script.goodnight_all                       ###
@@ -103,6 +106,7 @@
           entity_id: light.kok_lilla_fonstret
           state: 'off'
     action:
+      - service: script.kitchen_light_100
       - service: script.cleaning_lights_on
       - service: script.harmony_tv
       - delay: '00:10:00'

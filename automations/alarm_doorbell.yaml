@@ -111,3 +111,31 @@
       - service: script.harmony_tv
       - delay: '00:10:00'
       - service: script.goodnight_all
+
+    #####################################################
+    ### Stänger av ringklocka när ingen är hemma      ###
+    ### T: group.track_for_home_devices to 'not_home' ###
+    ### A: switch.ringklocka = off                    ###
+    #####################################################
+  - alias: Ringklocka off (-> borta)
+    trigger:
+      platform: state
+      entity_id: group.track_for_home_devices
+      to: 'not_home'
+    action:
+      - service: homeassistant.turn_off
+        entity_id: switch.ringklocka
+
+    #################################################
+    ### Sätter på ringklocka när ingen är hemma   ###
+    ### T: group.track_for_home_devices to 'home' ###
+    ### A: switch.ringklocka = on                 ###
+    #################################################
+  - alias: Ringklocka on (-> hemma)
+    trigger:
+      platform: state
+      entity_id: group.track_for_home_devices
+      to: 'home'
+    action:
+      - service: homeassistant.turn_on
+        entity_id: switch.ringklocka

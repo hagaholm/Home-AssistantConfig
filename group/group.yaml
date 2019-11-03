@@ -318,6 +318,7 @@
       - sensor.hall_humidity
       - light.hall_byra
       - light.hall_skap
+      - switch.ringklocka
 
   laundry:
     name: Tvättstuga
@@ -420,6 +421,8 @@
       - light.forrad_fasad
       - light.friggebod_fasad
       - light.friggebod_ute
+      - switch.ringklocka_tvattstuga
+      - switch.ringklocka_hall
 
   fan:
     name: Ventilation
@@ -882,6 +885,8 @@
       - automation.ringklocka_hall
       - automation.ringklocka_tand_allt_lyse_1
       - automation.ringklocka_tand_allt_lyse_2
+      - automation.ringklocka_off_borta
+      - automation.ringklocka_on_hemma
 
   automation_garage_air_dryer:
     name: Garage luftavfuktare

@@ -36,7 +36,6 @@
         data:
           title: "Ringklocka hall."
           message: "Det ringer på dörren..."
-      - service: python_script.flash_light_vardagsrum_skank
 
 #####################################################
 ### Ringklocka tänd allt lyse och tv 1            ###
@@ -57,7 +56,7 @@
         entity_id: switch.ringklocka_tvattstuga
         to: 'on'
       - platform: state
-        entity_id: switch.hall_tvattstuga
+        entity_id: switch.ringklocka_hall
         to: 'on'
     condition:
       condition: and
@@ -94,7 +93,7 @@
         entity_id: switch.ringklocka_tvattstuga
         to: 'on'
       - platform: state
-        entity_id: switch.hall_tvattstuga
+        entity_id: switch.ringklocka_hall
         to: 'on'
     condition:
       condition: and
@@ -139,3 +138,21 @@
     action:
       - service: homeassistant.turn_on
         entity_id: switch.ringklocka
+
+    #################################################################################################
+    ### Blinka lampa kök lilla fönstret om det ringer på ringklocka tvättstuga och någon är hemma ###
+    ### T: switch.ringklocka_tvattstuga == on                                                     ###
+    ### C: group.track_for_home_devices = 'home'                                                  ###
+    ### A: python_script.flash_kok_lilla_fonstret                                                 ###
+    #################################################################################################
+  - alias: Ringklocka tvättstuga blinka lampa kök lilla fönstret
+    trigger:
+      - platform: state
+        entity_id: switch.ringklocka_tvattstuga
+        to: 'on'
+    condition:
+      condition: state
+      entity_id: group.track_for_home_devices
+      state: 'home'
+    action:
+      - service: python_script.flash_light_kok_lilli_fonstret

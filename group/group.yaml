@@ -196,8 +196,9 @@
       - light.kok_underskap_bank
       - light.kok_underskap_diskbank
       - light.kok_vitrinskap
-      - input_boolean.rorelsevakt_kok_aktiv
-      - timer.timer_rorelsevakt_kok_medium
+      - input_boolean.rorelsevakt_aktiv
+      - timer.timer_rorelsevakt_1_medium
+      - timer.timer_rorelsevakt_2_medium
 
   morning_lights:
     name: Morgonbelysning
@@ -233,7 +234,9 @@
     entities:
       - light.hall_byra
       - light.vardagsrum_fonster
-      - timer.timer_rorelsevakt_kok_short
+      - input_boolean.rorelsevakt_aktiv
+      - timer.timer_rorelsevakt_1_short
+      - timer.timer_rorelsevakt_2_short
 
   uterums:
     name: Uterum
@@ -303,8 +306,9 @@
       - light.kok_underskap_bank
       - light.kok_underskap_diskbank
       - light.kok_vitrinskap
-      - input_boolean.rorelsevakt_kok_aktiv
-      - timer.timer_rorelsevakt_kok_medium
+      - input_boolean.rorelsevakt_aktiv
+      - timer.timer_rorelsevakt_1_medium
+      - timer.timer_rorelsevakt_2_medium
 
   hall:
     name: Hall
@@ -314,6 +318,7 @@
       - sensor.hall_humidity
       - light.hall_byra
       - light.hall_skap
+      - switch.ringklocka
 
   laundry:
     name: Tvättstuga
@@ -416,6 +421,8 @@
       - light.forrad_fasad
       - light.friggebod_fasad
       - light.friggebod_ute
+      - switch.ringklocka_tvattstuga
+      - switch.ringklocka_hall
 
   fan:
     name: Ventilation
@@ -822,9 +829,11 @@
     name: Rörelsedetektor i kök
 #    control: hidden
     entities:
-      - automation.startar_timers
-      - automation.stanger_av_rorelsevakt_kok_aktiv_for_nattbelysning
-      - automation.stanger_av_rorelsevakt_kok_aktiv_om_aktiv
+      - automation.startar_timers_1
+      - automation.startar_timers_2
+      - automation.stanger_av_rorelsevakt_aktiv_for_nattbelysning
+      - automation.stanger_av_rorelsevakt_aktiv_om_aktiv_1
+      - automation.stanger_av_rorelsevakt_aktiv_om_aktiv_2
 
   automation_ventilation:
     name: Ventilation
@@ -874,6 +883,10 @@
     entities:
       - automation.ringklocka_tvattstuga
       - automation.ringklocka_hall
+      - automation.ringklocka_tand_allt_lyse_1
+      - automation.ringklocka_tand_allt_lyse_2
+      - automation.ringklocka_off_borta
+      - automation.ringklocka_on_hemma
 
   automation_garage_air_dryer:
     name: Garage luftavfuktare

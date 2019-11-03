@@ -37,3 +37,105 @@
           title: "Ringklocka hall."
           message: "Det ringer på dörren..."
       - service: python_script.flash_light_vardagsrum_skank
+
+#####################################################
+### Ringklocka tänd allt lyse och tv 1            ###
+### T: switch.ringklocka_tvattstuga == on         ###
+###    switch.ringklocka_hall == on               ###
+### C: group.track_for_home_devices == 'not_home' ###
+###    light.kok_lilla_fonstret == on             ###
+### A: script.kitchen_light_100                   ###
+###    script.cleaning_lights_on                  ###
+###    script.harmony_tv                          ###
+###    delay: '00:10:00'                          ###
+###    script.goodnight_all                       ###
+###    script.away_lights_on                      ###
+#####################################################
+  - alias: Ringklocka tänd allt lyse 1
+    trigger:
+      - platform: state
+        entity_id: switch.ringklocka_tvattstuga
+        to: 'on'
+      - platform: state
+        entity_id: switch.hall_tvattstuga
+        to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
+        - condition: state
+          entity_id: light.kok_lilla_fonstret
+          state: 'on'
+    action:
+      - service: script.kitchen_light_100
+      - service: script.cleaning_lights_on
+      - service: script.harmony_tv
+      - delay: '00:10:00'
+      - service: script.goodnight_all
+      - service: script.away_lights_on
+
+#####################################################
+### Ringklocka tänd allt lyse och tv 2            ###
+### T: switch.ringklocka_tvattstuga == on         ###
+###    switch.ringklocka_hall == on               ###
+### C: group.track_for_home_devices == 'not_home' ###
+###    light.kok_lilla_fonstret == on             ###
+### A: script.kitchen_light_100                   ###
+###    script.cleaning_lights_on                  ###
+###    script.harmony_tv                          ###
+###    delay: '00:10:00'                          ###
+###    script.goodnight_all                       ###
+#####################################################
+  - alias: Ringklocka tänd allt lyse 2
+    trigger:
+      - platform: state
+        entity_id: switch.ringklocka_tvattstuga
+        to: 'on'
+      - platform: state
+        entity_id: switch.hall_tvattstuga
+        to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
+        - condition: state
+          entity_id: light.kok_lilla_fonstret
+          state: 'off'
+    action:
+      - service: script.kitchen_light_100
+      - service: script.cleaning_lights_on
+      - service: script.harmony_tv
+      - delay: '00:10:00'
+      - service: script.goodnight_all
+
+    #####################################################
+    ### Stänger av ringklocka när ingen är hemma      ###
+    ### T: group.track_for_home_devices to 'not_home' ###
+    ### A: switch.ringklocka = off                    ###
+    #####################################################
+  - alias: Ringklocka off (-> borta)
+    trigger:
+      platform: state
+      entity_id: group.track_for_home_devices
+      to: 'not_home'
+    action:
+      - service: homeassistant.turn_off
+        entity_id: switch.ringklocka
+
+    #################################################
+    ### Sätter på ringklocka när ingen är hemma   ###
+    ### T: group.track_for_home_devices to 'home' ###
+    ### A: switch.ringklocka = on                 ###
+    #################################################
+  - alias: Ringklocka on (-> hemma)
+    trigger:
+      platform: state
+      entity_id: group.track_for_home_devices
+      to: 'home'
+    action:
+      - service: homeassistant.turn_on
+        entity_id: switch.ringklocka

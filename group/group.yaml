@@ -634,7 +634,6 @@
 
   automation_larm:
     name: Larm
-#    control: hidden
     entities:
       - automation.larm_rorelse_i_koket
       - automation.blinkar_inne_hem
@@ -642,7 +641,6 @@
 
   automation_larm_reading:
     name: Larm avläsningar saknas
-#    control: hidden
     entities:
       - input_boolean.frys_reading_missing_alarm
       - input_boolean.kyl_reading_missing_alarm
@@ -667,7 +665,6 @@
 
   automation_kitchen_light:
     name: Köksbelysning
-#    control: hidden
     entities:
       - automation.kok_100_2500
       - automation.kok_100_morgon_sensor_on_2500
@@ -682,7 +679,6 @@
 
   automation_morning_light:
     name: Morgonbelysning
-#    control: hidden
     entities:
       - automation.morgonbelysning_on_sensor_on_1800
       - automation.morgonbelysning_on_hemma_1800
@@ -691,7 +687,6 @@
 
   automation_evening_light:
     name: Kvällsbelysning
-#    control: hidden
     entities:
       - automation.kvallsbelysning_on_12_00_00_1800_hemma
       - automation.kvallsbelysning_on_1800_hemma
@@ -702,14 +697,12 @@
 
   automation_night_light:
     name: Nattbelysning
-#    control: hidden
     entities:
       - automation.nattbelysning_sensor_on_hemma_0_150
       - automation.nattbelysning_off_sensor_off
 
   automation_away_light_morning:
     name: Bortabelysning morgon
-#    control: hidden
     entities:
       - automation.bortabelysning_on_07_00_00_200_borta
       - automation.bortabelysning_on_borta_200_morgon
@@ -718,7 +711,6 @@
 
   automation_away_light_evening:
     name: Bortabelysning kväll
-#    control: hidden
     entities:
       - automation.bortabelysning_on_12_00_00_200_borta
       - automation.bortabelysning_on_200_borta
@@ -727,7 +719,6 @@
 
   automation_uterums_light:
     name: Uterumsbelysning
-#    control: hidden
     entities:
       - automation.uterums_fotogenlampa_on_18
       - automation.uterums_fotogenlampa_on_250
@@ -744,7 +735,6 @@
 
   automation_outside_light:
     name: Utebelysning
-#    control: hidden
     entities:
       - automation.friggebod_belysning_on_1
       - automation.friggebod_belysning_ute_on_5
@@ -755,7 +745,6 @@
 
   automation_outside_facade_light:
     name: Fasadbelysning
-#    control: hidden
     entities:
       - automation.friggebod_fasadbelysning_on_sensor_on_40
       - automation.friggebod_fasadbelysning_on_40
@@ -768,7 +757,6 @@
 
   automation_temp_larm:
     name: Larm temperatur
-#    control: hidden
     entities:
       - automation.uterum_larm_hog_temp
       - automation.friggebod_larm_hog_temp
@@ -789,7 +777,6 @@
 
   automation_pi_offline:
     name: Larm Raspberry Pi offline
-#    control: hidden
     entities:
       - automation.raspberry_pi_b_1_wire_offline
       - automation.raspberry_pi_3b_hagaholm_offline
@@ -799,7 +786,6 @@
 
   automation_travel_time:
     name: Restid till och från jobbet
-#    control: hidden
     entities:
       - automation.kor_annan_vag_hem
       - automation.kor_annan_vag_till_seb
@@ -808,7 +794,6 @@
 
   automation_ikea:
     name: IKEA
-#    control: hidden
     entities:
       - automation.ingen_kontakt_med_forrad_fasadbelysning
       - automation.ingen_kontakt_med_fotogenlampa_i_uterum
@@ -827,17 +812,15 @@
 
   automation_pir:
     name: Rörelsedetektor i kök
-#    control: hidden
     entities:
       - automation.startar_timers_1
       - automation.startar_timers_2
-      - automation.stanger_av_rorelsevakt_aktiv_for_nattbelysning
       - automation.stanger_av_rorelsevakt_aktiv_om_aktiv_1
       - automation.stanger_av_rorelsevakt_aktiv_om_aktiv_2
+      - automation.stanger_av_rorelsevakt_aktiv_for_nattbelysning_1
 
   automation_ventilation:
     name: Ventilation
-#    control: hidden
     entities:
       - automation.badrumsfonster_hog_fukt
       - automation.badrumsfonster_lag_fukt
@@ -845,7 +828,6 @@
 
   automation_ventilation_on_off:
     name: Ventilation On/Off
-#    control: hidden
     entities:
       - automation.ventilation_off_60_borta_ute_24degc_inne_23degc
       - automation.ventilation_off_borta_ute_24degc_60_inne_23degc
@@ -858,7 +840,6 @@
 
   automation_mediaplayer:
     name: Mediaspelare
-#    control: hidden
     entities:
       - automation.mediaspelare_off_borta
       - automation.satt_pa_mediaspelare_vid_watch_tv
@@ -870,7 +851,6 @@
 
   automation_hassbian:
     name: Hassbian
-#    control: hidden
     entities:
       - automation.hassbian_startad
       - automation.hassbian_stoppad
@@ -879,7 +859,6 @@
 
   automation_doorbell:
     name: Ringklocka
-#    control: hidden
     entities:
       - automation.ringklocka_tvattstuga
       - automation.ringklocka_hall
@@ -891,7 +870,6 @@
 
   automation_garage_air_dryer:
     name: Garage luftavfuktare
-#    control: hidden
     entities:
       - automation.starta_luftavfuktare
       - automation.stoppa_luftavfuktare

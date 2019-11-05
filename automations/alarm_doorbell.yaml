@@ -155,7 +155,13 @@
     ### Blinka lampa kök lilla fönstret om det ringer på ringklocka tvättstuga och någon är hemma ###
     ### T: switch.ringklocka_tvattstuga == on                                                     ###
     ### C: group.track_for_home_devices = 'home'                                                  ###
-    ### A: python_script.flash_kok_lilla_fonstret                                                 ###
+    ### A: light.kok_lilla_fonstret = toggle                                                      ###
+    ###    delay 1s                                                                               ###
+    ###    light.kok_lilla_fonstret = toggle                                                      ###
+    ###    delay 1s                                                                               ###
+    ###    light.kok_lilla_fonstret = toggle                                                      ###
+    ###    delay 1s                                                                               ###
+    ###    light.kok_lilla_fonstret = toggle                                                      ###
     #################################################################################################
   - alias: Ringklocka tvättstuga blinka lampa kök lilla fönstret
     trigger:
@@ -167,4 +173,14 @@
       entity_id: group.track_for_home_devices
       state: 'home'
     action:
-      - service: python_script.flash_light_kok_lilla_fonstret
+      - service: light.toggle
+        entity_id: light.kok_lilla_fonstret
+      - delay: '00:00:01'
+      - service: light.toggle
+        entity_id: light.kok_lilla_fonstret
+      - delay: '00:00:01'
+      - service: light.toggle
+        entity_id: light.kok_lilla_fonstret
+      - delay: '00:00:01'
+      - service: light.toggle
+        entity_id: light.kok_lilla_fonstret

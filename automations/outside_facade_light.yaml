@@ -30,6 +30,7 @@
         data:
           entity_id: light.friggebod_fasad
           brightness_pct: 30
+          transition: 5
 
     ##########################################################
     ### Tänder friggebod fasadbelysning när det blir mörkt ###
@@ -57,6 +58,7 @@
         data:
           entity_id: light.friggebod_fasad
           brightness_pct: 30
+          transition: 5
 
     ###########################################################
     ### Släcker friggebod fasadbelysning när det blir ljust ###
@@ -139,6 +141,7 @@
         data:
           entity_id: light.forrad_fasad
           brightness_pct: 30
+          transition: 5
 
     #####################################################################
     ### Tänder förråd fasadbelysning när ledbelysning i uterum släcks ###
@@ -166,6 +169,7 @@
         data:
           entity_id: light.forrad_fasad
           brightness_pct: 30
+          transition: 5
 
     ########################################################
     ### Släcker förråd fasadbelysning när det blir ljust ###

@@ -150,7 +150,7 @@ automation:
     ### Stänger av rorelsevakt_aktiv för nattbelysning 1 ###
     ### T: timer.timer_rorelsevakt_1_short == finished   ###
     ### C: input_select.inside_lights == 'Nattbelysning' ###
-    ###    timer.timer_rorelsevakt_1_short == idle       ###    
+    ###    timer.timer_rorelsevakt_2_short == idle       ###    
     ### A: input_boolean.rorelsevakt_aktiv = off         ###
     ########################################################
   - alias: Stänger av rorelsevakt_aktiv för nattbelysning 1
@@ -159,6 +159,33 @@ automation:
         event_type: timer.finished
         event_data:
           entity_id: timer.timer_rorelsevakt_1_short
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_select.inside_lights
+          state: 'Nattbelysning'
+        - condition: state
+          entity_id: timer.timer_rorelsevakt_2_short
+          state: idle
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.rorelsevakt_aktiv
+
+    ########################################################
+    ### Stänger av rorelsevakt_aktiv för nattbelysning 2 ###
+    ### T: timer.timer_rorelsevakt_2_short == finished   ###
+    ### C: input_select.inside_lights == 'Nattbelysning' ###
+    ###    timer.timer_rorelsevakt_1_short == idle       ###    
+    ### A: input_boolean.rorelsevakt_aktiv = off         ###
+    ########################################################
+  - alias: Stänger av rorelsevakt_aktiv för nattbelysning 2
+    trigger:
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.timer_rorelsevakt_2_short
     condition:
       condition: and
       conditions:

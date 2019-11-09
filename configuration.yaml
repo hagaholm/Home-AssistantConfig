@@ -248,6 +248,10 @@ media_player:
 ##  upnp_bind_multicast: True # optional, defaults to True
 #  listen_ports:
 #    - 8060
+emulated_roku:
+  servers:
+    - name: Home Assistant
+      listen_port: 8060
 
 ####################################################
 #                                                  #

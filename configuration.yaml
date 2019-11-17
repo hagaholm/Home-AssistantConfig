@@ -66,7 +66,7 @@ updater:
 
 #---------------------------------------------------
 # Discover some devices automatically
-#discovery:
+discovery:
 
 #---------------------------------------------------
 # Allows you to issue voice commands from the frontend in enabled browsers
@@ -248,6 +248,10 @@ media_player:
 ##  upnp_bind_multicast: True # optional, defaults to True
 #  listen_ports:
 #    - 8060
+#emulated_roku:
+#  servers:
+#    - name: Home Assistant
+#      listen_port: 8060
 
 ####################################################
 #                                                  #

@@ -413,12 +413,12 @@ volvooncall:
 camera:
 #  - platform: generic
 #    name: camera 1
-#    still_image_url: !secret Camera_URL
+#    still_image_url: !secret Camera_1_URL
 #    stream_source: !secret Camera_1_Source
 
   - platform: generic
     name: camera 2
-    still_image_url: !secret Camera_URL
+    still_image_url: !secret Camera_2_URL
     stream_source: !secret Camera_2_Source
 
 # Enable stream

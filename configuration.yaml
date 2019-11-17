@@ -382,21 +382,48 @@ asuswrt:
     - download
     - upload_speed
     - download_speed
+
 ####################################################
 #                                                  #
 #                       MQTT                       #
 #                                                  #
 ####################################################
-# Add broker used on Raspberry Pi 3B used for lux values 
+# Add broker used on Raspberry Pi 3B used for lux values
 # https://www.home-assistant.io/docs/mqtt/broker/
 mqtt:
   broker: 192.168.1.17
   port: 1883
 
-
+####################################################
+#                                                  #
+#                  VOLVO ON CALL                   #
+#                                                  #
+####################################################
+# https://www.home-assistant.io/integrations/volvooncall/
 volvooncall:
   username: !secret voc_username
   password: !secret voc_password
+
+####################################################
+#                                                  #
+#                       CAMERA                     #
+#                                                  #
+####################################################
+
+camera:
+#  - platform: generic
+#    name: camera 1
+#    still_image_url: !secret Camera_URL
+#    stream_source: !secret Camera_1_Source
+
+  - platform: generic
+    name: camera 2
+    still_image_url: !secret Camera_URL
+    stream_source: !secret Camera_2_Source
+
+# Enable stream
+stream:
+ 
 ####################################################
 #                                                  #
 #            END OF CONFIGURATION FILE             #

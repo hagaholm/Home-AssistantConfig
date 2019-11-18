@@ -17,6 +17,7 @@
       - group.default_view_info
       - group.default_view_lights_off
       - group.default_view_lights_on
+#      - group.camera_card
 
   default_view_info:
     name: Info
@@ -32,6 +33,12 @@
       - sensor.uterum
       - sensor.inne_medel
       - sensor.ljusstyrka
+
+#  camera_card:
+#    name: Kamera
+#    entities:
+#    - camera.camera_sannce
+#    - binary_sensor.ffmpeg_motion
 
   default_view_lights_off:
     name: Släck belysning

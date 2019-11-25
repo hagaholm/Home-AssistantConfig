@@ -406,11 +406,12 @@ volvooncall:
 
 ####################################################
 #                                                  #
-#                       CAMERA                     #
+#                      CAMERA                      #
 #                                                  #
 ####################################################
-
+# https://www.home-assistant.io/integrations/camera/
 camera:
+    # https://www.home-assistant.io/integrations/generic_ip_camera/
   - platform: generic
     name: Kamera 1
     still_image_url: !secret Camera_1_URL
@@ -421,7 +422,13 @@ camera:
     still_image_url: !secret Camera_2_URL
     stream_source: !secret Camera_2_Source
 
+####################################################
+#                                                  #
+#                     STREAM                       #
+#                                                  #
+####################################################
 # Enable stream
+https://www.home-assistant.io/integrations/stream/
 stream:
  
 ####################################################

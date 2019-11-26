@@ -61,7 +61,7 @@
       # Updated
       - service: light.turn_on
         data:
-          entity_id: light.vardagsrum_fonster
+          entity_id: light.vardagsrum_fonster_ljusstake
           brightness_pct: 100
           transition: 5
       - service: light.turn_on
@@ -86,3 +86,5 @@
     sequence:
       - service: homeassistant.turn_off
         entity_id: group.evening_lights
+      - service: light.turn_off
+        entity_id: light.vardagsrum_fonster_ljusstake

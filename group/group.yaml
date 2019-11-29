@@ -17,7 +17,6 @@
       - group.default_view_info
       - group.default_view_lights_off
       - group.default_view_lights_on
-#      - group.camera_card
 
   default_view_info:
     name: Info
@@ -33,12 +32,6 @@
       - sensor.uterum
       - sensor.inne_medel
       - sensor.ljusstyrka
-
-#  camera_card:
-#    name: Kamera
-#    entities:
-#    - camera.camera_sannce
-#    - binary_sensor.ffmpeg_motion
 
   default_view_lights_off:
     name: Släck belysning
@@ -517,6 +510,7 @@
     view: yes
     entities:
       - group.camera
+      - group.camera_timer
 
   camera:
     name: Kamera
@@ -528,6 +522,25 @@
       - device_tracker.camera2
       - camera.kamera_1
       - camera.kamera_2
+
+  camera_timer:
+    name: timer
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - timer.timer_camera_1_home
+      - timer.timer_camera_1_away
+      - timer.timer_camera_2_home
+      - timer.timer_camera_2_away
+      - input_boolean.camera_1_aktiv
+      - input_boolean.camera_2_aktiv
+      - automation.startar_camera_1_timers
+      - automation.startar_camera_2_timers
+      - automation.stanger_av_camera_1_aktiv_home
+      - automation.stanger_av_camera_1_aktiv_away
+      - automation.stanger_av_camera_2_aktiv_home
+      - automation.stanger_av_camera_2_aktiv_away
 
 ################
 ################

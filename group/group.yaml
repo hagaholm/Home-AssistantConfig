@@ -509,6 +509,28 @@
 
 ################
 ################
+# View: Kamera #
+################
+################
+  camera_view:
+    name: Kamera
+    view: yes
+    entities:
+      - group.camera
+
+  camera:
+    name: Kamera
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - device_tracker.camera1
+      - device_tracker.camera2
+      - camera.kamera_1
+      - camera.kamera_2
+
+################
+################
 # View: Grafer #
 ################
 ################

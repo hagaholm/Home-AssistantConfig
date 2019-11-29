@@ -1,13 +1,13 @@
 binary_sensor:
   - platform: rest
-    resource: !secretCamera_1_Motion
+    resource: !secret Camera_1_Motion
     name: Motion Kamera 1
     scan_interval: 5
     value_template: “{{ value_json[0].value.state }}”
     device_class: motion
 
   - platform: rest
-    resource: !secretCamera_2_Motion
+    resource: !secret Camera_2_Motion
     name: Motion Kamera 2
     scan_interval: 5
     value_template: “{{ value_json[0].value.state }}”

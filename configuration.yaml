@@ -194,6 +194,11 @@ light:
     name: Discolampa
     entity_id: switch.discolampa
 
+  - platform: switch
+    name: Vardagsrum fönster ljusstake
+    entity_id: switch.vardagsrum_fonster_ljusstake
+
+
 ####################################################
 #                                                  #
 #                     SWITCH                       #
@@ -297,7 +302,6 @@ binary_sensor:
 input_boolean:
   christmas_light:
     name: Använd julbelysning
-    initial: off
     icon: mdi:pine-tree
 
   rorelsevakt_aktiv:

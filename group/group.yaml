@@ -205,9 +205,11 @@
     view: no
     entities:
       - light.kok_stora_fonstret
+      - light.kok_stora_fonstret_ljusstake
       - light.kok_lilla_fonstret
       - light.hall_byra
       - light.vardagsrum_fonster
+      - light.vardagsrum_fonster_ljusstake
       - light.vardagsrum_gran
       - light.uterum_fonster
 
@@ -216,10 +218,12 @@
     view: no
     entities:
       - light.kok_stora_fonstret
+      - light.kok_stora_fonstret_ljusstake
       - light.kok_lilla_fonstret
       - light.hall_byra
       - light.hall_skap
       - light.vardagsrum_fonster
+      - light.vardagsrum_fonster_ljusstake
       - light.vardagsrum_skank
       - light.vardagsrum_vitrinskap
       - light.vardagsrum_gran
@@ -234,6 +238,7 @@
     entities:
       - light.hall_byra
       - light.vardagsrum_fonster
+      - light.vardagsrum_fonster_ljusstake
       - input_boolean.rorelsevakt_aktiv
       - timer.timer_rorelsevakt_1_short
       - timer.timer_rorelsevakt_2_short
@@ -261,9 +266,11 @@
     view: no
     entities:
       - light.kok_stora_fonstret
+      - light.kok_stora_fonstret_ljusstake
       - light.kok_lilla_fonstret
       - light.hall_byra
       - light.vardagsrum_fonster
+      - light.vardagsrum_fonster_ljusstake
       - light.sovrum_fonster
       - light.louise_fonster
       - light.uterum_fonster
@@ -302,6 +309,7 @@
       - sensor.frys_temperature
       #- sensor.frys_humidity # Onödigt att visa, kanska kan larma om ovanligt värde
       - light.kok_stora_fonstret
+      - light.kok_stora_fonstret_ljusstake
       - light.kok_lilla_fonstret
       - light.kok_underskap_bank
       - light.kok_underskap_diskbank
@@ -334,6 +342,7 @@
     entities:
       - sensor.vardagsrum_temperature
       - light.vardagsrum_fonster
+      - light.vardagsrum_fonster_ljusstake
       - light.vardagsrum_skank
       - light.vardagsrum_vitrinskap
       - light.vardagsrum_gran

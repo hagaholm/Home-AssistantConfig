@@ -502,6 +502,50 @@
 
 ################
 ################
+# View: Kamera #
+################
+################
+  camera_view:
+    name: Kamera
+    view: yes
+    entities:
+      - group.camera
+      - group.camera_timer
+
+  camera:
+    name: Kamera
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - device_tracker.camera1
+      - device_tracker.camera2
+      - binary_sensor.motion_kamera_1
+      - binary_sensor.motion_kamera_2
+      - camera.kamera_1
+      - camera.kamera_2
+
+  camera_timer:
+    name: timer
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - timer.timer_camera_1_home
+      - timer.timer_camera_1_away
+      - timer.timer_camera_2_home
+      - timer.timer_camera_2_away
+      - input_boolean.camera_1_aktiv
+      - input_boolean.camera_2_aktiv
+      - automation.startar_camera_1_timers
+      - automation.startar_camera_2_timers
+      - automation.stanger_av_camera_1_aktiv_home
+      - automation.stanger_av_camera_1_aktiv_away
+      - automation.stanger_av_camera_2_aktiv_home
+      - automation.stanger_av_camera_2_aktiv_away
+
+################
+################
 # View: Grafer #
 ################
 ################

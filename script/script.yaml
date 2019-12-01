@@ -213,6 +213,8 @@
     sequence:
       - service: homeassistant.turn_off
         entity_id: light.louise_fonster
+      - service: light.turn_on
+        entity_id: light.louise_fonster_julstjarna
 
   #######################
   ### Start switch tv ###

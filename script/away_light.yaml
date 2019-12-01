@@ -78,10 +78,7 @@
           brightness_pct: 100
           transition: 5
       - service: light.turn_on
-        data:
-          entity_id: light.uterum_fonster
-          brightness_pct: 80
-          transition: 5
+        entity_id: light.uterum_julstjarnor
 
   ##########################
   ### Bortabelysning off ###
@@ -100,3 +97,5 @@
         entity_id: light.kok_stora_fonstret_ljusstake
       - service: light.turn_off
         entity_id: light.louise_fonster_julstjarna
+      - service: light.turn_off
+        entity_id: light.uterum_julstjarnor

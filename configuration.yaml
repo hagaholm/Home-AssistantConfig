@@ -157,9 +157,9 @@ light:
   - platform: switch
     name: Friggebod lilla fönstret
     entity_id: switch.friggebod_lilla_fonstret
-  - platform: switch
-    name: Friggebod stora fönstret
-    entity_id: switch.friggebod_fonster
+#  - platform: switch
+#    name: Friggebod stora fönstret
+#    entity_id: switch.friggebod_fonster
   - platform: switch
     name: Friggebod ute
     entity_id: switch.friggebod_ute
@@ -197,6 +197,9 @@ light:
   - platform: switch
     name: Vardagsrum fönster ljusstake
     entity_id: switch.vardagsrum_fonster_ljusstake
+  - platform: switch
+    name: Uterum julstjärnor
+    entity_id: switch.uterum_julstjarnor
 
 
 ####################################################

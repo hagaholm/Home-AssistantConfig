@@ -260,8 +260,9 @@
       - light.forrad_fasad
       - light.friggebod_fasad
       - light.friggebod_ute
-      - light.friggebod_stora_fonstret
-      - light.friggebod_lilla_fonstret
+      - light.friggebod_fonster
+#      - light.friggebod_stora_fonstret
+#      - light.friggebod_lilla_fonstret
       - light.spabad_vagg
 
   away_lights:
@@ -416,8 +417,9 @@
     entities:
       - sensor.friggebod_temperature
       - sensor.friggebod_humidity
-      - light.friggebod_lilla_fonstret
-      - light.friggebod_stora_fonstret
+      - light.friggebod_fonster
+#      - light.friggebod_lilla_fonstret
+#      - light.friggebod_stora_fonstret
 
   garage:
     name: Garage/Förråd

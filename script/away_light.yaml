@@ -64,7 +64,7 @@
       - service: light.turn_on
         entity_id: light.andreas_fonster
       - service: light.turn_on
-        entity_id: light.louise_fonster_julstjarna
+        entity_id: light.louise_fonster_dimmer_julstjarna
       # Updated
       - service: light.turn_on
         data:
@@ -96,6 +96,6 @@
       - service: light.turn_off
         entity_id: light.kok_stora_fonstret_ljusstake
       - service: light.turn_off
-        entity_id: light.louise_fonster_julstjarna
+        entity_id: light.louise_fonster_dimmer_julstjarna
       - service: light.turn_off
         entity_id: light.uterum_julstjarnor

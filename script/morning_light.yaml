@@ -49,7 +49,7 @@
     alias: Morgonjulbelysning on
     sequence:
       - service: light.turn_on
-        entity_id: light.kok_stora_fonstret
+        entity_id: light.kok_stora_fonstret_ljusstake
       - service: light.turn_on
         entity_id: light.kok_lilla_fonstret
       # Updated
@@ -73,10 +73,7 @@
       #- service: light.turn_on
       #  entity_id: light.louise_fonster
       - service: light.turn_on
-        data:
-          entity_id: light.uterum_fonster
-          brightness_pct: 80
-          transition: 5
+        entity_id: light.uterum_julstjarnor
 
   ###########################
   ### Morgonbelysning off ###
@@ -88,3 +85,7 @@
         entity_id: group.evening_lights
       - service: light.turn_off
         entity_id: light.vardagsrum_fonster_ljusstake_2
+      - service: light.turn_off
+        entity_id: light.kok_stora_fonstret_ljusstake
+      - service: light.turn_off
+        entity_id: light.uterum_julstjarnor

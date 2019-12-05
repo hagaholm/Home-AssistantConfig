@@ -66,7 +66,7 @@ updater:
 
 #---------------------------------------------------
 # Discover some devices automatically
-#discovery:
+discovery:
 
 #---------------------------------------------------
 # Allows you to issue voice commands from the frontend in enabled browsers
@@ -148,17 +148,17 @@ cover:
 light:
   - platform: tellstick
 
-  - platform: switch
-    name: Louise fönster
-    entity_id: switch.louise_fonster
+#  - platform: switch
+#    name: Louise fönster
+#    entity_id: switch.louise_fonster
   - platform: switch
     name: Andreas fönster
     entity_id: switch.andreas_fonster
+#  - platform: switch
+#    name: Friggebod lilla fönstret
+#    entity_id: switch.friggebod_lilla_fonstret
   - platform: switch
-    name: Friggebod lilla fönstret
-    entity_id: switch.friggebod_lilla_fonstret
-  - platform: switch
-    name: Friggebod stora fönstret
+    name: Friggebod fönster
     entity_id: switch.friggebod_fonster
   - platform: switch
     name: Friggebod ute
@@ -170,8 +170,8 @@ light:
     name: Kök lilla fönstret
     entity_id: switch.kok_lilla_fonstret
   - platform: switch
-    name: Kök stora fönstret
-    entity_id: switch.kok_stora_fonstret
+    name: Kök stora fönstret ljusstake
+    entity_id: switch.kok_stora_fonstret_ljusstake
   - platform: switch
     name: Sovrum fönster
     entity_id: switch.sovrum_fonster
@@ -190,6 +190,18 @@ light:
   - platform: switch
     name: Vardagsrum gran
     entity_id: switch.vardagsrum_gran
+  - platform: switch
+    name: Discolampa
+    entity_id: switch.discolampa
+
+  - platform: switch
+    name: Vardagsrum fönster ljusstake
+    entity_id: switch.vardagsrum_fonster_ljusstake
+  - platform: switch
+    name: Uterum julstjärnor
+    entity_id: switch.uterum_julstjarnor
+
+
 ####################################################
 #                                                  #
 #                     SWITCH                       #
@@ -244,6 +256,10 @@ media_player:
 ##  upnp_bind_multicast: True # optional, defaults to True
 #  listen_ports:
 #    - 8060
+#emulated_roku:
+#  servers:
+#    - name: Home Assistant
+#      listen_port: 8060
 
 ####################################################
 #                                                  #
@@ -289,11 +305,10 @@ binary_sensor:
 input_boolean:
   christmas_light:
     name: Använd julbelysning
-    initial: off
     icon: mdi:pine-tree
 
-  rorelsevakt_kok_aktiv:
-    name: Rörelsevakt kök aktiv
+  rorelsevakt_aktiv:
+    name: Rörelsevakt aktiv
     initial: off
 
 ####################################################
@@ -374,21 +389,55 @@ asuswrt:
     - download
     - upload_speed
     - download_speed
+
 ####################################################
 #                                                  #
 #                       MQTT                       #
 #                                                  #
 ####################################################
-# Add broker used on Raspberry Pi 3B used for lux values 
+# Add broker used on Raspberry Pi 3B used for lux values
 # https://www.home-assistant.io/docs/mqtt/broker/
 mqtt:
   broker: 192.168.1.17
   port: 1883
 
-
+####################################################
+#                                                  #
+#                  VOLVO ON CALL                   #
+#                                                  #
+####################################################
+# https://www.home-assistant.io/integrations/volvooncall/
 volvooncall:
   username: !secret voc_username
   password: !secret voc_password
+
+####################################################
+#                                                  #
+#                      CAMERA                      #
+#                                                  #
+####################################################
+# https://www.home-assistant.io/integrations/camera/
+camera:
+    # https://www.home-assistant.io/integrations/generic_ip_camera/
+  - platform: generic
+    name: Kamera 1
+    still_image_url: !secret Camera_1_URL
+    stream_source: !secret Camera_1_Source
+
+  - platform: generic
+    name: Kamera 2
+    still_image_url: !secret Camera_2_URL
+    stream_source: !secret Camera_2_Source
+
+####################################################
+#                                                  #
+#                     STREAM                       #
+#                                                  #
+####################################################
+# Enable stream
+# https://www.home-assistant.io/integrations/stream/
+stream:
+ 
 ####################################################
 #                                                  #
 #            END OF CONFIGURATION FILE             #

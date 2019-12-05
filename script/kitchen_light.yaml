@@ -1,4 +1,4 @@
-﻿  ##########################
+  ##########################
   ### Köksbelysning 100% ###
   ##########################
   kitchen_light_100:
@@ -8,14 +8,17 @@
         data:
           entity_id: light.kok_underskap_bank
           brightness_pct: 100
+          transition: 2
       - service: light.turn_on
         data:
           entity_id: light.kok_underskap_diskbank
           brightness_pct: 100
+          transition: 2
       - service: light.turn_on
         data:
           entity_id: light.kok_vitrinskap
           brightness_pct: 100
+          transition: 2
 
   #########################
   ### Köksbelysning 25% ###

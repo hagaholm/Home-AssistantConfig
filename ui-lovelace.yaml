@@ -31,7 +31,7 @@ views:
         # The picture entity card will represent an entity with a picture
       - type: picture-entity
         image: https://www.home-assistant.io/images/default-social.png
-        entity: light.hall_byra_dimmer
+        entity: light.hall_byra
 
     # Specify a tab icon if you want the view tab to be an icon.
   - icon: mdi:home-assistant
@@ -45,9 +45,9 @@ views:
         # The entities here will be shown in the same order as specified.
         # Each entry is an entity ID or a map with extra options.
         entities:
-          - light.hall_byra_dimmer
+          - light.hall_byra
           - switch.hall_skap
-          - entity: light.vardagsrum_skank_dimmer
+          - entity: light.vardagsrum_skank
             # Override the name to use
             name: LR Lights
 

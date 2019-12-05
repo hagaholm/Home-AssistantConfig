@@ -3,15 +3,15 @@
     sequence:
       - service: light.turn_on
         data:
-          entity_id: light.vardagsrum_skank_dimmer
+          entity_id: light.vardagsrum_skank
           brightness_pct: 100
       - service: light.turn_on
         data:
-          entity_id: light.vardagsrum_fonster_dimmer
+          entity_id: light.vardagsrum_fonster
           brightness_pct: 100
       - service: light.turn_on
         data:
-          entity_id: light.hall_byra_dimmer
+          entity_id: light.hall_byra
           brightness_pct: 100  
         
   tv_light_normal:
@@ -19,15 +19,15 @@
     sequence:
       - service: light.turn_on
         data:
-          entity_id: light.vardagsrum_skank_dimmer
+          entity_id: light.vardagsrum_skank
           brightness_pct: 75
       - service: light.turn_on
         data:
-          entity_id: light.vardagsrum_fonster_dimmer
+          entity_id: light.vardagsrum_fonster
           brightness_pct: 75
       - service: light.turn_on
         data:
-          entity_id: light.hall_byra_dimmer
+          entity_id: light.hall_byra
           brightness_pct: 75  
 
   tv_light_look_at_tv:
@@ -35,24 +35,24 @@
     sequence:
       - service: light.turn_on
         data:
-          entity_id: light.vardagsrum_skank_dimmer
+          entity_id: light.vardagsrum_skank
           brightness_pct: 50
       - service: light.turn_on
         data:
-          entity_id: light.vardagsrum_fonster_dimmer
+          entity_id: light.vardagsrum_fonster
           brightness_pct: 50
       - service: light.turn_on
         data:
-          entity_id: light.hall_byra_dimmer
+          entity_id: light.hall_byra
           brightness_pct: 40  
 
   tv_light_off:
     alias: Tv lampor off
     sequence:
       - service: light.turn_off
-        entity_id: light.vardagsrum_skank_dimmer
+        entity_id: light.vardagsrum_skank
       - service: light.turn_off
-        entity_id: light.vardagsrum_fonster_dimmer
+        entity_id: light.vardagsrum_fonster
       - service: light.turn_off
-        entity_id: light.hall_byra_dimmer
+        entity_id: light.hall_byra
  

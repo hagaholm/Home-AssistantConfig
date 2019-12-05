@@ -3,7 +3,7 @@
     #################
     #######################################################################
     ### Tänder friggebod fasadbelysning på morgonen vid rörelse i köket ###
-    ### T: input_boolean.rorelsevakt_kok_aktiv == on                    ###
+    ### T: input_boolean.rorelsevakt_aktiv == on                        ###
     ### C: sensor.ljusstyrka < 40                                       ###
     ###    05:00:00 - 12:00:00                                          ###
     ### A: light.friggebod_fasad = on                                   ###
@@ -11,7 +11,7 @@
   - alias: Friggebod fasadbelysning on (sensor on, <40)
     trigger:
       platform: state
-      entity_id: input_boolean.rorelsevakt_kok_aktiv
+      entity_id: input_boolean.rorelsevakt_aktiv
       to: 'on'
     condition:
       condition: and
@@ -30,6 +30,7 @@
         data:
           entity_id: light.friggebod_fasad
           brightness_pct: 30
+          transition: 5
 
     ##########################################################
     ### Tänder friggebod fasadbelysning när det blir mörkt ###
@@ -57,6 +58,7 @@
         data:
           entity_id: light.friggebod_fasad
           brightness_pct: 30
+          transition: 5
 
     ###########################################################
     ### Släcker friggebod fasadbelysning när det blir ljust ###
@@ -139,6 +141,7 @@
         data:
           entity_id: light.forrad_fasad
           brightness_pct: 30
+          transition: 5
 
     #####################################################################
     ### Tänder förråd fasadbelysning när ledbelysning i uterum släcks ###
@@ -166,6 +169,7 @@
         data:
           entity_id: light.forrad_fasad
           brightness_pct: 30
+          transition: 5
 
     ########################################################
     ### Släcker förråd fasadbelysning när det blir ljust ###

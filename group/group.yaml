@@ -196,44 +196,55 @@
       - light.kok_underskap_bank
       - light.kok_underskap_diskbank
       - light.kok_vitrinskap
-      - input_boolean.rorelsevakt_kok_aktiv
-      - timer.timer_rorelsevakt_kok_medium
+      - input_boolean.rorelsevakt_aktiv
+      - timer.timer_rorelsevakt_1_medium
+      - timer.timer_rorelsevakt_2_medium
 
   morning_lights:
     name: Morgonbelysning
     view: no
     entities:
       - light.kok_stora_fonstret
+      - light.kok_stora_fonstret_ljusstake
       - light.kok_lilla_fonstret
-      - light.hall_byra_dimmer
-      - light.vardagsrum_fonster_dimmer
+      - light.hall_byra
+      - light.vardagsrum_fonster
+      - light.vardagsrum_fonster_ljusstake_2
       - light.vardagsrum_gran
       - light.uterum_fonster
+      - light.uterum_julstjarnor
 
   evening_lights:
     name: Kvällsbelysning
     view: no
     entities:
       - light.kok_stora_fonstret
+      - light.kok_stora_fonstret_ljusstake
       - light.kok_lilla_fonstret
-      - light.hall_byra_dimmer
+      - light.hall_byra
       - light.hall_skap
-      - light.vardagsrum_fonster_dimmer
-      - light.vardagsrum_skank_dimmer
+      - light.vardagsrum_fonster
+      - light.vardagsrum_fonster_ljusstake_2
+      - light.vardagsrum_skank
       - light.vardagsrum_vitrinskap
       - light.vardagsrum_gran
       - light.sovrum_fonster
       - light.andreas_fonster
       - light.louise_fonster
+      - light.louise_fonster_dimmer_julstjarna
       - light.uterum_fonster
+      - light.uterum_julstjarnor
 
   night_lights:
     name: Nattbelysning
     view: no
     entities:
-      - light.hall_byra_dimmer
-      - light.vardagsrum_fonster_dimmer
-      - timer.timer_rorelsevakt_kok_short
+      - light.hall_byra
+      - light.vardagsrum_fonster
+      - light.vardagsrum_fonster_ljusstake_2
+      - input_boolean.rorelsevakt_aktiv
+      - timer.timer_rorelsevakt_1_short
+      - timer.timer_rorelsevakt_2_short
 
   uterums:
     name: Uterum
@@ -249,8 +260,9 @@
       - light.forrad_fasad
       - light.friggebod_fasad
       - light.friggebod_ute
-      - light.friggebod_stora_fonstret
-      - light.friggebod_lilla_fonstret
+      - light.friggebod_fonster
+#      - light.friggebod_stora_fonstret
+#      - light.friggebod_lilla_fonstret
       - light.spabad_vagg
 
   away_lights:
@@ -258,12 +270,16 @@
     view: no
     entities:
       - light.kok_stora_fonstret
+      - light.kok_stora_fonstret_ljusstake
       - light.kok_lilla_fonstret
-      - light.hall_byra_dimmer
-      - light.vardagsrum_fonster_dimmer
+      - light.hall_byra
+      - light.vardagsrum_fonster
+      - light.vardagsrum_fonster_ljusstake_2
       - light.sovrum_fonster
       - light.louise_fonster
+      - light.louise_fonster_dimmer_julstjarna
       - light.uterum_fonster
+      - light.uterum_julstjarnor
 
 #############
 #############
@@ -299,12 +315,14 @@
       - sensor.frys_temperature
       #- sensor.frys_humidity # Onödigt att visa, kanska kan larma om ovanligt värde
       - light.kok_stora_fonstret
+      - light.kok_stora_fonstret_ljusstake
       - light.kok_lilla_fonstret
       - light.kok_underskap_bank
       - light.kok_underskap_diskbank
       - light.kok_vitrinskap
-      - input_boolean.rorelsevakt_kok_aktiv
-      - timer.timer_rorelsevakt_kok_medium
+      - input_boolean.rorelsevakt_aktiv
+      - timer.timer_rorelsevakt_1_medium
+      - timer.timer_rorelsevakt_2_medium
 
   hall:
     name: Hall
@@ -312,8 +330,9 @@
     entities:
       - sensor.hall_temperature
       - sensor.hall_humidity
-      - light.hall_byra_dimmer
+      - light.hall_byra
       - light.hall_skap
+      - switch.ringklocka
 
   laundry:
     name: Tvättstuga
@@ -328,8 +347,9 @@
     view: no
     entities:
       - sensor.vardagsrum_temperature
-      - light.vardagsrum_fonster_dimmer
-      - light.vardagsrum_skank_dimmer
+      - light.vardagsrum_fonster
+      - light.vardagsrum_fonster_ljusstake_2
+      - light.vardagsrum_skank
       - light.vardagsrum_vitrinskap
       - light.vardagsrum_gran
       - switch.vardagsrum_stereobank
@@ -360,6 +380,8 @@
       - sensor.louise_rum_temperature
       - sensor.louise_rum_humidity
       - light.louise_fonster
+      - light.louise_fonster_dimmer_julstjarna
+      - light.discolampa
 
   andreas_room:
     name: Andreas rum
@@ -373,6 +395,7 @@
     entities:
       - sensor.uterum
       - light.uterum_fonster
+      - light.uterum_julstjarnor
       - light.uterum_led
       - light.uterum_fotogenlampa
 
@@ -394,8 +417,9 @@
     entities:
       - sensor.friggebod_temperature
       - sensor.friggebod_humidity
-      - light.friggebod_lilla_fonstret
-      - light.friggebod_stora_fonstret
+      - light.friggebod_fonster
+#      - light.friggebod_lilla_fonstret
+#      - light.friggebod_stora_fonstret
 
   garage:
     name: Garage/Förråd
@@ -404,7 +428,7 @@
       - sensor.forrad_temperature
       - sensor.forrad_humidity
       - sensor.garage_temperature
-      - switch.garage_luftavfuktare_2
+      - switch.garage_luftavfuktare
 
   outside:
     name: Ute
@@ -416,6 +440,8 @@
       - light.forrad_fasad
       - light.friggebod_fasad
       - light.friggebod_ute
+      - switch.ringklocka_tvattstuga
+      - switch.ringklocka_hall
 
   fan:
     name: Ventilation
@@ -491,6 +517,50 @@
       - automation.dagligen_mandag
       - automation.dagligen_onsdag
       - automation.dagligen_fredag
+
+################
+################
+# View: Kamera #
+################
+################
+  camera_view:
+    name: Kamera
+    view: yes
+    entities:
+      - group.camera
+      - group.camera_timer
+
+  camera:
+    name: Kamera
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - device_tracker.camera1
+      - device_tracker.camera2
+      - binary_sensor.motion_kamera_1
+      - binary_sensor.motion_kamera_2
+      - camera.kamera_1
+      - camera.kamera_2
+
+  camera_timer:
+    name: timer
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - timer.timer_camera_1_home
+      - timer.timer_camera_1_away
+      - timer.timer_camera_2_home
+      - timer.timer_camera_2_away
+      - input_boolean.camera_1_aktiv
+      - input_boolean.camera_2_aktiv
+      - automation.startar_camera_1_timers
+      - automation.startar_camera_2_timers
+      - automation.stanger_av_camera_1_aktiv_home
+      - automation.stanger_av_camera_1_aktiv_away
+      - automation.stanger_av_camera_2_aktiv_home
+      - automation.stanger_av_camera_2_aktiv_away
 
 ################
 ################
@@ -627,7 +697,6 @@
 
   automation_larm:
     name: Larm
-#    control: hidden
     entities:
       - automation.larm_rorelse_i_koket
       - automation.blinkar_inne_hem
@@ -635,7 +704,6 @@
 
   automation_larm_reading:
     name: Larm avläsningar saknas
-#    control: hidden
     entities:
       - input_boolean.frys_reading_missing_alarm
       - input_boolean.kyl_reading_missing_alarm
@@ -660,7 +728,6 @@
 
   automation_kitchen_light:
     name: Köksbelysning
-#    control: hidden
     entities:
       - automation.kok_100_2500
       - automation.kok_100_morgon_sensor_on_2500
@@ -675,7 +742,6 @@
 
   automation_morning_light:
     name: Morgonbelysning
-#    control: hidden
     entities:
       - automation.morgonbelysning_on_sensor_on_1800
       - automation.morgonbelysning_on_hemma_1800
@@ -684,7 +750,6 @@
 
   automation_evening_light:
     name: Kvällsbelysning
-#    control: hidden
     entities:
       - automation.kvallsbelysning_on_12_00_00_1800_hemma
       - automation.kvallsbelysning_on_1800_hemma
@@ -695,14 +760,12 @@
 
   automation_night_light:
     name: Nattbelysning
-#    control: hidden
     entities:
       - automation.nattbelysning_sensor_on_hemma_0_150
       - automation.nattbelysning_off_sensor_off
 
   automation_away_light_morning:
     name: Bortabelysning morgon
-#    control: hidden
     entities:
       - automation.bortabelysning_on_07_00_00_200_borta
       - automation.bortabelysning_on_borta_200_morgon
@@ -711,7 +774,6 @@
 
   automation_away_light_evening:
     name: Bortabelysning kväll
-#    control: hidden
     entities:
       - automation.bortabelysning_on_12_00_00_200_borta
       - automation.bortabelysning_on_200_borta
@@ -720,7 +782,6 @@
 
   automation_uterums_light:
     name: Uterumsbelysning
-#    control: hidden
     entities:
       - automation.uterums_fotogenlampa_on_18
       - automation.uterums_fotogenlampa_on_250
@@ -737,7 +798,6 @@
 
   automation_outside_light:
     name: Utebelysning
-#    control: hidden
     entities:
       - automation.friggebod_belysning_on_1
       - automation.friggebod_belysning_ute_on_5
@@ -748,7 +808,6 @@
 
   automation_outside_facade_light:
     name: Fasadbelysning
-#    control: hidden
     entities:
       - automation.friggebod_fasadbelysning_on_sensor_on_40
       - automation.friggebod_fasadbelysning_on_40
@@ -761,7 +820,6 @@
 
   automation_temp_larm:
     name: Larm temperatur
-#    control: hidden
     entities:
       - automation.uterum_larm_hog_temp
       - automation.friggebod_larm_hog_temp
@@ -782,7 +840,6 @@
 
   automation_pi_offline:
     name: Larm Raspberry Pi offline
-#    control: hidden
     entities:
       - automation.raspberry_pi_b_1_wire_offline
       - automation.raspberry_pi_3b_hagaholm_offline
@@ -792,7 +849,6 @@
 
   automation_travel_time:
     name: Restid till och från jobbet
-#    control: hidden
     entities:
       - automation.kor_annan_vag_hem
       - automation.kor_annan_vag_till_seb
@@ -801,7 +857,6 @@
 
   automation_ikea:
     name: IKEA
-#    control: hidden
     entities:
       - automation.ingen_kontakt_med_forrad_fasadbelysning
       - automation.ingen_kontakt_med_fotogenlampa_i_uterum
@@ -809,26 +864,27 @@
       - automation.ingen_kontakt_med_friggebod_fasadbelysning
       - automation.ingen_kontakt_med_garage_avfuktare
       - automation.ingen_kontakt_med_uterum_fonster
-      - automation.ingen_kontakt_med_vardagsrum_skank_dimmer
+      - automation.ingen_kontakt_med_vardagsrum_skank
       - automation.kontakt_med_forrad_fasadbelysning
       - automation.kontakt_med_fotogenlampa_i_uterum
       - automation.kontakt_med_friggebod_brytare_vid_stora_fonstret
       - automation.kontakt_med_friggebod_fasadbelysning
       - automation.kontakt_med_garage_avfuktare
       - automation.kontakt_med_uterum_fonster
-      - automation.kontakt_med_vardagsrum_skank_dimmer
+      - automation.kontakt_med_vardagsrum_skank
 
   automation_pir:
     name: Rörelsedetektor i kök
-#    control: hidden
     entities:
-      - automation.startar_timers
-      - automation.stanger_av_rorelsevakt_kok_aktiv_for_nattbelysning
-      - automation.stanger_av_rorelsevakt_kok_aktiv_om_aktiv
+      - automation.startar_timers_1
+      - automation.startar_timers_2
+      - automation.stanger_av_rorelsevakt_aktiv_om_aktiv_1
+      - automation.stanger_av_rorelsevakt_aktiv_om_aktiv_2
+      - automation.stanger_av_rorelsevakt_aktiv_for_nattbelysning_1
+      - automation.stanger_av_rorelsevakt_aktiv_for_nattbelysning_2
 
   automation_ventilation:
     name: Ventilation
-#    control: hidden
     entities:
       - automation.badrumsfonster_hog_fukt
       - automation.badrumsfonster_lag_fukt
@@ -836,7 +892,6 @@
 
   automation_ventilation_on_off:
     name: Ventilation On/Off
-#    control: hidden
     entities:
       - automation.ventilation_off_60_borta_ute_24degc_inne_23degc
       - automation.ventilation_off_borta_ute_24degc_60_inne_23degc
@@ -849,7 +904,6 @@
 
   automation_mediaplayer:
     name: Mediaspelare
-#    control: hidden
     entities:
       - automation.mediaspelare_off_borta
       - automation.satt_pa_mediaspelare_vid_watch_tv
@@ -861,7 +915,6 @@
 
   automation_hassbian:
     name: Hassbian
-#    control: hidden
     entities:
       - automation.hassbian_startad
       - automation.hassbian_stoppad
@@ -870,14 +923,17 @@
 
   automation_doorbell:
     name: Ringklocka
-#    control: hidden
     entities:
       - automation.ringklocka_tvattstuga
       - automation.ringklocka_hall
+      - automation.ringklocka_tand_allt_lyse_1
+      - automation.ringklocka_tand_allt_lyse_2
+      - automation.ringklocka_off_borta
+      - automation.ringklocka_on_hemma
+      - automation.ringklocka_tvattstuga_blinka_lampa_kok_lilla_fonstret
 
   automation_garage_air_dryer:
     name: Garage luftavfuktare
-#    control: hidden
     entities:
       - automation.starta_luftavfuktare
       - automation.stoppa_luftavfuktare
@@ -931,7 +987,7 @@
       - sensor.fr24_feeder_aircraft_uploaded
       - sensor.fr24_feeder_radar_code
       - sensor.fr24_feeder_version
-      - sensor.opensky
+#      - sensor.opensky
 
   extra_view_sensor_latest:
     name: Info

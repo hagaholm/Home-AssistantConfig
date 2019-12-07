@@ -97,7 +97,7 @@ input_boolean:
 automation:
     ################################################
     ### Startar båda timers vid rörelse camera 1 ###
-    ### T: binary_sensor.kamera_1_rorelse == on  ###
+    ### T: binary_sensor.motion_kamera_1 == on   ###
     ### A: input_boolean.camera_1_aktiv = on     ###
     ###    timer.timer_camera_1_home = cancel    ###
     ###    timer.timer_camera_1_away = cancel    ###
@@ -107,7 +107,7 @@ automation:
   - alias: Startar Camera 1 timers
     trigger:
       - platform: state
-        entity_id: binary_sensor.kamera_1_rorelse
+        entity_id: binary_sensor.motion_kamera_1
         to: 'on'
     action:
       # Aktiverar rorelsevakt_aktiv
@@ -129,7 +129,7 @@ automation:
 
     ################################################
     ### Startar båda timers vid rörelse camera 2 ###
-    ### T: binary_sensor.kamera_2_rorelse == on  ###
+    ### T: binary_sensor.motion_kamera_1 == on   ###
     ### A: input_boolean.camera_2_aktiv = on     ###
     ###    timer.timer_camera_2_home = cancel    ###
     ###    timer.timer_camera_2_away = cancel    ###
@@ -139,7 +139,7 @@ automation:
   - alias: Startar Camera 2 timers
     trigger:
       - platform: state
-        entity_id: binary_sensor.kamera_2_rorelse
+        entity_id: binary_sensor.motion_kamera_2
         to: 'on'
     action:
       # Aktiverar rorelsevakt_aktiv

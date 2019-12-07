@@ -1,3 +1,5 @@
+default_config:
+
 ####################################################
 #                                                  #
 #                 HOME ASSISTANT                   #
@@ -130,6 +132,8 @@ script: !include_dir_merge_named script
 #                                                  #
 ####################################################
 tellstick:
+  host: core-tellstick
+  port: [50800, 50801]
   signal_repetitions: 3
 
 ####################################################
@@ -383,12 +387,12 @@ input_select:
 asuswrt:
     host: 192.168.1.1
     username: admin
-    ssh_key: /home/homeassistant/.ssh/id_rsa
-#    sensors:
-#    - upload
-#    - download
-#    - upload_speed
-#    - download_speed
+    ssh_key: /config/ssh/asuswrt
+    sensors:
+    - upload
+    - download
+    - upload_speed
+    - download_speed
 
 ####################################################
 #                                                  #

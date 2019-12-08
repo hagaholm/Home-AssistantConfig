@@ -87,18 +87,22 @@ input_boolean:
     initial: off
 
 automation:
-    ##############################################
-    ### Startar timer vid rörelse camera 1     ###
-    ### T: binary_sensor.motion_kamera_1 == on ###
-    ### A: input_boolean.camera_1_aktiv = on   ###
-    ###    timer.timer_camera_1 = cancel       ###
-    ###    timer.timer_camera_1 = start        ###
-    ##############################################
+    ###############################################
+    ### Startar timer vid rörelse camera 1      ###
+    ### T: binary_sensor.motion_kamera_1 == on  ###
+    ###    binary_sensor.motion_kamera_1 == off ###
+    ### A: input_boolean.camera_1_aktiv = on    ###
+    ###    timer.timer_camera_1 = cancel        ###
+    ###    timer.timer_camera_1 = start         ###
+    ###############################################
   - alias: Startar Camera 1 timer
     trigger:
       - platform: state
         entity_id: binary_sensor.motion_kamera_1
         to: 'on'
+      - platform: state
+        entity_id: binary_sensor.motion_kamera_1
+        to: 'off'
     action:
       # Aktiverar rorelsevakt_aktiv
       - service: input_boolean.turn_on
@@ -113,18 +117,22 @@ automation:
       - service: timer.start
         entity_id: timer.timer_camera_1
 
-    ##############################################
-    ### Startar timer vid rörelse camera 2     ###
-    ### T: binary_sensor.motion_kamera_1 == on ###
-    ### A: input_boolean.camera_2_aktiv = on   ###
-    ###    timer.timer_camera_2 = cancel       ###
-    ###    timer.timer_camera_2 = start        ###
-    ##############################################
+    ###############################################
+    ### Startar timer vid rörelse camera 2      ###
+    ### T: binary_sensor.motion_kamera_1 == on  ###
+    ###    binary_sensor.motion_kamera_1 == off ###
+    ### A: input_boolean.camera_2_aktiv = on    ###
+    ###    timer.timer_camera_2 = cancel        ###
+    ###    timer.timer_camera_2 = start         ###
+    ###############################################
   - alias: Startar Camera 2 timer
     trigger:
       - platform: state
         entity_id: binary_sensor.motion_kamera_2
         to: 'on'
+      - platform: state
+        entity_id: binary_sensor.motion_kamera_2
+        to: 'off'
     action:
       # Aktiverar rorelsevakt_aktiv
       - service: input_boolean.turn_on
@@ -186,3 +194,91 @@ automation:
       - service: input_boolean.turn_off
         data:
           entity_id: input_boolean.camera_2_aktiv
+
+    ##################################################
+    ### Startar camera_1_and_2_aktiv               ###
+    ### T: input_boolean.camera_1_aktiv == on      ###
+    ### C: input_boolean.camera_2_aktiv == on      ###
+    ### A: input_boolean.camera_1_and_2_aktiv = on ###
+    ##################################################
+  - alias: Startar camera_1_and_2_aktiv (1 aktiv) 
+    trigger:
+      - platform: state
+        entity_id: input_boolean.camera_1_aktiv
+        to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id:  input_boolean.camera_2_aktiv
+          state: 'on'
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.camera_1_and_2_aktiv
+
+    ##################################################
+    ### Startar camera_1_and_2_aktiv               ###
+    ### T: input_boolean.camera_2_aktiv == on      ###
+    ### C: input_boolean.camera_1_aktiv == on      ###
+    ### A: input_boolean.camera_1_and_2_aktiv = on ###
+    ##################################################
+  - alias: Startar camera_1_and_2_aktiv (2 aktiv) 
+    trigger:
+      - platform: state
+        entity_id: input_boolean.camera_2_aktiv
+        to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id:  input_boolean.camera_1_aktiv
+          state: 'on'
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.camera_1_and_2_aktiv
+
+    ###################################################
+    ### Stoppar camera_1_and_2_aktiv                ###
+    ### T: input_boolean.camera_1_aktiv == off      ###
+    ### C: input_boolean.camera_2_aktiv == off      ###
+    ### A: input_boolean.camera_1_and_2_aktiv = off ###
+    ###################################################
+  - alias: Stoppar camera_1_and_2_aktiv (1 inaktiv) 
+    trigger:
+      - platform: state
+        entity_id: input_boolean.camera_1_aktiv
+        to: 'off'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id:  input_boolean.camera_2_aktiv
+          state: 'off'
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.camera_1_and_2_aktiv
+
+    ###################################################
+    ### Stoppar camera_1_and_2_aktiv                ###
+    ### T: input_boolean.camera_2_aktiv == off      ###
+    ### C: input_boolean.camera_1_aktiv == off      ###
+    ### A: input_boolean.camera_1_and_2_aktiv = off ###
+    ###################################################
+  - alias: Stoppar camera_1_and_2_aktiv (2 inaktiv) 
+    trigger:
+      - platform: state
+        entity_id: input_boolean.camera_2_aktiv
+        to: 'off'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id:  input_boolean.camera_1_aktiv
+          state: 'off'
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.camera_1_and_2_aktiv

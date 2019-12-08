@@ -282,3 +282,135 @@ automation:
       - service: input_boolean.turn_off
         data:
           entity_id: input_boolean.camera_1_and_2_aktiv
+
+    #####################################################
+    ### Skickar notification om kamera 1 aktiv, hemma ###
+    ### T: input_boolean.camera_1_aktiv == on         ###
+    ### C: group.track_for_home_devices == home       ###
+    ### A: notify                                     ###
+    #####################################################
+  - alias: Larm kamera 1 aktiv (home)
+    trigger:
+      platform: state
+      entity_id: input_boolean.camera_1_aktiv
+      to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'home'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'LARM! Kamera 1 aktiv'
+
+    #####################################################
+    ### Skickar notification om kamera 2 aktiv, hemma ###
+    ### T: input_boolean.camera_2_aktiv == on         ###
+    ### C: group.track_for_home_devices == home       ###
+    ### A: notify                                     ###
+    #####################################################
+  - alias: Larm kamera 2 aktiv (home)
+    trigger:
+      platform: state
+      entity_id: input_boolean.camera_2_aktiv
+      to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'home'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'LARM! Kamera 2 aktiv'
+
+    #####################################################
+    ### Skickar notification om kamera 1 aktiv, borta ###
+    ### T: input_boolean.camera_1_aktiv == on         ###
+    ### C: group.track_for_home_devices == not_home   ###
+    ### A: notify                                     ###
+    #####################################################
+  - alias: Larm kamera 1 aktiv (away)
+    trigger:
+      platform: state
+      entity_id: input_boolean.camera_1_aktiv
+      to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'LARM! Kamera 1 aktiv, ingen är hemma'
+
+    #####################################################
+    ### Skickar notification om kamera 2 aktiv, borta ###
+    ### T: input_boolean.camera_2_aktiv == on         ###
+    ### C: group.track_for_home_devices == not_home  ###
+    ### A: notify                                     ###
+    #####################################################
+  - alias: Larm kamera 2 aktiv (away)
+    trigger:
+      platform: state
+      entity_id: input_boolean.camera_2_aktiv
+      to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'LARM! Kamera 2 aktiv, ingen är hemma'
+
+    #########################################################
+    ### Skickar notification om kamerort är aktiva, hemma ###
+    ### T: input_boolean.camera_1_and_2_aktiv == on       ###
+    ### C: group.track_for_home_devices == home           ###
+    ### A: notify                                         ###
+    #########################################################
+  - alias: Larm kameror är aktiva (home)
+    trigger:
+      platform: state
+      entity_id: input_boolean.camera_1_and_2_aktiv
+      to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'home'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'LARM! Kameror är aktiva'
+
+    #########################################################
+    ### Skickar notification om kamerort är aktiva, borta ###
+    ### T: input_boolean.camera_1_and_2_aktiv == on       ###
+    ### C: group.track_for_home_devices == not_home       ###
+    ### A: notify                                         ###
+    #########################################################
+  - alias: Larm kameror är aktiva (away)
+    trigger:
+      platform: state
+      entity_id: input_boolean.camera_1_and_2_aktiv
+      to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'LARM! Kameror är aktiva, ingen är hemma'

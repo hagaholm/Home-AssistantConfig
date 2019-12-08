@@ -58,25 +58,13 @@ binary_sensor:
 # https://www.home-assistant.io/integrations/timer/
 timer:
   # Timers för camera 1
-  # Home
-  timer_camera_1_home:
-    name: Tid kvar camera 1 hemma
-    duration: '00:03:00'
-
-  # Away
-  timer_camera_1_away:
-    name: Tid kvar camera 1 borta
+  timer_camera_1:
+    name: Tid kvar kamera 1
     duration: '00:03:00'
 
   # Timers för camera 2
-  # Home
-  timer_camera_2_home:
-    name: Tid kvar camera 2 hemma
-    duration: '00:03:00'
-
-  # Away
-  timer_camera_2_away:
-    name: Tid kvar camera 2 borta
+  timer_camera_2:
+    name: Tid kvar kamera 2
     duration: '00:03:00'
 
 ####################################################
@@ -94,17 +82,19 @@ input_boolean:
     name: Kamera 2 aktiv
     initial: off
 
+  camera_1_and_2_aktiv:
+    name: Kameror aktiva
+    iniitial: off
+
 automation:
-    ################################################
-    ### Startar båda timers vid rörelse camera 1 ###
-    ### T: binary_sensor.motion_kamera_1 == on   ###
-    ### A: input_boolean.camera_1_aktiv = on     ###
-    ###    timer.timer_camera_1_home = cancel    ###
-    ###    timer.timer_camera_1_away = cancel    ###
-    ###    timer.timer_camera_1_home = start     ###
-    ###    timer.timer_camera_1_away = start     ###
-    ################################################
-  - alias: Startar Camera 1 timers
+    ##############################################
+    ### Startar timer vid rörelse camera 1     ###
+    ### T: binary_sensor.motion_kamera_1 == on ###
+    ### A: input_boolean.camera_1_aktiv = on   ###
+    ###    timer.timer_camera_1 = cancel       ###
+    ###    timer.timer_camera_1 = start        ###
+    ##############################################
+  - alias: Startar Camera 1 timer
     trigger:
       - platform: state
         entity_id: binary_sensor.motion_kamera_1
@@ -115,28 +105,22 @@ automation:
         data:
           entity_id: input_boolean.camera_1_aktiv
 
-      # Cancel timers, återställer till maxtid
+      # Cancel timer, återställer till maxtid
       - service: timer.cancel
-        entity_id: timer.timer_camera_1_home
-      - service: timer.cancel
-        entity_id: timer.timer_camera_1_away
+        entity_id: timer.timer_camera_1
 
-      # Start timers, börjar räkna ner tiden
+      # Start timer, börjar räkna ner tiden
       - service: timer.start
-        entity_id: timer.timer_camera_1_home
-      - service: timer.start
-        entity_id: timer.timer_camera_1_away
+        entity_id: timer.timer_camera_1
 
-    ################################################
-    ### Startar båda timers vid rörelse camera 2 ###
-    ### T: binary_sensor.motion_kamera_1 == on   ###
-    ### A: input_boolean.camera_2_aktiv = on     ###
-    ###    timer.timer_camera_2_home = cancel    ###
-    ###    timer.timer_camera_2_away = cancel    ###
-    ###    timer.timer_camera_2_home = start     ###
-    ###    timer.timer_camera_2_away = start     ###
-    ################################################
-  - alias: Startar Camera 2 timers
+    ##############################################
+    ### Startar timer vid rörelse camera 2     ###
+    ### T: binary_sensor.motion_kamera_1 == on ###
+    ### A: input_boolean.camera_2_aktiv = on   ###
+    ###    timer.timer_camera_2 = cancel       ###
+    ###    timer.timer_camera_2 = start        ###
+    ##############################################
+  - alias: Startar Camera 2 timer
     trigger:
       - platform: state
         entity_id: binary_sensor.motion_kamera_2
@@ -147,37 +131,30 @@ automation:
         data:
           entity_id: input_boolean.camera_2_aktiv
 
-      # Cancel timers, återställer till maxtid
+      # Cancel timer, återställer till maxtid
       - service: timer.cancel
-        entity_id: timer.timer_camera_2_home
-      - service: timer.cancel
-        entity_id: timer.timer_camera_2_away
+        entity_id: timer.timer_camera_2
 
-      # Start timers, börjar räkna ner tiden
+      # Start timer, börjar räkna ner tiden
       - service: timer.start
-        entity_id: timer.timer_camera_2_home
-      - service: timer.start
-        entity_id: timer.timer_camera_2_away
+        entity_id: timer.timer_camera_2
 
-    ################################################
-    ### Stänger av camera_1_aktiv (home)         ###
-    ### T: timer.timer_camera_1_home == finished ###
-    ### C: group.track_for_home_devices == home  ###
-    ###    input_boolean.camera_1_aktiv == on    ###
-    ### A: input_boolean.camera_1_aktiv = off    ###
-    ################################################
-  - alias: Stänger av camera_1_aktiv (home)
+    ###############################################
+    ### Stänger av camera_1_aktiv               ###
+    ### T: timer.timer_camera_1 == finished     ###
+    ### C: group.track_for_home_devices == away ###
+    ###    input_boolean.camera_1_aktiv == on   ###
+    ### A: input_boolean.camera_1_aktiv = off   ###
+    ###############################################
+  - alias: Stänger av camera_1_aktiv
     trigger:
       - platform: event
         event_type: timer.finished
         event_data:
-          entity_id: timer.timer_camera_1_home
+          entity_id: timer.timer_camera_1
     condition:
       condition: and
       conditions:
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'home'
         - condition: state
           entity_id:  input_boolean.camera_1_aktiv
           state: 'on'
@@ -186,79 +163,22 @@ automation:
         data:
           entity_id: input_boolean.camera_1_aktiv
 
-    ################################################
-    ### Stänger av camera_1_aktiv (away)         ###
-    ### T: timer.timer_camera_1_away == finished ###
-    ### C: group.track_for_home_devices == away  ###
-    ###    input_boolean.camera_1_aktiv == on    ###
-    ### A: input_boolean.camera_1_aktiv = off    ###
-    ################################################
-  - alias: Stänger av camera_1_aktiv (away)
+    ###############################################
+    ### Stänger av camera_2_aktiv               ###
+    ### T: timer.timer_camera_2 == finished     ###
+    ### C: group.track_for_home_devices == home ###
+    ###    input_boolean.camera_2_aktiv == on   ###
+    ### A: input_boolean.camera_2_aktiv = off   ###
+    ###############################################
+  - alias: Stänger av camera_2_aktiv
     trigger:
       - platform: event
         event_type: timer.finished
         event_data:
-          entity_id: timer.timer_camera_1_away
+          entity_id: timer.timer_camera_2
     condition:
       condition: and
       conditions:
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'away'
-        - condition: state
-          entity_id:  input_boolean.camera_1_aktiv
-          state: 'on'
-    action:
-      - service: input_boolean.turn_off
-        data:
-          entity_id: input_boolean.camera_1_aktiv
-
-    ################################################
-    ### Stänger av camera_2_aktiv (home)         ###
-    ### T: timer.timer_camera_2_home == finished ###
-    ### C: group.track_for_home_devices == home  ###
-    ###    input_boolean.camera_2_aktiv == on    ###
-    ### A: input_boolean.camera_2_aktiv = off    ###
-    ################################################
-  - alias: Stänger av camera_2_aktiv (home)
-    trigger:
-      - platform: event
-        event_type: timer.finished
-        event_data:
-          entity_id: timer.timer_camera_2_home
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'home'
-        - condition: state
-          entity_id:  input_boolean.camera_2_aktiv
-          state: 'on'
-    action:
-      - service: input_boolean.turn_off
-        data:
-          entity_id: input_boolean.camera_2_aktiv
-
-    ################################################
-    ### Stänger av camera_2_aktiv (away)         ###
-    ### T: timer.timer_camera_2_away == finished ###
-    ### C: group.track_for_home_devices == away  ###
-    ###    input_boolean.camera_2_aktiv == on    ###
-    ### A: input_boolean.camera_2_aktiv = off    ###
-    ################################################
-  - alias: Stänger av camera_2_aktiv (away)
-    trigger:
-      - platform: event
-        event_type: timer.finished
-        event_data:
-          entity_id: timer.timer_camera_2_away
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'away'
         - condition: state
           entity_id:  input_boolean.camera_2_aktiv
           state: 'on'

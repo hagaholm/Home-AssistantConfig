@@ -550,18 +550,16 @@
     icon: mdi:information-outline
     control: hidden
     entities:
-      - timer.timer_camera_1_home
-      - timer.timer_camera_1_away
-      - timer.timer_camera_2_home
-      - timer.timer_camera_2_away
+      - timer.timer_camera_1
+      - timer.timer_camera_2
       - input_boolean.camera_1_aktiv
       - input_boolean.camera_2_aktiv
+      - input_boolean.camera_1_and_2_aktiv
       - automation.startar_camera_1_timers
       - automation.startar_camera_2_timers
-      - automation.stanger_av_camera_1_aktiv_home
-      - automation.stanger_av_camera_1_aktiv_away
-      - automation.stanger_av_camera_2_aktiv_home
-      - automation.stanger_av_camera_2_aktiv_away
+      - automation.stanger_av_camera_1_aktiv
+      - automation.stanger_av_camera_2_aktiv
+
 
 ################
 ################

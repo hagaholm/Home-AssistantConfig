@@ -429,6 +429,7 @@
       - sensor.forrad_humidity
       - sensor.garage_temperature
       - switch.garage_luftavfuktare
+      - switch.garage_elvarme
 
   outside:
     name: Ute
@@ -713,6 +714,7 @@
       - group.automation_hassbian
       - group.automation_doorbell
       - group.automation_garage_air_dryer
+      - group.automation_garage_heater
       - group.automation_pi_offline
       - group.automation_travel_time
       - group.automation_ikea
@@ -960,6 +962,12 @@
     entities:
       - automation.starta_luftavfuktare
       - automation.stoppa_luftavfuktare
+
+  automation_garage_heater:
+    name: Garage elvärme
+    entities:
+      - automation.starta_elvarme
+      - automation.stoppa_elvarme
 
 ##############################################################
 

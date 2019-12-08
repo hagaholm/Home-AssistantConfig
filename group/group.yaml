@@ -542,25 +542,33 @@
       - binary_sensor.motion_kamera_2
       - camera.kamera_1
       - camera.kamera_2
-
+      - camera.kamera_1_2
+      - camera.kamera_2_2
   camera_timer:
     name: timer
     view: no
     icon: mdi:information-outline
     control: hidden
     entities:
-      - timer.timer_camera_1_home
-      - timer.timer_camera_1_away
-      - timer.timer_camera_2_home
-      - timer.timer_camera_2_away
+      - timer.timer_camera_1
+      - timer.timer_camera_2
       - input_boolean.camera_1_aktiv
       - input_boolean.camera_2_aktiv
-      - automation.startar_camera_1_timers
-      - automation.startar_camera_2_timers
-      - automation.stanger_av_camera_1_aktiv_home
-      - automation.stanger_av_camera_1_aktiv_away
-      - automation.stanger_av_camera_2_aktiv_home
-      - automation.stanger_av_camera_2_aktiv_away
+      - input_boolean.camera_1_and_2_aktiv
+      - automation.startar_camera_1_timer
+      - automation.startar_camera_2_timer
+      - automation.stanger_av_camera_1_aktiv
+      - automation.stanger_av_camera_2_aktiv
+      - automation.startar_camera_1_and_2_aktiv_1_aktiv
+      - automation.startar_camera_1_and_2_aktiv_2_aktiv
+      - automation.stoppar_camera_1_and_2_aktiv_1_inaktiv
+      - automation.stoppar_camera_1_and_2_aktiv_2_inaktiv
+      - automation.larm_kamera_1_aktiv_home
+      - automation.larm_kamera_1_aktiv_away
+      - automation.larm_kamera_2_aktiv_home
+      - automation.larm_kamera_2_aktiv_away
+      - automation.larm_kameror_ar_aktiva_home
+      - automation.larm_kameror_ar_aktiva_away
 
 ################
 ################

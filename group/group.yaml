@@ -529,6 +529,8 @@
     entities:
       - group.camera
       - group.camera_timer
+      - group.camera_aktiv
+      - group.camera_automation
 
   camera:
     name: Kamera
@@ -542,19 +544,32 @@
       - binary_sensor.motion_kamera_2
       - camera.kamera_1
       - camera.kamera_2
-      - camera.kamera_1_2
-      - camera.kamera_2_2
+
   camera_timer:
-    name: timer
+    name: Timer
     view: no
     icon: mdi:information-outline
     control: hidden
     entities:
       - timer.timer_camera_1
       - timer.timer_camera_2
+
+  camera_aktiv:
+    name: Timer
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
       - input_boolean.camera_1_aktiv
       - input_boolean.camera_2_aktiv
       - input_boolean.camera_1_and_2_aktiv
+
+  camera_automation:
+    name: Automation
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
       - automation.startar_camera_1_timer
       - automation.startar_camera_2_timer
       - automation.stanger_av_camera_1_aktiv

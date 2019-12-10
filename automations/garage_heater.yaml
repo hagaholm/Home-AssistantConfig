@@ -1,0 +1,27 @@
+  ########################################
+  ### Starta elvärme garage            ###
+  ### T: sensor.forrad_temperature < 8 ###
+  ### A: switch.garage_elvarme = on    ###
+  ########################################
+- alias: Starta elvärme
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.forrad_temperature
+    below: '8'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: switch.garage_elvarme
+
+  #########################################
+  ### Stoppa elvärme garage             ###
+  ### T: sensor.forrad_temperature > 10 ###
+  ### A: switch.garage_elvarme = off    ###
+  #########################################
+- alias: Stoppa elvärme
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.forrad_temperature
+    above: '10'
+  action:
+    - service: homeassistant.turn_off
+      entity_id: switch.garage_elvarme

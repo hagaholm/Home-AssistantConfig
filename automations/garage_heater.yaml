@@ -8,7 +8,7 @@ automation:
     trigger:
       platform: numeric_state
       entity_id: sensor.forrad_temperature
-      above: '66'
+      below: '8'
     action:
       - service: homeassistant.turn_on
         entity_id: switch.garage_elvarme
@@ -22,7 +22,7 @@ automation:
     trigger:
       platform: numeric_state
       entity_id: sensor.forrad_temperature
-      below: '64'
+      above: '10'
     action:
       - service: homeassistant.turn_off
         entity_id: switch.garage_elvarme

@@ -47,6 +47,7 @@
   #########################
   ### Nattbelysning off ###
   #########################
+  night_light_off:
     alias: Nattbelysning off
     sequence:
       - service: homeassistant.turn_off

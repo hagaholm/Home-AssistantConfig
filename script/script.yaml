@@ -10,6 +10,10 @@
         entity_id: group.evening_lights
       - service: homeassistant.turn_off
         entity_id: group.kitchen_lights
+# Removed
+#      - service: homeassistant.turn_off
+#        entity_id: group.outside_lights
+# Added
       - service: homeassistant.turn_off
         entity_id: light.vardagsrum_fonster_ljusstake_2
       - service: light.turn_off
@@ -43,6 +47,14 @@
         entity_id: group.evening_lights
       - service: homeassistant.turn_off
         entity_id: group.kitchen_lights
+# Removed
+#      - service: homeassistant.turn_off
+#        entity_id: group.outside_lights
+# Added
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_fasad
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_ute
       - service: homeassistant.turn_off
         entity_id: light.vardagsrum_fonster_ljusstake_2
       - service: light.turn_off
@@ -74,6 +86,12 @@
         entity_id: group.evening_lights
       - service: homeassistant.turn_off
         entity_id: group.kitchen_lights
+# Removed
+#      - service: homeassistant.turn_off
+#        entity_id: group.outside_lights
+# Added
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_fasad
       - service: homeassistant.turn_off
         entity_id: light.vardagsrum_fonster_ljusstake_2
       - service: light.turn_off
@@ -92,11 +110,9 @@
         entity_id: light.friggebod_lilla_fonstret
       - service: homeassistant.turn_off
         entity_id: light.spabad_vagg
-
       - service: remote.turn_off
         entity_id: remote.harmony_hub
       - delay: '00:00:15'
-
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_stereobank
       - service: homeassistant.turn_off
@@ -120,6 +136,14 @@
         entity_id: group.evening_lights
       - service: homeassistant.turn_off
         entity_id: group.kitchen_lights
+# Removed
+#      - service: homeassistant.turn_off
+#        entity_id: group.outside_lights
+# Added
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_fasad
+      - service: homeassistant.turn_off
+        entity_id: light.friggebod_ute
       - service: homeassistant.turn_off
         entity_id: light.vardagsrum_fonster_ljusstake_2
       - service: light.turn_off
@@ -138,11 +162,9 @@
         entity_id: light.friggebod_lilla_fonstret
       - service: homeassistant.turn_off
         entity_id: light.spabad_vagg
-
       - service: remote.turn_off
         entity_id: remote.harmony_hub
       - delay: '00:00:15'
-
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_stereobank
       - service: homeassistant.turn_off
@@ -164,6 +186,10 @@
         entity_id: group.evening_lights
       - service: homeassistant.turn_off
         entity_id: group.kitchen_lights
+# Removed
+#      - service: homeassistant.turn_off
+#        entity_id: group.outside_lights
+# Added
       - service: homeassistant.turn_off
         entity_id: light.vardagsrum_fonster_ljusstake_2
       - service: light.turn_off
@@ -183,6 +209,7 @@
         entity_id: light.friggebod_lilla_fonstret
       - service: homeassistant.turn_off
         entity_id: light.spabad_vagg
+
       - delay: '00:10:00'
 
       - service: remote.turn_off

@@ -1,8 +1,23 @@
-  #####################
-  ### Nattbelysning ###
-  #####################
+  ########################
+  ### Nattbelysning on ###
+  ########################
   night_light:
     alias: Nattbelysning
+    sequence:
+      - service: script.turn_on
+        data_template:
+          entity_id: >
+            {% if is_state('input_boolean.christmas_light', 'on') %}
+              script.night_light_christmas_on
+            {% else %}
+              script.night_light_default_on
+            {% endif %}  
+  
+  ################################
+  ### Nattbelysning default on ###
+  ################################
+  night_light_default_on:
+    alias: Nattbelysning default
     sequence:
       - service: light.turn_on
         data:
@@ -13,6 +28,22 @@
           entity_id: light.vardagsrum_fonster
           brightness_pct: 1
 
+  ##################################
+  ### Nattbelysning christmas on ###
+  ##################################
+  night_light_christmas_on:
+    alias: Nattjulbelysning
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: light.hall_byra
+          brightness_pct: 1
+      - service: light.turn_on
+        data:
+          entity_id: light.vardagsrum_fonster_ljusstake_2
+          brightness_pct: 100
+          transition: 5
+
   #########################
   ### Nattbelysning off ###
   #########################
@@ -21,3 +52,5 @@
     sequence:
       - service: homeassistant.turn_off
         entity_id: group.night_lights
+      - service: light.turn_off
+        entity_id: light.vardagsrum_fonster_ljusstake_2

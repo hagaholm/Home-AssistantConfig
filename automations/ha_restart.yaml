@@ -1,0 +1,32 @@
+###############################################
+### Restart HA                              ###
+### T: time == "04:00:00"                   ###
+### C: group.track_for_home_devices == home ###
+###    light.kok_lilla_fonstret == off      ###
+###    light.kok_lilla_fonstret == off      ###
+### A: homeassistant.restart                ###
+###############################################
+  - alias: Restart HA
+    trigger:
+      platform: time
+      at: "04:00:00"
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'home'
+        - condition: state
+          entity_id: light.kok_lilla_fonstret
+          state: 'off'
+        - condition: time
+          weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+          - sat
+          - sun
+    action:
+      - service: homeassistant.restart

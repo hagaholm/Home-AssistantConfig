@@ -48,7 +48,7 @@ sensor:
         icon_template: 'mdi:timer'
       vacuum_cleaned_area:
         friendly_name: Area of Last Cycle
-        unit_of_measurement: 'm ²'
+        unit_of_measurement: 'm²'
         entity_id:
           - vacuum.xiaomi_vacuum_cleaner
         value_template: '{{ states.vacuum.xiaomi_vacuum_cleaner.attributes.cleaned_area }}'
@@ -74,6 +74,13 @@ sensor:
           - vacuum.xiaomi_vacuum_cleaner
         value_template: 'Filter: {{ states.vacuum.xiaomi_vacuum_cleaner.attributes.filter_left }}'
         icon_template: 'mdi:screwdriver'
+      vacuum_cleanstop:
+        friendly_name: Clean stop
+        unit_of_measurement: 'date'
+        entity_id:
+          - vacuum.xiaomi_vacuum_cleaner
+        value_template: 'Filter: {{ states.vacuum.xiaomi_vacuum_cleaner.attributes.clean_stop }}'
+        icon_template: 'mdi:stop'
       vacuum_sensordirtyleft:
         friendly_name: Clean sensor
         unit_of_measurement: 'h'
@@ -343,3 +350,13 @@ automation:
     action:
       - service: script.vacuum_daily        
 
+  - alias: "Dammsugaren har problem"
+    trigger:
+      - platform: state
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        to: "error"
+    action:
+      - service: notify.pushbullet
+        data:
+          title: "Dammsugaren har problem"
+          message: "Han sitter fast eller vill bara ha lite uppmärksamhet"

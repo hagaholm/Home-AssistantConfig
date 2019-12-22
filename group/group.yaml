@@ -467,7 +467,6 @@
     entities:
       - group.time_to_clean
       - group.xiaomi_vacuum_cleaner
-      - group.automation_cleaner
 
   time_to_clean:
     name: Dammsug
@@ -508,16 +507,6 @@
       - sensor.vacuum_do_not_disturb
       - sensor.vacuum_operation
       - sensor.vacuum_accessories
-
-  automation_cleaner:
-    name: Automation
-    view: no
-    icon: mdi:information-outline
-    control: hidden
-    entities:
-      - automation.dagligen_mandag
-      - automation.dagligen_onsdag
-      - automation.dagligen_fredag
 
 ################
 ################
@@ -719,6 +708,7 @@
       - group.automation_travel_time
       - group.automation_ikea
       - group.automation_pir
+      - group.automation_cleaner
 
   automation_larm:
     name: Larm
@@ -945,6 +935,7 @@
       - automation.hassbian_stoppad
       - automation.ny_enhet_hittad
       - automation.hassbian_uppdatering
+      - automation.restart_ha
 
   automation_doorbell:
     name: Ringklocka
@@ -969,6 +960,13 @@
       - automation.starta_elvarme
       - automation.stoppa_elvarme
 
+  automation_cleaner:
+    name: Dammsugare
+    entities:
+      - automation.dagligen_mandag
+      - automation.dagligen_onsdag
+      - automation.dagligen_fredag
+      - automation.dammsugaren_har_problem
 ##############################################################
 
   family:

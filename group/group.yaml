@@ -957,8 +957,10 @@
   automation_garage_heater:
     name: Garage elvärme
     entities:
-      - automation.starta_elvarme
-      - automation.stoppa_elvarme
+      - automation.starta_elvarme_5_grader
+      - automation.stoppa_elvarme_7_grader
+      - automation.starta_elvarme_8_grader
+      - automation.stoppa_elvarme_10_grader
 
   automation_cleaner:
     name: Dammsugare

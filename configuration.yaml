@@ -52,6 +52,11 @@ config:
 # http
 # https://home-assistant.io/components/http/
 http:
+  # Added for Duck DNS and Google Assistant
+  base_url: https://hagaholm.duckdns.org:8123
+  ssl_certificate: /ssl/fullchain.pem
+  ssl_key: /ssl/privkey.pem
+
 #  api_password: !secret http_password
   ip_ban_enabled: True
   login_attempts_threshold: 3

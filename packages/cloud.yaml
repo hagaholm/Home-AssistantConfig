@@ -1,0 +1,58 @@
+####################################################
+#                                                  #
+#                      CLOUD                       #
+#                                                  #
+####################################################
+cloud:
+  google_actions:
+#    filter:
+#      include_entities:
+#        - light.kitchen
+#        - light.kitchen_left
+#      include_domains:
+#        - switch
+#        - script
+#      exclude_entities:
+#        - switch.outside
+#       exclude_domains:
+#         - scene
+#         - script
+    entity_config:
+#      switch.kitchen:
+#        name: Custom Name for Google Assistant
+#        aliases:
+#         - bright lights
+#         - entry lights
+#        room: living room
+      script.fan_normal:
+        name: Fläkt normal
+        aliases:
+          - fläkt normal
+
+      script.fan_forced:
+        name: Fläkt forcerad
+        aliases:
+          - fläkt forcerad
+
+      script.goodnight_all:
+        name: Godnatt
+        aliases:
+          - godnatt
+          - sovdags
+
+      script.goodnight:
+        name: Släck allt
+        aliases:
+          - släck allt
+
+      script.evening_lights_on:
+        name: Kvällsbelysning på
+        aliases:
+          - tänd lyset
+          - sätt på lyse
+
+      script.bedroom_off:
+        name: Sovrumsbelysning av
+        aliases:
+          - släck sovrummet
+          - släck i sovrummet

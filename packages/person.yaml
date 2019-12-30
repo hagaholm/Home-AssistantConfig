@@ -1,0 +1,26 @@
+####################################################
+#                                                  #
+#                      PERSON                      #
+#                                                  #
+####################################################
+# https://www.home-assistant.io/integrations/person/
+person:
+  - name: Micke
+    id: micke
+    device_trackers:
+      - device_tracker.mobil_micke
+
+  - name: Annelie
+    id: annelie
+    device_trackers:
+      - device_tracker.mobil_annelie
+
+  - name: Louise
+    id: louise
+    device_trackers:
+      - device_tracker.mobil_louise
+
+  - name: Andreas
+    id: andreas
+    device_trackers:
+      - device_tracker.mobil_andreas

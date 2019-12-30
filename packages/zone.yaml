@@ -1,0 +1,32 @@
+####################################################
+#                                                  #
+#                        ZONE                      #
+#                                                  #
+####################################################
+# https://www.home-assistant.io/integrations/zone/
+zone:
+    # This will override the default home zone
+  - name: Home
+    latitude: !secret zone_home_latitude
+    longitude: !secret longitude_home
+    radius: 100
+    icon: mdi:home
+
+  - name: M Work
+    latitude: !secret zone_m_work_latitude
+    longitude: !secret zone_m_work_latitude
+    radius: 250
+    icon: mdi:worker
+
+  - name: A Work 1
+    latitude: !secret zone_a_work_1_latitude
+    longitude: !secret zone_a_work_1_latitude
+    radius: 250
+    icon: mdi:worker
+
+  - name: A Work 2
+    latitude: !secret zone_a_work_2_latitude
+    longitude: !secret zone_a_work_2_latitude
+    radius: 250
+    icon: mdi:worker
+

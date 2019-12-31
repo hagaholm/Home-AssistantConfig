@@ -84,31 +84,36 @@ cloud:
         name: Kvällsbelysning på
         aliases:
           - tänd lyset
-          - sätt på lyse
+          - sätt på lyset
         room: Huset
 
       script.bedroom_off:
         name: Sovrumsbelysning av
         aliases:
+          - släck sovrum
+          - släck i sovrum
           - släck sovrummet
           - släck i sovrummet
-        room: Sovrummet
+        room: Sovrum
 
       script.bedroom_on:
         name: Sovrumsbelysning på
         aliases:
+          - tänd sovrum
+          - tänd i sovrum
           - tänd sovrummet
           - tänd i sovrummet
-        room: Sovrummet
+        room: Sovrum
 
       script.harmony_tv:
         name: Starta tv
         aliases:
           - starta tv
-        room: Vardagsrummet
+          - sätt på tv
+        room: Vardagsrum
 
       script.harmony_off:
         name: Stäng tv
         aliases:
           - stäng av tv
-        room: Vardagsrummet
+        room: Vardagsrum

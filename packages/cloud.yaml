@@ -1,3 +1,14 @@
+script:
+  ########################
+  ### Tänd i sovrummet ###
+  ########################
+  bedroom_on:
+    alias: Tänd i sovrummet
+    sequence:
+      - service: homeassistant.turn_on
+        entity_id: light.sovrum_fonster
+
+
 ####################################################
 #                                                  #
 #                      CLOUD                       #
@@ -5,8 +16,17 @@
 ####################################################
 cloud:
   google_actions:
-#    filter:
-#      include_entities:
+    filter:
+      include_entities:
+        - script.fan_normal
+        - script.fan_forced
+        - script.goodnight_all
+        - script.goodnight
+        - script.evening_lights_on
+        - script.bedroom_off
+        - script.bedroom_on
+        - script.harmony_tv
+        - script.harmony_off
 #        - light.kitchen
 #        - light.kitchen_left
 #      include_domains:
@@ -14,9 +34,20 @@ cloud:
 #        - script
 #      exclude_entities:
 #        - switch.outside
-#       exclude_domains:
-#         - scene
-#         - script
+      exclude_domains:
+        - scene
+        - script
+        - binary_sensor
+        - camera
+        - group
+        - input_boolean
+        - input_select
+        - light
+        - lock
+        - media_player
+        - sensor
+        - switch
+        - vacuum
     entity_config:
 #      switch.kitchen:
 #        name: Custom Name for Google Assistant
@@ -28,31 +59,56 @@ cloud:
         name: Fläkt normal
         aliases:
           - fläkt normal
+        room: Huset
 
       script.fan_forced:
         name: Fläkt forcerad
         aliases:
           - fläkt forcerad
+        room: Huset
 
       script.goodnight_all:
         name: Godnatt
         aliases:
           - godnatt
           - sovdags
+        room: Huset
 
       script.goodnight:
         name: Släck allt
         aliases:
           - släck allt
+        room: Huset
 
       script.evening_lights_on:
         name: Kvällsbelysning på
         aliases:
           - tänd lyset
           - sätt på lyse
+        room: Huset
 
       script.bedroom_off:
         name: Sovrumsbelysning av
         aliases:
           - släck sovrummet
           - släck i sovrummet
+        room: Sovrummet
+
+      script.bedroom_on:
+        name: Sovrumsbelysning på
+        aliases:
+          - tänd sovrummet
+          - tänd i sovrummet
+        room: Sovrummet
+
+      script.harmony_tv:
+        name: Starta tv
+        aliases:
+          - starta tv
+        room: Vardagsrummet
+
+      script.harmony_off:
+        name: Stäng tv
+        aliases:
+          - stäng av tv
+        room: Vardagsrummet

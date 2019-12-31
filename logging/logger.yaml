@@ -4,14 +4,29 @@
 #----------------------------------------------------------------------------
 
   default: warn
-#  logs:
+  logs:
 #    # Added to remove some log records at startup
 #    homeassistant.components.media_player.squeezebox: fatal
 #    homeassistant.components.sensor.mold_indicator: fatal
 #    homeassistant.components.sensor: error
 #    netdisco.ssdp: error
 
-#    # Added to remove: 
-#    # WARNING (MainThread) [homeassistant.components.media_player] Updating yamaha media_player took longer than the scheduled update interval 0:00:10
-#    homeassistant.components.media_player: warning
 
+    # Added to remove:
+    # 2019-12-30 22:39:45 ERROR (MainThread) [homeassistant.components.squeezebox.media_player] Failed communicating with LMS: <class 'aiohttp.client_exceptions.ClientConnectorError'>
+    homeassistant.components.squeezebox.media_player: fatal
+
+    # 2019-12-30 22:39:45 WARNING (MainThread) [homeassistant.components.media_player] Platform squeezebox not ready yet. Retrying in 120 seconds.
+    # 2019-12-30 22:40:20 WARNING (MainThread) [homeassistant.components.media_player] Updating yamaha media_player took longer than the scheduled update interval 0:00:10
+    homeassistant.components.media_player: error
+
+    # 2019-12-30 22:40:19 WARNING (MainThread) [homeassistant.helpers.entity] Update of media_player.yamaha_receiver_zone_2 is taking over 10 seconds
+    homeassistant.helpers.entity: error
+
+    # 2019-12-30 22:56:49 WARNING (SyncWorker_8) [homeassistant.components.waze_travel_time.sensor] Error on retrieving data: empty response
+    homeassistant.components.waze_travel_time.sensor: error
+
+    aioharmony.hubconnector: fatal
+    # 2019-12-31 07:17:22 ERROR (MainThread) [aioharmony.hubconnector] 192.168.1.247: Exception on post: Connection timeout to host http://192.168.1.247:8088/
+    # 2019-12-31 07:17:22 ERROR (MainThread) [aioharmony.hubconnector] 192.168.1.247: Unable to retrieve HUB id
+    # 2019-12-31 07:22:31 ERROR (MainThread) [aioharmony.hubconnector] 192.168.1.247: Connection timed out for hub 12135421

@@ -1,6 +1,6 @@
 vacuum:
   - platform: xiaomi_miio
-    host: 192.168.1.144
+    host: 192.168.1.25
     token: !secret vacuum_token
 
 sensor:
@@ -107,14 +107,14 @@ sensor:
 
 script:
   vacuum_house:
-    alias: "Huset"
+    alias: "Dammsug huset"
     sequence:
       - service: vacuum.start
         data:
           entity_id: vacuum.xiaomi_vacuum_cleaner
 
   vacuum_daily:
-    alias: "Dagligen"
+    alias: "Dammsug dagligen"
     sequence:
       - service: vacuum.start
         data:
@@ -132,7 +132,7 @@ script:
           params: [[25006,28117,25706,28617,1],[27008,26977,28058,32227,1],[23778,32252,28028,34052,1],[26128,34092,27978,35792,1],[23786,36098,27836,40998,1],[27903,39379,29453,41029,2],[25006,28117,25706,28617,1]]
 
   vacuum_kitchen:
-    alias: "Köket"
+    alias: "Dammsug köket"
     sequence:
       - service: vacuum.start
         data:
@@ -149,7 +149,7 @@ script:
           params: [[23786,36098,27836,40998,1]]
 
   vacuum_kitchen_carpet:
-    alias: "Köksmattan"
+    alias: "Dammsug köksmattan"
     sequence:
       - service: vacuum.start
         data:
@@ -166,7 +166,7 @@ script:
           params: [[24215,38583,27815,40283,1]]
 
   vacuum_laundry:
-    alias: "Tvättstugan"
+    alias: "Dammsug tvättstugan"
     sequence:
       - service: vacuum.start
         data:
@@ -183,7 +183,7 @@ script:
           params: [[27853,38491,31753,40991,1]]
 
   vacuum_laundry_carpet:
-    alias: "Mattan i tvättstugan"
+    alias: "Dammsug mattan i tvättstugan"
     sequence:
       - service: vacuum.start
         data:
@@ -200,7 +200,7 @@ script:
           params: [[27903,39379,29453,41029,2]]
 
   vacuum_hall:
-    alias: "Hallen"
+    alias: "Dammsug hallen"
     sequence:
       - service: vacuum.start
         data:
@@ -217,7 +217,7 @@ script:
           params: [[27008,26977,28058,32227,1],[23778,32252,28028,34052,1],[26128,34092,27978,35792,1]]
 
   vacuum_sovrum:
-    alias: "Sovrummet"
+    alias: "Dammsug sovrummet"
     sequence:
       - service: vacuum.start
         data:
@@ -234,7 +234,7 @@ script:
           params: [[28167,25130,32167,29130,1]]
 
 #  vacuum_uterum:
-#    alias: "Uterum"
+#    alias: "Dammsug uterum"
 #    sequence:
 #      - service: vacuum.send_command
 #        data:
@@ -245,7 +245,7 @@ script:
 #      - service: vacuum.stop
 
   vacuum_louise_rum:
-    alias: "Louise rum"
+    alias: "Dammsug Louise rum"
     sequence:
       - service: vacuum.start
         data:
@@ -262,7 +262,7 @@ script:
           params: [[24011,25173,26861,29373,1]]
 
   vacuum_andreas_rum:
-    alias: "Andreas rum"
+    alias: "Dammsug Andreas rum"
     sequence:
       - service: vacuum.start
         data:
@@ -279,7 +279,7 @@ script:
           params: [[28030,29476,31930,31976,1]]
 
   vacuum_vardagsrum:
-    alias: "Vardagsrum"
+    alias: "Dammsug vardagsrum"
     sequence:
       - service: vacuum.start
         data:
@@ -296,7 +296,7 @@ script:
           params: [[27928,32039,31928,38639,1]]
 
   vacuum_toalett:
-    alias: "Toalett"
+    alias: "Dammsug toalett"
     sequence:
       - service: vacuum.start
         data:

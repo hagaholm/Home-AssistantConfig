@@ -1,8 +1,10 @@
+################################################################################
 vacuum:
   - platform: xiaomi_miio
     host: 192.168.1.25
     token: !secret vacuum_token
 
+################################################################################
 sensor:
   # Template sensors for Xiaomi Vacuum
   - platform: template
@@ -105,6 +107,7 @@ sensor:
       vacuum_accessories:
         value_template: 'Maintenance'
 
+################################################################################
 script:
   vacuum_house:
     alias: "Dammsug huset"
@@ -312,19 +315,25 @@ script:
           command: app_zoned_clean
           params: [[23816,34397,25366,36047,1]]
 
+################################################################################
 automation:
   - alias: Dagligen måndag
     trigger:
       - platform: time
         at: '10:00:00'
     condition:
-      - condition: time
-        weekday:
-          - mon
-#          - tue
-#          - wed
-#          - thu
-#          - fri
+      condition: and
+      conditions:
+        - condition: time
+          weekday:
+            - mon
+#            - tue
+#            - wed
+#            - thu
+#            - fri
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'home'        
     action:
       - service: script.vacuum_daily
 
@@ -333,9 +342,14 @@ automation:
       - platform: time
         at: '10:00:00'
     condition:
-      - condition: time
-        weekday:
-          - wed
+      condition: and
+      conditions:
+        - condition: time
+          weekday:
+            - wed
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'home'        
     action:
       - service: script.vacuum_daily
 
@@ -344,9 +358,14 @@ automation:
       - platform: time
         at: '10:00:00'
     condition:
-      - condition: time
-        weekday:
-          - fri
+      condition: and
+      conditions:
+        - condition: time
+          weekday:
+            - fri
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'home'        
     action:
       - service: script.vacuum_daily        
 
@@ -359,4 +378,4 @@ automation:
       - service: notify.pushbullet
         data:
           title: "Dammsugaren har problem"
-          message: "Han sitter fast eller vill bara ha lite uppmärksamhet"
+          message: "Sitter fast eller vill bara ha lite uppmärksamhet"

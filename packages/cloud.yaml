@@ -8,6 +8,30 @@ script:
       - service: homeassistant.turn_on
         entity_id: light.sovrum_fonster
 
+  ##########################
+  ### Starta tv ###
+  ##########################
+  tv_on:
+    alias: Starta tv
+    sequence:
+      - service: script.turn_on
+        data_template:
+          entity_id: >
+            {% if is_state('switch.vardagsrum_stereobank', 'on') %}
+              script.harmony_tv
+            {% else %}
+              script.switch_harmony_tv
+            {% endif %}
+
+  switch_harmony_tv:
+    alias: Sätt på strömbrytare innan harmony tv aktiveras
+    sequence:
+      - service: homeassistant.turn_on
+        entity_id: switch.vardagsrum_stereobank
+      - service: homeassistant.turn_on
+        entity_id: switch.vardagsrum_tv
+      - delay: '00:00:10'
+      - service: script.harmony_tv
 
 ####################################################
 #                                                  #
@@ -25,7 +49,7 @@ cloud:
         - script.evening_lights_on
         - script.bedroom_off
         - script.bedroom_on
-        - script.harmony_tv
+        - script.tv_on
         - script.harmony_off
 #        - light.kitchen
 #        - light.kitchen_left
@@ -84,31 +108,36 @@ cloud:
         name: Kvällsbelysning på
         aliases:
           - tänd lyset
-          - sätt på lyse
+          - sätt på lyset
         room: Huset
 
       script.bedroom_off:
         name: Sovrumsbelysning av
         aliases:
+          - släck sovrum
+          - släck i sovrum
           - släck sovrummet
           - släck i sovrummet
-        room: Sovrummet
+        room: Sovrum
 
       script.bedroom_on:
         name: Sovrumsbelysning på
         aliases:
+          - tänd sovrum
+          - tänd i sovrum
           - tänd sovrummet
           - tänd i sovrummet
-        room: Sovrummet
+        room: Sovrum
 
-      script.harmony_tv:
+      script.tv_on:
         name: Starta tv
         aliases:
           - starta tv
-        room: Vardagsrummet
+          - sätt på tv
+        room: Vardagsrum
 
       script.harmony_off:
         name: Stäng tv
         aliases:
           - stäng av tv
-        room: Vardagsrummet
+        room: Vardagsrum

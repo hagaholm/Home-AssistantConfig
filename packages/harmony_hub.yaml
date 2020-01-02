@@ -37,6 +37,32 @@ script:
   harmony_off:
     alias: Harmony, stäng av allt
     sequence:
+#      - service: remote.send_command
+#        data: 
+#          entity_id: remote.harmony_hub
+#          command:
+#            - PowerOff
+#          device: 51581499 # Panasonic TV
+#          delay_secs: 0.6
+#      - service: remote.send_command
+#        data: 
+#          entity_id: remote.harmony_hub
+#          command:
+#            - PowerToggle
+#          device: 51581556 # CanalDigital SAT
+#          delay_secs: 0.6
+#      - service: remote.send_command
+#        data: 
+#          entity_id: remote.harmony_hub
+#          command:
+#            - PowerOff
+#          device: 51581386 # RX-A1030 A47CF6
+#          delay_secs: 0.6          
+      - service: remote.turn_on
+        entity_id: remote.harmony_hub
+        data:
+          activity: '-1'
+      - delay: '00:00:05'
       - service: remote.turn_off
         entity_id: remote.harmony_hub
 

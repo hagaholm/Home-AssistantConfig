@@ -11,6 +11,7 @@ group:
       - group.media_states
       - group.mobile_states
       - group.network_states
+      - group.other_states
       - group.system_monitor_card_pi_b_plus
       - group.system_monitor_card_pi_3b_1
       - group.system_monitor_card_pi_3b_2
@@ -38,6 +39,7 @@ group:
       - sensor.chromecast
       - sensor.chromecast_2
       - sensor.dns320
+      - sensor.google_home_mini
 
   mobile_states:
     name: Mobil status
@@ -60,6 +62,15 @@ group:
       - sensor.asuswrt_download_speed
       - sensor.asuswrt_upload
       - sensor.asuswrt_upload_speed
+
+  other_states:
+    name: Övrigt status
+    entities:
+      - sensor.tradfri_gateway
+      - sensor.rockrobo
+      - sensor.volvo_ykg498
+      - sensor.camera1
+      - sensor.camera2
 
   system_monitor_card_pi_b_plus:
     name: Raspberry Pi B+ (1-Wire)
@@ -246,6 +257,28 @@ sensor:
       dns320:
         friendly_name: 'Nas DNS-320'
         value_template: "{{ 'Online' if is_state('device_tracker.dns320', 'home') else 'Offline' }}"
+      google_home_mini:
+        friendly_name: 'Google Home Mini'
+        value_template: "{{ 'Online' if is_state('device_tracker.google_home_mini', 'home') else 'Offline' }}"
+
+    #########
+    # Other #
+    #########
+      tradfri_gateway:
+        friendly_name: 'Trådfri Gateway'
+        value_template: "{{ 'Online' if is_state('device_tracker.tradfri_gateway', 'home') else 'Offline' }}"
+      rockrobo:
+        friendly_name: 'Xiaomi Roborock S5'
+        value_template: "{{ 'Online' if is_state('device_tracker.rockrobo', 'home') else 'Offline' }}"
+      volvo_ykg498:
+        friendly_name: 'Volvo XC60'
+        value_template: "{{ 'Online' if is_state('device_tracker.volvo_ykg498', 'home') else 'Offline' }}"
+      camera1:
+        friendly_name: 'Kamera 1'
+        value_template: "{{ 'Online' if is_state('device_tracker.camera1', 'home') else 'Offline' }}"
+      camera2:
+        friendly_name: 'Kamera 2'
+        value_template: "{{ 'Online' if is_state('device_tracker.camera2', 'home') else 'Offline' }}"
 
     #############
     # Raspberry #

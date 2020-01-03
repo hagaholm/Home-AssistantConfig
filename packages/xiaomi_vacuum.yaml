@@ -333,7 +333,7 @@ automation:
 #            - fri
         - condition: state
           entity_id: group.track_for_home_devices
-          state: 'home'        
+          state: 'not_home'        
     action:
       - service: script.vacuum_daily
 
@@ -349,7 +349,7 @@ automation:
             - wed
         - condition: state
           entity_id: group.track_for_home_devices
-          state: 'home'        
+          state: 'not_home'        
     action:
       - service: script.vacuum_daily
 
@@ -365,7 +365,7 @@ automation:
             - fri
         - condition: state
           entity_id: group.track_for_home_devices
-          state: 'home'        
+          state: 'not_home'        
     action:
       - service: script.vacuum_daily        
 

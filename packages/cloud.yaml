@@ -1,4 +1,17 @@
 script:
+  #####################################
+  ### Vilken temperatur är det inne ###
+  #####################################
+  temp_inne:
+    alias: Vilken temperatur är det inne
+    sequence:
+      - delay: '00:00:01'
+      - service: tts.google_translate_say
+        entity_id: media_player.vardagsrum
+        data_template:
+          message: Det är {{states('sensor.inne_medel')}} grader inne
+          language: 'sv'
+
   ########################
   ### Tänd i sovrummet ###
   ########################
@@ -51,6 +64,7 @@ cloud:
         - script.bedroom_on
         - script.tv_on
         - script.harmony_off
+        - script.temp_inne
 #        - light.kitchen
 #        - light.kitchen_left
 #      include_domains:
@@ -141,3 +155,7 @@ cloud:
         aliases:
           - stäng av tv
         room: Vardagsrum
+
+      script.temp_inne:
+        name: Vilken temperatur är det inne
+        room: Huset

@@ -71,6 +71,7 @@ group:
       - sensor.volvo_ykg498
       - sensor.camera1
       - sensor.camera2
+      - sensor.garmin_fenix_5_plus
 
   system_monitor_card_pi_b_plus:
     name: Raspberry Pi B+ (1-Wire)
@@ -279,6 +280,9 @@ sensor:
       camera2:
         friendly_name: 'Kamera 2'
         value_template: "{{ 'Online' if is_state('device_tracker.camera2', 'home') else 'Offline' }}"
+      garmin_fenix_5_plus:
+        friendly_name: 'Garmin Fenix 5 Plus'
+        value_template: "{{ 'Online' if is_state('device_tracker.GarminFenix5Plus', 'home') else 'Offline' }}"
 
     #############
     # Raspberry #

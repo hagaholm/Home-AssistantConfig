@@ -23,7 +23,10 @@ group:
       - script.harmony_radio
       - script.harmony_chromecast
       - script.harmony_spotify
+      - script.harmony_chromecast_ultra
+      - script.harmony_chromecast_ultra_listen
       - media_player.chromecast
+      - media_player.chromecast_ultra
       - media_player.yamaha_receiver
       - media_player.vardagsrum
 
@@ -99,6 +102,21 @@ script:
         data:
           activity: '31360307'
 
+  harmony_chromecast_ultra:
+    alias: Starta ChromeCast ultra
+    sequence:
+      - service: remote.turn_on
+        entity_id: remote.harmony_hub
+        data:
+          activity: '42811819'
+
+  harmony_chromecast_ultra_listen:
+    alias: Starta Chromecast ultra radio
+    sequence:
+      - service: remote.turn_on
+        entity_id: remote.harmony_hub
+        data:
+          activity: '42812128'
 automation:
     ###############################################
     ### Stäng av subbasar vid PowerOff          ###
@@ -133,6 +151,8 @@ automation:
     ###    or to current_activity == "Watch ChromeCast"                   ###
     ###    or to current_activity == "Listen to Radio"                    ###
     ###    or to current_activity == "Listen to Spotify"                  ###
+    ###    or to current_activity == "Watch ChromeCast ultra"             ###
+    ###    or to current_activity == "Listen to ChromeCast ultra"         ###
     ### A: switch.vardagsrum_subbas = on                                  ###
     ###    switch.vardagsrum_extra_subbas = on                            ###
     #########################################################################
@@ -151,6 +171,10 @@ automation:
           value_template: '{{ trigger.to_state.attributes.current_activity == "Listen to Radio" }}'
         - condition: template
           value_template: '{{ trigger.to_state.attributes.current_activity == "Listen to Spotify" }}'
+        - condition: template
+          value_template: '{{ trigger.to_state.attributes.current_activity == "Watch ChromeCast ultra" }}'
+        - condition: template
+          value_template: '{{ trigger.to_state.attributes.current_activity == "Listen to ChromeCast ultra" }}'
     action:
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_subbas
@@ -341,3 +365,67 @@ automation:
       - service: script.harmony_off
       - delay: '00:00:05'
       - service: script.harmony_spotify
+
+    ############################################################
+    ### Sätt på mediaspelare vid Watch ChromeCast ultra      ###
+    ### T: remote.harmony_hub                                ###
+    ### C: from current_activity == "PowerOff"               ###
+    ###    to   current_activity == "Watch ChromeCast ultra" ###
+    ###    switch.vardagsrum_stereobank = off                ###
+    ### A: switch.vardagsrum_extra_subbas = on               ###
+    ############################################################
+  - alias: "Sätt på mediaspelare vid Watch ChromeCast ultra"
+    trigger:
+      platform: state
+      entity_id: remote.harmony_hub
+    condition:
+      condition: and
+      conditions:
+        - condition: template
+          value_template: '{{ trigger.from_state.attributes.current_activity == "PowerOff" }}'
+        - condition: template
+          value_template: '{{ trigger.to_state.attributes.current_activity == "Watch ChromeCast ultra" }}'
+        - condition: state
+          entity_id: switch.vardagsrum_stereobank
+          state: 'off'
+    action:
+      - service: homeassistant.turn_on
+        entity_id: switch.vardagsrum_stereobank
+      - service: homeassistant.turn_on
+        entity_id: switch.vardagsrum_tv
+      - delay: '00:00:05'
+      - service: script.harmony_off
+      - delay: '00:00:05'
+      - service: script.harmony_chromecast_ultra
+
+    ################################################################
+    ### Sätt på mediaspelare vid Listen to ChromeCast ultra      ###
+    ### T: remote.harmony_hub                                    ###
+    ### C: from current_activity == "PowerOff"                   ###
+    ###    to   current_activity == "Listen to ChromeCast ultra" ###
+    ###    switch.vardagsrum_stereobank = off                    ###
+    ### A: switch.vardagsrum_extra_subbas = on                   ###
+    ################################################################
+  - alias: "Sätt på mediaspelare vid Listen to ChromeCast ultra"
+    trigger:
+      platform: state
+      entity_id: remote.harmony_hub
+    condition:
+      condition: and
+      conditions:
+        - condition: template
+          value_template: '{{ trigger.from_state.attributes.current_activity == "PowerOff" }}'
+        - condition: template
+          value_template: '{{ trigger.to_state.attributes.current_activity == "Listen to ChromeCast ultra" }}'
+        - condition: state
+          entity_id: switch.vardagsrum_stereobank
+          state: 'off'
+    action:
+      - service: homeassistant.turn_on
+        entity_id: switch.vardagsrum_stereobank
+      - service: homeassistant.turn_on
+        entity_id: switch.vardagsrum_tv
+      - delay: '00:00:05'
+      - service: script.harmony_off
+      - delay: '00:00:05'
+      - service: script.harmony_chromecast_ultra_listen

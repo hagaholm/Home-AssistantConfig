@@ -38,8 +38,9 @@ group:
       - sensor.canal_digital
       - sensor.chromecast
       - sensor.chromecast_2
-      - sensor.dns320
+      - sensor.chromecast_ultra
       - sensor.google_home_mini
+      - sensor.dns320
 
   mobile_states:
     name: Mobil status
@@ -252,15 +253,18 @@ sensor:
       chromecast_2:
         friendly_name: 'Chromecast Wifi'
         value_template: "{{ 'Online' if is_state('device_tracker.chromecast_2', 'home') else 'Offline' }}"
+      chromecast_ultra:
+        friendly_name: 'Chromecast ultra'
+        value_template: "{{ 'Online' if is_state('device_tracker.chromecast_ultra', 'home') else 'Offline' }}"
       panasonic_tv:
         friendly_name: 'Tv Panasonic'
         value_template: "{{ 'Online' if is_state('device_tracker.panasonic_tv', 'home') else 'Offline' }}"
-      dns320:
-        friendly_name: 'Nas DNS-320'
-        value_template: "{{ 'Online' if is_state('device_tracker.dns320', 'home') else 'Offline' }}"
       google_home_mini:
         friendly_name: 'Google Home Mini'
         value_template: "{{ 'Online' if is_state('device_tracker.google_home_mini', 'home') else 'Offline' }}"
+      dns320:
+        friendly_name: 'Nas DNS-320'
+        value_template: "{{ 'Online' if is_state('device_tracker.dns320', 'home') else 'Offline' }}"
 
     #########
     # Other #

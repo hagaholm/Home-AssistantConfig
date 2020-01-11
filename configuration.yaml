@@ -415,7 +415,22 @@ mqtt:
 volvooncall:
   username: !secret voc_username
   password: !secret voc_password
- 
+
+####################################################
+#                                                  #
+#                     INFLUXDB                     #
+#                                                  #
+####################################################
+# https://www.home-assistant.io/integrations/influxdb
+influxdb:
+  host: 192.168.1.17
+  port: 8086
+  database: homeassistant
+  username: homeassistant
+  password: !secret influxdb_password
+  max_retries: 3
+  default_measurement: state
+
 ####################################################
 #                                                  #
 #            END OF CONFIGURATION FILE             #

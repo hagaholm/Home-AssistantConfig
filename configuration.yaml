@@ -430,10 +430,10 @@ influxdb:
   password: !secret influxdb_password
   max_retries: 3
   default_measurement: state
-   include:
+  include:
     entities:
-       - sensor.inne_medel
-       - sensor.ute
+      - sensor.inne_medel
+      - sensor.ute
 
 ####################################################
 #                                                  #

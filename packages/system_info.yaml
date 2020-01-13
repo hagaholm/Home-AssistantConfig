@@ -12,7 +12,7 @@ group:
       - group.mobile_states
       - group.network_states
       - group.other_states
-      - group.volvo_states
+      - group.system_monitor_card_pi_b_plus
       - group.system_monitor_card_pi_b_plus
       - group.system_monitor_card_pi_3b_1
       - group.system_monitor_card_pi_3b_2
@@ -70,19 +70,9 @@ group:
     entities:
       - sensor.tradfri_gateway
       - sensor.rockrobo
-      - sensor.volvo_xc60
       - sensor.camera1
       - sensor.camera2
       - sensor.garmin_fenix_5_plus
-
-  volvo_states:
-    name: Volvo status
-    entities:
-      - sensor.volvo_xc60
-      - binary_sensor.volvo_xc60_engine      
-      - sensor.volvo_xc60_range
-      - binary_sensor.volvo_xc60_washer_fluid
-      - binary_sensor.volvo_xc60_service
 
   system_monitor_card_pi_b_plus:
     name: Raspberry Pi B+ (1-Wire)
@@ -285,9 +275,6 @@ sensor:
       rockrobo:
         friendly_name: 'Xiaomi Roborock S5'
         value_template: "{{ 'Online' if is_state('device_tracker.rockrobo', 'home') else 'Offline' }}"
-      volvo_xc60:
-        friendly_name: 'Volvo XC60'
-        value_template: "{{ 'Online' if is_state('device_tracker.volvo_xc60', 'home') else 'Offline' }}"
       camera1:
         friendly_name: 'Kamera 1'
         value_template: "{{ 'Online' if is_state('device_tracker.camera1', 'home') else 'Offline' }}"

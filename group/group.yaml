@@ -1005,6 +1005,7 @@
       - group.extra_view_info
       - group.extra_view_setup
       - group.extra_view_ventilation
+      - group.extra_view_motion
 
   extra_view_fr24:
     name: Flightradar24
@@ -1075,3 +1076,27 @@
 #      - sensor.Forcerad # Fläkt hastighet
       - switch.fan_speed
       - switch.ventilationsaggregat
+
+
+  extra_view_motion:
+    name: Rörelsedetektorer
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - binary_sensor.aqara_motion_sensor_1
+      - binary_sensor.aqara_motion_sensor_2
+      - binary_sensor.tradfri_motion_sensor_1
+      - binary_sensor.tradfri_motion_sensor_2
+      - binary_sensor.tradfri_motion_sensor_3
+      - binary_sensor.tradfri_motion_sensor_4
+      - binary_sensor.tradfri_motion_sensor_5
+      - sensor.aqara_motion_sensor_1
+      - sensor.aqara_motion_sensor_2
+      - sensor.aqara_motion_sensor_1_battery_level
+      - sensor.aqara_motion_sensor_2_battery_level
+      - sensor.tradfri_motion_sensor_1_battery_level
+      - sensor.tradfri_motion_sensor_2_battery_level
+      - sensor.tradfri_motion_sensor_3_battery_level
+      - sensor.tradfri_motion_sensor_4_battery_level
+      - sensor.tradfri_motion_sensor_5_battery_level

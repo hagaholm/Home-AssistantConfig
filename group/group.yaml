@@ -204,35 +204,35 @@
     view: no
     entities:
       - light.kok_stora_fonstret
-      - light.kok_stora_fonstret_ljusstake
+#      - light.kok_stora_fonstret_ljusstake
       - light.kok_lilla_fonstret
       - light.hall_byra
       - light.vardagsrum_fonster
-      - light.vardagsrum_fonster_ljusstake_2
+#      - light.vardagsrum_fonster_ljusstake_2
       - light.vardagsrum_gran
       - light.uterum_fonster
-      - light.uterum_julstjarnor
+#jul      - light.uterum_julstjarnor
 
   evening_lights:
     name: Kvällsbelysning
     view: no
     entities:
       - light.kok_stora_fonstret
-      - light.kok_stora_fonstret_ljusstake
+#jul      - light.kok_stora_fonstret_ljusstake
       - light.kok_lilla_fonstret
       - light.hall_byra
       - light.hall_skap
       - light.vardagsrum_fonster
-      - light.vardagsrum_fonster_ljusstake_2
+#jul      - light.vardagsrum_fonster_ljusstake_2
       - light.vardagsrum_skank
       - light.vardagsrum_vitrinskap
       - light.vardagsrum_gran
       - light.sovrum_fonster
       - light.andreas_fonster
       - light.louise_fonster
-      - light.louise_fonster_dimmer_julstjarna
+#jul      - light.louise_fonster_dimmer_julstjarna
       - light.uterum_fonster
-      - light.uterum_julstjarnor
+#jul      - light.uterum_julstjarnor
 
   night_lights:
     name: Nattbelysning
@@ -240,7 +240,7 @@
     entities:
       - light.hall_byra
       - light.vardagsrum_fonster
-      - light.vardagsrum_fonster_ljusstake_2
+#jul      - light.vardagsrum_fonster_ljusstake_2
       - input_boolean.rorelsevakt_aktiv
       - timer.timer_rorelsevakt_1_short
       - timer.timer_rorelsevakt_2_short
@@ -269,16 +269,16 @@
     view: no
     entities:
       - light.kok_stora_fonstret
-      - light.kok_stora_fonstret_ljusstake
+#jul      - light.kok_stora_fonstret_ljusstake
       - light.kok_lilla_fonstret
       - light.hall_byra
       - light.vardagsrum_fonster
-      - light.vardagsrum_fonster_ljusstake_2
+#jul      - light.vardagsrum_fonster_ljusstake_2
       - light.sovrum_fonster
       - light.louise_fonster
-      - light.louise_fonster_dimmer_julstjarna
+#jul      - light.louise_fonster_dimmer_julstjarna
       - light.uterum_fonster
-      - light.uterum_julstjarnor
+#jul      - light.uterum_julstjarnor
 
 #############
 #############
@@ -314,7 +314,7 @@
       - sensor.frys_temperature
       #- sensor.frys_humidity # Onödigt att visa, kanska kan larma om ovanligt värde
       - light.kok_stora_fonstret
-      - light.kok_stora_fonstret_ljusstake
+#jul      - light.kok_stora_fonstret_ljusstake
       - light.kok_lilla_fonstret
       - light.kok_underskap_bank
       - light.kok_underskap_diskbank
@@ -349,7 +349,7 @@
     entities:
       - sensor.vardagsrum_temperature
       - light.vardagsrum_fonster
-      - light.vardagsrum_fonster_ljusstake_2
+#jul      - light.vardagsrum_fonster_ljusstake_2
       - light.vardagsrum_skank
       - light.vardagsrum_vitrinskap
       - light.vardagsrum_gran
@@ -381,7 +381,7 @@
       - sensor.louise_rum_temperature
       - sensor.louise_rum_humidity
       - light.louise_fonster
-      - light.louise_fonster_dimmer_julstjarna
+#jul      - light.louise_fonster_dimmer_julstjarna
       - light.discolampa
 
   andreas_room:
@@ -396,7 +396,7 @@
     entities:
       - sensor.uterum
       - light.uterum_fonster
-      - light.uterum_julstjarnor
+#jul      - light.uterum_julstjarnor
       - light.uterum_led
       - light.uterum_fotogenlampa
       - binary_sensor.tradfri_motion_sensor_5

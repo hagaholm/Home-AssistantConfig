@@ -103,8 +103,7 @@ automation:
     ####################################################
     ### Startar båda timers vid rörelse i kök        ###
     ### T: binary_sensor.aqara_motion_sensor_1 == on ###
-    ### A: binary_sensor.aqara_motion_sensor_1 = off  ###
-    ###    input_boolean.rorelsevakt_aktiv = on      ###
+    ### A: input_boolean.rorelsevakt_aktiv = on      ###
     ###    timer.timer_rorelsevakt_3_short = cancel  ###
     ###    timer.timer_rorelsevakt_3_medium = cancel ###
     ###    timer.timer_rorelsevakt_3_short = start   ###
@@ -116,10 +115,6 @@ automation:
         entity_id: binary_sensor.aqara_motion_sensor_1
         to: 'on'
     action:
-      # Reset binary_sensor.aqara_motion_sensor_1
-      - service: homeassistant.turn_off
-        entity_id: binary_sensor.aqara_motion_sensor_1
-
       # Aktiverar rorelsevakt_aktiv
       - service: input_boolean.turn_on
         data:

@@ -321,7 +321,6 @@
       - light.kok_vitrinskap
       - input_boolean.rorelsevakt_aktiv
       - timer.timer_rorelsevakt_1_medium
-      - timer.timer_rorelsevakt_2_medium
       - timer.timer_rorelsevakt_3_medium
 
   hall:
@@ -333,6 +332,7 @@
       - light.hall_byra
       - light.hall_skap
       - switch.ringklocka
+      - binary_sensor.aqara_motion_sensor_2
 
   laundry:
     name: Tvättstuga
@@ -341,6 +341,7 @@
       - sensor.tvattstuga_temperature
       - sensor.tvattstuga_humidity
       - sensor.varmepump_temperature
+      - timer.timer_rorelsevakt_2_medium
 
   livingroom:
     name: Vardagsrum

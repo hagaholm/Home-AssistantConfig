@@ -38,13 +38,13 @@
     ### C: group.track_for_home_devices == not_home                                                ###
     ###    switch.rorelsevakt_1 == off                                                             ###
     ###    switch.rorelsevakt_2 == off                                                             ###
-    ###    binary_sensor.aqara_motion_sensor_2 == off                                              ###
+    ###    binary_sensor.aqara_motion_sensor_1 == off                                              ###
     ### A: notify                                                                                  ###
     ##################################################################################################
   - alias: Larm rörelse i hallen
     trigger:
       platform: state
-      entity_id: binary_sensor.aqara_motion_sensor_2
+      entity_id: binary_sensor.aqara_motion_sensor_2 # Hall
       to: 'on'
     condition:
       condition: and
@@ -59,21 +59,20 @@
           entity_id: switch.rorelsevakt_2 # Tvättstuga
           state: 'off'
         - condition: state
-          entity_id: binary_sensor.aqara_motion_sensor_2
+          entity_id: binary_sensor.aqara_motion_sensor_1 # Kök
           state: 'off'
     action:
       - service: notify.pushbullet
         data:
           message: 'LARM! Rörelse i hallen, ingen är hemma...'
 
-
-    ####################################################################### 
-    ### Skickar notification vid rörelse vid uteplats om ingen är hemma ### 
-    ### T:binary_sensor.tradfri_motion_sensor_3 == on                   ### 
-    ### C: group.track_for_home_devices == not_home                     ### 
-    ### A: notify                                                       ### 
-    ####################################################################### 
-  - alias: Larm rörelse vid uteplats 
+    ######################################################################### 
+    ### Skickar notification vid rörelse vid huvudentre om ingen är hemma ### 
+    ### T:binary_sensor.tradfri_motion_sensor_3 == on                     ### 
+    ### C: group.track_for_home_devices == not_home                       ### 
+    ### A: notify                                                         ### 
+    ######################################################################### 
+  - alias: Larm rörelse vid huvudentre 
     trigger: 
       platform: state 
       entity_id: binary_sensor.tradfri_motion_sensor_3 
@@ -87,15 +86,15 @@
     action: 
       - service: notify.pushbullet 
         data: 
-          message: 'LARM! Rörelse vid uteplats, ingen är hemma...' 
+          message: 'LARM! Rörelse vid huvudentre, ingen är hemma...' 
 
-    ######################################################################### 
-    ### Skickar notification vid rörelse vid huvudentre om ingen är hemma ### 
-    ### T:binary_sensor.tradfri_motion_sensor_4 == on                     ### 
-    ### C: group.track_for_home_devices == not_home                       ### 
-    ### A: notify                                                         ### 
-    ######################################################################### 
-  - alias: Larm rörelse vid huvudentre 
+    ####################################################################### 
+    ### Skickar notification vid rörelse vid uteplats om ingen är hemma ### 
+    ### T:binary_sensor.tradfri_motion_sensor_4 == on                   ### 
+    ### C: group.track_for_home_devices == not_home                     ### 
+    ### A: notify                                                       ### 
+    ####################################################################### 
+  - alias: Larm rörelse vid uteplats 
     trigger: 
       platform: state 
       entity_id: binary_sensor.tradfri_motion_sensor_4 
@@ -109,7 +108,7 @@
     action: 
       - service: notify.pushbullet 
         data: 
-          message: 'LARM! Rörelse vid huvudentre, ingen är hemma...' 
+          message: 'LARM! Rörelse vid uteplats, ingen är hemma...' 
 
     ######################################################################
     ### Skickar notification vid rörelse i uterummet om ingen är hemma ###

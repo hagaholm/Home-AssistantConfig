@@ -996,7 +996,8 @@
     view: yes
     entities:
       - group.extra_view_fr24
-      - group.extra_view_sensor_latest
+      - group.extra_view_temp_sensor_latest
+      - group.extra_view_motion_sensor_latest
       - group.extra_view_info
       - group.extra_view_setup
       - group.extra_view_ventilation
@@ -1017,8 +1018,8 @@
       - sensor.fr24_feeder_version
 #      - sensor.opensky
 
-  extra_view_sensor_latest:
-    name: Info
+  extra_view_temp_sensor_latest:
+    name: Temp sensor senast
     view: no
     icon: mdi:information-outline
     control: hidden
@@ -1038,6 +1039,20 @@
       - sensor.garage_temp_lastupdated
       - sensor.friggebod_temp_lastupdated
       - sensor.friggebod_fukt_lastupdated
+
+  extra_view_motion_sensor_latest:
+    name: Rörelsesensor senast
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - sensor.aqara_motion_sensor_1_lastupdated
+      - sensor.aqara_motion_sensor_2_lastupdated
+      - sensor.tradfri_motion_sensor_1_lastupdated
+      - sensor.tradfri_motion_sensor_2_lastupdated
+      - sensor.tradfri_motion_sensor_3_lastupdated
+      - sensor.tradfri_motion_sensor_4_lastupdated
+      - sensor.tradfri_motion_sensor_5_lastupdated
 
   extra_view_info:
     name: Info

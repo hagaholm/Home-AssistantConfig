@@ -406,12 +406,12 @@ automation:
         data:
           message: 'LARM! Kamera 2 aktiv, ingen är hemma'
 
-    #########################################################
-    ### Skickar notification om kamerort är aktiva, hemma ###
-    ### T: input_boolean.camera_1_and_2_aktiv == on       ###
-    ### C: group.track_for_home_devices == home           ###
-    ### A: notify                                         ###
-    #########################################################
+    ########################################################
+    ### Skickar notification om kameror är aktiva, hemma ###
+    ### T: input_boolean.camera_1_and_2_aktiv == on      ###
+    ### C: group.track_for_home_devices == home          ###
+    ### A: notify                                        ###
+    ########################################################
   - alias: Larm kameror är aktiva (home)
     trigger:
       platform: state
@@ -428,12 +428,12 @@ automation:
         data:
           message: 'LARM! Kameror är aktiva'
 
-    #########################################################
-    ### Skickar notification om kamerort är aktiva, borta ###
-    ### T: input_boolean.camera_1_and_2_aktiv == on       ###
-    ### C: group.track_for_home_devices == not_home       ###
-    ### A: notify                                         ###
-    #########################################################
+    ########################################################
+    ### Skickar notification om kameror är aktiva, borta ###
+    ### T: input_boolean.camera_1_and_2_aktiv == on      ###
+    ### C: group.track_for_home_devices == not_home      ###
+    ### A: notify                                        ###
+    ########################################################
   - alias: Larm kameror är aktiva (away)
     trigger:
       platform: state

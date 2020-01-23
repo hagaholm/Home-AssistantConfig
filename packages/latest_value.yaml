@@ -1,0 +1,50 @@
+sensor:
+  - platform: template
+    sensors:
+      aqara_motion_sensor_1_lastupdated:
+        friendly_name: Aqara Motion Sensor 1 senast uppdaterad
+        value_template: >-
+          {{ states.binary_sensor.aqara_motion_sensor_1.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+
+    sensors:
+      aqara_motion_sensor_2_lastupdated:
+        friendly_name: Aqara Motion Sensor 2 senast uppdaterad
+        value_template: >-
+          {{ states.binary_sensor.aqara_motion_sensor_2.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+
+    sensors:
+      binary_sensor.tradfri_motion_sensor_1_lastupdated:
+        friendly_name: Trådfri Motion Sensor 1 senast uppdaterad
+        value_template: >-
+          {{ states.binary_sensor.tradfri_motion_sensor_1.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+
+    sensors:
+      binary_sensor.tradfri_motion_sensor_2_lastupdated:
+        friendly_name: Trådfri Motion Sensor 2 senast uppdaterad
+        value_template: >-
+          {{ states.binary_sensor.tradfri_motion_sensor_2.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+
+    sensors:
+      binary_sensor.tradfri_motion_sensor_3_lastupdated:
+        friendly_name: Trådfri Motion Sensor 3 senast uppdaterad
+        value_template: >-
+          {{ states.binary_sensor.tradfri_motion_sensor_3.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+
+    sensors:
+      binary_sensor.tradfri_motion_sensor_4_lastupdated:
+        friendly_name: Trådfri Motion Sensor 4 senast uppdaterad
+        value_template: >-
+          {{ states.binary_sensor.tradfri_motion_sensor_4.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+
+    sensors:
+      binary_sensor.tradfri_motion_sensor_5_lastupdated:
+        friendly_name: Trådfri Motion Sensor 5 senast uppdaterad
+        value_template: >-
+          {{ states.binary_sensor.tradfri_motion_sensor_5.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp

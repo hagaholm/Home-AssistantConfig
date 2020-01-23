@@ -997,28 +997,27 @@
     name: Extra
     view: yes
     entities:
-      - group.extra_view_fr24
+#      - group.extra_view_fr24
       - group.extra_view_temp_sensor_latest
       - group.extra_view_motion_sensor_latest
-      - group.extra_view_info
+#      - group.extra_view_info
       - group.extra_view_setup
       - group.extra_view_ventilation
       - group.extra_view_motion
 
-  extra_view_fr24:
-    name: Flightradar24
-    view: no
-    icon: mdi:airplane
-    control: hidden
-    entities:
-      - binary_sensor.fr24_feeder_link_connected
-      - binary_sensor.fr24_feeder_receiver_connected
-      - sensor.fr24_feeder
-      - sensor.fr24_feeder_aircraft_tracked
-      - sensor.fr24_feeder_aircraft_uploaded
-      - sensor.fr24_feeder_radar_code
-      - sensor.fr24_feeder_version
-#      - sensor.opensky
+#  extra_view_fr24:
+#    name: Flightradar24
+#    view: no
+#    icon: mdi:airplane
+#    control: hidden
+#    entities:
+#      - binary_sensor.fr24_feeder_link_connected
+#      - binary_sensor.fr24_feeder_receiver_connected
+#      - sensor.fr24_feeder
+#      - sensor.fr24_feeder_aircraft_tracked
+#      - sensor.fr24_feeder_aircraft_uploaded
+#      - sensor.fr24_feeder_radar_code
+#      - sensor.fr24_feeder_version
 
   extra_view_temp_sensor_latest:
     name: Temp sensor senast
@@ -1056,15 +1055,15 @@
       - sensor.tradfri_motion_sensor_4_lastupdated
       - sensor.tradfri_motion_sensor_5_lastupdated
 
-  extra_view_info:
-    name: Info
-    view: no
-    icon: mdi:information-outline
-    control: hidden
-    entities:
-      - sensor.ljusstyrka
-      - sensor.ljusstyrka_flacksta
-      - sensor.ljusstyrka2     
+#  extra_view_info:
+#    name: Info
+#    view: no
+#    icon: mdi:information-outline
+#    control: hidden
+#    entities:
+#      - sensor.ljusstyrka
+#      - sensor.ljusstyrka_flacksta
+#      - sensor.ljusstyrka2     
 
   extra_view_setup:
     name: Inställningar

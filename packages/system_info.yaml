@@ -133,11 +133,7 @@ sensor:
       - type: processor_use
       - type: last_boot
       - type: disk_use_percent
-        arg: /
-      - type: disk_use_percent
         arg: /home
-      - type: disk_use_percent
-        arg: /mnt/media
       - type: swap_use_percent
       - type: load_1m
       - type: load_5m

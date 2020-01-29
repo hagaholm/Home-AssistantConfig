@@ -17,7 +17,7 @@ group:
       - group.system_monitor_card_pi_3b_1
       - group.system_monitor_card_pi_3b_2
       - group.system_monitor_card_pi_3b_plus
-      - group.system_monitor_card_pi_4b
+      - group.system_monitor_card_ubuntu_server
 
 ####
 
@@ -94,8 +94,8 @@ group:
       - sensor.raspberry_pi_3b_plus
 #      - sensor.raspberry_pi_3b_plus_temperature
 
-  system_monitor_card_pi_4b:
-    name: Raspberry Pi 4B (Hassbian)
+  system_monitor_card_ubuntu_server:
+    name: Ubuntu Server (Hassbian)
     entities:
       - sensor.raspberry_pi_4b
       - sensor.last_boot

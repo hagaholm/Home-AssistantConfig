@@ -526,6 +526,8 @@
     view: yes
     entities:
       - group.camera
+      - group.motion_outside
+      - group.motion_inside
       - group.camera_automation
 
   camera:
@@ -536,8 +538,6 @@
     entities:
       - device_tracker.camera1
       - device_tracker.camera2
-      - binary_sensor.motion_kamera_1
-      - binary_sensor.motion_kamera_2
       - camera.kamera_1
       - camera.kamera_2
       - timer.timer_camera_1
@@ -545,6 +545,29 @@
       - input_boolean.camera_1_aktiv
       - input_boolean.camera_2_aktiv
       - input_boolean.camera_1_and_2_aktiv
+
+  motion_outside:
+    name: Rörelsedetektor ute
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - binary_sensor.motion_kamera_1
+      - binary_sensor.motion_kamera_2
+      - binary_sensor.tradfri_motion_sensor_1
+      - binary_sensor.tradfri_motion_sensor_2
+      - binary_sensor.tradfri_motion_sensor_3
+      - binary_sensor.tradfri_motion_sensor_4
+
+  motion_inside:
+    name: Rörelsedetektor ute
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - binary_sensor.aqara_motion_sensor_1
+      - binary_sensor.aqara_motion_sensor_2
+      - binary_sensor.tradfri_motion_sensor_5
 
   camera_automation:
     name: Automation

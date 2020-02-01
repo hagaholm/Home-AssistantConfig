@@ -226,6 +226,7 @@
       - light.vardagsrum_fonster
 #jul      - light.vardagsrum_fonster_ljusstake_2
       - light.vardagsrum_skank
+      - light.vardagsrum_vagn
       - light.vardagsrum_vitrinskap
       - light.vardagsrum_gran
       - light.sovrum_fonster
@@ -353,6 +354,7 @@
       - light.vardagsrum_fonster
 #jul      - light.vardagsrum_fonster_ljusstake_2
       - light.vardagsrum_skank
+      - light.vardagsrum_vagn
       - light.vardagsrum_vitrinskap
       - light.vardagsrum_gran
       - switch.vardagsrum_stereobank
@@ -547,7 +549,7 @@
       - input_boolean.camera_1_and_2_aktiv
 
   motion_inside:
-    name: Rörelsedetektor inneS
+    name: Rörelsedetektor inne
     view: no
     icon: mdi:information-outline
     control: hidden
@@ -899,6 +901,7 @@
       - automation.ingen_kontakt_med_garage_avfuktare
       - automation.ingen_kontakt_med_uterum_fonster
       - automation.ingen_kontakt_med_vardagsrum_skank
+      - automation.ingen_kontakt_med_vardagsrum_vagn
       - automation.kontakt_med_forrad_fasadbelysning
       - automation.kontakt_med_fotogenlampa_i_uterum
       - automation.kontakt_med_friggebod_brytare_vid_stora_fonstret
@@ -906,6 +909,7 @@
       - automation.kontakt_med_garage_avfuktare
       - automation.kontakt_med_uterum_fonster
       - automation.kontakt_med_vardagsrum_skank
+      - automation.kontakt_med_vardagsrum_vagn
 
   automation_pir:
     name: Rörelsedetektor i kök

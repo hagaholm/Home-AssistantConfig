@@ -7,6 +7,10 @@
           brightness_pct: 100
       - service: light.turn_on
         data:
+          entity_id: light.vardagsrum_vagn
+          brightness_pct: 100
+      - service: light.turn_on
+        data:
           entity_id: light.vardagsrum_fonster
           brightness_pct: 100
       - service: light.turn_on
@@ -20,6 +24,10 @@
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_skank
+          brightness_pct: 75
+      - service: light.turn_on
+        data:
+          entity_id: light.vardagsrum_vagn
           brightness_pct: 75
       - service: light.turn_on
         data:
@@ -39,6 +47,10 @@
           brightness_pct: 50
       - service: light.turn_on
         data:
+          entity_id: light.vardagsrum_vagn
+          brightness_pct: 50
+      - service: light.turn_on
+        data:
           entity_id: light.vardagsrum_fonster
           brightness_pct: 50
       - service: light.turn_on
@@ -51,6 +63,8 @@
     sequence:
       - service: light.turn_off
         entity_id: light.vardagsrum_skank
+      - service: light.turn_off
+        entity_id: light.vardagsrum_vagn
       - service: light.turn_off
         entity_id: light.vardagsrum_fonster
       - service: light.turn_off

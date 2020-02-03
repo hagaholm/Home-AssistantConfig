@@ -79,6 +79,7 @@
       - group.temperature_view_fridge_freezer
       - group.temperature_view_other
       - group.temperature_view_heater_ventilation
+      - group.temperature_view_statistic
       - group.temperature_view_yr
 
   temperature_view_outside:
@@ -169,6 +170,33 @@
       - sensor.Avluft
       - switch.fan_speed
       - switch.ventilationsaggregat
+
+
+  temperature_view_statistic:
+    name: Statistik
+    view: no
+    icon: mdi:information-outline
+    control: hidden
+    entities:
+      - sensor.hall_temp_statistik
+      - sensor.vardagsrum_temp_statistik
+      - sensor.tvattstuga_temp_statistik
+      - sensor.badrum_temp_statistik
+
+      - sensor.forrad_temp_statistik
+      - sensor.friggebod_temp_statistik
+      - sensor.garage_temp_statistik
+
+      - sensor.kyl_temp_statistik
+      - sensor.frys_temp_statistik
+      - sensor.varmepump_temp_statistik
+
+      - sensor.hall_fukt_statistik
+      - sensor.tvattstuga_fukt_statistik
+      - sensor.badrum_fukt_statistik
+
+      - sensor.forrad_fukt_statistik
+      - sensor.friggebod_fukt_statistik
 
 ###################
 ###################

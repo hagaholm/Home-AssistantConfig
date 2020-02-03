@@ -331,6 +331,12 @@ sensor:
     max_age:
       hours: 24
     sampling_size: 2000
+  - platform: statistics
+    name: Inne temp statistik
+    entity_id: sensor.inne_medel 
+    max_age:
+      hours: 24
+    sampling_size: 2000
 
 #########################################################
 input_boolean:

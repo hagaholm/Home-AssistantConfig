@@ -178,10 +178,15 @@
     icon: mdi:information-outline
     control: hidden
     entities:
+      - sensor.ute
+      
       - sensor.hall_temp_statistik
       - sensor.vardagsrum_temp_statistik
+      - sensor.sovrum_temp_statistik
+      - sensor.louise_rum_temp_statistik
       - sensor.tvattstuga_temp_statistik
       - sensor.badrum_temp_statistik
+      - sensor.uterum_temp_statistik
 
       - sensor.forrad_temp_statistik
       - sensor.garage_temp_statistik
@@ -192,8 +197,10 @@
       - sensor.varmepump_temp_statistik
 
       - sensor.hall_fukt_statistik
+      - sensor.louise_rum_fukt_statistik
       - sensor.tvattstuga_fukt_statistik
       - sensor.badrum_fukt_statistik
+      - sensor.uterum_fukt_statistik
 
       - sensor.forrad_fukt_statistik
       - sensor.friggebod_fukt_statistik

@@ -56,6 +56,15 @@ history_graph:
     hours_to_show: 168
     refresh: 1800
 
+  temp_varme_behov_1_day:
+    name: Värmebehov 1 dag
+    entities:
+      - sensor.ute
+      - sensor.inne_medel
+      - sensor.varmepump_temperature
+    hours_to_show: 24
+    refresh: 1800
+
   alla_sensorer_2_hours:
     name: Alla trådlösa sensorer 2 timmar
     entities:

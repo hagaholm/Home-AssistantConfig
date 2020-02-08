@@ -43,6 +43,21 @@
         data:
           message: 'Ingen kontakt med vardagsrum skänk'
 
+    ###############################################
+    ### Ingen kontakt med vardagsrum vagn       ###
+    ### T: light.vardagsrum_vagn == unavailable ###
+    ### A: notify.pushbullet                    ###
+    ###############################################
+  - alias: Ingen kontakt med vardagsrum vagn
+    trigger:
+      platform: state
+      entity_id: light.vardagsrum_vagn
+      to: 'unavailable'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Ingen kontakt med vardagsrum vagn'
+
     ##############################################
     ### Ingen kontakt med uterum fönster       ###
     ### T: light.uterum_fonster == unavailable ###
@@ -151,6 +166,21 @@
       - service: notify.pushbullet
         data:
           message: 'Kontakt med vardagsrum skänk'
+
+    ###############################################
+    ### Kontakt med vardagsrum vagn             ###
+    ### T: light.vardagsrum_vagn != unavailable ###
+    ### A: notify.pushbullet                    ###
+    ###############################################
+  - alias: Kontakt med vardagsrum vagn
+    trigger:
+      platform: state
+      entity_id: light.vardagsrum_vagn
+      from: 'unavailable'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Kontakt med vardagsrum vagn'
 
     ##############################################
     ### Kontakt med uterum fönster             ###

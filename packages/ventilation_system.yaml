@@ -514,6 +514,6 @@ automation:
       - delay: '00:00:05'
       - service: homeassistant.turn_on
         entity_id: switch.ventilationsaggregat
-      - service: notify.pushbullet
-        data:
-          message: 'Ventilation on (Inne <23°C, Off)'
+#      - service: notify.pushbullet
+##        data:
+#          message: 'Ventilation on (Inne <23°C, Off)'

@@ -20,7 +20,7 @@
   default_view_info:
     name: Info
     icon: mdi:information-outline
-    control: hidden
+#    control: hidden
     entities:
       - device_tracker.mobil_micke
       - device_tracker.mobil_annelie
@@ -34,7 +34,7 @@
   default_view_lights_off:
     name: Släck belysning
     icon: mdi:information-outline
-    control: hidden
+#    control: hidden
     entities:
       - script.goodnight
       - script.goodnight_10_min
@@ -48,7 +48,7 @@
   default_view_lights_on:
     name: Tänd belysning
     icon: mdi:information-outline
-    control: hidden
+#    control: hidden
     entities:
       - script.cleaning_lights_on
       - automation.kok_off_sensor_off
@@ -80,7 +80,7 @@
   temperature_view_outside:
     name: Utomhus
     icon: mdi:information-outline
-    control: hidden
+#    control: hidden
     entities:
       - sensor.ute
 #      - sensor.ute2_temperature
@@ -90,7 +90,7 @@
   temperature_view_yr:
     name: Yr
     icon: mdi:information-outline
-    control: hidden
+#    control: hidden
     entities:
       - sensor.yr_temperature
       - sensor.yr_symbol
@@ -106,7 +106,7 @@
   temperature_view_inside:
     name: Inomhus temperatur
     icon: mdi:information-outline
-    control: hidden
+#    control: hidden
     entities:
       - sensor.uterum
       - sensor.hall_temperature
@@ -119,7 +119,7 @@
   humidity_view_inside:
     name: Inomhus luftfuktighet
     icon: mdi:information-outline
-    control: hidden
+#    control: hidden
     entities:
       - sensor.hall_humidity
       - sensor.louise_rum_humidity
@@ -129,7 +129,7 @@
   temperature_view_fridge_freezer:
     name: Kyl/Frys
     icon: mdi:information-outline
-    control: hidden
+#    control: hidden
     entities:
       - sensor.kyl_temperature
       - sensor.frys_temperature
@@ -137,7 +137,7 @@
   temperature_view_other:
     name: Övrigt
     icon: mdi:information-outline
-    control: hidden
+#    control: hidden
     entities:
       - sensor.friggebod_temperature
       - sensor.friggebod_humidity
@@ -149,7 +149,7 @@
   temperature_view_heater_ventilation:
     name: Värmepump/Ventilation
     icon: mdi:information-outline
-    control: hidden
+#    control: hidden
     entities:
       - sensor.varmepump_temperature
       - sensor.Uteluft
@@ -163,7 +163,7 @@
   temperature_view_statistic:
     name: Statistik
     icon: mdi:information-outline
-    control: hidden
+#    control: hidden
     entities:
       - sensor.ute_temp_statistik
       
@@ -504,7 +504,7 @@
     name: Dammsug
 
     icon: mdi:information-outline
-    control: hidden
+#    control: hidden
     entities:
       - script.vacuum_house
       - script.vacuum_daily
@@ -524,7 +524,7 @@
     name: Xiaomi S50
 
     icon: mdi:information-outline
-    control: hidden
+#    control: hidden
     entities:
       - vacuum.xiaomi_vacuum_cleaner
       - sensor.vacuum_status
@@ -558,7 +558,7 @@
     name: Kamera
 
     icon: mdi:information-outline
-    control: hidden
+#    control: hidden
     entities:
       - device_tracker.camera1
       - device_tracker.camera2
@@ -574,7 +574,7 @@
     name: Rörelsedetektor inne
 
     icon: mdi:information-outline
-    control: hidden
+#    control: hidden
     entities:
       - binary_sensor.aqara_motion_sensor_1
       - binary_sensor.aqara_motion_sensor_2
@@ -584,7 +584,7 @@
     name: Rörelsedetektor ute
 
     icon: mdi:information-outline
-    control: hidden
+#    control: hidden
     entities:
       - binary_sensor.motion_kamera_1
       - binary_sensor.motion_kamera_2
@@ -597,7 +597,7 @@
     name: Automation
 
     icon: mdi:information-outline
-    control: hidden
+#    control: hidden
     entities:
       - automation.startar_camera_1_timer
       - automation.startar_camera_2_timer
@@ -977,7 +977,7 @@
     name: Temp sensor senast
 
     icon: mdi:information-outline
-    control: hidden
+#    control: hidden
     entities:
       - sensor.frys_temp_lastupdated
       - sensor.kyl_temp_lastupdated
@@ -999,7 +999,7 @@
     name: Rörelsesensor senast
 
     icon: mdi:information-outline
-    control: hidden
+#    control: hidden
     entities:
       - sensor.aqara_motion_sensor_1_lastupdated
       - sensor.aqara_motion_sensor_2_lastupdated
@@ -1022,7 +1022,7 @@
   extra_view_setup:
     name: Inställningar
 
-    control: hidden
+#    control: hidden
     entities:
       - input_select.inside_lights
       - input_select.kitchen_lights
@@ -1034,7 +1034,7 @@
     name: Ventilation badrum
 
     icon: mdi:information-outline
-    control: hidden
+#    control: hidden
     entities:
       - sensor.badrum_humidity
       - sensor.fukt_badrumsfonster
@@ -1047,7 +1047,7 @@
     name: Rörelsedetektorer
 
     icon: mdi:information-outline
-    control: hidden
+#    control: hidden
     entities:
       - binary_sensor.aqara_motion_sensor_1
       - binary_sensor.aqara_motion_sensor_2

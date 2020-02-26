@@ -11,7 +11,6 @@
 #################
   default_view:
     name: Info
-    view: yes
     icon: mdi:information-outline
     entities:
       - group.default_view_info
@@ -20,7 +19,6 @@
 
   default_view_info:
     name: Info
-    view: no
     icon: mdi:information-outline
     control: hidden
     entities:
@@ -35,7 +33,6 @@
 
   default_view_lights_off:
     name: Släck belysning
-    view: no
     icon: mdi:information-outline
     control: hidden
     entities:
@@ -50,7 +47,6 @@
 
   default_view_lights_on:
     name: Tänd belysning
-    view: no
     icon: mdi:information-outline
     control: hidden
     entities:
@@ -70,7 +66,6 @@
 #####################
   temperature_view:
     name: Temperatur
-    view: yes
     icon: mdi:thermometer
     entities:
       - group.temperature_view_outside
@@ -84,7 +79,6 @@
 
   temperature_view_outside:
     name: Utomhus
-    view: no
     icon: mdi:information-outline
     control: hidden
     entities:
@@ -95,7 +89,6 @@
 
   temperature_view_yr:
     name: Yr
-    view: no
     icon: mdi:information-outline
     control: hidden
     entities:
@@ -112,7 +105,6 @@
 
   temperature_view_inside:
     name: Inomhus temperatur
-    view: no
     icon: mdi:information-outline
     control: hidden
     entities:
@@ -126,7 +118,6 @@
 
   humidity_view_inside:
     name: Inomhus luftfuktighet
-    view: no
     icon: mdi:information-outline
     control: hidden
     entities:
@@ -137,7 +128,6 @@
 
   temperature_view_fridge_freezer:
     name: Kyl/Frys
-    view: no
     icon: mdi:information-outline
     control: hidden
     entities:
@@ -146,7 +136,6 @@
 
   temperature_view_other:
     name: Övrigt
-    view: no
     icon: mdi:information-outline
     control: hidden
     entities:
@@ -159,7 +148,6 @@
 
   temperature_view_heater_ventilation:
     name: Värmepump/Ventilation
-    view: no
     icon: mdi:information-outline
     control: hidden
     entities:
@@ -174,7 +162,6 @@
 
   temperature_view_statistic:
     name: Statistik
-    view: no
     icon: mdi:information-outline
     control: hidden
     entities:
@@ -212,7 +199,7 @@
 ###################
   switch_view:
     name: Belysning
-    view: yes
+
     icon: mdi:lightbulb
     entities:
       - group.kitchen_lights
@@ -225,7 +212,7 @@
 
   kitchen_lights:
     name: Köksbelysning
-    view: no
+
     entities:
       - light.kok_underskap_bank
       - light.kok_underskap_diskbank
@@ -237,7 +224,7 @@
 
   morning_lights:
     name: Morgonbelysning
-    view: no
+
     entities:
       - light.kok_stora_fonstret
 #      - light.kok_stora_fonstret_ljusstake
@@ -251,7 +238,7 @@
 
   evening_lights:
     name: Kvällsbelysning
-    view: no
+
     entities:
       - light.kok_stora_fonstret
 #jul      - light.kok_stora_fonstret_ljusstake
@@ -273,7 +260,7 @@
 
   night_lights:
     name: Nattbelysning
-    view: no
+
     entities:
       - light.hall_byra
       - light.vardagsrum_fonster
@@ -285,14 +272,14 @@
 
   uterums:
     name: Uterum
-    view: no
+
     entities:
       - light.uterum_led
       - light.uterum_fotogenlampa
 
   outside_lights:
     name: Utomhusbelysning
-    view: no
+
     entities:
       - light.forrad_fasad
       - light.friggebod_fasad
@@ -304,7 +291,7 @@
 
   away_lights:
     name: Bortabelysning
-    view: no
+
     entities:
       - light.kok_stora_fonstret
 #jul      - light.kok_stora_fonstret_ljusstake
@@ -325,7 +312,7 @@
 #############
   room:
     name: Rum
-    view: yes
+
     entities:
       - group.kitchen
       - group.hall
@@ -345,7 +332,7 @@
 
   kitchen:
     name: Kök
-    view: no
+
     entities:
       - sensor.kyl_temperature
       #- sensor.kyl_humidity # Onödigt att visa, kanska kan larma om ovanligt värde
@@ -363,7 +350,7 @@
 
   hall:
     name: Hall
-    view: no
+
     entities:
       - sensor.hall_temperature
       - sensor.hall_humidity
@@ -374,7 +361,7 @@
 
   laundry:
     name: Tvättstuga
-    view: no
+
     entities:
       - sensor.tvattstuga_temperature
       - sensor.tvattstuga_humidity
@@ -383,7 +370,7 @@
 
   livingroom:
     name: Vardagsrum
-    view: no
+
     entities:
       - sensor.vardagsrum_temperature
       - light.vardagsrum_fonster
@@ -399,7 +386,7 @@
 
   bathroom:
     name: Badrum
-    view: no
+
     entities:
       - sensor.badrum_temperature
       - sensor.badrum_humidity
@@ -408,14 +395,14 @@
 
   bedroom:
     name: Sovrum
-    view: no
+
     entities:
       - sensor.sovrum
       - light.sovrum_fonster
 
   louise_room:
     name: Louise rum
-    view: no
+
     entities:
       - sensor.louise_rum_temperature
       - sensor.louise_rum_humidity
@@ -425,13 +412,13 @@
 
   andreas_room:
     name: Andreas rum
-    view: no
+
     entities:
       - light.andreas_fonster
 
   conservatory:
     name: Uterum
-    view: no
+
     entities:
       - sensor.uterum
       - light.uterum_fonster
@@ -442,19 +429,19 @@
 
   attic:
     name: Vinden
-    view: no
+
     entities:
       - sensor.pa_vinden
 
   spa:
     name: Spabad
-    view: no
+
     entities:
       - light.spabad_vagg
 
   friggebod:
     name: Friggebod
-    view: no
+
     entities:
       - sensor.friggebod_temperature
       - sensor.friggebod_humidity
@@ -464,7 +451,7 @@
 
   garage:
     name: Garage/Förråd
-    view: no
+
     entities:
       - sensor.forrad_temperature
       - sensor.forrad_humidity
@@ -474,7 +461,7 @@
 
   outside:
     name: Ute
-    view: no
+
     entities:
       - sensor.ute
       - sensor.ute2_humidity
@@ -491,7 +478,7 @@
 
   fan:
     name: Ventilation
-    view: no
+
     entities:
       - sensor.Uteluft
       - sensor.Tilluft
@@ -508,14 +495,14 @@
 ####################
   cleaner_view:
     name: Dammsugare
-    view: yes
+
     entities:
       - group.time_to_clean
       - group.xiaomi_vacuum_cleaner
 
   time_to_clean:
     name: Dammsug
-    view: no
+
     icon: mdi:information-outline
     control: hidden
     entities:
@@ -535,7 +522,7 @@
 
   xiaomi_vacuum_cleaner:
     name: Xiaomi S50
-    view: no
+
     icon: mdi:information-outline
     control: hidden
     entities:
@@ -560,7 +547,7 @@
 ################
   camera_view:
     name: Kamera
-    view: yes
+
     entities:
       - group.camera
       - group.motion_inside
@@ -569,7 +556,7 @@
 
   camera:
     name: Kamera
-    view: no
+
     icon: mdi:information-outline
     control: hidden
     entities:
@@ -585,7 +572,7 @@
 
   motion_inside:
     name: Rörelsedetektor inne
-    view: no
+
     icon: mdi:information-outline
     control: hidden
     entities:
@@ -595,7 +582,7 @@
 
   motion_outside:
     name: Rörelsedetektor ute
-    view: no
+
     icon: mdi:information-outline
     control: hidden
     entities:
@@ -608,7 +595,7 @@
 
   camera_automation:
     name: Automation
-    view: no
+
     icon: mdi:information-outline
     control: hidden
     entities:
@@ -634,7 +621,7 @@
 ####################
   automation:
     name: Automation
-    view: yes
+
     icon: mdi:home-automation
     entities:
       - group.automation_larm
@@ -962,7 +949,7 @@
 ###############
   extra_view:
     name: Extra
-    view: yes
+
     entities:
 #      - group.extra_view_fr24
       - group.extra_view_temp_sensor_latest
@@ -988,7 +975,7 @@
 
   extra_view_temp_sensor_latest:
     name: Temp sensor senast
-    view: no
+
     icon: mdi:information-outline
     control: hidden
     entities:
@@ -1010,7 +997,7 @@
 
   extra_view_motion_sensor_latest:
     name: Rörelsesensor senast
-    view: no
+
     icon: mdi:information-outline
     control: hidden
     entities:
@@ -1034,7 +1021,7 @@
 
   extra_view_setup:
     name: Inställningar
-    view: no
+
     control: hidden
     entities:
       - input_select.inside_lights
@@ -1045,7 +1032,7 @@
 
   extra_view_ventilation:
     name: Ventilation badrum
-    view: no
+
     icon: mdi:information-outline
     control: hidden
     entities:
@@ -1058,7 +1045,7 @@
 
   extra_view_motion:
     name: Rörelsedetektorer
-    view: no
+
     icon: mdi:information-outline
     control: hidden
     entities:

@@ -1,58 +1,996 @@
-﻿title: Hagaholm
-# Optional background for all views. Check https://developer.mozilla.org/en-US/docs/Web/CSS/background for more examples.
-background: center / cover no-repeat url("/background.png") fixed
-# Exclude entities from "Unused entities" view
-excluded_entities:
-  - weblink.router
+title: Home
 views:
-    # View tab title.
-  - title: Info
-    # Optional unique id for direct access /lovelace/${id}
-    id: info
-    # Optional background (overwrites the global background).
-    background: radial-gradient(crimson, skyblue)
-    # Each view can have a different theme applied. Theme should be defined in the frontend.
-    theme: dark-mode
-    # The cards to show on this view.
+  - path: default_view
+    title: Info
+    badges: []
     cards:
-        # The filter card will filter entities for their state
-      - type: entity-filter
+      - type: entities
         entities:
           - device_tracker.mobil_micke
           - device_tracker.mobil_annelie
-          - device_tracker.mobil_louise
           - device_tracker.mobil_andreas
-        state_filter:
-          - 'home'
-        card:
-          type: glance
-          title: Status
-
-        # The picture entity card will represent an entity with a picture
-      - type: picture-entity
-        image: https://www.home-assistant.io/images/default-social.png
-        entity: light.hall_byra
-
-    # Specify a tab icon if you want the view tab to be an icon.
-  - icon: mdi:home-assistant
-    # Title of the view. Will be used as the tooltip for tab icon
-    title: Second view
-    cards:
-        # Entities card will take a list of entities and show their state.
+          - device_tracker.mobil_louise
+          - sensor.ute
+          - sensor.uterum
+          - sensor.inne_medel
+          - sensor.ljusstyrka
+        title: Info
+        show_header_toggle: false
       - type: entities
-        # Title of the entities card
-        title: Example
-        # The entities here will be shown in the same order as specified.
-        # Each entry is an entity ID or a map with extra options.
+        entities:
+          - script.goodnight
+          - script.goodnight_10_min
+          - script.goodnight_all
+          - script.goodnight_all_10_min
+          - script.goodnight_all_tv_10_min
+          - script.bedroom_off
+          - script.andreas_room_off
+          - script.louise_room_off
+        title: Släck belysning
+        show_header_toggle: false
+      - type: entities
+        entities:
+          - script.cleaning_lights_on
+          - automation.kok_off_sensor_off
+          - script.morning_lights_on
+          - script.evening_lights_on
+          - script.night_light
+          - script.kitchen_light_100
+          - script.spa_light_on
+          - script.away_lights_on
+        title: Tänd belysning
+        show_header_toggle: false
+    icon: 'mdi:information-outline'
+  - path: temperature_view
+    title: Temperatur
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - sensor.ute
+          - sensor.ute2_humidity
+          - sensor.ljusstyrka
+        title: Utomhus
+        show_header_toggle: false
+      - type: entities
+        entities:
+          - sensor.uterum
+          - sensor.hall_temperature
+          - sensor.vardagsrum_temperature
+          - sensor.sovrum
+          - sensor.louise_rum_temperature
+          - sensor.badrum_temperature
+          - sensor.tvattstuga_temperature
+        title: Inomhus temperatur
+        show_header_toggle: false
+      - type: entities
+        entities:
+          - sensor.hall_humidity
+          - sensor.louise_rum_humidity
+          - sensor.badrum_humidity
+          - sensor.tvattstuga_humidity
+        title: Inomhus luftfuktighet
+        show_header_toggle: false
+      - type: entities
+        entities:
+          - sensor.kyl_temperature
+          - sensor.frys_temperature
+        title: Kyl/Frys
+        show_header_toggle: false
+      - type: entities
+        entities:
+          - sensor.friggebod_temperature
+          - sensor.friggebod_humidity
+          - sensor.forrad_temperature
+          - sensor.forrad_humidity
+          - sensor.garage_temperature
+          - sensor.pa_vinden
+        title: Övrigt
+        show_header_toggle: false
+      - type: entities
+        entities:
+          - sensor.varmepump_temperature
+          - sensor.uteluft
+          - sensor.tilluft
+          - sensor.franluft
+          - sensor.avluft
+          - switch.fan_speed
+          - switch.ventilationsaggregat
+        title: Värmepump/Ventilation
+        show_header_toggle: false
+      - type: entities
+        entities:
+          - sensor.ute_temp_statistik
+          - sensor.inne_temp_statistik
+          - sensor.hall_temp_statistik
+          - sensor.vardagsrum_temp_statistik
+          - sensor.sovrum_temp_statistik
+          - sensor.louise_rum_temp_statistik
+          - sensor.tvattstuga_temp_statistik
+          - sensor.badrum_temp_statistik
+          - sensor.uterum_temp_statistik
+          - sensor.forrad_temp_statistik
+          - sensor.garage_temp_statistik
+          - sensor.friggebod_temp_statistik
+          - sensor.kyl_temp_statistik
+          - sensor.frys_temp_statistik
+          - sensor.varmepump_temp_statistik
+          - sensor.hall_fukt_statistik
+          - sensor.louise_rum_fukt_statistik
+          - sensor.tvattstuga_fukt_statistik
+          - sensor.badrum_fukt_statistik
+          - sensor.forrad_fukt_statistik
+          - sensor.friggebod_fukt_statistik
+        title: Statistik
+        show_header_toggle: false
+      - type: entities
+        entities:
+          - sensor.yr_temperature
+          - sensor.yr_symbol
+          - sensor.yr_precipitation
+          - sensor.yr_wind_speed
+          - sensor.yr_wind_direction
+          - sensor.yr_pressure
+          - sensor.yr_humidity
+          - sensor.yr_fog
+          - sensor.yr_cloudiness
+          - sensor.yr_dewpoint_temperature
+        title: Yr
+        show_header_toggle: false
+    icon: 'mdi:thermometer'
+  - path: switch_view
+    title: Belysning
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - light.kok_underskap_bank
+          - light.kok_underskap_diskbank
+          - light.kok_vitrinskap
+          - input_boolean.rorelsevakt_aktiv
+          - timer.timer_rorelsevakt_1_medium
+          - timer.timer_rorelsevakt_2_medium
+          - timer.timer_rorelsevakt_3_medium
+        title: Köksbelysning
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - light.kok_stora_fonstret
+          - light.kok_lilla_fonstret
+          - light.hall_byra
+          - light.vardagsrum_fonster
+          - light.vardagsrum_gran
+          - light.uterum_fonster
+        title: Morgonbelysning
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - light.kok_stora_fonstret
+          - light.kok_lilla_fonstret
+          - light.hall_byra
+          - light.hall_skap
+          - light.vardagsrum_fonster
+          - light.vardagsrum_skank
+          - light.vardagsrum_vagn
+          - light.vardagsrum_vitrinskap
+          - light.vardagsrum_gran
+          - light.sovrum_fonster
+          - light.andreas_fonster
+          - light.louise_fonster
+          - light.uterum_fonster
+        title: Kvällsbelysning
+        show_header_toggle: true
+      - type: entities
         entities:
           - light.hall_byra
-          - switch.hall_skap
+          - light.vardagsrum_fonster
+          - input_boolean.rorelsevakt_aktiv
+          - timer.timer_rorelsevakt_1_short
+          - timer.timer_rorelsevakt_2_short
+          - timer.timer_rorelsevakt_3_short
+        title: Nattbelysning
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - entity: light.uterum_led
+            name: led
+          - entity: light.uterum_fotogenlampa
+            name: fotogenlampa
+        title: Uterum
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - light.forrad_fasad
+          - light.friggebod_fasad
+          - light.friggebod_ute
+          - light.friggebod_fonster
+          - light.spabad_vagg
+        title: Utomhusbelysning
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - light.kok_stora_fonstret
+          - light.kok_lilla_fonstret
+          - light.hall_byra
+          - light.vardagsrum_fonster
+          - light.sovrum_fonster
+          - light.louise_fonster
+          - light.uterum_fonster
+        title: Bortabelysning
+        show_header_toggle: true
+    icon: 'mdi:lightbulb'
+  - path: room
+    title: Rum
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - sensor.kyl_temperature
+          - sensor.frys_temperature
+          - entity: light.kok_stora_fonstret
+            name: stora fönstret
+          - entity: light.kok_lilla_fonstret
+            name: lilla fönstret
+          - entity: light.kok_underskap_bank
+            name: underskåp bänk
+          - entity: light.kok_underskap_diskbank
+            name: underskåp diskbänk
+          - entity: light.kok_vitrinskap
+            name: vitrinskåp
+          - input_boolean.rorelsevakt_aktiv
+          - timer.timer_rorelsevakt_1_medium
+          - timer.timer_rorelsevakt_3_medium
+        title: Kök
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - sensor.hall_temperature
+          - sensor.hall_humidity
+          - entity: light.hall_byra
+            name: byrå
+          - entity: light.hall_skap
+            name: skåp
+          - switch.ringklocka
+          - binary_sensor.aqara_motion_sensor_2
+        title: Hall
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - sensor.tvattstuga_temperature
+          - sensor.tvattstuga_humidity
+          - sensor.varmepump_temperature
+          - timer.timer_rorelsevakt_2_medium
+        title: Tvättstuga
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - sensor.vardagsrum_temperature
+          - entity: light.vardagsrum_fonster
+            name: fönster
           - entity: light.vardagsrum_skank
-            # Override the name to use
-            name: LR Lights
-
-        # The markdown card will render markdown text.
-      - type: markdown
-        title: Lovelace
-        content: >
-          Welcome to your **Lovelace UI**.
+            name: skänk
+          - entity: light.vardagsrum_vagn
+            name: vagn
+          - entity: light.vardagsrum_vitrinskap
+            name: vitrinskåp
+          - entity: light.vardagsrum_gran
+            name: gran
+          - entity: switch.vardagsrum_stereobank
+            name: stereobänk
+          - entity: switch.vardagsrum_tv
+            name: tv
+          - entity: switch.vardagsrum_subbas
+            name: subbas
+          - entity: switch.vardagsrum_extra_subbas
+            name: extra subbas
+        title: Vardagsrum
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - entity: sensor.badrum_temperature
+            name: temperature
+          - sensor.badrum_humidity
+          - sensor.fukt_badrumsfonster
+          - switch.fan_speed
+        title: Badrum
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - sensor.sovrum
+          - entity: light.sovrum_fonster
+            name: fönster
+        title: Sovrum
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - sensor.louise_rum_temperature
+          - sensor.louise_rum_humidity
+          - light.louise_fonster
+          - light.discolampa
+        title: Louise rum
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - light.andreas_fonster
+        title: Andreas rum
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - sensor.uterum
+          - entity: light.uterum_fonster
+            name: fönster
+          - entity: light.uterum_led
+            name: led
+          - entity: light.uterum_fotogenlampa
+            name: fotogenlampa
+          - binary_sensor.tradfri_motion_sensor_5
+        title: Uterum
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - sensor.pa_vinden
+        title: Vinden
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - entity: light.spabad_vagg
+            name: vägg
+        title: Spabad
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - sensor.friggebod_temperature
+          - sensor.friggebod_humidity
+          - entity: light.friggebod_fonster
+            name: fönster
+        title: Friggebod
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - sensor.forrad_temperature
+          - sensor.forrad_humidity
+          - sensor.garage_temperature
+          - switch.garage_luftavfuktare
+          - switch.garage_elvarme
+        title: Garage/Förråd
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - sensor.ute
+          - sensor.ute2_humidity
+          - sensor.ljusstyrka
+          - light.forrad_fasad
+          - light.friggebod_fasad
+          - light.friggebod_ute
+          - switch.ringklocka_tvattstuga
+          - switch.ringklocka_hall
+          - binary_sensor.tradfri_motion_sensor_1
+          - binary_sensor.tradfri_motion_sensor_2
+          - binary_sensor.tradfri_motion_sensor_3
+          - binary_sensor.tradfri_motion_sensor_4
+        title: Ute
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - sensor.uteluft
+          - sensor.tilluft
+          - sensor.franluft
+          - sensor.avluft
+          - switch.fan_speed
+          - switch.ventilationsaggregat
+        title: Ventilation
+        show_header_toggle: true
+  - path: cleaner_view
+    title: Dammsugare
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - entity: script.vacuum_house
+            name: huset
+          - entity: script.vacuum_daily
+            name: dagligen
+          - entity: script.vacuum_kitchen
+            name: köket
+          - entity: script.vacuum_kitchen_carpet
+            name: köksmattan
+          - entity: script.vacuum_hall
+            name: hallen
+          - entity: script.vacuum_laundry
+            name: tvättstugan
+          - entity: script.vacuum_laundry_carpet
+            name: mattan i tvättstugan
+          - entity: script.vacuum_sovrum
+            name: sovrummet
+          - entity: script.vacuum_louise_rum
+            name: Louise rum
+          - entity: script.vacuum_andreas_rum
+            name: Andreas rum
+          - entity: script.vacuum_vardagsrum
+            name: vardagsrum
+          - entity: script.vacuum_toalett
+            name: toalett
+        title: Dammsug
+        show_header_toggle: false
+      - type: entities
+        entities:
+          - vacuum.xiaomi_vacuum_cleaner
+          - sensor.vacuum_status
+          - sensor.vacuum_fan_speed
+          - sensor.vacuum_battery
+          - sensor.vacuum_cleaning_time
+          - sensor.vacuum_cleaned_area
+          - sensor.vacuum_cleanmainbrush
+          - sensor.vacuum_cleansidebrush
+          - sensor.vacuum_cleanfilter
+          - sensor.vacuum_sensordirtyleft
+          - sensor.vacuum_do_not_disturb
+          - sensor.vacuum_operation
+          - sensor.vacuum_accessories
+        title: Xiaomi S50
+        show_header_toggle: false
+  - path: camera_view
+    title: Kamera
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - entity: device_tracker.camera1
+            name: '1'
+          - entity: device_tracker.camera2
+            name: '2'
+          - timer.timer_camera_1
+          - timer.timer_camera_2
+          - entity: input_boolean.camera_1_aktiv
+            name: 1 aktiv
+          - entity: input_boolean.camera_2_aktiv
+            name: 2 aktiv
+          - input_boolean.camera_1_and_2_aktiv
+        title: Kamera
+        show_header_toggle: false
+      - type: picture-entity
+        entity: camera.kamera_1
+      - type: picture-entity
+        entity: camera.kamera_2
+      - type: entities
+        entities:
+          - binary_sensor.aqara_motion_sensor_1
+          - binary_sensor.aqara_motion_sensor_2
+          - binary_sensor.tradfri_motion_sensor_5
+        title: Rörelsedetektor inne
+        show_header_toggle: false
+      - type: entities
+        entities:
+          - binary_sensor.motion_kamera_1
+          - binary_sensor.motion_kamera_2
+          - binary_sensor.tradfri_motion_sensor_1
+          - binary_sensor.tradfri_motion_sensor_2
+          - binary_sensor.tradfri_motion_sensor_3
+          - binary_sensor.tradfri_motion_sensor_4
+        title: Rörelsedetektor ute
+        show_header_toggle: false
+      - type: entities
+        entities:
+          - automation.startar_camera_1_timer
+          - automation.startar_camera_2_timer
+          - automation.stanger_av_camera_1_aktiv
+          - automation.stanger_av_camera_2_aktiv
+          - automation.startar_camera_1_and_2_aktiv_1_aktiv
+          - automation.startar_camera_1_and_2_aktiv_2_aktiv
+          - automation.stoppar_camera_1_and_2_aktiv_1_inaktiv
+          - automation.stoppar_camera_1_and_2_aktiv_2_inaktiv
+          - automation.larm_kamera_1_aktiv_home
+          - automation.larm_kamera_1_aktiv_away
+          - automation.larm_kamera_2_aktiv_home
+          - automation.larm_kamera_2_aktiv_away
+          - automation.larm_kameror_ar_aktiva_home
+          - automation.larm_kameror_ar_aktiva_away
+        title: Automation
+        show_header_toggle: false
+  - path: automation
+    title: Automation
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - entity: automation.larm_rorelse_i_koket
+            name: rörelse i köket
+          - entity: automation.larm_rorelse_i_hallen
+            name: rörelse i hallen
+          - entity: automation.larm_rorelse_vid_huvudentre
+            name: rörelse vid huvudentre
+          - entity: automation.larm_rorelse_vid_uteplats
+            name: rörelse vid uteplats
+          - entity: automation.larm_rorelse_i_uterummet
+            name: rörelse i uterummet
+          - automation.blinkar_inne_hem
+          - automation.blinkar_ute_hem
+        title: Larm
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - input_boolean.frys_reading_missing_alarm
+          - input_boolean.kyl_reading_missing_alarm
+          - input_boolean.badrum_reading_missing_alarm
+          - input_boolean.tvattstuga_reading_missing_alarm
+          - input_boolean.varmepump_reading_missing_alarm
+          - input_boolean.vardagsrum_reading_missing_alarm
+          - input_boolean.hall_reading_missing_alarm
+          - input_boolean.forrad_reading_missing_alarm
+          - input_boolean.garage_reading_missing_alarm
+          - input_boolean.friggebod_reading_missing_alarm
+          - automation.avlasning_saknas_frys
+          - automation.avlasning_saknas_kyl
+          - automation.avlasning_saknas_badrum
+          - automation.avlasning_saknas_tvattstuga
+          - automation.avlasning_saknas_varmepump
+          - automation.avlasning_saknas_vardagsrum
+          - automation.avlasning_saknas_hall
+          - automation.avlasning_saknas_forrad
+          - automation.avlasning_saknas_garage
+          - automation.avlasning_saknas_friggebod
+        title: Larm avläsningar saknas
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - automation.kok_100_2500
+          - automation.kok_100_morgon_sensor_on_2500
+          - automation.kok_100_sensor_on_0_150
+          - automation.kok_100_sensor_on_150_2500
+          - automation.kok_100_sensor_on_borta_0_150
+          - automation.kok_25_sensor_on_hemma_0_150
+          - automation.kok_off_borta
+          - automation.kok_off_sensor_off
+          - automation.kok_off_3000
+          - automation.kok_rorelsevakt_reset
+        title: Köksbelysning
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - entity: automation.morgonbelysning_on_sensor_on_1800
+            name: 'on (sensor on, <1800)'
+          - entity: automation.morgonbelysning_on_hemma_1800
+            name: 'on (-> hemma, <1800)'
+          - entity: automation.morgonbelysning_off_2000_hemma
+            name: 'off (>2000, hemma)'
+          - entity: automation.morgonbelysning_off_borta
+            name: off (-> borta)
+        title: Morgonbelysning
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - entity: automation.kvallsbelysning_on_12_00_00_1800_hemma
+            name: 'on (=12:00:00, <1800, hemma)'
+          - entity: automation.kvallsbelysning_on_1800_hemma
+            name: 'on (<1800, hemma)'
+          - entity: automation.kvallsbelysning_on_sensor_on_borta_1800
+            name: 'on (sensor on, borta, <1800)'
+          - entity: automation.kvallsbelysning_on_hemma_1800
+            name: 'on (-> hemma, <1800)'
+          - entity: automation.kvallsbelysning_off_2500_hemma
+            name: 'off (>2500, hemma)'
+          - entity: automation.kvallsbelysning_off_borta
+            name: off (-> borta)
+        title: Kvällsbelysning
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - entity: automation.nattbelysning_sensor_on_hemma_0_150
+            name: '(sensor on, Hemma, 0-150)'
+          - entity: automation.nattbelysning_off_sensor_off
+            name: off (sensor off)
+        title: Nattbelysning
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - automation.bortabelysning_on_07_00_00_200_borta
+          - automation.bortabelysning_on_borta_200_morgon
+          - automation.bortabelysning_off_11_00_00_borta
+          - automation.bortabelysning_off_250_borta_morgon
+        title: Bortabelysning morgon
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - automation.bortabelysning_on_12_00_00_200_borta
+          - automation.bortabelysning_on_200_borta
+          - automation.bortabelysning_on_borta_200
+          - automation.bortabelysning_off_23_00_00_borta
+        title: Bortabelysning kväll
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - automation.uterums_fotogenlampa_on_16
+          - automation.uterums_fotogenlampa_on_250
+          - automation.uterums_fotogenlampa_on_home
+          - automation.uterums_fotogenlampa_on_motion
+          - automation.uterums_fotogenlampa_off_15
+          - automation.uterums_fotogenlampa_off_all_off_hemma
+          - automation.uterums_fotogenlampa_off_borta
+          - automation.uterums_ledbelysning_on_16
+          - automation.uterums_ledbelysning_on_250
+          - automation.uterums_ledbelysning_on_home
+          - automation.uterums_ledbelysning_on_motion
+          - automation.uterums_ledbelysning_off_15
+          - automation.uterums_ledbelysning_off_all_off_hemma
+          - automation.uterums_ledbelysning_off_borta
+        title: Uterumsbelysning
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - automation.friggebod_belysning_on_1
+          - automation.friggebod_belysning_ute_on_5
+          - automation.spabelysning_on_5
+          - entity: automation.utebelysning_off_22_00_00_borta
+            name: 'off (>22:00:00, borta)'
+          - entity: automation.utebelysning_off_22_00_00_hemma_vardag
+            name: 'off (>22:00:00, hemma, vardag)'
+          - entity: automation.utebelysning_off_all_off_hemma_helg
+            name: 'off (All off, hemma, helg)'
+        title: Utebelysning
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - automation.friggebod_fasadbelysning_on_sensor_on_40
+          - automation.friggebod_fasadbelysning_on_40
+          - automation.forrad_fasadbelysning_on_40_led_off
+          - automation.forrad_fasadbelysning_on_led_off_40
+          - automation.friggebod_fasadbelysning_off
+          - automation.friggebod_fasadbelysning_off_60
+          - automation.forrad_fasadbelysning_off
+          - automation.forrad_fasadbelysning_off_60
+        title: Fasadbelysning
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - automation.uterum_larm_hog_temp
+          - automation.friggebod_larm_hog_temp
+          - automation.friggebod_larm_lag_temp
+          - automation.friggebod_frysvakt
+          - automation.larm_hog_temp_i_kyl
+          - automation.larm_lag_temp_i_kyl
+          - automation.larm_varning_hog_temp_i_frys
+          - automation.larm_hog_temp_i_frys
+          - automation.larm_lag_temp_i_frys
+          - automation.hog_temp_raspberry
+          - automation.lag_temp_ackumulatortank
+          - automation.hog_temp_ackumulatortank
+          - automation.lag_temp_franluft
+          - automation.hog_temp_franluft
+          - automation.lag_temp_tilluft
+          - automation.hog_temp_tilluft
+        title: Larm temperatur
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - automation.badrumsfonster_hog_fukt
+          - automation.badrumsfonster_lag_fukt
+          - automation.badrumsfonster_hog_fukt_larm
+        title: Ventilation
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - automation.ventilation_off_60_borta_ute_24degc_inne_23degc
+          - automation.ventilation_off_borta_ute_24degc_60_inne_23degc
+          - automation.ventilation_off_inne_23degc_borta_60_ute_24degc
+          - automation.ventilation_off_ute_24degc_borta_60_inne_23degc
+          - automation.ventilation_on_60_off
+          - automation.ventilation_on_hemma_off
+          - automation.ventilation_on_inne_23degc_off
+          - automation.ventilation_on_ute_22degc_off
+        title: Ventilation On/Off
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - entity: automation.mediaspelare_off_borta
+            name: off (-> borta)
+          - automation.satt_pa_mediaspelare_vid_watch_tv
+          - automation.satt_pa_mediaspelare_vid_listen_to_radio
+          - automation.satt_pa_mediaspelare_vid_watch_chromecast
+          - automation.satt_pa_mediaspelare_vid_listen_to_spotify
+          - automation.satt_pa_mediaspelare_vid_watch_chromecast_ultra
+          - automation.satt_pa_mediaspelare_vid_listen_to_chromecast_ultra
+          - automation.satt_pa_subbasar_vid_poweron
+          - automation.stang_av_subbasar_vid_poweroff
+        title: Mediaspelare
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - entity: automation.hassbian_startad
+            name: startad
+          - entity: automation.hassbian_stoppad
+            name: stoppad
+          - automation.ny_enhet_hittad
+          - entity: automation.hassbian_uppdatering
+            name: uppdatering
+          - automation.restart_ha
+        title: Hassbian
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - entity: automation.ringklocka_tvattstuga
+            name: tvättstuga
+          - entity: automation.ringklocka_hall
+            name: hall
+          - entity: automation.ringklocka_tand_allt_lyse_1
+            name: tänd allt lyse 1
+          - entity: automation.ringklocka_tand_allt_lyse_2
+            name: tänd allt lyse 2
+          - entity: automation.ringklocka_off_borta
+            name: off (-> borta)
+          - entity: automation.ringklocka_on_hemma
+            name: on (-> hemma)
+          - entity: automation.ringklocka_tvattstuga_blinka_lampa_kok_lilla_fonstret
+            name: tvättstuga blinka lampa kök lilla fönstret
+        title: Ringklocka
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - automation.starta_luftavfuktare
+          - automation.stoppa_luftavfuktare
+        title: Garage luftavfuktare
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - automation.starta_elvarme_5_grader
+          - automation.stoppa_elvarme_7_grader
+          - automation.starta_elvarme_8_grader
+          - automation.stoppa_elvarme_10_grader
+        title: Garage elvärme
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - automation.raspberry_pi_b_1_wire_offline
+          - automation.raspberry_pi_3b_hagaholm_offline
+          - automation.raspberry_pi_3b_lux_offline
+          - automation.raspberry_pi_3b_offline
+          - automation.raspberry_pi_4b_hassbian_offline
+        title: Larm Raspberry Pi offline
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - automation.kor_annan_vag_hem
+          - automation.kor_annan_vag_till_seb
+          - automation.lang_restid_hem
+          - automation.lang_restid_till_seb
+        title: Restid till och från jobbet
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - automation.ingen_kontakt_med_forrad_fasadbelysning
+          - automation.ingen_kontakt_med_fotogenlampa_i_uterum
+          - automation.ingen_kontakt_med_friggebod_brytare_vid_stora_fonstret
+          - automation.ingen_kontakt_med_friggebod_fasadbelysning
+          - automation.ingen_kontakt_med_garage_avfuktare
+          - automation.ingen_kontakt_med_uterum_fonster
+          - automation.ingen_kontakt_med_vardagsrum_skank
+          - automation.ingen_kontakt_med_vardagsrum_vagn
+          - automation.kontakt_med_forrad_fasadbelysning
+          - automation.kontakt_med_fotogenlampa_i_uterum
+          - automation.kontakt_med_friggebod_brytare_vid_stora_fonstret
+          - automation.kontakt_med_friggebod_fasadbelysning
+          - automation.kontakt_med_garage_avfuktare
+          - automation.kontakt_med_uterum_fonster
+          - automation.kontakt_med_vardagsrum_skank
+          - automation.kontakt_med_vardagsrum_vagn
+        title: IKEA
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - automation.startar_timers_1
+          - automation.startar_timers_2
+          - automation.startar_timers_3
+          - automation.stanger_av_rorelsevakt_aktiv_om_aktiv_1
+          - automation.stanger_av_rorelsevakt_aktiv_om_aktiv_2
+          - automation.stanger_av_rorelsevakt_aktiv_om_aktiv_3
+          - automation.stanger_av_rorelsevakt_aktiv_for_nattbelysning_1
+          - automation.stanger_av_rorelsevakt_aktiv_for_nattbelysning_2
+          - automation.stanger_av_rorelsevakt_aktiv_for_nattbelysning_3
+        title: Rörelsedetektor i kök
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - automation.dagligen_mandag
+          - automation.dagligen_onsdag
+          - automation.dagligen_fredag
+          - automation.dammsugaren_har_problem
+        title: Dammsugare
+        show_header_toggle: true
+    icon: 'mdi:home-automation'
+  - path: extra_view
+    title: Extra
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - sensor.frys_temp_lastupdated
+          - sensor.kyl_temp_lastupdated
+          - sensor.badrum_temp_lastupdated
+          - sensor.badrum_fukt_lastupdated
+          - sensor.tvattstuga_temp_lastupdated
+          - sensor.tvattstuga_fukt_lastupdated
+          - sensor.varmepump_temp_lastupdated
+          - sensor.vardagsrum_temp_lastupdated
+          - sensor.hall_temp_lastupdated
+          - sensor.hall_fukt_lastupdated
+          - sensor.forrad_temp_lastupdated
+          - sensor.forrad_fukt_lastupdated
+          - sensor.garage_temp_lastupdated
+          - sensor.friggebod_temp_lastupdated
+          - sensor.friggebod_fukt_lastupdated
+        title: Temp sensor senast
+        show_header_toggle: false
+      - type: entities
+        entities:
+          - sensor.aqara_motion_sensor_1_lastupdated
+          - sensor.aqara_motion_sensor_2_lastupdated
+          - sensor.tradfri_motion_sensor_1_lastupdated
+          - sensor.tradfri_motion_sensor_2_lastupdated
+          - sensor.tradfri_motion_sensor_3_lastupdated
+          - sensor.tradfri_motion_sensor_4_lastupdated
+          - sensor.tradfri_motion_sensor_5_lastupdated
+        title: Rörelsesensor senast
+        show_header_toggle: false
+      - type: entities
+        entities:
+          - input_select.inside_lights
+          - input_select.kitchen_lights
+          - input_select.uterum_led_lights
+          - input_select.outside_lights
+          - input_boolean.christmas_light
+        title: Inställningar
+        show_header_toggle: false
+      - type: entities
+        entities:
+          - sensor.badrum_humidity
+          - sensor.fukt_badrumsfonster
+          - switch.fan_speed
+          - switch.ventilationsaggregat
+        title: Ventilation badrum
+        show_header_toggle: false
+      - type: entities
+        entities:
+          - binary_sensor.aqara_motion_sensor_1
+          - binary_sensor.aqara_motion_sensor_2
+          - binary_sensor.tradfri_motion_sensor_1
+          - binary_sensor.tradfri_motion_sensor_2
+          - binary_sensor.tradfri_motion_sensor_3
+          - binary_sensor.tradfri_motion_sensor_4
+          - binary_sensor.tradfri_motion_sensor_5
+          - sensor.aqara_motion_sensor_1
+          - sensor.aqara_motion_sensor_2
+        title: Rörelsedetektorer
+        show_header_toggle: false
+  - path: car
+    title: Bil
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - sensor.volvo_ykg498
+          - binary_sensor.ykg498_engine
+          - sensor.ykg498_range
+          - binary_sensor.ykg498_washer_fluid
+          - binary_sensor.ykg498_service
+        title: Volvo status
+        show_header_toggle: true
+    icon: 'mdi:car'
+  - path: harmony
+    title: Mediaspelare
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - sensor.harmony_current
+          - script.harmony_off
+          - script.harmony_tv
+          - script.harmony_radio
+          - script.harmony_chromecast
+          - script.harmony_spotify
+          - script.harmony_chromecast_ultra
+          - script.harmony_chromecast_ultra_listen
+        title: Fjärrkontroll
+        show_header_toggle: true
+      - type: media-control
+        entity: media_player.chromecast
+      - type: media-control
+        entity: media_player.chromecastultra2230
+      - type: media-control
+        entity: media_player.yamaha_receiver
+      - type: media-control
+        entity: media_player.vardagsrum
+  - path: system_info_view
+    title: System info
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - sensor.mickes_laptop
+          - sensor.mickes_work_laptop
+          - sensor.louise_dator
+          - sensor.herberts_dator
+        title: Dator status
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - sensor.harmony_hub
+          - sensor.yamaha
+          - sensor.classic
+          - sensor.panasonic_tv
+          - sensor.canal_digital
+          - sensor.chromecast
+          - sensor.chromecast_2
+          - sensor.chromecast_ultra
+          - sensor.google_home_mini
+          - sensor.dns320
+        title: Mediaspelare status
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - sensor.mobil_louise
+          - sensor.mobil_annelie
+          - sensor.mobil_annelie_jobb
+          - sensor.mobil_micke
+          - sensor.mobil_andreas
+          - sensor.mobil_margareta
+          - sensor.mobil_herbert
+          - sensor.mobil_erik
+        title: Mobil status
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - sensor.asus_rt_ac68u
+          - sensor.asus_n66u
+        title: Nätverks status
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - sensor.tradfri_gateway
+          - sensor.rockrobo
+          - sensor.camera1
+          - sensor.camera2
+          - sensor.garmin_fenix_5_plus
+        title: Övrigt status
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - sensor.raspberry_pi_b_plus
+        title: Raspberry Pi B+ (1-Wire)
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - sensor.raspberry_pi_3b_1
+          - sensor.raspberry_pi_3b_1_temperature
+        title: Raspberry Pi 3B (Hagaholm)
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - sensor.raspberry_pi_3b_2
+          - sensor.raspberry_pi_3b_2_temperature
+        title: Raspberry Pi 3B (Lux)
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - sensor.raspberry_pi_3b_plus
+        title: Raspberry Pi 3B+ (Flightradar24)
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - sensor.raspberry_pi_4b
+          - sensor.last_boot
+          - sensor.uptime
+          - sensor.cpu_temperature
+          - sensor.cpu
+          - sensor.load_1m
+          - sensor.load_5m
+          - sensor.load_15m
+          - sensor.memory_free
+          - sensor.memory_use_percent
+          - sensor.disk_use_percent_home
+          - sensor.swap_use_percent
+          - sensor.processor_use
+          - sensor.connected_clients
+          - sensor.installed_version
+          - sensor.current_ha_version
+        title: Ubuntu Server (Hassbian)
+        show_header_toggle: true
+    icon: 'mdi:lan'

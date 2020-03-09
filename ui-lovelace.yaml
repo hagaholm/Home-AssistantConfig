@@ -8,6 +8,15 @@ views:
       - sensor.ute2_humidity
       - sensor.ljusstyrka
     cards:
+      - type: sensor      
+        entity: sensor.ute
+        name: Ute
+      - type: sensor      
+        entity: sensor.inne_medel
+        name: Inne
+      - type: sensor      
+        entity: sensor.uterum
+        name: Uterum
       - type: entities
         entities:
           - device_tracker.mobil_micke

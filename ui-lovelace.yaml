@@ -1,8 +1,12 @@
-title: Home
+title: Hagaholm
 views:
   - path: default_view
     title: Info
-    badges: []
+    badges: 
+      - sun.sun
+      - sensor.ute
+      - sensor.ute2_humidity
+      - sensor.ljusstyrka
     cards:
       - type: entities
         entities:
@@ -45,13 +49,6 @@ views:
     title: Temperatur
     badges: []
     cards:
-      - type: entities
-        entities:
-          - sensor.ute
-          - sensor.ute2_humidity
-          - sensor.ljusstyrka
-        title: Utomhus
-        show_header_toggle: false
       - type: entities
         entities:
           - sensor.uterum

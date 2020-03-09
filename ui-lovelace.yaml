@@ -7,19 +7,22 @@ views:
       - sensor.ute
       - sensor.ute2_humidity
       - sensor.ljusstyrka
+    type: vertical-stack
     cards:
       - type: sensor
         graph: line
         entity: sensor.ute
         name: Ute
-      - type: sensor
-        graph: line
-        entity: sensor.inne_medel
-        name: Inne
-      - type: sensor
-        graph: line
-        entity: sensor.uterum
-        name: Uterum
+      - type: horizontal-stack
+        cards:        
+          - type: sensor
+            graph: line
+            entity: sensor.inne_medel
+            name: Inne
+          - type: sensor
+            graph: line
+            entity: sensor.uterum
+            name: Uterum
       - type: entities
         entities:
           - device_tracker.mobil_micke

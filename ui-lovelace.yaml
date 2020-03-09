@@ -8,13 +8,16 @@ views:
       - sensor.ute2_humidity
       - sensor.ljusstyrka
     cards:
-      - type: sensor      
+      - type: sensor
+        graph: line
         entity: sensor.ute
         name: Ute
-      - type: sensor      
+      - type: sensor
+        graph: line
         entity: sensor.inne_medel
         name: Inne
-      - type: sensor      
+      - type: sensor
+        graph: line
         entity: sensor.uterum
         name: Uterum
       - type: entities

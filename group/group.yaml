@@ -1,0 +1,1067 @@
+####################################################
+#                                                  #
+#                       GROUP                      #
+#                                                  #
+####################################################
+
+#################
+#################
+# View: Default #
+#################
+#################
+  default_view:
+    name: Info
+    icon: mdi:information-outline
+    entities:
+      - group.default_view_info
+      - group.default_view_lights_off
+      - group.default_view_lights_on
+
+  default_view_info:
+    name: Info
+    icon: mdi:information-outline
+#    control: hidden
+    entities:
+      - device_tracker.mobil_micke
+      - device_tracker.mobil_annelie
+      - device_tracker.mobil_andreas
+      - device_tracker.mobil_louise
+      - sensor.ute
+      - sensor.uterum
+      - sensor.inne_medel
+      - sensor.ljusstyrka
+
+  default_view_lights_off:
+    name: Släck belysning
+    icon: mdi:information-outline
+#    control: hidden
+    entities:
+      - script.goodnight
+      - script.goodnight_10_min
+      - script.goodnight_all
+      - script.goodnight_all_10_min
+      - script.goodnight_all_tv_10_min
+      - script.bedroom_off
+      - script.andreas_room_off
+      - script.louise_room_off
+
+  default_view_lights_on:
+    name: Tänd belysning
+    icon: mdi:information-outline
+#    control: hidden
+    entities:
+      - script.cleaning_lights_on
+      - automation.kok_off_sensor_off
+      - script.morning_lights_on
+      - script.evening_lights_on
+      - script.night_light
+      - script.kitchen_light_100
+      - script.spa_light_on
+      - script.away_lights_on
+
+#####################
+#####################
+# View: Temperature #
+#####################
+#####################
+  temperature_view:
+    name: Temperatur
+    icon: mdi:thermometer
+    entities:
+      - group.temperature_view_outside
+      - group.temperature_view_inside
+      - group.humidity_view_inside
+      - group.temperature_view_fridge_freezer
+      - group.temperature_view_other
+      - group.temperature_view_heater_ventilation
+      - group.temperature_view_statistic
+      - group.temperature_view_yr
+
+  temperature_view_outside:
+    name: Utomhus
+    icon: mdi:information-outline
+#    control: hidden
+    entities:
+      - sensor.ute
+#      - sensor.ute2_temperature
+      - sensor.ute2_humidity
+      - sensor.ljusstyrka
+
+  temperature_view_yr:
+    name: Yr
+    icon: mdi:information-outline
+#    control: hidden
+    entities:
+      - sensor.yr_temperature
+      - sensor.yr_symbol
+      - sensor.yr_precipitation
+      - sensor.yr_wind_speed
+      - sensor.yr_wind_direction
+      - sensor.yr_pressure
+      - sensor.yr_humidity
+      - sensor.yr_fog
+      - sensor.yr_cloudiness
+      - sensor.yr_dewpoint_temperature
+
+  temperature_view_inside:
+    name: Inomhus temperatur
+    icon: mdi:information-outline
+#    control: hidden
+    entities:
+      - sensor.uterum
+      - sensor.hall_temperature
+      - sensor.vardagsrum_temperature
+      - sensor.sovrum
+      - sensor.louise_rum_temperature
+      - sensor.badrum_temperature
+      - sensor.tvattstuga_temperature
+
+  humidity_view_inside:
+    name: Inomhus luftfuktighet
+    icon: mdi:information-outline
+#    control: hidden
+    entities:
+      - sensor.hall_humidity
+      - sensor.louise_rum_humidity
+      - sensor.badrum_humidity
+      - sensor.tvattstuga_humidity
+
+  temperature_view_fridge_freezer:
+    name: Kyl/Frys
+    icon: mdi:information-outline
+#    control: hidden
+    entities:
+      - sensor.kyl_temperature
+      - sensor.frys_temperature
+
+  temperature_view_other:
+    name: Övrigt
+    icon: mdi:information-outline
+#    control: hidden
+    entities:
+      - sensor.friggebod_temperature
+      - sensor.friggebod_humidity
+      - sensor.forrad_temperature
+      - sensor.forrad_humidity
+      - sensor.garage_temperature
+      - sensor.pa_vinden
+
+  temperature_view_heater_ventilation:
+    name: Värmepump/Ventilation
+    icon: mdi:information-outline
+#    control: hidden
+    entities:
+      - sensor.varmepump_temperature
+      - sensor.Uteluft
+      - sensor.Tilluft
+      - sensor.Franluft
+      - sensor.Avluft
+      - switch.fan_speed
+      - switch.ventilationsaggregat
+
+
+  temperature_view_statistic:
+    name: Statistik
+    icon: mdi:information-outline
+#    control: hidden
+    entities:
+      - sensor.ute_temp_statistik
+      
+      - sensor.inne_temp_statistik
+      - sensor.hall_temp_statistik
+      - sensor.vardagsrum_temp_statistik
+      - sensor.sovrum_temp_statistik
+      - sensor.louise_rum_temp_statistik
+      - sensor.tvattstuga_temp_statistik
+      - sensor.badrum_temp_statistik
+      - sensor.uterum_temp_statistik
+
+      - sensor.forrad_temp_statistik
+      - sensor.garage_temp_statistik
+      - sensor.friggebod_temp_statistik
+
+      - sensor.kyl_temp_statistik
+      - sensor.frys_temp_statistik
+      - sensor.varmepump_temp_statistik
+
+      - sensor.hall_fukt_statistik
+      - sensor.louise_rum_fukt_statistik
+      - sensor.tvattstuga_fukt_statistik
+      - sensor.badrum_fukt_statistik
+
+      - sensor.forrad_fukt_statistik
+      - sensor.friggebod_fukt_statistik
+
+###################
+###################
+# View: Belysning #
+###################
+###################
+  switch_view:
+    name: Belysning
+
+    icon: mdi:lightbulb
+    entities:
+      - group.kitchen_lights
+      - group.morning_lights
+      - group.evening_lights
+      - group.night_lights
+      - group.uterums
+      - group.outside_lights
+      - group.away_lights
+
+  kitchen_lights:
+    name: Köksbelysning
+
+    entities:
+      - light.kok_underskap_bank
+      - light.kok_underskap_diskbank
+      - light.kok_vitrinskap
+      - input_boolean.rorelsevakt_aktiv
+      - timer.timer_rorelsevakt_1_medium
+      - timer.timer_rorelsevakt_2_medium
+      - timer.timer_rorelsevakt_3_medium
+
+  morning_lights:
+    name: Morgonbelysning
+
+    entities:
+      - light.kok_stora_fonstret
+#      - light.kok_stora_fonstret_ljusstake
+      - light.kok_lilla_fonstret
+      - light.hall_byra
+      - light.vardagsrum_fonster
+#      - light.vardagsrum_fonster_ljusstake_2
+      - light.vardagsrum_gran
+      - light.uterum_fonster
+#jul      - light.uterum_julstjarnor
+
+  evening_lights:
+    name: Kvällsbelysning
+
+    entities:
+      - light.kok_stora_fonstret
+#jul      - light.kok_stora_fonstret_ljusstake
+      - light.kok_lilla_fonstret
+      - light.hall_byra
+      - light.hall_skap
+      - light.vardagsrum_fonster
+#jul      - light.vardagsrum_fonster_ljusstake_2
+      - light.vardagsrum_skank
+      - light.vardagsrum_vagn
+      - light.vardagsrum_vitrinskap
+      - light.vardagsrum_gran
+      - light.sovrum_fonster
+      - light.andreas_fonster
+      - light.louise_fonster
+#jul      - light.louise_fonster_dimmer_julstjarna
+      - light.uterum_fonster
+#jul      - light.uterum_julstjarnor
+
+  night_lights:
+    name: Nattbelysning
+
+    entities:
+      - light.hall_byra
+      - light.vardagsrum_fonster
+#jul      - light.vardagsrum_fonster_ljusstake_2
+      - input_boolean.rorelsevakt_aktiv
+      - timer.timer_rorelsevakt_1_short
+      - timer.timer_rorelsevakt_2_short
+      - timer.timer_rorelsevakt_3_short
+
+  uterums:
+    name: Uterum
+
+    entities:
+      - light.uterum_led
+      - light.uterum_fotogenlampa
+
+  outside_lights:
+    name: Utomhusbelysning
+
+    entities:
+      - light.forrad_fasad
+      - light.friggebod_fasad
+      - light.friggebod_ute
+      - light.friggebod_fonster
+#      - light.friggebod_stora_fonstret
+#      - light.friggebod_lilla_fonstret
+      - light.spabad_vagg
+
+  away_lights:
+    name: Bortabelysning
+
+    entities:
+      - light.kok_stora_fonstret
+#jul      - light.kok_stora_fonstret_ljusstake
+      - light.kok_lilla_fonstret
+      - light.hall_byra
+      - light.vardagsrum_fonster
+#jul      - light.vardagsrum_fonster_ljusstake_2
+      - light.sovrum_fonster
+      - light.louise_fonster
+#jul      - light.louise_fonster_dimmer_julstjarna
+      - light.uterum_fonster
+#jul      - light.uterum_julstjarnor
+
+#############
+#############
+# View: Rum #
+#############
+#############
+  room:
+    name: Rum
+
+    entities:
+      - group.kitchen
+      - group.hall
+      - group.laundry
+      - group.livingroom
+      - group.bathroom
+      - group.bedroom
+      - group.louise_room
+      - group.andreas_room
+      - group.conservatory # uterum
+      - group.attic        # vinden
+      - group.spa
+      - group.friggebod
+      - group.garage
+      - group.outside
+      - group.fan  
+
+  kitchen:
+    name: Kök
+
+    entities:
+      - sensor.kyl_temperature
+      #- sensor.kyl_humidity # Onödigt att visa, kanska kan larma om ovanligt värde
+      - sensor.frys_temperature
+      #- sensor.frys_humidity # Onödigt att visa, kanska kan larma om ovanligt värde
+      - light.kok_stora_fonstret
+#jul      - light.kok_stora_fonstret_ljusstake
+      - light.kok_lilla_fonstret
+      - light.kok_underskap_bank
+      - light.kok_underskap_diskbank
+      - light.kok_vitrinskap
+      - input_boolean.rorelsevakt_aktiv
+      - timer.timer_rorelsevakt_1_medium
+      - timer.timer_rorelsevakt_3_medium
+
+  hall:
+    name: Hall
+
+    entities:
+      - sensor.hall_temperature
+      - sensor.hall_humidity
+      - light.hall_byra
+      - light.hall_skap
+      - switch.ringklocka
+      - binary_sensor.aqara_motion_sensor_2
+
+  laundry:
+    name: Tvättstuga
+
+    entities:
+      - sensor.tvattstuga_temperature
+      - sensor.tvattstuga_humidity
+      - sensor.varmepump_temperature
+      - timer.timer_rorelsevakt_2_medium
+
+  livingroom:
+    name: Vardagsrum
+
+    entities:
+      - sensor.vardagsrum_temperature
+      - light.vardagsrum_fonster
+#jul      - light.vardagsrum_fonster_ljusstake_2
+      - light.vardagsrum_skank
+      - light.vardagsrum_vagn
+      - light.vardagsrum_vitrinskap
+      - light.vardagsrum_gran
+      - switch.vardagsrum_stereobank
+      - switch.vardagsrum_tv
+      - switch.vardagsrum_subbas
+      - switch.vardagsrum_extra_subbas
+
+  bathroom:
+    name: Badrum
+
+    entities:
+      - sensor.badrum_temperature
+      - sensor.badrum_humidity
+      - sensor.fukt_badrumsfonster
+      - switch.fan_speed
+
+  bedroom:
+    name: Sovrum
+
+    entities:
+      - sensor.sovrum
+      - light.sovrum_fonster
+
+  louise_room:
+    name: Louise rum
+
+    entities:
+      - sensor.louise_rum_temperature
+      - sensor.louise_rum_humidity
+      - light.louise_fonster
+#jul      - light.louise_fonster_dimmer_julstjarna
+      - light.discolampa
+
+  andreas_room:
+    name: Andreas rum
+
+    entities:
+      - light.andreas_fonster
+
+  conservatory:
+    name: Uterum
+
+    entities:
+      - sensor.uterum
+      - light.uterum_fonster
+#jul      - light.uterum_julstjarnor
+      - light.uterum_led
+      - light.uterum_fotogenlampa
+      - binary_sensor.tradfri_motion_sensor_5
+
+  attic:
+    name: Vinden
+
+    entities:
+      - sensor.pa_vinden
+
+  spa:
+    name: Spabad
+
+    entities:
+      - light.spabad_vagg
+
+  friggebod:
+    name: Friggebod
+
+    entities:
+      - sensor.friggebod_temperature
+      - sensor.friggebod_humidity
+      - light.friggebod_fonster
+#      - light.friggebod_lilla_fonstret
+#      - light.friggebod_stora_fonstret
+
+  garage:
+    name: Garage/Förråd
+
+    entities:
+      - sensor.forrad_temperature
+      - sensor.forrad_humidity
+      - sensor.garage_temperature
+      - switch.garage_luftavfuktare
+      - switch.garage_elvarme
+
+  outside:
+    name: Ute
+
+    entities:
+      - sensor.ute
+      - sensor.ute2_humidity
+      - sensor.ljusstyrka
+      - light.forrad_fasad
+      - light.friggebod_fasad
+      - light.friggebod_ute
+      - switch.ringklocka_tvattstuga
+      - switch.ringklocka_hall
+      - binary_sensor.tradfri_motion_sensor_1
+      - binary_sensor.tradfri_motion_sensor_2
+      - binary_sensor.tradfri_motion_sensor_3
+      - binary_sensor.tradfri_motion_sensor_4
+
+  fan:
+    name: Ventilation
+
+    entities:
+      - sensor.Uteluft
+      - sensor.Tilluft
+      - sensor.Franluft
+      - sensor.Avluft
+      - switch.fan_speed
+      - switch.ventilationsaggregat
+      # Verkningsgrad
+
+####################
+####################
+# View: Dammsugare #
+####################
+####################
+  cleaner_view:
+    name: Dammsugare
+
+    entities:
+      - group.time_to_clean
+      - group.xiaomi_vacuum_cleaner
+
+  time_to_clean:
+    name: Dammsug
+
+    icon: mdi:information-outline
+#    control: hidden
+    entities:
+      - script.vacuum_house
+      - script.vacuum_daily
+      - script.vacuum_kitchen
+      - script.vacuum_kitchen_carpet
+      - script.vacuum_hall
+      - script.vacuum_laundry
+      - script.vacuum_laundry_carpet
+      - script.vacuum_sovrum
+      - script.vacuum_louise_rum
+      - script.vacuum_andreas_rum
+      - script.vacuum_vardagsrum
+      - script.vacuum_toalett
+#      - script.vaccum_uterum
+
+  xiaomi_vacuum_cleaner:
+    name: Xiaomi S50
+
+    icon: mdi:information-outline
+#    control: hidden
+    entities:
+      - vacuum.xiaomi_vacuum_cleaner
+      - sensor.vacuum_status
+      - sensor.vacuum_fan_speed
+      - sensor.vacuum_battery
+      - sensor.vacuum_cleaning_time
+      - sensor.vacuum_cleaned_area
+      - sensor.vacuum_cleanmainbrush
+      - sensor.vacuum_cleansidebrush
+      - sensor.vacuum_cleanfilter
+      - sensor.vacuum_sensordirtyleft
+      - sensor.vacuum_do_not_disturb
+      - sensor.vacuum_operation
+      - sensor.vacuum_accessories
+
+################
+################
+# View: Kamera #
+################
+################
+  camera_view:
+    name: Kamera
+
+    entities:
+      - group.camera
+      - group.motion_inside
+      - group.motion_outside
+      - group.camera_automation
+
+  camera:
+    name: Kamera
+
+    icon: mdi:information-outline
+#    control: hidden
+    entities:
+      - device_tracker.camera1
+      - device_tracker.camera2
+      - camera.kamera_1
+      - camera.kamera_2
+      - timer.timer_camera_1
+      - timer.timer_camera_2
+      - input_boolean.camera_1_aktiv
+      - input_boolean.camera_2_aktiv
+      - input_boolean.camera_1_and_2_aktiv
+
+  motion_inside:
+    name: Rörelsedetektor inne
+
+    icon: mdi:information-outline
+#    control: hidden
+    entities:
+      - binary_sensor.aqara_motion_sensor_1
+      - binary_sensor.aqara_motion_sensor_2
+      - binary_sensor.tradfri_motion_sensor_5
+
+  motion_outside:
+    name: Rörelsedetektor ute
+
+    icon: mdi:information-outline
+#    control: hidden
+    entities:
+      - binary_sensor.motion_kamera_1
+      - binary_sensor.motion_kamera_2
+      - binary_sensor.tradfri_motion_sensor_1
+      - binary_sensor.tradfri_motion_sensor_2
+      - binary_sensor.tradfri_motion_sensor_3
+      - binary_sensor.tradfri_motion_sensor_4
+
+  camera_automation:
+    name: Automation
+
+    icon: mdi:information-outline
+#    control: hidden
+    entities:
+      - automation.startar_camera_1_timer
+      - automation.startar_camera_2_timer
+      - automation.stanger_av_camera_1_aktiv
+      - automation.stanger_av_camera_2_aktiv
+      - automation.startar_camera_1_and_2_aktiv_1_aktiv
+      - automation.startar_camera_1_and_2_aktiv_2_aktiv
+      - automation.stoppar_camera_1_and_2_aktiv_1_inaktiv
+      - automation.stoppar_camera_1_and_2_aktiv_2_inaktiv
+      - automation.larm_kamera_1_aktiv_home
+      - automation.larm_kamera_1_aktiv_away
+      - automation.larm_kamera_2_aktiv_home
+      - automation.larm_kamera_2_aktiv_away
+      - automation.larm_kameror_ar_aktiva_home
+      - automation.larm_kameror_ar_aktiva_away
+
+####################
+####################
+# View: Automation #
+####################
+####################
+  automation:
+    name: Automation
+
+    icon: mdi:home-automation
+    entities:
+      - group.automation_larm
+      - group.automation_larm_reading
+      - group.automation_kitchen_light
+      - group.automation_morning_light
+      - group.automation_evening_light
+      - group.automation_night_light
+      - group.automation_away_light_morning
+      - group.automation_away_light_evening
+      - group.automation_uterums_light
+      - group.automation_outside_light
+      - group.automation_outside_facade_light
+      - group.automation_temp_larm
+      - group.automation_ventilation
+      - group.automation_ventilation_on_off
+      - group.automation_mediaplayer
+      - group.automation_hassbian
+      - group.automation_doorbell
+      - group.automation_garage_air_dryer
+      - group.automation_garage_heater
+      - group.automation_pi_offline
+      - group.automation_travel_time
+      - group.automation_ikea
+      - group.automation_pir
+      - group.automation_cleaner
+
+  automation_larm:
+    name: Larm
+    entities:
+      - automation.larm_rorelse_i_koket
+      - automation.larm_rorelse_i_hallen
+      - automation.larm_rorelse_vid_huvudentre
+      - automation.larm_rorelse_vid_uteplats
+      - automation.larm_rorelse_i_uterummet
+      - automation.blinkar_inne_hem
+      - automation.blinkar_ute_hem
+
+  automation_larm_reading:
+    name: Larm avläsningar saknas
+    entities:
+      - input_boolean.frys_reading_missing_alarm
+      - input_boolean.kyl_reading_missing_alarm
+      - input_boolean.badrum_reading_missing_alarm
+      - input_boolean.tvattstuga_reading_missing_alarm
+      - input_boolean.varmepump_reading_missing_alarm
+      - input_boolean.vardagsrum_reading_missing_alarm
+      - input_boolean.hall_reading_missing_alarm
+      - input_boolean.forrad_reading_missing_alarm
+      - input_boolean.garage_reading_missing_alarm
+      - input_boolean.friggebod_reading_missing_alarm
+      - automation.avlasning_saknas_frys
+      - automation.avlasning_saknas_kyl
+      - automation.avlasning_saknas_badrum
+      - automation.avlasning_saknas_tvattstuga
+      - automation.avlasning_saknas_varmepump
+      - automation.avlasning_saknas_vardagsrum
+      - automation.avlasning_saknas_hall
+      - automation.avlasning_saknas_forrad
+      - automation.avlasning_saknas_garage
+      - automation.avlasning_saknas_friggebod
+
+  automation_kitchen_light:
+    name: Köksbelysning
+    entities:
+      - automation.kok_100_2500
+      - automation.kok_100_morgon_sensor_on_2500
+      - automation.kok_100_sensor_on_0_150
+      - automation.kok_100_sensor_on_150_2500
+      - automation.kok_100_sensor_on_borta_0_150
+      - automation.kok_25_sensor_on_hemma_0_150
+      - automation.kok_off_borta
+      - automation.kok_off_sensor_off
+      - automation.kok_off_3000
+      - automation.kok_rorelsevakt_reset
+
+  automation_morning_light:
+    name: Morgonbelysning
+    entities:
+      - automation.morgonbelysning_on_sensor_on_1800
+      - automation.morgonbelysning_on_hemma_1800
+      - automation.morgonbelysning_off_2000_hemma
+      - automation.morgonbelysning_off_borta
+
+  automation_evening_light:
+    name: Kvällsbelysning
+    entities:
+      - automation.kvallsbelysning_on_12_00_00_1800_hemma
+      - automation.kvallsbelysning_on_1800_hemma
+      - automation.kvallsbelysning_on_sensor_on_borta_1800
+      - automation.kvallsbelysning_on_hemma_1800
+      - automation.kvallsbelysning_off_2500_hemma
+      - automation.kvallsbelysning_off_borta
+
+  automation_night_light:
+    name: Nattbelysning
+    entities:
+      - automation.nattbelysning_sensor_on_hemma_0_150
+      - automation.nattbelysning_off_sensor_off
+
+  automation_away_light_morning:
+    name: Bortabelysning morgon
+    entities:
+      - automation.bortabelysning_on_07_00_00_200_borta
+      - automation.bortabelysning_on_borta_200_morgon
+      - automation.bortabelysning_off_11_00_00_borta
+      - automation.bortabelysning_off_250_borta_morgon
+
+  automation_away_light_evening:
+    name: Bortabelysning kväll
+    entities:
+      - automation.bortabelysning_on_12_00_00_200_borta
+      - automation.bortabelysning_on_200_borta
+      - automation.bortabelysning_on_borta_200
+      - automation.bortabelysning_off_23_00_00_borta
+
+  automation_uterums_light:
+    name: Uterumsbelysning
+    entities:
+      - automation.uterums_fotogenlampa_on_16
+      - automation.uterums_fotogenlampa_on_250
+      - automation.uterums_fotogenlampa_on_home
+      - automation.uterums_fotogenlampa_on_motion      
+      - automation.uterums_fotogenlampa_off_15
+      - automation.uterums_fotogenlampa_off_all_off_hemma
+      - automation.uterums_fotogenlampa_off_borta
+      - automation.uterums_ledbelysning_on_16
+      - automation.uterums_ledbelysning_on_250
+      - automation.uterums_ledbelysning_on_home
+      - automation.uterums_ledbelysning_on_motion            
+      - automation.uterums_ledbelysning_off_15
+      - automation.uterums_ledbelysning_off_all_off_hemma
+      - automation.uterums_ledbelysning_off_borta
+
+  automation_outside_light:
+    name: Utebelysning
+    entities:
+      - automation.friggebod_belysning_on_1
+      - automation.friggebod_belysning_ute_on_5
+      - automation.spabelysning_on_5
+      - automation.utebelysning_off_22_00_00_borta
+      - automation.utebelysning_off_22_00_00_hemma_vardag
+      - automation.utebelysning_off_all_off_hemma_helg
+
+  automation_outside_facade_light:
+    name: Fasadbelysning
+    entities:
+      - automation.friggebod_fasadbelysning_on_sensor_on_40
+      - automation.friggebod_fasadbelysning_on_40
+      - automation.forrad_fasadbelysning_on_40_led_off
+      - automation.forrad_fasadbelysning_on_led_off_40
+      - automation.friggebod_fasadbelysning_off
+      - automation.friggebod_fasadbelysning_off_60
+      - automation.forrad_fasadbelysning_off
+      - automation.forrad_fasadbelysning_off_60
+
+  automation_temp_larm:
+    name: Larm temperatur
+    entities:
+      - automation.uterum_larm_hog_temp
+      - automation.friggebod_larm_hog_temp
+      - automation.friggebod_larm_lag_temp
+      - automation.friggebod_frysvakt
+      - automation.larm_hog_temp_i_kyl
+      - automation.larm_lag_temp_i_kyl
+      - automation.larm_varning_hog_temp_i_frys
+      - automation.larm_hog_temp_i_frys
+      - automation.larm_lag_temp_i_frys
+      - automation.hog_temp_raspberry
+      - automation.lag_temp_ackumulatortank
+      - automation.hog_temp_ackumulatortank
+      - automation.lag_temp_franluft
+      - automation.hog_temp_franluft
+      - automation.lag_temp_tilluft
+      - automation.hog_temp_tilluft
+
+  automation_pi_offline:
+    name: Larm Raspberry Pi offline
+    entities:
+      - automation.raspberry_pi_b_1_wire_offline
+      - automation.raspberry_pi_3b_hagaholm_offline
+      - automation.raspberry_pi_3b_lux_offline
+      - automation.raspberry_pi_3b_offline
+      - automation.raspberry_pi_4b_hassbian_offline
+
+  automation_travel_time:
+    name: Restid till och från jobbet
+    entities:
+      - automation.kor_annan_vag_hem
+      - automation.kor_annan_vag_till_seb
+      - automation.lang_restid_hem
+      - automation.lang_restid_till_seb
+
+  automation_ikea:
+    name: IKEA
+    entities:
+      - automation.ingen_kontakt_med_forrad_fasadbelysning
+      - automation.ingen_kontakt_med_fotogenlampa_i_uterum
+      - automation.ingen_kontakt_med_friggebod_brytare_vid_stora_fonstret
+      - automation.ingen_kontakt_med_friggebod_fasadbelysning
+      - automation.ingen_kontakt_med_garage_avfuktare
+      - automation.ingen_kontakt_med_uterum_fonster
+      - automation.ingen_kontakt_med_vardagsrum_skank
+      - automation.ingen_kontakt_med_vardagsrum_vagn
+      - automation.kontakt_med_forrad_fasadbelysning
+      - automation.kontakt_med_fotogenlampa_i_uterum
+      - automation.kontakt_med_friggebod_brytare_vid_stora_fonstret
+      - automation.kontakt_med_friggebod_fasadbelysning
+      - automation.kontakt_med_garage_avfuktare
+      - automation.kontakt_med_uterum_fonster
+      - automation.kontakt_med_vardagsrum_skank
+      - automation.kontakt_med_vardagsrum_vagn
+
+  automation_pir:
+    name: Rörelsedetektor i kök
+    entities:
+      - automation.startar_timers_1
+      - automation.startar_timers_2
+      - automation.startar_timers_3
+      - automation.stanger_av_rorelsevakt_aktiv_om_aktiv_1
+      - automation.stanger_av_rorelsevakt_aktiv_om_aktiv_2
+      - automation.stanger_av_rorelsevakt_aktiv_om_aktiv_3
+      - automation.stanger_av_rorelsevakt_aktiv_for_nattbelysning_1
+      - automation.stanger_av_rorelsevakt_aktiv_for_nattbelysning_2
+      - automation.stanger_av_rorelsevakt_aktiv_for_nattbelysning_3
+
+  automation_ventilation:
+    name: Ventilation
+    entities:
+      - automation.badrumsfonster_hog_fukt
+      - automation.badrumsfonster_lag_fukt
+      - automation.badrumsfonster_hog_fukt_larm
+
+  automation_ventilation_on_off:
+    name: Ventilation On/Off
+    entities:
+      - automation.ventilation_off_60_borta_ute_24degc_inne_23degc
+      - automation.ventilation_off_borta_ute_24degc_60_inne_23degc
+      - automation.ventilation_off_inne_23degc_borta_60_ute_24degc
+      - automation.ventilation_off_ute_24degc_borta_60_inne_23degc
+      - automation.ventilation_on_60_off
+      - automation.ventilation_on_hemma_off
+      - automation.ventilation_on_inne_23degc_off
+      - automation.ventilation_on_ute_22degc_off
+
+  automation_mediaplayer:
+    name: Mediaspelare
+    entities:
+      - automation.mediaspelare_off_borta
+      - automation.satt_pa_mediaspelare_vid_watch_tv
+      - automation.satt_pa_mediaspelare_vid_listen_to_radio
+      - automation.satt_pa_mediaspelare_vid_watch_chromecast
+      - automation.satt_pa_mediaspelare_vid_listen_to_Spotify
+      - automation.satt_pa_mediaspelare_vid_watch_chromecast_ultra
+      - automation.satt_pa_mediaspelare_vid_listen_to_chromecast_ultra
+      - automation.satt_pa_subbasar_vid_poweron
+      - automation.stang_av_subbasar_vid_poweroff
+
+  automation_hassbian:
+    name: Hassbian
+    entities:
+      - automation.hassbian_startad
+      - automation.hassbian_stoppad
+      - automation.ny_enhet_hittad
+      - automation.hassbian_uppdatering
+      - automation.restart_ha
+
+  automation_doorbell:
+    name: Ringklocka
+    entities:
+      - automation.ringklocka_tvattstuga
+      - automation.ringklocka_hall
+      - automation.ringklocka_tand_allt_lyse_1
+      - automation.ringklocka_tand_allt_lyse_2
+      - automation.ringklocka_off_borta
+      - automation.ringklocka_on_hemma
+      - automation.ringklocka_tvattstuga_blinka_lampa_kok_lilla_fonstret
+
+  automation_garage_air_dryer:
+    name: Garage luftavfuktare
+    entities:
+      - automation.starta_luftavfuktare
+      - automation.stoppa_luftavfuktare
+
+  automation_garage_heater:
+    name: Garage elvärme
+    entities:
+      - automation.starta_elvarme_5_grader
+      - automation.stoppa_elvarme_7_grader
+      - automation.starta_elvarme_8_grader
+      - automation.stoppa_elvarme_10_grader
+
+  automation_cleaner:
+    name: Dammsugare
+    entities:
+      - automation.dagligen_mandag
+      - automation.dagligen_onsdag
+      - automation.dagligen_fredag
+      - automation.dammsugaren_har_problem
+##############################################################
+
+  family:
+    name: Familj
+    entities:
+    - device_tracker.mobil_micke
+    - device_tracker.mobil_annelie
+    - device_tracker.mobil_louise
+    - device_tracker.mobil_andreas
+
+  track_for_home_devices:
+    name: Enheter för kontroll om hemma
+    entities:
+    - device_tracker.mobil_micke
+    - device_tracker.mobil_annelie
+    - device_tracker.mobil_louise
+    - device_tracker.mobil_andreas
+    - device_tracker.mobil_margareta
+    - device_tracker.mobil_herbert
+    - device_tracker.mobil_erik
+
+###############
+###############
+# View: Extra #
+###############
+###############
+  extra_view:
+    name: Extra
+
+    entities:
+#      - group.extra_view_fr24
+      - group.extra_view_temp_sensor_latest
+      - group.extra_view_motion_sensor_latest
+#      - group.extra_view_info
+      - group.extra_view_setup
+      - group.extra_view_ventilation
+      - group.extra_view_motion
+
+#  extra_view_fr24:
+#    name: Flightradar24
+#    view: no
+#    icon: mdi:airplane
+#    control: hidden
+#    entities:
+#      - binary_sensor.fr24_feeder_link_connected
+#      - binary_sensor.fr24_feeder_receiver_connected
+#      - sensor.fr24_feeder
+#      - sensor.fr24_feeder_aircraft_tracked
+#      - sensor.fr24_feeder_aircraft_uploaded
+#      - sensor.fr24_feeder_radar_code
+#      - sensor.fr24_feeder_version
+
+  extra_view_temp_sensor_latest:
+    name: Temp sensor senast
+
+    icon: mdi:information-outline
+#    control: hidden
+    entities:
+      - sensor.frys_temp_lastupdated
+      - sensor.kyl_temp_lastupdated
+      - sensor.badrum_temp_lastupdated
+      - sensor.badrum_fukt_lastupdated
+      - sensor.tvattstuga_temp_lastupdated
+      - sensor.tvattstuga_fukt_lastupdated
+      - sensor.varmepump_temp_lastupdated
+      - sensor.vardagsrum_temp_lastupdated
+      - sensor.hall_temp_lastupdated
+      - sensor.hall_fukt_lastupdated
+      - sensor.forrad_temp_lastupdated
+      - sensor.forrad_fukt_lastupdated
+      - sensor.garage_temp_lastupdated
+      - sensor.friggebod_temp_lastupdated
+      - sensor.friggebod_fukt_lastupdated
+
+  extra_view_motion_sensor_latest:
+    name: Rörelsesensor senast
+
+    icon: mdi:information-outline
+#    control: hidden
+    entities:
+      - sensor.aqara_motion_sensor_1_lastupdated
+      - sensor.aqara_motion_sensor_2_lastupdated
+      - sensor.tradfri_motion_sensor_1_lastupdated
+      - sensor.tradfri_motion_sensor_2_lastupdated
+      - sensor.tradfri_motion_sensor_3_lastupdated
+      - sensor.tradfri_motion_sensor_4_lastupdated
+      - sensor.tradfri_motion_sensor_5_lastupdated
+
+#  extra_view_info:
+#    name: Info
+#    view: no
+#    icon: mdi:information-outline
+#    control: hidden
+#    entities:
+#      - sensor.ljusstyrka
+#      - sensor.ljusstyrka_flacksta
+#      - sensor.ljusstyrka2     
+
+  extra_view_setup:
+    name: Inställningar
+
+#    control: hidden
+    entities:
+      - input_select.inside_lights
+      - input_select.kitchen_lights
+      - input_select.uterum_led_lights
+      - input_select.outside_lights
+      - input_boolean.christmas_light
+
+  extra_view_ventilation:
+    name: Ventilation badrum
+
+    icon: mdi:information-outline
+#    control: hidden
+    entities:
+      - sensor.badrum_humidity
+      - sensor.fukt_badrumsfonster
+#      - sensor.Forcerad # Fläkt hastighet
+      - switch.fan_speed
+      - switch.ventilationsaggregat
+
+
+  extra_view_motion:
+    name: Rörelsedetektorer
+
+    icon: mdi:information-outline
+#    control: hidden
+    entities:
+      - binary_sensor.aqara_motion_sensor_1
+      - binary_sensor.aqara_motion_sensor_2
+      - binary_sensor.tradfri_motion_sensor_1
+      - binary_sensor.tradfri_motion_sensor_2
+      - binary_sensor.tradfri_motion_sensor_3
+      - binary_sensor.tradfri_motion_sensor_4
+      - binary_sensor.tradfri_motion_sensor_5
+      - sensor.aqara_motion_sensor_1
+      - sensor.aqara_motion_sensor_2
+      - sensor.aqara_motion_sensor_1_battery_level
+      - sensor.aqara_motion_sensor_2_battery_level
+      - sensor.tradfri_motion_sensor_1_battery_level
+      - sensor.tradfri_motion_sensor_2_battery_level
+      - sensor.tradfri_motion_sensor_3_battery_level
+      - sensor.tradfri_motion_sensor_4_battery_level
+      - sensor.tradfri_motion_sensor_5_battery_level

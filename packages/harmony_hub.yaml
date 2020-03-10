@@ -4,6 +4,30 @@ remote:
     host: 192.168.1.23
     activity: Watch TV
 
+group:
+  harmony:
+    name: Mediaspelare 
+#    icon: mdi:information-outline
+    entities:
+      - group.mediaplayer
+
+  mediaplayer:
+    name: Fjärrkontroll
+#    icon: mdi:information-outline
+    entities:
+      - sensor.harmony_current
+      - script.harmony_off
+      - script.harmony_tv
+      - script.harmony_radio
+      - script.harmony_chromecast
+      - script.harmony_spotify
+      - script.harmony_chromecast_ultra
+      - script.harmony_chromecast_ultra_listen
+      - media_player.chromecast
+      - media_player.chromecastultra2230
+      - media_player.yamaha_receiver
+      - media_player.vardagsrum
+
 sensor:
   - platform: template
     sensors:

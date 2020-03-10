@@ -7,13 +7,11 @@ remote:
 group:
   harmony:
     name: Mediaspelare 
-#    icon: mdi:information-outline
     entities:
       - group.mediaplayer
 
   mediaplayer:
     name: Fjärrkontroll
-#    icon: mdi:information-outline
     entities:
       - sensor.harmony_current
       - script.harmony_off

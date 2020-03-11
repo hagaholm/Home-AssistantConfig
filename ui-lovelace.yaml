@@ -2,27 +2,8 @@ title: Hagaholm
 views:
   - path: default_view
     title: Info
-    badges: 
-      - sun.sun
-      - sensor.ute
-      - sensor.ute2_humidity
-      - sensor.ljusstyrka
-    type: vertical-stack
+    badges: []
     cards:
-      - type: sensor
-        graph: line
-        entity: sensor.ute
-        name: Ute
-      - type: horizontal-stack
-        cards:        
-          - type: sensor
-            graph: line
-            entity: sensor.inne_medel
-            name: Inne
-          - type: sensor
-            graph: line
-            entity: sensor.uterum
-            name: Uterum
       - type: entities
         entities:
           - device_tracker.mobil_micke
@@ -64,6 +45,13 @@ views:
     title: Temperatur
     badges: []
     cards:
+      - type: entities
+        entities:
+          - sensor.ute
+          - sensor.ute2_humidity
+          - sensor.ljusstyrka
+        title: Utomhus
+        show_header_toggle: false
       - type: entities
         entities:
           - sensor.uterum
@@ -1006,3 +994,22 @@ views:
         title: Ubuntu Server (Hassbian)
         show_header_toggle: true
     icon: 'mdi:lan'
+  - path: test_view
+    title: Test UI
+    badges: []
+    cards:
+      - type: sensor
+        graph: line
+        entity: sensor.ute
+        name: Ute
+      - type: horizontal-stack
+        cards:        
+          - type: sensor
+            graph: line
+            entity: sensor.inne_medel
+            name: Inne
+          - type: sensor
+            graph: line
+            entity: sensor.uterum
+            name: Uterum
+    icon: 'mdi:information-outline'

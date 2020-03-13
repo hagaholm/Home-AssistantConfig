@@ -998,20 +998,20 @@ views:
     title: Test UI
     badges: []
     cards:
-      - type: sensor
-        graph: line
-        entity: sensor.ute
-        name: Ute
       - type: horizontal-stack
         cards:        
           - type: sensor
+            name: Ute
+            entity: sensor.ute
             graph: line
-            entity: sensor.inne_medel
-            name: Inne
           - type: sensor
+            name: Inne
+            entity: sensor.inne_medel
             graph: line
-            entity: sensor.uterum
+          - type: sensor
             name: Uterum
+            entity: sensor.uterum
+            graph: line
           - type: button
             entity: light.belysning
             name: Belysning

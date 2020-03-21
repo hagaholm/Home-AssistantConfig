@@ -29,7 +29,6 @@ homeassistant:
 #                     GENERAL                      #
 #                                                  #
 ####################################################
-
 # https://www.home-assistant.io/components/system_health/
 system_health:
 
@@ -105,6 +104,15 @@ recorder: !include logging/recorder.yaml
 history: !include logging/history.yaml
 logbook: !include logging/logbook.yaml
 logger: !include logging/logger.yaml
+
+###################################################
+#                                                 #
+#                     lovelace                    #
+#                                                 #
+###################################################
+# https://www.home-assistant.io/lovelace/yaml-mode/
+lovelace:
+  mode: yaml
 
 ####################################################
 #                                                  #
@@ -204,6 +212,27 @@ light:
   - platform: switch
     name: Uterum julstjärnor
     entity_id: switch.uterum_julstjarnor
+
+  - platform: group
+    name: Belysning
+    entities:
+      - light.kok_stora_fonstret
+#jul      - light.kok_stora_fonstret_ljusstake
+      - light.kok_lilla_fonstret
+      - light.hall_byra
+      - light.hall_skap
+      - light.vardagsrum_fonster
+#jul      - light.vardagsrum_fonster_ljusstake_2
+      - light.vardagsrum_skank
+      - light.vardagsrum_vagn
+      - light.vardagsrum_vitrinskap
+      - light.vardagsrum_gran
+      - light.sovrum_fonster
+      - light.andreas_fonster
+      - light.louise_fonster
+#jul      - light.louise_fonster_dimmer_julstjarna
+      - light.uterum_fonster
+#jul      - light.uterum_julstjarnor
 
 
 ####################################################

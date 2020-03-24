@@ -116,18 +116,32 @@ lovelace:
 
   # Add more dashboards
   dashboards:
-#    lovelace-generated: # Needs to contain a hyphen (-)
-#      mode: yaml
-#      filename: notexist.yaml
-#      title: Generated
-#      icon: mdi:tools
-#      show_in_sidebar: true
-#      require_admin: true
+
+    # Add yaml dashboards
+    lovelace-generated: # Needs to contain a hyphen (-)
+      mode: yaml
+      filename: notexist.yaml
+      title: Generated
+      icon: mdi:tools
+      show_in_sidebar: true
+      require_admin: true
+
+  # Add yaml dashboards
+    lovelace-yaml:
+      mode: storage
+      title: StorageL
+      icon: mdi:script
+      show_in_sidebar: true
+      filename: lovelace-storage.yaml
+
+    # Add yaml dashboards
     lovelace-yaml:
       mode: yaml
       title: standard
       show_in_sidebar: true
       filename: ui-lovelace.yaml
+
+    # Add yaml dashboards
     lovelace-test:
       mode: yaml
       title: test

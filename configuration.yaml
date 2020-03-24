@@ -114,6 +114,26 @@ logger: !include logging/logger.yaml
 lovelace:
   mode: yaml
 
+  # Add more dashboards
+  dashboards:
+#    lovelace-generated: # Needs to contain a hyphen (-)
+#      mode: yaml
+#      filename: notexist.yaml
+#      title: Generated
+#      icon: mdi:tools
+#      show_in_sidebar: true
+#      require_admin: true
+    lovelace-yaml:
+      mode: yaml
+      title: standard
+      show_in_sidebar: true
+      filename: ui-lovelace.yaml
+    lovelace-test:
+      mode: yaml
+      title: test
+      show_in_sidebar: true
+      filename: ui-lovelace_test.yaml
+
 ####################################################
 #                                                  #
 #      LINKS TO INDIVUAL CONFIGURATION FILES       #

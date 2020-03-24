@@ -4,7 +4,6 @@
 #                                                  #
 ####################################################
 
-
 ###################
 ###################
 # View: Belysning #
@@ -12,7 +11,6 @@
 ###################
   kitchen_lights:
     name: Köksbelysning
-
     entities:
       - light.kok_underskap_bank
       - light.kok_underskap_diskbank
@@ -24,7 +22,6 @@
 
   morning_lights:
     name: Morgonbelysning
-
     entities:
       - light.kok_stora_fonstret
 #      - light.kok_stora_fonstret_ljusstake
@@ -38,7 +35,6 @@
 
   evening_lights:
     name: Kvällsbelysning
-
     entities:
       - light.kok_stora_fonstret
 #jul      - light.kok_stora_fonstret_ljusstake
@@ -60,7 +56,6 @@
 
   night_lights:
     name: Nattbelysning
-
     entities:
       - light.hall_byra
       - light.vardagsrum_fonster
@@ -70,10 +65,8 @@
       - timer.timer_rorelsevakt_2_short
       - timer.timer_rorelsevakt_3_short
 
-
   outside_lights:
     name: Utomhusbelysning
-
     entities:
       - light.forrad_fasad
       - light.friggebod_fasad
@@ -83,7 +76,6 @@
 
   away_lights:
     name: Bortabelysning
-
     entities:
       - light.kok_stora_fonstret
 #jul      - light.kok_stora_fonstret_ljusstake
@@ -103,10 +95,10 @@
   track_for_home_devices:
     name: Enheter för kontroll om hemma
     entities:
-    - device_tracker.mobil_micke
-    - device_tracker.mobil_annelie
-    - device_tracker.mobil_louise
-    - device_tracker.mobil_andreas
-    - device_tracker.mobil_margareta
-    - device_tracker.mobil_herbert
-    - device_tracker.mobil_erik
+      - device_tracker.mobil_micke
+      - device_tracker.mobil_annelie
+      - device_tracker.mobil_louise
+      - device_tracker.mobil_andreas
+      - device_tracker.mobil_margareta
+      - device_tracker.mobil_herbert
+      - device_tracker.mobil_erik

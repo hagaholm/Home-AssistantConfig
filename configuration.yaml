@@ -290,27 +290,6 @@ light:
 #jul      - light.uterum_julstjarnor
 
   - platform: group
-    name: Kvällsbelysning
-    entities:
-      - light.kok_stora_fonstret
-#jul      - light.kok_stora_fonstret_ljusstake
-      - light.kok_lilla_fonstret
-      - light.hall_byra
-      - light.hall_skap
-      - light.vardagsrum_fonster
-#jul      - light.vardagsrum_fonster_ljusstake_2
-      - light.vardagsrum_skank
-      - light.vardagsrum_vagn
-      - light.vardagsrum_vitrinskap
-      - light.vardagsrum_gran
-      - light.sovrum_fonster
-      - light.andreas_fonster
-      - light.louise_fonster
-#jul      - light.louise_fonster_dimmer_julstjarna
-      - light.uterum_fonster
-#jul      - light.uterum_julstjarnor
-
-  - platform: group
     name: Nattbelysning
     entities:
       - light.hall_byra
@@ -461,8 +440,7 @@ input_select:
     options:
      - Off
      - Morgonbelysning
-     - Förmiddagsbelysning
-     - Kvällsbelysning
+     - Belysning
      - Nattbelysning
      - Bortabelysning
 #    initial: Off

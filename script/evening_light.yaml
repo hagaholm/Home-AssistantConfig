@@ -1,23 +1,23 @@
-  ##########################
-  ### Kvällsbelysning on ###
-  ##########################
-  evening_lights_on:
-    alias: Kvällsbelysning on
+  ####################
+  ### Belysning on ###
+  ####################
+  lights_on:
+    alias: Belysning on
     sequence:
       - service: script.turn_on
         data_template:
           entity_id: >
             {% if is_state('input_boolean.christmas_light', 'on') %}
-              script.evening_lights_christmas_on
+              script.lights_christmas_on
             {% else %}
-              script.evening_lights_default_on
+              script.lights_default_on
             {% endif %}
 
-  ### -------------------------- ###
-  ### Kvällsbelysning default on ###
-  ### -------------------------- ###
-  evening_lights_default_on:
-    alias: Kvällsbelysning default on
+  ### -------------------- ###
+  ### Belysning default on ###
+  ### -------------------- ###
+  lights_default_on:
+    alias: Belysning default on
     sequence:
       - service: light.turn_on
         data:
@@ -65,11 +65,11 @@
           brightness_pct: 80
           transition: 5
 
-  ### --------------------- ###
-  ### Kvällsjulbelysning on ###
-  ### --------------------- ###
-  evening_lights_christmas_on:
-    alias: Kvällsjulbelysning on
+  ### --------------- ###
+  ### Julbelysning on ###
+  ### --------------- ###
+  lights_christmas_on:
+    alias: Julbelysning on
     sequence:
       - service: light.turn_on
         entity_id: light.kok_stora_fonstret_ljusstake
@@ -112,14 +112,14 @@
       - service: light.turn_on
         entity_id: light.uterum_julstjarnor
 
-  ###########################
-  ### Kvällsbelysning off ###
-  ###########################
-  evening_lights_off:
-    alias: Kvällsbelysning off
+  #####################
+  ### Belysning off ###
+  #####################
+  lights_off:
+    alias: Belysning off
     sequence:
       - service: homeassistant.turn_off
-        entity_id: light.kvallsbelysning
+        entity_id: light.belysning
       - service: light.turn_off
         entity_id: light.vardagsrum_fonster_ljusstake_2
       - service: light.turn_off
@@ -128,4 +128,3 @@
         entity_id: light.louise_fonster_dimmer_julstjarna
       - service: light.turn_off
         entity_id: light.uterum_julstjarnor
-

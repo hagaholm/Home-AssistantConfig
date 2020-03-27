@@ -59,7 +59,7 @@ cloud:
         - script.fan_forced
         - script.goodnight_all
         - script.goodnight
-        - script.evening_lights_on
+        - script.lights_on
         - script.bedroom_off
         - script.bedroom_on
         - script.tv_on
@@ -118,9 +118,13 @@ cloud:
           - släck allt
         room: Huset
 
-      script.evening_lights_on:
-        name: Kvällsbelysning på
+      script.lights_on:
+        name: Belysning på
         aliases:
+          - belysning
+          - tänd belysning
+          - sätt på belysning
+          - lyset
           - tänd lyset
           - sätt på lyset
         room: Huset

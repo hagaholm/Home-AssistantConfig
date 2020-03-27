@@ -3,9 +3,9 @@
     ### T: Time = 12:00:00                        ###
     ### C: sensor.ljusstyrka < 1800               ###
     ###    group.track_for_home_devices == 'home' ###
-    ### A: script.evening_lights_on               ###
+    ### A: script.lights_on                       ###
     #################################################
-  - alias: Kvällsbelysning on (=12:00:00, <1800, hemma)
+  - alias: Belysning on (=12:00:00, <1800, hemma)
     trigger:
       platform: time
       at: '12:00:00'
@@ -22,17 +22,17 @@
       - service: input_select.select_option
         data:
           entity_id: input_select.inside_lights
-          option: Kvällsbelysning
-      - service: script.evening_lights_on
+          option: Belysning
+      - service: script.lights_on
     
     ########################################################
     ### Tänder lampor när det blir mörkt fram till 22:00 ###
     ### T: sensor.ljusstyrka < 1800                      ###
     ### C: group.track_for_home_devices == 'home'        ###
     ###    12:00:00 - 22:00:00                           ###
-    ### A: script.evening_lights_on                      ###
+    ### A: script.lights_on                              ###
     ########################################################
-  - alias: Kvällsbelysning on (<1800, hemma)
+  - alias: Belysning on (<1800, hemma)
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
@@ -50,8 +50,8 @@
       - service: input_select.select_option
         data:
           entity_id: input_select.inside_lights
-          option: Kvällsbelysning
-      - service: script.evening_lights_on
+          option: Belysning
+      - service: script.lights_on
 
     ########################################################
     ### Tänder lampor vid rörelse i köket övrigt tid     ###
@@ -61,9 +61,9 @@
     ### C: group.track_for_home_devices == 'not_home'    ###
     ###    sensor.ljusstyrka < 1800                      ###
     ###    12:00:00 - 05:00:00                           ###
-    ### A: script.evening_lights_on                      ###
+    ### A: script.lights_on                              ###
     ########################################################
-  - alias: Kvällsbelysning on (sensor on, borta, <1800)
+  - alias: Belysning on (sensor on, borta, <1800)
     trigger:
       platform: state
       entity_id: input_boolean.rorelsevakt_aktiv
@@ -84,17 +84,17 @@
       - service: input_select.select_option
         data:
           entity_id: input_select.inside_lights
-          option: Kvällsbelysning
-      - service: script.evening_lights_on
+          option: Belysning
+      - service: script.lights_on
 
     #####################################################
     ### Tänder lampor när första kommer hem övrig tid ###
     ### T: group.track_for_home_devices to 'home'     ###
     ### C: sensor.ljusstyrka < 1800                   ###
     ###    12:00:00 - 05:00:00                        ###
-    ### A: script.evening_lights_on                   ###
+    ### A: script.lights_on                           ###
     #####################################################
-  - alias: Kvällsbelysning on (-> hemma, <1800)
+  - alias: Belysning on (-> hemma, <1800)
     trigger:
       platform: state
       entity_id: group.track_for_home_devices
@@ -113,17 +113,17 @@
       - service: input_select.select_option
         data:
           entity_id: input_select.inside_lights
-          option: Kvällsbelysning
-      - service: script.evening_lights_on
+          option: Belysning
+      - service: script.lights_on
 
     ##########################################################
     ### Släcker lampor om det blir för ljust ute övrig tid ###
     ### T: sensor.ljusstyrka > 2500                        ###
     ### C: group.track_for_home_devices = 'home'           ###
     ###    12:00:00 - 05:00:00                             ###
-    ### A: script.evening_lights_off                       ###
+    ### A: script.lights_off                               ###
     ##########################################################
-  - alias: Kvällsbelysning off (>2500, hemma)
+  - alias: Belysning off (>2500, hemma)
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
@@ -142,15 +142,15 @@
         data:
           entity_id: input_select.inside_lights
           option: Off
-      - service: script.evening_lights_off
+      - service: script.lights_off
 
     ########################################################
     ### Släcker lampor när sista åker hemifrån övrig tid ###
     ### T: group.track_for_home_devices to 'not_home'    ###
     ### C: 12:00:00 - 05:00:00                           ###
-    ### A: script.evening_lights_off                     ###
+    ### A: script.lights_off                             ###
     ########################################################
-  - alias: Kvällsbelysning off (-> borta)
+  - alias: Belysning off (-> borta)
     trigger:
       platform: state
       entity_id: group.track_for_home_devices
@@ -165,4 +165,4 @@
         data:
           entity_id: input_select.inside_lights
           option: Off
-      - service: script.evening_lights_off
+      - service: script.lights_off

@@ -33,7 +33,7 @@ views:
           - script.cleaning_lights_on
           - automation.kok_off_sensor_off
           - script.morning_lights_on
-          - script.evening_lights_on
+          - script.lights_on
           - script.night_light
           - script.kitchen_light_100
           - script.spa_light_on
@@ -153,7 +153,7 @@ views:
           - light.andreas_fonster
           - light.louise_fonster
           - light.uterum_fonster
-        title: Kvällsbelysning
+        title: Belysning
         show_header_toggle: true
       - type: entities
         entities:
@@ -534,19 +534,19 @@ views:
         show_header_toggle: true
       - type: entities
         entities:
-          - entity: automation.kvallsbelysning_on_12_00_00_1800_hemma
+          - entity: automation.belysning_on_12_00_00_1800_hemma
             name: 'on (=12:00:00, <1800, hemma)'
-          - entity: automation.kvallsbelysning_on_1800_hemma
+          - entity: automation.elysning_on_1800_hemma
             name: 'on (<1800, hemma)'
-          - entity: automation.kvallsbelysning_on_sensor_on_borta_1800
+          - entity: automation.belysning_on_sensor_on_borta_1800
             name: 'on (sensor on, borta, <1800)'
-          - entity: automation.kvallsbelysning_on_hemma_1800
+          - entity: automation.belysning_on_hemma_1800
             name: 'on (-> hemma, <1800)'
-          - entity: automation.kvallsbelysning_off_2500_hemma
+          - entity: automation.belysning_off_2500_hemma
             name: 'off (>2500, hemma)'
-          - entity: automation.kvallsbelysning_off_borta
+          - entity: automation.belysning_off_borta
             name: off (-> borta)
-        title: Kvällsbelysning
+        title: Belysning
         show_header_toggle: true
       - type: entities
         entities:

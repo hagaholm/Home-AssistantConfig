@@ -403,3 +403,33 @@ automation:
       - service: script.harmony_off
       - delay: '00:00:05'
       - service: script.harmony_chromecast_ultra_listen
+
+    ###################################
+    ### Sätt på basar vid hög volym ###
+    ###################################
+  - alias: Sätt på basar vid hög volym
+    trigger:
+      platform: numeric_state
+      entity_id: media_player.yamaha_receiver
+      value_template: "{{ state.attributes.volyme_level }}"
+      above: '0.65' # > 35
+    action:
+      - service: homeassistant.turn_on
+        entity_id: switch.vardagsrum_subbas
+      - service: homeassistant.turn_on
+        entity_id: switch.vardagsrum_extra_subbas
+
+    ####################################
+    ### Stäng av basar vid låg volym ###
+    ####################################
+  - alias: Stäng av basar vid låg volym
+    trigger:
+      platform: numeric_state
+      entity_id: media_player.yamaha_receiver
+      value_template: "{{ state.attributes.volyme_level }}"
+      below: '0.65' # < 35
+    action:
+      - service: homeassistant.turn_off
+        entity_id: switch.vardagsrum_subbas
+      - service: homeassistant.turn_off
+        entity_id: switch.vardagsrum_extra_subbas

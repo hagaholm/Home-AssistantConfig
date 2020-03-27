@@ -7,12 +7,12 @@
       - service: homeassistant.turn_off
         entity_id: light.sovrum_fonster
       - service: homeassistant.turn_off
-        entity_id: group.evening_lights
+        entity_id: light.belysning
       - service: homeassistant.turn_off
-        entity_id: group.kitchen_lights
+        entity_id: light.koksbelysning
 # Removed
 #      - service: homeassistant.turn_off
-#        entity_id: group.outside_lights
+#        entity_id: light.utomhusbelysning
 # Added
       - service: homeassistant.turn_off
         entity_id: light.vardagsrum_fonster_ljusstake_2
@@ -20,16 +20,14 @@
         entity_id: light.louise_fonster_dimmer_julstjarna
 # Removed
 #      - service: homeassistant.turn_off
-#        entity_id: group.outside_lights
+#        entity_id: light.utomhusbelysning
 # Added
       - service: homeassistant.turn_off
         entity_id: light.friggebod_fasad
       - service: homeassistant.turn_off
         entity_id: light.friggebod_ute
       - service: homeassistant.turn_off
-        entity_id: light.friggebod_stora_fonstret
-      - service: homeassistant.turn_off
-        entity_id: light.friggebod_lilla_fonstret
+        entity_id: light.friggebod_fonster
       - service: homeassistant.turn_off
         entity_id: light.spabad_vagg
 
@@ -44,12 +42,12 @@
       - service: homeassistant.turn_off
         entity_id: light.sovrum_fonster
       - service: homeassistant.turn_off
-        entity_id: group.evening_lights
+        entity_id: light.belysning
       - service: homeassistant.turn_off
-        entity_id: group.kitchen_lights
+        entity_id: light.koksbelysning
 # Removed
 #      - service: homeassistant.turn_off
-#        entity_id: group.outside_lights
+#        entity_id: light.utomhusbelysning
 # Added
       - service: homeassistant.turn_off
         entity_id: light.friggebod_fasad
@@ -61,16 +59,14 @@
         entity_id: light.louise_fonster_dimmer_julstjarna
 # Removed
 #      - service: homeassistant.turn_off
-#        entity_id: group.outside_lights
+#        entity_id: light.utomhusbelysning
 # Added
       - service: homeassistant.turn_off
         entity_id: light.friggebod_fasad
       - service: homeassistant.turn_off
         entity_id: light.friggebod_ute
       - service: homeassistant.turn_off
-        entity_id: light.friggebod_stora_fonstret
-      - service: homeassistant.turn_off
-        entity_id: light.friggebod_lilla_fonstret
+        entity_id: light.friggebod_fonster
       - service: homeassistant.turn_off
         entity_id: light.spabad_vagg
 
@@ -83,12 +79,12 @@
       - service: homeassistant.turn_off
         entity_id: light.sovrum_fonster
       - service: homeassistant.turn_off
-        entity_id: group.evening_lights
+        entity_id: light.belysning
       - service: homeassistant.turn_off
-        entity_id: group.kitchen_lights
+        entity_id: light.koksbelysning
 # Removed
 #      - service: homeassistant.turn_off
-#        entity_id: group.outside_lights
+#        entity_id: light.utomhusbelysning
 # Added
       - service: homeassistant.turn_off
         entity_id: light.friggebod_fasad
@@ -98,16 +94,14 @@
         entity_id: light.louise_fonster_dimmer_julstjarna
 # Removed
 #      - service: homeassistant.turn_off
-#        entity_id: group.outside_lights
+#        entity_id: light.utomhusbelysning
 # Added
       - service: homeassistant.turn_off
         entity_id: light.friggebod_fasad
       - service: homeassistant.turn_off
         entity_id: light.friggebod_ute
       - service: homeassistant.turn_off
-        entity_id: light.friggebod_stora_fonstret
-      - service: homeassistant.turn_off
-        entity_id: light.friggebod_lilla_fonstret
+        entity_id: light.friggebod_fonster
       - service: homeassistant.turn_off
         entity_id: light.spabad_vagg
       - service: remote.turn_off
@@ -133,12 +127,12 @@
       - service: homeassistant.turn_off
         entity_id: light.sovrum_fonster
       - service: homeassistant.turn_off
-        entity_id: group.evening_lights
+        entity_id: light.belysning
       - service: homeassistant.turn_off
-        entity_id: group.kitchen_lights
+        entity_id: light.koksbelysning
 # Removed
 #      - service: homeassistant.turn_off
-#        entity_id: group.outside_lights
+#        entity_id: light.utomhusbelysning
 # Added
       - service: homeassistant.turn_off
         entity_id: light.friggebod_fasad
@@ -150,16 +144,14 @@
         entity_id: light.louise_fonster_dimmer_julstjarna
 # Removed
 #      - service: homeassistant.turn_off
-#        entity_id: group.outside_lights
+#        entity_id: light.utomhusbelysning
 # Added
       - service: homeassistant.turn_off
         entity_id: light.friggebod_fasad
       - service: homeassistant.turn_off
         entity_id: light.friggebod_ute
       - service: homeassistant.turn_off
-        entity_id: light.friggebod_stora_fonstret
-      - service: homeassistant.turn_off
-        entity_id: light.friggebod_lilla_fonstret
+        entity_id: light.friggebod_fonster
       - service: homeassistant.turn_off
         entity_id: light.spabad_vagg
       - service: remote.turn_off
@@ -183,12 +175,12 @@
       - service: homeassistant.turn_off
         entity_id: light.sovrum_fonster
       - service: homeassistant.turn_off
-        entity_id: group.evening_lights
+        entity_id: light.belysning
       - service: homeassistant.turn_off
-        entity_id: group.kitchen_lights
+        entity_id: light.koksbelysning
 # Removed
 #      - service: homeassistant.turn_off
-#        entity_id: group.outside_lights
+#        entity_id: light.utomhusbelysning
 # Added
       - service: homeassistant.turn_off
         entity_id: light.vardagsrum_fonster_ljusstake_2
@@ -197,16 +189,14 @@
 
 # Removed
 #      - service: homeassistant.turn_off
-#        entity_id: group.outside_lights
+#        entity_id: light.utomhusbelysning
 # Added
       - service: homeassistant.turn_off
         entity_id: light.friggebod_fasad
       - service: homeassistant.turn_off
         entity_id: light.friggebod_ute
       - service: homeassistant.turn_off
-        entity_id: light.friggebod_stora_fonstret
-      - service: homeassistant.turn_off
-        entity_id: light.friggebod_lilla_fonstret
+        entity_id: light.friggebod_fonster
       - service: homeassistant.turn_off
         entity_id: light.spabad_vagg
 

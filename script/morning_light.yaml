@@ -82,7 +82,7 @@
     alias: Morgonbelysning off
     sequence:
       - service: homeassistant.turn_off
-        entity_id: group.evening_lights
+        entity_id: light.belysning
       - service: light.turn_off
         entity_id: light.vardagsrum_fonster_ljusstake_2
       - service: light.turn_off

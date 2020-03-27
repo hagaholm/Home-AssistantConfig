@@ -112,7 +112,41 @@ logger: !include logging/logger.yaml
 ###################################################
 # https://www.home-assistant.io/lovelace/yaml-mode/
 lovelace:
-  mode: yaml
+  mode: storage
+
+  # Add more dashboards
+  dashboards:
+
+    # Standard
+    lovelace-standard:
+      mode: yaml
+      title: standard
+      show_in_sidebar: true
+      filename: ui-lovelace.yaml
+
+    # Generated
+    lovelace-generated: # Needs to contain a hyphen (-)
+      mode: yaml
+      filename: notexist.yaml
+      title: Generated
+      icon: mdi:tools
+      show_in_sidebar: false
+      require_admin: true
+
+    # Storage
+    lovelace-storage:
+      mode: yaml
+      title: Storage
+      icon: mdi:script
+      show_in_sidebar: false
+      filename: lovelace-storage.yaml
+
+    # Test
+    lovelace-test:
+      mode: yaml
+      title: test
+      show_in_sidebar: false
+      filename: ui-lovelace_test.yaml
 
 ####################################################
 #                                                  #
@@ -166,9 +200,6 @@ light:
   - platform: switch
     name: Andreas fönster
     entity_id: switch.andreas_fonster
-#  - platform: switch
-#    name: Friggebod lilla fönstret
-#    entity_id: switch.friggebod_lilla_fonstret
   - platform: switch
     name: Friggebod fönster
     entity_id: switch.friggebod_fonster
@@ -213,6 +244,10 @@ light:
     name: Uterum julstjärnor
     entity_id: switch.uterum_julstjarnor
 
+
+# Light group
+# https://www.home-assistant.io/integrations/light.group/
+
   - platform: group
     name: Belysning
     entities:
@@ -234,6 +269,56 @@ light:
       - light.uterum_fonster
 #jul      - light.uterum_julstjarnor
 
+  - platform: group
+    name: Köksbelysning
+    entities:
+      - light.kok_underskap_bank
+      - light.kok_underskap_diskbank
+      - light.kok_vitrinskap
+
+  - platform: group
+    name: Morgonbelysning
+    entities:
+      - light.kok_stora_fonstret
+#jul      - light.kok_stora_fonstret_ljusstake
+      - light.kok_lilla_fonstret
+      - light.hall_byra
+      - light.vardagsrum_fonster
+#jul      - light.vardagsrum_fonster_ljusstake_2
+      - light.vardagsrum_gran
+      - light.uterum_fonster
+#jul      - light.uterum_julstjarnor
+
+  - platform: group
+    name: Nattbelysning
+    entities:
+      - light.hall_byra
+      - light.vardagsrum_fonster
+#jul      - light.vardagsrum_fonster_ljusstake_2
+
+  - platform: group
+    name: Utomhusbelysning
+    entities:
+      - light.forrad_fasad
+      - light.friggebod_fasad
+      - light.friggebod_ute
+      - light.friggebod_fonster
+      - light.spabad_vagg
+
+  - platform: group
+    name: Bortabelysning
+    entities:
+      - light.kok_stora_fonstret
+#jul      - light.kok_stora_fonstret_ljusstake
+      - light.kok_lilla_fonstret
+      - light.hall_byra
+      - light.vardagsrum_fonster
+#jul      - light.vardagsrum_fonster_ljusstake_2
+      - light.sovrum_fonster
+      - light.louise_fonster
+#jul      - light.louise_fonster_dimmer_julstjarna
+      - light.uterum_fonster
+#jul      - light.uterum_julstjarnor
 
 ####################################################
 #                                                  #
@@ -355,8 +440,7 @@ input_select:
     options:
      - Off
      - Morgonbelysning
-     - Förmiddagsbelysning
-     - Kvällsbelysning
+     - Belysning
      - Nattbelysning
      - Bortabelysning
 #    initial: Off

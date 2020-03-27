@@ -413,6 +413,12 @@ automation:
       entity_id: media_player.yamaha_receiver
       value_template: "{{ state.attributes.volume_level }}"
       above: '0.65' # > 35
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'on'
     action:
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_subbas
@@ -428,6 +434,12 @@ automation:
       entity_id: media_player.yamaha_receiver
       value_template: "{{ state.attributes.volume_level }}"
       below: '0.65' # < 35
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'on'
     action:
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_subbas

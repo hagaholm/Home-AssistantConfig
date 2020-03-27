@@ -12,9 +12,7 @@
   kitchen_lights:
     name: Köksbelysning
     entities:
-      - light.kok_underskap_bank
-      - light.kok_underskap_diskbank
-      - light.kok_vitrinskap
+      - light.koksbelysning
       - input_boolean.rorelsevakt_aktiv
       - timer.timer_rorelsevakt_1_medium
       - timer.timer_rorelsevakt_2_medium
@@ -23,43 +21,17 @@
   morning_lights:
     name: Morgonbelysning
     entities:
-      - light.kok_stora_fonstret
-#      - light.kok_stora_fonstret_ljusstake
-      - light.kok_lilla_fonstret
-      - light.hall_byra
-      - light.vardagsrum_fonster
-#      - light.vardagsrum_fonster_ljusstake_2
-      - light.vardagsrum_gran
-      - light.uterum_fonster
-#jul      - light.uterum_julstjarnor
+      - light.morgonbelysning
 
   evening_lights:
     name: Kvällsbelysning
     entities:
-      - light.kok_stora_fonstret
-#jul      - light.kok_stora_fonstret_ljusstake
-      - light.kok_lilla_fonstret
-      - light.hall_byra
-      - light.hall_skap
-      - light.vardagsrum_fonster
-#jul      - light.vardagsrum_fonster_ljusstake_2
-      - light.vardagsrum_skank
-      - light.vardagsrum_vagn
-      - light.vardagsrum_vitrinskap
-      - light.vardagsrum_gran
-      - light.sovrum_fonster
-      - light.andreas_fonster
-      - light.louise_fonster
-#jul      - light.louise_fonster_dimmer_julstjarna
-      - light.uterum_fonster
-#jul      - light.uterum_julstjarnor
+      - light.kvallsbelysning
 
   night_lights:
     name: Nattbelysning
     entities:
-      - light.hall_byra
-      - light.vardagsrum_fonster
-#jul      - light.vardagsrum_fonster_ljusstake_2
+      - light.nattbelysning
       - input_boolean.rorelsevakt_aktiv
       - timer.timer_rorelsevakt_1_short
       - timer.timer_rorelsevakt_2_short
@@ -68,27 +40,12 @@
   outside_lights:
     name: Utomhusbelysning
     entities:
-      - light.forrad_fasad
-      - light.friggebod_fasad
-      - light.friggebod_ute
-      - light.friggebod_fonster
-      - light.spabad_vagg
+      - light.utomhusbelysning
 
   away_lights:
     name: Bortabelysning
     entities:
-      - light.kok_stora_fonstret
-#jul      - light.kok_stora_fonstret_ljusstake
-      - light.kok_lilla_fonstret
-      - light.hall_byra
-      - light.vardagsrum_fonster
-#jul      - light.vardagsrum_fonster_ljusstake_2
-      - light.sovrum_fonster
-      - light.louise_fonster
-#jul      - light.louise_fonster_dimmer_julstjarna
-      - light.uterum_fonster
-#jul      - light.uterum_julstjarnor
-
+      - light.bortabelysning
 
 
 

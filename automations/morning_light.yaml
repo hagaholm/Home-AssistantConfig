@@ -2,6 +2,7 @@
     ### Tänder lampor på morgonen vid rörelse i köket ###
     ### T: input_boolean.rorelsevakt_aktiv == on      ###
     ### C: sensor.ljusstyrka < 1800                   ###
+    ###    light.morgonbelysning == off               ###
     ###    05:00:00 - 12:00:00                        ###
     ### A: script.morning_lights_on                   ###
     #####################################################
@@ -17,7 +18,7 @@
           entity_id: sensor.ljusstyrka
           below: 1800
         - condition: state
-          entity_id: group.morning_lights
+          entity_id: light.morgonbelysning
           state: 'off'
         - condition: time
           after: '05:00:00'

@@ -244,6 +244,10 @@ light:
     name: Uterum julstjärnor
     entity_id: switch.uterum_julstjarnor
 
+
+# Light group
+# https://www.home-assistant.io/integrations/light.group/
+
   - platform: group
     name: Belysning
     entities:
@@ -265,6 +269,77 @@ light:
       - light.uterum_fonster
 #jul      - light.uterum_julstjarnor
 
+  - platform: group
+    name: Köksbelysning
+    entities:
+      - light.kok_underskap_bank
+      - light.kok_underskap_diskbank
+      - light.kok_vitrinskap
+
+  - platform: group
+    name: Morgonbelysning
+    entities:
+      - light.kok_stora_fonstret
+#jul      - light.kok_stora_fonstret_ljusstake
+      - light.kok_lilla_fonstret
+      - light.hall_byra
+      - light.vardagsrum_fonster
+#jul      - light.vardagsrum_fonster_ljusstake_2
+      - light.vardagsrum_gran
+      - light.uterum_fonster
+#jul      - light.uterum_julstjarnor
+
+  - platform: group
+    name: Kvällsbelysning
+    entities:
+      - light.kok_stora_fonstret
+#jul      - light.kok_stora_fonstret_ljusstake
+      - light.kok_lilla_fonstret
+      - light.hall_byra
+      - light.hall_skap
+      - light.vardagsrum_fonster
+#jul      - light.vardagsrum_fonster_ljusstake_2
+      - light.vardagsrum_skank
+      - light.vardagsrum_vagn
+      - light.vardagsrum_vitrinskap
+      - light.vardagsrum_gran
+      - light.sovrum_fonster
+      - light.andreas_fonster
+      - light.louise_fonster
+#jul      - light.louise_fonster_dimmer_julstjarna
+      - light.uterum_fonster
+#jul      - light.uterum_julstjarnor
+
+  - platform: group
+    name: Nattbelysning
+    entities:
+      - light.hall_byra
+      - light.vardagsrum_fonster
+#jul      - light.vardagsrum_fonster_ljusstake_2
+
+  - platform: group
+    name: Utomhusbelysning
+    entities:
+      - light.forrad_fasad
+      - light.friggebod_fasad
+      - light.friggebod_ute
+      - light.friggebod_fonster
+      - light.spabad_vagg
+
+  - platform: group
+    name: Bortabelysning
+    entities:
+      - light.kok_stora_fonstret
+#jul      - light.kok_stora_fonstret_ljusstake
+      - light.kok_lilla_fonstret
+      - light.hall_byra
+      - light.vardagsrum_fonster
+#jul      - light.vardagsrum_fonster_ljusstake_2
+      - light.sovrum_fonster
+      - light.louise_fonster
+#jul      - light.louise_fonster_dimmer_julstjarna
+      - light.uterum_fonster
+#jul      - light.uterum_julstjarnor
 
 ####################################################
 #                                                  #

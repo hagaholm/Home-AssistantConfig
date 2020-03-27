@@ -4,51 +4,6 @@
 #                                                  #
 ####################################################
 
-###################
-###################
-# View: Belysning #
-###################
-###################
-  kitchen_lights:
-    name: Köksbelysning
-    entities:
-      - light.koksbelysning
-      - input_boolean.rorelsevakt_aktiv
-      - timer.timer_rorelsevakt_1_medium
-      - timer.timer_rorelsevakt_2_medium
-      - timer.timer_rorelsevakt_3_medium
-
-  morning_lights:
-    name: Morgonbelysning
-    entities:
-      - light.morgonbelysning
-
-  lights:
-    name: Belysning
-    entities:
-      - light.belysning
-
-  night_lights:
-    name: Nattbelysning
-    entities:
-      - light.nattbelysning
-      - input_boolean.rorelsevakt_aktiv
-      - timer.timer_rorelsevakt_1_short
-      - timer.timer_rorelsevakt_2_short
-      - timer.timer_rorelsevakt_3_short
-
-  outside_lights:
-    name: Utomhusbelysning
-    entities:
-      - light.utomhusbelysning
-
-  away_lights:
-    name: Bortabelysning
-    entities:
-      - light.bortabelysning
-
-
-
   track_for_home_devices:
     name: Enheter för kontroll om hemma
     entities:

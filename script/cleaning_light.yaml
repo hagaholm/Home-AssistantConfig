@@ -4,20 +4,22 @@
   cleaning_lights_on:
     alias: Städbelysning on
     sequence:
-      - service: light.turn_on
-        data:
-          entity_id: light.kok_stora_fonstret
-          brightness_pct: 100
+
+# Tellstick
       - service: light.turn_on
         entity_id: light.kok_lilla_fonstret
-      - service: light.turn_on
-        entity_id: light.hall_skap
       - service: light.turn_on
         entity_id: light.vardagsrum_vitrinskap
       - service: light.turn_on
         entity_id: light.sovrum_fonster
       - service: light.turn_on
         entity_id: light.andreas_fonster
+
+# IKEA
+      - service: light.turn_on
+        data:
+          entity_id: light.kok_stora_fonstret
+          brightness_pct: 100
       - service: light.turn_on
         data:
           entity_id: light.louise_fonster
@@ -25,6 +27,10 @@
       - service: light.turn_on
         data:
           entity_id: light.hall_byra
+          brightness_pct: 100
+      - service: light.turn_on
+        data:
+          entity_id: light.hall_skap
           brightness_pct: 100
       - service: light.turn_on
         data:

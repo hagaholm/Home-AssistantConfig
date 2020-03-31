@@ -19,6 +19,8 @@
   night_light_default_on:
     alias: Nattbelysning default
     sequence:
+
+# IKEA
       - service: light.turn_on
         data:
           entity_id: light.hall_byra
@@ -34,6 +36,8 @@
   night_light_christmas_on:
     alias: Nattjulbelysning
     sequence:
+
+# IKEA
       - service: light.turn_on
         data:
           entity_id: light.hall_byra

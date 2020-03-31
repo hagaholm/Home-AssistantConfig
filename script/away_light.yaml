@@ -19,15 +19,19 @@
   away_lights_default_on:
     alias: Bortabelysning default on
     sequence:
+
+# Tellstick
+      - service: light.turn_on
+        entity_id: light.kok_lilla_fonstret
+      - service: light.turn_on
+        entity_id: light.sovrum_fonster
+
+# IKEA
       - service: light.turn_on
         data:
           entity_id: light.kok_stora_fonstret
           brightness_pct: 50
           transition: 5
-      - service: light.turn_on
-        entity_id: light.kok_lilla_fonstret
-      - service: light.turn_on
-        entity_id: light.sovrum_fonster
       - service: light.turn_on
         data:
           entity_id: light.louise_fonster
@@ -55,6 +59,8 @@
   away_lights_christmas_on:
     alias: Bortajulbelysning on
     sequence:
+
+# Tellstick
       - service: light.turn_on
         entity_id: light.kok_stora_fonstret_ljusstake
       - service: light.turn_on
@@ -65,20 +71,20 @@
         entity_id: light.andreas_fonster
       - service: light.turn_on
         entity_id: light.louise_fonster_dimmer_julstjarna
-      # Updated
+      - service: light.turn_on
+        entity_id: light.uterum_julstjarnor
+
+# IKEA
       - service: light.turn_on
         data:
           entity_id: light.hall_byra
           brightness_pct: 40
           transition: 5
-      # Updated
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_fonster_ljusstake_2
           brightness_pct: 100
           transition: 5
-      - service: light.turn_on
-        entity_id: light.uterum_julstjarnor
 
   ##########################
   ### Bortabelysning off ###

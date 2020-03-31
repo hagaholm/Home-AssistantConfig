@@ -14,7 +14,8 @@ sensor:
   - platform: template
     sensors:
       yamaha_volume_level:
-        value_template: '{{ states.media_player.yamaha_receiver.attributes.volume_level }}'
+        value_template: '{{ states.media_player.yamaha_receiver.attributes.volume_level * 100}}'
+        unit_of_measurement: '%'
         friendly_name: 'Yamaha volym' 
 
 script:

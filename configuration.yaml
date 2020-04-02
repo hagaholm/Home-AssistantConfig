@@ -320,6 +320,29 @@ light:
       - light.uterum_fonster
 #jul      - light.uterum_julstjarnor
 
+  - platform: group
+    name: Hall
+    entities:
+      - light.hall_byra
+      - light.hall_skap
+
+  - platform: group
+    name: Vardagsrum
+    entities:
+      - light.vardagsrum_fonster
+#jul      - light.vardagsrum_fonster_ljusstake_2
+      - light.vardagsrum_skank
+      - light.vardagsrum_vagn
+      - light.vardagsrum_vitrinskap
+      - light.vardagsrum_gran
+
+  - platform: group
+    name: Kök
+    entities:
+      - light.kok_stora_fonstret
+#jul      - light.kok_stora_fonstret_ljusstake
+      - light.kok_lilla_fonstret
+
 ####################################################
 #                                                  #
 #                     SWITCH                       #

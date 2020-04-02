@@ -1,5 +1,119 @@
 title: Hagaholm
 views:
+  - badges: []
+    cards:
+      - cards:
+          - entity: sensor.ute
+            graph: line
+            name: Ute
+            type: sensor
+          - entity: sensor.inne_medel
+            graph: line
+            name: Inne
+            type: sensor
+          - entity: sensor.uterum
+            graph: line
+            name: Uterum
+            type: sensor
+        type: horizontal-stack
+      - cards:
+          - entity: script.lights_on
+            icon: 'mdi:lightbulb'
+            name: Tänd allt
+            tap_action:
+              action: toggle
+            type: button
+          - entity: script.cleaning_lights_on
+            icon: 'mdi:lightbulb'
+            name: Städdags
+            show_icon: true
+            show_name: true
+            tap_action:
+              action: toggle
+            type: button
+          - entity: script.goodnight_all
+            hold_action:
+              action: none
+            icon: 'mdi:sleep'
+            name: Godnatt
+            tap_action:
+              action: toggle
+            type: button
+        type: horizontal-stack
+      - cards:
+          - entity: script.harmony_tv
+            icon: 'mdi:television'
+            show_icon: true
+            show_name: true
+            tap_action:
+              action: toggle
+            type: button
+          - entity: script.harmony_radio
+            icon: 'mdi:radio'
+            show_icon: true
+            show_name: true
+            tap_action:
+              action: toggle
+            type: button
+          - entity: script.harmony_off
+            hold_action:
+              action: none
+            icon: 'mdi:television-off'
+            name: Stäng av
+            tap_action:
+              action: toggle
+            type: button
+        type: horizontal-stack
+      - cards:
+          - entity: light.sovrum_fonster
+            hold_action:
+              action: none
+            icon: 'mdi:lightbulb'
+            name: Sovrum
+            tap_action:
+              action: toggle
+            type: button
+          - entity: light.andreas_fonster
+            icon: 'mdi:lightbulb'
+            name: Andreas rum
+            show_icon: true
+            show_name: true
+            tap_action:
+              action: toggle
+            type: button
+          - entity: light.louise_fonster
+            icon: 'mdi:lightbulb'
+            name: Louise rum
+            tap_action:
+              action: toggle
+            type: button
+        type: horizontal-stack
+      - cards:
+          - entity: light.vardagsrum
+            hold_action:
+              action: more-info
+            icon: 'mdi:lightbulb'
+            tap_action:
+              action: toggle
+            type: button
+          - entity: light.hall
+            icon: 'mdi:lightbulb'
+            show_icon: true
+            show_name: true
+            tap_action:
+              action: toggle
+            type: button
+          - entity: light.kok
+            icon: 'mdi:lightbulb'
+            tap_action:
+              action: toggle
+            type: button
+        type: horizontal-stack
+    icon: 'mdi:information-outline'
+    panel: false
+    path: Start
+    theme: default
+    title: Information
   - path: default_view
     title: Info
     badges: []
@@ -40,7 +154,7 @@ views:
           - script.away_lights_on
         title: Tänd belysning
         show_header_toggle: false
-    icon: 'mdi:information-outline'
+    icon: 'mdi:home-assistant'
   - path: temperature_view
     title: Temperatur
     badges: []

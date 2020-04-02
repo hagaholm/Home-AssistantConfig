@@ -112,7 +112,8 @@ logger: !include logging/logger.yaml
 ###################################################
 # https://www.home-assistant.io/lovelace/yaml-mode/
 lovelace:
-  mode: storage
+#  mode: storage
+  mode: yaml
 
   # Add more dashboards
   dashboards:

@@ -39,6 +39,7 @@
     ###    switch.rorelsevakt_1 == off                                                             ###
     ###    switch.rorelsevakt_2 == off                                                             ###
     ###    binary_sensor.aqara_motion_sensor_1 == off                                              ###
+    ###    vacuum.xiaomi_vacuum_cleaner == idle                                                    ###
     ### A: notify                                                                                  ###
     ##################################################################################################
   - alias: Larm rörelse i hallen
@@ -61,6 +62,9 @@
         - condition: state
           entity_id: binary_sensor.aqara_motion_sensor_1 # Kök
           state: 'off'
+        - condition: state
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+          state: idle
     action:
       - service: notify.pushbullet
         data:

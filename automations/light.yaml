@@ -1,14 +1,14 @@
     #################################################
-    ### Tänder lampor kl 12:00 om det är mörkt    ###
-    ### T: Time = 12:00:00                        ###
+    ### Tänder lampor kl 09:00 om det är mörkt    ###
+    ### T: Time = 09:00:00                        ###
     ### C: sensor.ljusstyrka < 1800               ###
     ###    group.track_for_home_devices == 'home' ###
     ### A: script.lights_on                       ###
     #################################################
-  - alias: Belysning on (=12:00:00, <1800, hemma)
+  - alias: Belysning on (=09:00:00, <1800, hemma)
     trigger:
       platform: time
-      at: '12:00:00'
+      at: '09:00:00'
     condition:
       condition: and
       conditions:
@@ -29,7 +29,7 @@
     ### Tänder lampor när det blir mörkt fram till 22:00 ###
     ### T: sensor.ljusstyrka < 1800                      ###
     ### C: group.track_for_home_devices == 'home'        ###
-    ###    12:00:00 - 22:00:00                           ###
+    ###    09:00:00 - 22:00:00                           ###
     ### A: script.lights_on                              ###
     ########################################################
   - alias: Belysning on (<1800, hemma)
@@ -44,7 +44,7 @@
           entity_id: group.track_for_home_devices
           state: 'home'
         - condition: time
-          after: '12:00:00'
+          after: '09:00:00'
           before: '22:00:00'
     action:
       - service: input_select.select_option
@@ -60,7 +60,7 @@
     ### T: input_boolean.rorelsevakt_aktiv == on         ###
     ### C: group.track_for_home_devices == 'not_home'    ###
     ###    sensor.ljusstyrka < 1800                      ###
-    ###    12:00:00 - 05:00:00                           ###
+    ###    09:00:00 - 05:00:00                           ###
     ### A: script.lights_on                              ###
     ########################################################
   - alias: Belysning on (sensor on, borta, <1800)
@@ -78,7 +78,7 @@
           entity_id: sensor.ljusstyrka
           below: 1800
         - condition: time
-          after: '12:00:00'
+          after: '09:00:00'
           before: '05:00:00'
     action:
       - service: input_select.select_option
@@ -91,7 +91,7 @@
     ### Tänder lampor när första kommer hem övrig tid ###
     ### T: group.track_for_home_devices to 'home'     ###
     ### C: sensor.ljusstyrka < 1800                   ###
-    ###    12:00:00 - 05:00:00                        ###
+    ###    09:00:00 - 05:00:00                        ###
     ### A: script.lights_on                           ###
     #####################################################
   - alias: Belysning on (-> hemma, <1800)
@@ -107,7 +107,7 @@
           entity_id: sensor.ljusstyrka
           below: 1800
         - condition: time
-          after: '12:00:00'
+          after: '09:00:00'
           before: '05:00:00'
     action:
       - service: input_select.select_option
@@ -120,7 +120,7 @@
     ### Släcker lampor om det blir för ljust ute övrig tid ###
     ### T: sensor.ljusstyrka > 2500                        ###
     ### C: group.track_for_home_devices = 'home'           ###
-    ###    12:00:00 - 05:00:00                             ###
+    ###    09:00:00 - 05:00:00                             ###
     ### A: script.lights_off                               ###
     ##########################################################
   - alias: Belysning off (>2500, hemma)
@@ -135,7 +135,7 @@
           entity_id: group.track_for_home_devices
           state: 'home'
         - condition: time
-          after: '12:00:00'
+          after: '09:00:00'
           before: '05:00:00'
     action:
       - service: input_select.select_option
@@ -147,7 +147,7 @@
     ########################################################
     ### Släcker lampor när sista åker hemifrån övrig tid ###
     ### T: group.track_for_home_devices to 'not_home'    ###
-    ### C: 12:00:00 - 05:00:00                           ###
+    ### C: 09:00:00 - 05:00:00                           ###
     ### A: script.lights_off                             ###
     ########################################################
   - alias: Belysning off (-> borta)
@@ -158,7 +158,7 @@
       to: 'not_home'
     condition:
       condition: time
-      after: '12:00:00'
+      after: '09:00:00'
       before: '05:00:00'
     action:
       - service: input_select.select_option

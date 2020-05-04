@@ -5,13 +5,15 @@ import requests
 import datetime
 import json
 import logging
+import aiohttp
 
 _LOGGER = logging.getLogger(__name__)
 
 class ReolinkApi(object):
-    def __init__(self, ip):
+    def __init__(self, ip, channel):
         self._url = "http://" + ip + "/cgi-bin/api.cgi"
         self._ip = ip
+        self._channel = channel
         self._token = None
         self._motion_state = False
         self._last_motion = 0
@@ -22,24 +24,31 @@ class ReolinkApi(object):
         self._ir_state = None
         self._rtspport = None
         self._rtmpport = None
+        self._ptzpresets = dict()
 
-    def status(self):
+    def session_active(self):
+        return self._token is not None
+
+    async def get_settings(self):
         if self._token is None:
             return
 
-        body = [{"cmd":"GetDevInfo","action":1,"param":{}},
-        {"cmd": "GetNetPort", "action": 1, "param": {}},
-        {"cmd": "GetFtp", "action": 1, "param": {}}, 
-        {"cmd":"GetEmail","action":1,"param":{}}, 
-        {"cmd":"GetIrLights","action":1,"param":{}}]
+        param_channel = {"channel": self._channel}
+        body = [{"cmd": "GetDevInfo", "action":1, "param": param_channel},
+            {"cmd": "GetNetPort", "action": 1, "param": param_channel},
+            {"cmd": "GetFtp", "action": 1, "param": param_channel},
+            {"cmd": "GetEmail", "action": 1, "param": param_channel},
+            {"cmd": "GetIrLights", "action": 1, "param": param_channel},
+            {"cmd": "GetPtzPreset", "action": 1, "param": param_channel}]
 
         param = {"token": self._token}
-        response = self.send(body, param)
+        response = await self.send(body, param)
 
         try:
-            json_data = json.loads(response.text)
+            json_data = json.loads(response)
         except:
             _LOGGER.error(f"Error translating response to json")
+            self._token = None
             return
 
         for data in json_data:
@@ -72,15 +81,28 @@ class ReolinkApi(object):
                         self._ir_state = True
                     else:
                         self._ir_state = False
+
+                elif data["cmd"] == "GetPtzPreset":
+                    self._ptzpresets_settings = data
+                    for preset in data["value"]["PtzPreset"]:
+                        if int(preset["enable"]) == 1:
+                            preset_name = preset["name"]
+                            preset_id = int(preset["id"])
+                            self._ptzpresets[preset_name] = preset_id
+                            _LOGGER.debug(f"Got preset {preset_name} with ID {preset_id}")
+                        else:
+                            _LOGGER.debug(f"Preset is not enabled: {preset}")
             except:
                 continue    
 
-    @property
-    def motion_state(self):
-        response = self.send(None, "?cmd=GetMdState&token=" + self._token)
+    async def get_motion_state(self):
+        body = [{"cmd": "GetMdState", "action": 0, "param":{"channel":self._channel}}]
+        param = {"token": self._token}
+        
+        response = await self.send(body, param)
 
         try:
-            json_data = json.loads(response.text)
+            json_data = json.loads(response)
 
             if json_data is None:
                 _LOGGER.error(f"Unable to get Motion detection state at IP {self._ip}")
@@ -98,10 +120,25 @@ class ReolinkApi(object):
         return self._motion_state
     
     @property
-    def still_image(self):
-        response = self.send(None, "?cmd=Snap&channel=0&token=" + self._token, stream=True)
-        response.raw.decode_content = True
-        return response.raw
+    async def still_image(self):
+        response = await self.send(None, f"?cmd=Snap&channel={self._channel}&token={self._token}", stream=True)
+        if response is None:
+            return
+
+        # response.raw.decode_content = True
+        return response
+
+    @property
+    async def snapshot(self):
+        response = await self.send(None, f"?cmd=Snap&channel={self._channel}&token={self._token}", stream=False)
+        if response is None:
+            return
+
+        return response
+
+    @property
+    def motion_state(self):
+        return self._motion_state
 
     @property
     def ftp_state(self):
@@ -127,14 +164,18 @@ class ReolinkApi(object):
     def last_motion(self):
         return self._last_motion
 
-    def login(self, username, password):
+    @property
+    def ptzpresets(self):
+        return self._ptzpresets
+
+    async def login(self, username, password):
         body = [{"cmd": "Login", "action": 0, "param": {"User": {"userName": username, "password": password}}}]
         param = {"cmd": "Login", "token": "null"}
         
-        response = self.send(body, param)
+        response = await self.send(body, param)
 
         try:
-            json_data = json.loads(response.text)
+            json_data = json.loads(response)
         except:
             _LOGGER.error(f"Error translating login response to json")
             return
@@ -148,14 +189,14 @@ class ReolinkApi(object):
         else:
             _LOGGER.error(f"Failed to login at IP {self._ip}. Connection error.")
 
-    def logout(self):
+    async def logout(self):
         body = [{"cmd":"Logout","action":0,"param":{}}]
         param = {"cmd": "Logout", "token": self._token}
 
-        self.send(body, param)
+        await self.send(body, param)
 
-    def set_ftp(self, enabled):
-        self.status()
+    async def set_ftp(self, enabled):
+        await self.get_settings()
 
         if not self._ftp_settings:
             _LOGGER.error("Error while fetching current FTP settings")
@@ -169,9 +210,9 @@ class ReolinkApi(object):
         body = [{"cmd":"SetFtp","action":0,"param": self._ftp_settings["value"] }]
         body[0]["param"]["Ftp"]["schedule"]["enable"] = newValue
 
-        response = self.send(body, {"cmd": "SetFtp", "token": self._token} )
+        response = await self.send(body, {"cmd": "SetFtp", "token": self._token} )
         try:
-            json_data = json.loads(response.text)
+            json_data = json.loads(response)
             if json_data[0]["value"]["rspCode"] == 200:
                 return True
             else:
@@ -180,8 +221,8 @@ class ReolinkApi(object):
             _LOGGER.error(f"Error translating FTP response to json")
             return False
 
-    def set_email(self, enabled):
-        self.status()
+    async def set_email(self, enabled):
+        await self.get_settings()
 
         if not self._email_settings:
             _LOGGER.error("Error while fetching current email settings")
@@ -195,9 +236,9 @@ class ReolinkApi(object):
         body = [{"cmd":"SetEmail","action":0,"param": self._email_settings["value"] }]
         body[0]["param"]["Email"]["schedule"]["enable"] = newValue
 
-        response = self.send(body, {"cmd": "SetEmail", "token": self._token} )
+        response = await self.send(body, {"cmd": "SetEmail", "token": self._token} )
         try:
-            json_data = json.loads(response.text)
+            json_data = json.loads(response)
             if json_data[0]["value"]["rspCode"] == 200:
                 return True
             else:
@@ -206,8 +247,8 @@ class ReolinkApi(object):
             _LOGGER.error(f"Error translating Email response to json")
             return False
 
-    def set_ir_lights(self, enabled):
-        self.status()
+    async def set_ir_lights(self, enabled):
+        await self.get_settings()
 
         if not self._ir_settings:
             _LOGGER.error("Error while fetching current IR light settings")
@@ -221,30 +262,31 @@ class ReolinkApi(object):
         body = [{"cmd":"SetIrLights","action":0,"param": self._ir_settings["value"] }]
         body[0]["param"]["IrLights"]["state"] = newValue
 
-        response = self.send(body, {"cmd": "SetIrLights", "token": self._token} )
+        response = await self.send(body, {"cmd": "SetIrLights", "token": self._token} )
         try:
-            json_data = json.loads(response.text)
+            json_data = json.loads(response)
             if json_data[0]["value"]["rspCode"] == 200:
                 return True
             else:
                 return False
-        except:
+        except requests.exceptions.RequestException:
             _LOGGER.error(f"Error translating IR Lights response to json")
             return False
 
-    def send(self, body, param, stream=False):
-        try:
-            if (self._token is None and 
-                (body is None or body[0]["cmd"] != "Login")):
-                _LOGGER.info(f"Reolink camera at IP {self._ip} is not logged in")
-                return                
+    async def send(self, body, param, stream=False):
+        if (self._token is None and 
+            (body is None or body[0]["cmd"] != "Login")):
+            _LOGGER.info(f"Reolink camera at IP {self._ip} is not logged in")
+            return   
 
-            if body is None:
-                response = requests.get(self._url, params=param, stream=stream)
-            else:
-                response = requests.post(self._url, data=json.dumps(body), params=param)
-            
-            return response
-        except Exception:
-            _LOGGER.error(f"Exception while calling Reolink camera API at ip {self._ip}")
-            return None
+        timeout = aiohttp.ClientTimeout(total=10)
+
+        if body is None:
+            async with aiohttp.ClientSession(timeout=timeout) as session:
+                async with session.get(url=self._url, params=param) as response:
+                    return await response.read()
+        else:
+            async with aiohttp.ClientSession(timeout=timeout) as session:
+                async with session.post(url=self._url, json=body, params=param) as response:
+                    json_data = await response.text()
+                    return json_data

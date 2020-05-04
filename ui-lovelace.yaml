@@ -641,16 +641,16 @@ views:
             name: 'on (sensor on, <1800)'
           - entity: automation.morgonbelysning_on_hemma_1800
             name: 'on (-> hemma, <1800)'
-          - entity: automation.morgonbelysning_off_2000_hemma
-            name: 'off (>2000, hemma)'
+          - entity: automation.morgonbelysning_off_2500_hemma
+            name: 'off (>2500, hemma)'
           - entity: automation.morgonbelysning_off_borta
             name: off (-> borta)
         title: Morgonbelysning
         show_header_toggle: true
       - type: entities
         entities:
-          - entity: automation.belysning_on_12_00_00_1800_hemma
-            name: 'on (=12:00:00, <1800, hemma)'
+          - entity: automation.belysning_on_09_00_00_1800_hemma
+            name: 'on (=09:00:00, <1800, hemma)'
           - entity: automation.belysning_on_1800_hemma
             name: 'on (<1800, hemma)'
           - entity: automation.belysning_on_sensor_on_borta_1800

@@ -33,7 +33,7 @@
     ########################################################
   - alias: Belysning on (<1800, hemma)
     trigger:
-      platform: trigger
+      platform: template
       value_template: "{{(states.sensor.ljusstyrka.state | int) < (states.input_number.light_on.state | int )}}"
     condition:
       condition: and
@@ -121,7 +121,7 @@
     ##########################################################
   - alias: Belysning off (>2500, hemma)
     trigger:
-      platform: trigger
+      platform: template
       value_template: "{{(states.sensor.ljusstyrka.state | int) > (states.input_number.light_off.state | int )}}"
     condition:
       condition: and

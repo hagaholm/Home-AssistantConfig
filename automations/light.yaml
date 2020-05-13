@@ -12,11 +12,6 @@
     condition:
       condition: and
       conditions:
-        #- condition: numeric_state
-          #entity_id: sensor.ljusstyrka
-          #below: 1800
-          #below: input_number.light_on
-          #below: {{ states('input_number.light_on') | int }}
         - condition: template
           value_template: "{{(states.sensor.ljusstyrka.state | int) < (states.input_number.light_on.state | int )}}"
         - condition: state
@@ -78,9 +73,8 @@
         - condition: state
           entity_id: group.track_for_home_devices
           state: 'not_home'
-        - condition: numeric_state
-          entity_id: sensor.ljusstyrka
-          below: 1800
+        - condition: template
+          value_template: "{{(states.sensor.ljusstyrka.state | int) < (states.input_number.light_on.state | int )}}"
         - condition: time
           after: '09:00:00'
           before: '05:00:00'
@@ -107,9 +101,8 @@
     condition:
       condition: and
       conditions:
-        - condition: numeric_state
-          entity_id: sensor.ljusstyrka
-          below: 1800
+        - condition: template
+          value_template: "{{(states.sensor.ljusstyrka.state | int) < (states.input_number.light_on.state | int )}}"
         - condition: time
           after: '09:00:00'
           before: '05:00:00'

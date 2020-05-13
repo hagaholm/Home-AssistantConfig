@@ -24,6 +24,10 @@ homeassistant:
   # Package folder
   packages: !include_dir_named packages
 
+  whitelist_external_dirs:
+    - /config/kamera_1_images
+    - /config/kamera_1_images_processing
+    - /config/snapshots
 ####################################################
 #                                                  #
 #                     GENERAL                      #
@@ -72,13 +76,6 @@ discovery:
 #---------------------------------------------------
 # Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
-
-
-whitelist_external_dirs:
-  - /config/kamera_1_images
-  - /config/kamera_1_images_processing
-  - /config/snapshots
-
 
 #---------------------------------------------------
 # Enables a map showing the location of tracked devices

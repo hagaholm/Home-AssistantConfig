@@ -73,6 +73,12 @@ discovery:
 # Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
 
+
+whitelist_external_dirs:
+  - /usr/share/hassio/homeassistant/kamera_1_images
+  - /usr/share/hassio/homeassistant/kamera_1_images_processing
+
+
 #---------------------------------------------------
 # Enables a map showing the location of tracked devices
 #map:

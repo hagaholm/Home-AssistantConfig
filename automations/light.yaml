@@ -11,7 +11,7 @@
       at: '09:00:00'
     condition:
       condition: template
-        value_template: {{ states('input_number.light_on')|float > states('input_number.light_off')|float }}
+        value_template: {{ states('sensor.ljusstyrka')|float > states('sensor.ljusstyrka2')|float }}
     action:
       - service: input_select.select_option
         data:

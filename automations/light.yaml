@@ -14,8 +14,8 @@
       conditions:
         - condition: numeric_state
           entity_id: sensor.ljusstyrka
-          below: input_number.light_on
-          #below: {{ states('input_number.light_on') | int }}
+          #below: input_number.light_on
+          below: {{ states('input_number.light_on') | int }}
         - condition: state
           entity_id: group.track_for_home_devices
           state: 'home'
@@ -37,7 +37,8 @@
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      below: input_number.light_on
+      #below: input_number.light_on
+      below: {{ states('input_number.light_on') | int }}
     condition:
       condition: and
       conditions:
@@ -77,7 +78,8 @@
           state: 'not_home'
         - condition: numeric_state
           entity_id: sensor.ljusstyrka
-          below: input_number.light_on
+          #below: input_number.light_on
+          below: {{ states('input_number.light_on') | int }}
         - condition: time
           after: '09:00:00'
           before: '05:00:00'
@@ -106,7 +108,8 @@
       conditions:
         - condition: numeric_state
           entity_id: sensor.ljusstyrka
-          below: input_number.light_on
+          #below: input_number.light_on
+          below: {{ states('input_number.light_on') | int }}
         - condition: time
           after: '09:00:00'
           before: '05:00:00'
@@ -128,7 +131,8 @@
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      above: input_number.light_off
+      #above: input_number.light_on
+      above: {{ states('input_number.light_off') | int }}
     condition:
       condition: and
       conditions:

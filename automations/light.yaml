@@ -12,10 +12,13 @@
     condition:
       condition: and
       conditions:
-        - condition: numeric_state
-          entity_id: sensor.ljusstyrka
+        #- condition: numeric_state
+          #entity_id: sensor.ljusstyrka
+          #below: 1800
           #below: input_number.light_on
-          below: {{ states('input_number.light_on') | int }}
+          #below: {{ states('input_number.light_on') | int }}
+        - condition: template
+          value_template: {{ states('sensor.ljusstyrka') | int < states('input_number.input_number.light_on') | int }}
         - condition: state
           entity_id: group.track_for_home_devices
           state: 'home'
@@ -25,7 +28,7 @@
           entity_id: input_select.inside_lights
           option: Belysning
       - service: script.lights_on
-    
+
     ########################################################
     ### Tänder lampor när det blir mörkt fram till 22:00 ###
     ### T: sensor.ljusstyrka < 1800                      ###
@@ -37,8 +40,7 @@
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      #below: input_number.light_on
-      below: {{ states('input_number.light_on') | int }}
+      below: 1800
     condition:
       condition: and
       conditions:
@@ -78,8 +80,7 @@
           state: 'not_home'
         - condition: numeric_state
           entity_id: sensor.ljusstyrka
-          #below: input_number.light_on
-          below: {{ states('input_number.light_on') | int }}
+          below: 1800
         - condition: time
           after: '09:00:00'
           before: '05:00:00'
@@ -108,8 +109,7 @@
       conditions:
         - condition: numeric_state
           entity_id: sensor.ljusstyrka
-          #below: input_number.light_on
-          below: {{ states('input_number.light_on') | int }}
+          below: 1800
         - condition: time
           after: '09:00:00'
           before: '05:00:00'
@@ -131,8 +131,7 @@
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      #above: input_number.light_on
-      above: {{ states('input_number.light_off') | int }}
+      above: 2500
     condition:
       condition: and
       conditions:

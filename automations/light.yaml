@@ -128,7 +128,7 @@
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      above: below: input_number.light_off
+      above: input_number.light_off
     condition:
       condition: and
       conditions:

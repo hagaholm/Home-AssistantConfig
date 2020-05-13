@@ -10,18 +10,8 @@
       platform: time
       at: '09:00:00'
     condition:
-      condition: and
-      conditions:
-        #- condition: numeric_state
-          #entity_id: sensor.ljusstyrka
-          #below: 1800
-          #below: input_number.light_on
-          #below: {{ states('input_number.light_on') | int }}
-        - condition: template
-          value_template: {{ states('input_number.light_on')|float > states('input_number.light_off')|float }}
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'home'
+      condition: template
+        value_template: {{ states('input_number.light_on')|float > states('input_number.light_off')|float }}
     action:
       - service: input_select.select_option
         data:

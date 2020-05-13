@@ -18,9 +18,7 @@
           #below: input_number.light_on
           #below: {{ states('input_number.light_on') | int }}
         - condition: template
-          value_template: "{{(states.sensor.ljusstyrka.state | float) < (states.sensor.ljusstyrka2.state | float )}}"
-        #- condition: template
-        #  value_template: "{{(states.sensor.ljusstyrka.state | int) <= (states.input_number.heater_temp_set.state | int)}}"
+          value_template: "{{(states.sensor.ljusstyrka.state | int) < (states.input_number.light_on.state | int )}}"
         - condition: state
           entity_id: group.track_for_home_devices
           state: 'home'

@@ -1,16 +1,15 @@
     #######################################################################
     ### Tänder lampor 100% när lux kommer under 2500                    ###
     ### För att förhindra att det inte tänds när någon redan är i köket ###
-    ### T: sensor.ljusstyrka < 2500                                     ###
+    ### T: sensor.ljusstyrka < input_number.kitchen_light_on            ###
     ### C: 12:00:00 - 22:00:00                                          ###
     ### C: group.track_for_home_devices == 'home'                       ###
     ### A: script.kitchen_light_100                                     ###
     #######################################################################
   - alias: Kök 100% (<2500)
     trigger:
-      platform: numeric_state
-      entity_id: sensor.ljusstyrka
-      below: 2500
+      platform: template
+      value_template: "{{(states.sensor.ljusstyrka.state | int) < (states.input_number.kitchen_light_on.state | int )}}"
     condition:
       condition: and
       conditions:
@@ -30,7 +29,7 @@
     #####################################################################
     ### Tänder lampor 100% på morgonen vid rörelse i köket < 2500 lux ###
     ### T: input_boolean.rorelsevakt_aktiv == on                      ###
-    ### C: sensor.ljusstyrka < 2500                                   ###
+    ### C: sensor.ljusstyrka < input_number.kitchen_light_on          ###
     ###    05:00:00 - 12:00:00                                        ###
     ### A: script.kitchen_light_100                                   ###
     #####################################################################
@@ -42,9 +41,8 @@
     condition:
       condition: and
       conditions:
-        - condition: numeric_state
-          entity_id: sensor.ljusstyrka
-          below: 2500
+        - condition: template
+          value_template: "{{(states.sensor.ljusstyrka.state | int) < (states.input_number.kitchen_light_on.state | int )}}"
         - condition: time
           after: '05:00:00'
           before: '12:00:00'
@@ -58,7 +56,7 @@
     #####################################################################
     ### Tänder lampor 100% vid rörelse i köket 150-2500 lux övrig tid ###
     ### T: input_boolean.rorelsevakt_aktiv == on                      ###
-    ### C: sensor.ljusstyrka 150-2500                                 ###
+    ### C: sensor.ljusstyrka 150-input_number.kitchen_light_on        ###
     ###    12:00:00 - 05:00:00                                        ###
     ### A: script.kitchen_light_100                                   ###
     #####################################################################
@@ -73,7 +71,8 @@
         - condition: numeric_state
           entity_id: sensor.ljusstyrka
           above: 150
-          below: 2500
+        - condition: template
+          value_template: "{{(states.sensor.ljusstyrka.state | int) < (states.input_number.kitchen_light_on.state | int )}}"
         - condition: time
           after: '12:00:00'
           before: '05:00:00'
@@ -221,17 +220,16 @@
       - service: homeassistant.turn_off
         entity_id: input_boolean.rorelsevakt_aktiv
 
-    #################################################
-    ### Släcker lampor när lux kommer över 3000   ###
-    ### T: sensor.ljusstyrka > 3000               ###
-    ### C: group.track_for_home_devices == 'home' ###
-    ### A: input_boolean.rorelsevakt_aktiv = off  ###
-    #################################################
+    ##############################################################
+    ### Släcker lampor när lux kommer över 3000                ###
+    ### T: sensor.ljusstyrka > input_number.kitchecn_light_off ###
+    ### C: group.track_for_home_devices == 'home'              ###
+    ### A: input_boolean.rorelsevakt_aktiv = off               ###
+    ##############################################################
   - alias: Kök off (>3000)
     trigger:
-      platform: numeric_state
-      entity_id: sensor.ljusstyrka
-      above: 3000
+      platform: template
+      value_template: "{{(states.sensor.ljusstyrka.state | int) > (states.input_number.kitchen_light_off.state | int )}}"
     condition:
       condition: state
       entity_id: group.track_for_home_devices

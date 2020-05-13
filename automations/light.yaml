@@ -1,10 +1,10 @@
-    #################################################
-    ### Tänder lampor kl 09:00 om det är mörkt    ###
-    ### T: Time = 09:00:00                        ###
-    ### C: sensor.ljusstyrka < 1800               ###
-    ###    group.track_for_home_devices == 'home' ###
-    ### A: script.lights_on                       ###
-    #################################################
+    ####################################################
+    ### Tänder lampor kl 09:00 om det är mörkt       ###
+    ### T: Time = 09:00:00                           ###
+    ### C: sensor.ljusstyrka < input_number.light_on ###
+    ###    group.track_for_home_devices == 'home'    ###
+    ### A: script.lights_on                          ###
+    ####################################################
   - alias: Belysning on (=09:00:00, <1800, hemma)
     trigger:
       platform: time
@@ -26,7 +26,7 @@
 
     ########################################################
     ### Tänder lampor när det blir mörkt fram till 22:00 ###
-    ### T: sensor.ljusstyrka < 1800                      ###
+    ### T: sensor.ljusstyrka < input_number.light_on     ###
     ### C: group.track_for_home_devices == 'home'        ###
     ###    09:00:00 - 22:00:00                           ###
     ### A: script.lights_on                              ###
@@ -57,7 +57,7 @@
     ### kommer hem innan status ändrats till 'hemma'     ###
     ### T: input_boolean.rorelsevakt_aktiv == on         ###
     ### C: group.track_for_home_devices == 'not_home'    ###
-    ###    sensor.ljusstyrka < 1800                      ###
+    ###    sensor.ljusstyrka < input_number.light_on     ###
     ###    09:00:00 - 05:00:00                           ###
     ### A: script.lights_on                              ###
     ########################################################
@@ -87,7 +87,7 @@
     #####################################################
     ### Tänder lampor när första kommer hem övrig tid ###
     ### T: group.track_for_home_devices to 'home'     ###
-    ### C: sensor.ljusstyrka < 1800                   ###
+    ### C: sensor.ljusstyrka < input_number.light_on  ###
     ###    09:00:00 - 05:00:00                        ###
     ### A: script.lights_on                           ###
     #####################################################
@@ -114,7 +114,7 @@
 
     ##########################################################
     ### Släcker lampor om det blir för ljust ute övrig tid ###
-    ### T: sensor.ljusstyrka > 2500                        ###
+    ### T: sensor.ljusstyrka > input_number.light_off      ###
     ### C: group.track_for_home_devices = 'home'           ###
     ###    09:00:00 - 05:00:00                             ###
     ### A: script.lights_off                               ###

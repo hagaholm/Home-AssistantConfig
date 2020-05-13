@@ -33,47 +33,47 @@
         data:
           entity_id: light.kok_stora_fonstret
           brightness_pct: 50
-          transition: 5
+          transition: 30
       - service: light.turn_on
         data:
           entity_id: light.andreas_fonster
           brightness_pct: 30
-          transition: 5
+          transition: 30
       - service: light.turn_on
         data:
           entity_id: light.louise_fonster
           brightness_pct: 80
-          transition: 5
+          transition: 30
       - service: light.turn_on
         data:
           entity_id: light.hall_byra
           brightness_pct: 40
-          transition: 5
+          transition: 30
       - service: light.turn_on
         data:
           entity_id: light.hall_skap
           brightness_pct: 40
-          transition: 5
+          transition: 30
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_fonster
           brightness_pct: 50
-          transition: 5
+          transition: 30
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_skank
           brightness_pct: 50
-          transition: 5
+          transition: 30
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_vagn
           brightness_pct: 50
-          transition: 5
+          transition: 30
       - service: light.turn_on
         data:
           entity_id: light.uterum_fonster
           brightness_pct: 80
-          transition: 5
+          transition: 30
 
   ### --------------- ###
   ### Julbelysning on ###
@@ -105,27 +105,27 @@
         data:
           entity_id: light.hall_byra
           brightness_pct: 40
-          transition: 5
+          transition: 30
       - service: light.turn_on
         data:
           entity_id: light.hall_skap
           brightness_pct: 40
-          transition: 5
+          transition: 30
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_fonster_ljusstake_2
           brightness_pct: 100
-          transition: 5
+          transition: 30
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_skank
           brightness_pct: 50
-          transition: 5
+          transition: 30
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_vagn
           brightness_pct: 50
-          transition: 5
+          transition: 30
 
   #####################
   ### Belysning off ###
@@ -134,7 +134,10 @@
     alias: Belysning off
     sequence:
       - service: homeassistant.turn_off
-        entity_id: light.belysning
+        data:
+          entity_id: light.belysning
+          brightness_pct: 0
+          transition: 30
       - service: light.turn_off
         entity_id: light.vardagsrum_fonster_ljusstake_2
       - service: light.turn_off

@@ -1,10 +1,10 @@
-    #################################################
-    ### Tänder lampor kl 09:00 om det är mörkt    ###
-    ### T: Time = 09:00:00                        ###
-    ### C: sensor.ljusstyrka < 1800               ###
-    ###    group.track_for_home_devices == 'home' ###
-    ### A: script.lights_on                       ###
-    #################################################
+    ####################################################
+    ### Tänder lampor kl 09:00 om det är mörkt       ###
+    ### T: Time = 09:00:00                           ###
+    ### C: sensor.ljusstyrka < input_number.light_on ###
+    ###    group.track_for_home_devices == 'home'    ###
+    ### A: script.lights_on                          ###
+    ####################################################
   - alias: Belysning on (=09:00:00, <1800, hemma)
     trigger:
       platform: time
@@ -12,9 +12,8 @@
     condition:
       condition: and
       conditions:
-        - condition: numeric_state
-          entity_id: sensor.ljusstyrka
-          below: 1800
+        - condition: template
+          value_template: "{{(states.sensor.ljusstyrka.state | int) < (states.input_number.light_on.state | int )}}"
         - condition: state
           entity_id: group.track_for_home_devices
           state: 'home'
@@ -24,19 +23,18 @@
           entity_id: input_select.inside_lights
           option: Belysning
       - service: script.lights_on
-    
+
     ########################################################
     ### Tänder lampor när det blir mörkt fram till 22:00 ###
-    ### T: sensor.ljusstyrka < 1800                      ###
+    ### T: sensor.ljusstyrka < input_number.light_on     ###
     ### C: group.track_for_home_devices == 'home'        ###
     ###    09:00:00 - 22:00:00                           ###
     ### A: script.lights_on                              ###
     ########################################################
   - alias: Belysning on (<1800, hemma)
     trigger:
-      platform: numeric_state
-      entity_id: sensor.ljusstyrka
-      below: 1800
+      platform: template
+      value_template: "{{(states.sensor.ljusstyrka.state | int) < (states.input_number.light_on.state | int )}}"
     condition:
       condition: and
       conditions:
@@ -59,7 +57,7 @@
     ### kommer hem innan status ändrats till 'hemma'     ###
     ### T: input_boolean.rorelsevakt_aktiv == on         ###
     ### C: group.track_for_home_devices == 'not_home'    ###
-    ###    sensor.ljusstyrka < 1800                      ###
+    ###    sensor.ljusstyrka < input_number.light_on     ###
     ###    09:00:00 - 05:00:00                           ###
     ### A: script.lights_on                              ###
     ########################################################
@@ -74,9 +72,8 @@
         - condition: state
           entity_id: group.track_for_home_devices
           state: 'not_home'
-        - condition: numeric_state
-          entity_id: sensor.ljusstyrka
-          below: 1800
+        - condition: template
+          value_template: "{{(states.sensor.ljusstyrka.state | int) < (states.input_number.light_on.state | int )}}"
         - condition: time
           after: '09:00:00'
           before: '05:00:00'
@@ -90,7 +87,7 @@
     #####################################################
     ### Tänder lampor när första kommer hem övrig tid ###
     ### T: group.track_for_home_devices to 'home'     ###
-    ### C: sensor.ljusstyrka < 1800                   ###
+    ### C: sensor.ljusstyrka < input_number.light_on  ###
     ###    09:00:00 - 05:00:00                        ###
     ### A: script.lights_on                           ###
     #####################################################
@@ -103,9 +100,8 @@
     condition:
       condition: and
       conditions:
-        - condition: numeric_state
-          entity_id: sensor.ljusstyrka
-          below: 1800
+        - condition: template
+          value_template: "{{(states.sensor.ljusstyrka.state | int) < (states.input_number.light_on.state | int )}}"
         - condition: time
           after: '09:00:00'
           before: '05:00:00'
@@ -118,16 +114,15 @@
 
     ##########################################################
     ### Släcker lampor om det blir för ljust ute övrig tid ###
-    ### T: sensor.ljusstyrka > 2500                        ###
+    ### T: sensor.ljusstyrka > input_number.light_off      ###
     ### C: group.track_for_home_devices = 'home'           ###
     ###    09:00:00 - 05:00:00                             ###
     ### A: script.lights_off                               ###
     ##########################################################
   - alias: Belysning off (>2500, hemma)
     trigger:
-      platform: numeric_state
-      entity_id: sensor.ljusstyrka
-      above: 2500
+      platform: template
+      value_template: "{{(states.sensor.ljusstyrka.state | int) > (states.input_number.light_off.state | int )}}"
     condition:
       condition: and
       conditions:

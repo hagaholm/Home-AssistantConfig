@@ -1,0 +1,12 @@
+image_processing:
+  - platform: deepstack_object
+    ip_address: localhost
+    port: 5000
+    api_key: ee9896aa-6b37-44ed-b1f2-a689b422ef8a
+    save_file_folder: /config/snapshots/
+    save_timestamped_file: True
+    targets:
+      - person
+      - car
+    source:
+      - entity_id: camera.entity_picture

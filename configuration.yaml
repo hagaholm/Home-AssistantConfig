@@ -23,11 +23,10 @@ homeassistant:
   customize: !include customize.yaml
   # Package folder
   packages: !include_dir_named packages
-
+  # Whitelist external directories 
   whitelist_external_dirs:
-    - /config/kamera_1_images
-    - /config/kamera_1_images_processing
-    - /config/snapshots
+    - /config/camera_1_target_found
+    
 ####################################################
 #                                                  #
 #                     GENERAL                      #

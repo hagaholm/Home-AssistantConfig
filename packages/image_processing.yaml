@@ -1,3 +1,7 @@
+camera:
+  - platform: local_file
+    file_path: /config/kamera_1_images/kamera_1.jpg
+
 automation:
   - alias: Sparar ner bild från kamera 1
     trigger:
@@ -8,7 +12,7 @@ automation:
       service: camera.snapshot
       data:
         entity_id: camera.kamera_1
-        filename: '/config/kamera_1_images/kamera_1{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
+        filename: '/config/kamera_1_images/kamera_1.jpg'
 
 image_processing:
   - platform: deepstack_object
@@ -21,4 +25,4 @@ image_processing:
       - person
       - car
     source:
-      - entity_id: camera.kamera_1
+      - entity_id: camera.local_file

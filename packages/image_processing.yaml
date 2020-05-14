@@ -4,7 +4,7 @@ image_processing:
     port: 5000
     api_key: !secret deepstack_password
     # scan_interval: 30 # Optional, in seconds
-    save_file_folder: /config/camera_1_target_found/
+    save_file_folder: /config/camera_1_images_processed/
     save_timestamped_file: True
 #    confidence: 90
     targets:
@@ -15,11 +15,29 @@ image_processing:
         name: deepstack_camera_1
 
 automation:
-  - alias: Image processing camera 1
+  - alias: Camera 1 Image processing
     trigger:
       - platform: time_pattern
         seconds: "/5"
     action:
-      service: image_processing.scan
-      data:
-        entity_id: image_processing.deepstack_camera_1
+      - service: image_processing.scan
+        data:
+          entity_id: image_processing.deepstack_camera_1
+#      - delay: '00:00:01'
+#      - service: automation.doPersonExist
+#        entity_id: automation.camera_1_search_for_person
+
+#  - alias: Camera 1 search for person
+#    trigger:
+#      - platform: event
+#        event_type: deepstack.object_detected
+#        event_data:
+#          object: person
+#    action:
+#      service: shell_command.copy_latestmotion
+
+#shell_command:
+#  copy_latestmotion: 'cp /config/camera_1_images_processed/*.jpg|head -n1) /configcamera_1_persons_found/latest.mp4'
+
+
+

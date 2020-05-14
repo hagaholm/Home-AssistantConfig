@@ -40,7 +40,6 @@ camera:
     username: !secret Camera_User
     password: !secret Camera_Password
     scan_interval: 5
-    filename: /config/kamera_1_images/snapshot_{{ entity_id }}
 
   - platform: reolink_dev
     name: Kamera 2

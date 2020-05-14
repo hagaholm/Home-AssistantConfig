@@ -18,11 +18,16 @@ image_processing:
   - platform: deepstack_object
     ip_address: localhost
     port: 5000
-    api_key: ee9896aa-6b37-44ed-b1f2-a689b422ef8a
+    api_key: !secret deepstack_password
+    # scan_interval: 30 # Optional, in seconds
     save_file_folder: /config/snapshots/
     save_timestamped_file: True
+#    confidence: 90
     targets:
       - person
       - car
     source:
-      - entity_id: camera.local_file
+      - entity_id: camera.kamera_1
+        name: deepstack_kamera_1
+#    source:
+#      - entity_id: camera.local_file

@@ -29,5 +29,13 @@ image_processing:
     source:
       - entity_id: camera.kamera_1
         name: deepstack_kamera_1
-#    source:
-#      - entity_id: camera.local_file
+
+automation:
+  - alias: Image processing
+    trigger:
+      - platform: time_pattern
+        seconds: "/5"
+  action:
+    service: image_processing.scan
+    data:
+      entity_id: image_processing.deepstack_kamera_1

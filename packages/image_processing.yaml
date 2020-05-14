@@ -1,18 +1,18 @@
-camera:
-  - platform: local_file
-    file_path: /config/kamera_1_images/kamera_1.jpg
+#camera:
+#  - platform: local_file
+#    file_path: /config/kamera_1_images/kamera_1.jpg
 
-automation:
-  - alias: Sparar ner bild från kamera 1
-    trigger:
-      - platform: state
-        entity_id: binary_sensor.motion_kamera_1
-        to: 'on'
-    action:
-      service: camera.snapshot
-      data:
-        entity_id: camera.kamera_1
-        filename: '/config/kamera_1_images/kamera_1.jpg'
+#automation:
+#  - alias: Sparar ner bild från kamera 1
+#    trigger:
+#      - platform: state
+#        entity_id: binary_sensor.motion_kamera_1
+#        to: 'on'
+#    action:
+#      service: camera.snapshot
+#      data:
+#        entity_id: camera.kamera_1
+#        filename: '/config/kamera_1_images/kamera_1.jpg'
 
 image_processing:
   - platform: deepstack_object

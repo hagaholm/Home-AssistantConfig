@@ -23,3 +23,10 @@ automation:
       - service: image_processing.scan
         data:
           entity_id: image_processing.deepstack_camera_1
+
+sensor:
+  - platform: template
+    sensors:
+      deepstack_camera_01_person:
+        friendly_name: DeepStack Camera 1 Person
+        value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['person'] }}"

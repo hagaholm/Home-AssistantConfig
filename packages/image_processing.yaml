@@ -31,10 +31,13 @@ automation:
       event_data:
         event_type: modified
     action:
-      service: shell_command.camera_1_copy_latest_motion
+      - service: shell_command.camera_1_delete_latest_motion
+      - delay: '00:00:15'
+      - service: shell_command.camera_1_copy_latest_motion
 
 shell_command:
-  camera_1_copy_latest_motion: cp /config/camera_1_persons_found/deepstack_camera_1_latest.jpg /config/www/cam_captures/deepstack_camera_1_latest.jpg
+  camera_1_delete_latest_motion: 'rm -f /config/camera_1_persons_found/deepstack_camera_1_latest.jpg'
+  camera_1_copy_latest_motion: 'cp /config/camera_1_persons_found/deepstack_camera_1_latest.jpg /config/www/cam_captures/deepstack_camera_1_latest.jpg'
 
 sensor:
   - platform: template

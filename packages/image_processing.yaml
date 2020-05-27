@@ -24,58 +24,70 @@ automation:
         data:
           entity_id: image_processing.deepstack_camera_1
 
+  - alias: Camera 1 Copy latest motion
+    trigger:
+      platform: event
+      event_type: folder_watcher
+      event_data:
+        event_type: modified
+    action:
+      service: shell_command.camera_1_copy_latest_motion
+
+shell_command:
+  camera_1_copy_latest_motion: cp /config/camera_1_persons_found/deepstack_camera_1_latest.jpg /config/www/cam_captures/deepstack_camera_1_latest.jpg
+
 sensor:
   - platform: template
     sensors:
-      camera_01_person:
+      camera_1_person:
         friendly_name: Camera 1 Person
         value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['person'] }}"
 
-      camera_01_bicycle:
+      camera_1_bicycle:
         friendly_name: Camera 1 Cykel
         value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['bicycle'] }}"
 
-      camera_01_car:
+      camera_1_car:
         friendly_name: Camera 1 Bil
         value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['car'] }}"
 
-      camera_01_motorcycle:
+      camera_1_motorcycle:
         friendly_name: Camera 1 Motorcykel
         value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['motorcycle'] }}"
 
-      camera_01_bus:
+      camera_1_bus:
         friendly_name: Camera 1 Buss
         value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['bus'] }}"
 
-      camera_01_truck:
+      camera_1_truck:
         friendly_name: Camera 1 Lastbil
         value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['truck'] }}"
 
-      camera_01_boat:
+      camera_1_boat:
         friendly_name: Camera 1 Båt
         value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['boat'] }}"
 
-      camera_01_bird:
+      camera_1_bird:
         friendly_name: Camera 1 Fågel
         value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['bird'] }}"
 
-      camera_01_cat:
+      camera_1_cat:
         friendly_name: Camera 1 Katt
         value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['cat'] }}"
 
-      camera_01_dog:
+      camera_1_dog:
         friendly_name: Camera 1 Hund
         value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['dog'] }}"
 
-      camera_01_horse:
+      camera_1_horse:
         friendly_name: Camera 1 Häst
         value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['horse'] }}"
 
-      camera_01_sheep:
+      camera_1_sheep:
         friendly_name: Camera 1 Får
         value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['sheep'] }}"
 
-      camera_01_cow:
+      camera_1_cow:
         friendly_name: Camera 1 Ko
         value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['cow'] }}"
 

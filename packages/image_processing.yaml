@@ -27,6 +27,71 @@ automation:
 sensor:
   - platform: template
     sensors:
-      deepstack_camera_01_person:
-        friendly_name: DeepStack Camera 1 Person
+      camera_01_person:
+        friendly_name: Camera 1 Person
         value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['person'] }}"
+
+      camera_01_bicycle:
+        friendly_name: Camera 1 Cykel
+        value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['bicycle'] }}"
+
+      camera_01_car:
+        friendly_name: Camera 1 Bil
+        value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['car'] }}"
+
+      camera_01_motorcycle:
+        friendly_name: Camera 1 Motorcykel
+        value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['motorcycle'] }}"
+
+      camera_01_bus:
+        friendly_name: Camera 1 Buss
+        value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['bus'] }}"
+
+      camera_01_truck:
+        friendly_name: Camera 1 Lastbil
+        value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['truck'] }}"
+
+      camera_01_boat:
+        friendly_name: Camera 1 Båt
+        value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['boat'] }}"
+
+      camera_01_bird:
+        friendly_name: Camera 1 Fågel
+        value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['bird'] }}"
+
+      camera_01_cat:
+        friendly_name: Camera 1 Katt
+        value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['cat'] }}"
+
+      camera_01_dog:
+        friendly_name: Camera 1 Hund
+        value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['dog'] }}"
+
+      camera_01_horse:
+        friendly_name: Camera 1 Häst
+        value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['horse'] }}"
+
+      camera_01_sheep:
+        friendly_name: Camera 1 Får
+        value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['sheep'] }}"
+
+      camera_01_cow:
+        friendly_name: Camera 1 Ko
+        value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['cow'] }}"
+
+
+# Used: 
+# person, bicycle, car, motorcycle, bus, truck, boat,
+# bird, cat, dog, horse, sheep, cow
+# Not used: elephant, bear, zebra, giraffe,
+
+# Unused:
+# airplane, train, traffic light, fire hydrant, stop_sign,
+# parking meter, bench,  backpack, umbrella, handbag, tie, suitcase,
+# frisbee, skis, snowboard, sports ball, kite, baseball bat, baseball glove,
+# skateboard, surfboard, tennis racket, bottle, wine glass, cup, fork,
+# knife, spoon, bowl, banana, apple, sandwich, orange, broccoli, carrot,
+# hot dog, pizza, donot, cake, chair, couch, potted plant, bed, dining table,
+# toilet, tv, laptop, mouse, remote, keyboard, cell phone, microwave,
+# oven, toaster, sink, refrigerator, book, clock, vase, scissors, teddy bear,
+# hair dryer, toothbrush.

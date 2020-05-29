@@ -31,12 +31,36 @@ automation:
       event_data:
         event_type: modified
     action:
-      - service: shell_command.camera_1_delete_latest_motion
-      - delay: '00:00:15'
       - service: shell_command.camera_1_copy_latest_motion
 
+  - alias: Larm person detekterad del 1
+    trigger:
+      - platform: state
+        entity_id: sensor.camera_1_person
+        from: 0
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
+    action:
+      - delay: '00:01:00'
+      - service: automation.trigger
+        entity_id: automation.larm_person_detekterad_del_2
+
+  - alias: Larm person detekterad del 2
+    trigger:
+      platform: state
+      entity_id: group.track_for_home_devices
+      to: 'not_home'
+    action:
+      - service: notify.pushbullet
+        data:
+          title: "Person detekterad"
+          message: "och ingen är hemma"
+
 shell_command:
-  camera_1_delete_latest_motion: 'rm -f /config/camera_1_persons_found/deepstack_camera_1_latest.jpg'
   camera_1_copy_latest_motion: 'cp /config/camera_1_persons_found/deepstack_camera_1_latest.jpg /config/www/cam_captures/deepstack_camera_1_latest.jpg'
 
 sensor:

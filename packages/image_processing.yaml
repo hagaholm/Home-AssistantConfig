@@ -33,7 +33,7 @@ automation:
     action:
       - service: shell_command.camera_1_copy_latest_motion
 
-  - alias: Larm person detekterad del 1
+  - alias: Larm person detekterad
     trigger:
       platform: state
       entity_id: sensor.camera_1_person
@@ -46,21 +46,25 @@ automation:
           state: 'not_home'
     action:
       - delay: '00:01:00'
-      - service: automation.trigger
-        entity_id: automation.larm_person_detekterad_del_2
+      - service: script.larm_person_detekterad
 
-  - alias: Larm person detekterad del 2
-    trigger:
-      platform: state
-      entity_id: group.track_for_home_devices
-      to: 'not_home'
-    action:
+script:
+  larm_person_detekterad:
+    alias: Larm person detekterad
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
+    sequence:    
       - service: notify.pushbullet
         data:
           title: "Person detekterad"
           message: "och ingen är hemma"
           data:
             file: /config/www/cam_captures/deepstack_camera_1_latest.jpg
+
 
 shell_command:
   camera_1_copy_latest_motion: 'cp /config/camera_1_persons_found/deepstack_camera_1_latest.jpg /config/www/cam_captures/deepstack_camera_1_latest.jpg'

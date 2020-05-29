@@ -35,9 +35,9 @@ automation:
 
   - alias: Larm person detekterad del 1
     trigger:
-      - platform: state
-        entity_id: sensor.camera_1_person
-        from: 0
+      platform: state
+      entity_id: sensor.camera_1_person
+      to: '1'
     condition:
       condition: and
       conditions:

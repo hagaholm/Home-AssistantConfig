@@ -59,6 +59,8 @@ automation:
         data:
           title: "Person detekterad"
           message: "och ingen är hemma"
+          data:
+            file: /config/www/cam_captures/deepstack_camera_1_latest.jpg
 
 shell_command:
   camera_1_copy_latest_motion: 'cp /config/camera_1_persons_found/deepstack_camera_1_latest.jpg /config/www/cam_captures/deepstack_camera_1_latest.jpg'

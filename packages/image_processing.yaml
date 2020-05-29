@@ -80,7 +80,7 @@ script:
     sequence:    
       - service: notify.pushbullet
         data:
-          title: "{{ now().strftime("%H:%M %Y-%m-%d") }}"
+          title: "{{ now().strftime('%H:%M %Y-%m-%d') }}"
           message: "Person detekterad, senaste bild"
           data:
             file: /config/www/cam_captures/deepstack_camera_1_latest.jpg

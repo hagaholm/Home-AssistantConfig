@@ -41,27 +41,32 @@ automation:
     trigger:
       - platform: state
         entity_id: sensor.camera_1_person
+        from: ''
         to: '1'
       - platform: state
         entity_id: sensor.camera_1_person
+        from: ''
         to: '2'
       - platform: state
         entity_id: sensor.camera_1_person
+        from: ''
         to: '3'
       - platform: state
         entity_id: sensor.camera_1_person
+        from: ''
         to: '4'
       - platform: state
         entity_id: sensor.camera_1_person
+        from: ''
         to: '5'
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: group.track_for_home_devices
-          state: 'not_home'
+          state: 'home'
     action:
-      - delay: '00:02:00'
+      - delay: '00:00:10'
       - service: script.larm_person_detekterad_1
 
 script:
@@ -71,7 +76,7 @@ script:
       - service: script.turn_on
         data_template:
           entity_id: >
-            {% if is_state('group.track_for_home_devices', 'not_home') %}
+            {% if is_state('group.track_for_home_devices', 'home') %}
               script.larm_person_detekterad_2
             {% endif %}
 
@@ -84,19 +89,19 @@ script:
           message: "Person detekterad, senaste bild"
           data:
             file: /config/www/cam_captures/deepstack_camera_1_latest.jpg
-      - service: notify.pushbullet
-        data:
-          title: "{{ now().strftime('%H:%M %Y-%m-%d') }}"
-          message: "Person detekterad, föregående bild"
-          data:
-            file: /config/www/cam_captures/deepstack_camera_2_latest.jpg
+#      - service: notify.pushbullet
+#        data:
+#          title: "{{ now().strftime('%H:%M %Y-%m-%d') }}"
+#          message: "Person detekterad, föregående bild"
+#          data:
+#            file: /config/www/cam_captures/deepstack_camera_2_latest.jpg
 
 shell_command:
-  camera_1_copy_latest_5_motion: 'cp /config/www/cam_captures/deepstack_camera_4_latest.jpg /config/www/cam_captures/deepstack_camera_5_latest.jpg'
-  camera_1_copy_latest_4_motion: 'cp /config/www/cam_captures/deepstack_camera_3_latest.jpg /config/www/cam_captures/deepstack_camera_4_latest.jpg'
-  camera_1_copy_latest_3_motion: 'cp /config/www/cam_captures/deepstack_camera_2_latest.jpg /config/www/cam_captures/deepstack_camera_3_latest.jpg'
-  camera_1_copy_latest_2_motion: 'cp /config/www/cam_captures/deepstack_camera_1_latest.jpg /config/www/cam_captures/deepstack_camera_2_latest.jpg'
-  camera_1_copy_latest_1_motion: 'cp /config/camera_1_persons_found/deepstack_camera_1_latest.jpg /config/www/cam_captures/deepstack_camera_1_latest.jpg'
+  camera_1_copy_latest_5_motion: 'sudo cp /config/www/cam_captures/deepstack_camera_4_latest.jpg /config/www/cam_captures/deepstack_camera_5_latest.jpg'
+  camera_1_copy_latest_4_motion: 'sudo cp /config/www/cam_captures/deepstack_camera_3_latest.jpg /config/www/cam_captures/deepstack_camera_4_latest.jpg'
+  camera_1_copy_latest_3_motion: 'sudo cp /config/www/cam_captures/deepstack_camera_2_latest.jpg /config/www/cam_captures/deepstack_camera_3_latest.jpg'
+  camera_1_copy_latest_2_motion: 'sudo cp /config/www/cam_captures/deepstack_camera_1_latest.jpg /config/www/cam_captures/deepstack_camera_2_latest.jpg'
+  camera_1_copy_latest_1_motion: 'sudo cp /config/camera_1_persons_found/deepstack_camera_1_latest.jpg /config/www/cam_captures/deepstack_camera_1_latest.jpg'
 
 sensor:
   - platform: template

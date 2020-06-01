@@ -95,10 +95,10 @@ script:
         data_template:
           entity_id: >
             {% if is_state('group.track_for_home_devices', 'not_home') %}
-              script.camera_1_latest_motion_away_1
+              script.camera_1_latest_motion_away_2
             {% endif %}
 
-  camera_1_latest_motion_away_1:
+  camera_1_latest_motion_away_2:
     sequence:    
       - service: notify.pushbullet
         data:

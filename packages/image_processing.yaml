@@ -16,9 +16,12 @@ image_processing:
 
 camera:
   - platform: local_file
-    file_path: /config/www/cam_captures/deepstack_camera_1_latest.jpg
+    file_path: /config/www/latest/1.jpg
 
 automation:
+  ###################################
+  ### Processes image every 5 sec ###
+  ###################################
   - alias: Camera 1 Image processing
     trigger:
       - platform: time_pattern
@@ -28,6 +31,9 @@ automation:
         data:
           entity_id: image_processing.deepstack_camera_1
 
+  #########################################
+  ### Copy latest motion detected image ###
+  #########################################
   - alias: Camera 1 Copy latest motion
     trigger:
       - platform: event
@@ -35,13 +41,16 @@ automation:
         event_data:
           event_type: created
     action:
-#      - service: shell_command.camera_1_copy_latest_5_motion
-#      - service: shell_command.camera_1_copy_latest_4_motion
-#      - service: shell_command.camera_1_copy_latest_3_motion
-#      - service: shell_command.camera_1_copy_latest_2_motion
-      - service: shell_command.camera_1_copy_latest_1_motion
+      - service: shell_command.camera_1_copy_latest_motion_5
+      - service: shell_command.camera_1_copy_latest_motion_4
+      - service: shell_command.camera_1_copy_latest_motion_3
+      - service: shell_command.camera_1_copy_latest_motion_2
+      - service: shell_command.camera_1_copy_latest_motion_1
 
-  - alias: Larm person detekterad
+  ##############################################
+  ### Copy latest motion away detected image ###
+  ##############################################
+  - alias:  Camera 1 Copy latest motion away
     trigger:
       - platform: state
         entity_id: sensor.camera_1_person
@@ -70,42 +79,48 @@ automation:
           entity_id: group.track_for_home_devices
           state: 'not_home'
     action:
+      - service: shell_command.camera_1_copy_latest_motion_away
       - delay: '00:02:30'
-      - service: script.larm_person_detekterad_1
+      - service: script.camera_1_latest_motion_away_1
 
 script:
-  larm_person_detekterad_1:
-    alias: Larm person detekterad 1
+  camera_1_latest_motion_away_1:
     sequence:
+      - service: shell_command.camera_1_copy_latest_motion_away_5
+      - service: shell_command.camera_1_copy_latest_motion_away_4
+      - service: shell_command.camera_1_copy_latest_motion_away_3
+      - service: shell_command.camera_1_copy_latest_motion_away_2
+      - service: shell_command.camera_1_copy_latest_motion_away_1
       - service: script.turn_on
         data_template:
           entity_id: >
             {% if is_state('group.track_for_home_devices', 'not_home') %}
-              script.larm_person_detekterad_2
+              script.camera_1_latest_motion_away_1
             {% endif %}
 
-  larm_person_detekterad_2:
-    alias: Larm person detekterad 2
+  camera_1_latest_motion_away_1:
     sequence:    
       - service: notify.pushbullet
         data:
           title: "{{ now().strftime('%H:%M %Y-%m-%d') }}"
           message: "Person detekterad, senaste bild"
           data:
-            file: /config/www/cam_captures/deepstack_camera_1_latest.jpg
-#      - service: notify.pushbullet
-#        data:
-#          title: "{{ now().strftime('%H:%M %Y-%m-%d') }}"
-#          message: "Person detekterad, föregående bild"
-#          data:
-#            file: /config/www/cam_captures/deepstack_camera_2_latest.jpg
+            file: /config/www/latest_away/1.jpg
 
 shell_command:
-  camera_1_copy_latest_5_motion: 'cp /config/www/cam_captures/deepstack_camera_4_latest.jpg /config/www/cam_captures/deepstack_camera_5_latest.jpg'
-  camera_1_copy_latest_4_motion: 'cp /config/www/cam_captures/deepstack_camera_3_latest.jpg /config/www/cam_captures/deepstack_camera_4_latest.jpg'
-  camera_1_copy_latest_3_motion: 'cp /config/www/cam_captures/deepstack_camera_2_latest.jpg /config/www/cam_captures/deepstack_camera_3_latest.jpg'
-  camera_1_copy_latest_2_motion: 'cp /config/www/cam_captures/deepstack_camera_1_latest.jpg /config/www/cam_captures/deepstack_camera_2_latest.jpg'
-  camera_1_copy_latest_1_motion: 'cp /config/camera_1_persons_found/deepstack_camera_1_latest.jpg /config/www/cam_captures/deepstack_camera_1_latest.jpg'
+  camera_1_copy_latest_motion_5: 'cp /config/www/latest/4.jpg /config/www/latest/5.jpg'
+  camera_1_copy_latest_motion_4: 'cp /config/www/latest/3.jpg /config/www/latest/4.jpg'
+  camera_1_copy_latest_motion_3: 'cp /config/www/latest/2.jpg /config/www/latest/3.jpg'
+  camera_1_copy_latest_motion_2: 'cp /config/www/latest/1.jpg /config/www/latest/2.jpg'
+  camera_1_copy_latest_motion_1: 'cp /config/camera_1_persons_found/deepstack_camera_1_latest.jpg /config/www/latest/1.jpg'
+
+  camera_1_copy_latest_motion_away: 'cp /config/camera_1_persons_found/deepstack_camera_1_latest.jpg /config/camera_1_persons_found/deepstack_camera_1_latest_away.jpg'
+
+  camera_1_copy_latest_motion_away_5: 'cp /config/www/latest_away/4.jpg /config/www/latest_away/5.jpg'
+  camera_1_copy_latest_motion_away_4: 'cp /config/www/latest_away/3.jpg /config/www/latest_away/4.jpg'
+  camera_1_copy_latest_motion_away_3: 'cp /config/www/latest_away/2.jpg /config/www/latest_away/3.jpg'
+  camera_1_copy_latest_motion_away_2: 'cp /config/www/latest_away/1.jpg /config/www/latest_away/2.jpg'
+  camera_1_copy_latest_motion_away_1: '/config/camera_1_persons_found/deepstack_camera_1_latest_away.jpg /config/www/latest_away/1.jpg'
 
 sensor:
   - platform: template
@@ -131,7 +146,7 @@ sensor:
         value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['bus'] }}"
 
       camera_1_truck:
-        friendly_name: Camera 1 Lastbil
+        friendly_name: Camera 1 lastbil
         value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['truck'] }}"
 
       camera_1_boat:

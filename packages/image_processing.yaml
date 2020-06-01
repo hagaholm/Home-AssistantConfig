@@ -14,6 +14,10 @@ image_processing:
       - entity_id: camera.kamera_1
         name: deepstack_camera_1
 
+camera:
+  - platform: local_file
+    file_path: /config/www/cam_captures/deepstack_camera_1_latest.jpg
+
 automation:
   - alias: Camera 1 Image processing
     trigger:

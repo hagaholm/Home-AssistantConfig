@@ -25,12 +25,15 @@ homeassistant:
   packages: !include_dir_named packages
   # Whitelist external directories 
   whitelist_external_dirs:
-    - /config/camera_1_persons_found
+    - /config/camera_1
+    - /config/camera_1/person
+    - /config/camera_1/latest_person
+    - /config/camera_1/latest_person_away
+    - /config/camera_1/latest_other
     - /config/www
-    - /config/www/latest
-    - /config/www/latest_away
+    - /config/www/latest_person
+    - /config/www/latest_person_away
     - /config/www/latest_other
-    - /config/www/cam_captures
     
 ####################################################
 #                                                  #

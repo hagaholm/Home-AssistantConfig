@@ -53,6 +53,17 @@ automation:
         data:
           entity_id: image_processing.deepstack_camera_1
 
+  #########################
+  ### Remove old images ###
+  #########################
+  - alias: Camera 1 Remove old images
+  
+    trigger:
+      - platform: time
+        at: "00:01:00" # HH:MM:SS
+    action:
+      - service: shell_command.camera_1_remove_old_images
+
   #########################################
   ### Copy latest motion detected image ###
   #########################################
@@ -187,20 +198,25 @@ script:
             file: /config/www/latest_away/1.jpg
 
 shell_command:
+  # Delete 10 days old images from folder /config/camera_1_persons_found
+  camera_1_remove_old_images: 'find /config/camera_1_persons_found -mtime +10 -type f -delete' 
+
+  # Copy latest motion
 #  camera_1_copy_latest_motion_5: 'cp /config/www/latest/4.jpg /config/www/latest/5.jpg'
 #  camera_1_copy_latest_motion_4: 'cp /config/www/latest/3.jpg /config/www/latest/4.jpg'
 #  camera_1_copy_latest_motion_3: 'cp /config/www/latest/2.jpg /config/www/latest/3.jpg'
 #  camera_1_copy_latest_motion_2: 'cp /config/www/latest/1.jpg /config/www/latest/2.jpg'
   camera_1_copy_latest_motion_1: 'cp /config/camera_1_persons_found/deepstack_camera_1_latest.jpg /config/www/latest/1.jpg'
 
+  # Copy latest motion away
   camera_1_copy_latest_motion_away: 'cp /config/camera_1_persons_found/deepstack_camera_1_latest.jpg /config/camera_1_persons_found/deepstack_camera_1_latest_away.jpg'
-
   camera_1_copy_latest_motion_away_5: 'cp /config/www/latest_away/4.jpg /config/www/latest_away/5.jpg'
   camera_1_copy_latest_motion_away_4: 'cp /config/www/latest_away/3.jpg /config/www/latest_away/4.jpg'
   camera_1_copy_latest_motion_away_3: 'cp /config/www/latest_away/2.jpg /config/www/latest_away/3.jpg'
   camera_1_copy_latest_motion_away_2: 'cp /config/www/latest_away/1.jpg /config/www/latest_away/2.jpg'
   camera_1_copy_latest_motion_away_1: '/config/camera_1_persons_found/deepstack_camera_1_latest_away.jpg /config/www/latest_away/1.jpg'
 
+  # Copy latest motion other
   camera_1_copy_latest_motion_of_other_5: 'cp /config/www/latest_other/4.jpg /config/www/latest_other/5.jpg'
   camera_1_copy_latest_motion_of_other_4: 'cp /config/www/latest_other/3.jpg /config/www/latest_other/4.jpg'
   camera_1_copy_latest_motion_of_other_3: 'cp /config/www/latest_other/2.jpg /config/www/latest_other/3.jpg'

@@ -16,7 +16,11 @@ image_processing:
 
 camera:
   - platform: local_file
+    name: latest
     file_path: /config/www/latest/1.jpg
+  - platform: local_file
+    name: latest away
+    file_path: /config/www/latest_away/1.jpg
 
 automation:
   ###################################

@@ -136,10 +136,10 @@ automation:
       - delay: '00:02:30'
       - service: script.camera_1_latest_motion_away_1
 
-  ##########################################
-  ### Copy latest motion of other things ###
-  ##########################################
-  - alias:  Camera 1 Copy latest motion of other
+  #######################################
+  ### Copy latest motion other things ###
+  #######################################
+  - alias:  Camera 1 Copy latest motion other
     trigger:
       - platform: state
         entity_id: sensor.camera_1_bird
@@ -199,7 +199,7 @@ script:
 
 shell_command:
   # Delete 10 days old images from folder /config/camera_1/person
-  camera_1_remove_old_images: 'find /config/camera_1/person -mtime +10 -type f -delete' 
+  camera_1_remove_old_images: 'find /config/camera_1/person -mtime +14 -type f -delete' 
 
   # Copy latest motion person
 #  camera_1_copy_latest_motion_5: 'cp /config/www/latest_person/4.jpg /config/www/latest_person/5.jpg'

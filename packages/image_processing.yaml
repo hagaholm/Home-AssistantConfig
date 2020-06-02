@@ -176,11 +176,6 @@ automation:
 script:
   camera_1_latest_motion_away_1:
     sequence:
-      - service: shell_command.camera_1_copy_latest_motion_away_5
-      - service: shell_command.camera_1_copy_latest_motion_away_4
-      - service: shell_command.camera_1_copy_latest_motion_away_3
-      - service: shell_command.camera_1_copy_latest_motion_away_2
-      - service: shell_command.camera_1_copy_latest_motion_away_1
       - service: script.turn_on
         data_template:
           entity_id: >
@@ -189,7 +184,12 @@ script:
             {% endif %}
 
   camera_1_latest_motion_away_2:
-    sequence:    
+    sequence:
+      - service: shell_command.camera_1_copy_latest_motion_away_5
+      - service: shell_command.camera_1_copy_latest_motion_away_4
+      - service: shell_command.camera_1_copy_latest_motion_away_3
+      - service: shell_command.camera_1_copy_latest_motion_away_2
+      - service: shell_command.camera_1_copy_latest_motion_away_1
       - service: notify.pushbullet
         data:
           title: "{{ now().strftime('%H:%M %Y-%m-%d') }}"

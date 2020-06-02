@@ -18,9 +18,22 @@ camera:
   - platform: local_file
     name: latest
     file_path: /config/www/latest/1.jpg
+
   - platform: local_file
     name: latest away
     file_path: /config/www/latest_away/1.jpg
+  - platform: local_file
+    name: latest away 2
+    file_path: /config/www/latest_away/2.jpg
+  - platform: local_file
+    name: latest away 3
+    file_path: /config/www/latest_away/3.jpg
+  - platform: local_file
+    name: latest away 4
+    file_path: /config/www/latest_away/4.jpg
+  - platform: local_file
+    name: latest away 5
+    file_path: /config/www/latest_away/5.jpg
 
 automation:
   ###################################
@@ -45,10 +58,10 @@ automation:
         event_data:
           event_type: created
     action:
-      - service: shell_command.camera_1_copy_latest_motion_5
-      - service: shell_command.camera_1_copy_latest_motion_4
-      - service: shell_command.camera_1_copy_latest_motion_3
-      - service: shell_command.camera_1_copy_latest_motion_2
+#      - service: shell_command.camera_1_copy_latest_motion_5
+#      - service: shell_command.camera_1_copy_latest_motion_4
+#      - service: shell_command.camera_1_copy_latest_motion_3
+#      - service: shell_command.camera_1_copy_latest_motion_2
       - service: shell_command.camera_1_copy_latest_motion_1
 
   ##############################################
@@ -76,6 +89,26 @@ automation:
         entity_id: sensor.camera_1_person
         from: ''
         to: '5'
+      - platform: state
+        entity_id: sensor.camera_1_person
+        from: ''
+        to: '6'
+      - platform: state
+        entity_id: sensor.camera_1_person
+        from: ''
+        to: '7'
+      - platform: state
+        entity_id: sensor.camera_1_person
+        from: ''
+        to: '8'
+      - platform: state
+        entity_id: sensor.camera_1_person
+        from: ''
+        to: '9'
+      - platform: state
+        entity_id: sensor.camera_1_person
+        from: ''
+        to: '10'
     condition:
       condition: and
       conditions:
@@ -86,6 +119,43 @@ automation:
       - service: shell_command.camera_1_copy_latest_motion_away
       - delay: '00:02:30'
       - service: script.camera_1_latest_motion_away_1
+
+  ##########################################
+  ### Copy latest motion of other things ###
+  ##########################################
+  - alias:  Camera 1 Copy latest motion of other
+    trigger:
+      - platform: state
+        entity_id: sensor.camera_1_bird
+        from: ''
+        to: '1'
+      - platform: state
+        entity_id: sensor.camera_1_dog
+        from: ''
+        to: '1'
+      - platform: state
+        entity_id: sensor.camera_1_cat
+        from: ''
+        to: '1'
+      - platform: state
+        entity_id: sensor.camera_1_horse
+        from: ''
+        to: '1'
+      - platform: state
+        entity_id: sensor.camera_1_sheep
+        from: ''
+        to: '1'
+      - platform: state
+        entity_id: sensor.camera_1_cow
+        from: ''
+        to: '1'
+    action:
+#      - service: shell_command.camera_1_copy_latest_motion_of_other_5
+#      - service: shell_command.camera_1_copy_latest_motion_of_other_4
+#      - service: shell_command.camera_1_copy_latest_motion_of_other_3
+#      - service: shell_command.camera_1_copy_latest_motion_of_other_2
+      - service: shell_command.camera_1_copy_latest_motion_of_other_1
+
 
 script:
   camera_1_latest_motion_away_1:
@@ -112,10 +182,10 @@ script:
             file: /config/www/latest_away/1.jpg
 
 shell_command:
-  camera_1_copy_latest_motion_5: 'cp /config/www/latest/4.jpg /config/www/latest/5.jpg'
-  camera_1_copy_latest_motion_4: 'cp /config/www/latest/3.jpg /config/www/latest/4.jpg'
-  camera_1_copy_latest_motion_3: 'cp /config/www/latest/2.jpg /config/www/latest/3.jpg'
-  camera_1_copy_latest_motion_2: 'cp /config/www/latest/1.jpg /config/www/latest/2.jpg'
+#  camera_1_copy_latest_motion_5: 'cp /config/www/latest/4.jpg /config/www/latest/5.jpg'
+#  camera_1_copy_latest_motion_4: 'cp /config/www/latest/3.jpg /config/www/latest/4.jpg'
+#  camera_1_copy_latest_motion_3: 'cp /config/www/latest/2.jpg /config/www/latest/3.jpg'
+#  camera_1_copy_latest_motion_2: 'cp /config/www/latest/1.jpg /config/www/latest/2.jpg'
   camera_1_copy_latest_motion_1: 'cp /config/camera_1_persons_found/deepstack_camera_1_latest.jpg /config/www/latest/1.jpg'
 
   camera_1_copy_latest_motion_away: 'cp /config/camera_1_persons_found/deepstack_camera_1_latest.jpg /config/camera_1_persons_found/deepstack_camera_1_latest_away.jpg'
@@ -125,6 +195,12 @@ shell_command:
   camera_1_copy_latest_motion_away_3: 'cp /config/www/latest_away/2.jpg /config/www/latest_away/3.jpg'
   camera_1_copy_latest_motion_away_2: 'cp /config/www/latest_away/1.jpg /config/www/latest_away/2.jpg'
   camera_1_copy_latest_motion_away_1: '/config/camera_1_persons_found/deepstack_camera_1_latest_away.jpg /config/www/latest_away/1.jpg'
+
+  camera_1_copy_latest_motion_of_other_5: 'cp /config/www/latest_other/4.jpg /config/www/latest_other/5.jpg'
+  camera_1_copy_latest_motion_of_other_4: 'cp /config/www/latest_other/3.jpg /config/www/latest_other/4.jpg'
+  camera_1_copy_latest_motion_of_other_3: 'cp /config/www/latest_other/2.jpg /config/www/latest_other/3.jpg'
+  camera_1_copy_latest_motion_of_other_2: 'cp /config/www/latest_other/1.jpg /config/www/latest_other/2.jpg'
+  camera_1_copy_latest_motion_of_other_1: 'cp /config/camera_1_persons_found/deepstack_camera_1_latest.jpg /config/www/latest_other/1.jpg'
 
 sensor:
   - platform: template

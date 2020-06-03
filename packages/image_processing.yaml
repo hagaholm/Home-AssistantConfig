@@ -38,7 +38,18 @@ camera:
   - platform: local_file
     name: latest other
     file_path: /config/www/latest_other/1.jpg
-
+  - platform: local_file
+    name: latest other
+    file_path: /config/www/latest_other/2.jpg
+  - platform: local_file
+    name: latest other
+    file_path: /config/www/latest_other/3.jpg
+  - platform: local_file
+    name: latest other
+    file_path: /config/www/latest_other/4.jpg
+  - platform: local_file
+    name: latest other
+    file_path: /config/www/latest_other/5.jpg
 
 automation:
   ###################################
@@ -74,10 +85,6 @@ automation:
         event_data:
           event_type: created
     action:
-#      - service: shell_command.camera_1_copy_latest_motion_5
-#      - service: shell_command.camera_1_copy_latest_motion_4
-#      - service: shell_command.camera_1_copy_latest_motion_3
-#      - service: shell_command.camera_1_copy_latest_motion_2
       - service: shell_command.camera_1_copy_latest_motion_1
 
   ##############################################
@@ -168,10 +175,10 @@ automation:
         to: '1'
     action:
       - delay: '00:00:02' # Add delay as the new image do not exist yet
-#      - service: shell_command.camera_1_copy_latest_motion_other_5
-#      - service: shell_command.camera_1_copy_latest_motion_other_4
-#      - service: shell_command.camera_1_copy_latest_motion_other_3
-#      - service: shell_command.camera_1_copy_latest_motion_other_2
+      - service: shell_command.camera_1_copy_latest_motion_other_5
+      - service: shell_command.camera_1_copy_latest_motion_other_4
+      - service: shell_command.camera_1_copy_latest_motion_other_3
+      - service: shell_command.camera_1_copy_latest_motion_other_2
       - service: shell_command.camera_1_copy_latest_motion_other_1
 
 
@@ -204,10 +211,6 @@ shell_command:
   camera_1_remove_old_images: 'find /config/camera_1/person -mtime +14 -type f -delete' 
 
   # Copy latest motion person
-#  camera_1_copy_latest_motion_5: 'cp /config/www/latest_person/4.jpg /config/www/latest_person/5.jpg'
-#  camera_1_copy_latest_motion_4: 'cp /config/www/latest_person/3.jpg /config/www/latest_person/4.jpg'
-#  camera_1_copy_latest_motion_3: 'cp /config/www/latest_person/2.jpg /config/www/latest_person/3.jpg'
-#  camera_1_copy_latest_motion_2: 'cp /config/www/latest_person/1.jpg /config/www/latest_person/2.jpg'
   camera_1_copy_latest_motion_1: 'cp /config/camera_1/person/deepstack_camera_1_latest.jpg /config/www/latest_person/1.jpg'
 
   # Copy latest motion person away

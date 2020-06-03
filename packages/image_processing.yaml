@@ -132,6 +132,7 @@ automation:
           entity_id: group.track_for_home_devices
           state: 'not_home'
     action:
+      - delay: '00:00:02' # Add delay as the new image do not exist yet
       - service: shell_command.camera_1_copy_latest_motion_away
       - delay: '00:02:30'
       - service: script.camera_1_latest_motion_away_1

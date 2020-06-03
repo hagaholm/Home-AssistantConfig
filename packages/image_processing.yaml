@@ -167,6 +167,7 @@ automation:
         from: ''
         to: '1'
     action:
+      - delay: '00:00:02' # Add delay as the new image do not exist yet
 #      - service: shell_command.camera_1_copy_latest_motion_other_5
 #      - service: shell_command.camera_1_copy_latest_motion_other_4
 #      - service: shell_command.camera_1_copy_latest_motion_other_3

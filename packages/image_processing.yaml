@@ -1,3 +1,6 @@
+########################
+### Image processing ###
+########################
 image_processing:
   - platform: deepstack_object
     ip_address: localhost
@@ -14,6 +17,9 @@ image_processing:
       - entity_id: camera.kamera_1
         name: deepstack_camera_1
 
+##############
+### Camera ###
+##############
 camera:
   - platform: local_file
     name: latest person
@@ -51,14 +57,65 @@ camera:
     name: latest other
     file_path: /config/www/latest_other/5.jpg
 
+##################
+### Automation ###
+##################
 automation:
-  ###################################
-  ### Processes image every 5 sec ###
-  ###################################
-  - alias: Camera 1 Image processing
+  #####################################################
+  ### Processes image every 5 sec when home  at day ###
+  #####################################################
+  - alias: Camera 1 Image processing when home at day
     trigger:
       - platform: time_pattern
         seconds: "/5"
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'home'
+        - condition: time
+          after: '05:00:00'
+          before: '22:00:00'
+    action:
+      - service: image_processing.scan
+        data:
+          entity_id: image_processing.deepstack_camera_1
+
+  ######################################################
+  ### Processes image every 5 sec when home at night ###
+  ######################################################
+  - alias: Camera 1 Image processing when home at night
+    trigger:
+      - platform: time_pattern
+        seconds: "/5"
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'home'
+        - condition: time
+          before: '05:00:00'
+          after: '22:00:00'
+    action:
+      - service: image_processing.scan
+        data:
+          entity_id: image_processing.deepstack_camera_1
+
+  #############################################
+  ### Processes image every 5 sec when away ###
+  #############################################
+  - alias: Camera 1 Image processing when away
+    trigger:
+      - platform: time_pattern
+        seconds: "/5"
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
     action:
       - service: image_processing.scan
         data:
@@ -68,7 +125,6 @@ automation:
   ### Remove old images ###
   #########################
   - alias: Camera 1 Remove old images
-  
     trigger:
       - platform: time
         at: "00:01:00" # HH:MM:SS
@@ -181,7 +237,9 @@ automation:
       - service: shell_command.camera_1_copy_latest_motion_other_2
       - service: shell_command.camera_1_copy_latest_motion_other_1
 
-
+##############
+### Script ###
+##############
 script:
   camera_1_latest_motion_away_1:
     sequence:
@@ -206,6 +264,9 @@ script:
           data:
             file: /config/www/latest_person_away/1.jpg
 
+#####################
+### Shell command ###
+#####################
 shell_command:
   # Delete 10 days old images from folder /config/camera_1/person
   camera_1_remove_old_images: 'find /config/camera_1/person -mtime +14 -type f -delete' 
@@ -228,6 +289,9 @@ shell_command:
   camera_1_copy_latest_motion_other_2: 'cp /config/www/latest_other/1.jpg /config/www/latest_other/2.jpg'
   camera_1_copy_latest_motion_other_1: 'cp /config/camera_1/person/deepstack_camera_1_latest.jpg /config/www/latest_other/1.jpg'
 
+##############
+### Sensor ###
+##############
 sensor:
   - platform: template
     sensors:

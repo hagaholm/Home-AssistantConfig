@@ -1,21 +1,32 @@
 ########################
 ### Image processing ###
 ########################
+# Camera 1
 image_processing:
   - platform: deepstack_object
     ip_address: localhost
     port: 5000
     api_key: !secret deepstack_password
-    # scan_interval: 30 # Optional, in seconds
     save_file_folder: /config/camera_1/person/
     save_timestamped_file: True
-#    confidence: 90
     targets:
       - person
-#      - car
     source:
       - entity_id: camera.kamera_1
         name: deepstack_camera_1
+
+# Camera 2
+  - platform: deepstack_object
+    ip_address: localhost
+    port: 5000
+    api_key: !secret deepstack_password
+    save_file_folder: /config/camera_2/person/
+    save_timestamped_file: True
+    targets:
+      - person
+    source:
+      - entity_id: camera.kamera_2
+        name: deepstack_camera_2
 
 ##############
 ### Camera ###
@@ -81,6 +92,9 @@ automation:
       - service: image_processing.scan
         data:
           entity_id: image_processing.deepstack_camera_1
+      - service: image_processing.scan
+        data:
+          entity_id: image_processing.deepstack_camera_2
 
   ######################################################
   ### Processes image every 5 sec when home at night ###
@@ -102,6 +116,9 @@ automation:
       - service: image_processing.scan
         data:
           entity_id: image_processing.deepstack_camera_1
+      - service: image_processing.scan
+        data:
+          entity_id: image_processing.deepstack_camera_2
 
   #############################################
   ### Processes image every 5 sec when away ###
@@ -120,6 +137,9 @@ automation:
       - service: image_processing.scan
         data:
           entity_id: image_processing.deepstack_camera_1
+      - service: image_processing.scan
+        data:
+          entity_id: image_processing.deepstack_camera_2
 
   #########################
   ### Remove old images ###
@@ -130,6 +150,13 @@ automation:
         at: "00:01:00" # HH:MM:SS
     action:
       - service: shell_command.camera_1_remove_old_images
+
+  - alias: Camera 2 Remove old images
+    trigger:
+      - platform: time
+        at: "00:01:00" # HH:MM:SS
+    action:
+      - service: shell_command.camera_2_remove_old_images
 
   #########################################
   ### Copy latest motion detected image ###
@@ -142,6 +169,15 @@ automation:
           event_type: created
     action:
       - service: shell_command.camera_1_copy_latest_motion_1
+
+  - alias: Camera 2 Copy latest motion
+    trigger:
+      - platform: event
+        event_type: folder_watcher
+        event_data:
+          event_type: created
+    action:
+      - service: shell_command.camera_2_copy_latest_motion_1
 
   ##############################################
   ### Copy latest motion away detected image ###
@@ -200,6 +236,60 @@ automation:
       - delay: '00:02:30'
       - service: script.camera_1_latest_motion_away_1
 
+  - alias:  Camera 2 Copy latest motion away
+    trigger:
+      - platform: state
+        entity_id: sensor.camera_2_person
+        from: ''
+        to: '1'
+      - platform: state
+        entity_id: sensor.camera_2_person
+        from: ''
+        to: '2'
+      - platform: state
+        entity_id: sensor.camera_2_person
+        from: ''
+        to: '3'
+      - platform: state
+        entity_id: sensor.camera_2_person
+        from: ''
+        to: '4'
+      - platform: state
+        entity_id: sensor.camera_2_person
+        from: ''
+        to: '5'
+      - platform: state
+        entity_id: sensor.camera_2_person
+        from: ''
+        to: '6'
+      - platform: state
+        entity_id: sensor.camera_2_person
+        from: ''
+        to: '7'
+      - platform: state
+        entity_id: sensor.camera_2_person
+        from: ''
+        to: '8'
+      - platform: state
+        entity_id: sensor.camera_2_person
+        from: ''
+        to: '9'
+      - platform: state
+        entity_id: sensor.camera_2_person
+        from: ''
+        to: '10'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
+    action:
+      - delay: '00:00:02' # Add delay as the new image do not exist yet
+      - service: shell_command.camera_2_copy_latest_motion_away
+      - delay: '00:02:30'
+      - service: script.camera_2_latest_motion_away_1
+
   #######################################
   ### Copy latest motion other things ###
   #######################################
@@ -237,6 +327,40 @@ automation:
       - service: shell_command.camera_1_copy_latest_motion_other_2
       - service: shell_command.camera_1_copy_latest_motion_other_1
 
+  - alias:  Camera 2 Copy latest motion other
+    trigger:
+      - platform: state
+        entity_id: sensor.camera_2_bird
+        from: ''
+        to: '1'
+      - platform: state
+        entity_id: sensor.camera_2_dog
+        from: ''
+        to: '1'
+      - platform: state
+        entity_id: sensor.camera_2_cat
+        from: ''
+        to: '1'
+      - platform: state
+        entity_id: sensor.camera_2_horse
+        from: ''
+        to: '1'
+      - platform: state
+        entity_id: sensor.camera_2_sheep
+        from: ''
+        to: '1'
+      - platform: state
+        entity_id: sensor.camera_2_cow
+        from: ''
+        to: '1'
+    action:
+      - delay: '00:00:02' # Add delay as the new image do not exist yet
+      - service: shell_command.camera_2_copy_latest_motion_other_5
+      - service: shell_command.camera_2_copy_latest_motion_other_4
+      - service: shell_command.camera_2_copy_latest_motion_other_3
+      - service: shell_command.camera_2_copy_latest_motion_other_2
+      - service: shell_command.camera_2_copy_latest_motion_other_1
+
 ##############
 ### Script ###
 ##############
@@ -264,6 +388,30 @@ script:
           data:
             file: /config/www/latest_person_away/1.jpg
 
+
+  camera_2_latest_motion_away_1:
+    sequence:
+      - service: script.turn_on
+        data_template:
+          entity_id: >
+            {% if is_state('group.track_for_home_devices', 'not_home') %}
+              script.camera_2_latest_motion_away_2
+            {% endif %}
+
+  camera_2_latest_motion_away_2:
+    sequence:
+      - service: shell_command.camera_2_copy_latest_motion_away_5
+      - service: shell_command.camera_2_copy_latest_motion_away_4
+      - service: shell_command.camera_2_copy_latest_motion_away_3
+      - service: shell_command.camera_2_copy_latest_motion_away_2
+      - service: shell_command.camera_2_copy_latest_motion_away_1
+      - service: notify.pushbullet
+        data:
+          title: "{{ now().strftime('%H:%M %Y-%m-%d') }}"
+          message: "Person detekterad, senaste bild"
+          data:
+            file: /config/www/latest_person_away/1.jpg
+
 #####################
 ### Shell command ###
 #####################
@@ -271,8 +419,12 @@ shell_command:
   # Delete 10 days old images from folder /config/camera_1/person
   camera_1_remove_old_images: 'find /config/camera_1/person -mtime +14 -type f -delete' 
 
+  camera_2_remove_old_images: 'find /config/camera_2/person -mtime +14 -type f -delete' 
+
   # Copy latest motion person
   camera_1_copy_latest_motion_1: 'cp /config/camera_1/person/deepstack_camera_1_latest.jpg /config/www/latest_person/1.jpg'
+
+  camera_2_copy_latest_motion_1: 'cp /config/camera_2/person/deepstack_camera_2_latest.jpg /config/www/latest_person/1.jpg'
 
   # Copy latest motion person away
   camera_1_copy_latest_motion_away: 'cp /config/camera_1/person/deepstack_camera_1_latest.jpg /config/camera_1/latest_person_away/1.jpg'
@@ -282,12 +434,25 @@ shell_command:
   camera_1_copy_latest_motion_away_2: 'cp /config/www/latest_person_away/1.jpg /config/www/latest_person_away/2.jpg'
   camera_1_copy_latest_motion_away_1: 'cp /config/camera_1/latest_person_away/1.jpg /config/www/latest_person_away/1.jpg'
 
+  camera_2_copy_latest_motion_away: 'cp /config/camera_2/person/deepstack_camera_2_latest.jpg /config/camera_2/latest_person_away/1.jpg'
+  camera_2_copy_latest_motion_away_5: 'cp /config/www/latest_person_away/4.jpg /config/www/latest_person_away/5.jpg'
+  camera_2_copy_latest_motion_away_4: 'cp /config/www/latest_person_away/3.jpg /config/www/latest_person_away/4.jpg'
+  camera_2_copy_latest_motion_away_3: 'cp /config/www/latest_person_away/2.jpg /config/www/latest_person_away/3.jpg'
+  camera_2_copy_latest_motion_away_2: 'cp /config/www/latest_person_away/1.jpg /config/www/latest_person_away/2.jpg'
+  camera_2_copy_latest_motion_away_1: 'cp /config/camera_2/latest_person_away/1.jpg /config/www/latest_person_away/1.jpg'
+
   # Copy latest motion other
   camera_1_copy_latest_motion_other_5: 'cp /config/www/latest_other/4.jpg /config/www/latest_other/5.jpg'
   camera_1_copy_latest_motion_other_4: 'cp /config/www/latest_other/3.jpg /config/www/latest_other/4.jpg'
   camera_1_copy_latest_motion_other_3: 'cp /config/www/latest_other/2.jpg /config/www/latest_other/3.jpg'
   camera_1_copy_latest_motion_other_2: 'cp /config/www/latest_other/1.jpg /config/www/latest_other/2.jpg'
   camera_1_copy_latest_motion_other_1: 'cp /config/camera_1/person/deepstack_camera_1_latest.jpg /config/www/latest_other/1.jpg'
+
+  camera_2_copy_latest_motion_other_5: 'cp /config/www/latest_other/4.jpg /config/www/latest_other/5.jpg'
+  camera_2_copy_latest_motion_other_4: 'cp /config/www/latest_other/3.jpg /config/www/latest_other/4.jpg'
+  camera_2_copy_latest_motion_other_3: 'cp /config/www/latest_other/2.jpg /config/www/latest_other/3.jpg'
+  camera_2_copy_latest_motion_other_2: 'cp /config/www/latest_other/1.jpg /config/www/latest_other/2.jpg'
+  camera_2_copy_latest_motion_other_1: 'cp /config/camera_2/person/deepstack_camera_2_latest.jpg /config/www/latest_other/1.jpg'
 
 ##############
 ### Sensor ###
@@ -346,6 +511,61 @@ sensor:
       camera_1_cow:
         friendly_name: Camera 1 Ko
         value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['cow'] }}"
+
+
+
+      camera_2_person:
+        friendly_name: Camera 2 Person
+        value_template: "{{ states.image_processing.deepstack_camera_2.attributes.summary['person'] }}"
+
+      camera_2_bicycle:
+        friendly_name: Camera 2 Cykel
+        value_template: "{{ states.image_processing.deepstack_camera_2.attributes.summary['bicycle'] }}"
+
+      camera_2_car:
+        friendly_name: Camera 2 Bil
+        value_template: "{{ states.image_processing.deepstack_camera_2.attributes.summary['car'] }}"
+
+      camera_2_motorcycle:
+        friendly_name: Camera 2 Motorcykel
+        value_template: "{{ states.image_processing.deepstack_camera_2.attributes.summary['motorcycle'] }}"
+
+      camera_2_bus:
+        friendly_name: Camera 2 Buss
+        value_template: "{{ states.image_processing.deepstack_camera_2.attributes.summary['bus'] }}"
+
+      camera_2_truck:
+        friendly_name: Camera 2 lastbil
+        value_template: "{{ states.image_processing.deepstack_camera_2.attributes.summary['truck'] }}"
+
+      camera_2_boat:
+        friendly_name: Camera 2 Båt
+        value_template: "{{ states.image_processing.deepstack_camera_2.attributes.summary['boat'] }}"
+
+      camera_2_bird:
+        friendly_name: Camera 2 Fågel
+        value_template: "{{ states.image_processing.deepstack_camera_2.attributes.summary['bird'] }}"
+
+      camera_2_cat:
+        friendly_name: Camera 2 Katt
+        value_template: "{{ states.image_processing.deepstack_camera_2.attributes.summary['cat'] }}"
+
+      camera_2_dog:
+        friendly_name: Camera 2 Hund
+        value_template: "{{ states.image_processing.deepstack_camera_2.attributes.summary['dog'] }}"
+
+      camera_2_horse:
+        friendly_name: Camera 2 Häst
+        value_template: "{{ states.image_processing.deepstack_camera_2.attributes.summary['horse'] }}"
+
+      camera_2_sheep:
+        friendly_name: Camera 2 Får
+        value_template: "{{ states.image_processing.deepstack_camera_2.attributes.summary['sheep'] }}"
+
+      camera_2_cow:
+        friendly_name: Camera 2 Ko
+        value_template: "{{ states.image_processing.deepstack_camera_2.attributes.summary['cow'] }}"
+
 
 
 # Used: 

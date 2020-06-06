@@ -392,6 +392,61 @@ automation:
           brightness_pct: 30
           transition: 5
 
+  ######################################
+  ### Flash light if person detected ###
+  ######################################
+  - alias: Flash light if person detected
+    trigger:
+      - platform: state
+        entity_id: sensor.camera_1_person
+        from: ''
+        to: '1'
+      - platform: state
+        entity_id: sensor.camera_1_person
+        from: ''
+        to: '2'
+      - platform: state
+        entity_id: sensor.camera_1_person
+        from: ''
+        to: '3'
+      - platform: state
+        entity_id: sensor.camera_1_person
+        from: ''
+        to: '4'
+      - platform: state
+        entity_id: sensor.camera_1_person
+        from: ''
+        to: '5'
+      - platform: state
+        entity_id: sensor.camera_1_person
+        from: ''
+        to: '6'
+      - platform: state
+        entity_id: sensor.camera_1_person
+        from: ''
+        to: '7'
+      - platform: state
+        entity_id: sensor.camera_1_person
+        from: ''
+        to: '8'
+      - platform: state
+        entity_id: sensor.camera_1_person
+        from: ''
+        to: '9'
+      - platform: state
+        entity_id: sensor.camera_1_person
+        from: ''
+        to: '10'
+    action:
+      - service: light.toggle
+        entity_id: light.hall_skap
+      - delay:
+        seconds: 2
+      - service: light.toggle
+        entity_id: light.hall_byra
+      - service: automation.turn_off
+          entity_id: automation.flash_light_if_person_detected
+
 ##############
 ### Script ###
 ##############

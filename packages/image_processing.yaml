@@ -441,7 +441,7 @@ automation:
       - service: light.toggle
         entity_id: light.hall_skap
       - delay:
-        seconds: 2
+          seconds: 2
       - service: light.toggle
         entity_id: light.hall_byra
       - service: automation.turn_off

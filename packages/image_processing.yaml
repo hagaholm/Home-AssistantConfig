@@ -41,29 +41,13 @@ camera:
     name: latest person away 5
     file_path: /config/www/latest_person_away/5.jpg
 
-  - platform: local_file
-    name: latest other
-    file_path: /config/www/latest_other/1.jpg
-  - platform: local_file
-    name: latest other
-    file_path: /config/www/latest_other/2.jpg
-  - platform: local_file
-    name: latest other
-    file_path: /config/www/latest_other/3.jpg
-  - platform: local_file
-    name: latest other
-    file_path: /config/www/latest_other/4.jpg
-  - platform: local_file
-    name: latest other
-    file_path: /config/www/latest_other/5.jpg
-
 ##################
 ### Automation ###
 ##################
 automation:
-  #####################################################
-  ### Processes image every 5 sec when home  at day ###
-  #####################################################
+  ####################################################
+  ### Processes image every 5 sec when home at day ###
+  ####################################################
   - alias: Camera 1 Image processing when home at day
     trigger:
       - platform: time_pattern
@@ -81,6 +65,17 @@ automation:
       - service: image_processing.scan
         data:
           entity_id: image_processing.deepstack_camera_1
+
+# Just for test
+      - service: camera.snapshot
+        data:
+          entity_id: camera.kamera1
+          filename: '/config/camera_1/person/test_1_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg
+      - service: camera.snapshot
+        data:
+          entity_id: camera.kamera2
+          filename: '/config/camera_1/person/test_2_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg
+
 
   ######################################################
   ### Processes image every 5 sec when home at night ###
@@ -195,50 +190,28 @@ automation:
           entity_id: group.track_for_home_devices
           state: 'not_home'
     action:
+      - service: system_log.write
+        data_template:
+          message: 'Start 2 sec delay'
+          level: info
       - delay:
           seconds: 2 # Add delay as the new image do not exist yet
+      - service: system_log.write
+        data_template:
+          message: 'Finish 2 sec delay'
+          level: info
       - service: shell_command.camera_1_copy_latest_motion_away
+      - service: system_log.write
+        data_template:
+          message: 'Start 2 min delay'
+          level: info
       - delay:
           minutes: 2
+      - service: system_log.write
+        data_template:
+          message: 'Finish 2 min delay'
+          level: info
       - service: script.camera_1_latest_motion_away_1
-
-  #######################################
-  ### Copy latest motion other things ###
-  #######################################
-  - alias:  Camera 1 Copy latest motion other
-    trigger:
-      - platform: state
-        entity_id: sensor.camera_1_bird
-        from: ''
-        to: '1'
-      - platform: state
-        entity_id: sensor.camera_1_dog
-        from: ''
-        to: '1'
-      - platform: state
-        entity_id: sensor.camera_1_cat
-        from: ''
-        to: '1'
-      - platform: state
-        entity_id: sensor.camera_1_horse
-        from: ''
-        to: '1'
-      - platform: state
-        entity_id: sensor.camera_1_sheep
-        from: ''
-        to: '1'
-      - platform: state
-        entity_id: sensor.camera_1_cow
-        from: ''
-        to: '1'
-    action:
-      - delay:
-          seconds: 2 # Add delay as the new image do not exist yet
-      - service: shell_command.camera_1_copy_latest_motion_other_5
-      - service: shell_command.camera_1_copy_latest_motion_other_4
-      - service: shell_command.camera_1_copy_latest_motion_other_3
-      - service: shell_command.camera_1_copy_latest_motion_other_2
-      - service: shell_command.camera_1_copy_latest_motion_other_1
 
 ##############
 ### Script ###
@@ -285,13 +258,6 @@ shell_command:
   camera_1_copy_latest_motion_away_2: 'cp /config/www/latest_person_away/1.jpg /config/www/latest_person_away/2.jpg'
   camera_1_copy_latest_motion_away_1: 'cp /config/camera_1/latest_person_away/1.jpg /config/www/latest_person_away/1.jpg'
 
-  # Copy latest motion other
-  camera_1_copy_latest_motion_other_5: 'cp /config/www/latest_other/4.jpg /config/www/latest_other/5.jpg'
-  camera_1_copy_latest_motion_other_4: 'cp /config/www/latest_other/3.jpg /config/www/latest_other/4.jpg'
-  camera_1_copy_latest_motion_other_3: 'cp /config/www/latest_other/2.jpg /config/www/latest_other/3.jpg'
-  camera_1_copy_latest_motion_other_2: 'cp /config/www/latest_other/1.jpg /config/www/latest_other/2.jpg'
-  camera_1_copy_latest_motion_other_1: 'cp /config/camera_1/person/deepstack_camera_1_latest.jpg /config/www/latest_other/1.jpg'
-
 ##############
 ### Sensor ###
 ##############
@@ -301,55 +267,6 @@ sensor:
       camera_1_person:
         friendly_name: Camera 1 Person
         value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['person'] }}"
-
-      camera_1_bicycle:
-        friendly_name: Camera 1 Cykel
-        value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['bicycle'] }}"
-
-      camera_1_car:
-        friendly_name: Camera 1 Bil
-        value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['car'] }}"
-
-      camera_1_motorcycle:
-        friendly_name: Camera 1 Motorcykel
-        value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['motorcycle'] }}"
-
-      camera_1_bus:
-        friendly_name: Camera 1 Buss
-        value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['bus'] }}"
-
-      camera_1_truck:
-        friendly_name: Camera 1 lastbil
-        value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['truck'] }}"
-
-      camera_1_boat:
-        friendly_name: Camera 1 Båt
-        value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['boat'] }}"
-
-      camera_1_bird:
-        friendly_name: Camera 1 Fågel
-        value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['bird'] }}"
-
-      camera_1_cat:
-        friendly_name: Camera 1 Katt
-        value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['cat'] }}"
-
-      camera_1_dog:
-        friendly_name: Camera 1 Hund
-        value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['dog'] }}"
-
-      camera_1_horse:
-        friendly_name: Camera 1 Häst
-        value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['horse'] }}"
-
-      camera_1_sheep:
-        friendly_name: Camera 1 Får
-        value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['sheep'] }}"
-
-      camera_1_cow:
-        friendly_name: Camera 1 Ko
-        value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['cow'] }}"
-
 
 # Used: 
 # person, bicycle, car, motorcycle, bus, truck, boat,

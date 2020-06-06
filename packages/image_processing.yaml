@@ -65,17 +65,15 @@ automation:
       - service: image_processing.scan
         data:
           entity_id: image_processing.deepstack_camera_1
-
 # Just for test
-      - service: camera.snapshot
-        data:
-          entity_id: camera.kamera_1
-          filename: '/config/camera_1/person/test_1_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
-      - service: camera.snapshot
-        data:
-          entity_id: camera.kamera_2
-          filename: '/config/camera_1/person/test_2_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
-
+#      - service: camera.snapshot
+#        data:
+#          entity_id: camera.kamera_1
+#          filename: '/config/camera_1/person/test_1_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
+#      - service: camera.snapshot
+#        data:
+#          entity_id: camera.kamera_2
+#          filename: '/config/camera_1/person/test_2_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
 
   ######################################################
   ### Processes image every 5 sec when home at night ###

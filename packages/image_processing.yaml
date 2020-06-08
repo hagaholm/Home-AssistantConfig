@@ -63,14 +63,16 @@ automation:
         data:
           entity_id: image_processing.deepstack_camera_1
 # Just for test
-#      - service: camera.snapshot
-#        data:
-#          entity_id: camera.kamera_1
-#          filename: '/config/camera_1/person/test_1_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
-#      - service: camera.snapshot
-#        data:
-#          entity_id: camera.kamera_2
-#          filename: '/config/camera_1/person/test_2_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
+      - service: camera.snapshot
+        data:
+          entity_id: camera.kamera_1
+          filename: '/config/camera_1/person/test_1_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
+      - service: camera.record
+        data:
+          entity_id: camera.kamera_2
+          filename: '/config/camera_1/person/test_2_{{ now().strftime("%Y%m%d-%H%M%S") }}.mp4'
+          duration: 10
+          lookback: 10
 
   ######################################################
   ### Processes image every 5 sec when home at night ###
@@ -327,6 +329,14 @@ shell_command:
   camera_1_copy_latest_motion_away_3: 'cp /config/www/latest_person_away/2.jpg /config/www/latest_person_away/3.jpg'
   camera_1_copy_latest_motion_away_2: 'cp /config/www/latest_person_away/1.jpg /config/www/latest_person_away/2.jpg'
   camera_1_copy_latest_motion_away_1: 'cp /config/camera_1/latest_person_away/1.jpg /config/www/latest_person_away/1.jpg'
+
+#####################
+### Input Boolean ###
+#####################
+input_boolean:
+  camera_1_recording:
+    name: Camera 1 spelar in
+    initial: off
 
 ##############
 ### Sensor ###

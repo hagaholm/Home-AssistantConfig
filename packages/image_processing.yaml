@@ -347,16 +347,16 @@ binary_sensor:
       camera_1_person_detected:
         friendly_name: "Camera 1 Person detekterad"
         value_template: >-
-          {{ is_state('sensor.camera_1_person', '1')
-             or is_state('sensor.camera_1_person', '2')
-             or is_state('sensor.camera_1_person', '3')
-             or is_state('sensor.camera_1_person', '4')
-             or is_state('sensor.camera_1_person', '5')
-             or is_state('sensor.camera_1_person', '6')
-             or is_state('sensor.camera_1_person', '7')
-             or is_state('sensor.camera_1_person', '8')
-             or is_state('sensor.camera_1_person', '9')
-             or is_state('sensor.camera_1_person', '10') }}
+          {{ is_state('sensor.camera_1_num_person_detected', '1')
+             or is_state('sensor.camera_1_num_person_detected', '2')
+             or is_state('sensor.camera_1_num_person_detected', '3')
+             or is_state('sensor.camera_1_num_person_detected', '4')
+             or is_state('sensor.camera_1_num_person_detected', '5')
+             or is_state('sensor.camera_1_num_person_detected', '6')
+             or is_state('sensor.camera_1_num_person_detected', '7')
+             or is_state('sensor.camera_1_num_person_detected', '8')
+             or is_state('sensor.camera_1_num_person_detected', '9')
+             or is_state('sensor.camera_1_num_person_detected', '10') }}
 
 # Used: 
 # person, bicycle, car, motorcycle, bus, truck, boat,

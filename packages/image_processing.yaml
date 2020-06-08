@@ -59,20 +59,44 @@ automation:
           after: '05:00:00'
           before: '22:00:00'
     action:
+      - service: input_boolean.turn_on
+        entity_id: input_boolean.camera_1_recording:
       - service: image_processing.scan
         data:
           entity_id: image_processing.deepstack_camera_1
+
+  ############################################
+  ### Camera 1 Record when person detected ###
+  ############################################
+  - alias: Camera 1 Record when person detected
+    trigger:
+      - platform: state
+        entity_id: sensor.camera_1_person_detected
+        from: 'off'
+        to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.camera_1_recording
+          state: 'off'
+    action:
+      - service: input_boolean.turn_on
+        entity_id: input_boolean.camera_1_recording:
 # Just for test
       - service: camera.snapshot
         data:
           entity_id: camera.kamera_1
-          filename: '/config/camera_1/person/test_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
+          filename: '/config/camera_1/person/test1_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
       - service: camera.record
         data:
           entity_id: camera.kamera_1
-          filename: '/config/camera_1/person/test_{{ now().strftime("%Y%m%d-%H%M%S") }}.mp4'
-          duration: 10
+          filename: '/config/camera_1/person/test1_{{ now().strftime("%Y%m%d-%H%M%S") }}.mp4'
+          duration: 5
           lookback: 10
+      - delay: '00:00:10'
+      - service: input_boolean.turn_off
+        entity_id: input_boolean.camera_1_recording:
 
   ######################################################
   ### Processes image every 5 sec when home at night ###

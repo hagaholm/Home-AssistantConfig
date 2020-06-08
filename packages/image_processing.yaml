@@ -69,8 +69,7 @@ automation:
   - alias: Camera 1 Record when person detected
     trigger:
       - platform: state
-        entity_id: sensor.camera_1_person_detected
-        from: 'off'
+        entity_id: binary_sensor.camera_1_person_detected
         to: 'on'
     condition:
       condition: and
@@ -90,8 +89,8 @@ automation:
         data:
           entity_id: camera.kamera_1
           filename: '/config/camera_1/person/test1_{{ now().strftime("%Y%m%d-%H%M%S") }}.mp4'
-          duration: 5
-          lookback: 10
+          lookback: 5
+          duration: 30
       - delay: '00:00:10'
       - service: input_boolean.turn_off
         entity_id: input_boolean.camera_1_recording
@@ -163,8 +162,7 @@ automation:
   - alias:  Camera 1 Copy latest motion away
     trigger:
       - platform: state
-        entity_id: sensor.camera_1_person_detected
-        from: 'off'
+        entity_id: binary_sensor.camera_1_person_detected
         to: 'on'
     condition:
       condition: and
@@ -202,8 +200,7 @@ automation:
   - alias: Max light friggebod fasad if person detected
     trigger:
       - platform: state
-        entity_id: sensor.camera_1_person_detected
-        from: 'off'
+        entity_id: binary_sensor.camera_1_person_detected
         to: 'on'
     condition:
       condition: and
@@ -224,8 +221,7 @@ automation:
   - alias: Max light förråd fasad if person detected
     trigger:
       - platform: state
-        entity_id: sensor.camera_1_person_detected
-        from: 'off'
+        entity_id: binary_sensor.camera_1_person_detected
         to: 'on'
     condition:
       condition: and
@@ -246,8 +242,7 @@ automation:
   - alias: Reset light friggebod fasad if person no detected
     trigger:
       - platform: state
-        entity_id: sensor.camera_1_person_detected
-        from: 'on'
+        entity_id: binary_sensor.camera_1_person_detected
         to: 'off'
     condition:
       condition: and
@@ -268,8 +263,7 @@ automation:
   - alias: Reset light förråd fasad if person no detected
     trigger:
       - platform: state
-        entity_id: sensor.camera_1_person_detected
-        from: 'on'
+        entity_id: binary_sensor.camera_1_person_detected
         to: 'off'
     condition:
       condition: and
@@ -290,8 +284,7 @@ automation:
   - alias: Flash light if person detected
     trigger:
       - platform: state
-        entity_id: sensor.camera_1_person_detected
-        from: 'off'
+        entity_id: binary_sensor.camera_1_person_detected
         to: 'on'
     action:
       - service: light.toggle

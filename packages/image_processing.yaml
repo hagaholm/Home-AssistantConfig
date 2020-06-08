@@ -59,8 +59,6 @@ automation:
           after: '05:00:00'
           before: '22:00:00'
     action:
-      - service: input_boolean.turn_on
-        entity_id: input_boolean.camera_1_recording:
       - service: image_processing.scan
         data:
           entity_id: image_processing.deepstack_camera_1

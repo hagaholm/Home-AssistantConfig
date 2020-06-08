@@ -70,14 +70,11 @@ automation:
     trigger:
       - platform: state
         entity_id: sensor.camera_1_person_detected
-        from: 'off'
         to: 'on'
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_boolean.camera_1_recording
-          state: 'off'
+    conditions:
+      - condition: state
+        entity_id: input_boolean.camera_1_recording
+        state: 'off'
     action:
       - service: input_boolean.turn_on
         entity_id: input_boolean.camera_1_recording

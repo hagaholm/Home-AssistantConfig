@@ -6,7 +6,7 @@ image_processing:
     ip_address: localhost
     port: 5000
     api_key: !secret deepstack_password
-    save_file_folder: /config/camera_1/person/
+    save_file_folder: /config/camera/person/
     save_timestamped_file: True
     targets:
       - person
@@ -19,24 +19,24 @@ image_processing:
 ##############
 camera:
   - platform: local_file
-    name: latest person
-    file_path: /config/www/latest_person/1.jpg
+    name: Camera 1 Latest person
+    file_path: /config/www/latest_person/camera_1_1.jpg
 
   - platform: local_file
-    name: latest person away
-    file_path: /config/www/latest_person_away/1.jpg
+    name: Camera 1 Latest person away
+    file_path: /config/www/latest_person_away/camera_1_1.jpg
   - platform: local_file
-    name: latest person away 2
-    file_path: /config/www/latest_person_away/2.jpg
+    name: Camera 1 Latest person away 2
+    file_path: /config/www/latest_person_away/camera_1_2.jpg
   - platform: local_file
-    name: latest person away 3
-    file_path: /config/www/latest_person_away/3.jpg
+    name: Camera 1 Latest person away 3
+    file_path: /config/www/latest_person_away/camera_1_3.jpg
   - platform: local_file
-    name: latest person away 4
-    file_path: /config/www/latest_person_away/4.jpg
+    name: Camera 1 Latest person away 4
+    file_path: /config/www/latest_person_away/camera_1_4.jpg
   - platform: local_file
-    name: latest person away 5
-    file_path: /config/www/latest_person_away/5.jpg
+    name: Camera 1 Latest person away 5
+    file_path: /config/www/latest_person_away/camera_1_5.jpg
 
 ##################
 ### Automation ###
@@ -80,15 +80,14 @@ automation:
     action:
       - service: input_boolean.turn_on
         entity_id: input_boolean.camera_1_recording
-# Just for test
       - service: camera.snapshot
         data:
           entity_id: camera.kamera_1
-          filename: '/config/camera_1/person/test1_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
+          filename: '/config/camera/person/camera_1_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
       - service: camera.record
         data:
           entity_id: camera.kamera_1
-          filename: '/config/camera_1/person/test1_{{ now().strftime("%Y%m%d-%H%M%S") }}.mp4'
+          filename: '/config/camera/person/camera_1_{{ now().strftime("%Y%m%d-%H%M%S") }}.mp4'
           lookback: 5
           duration: 30
       - delay: '00:00:10'
@@ -137,7 +136,7 @@ automation:
   #########################
   ### Remove old images ###
   #########################
-  - alias: Camera 1 Remove old images
+  - alias: Camera Remove old images
     trigger:
       - platform: time
         at: "00:01:00" # HH:MM:SS
@@ -325,25 +324,25 @@ script:
           title: "{{ now().strftime('%H:%M %Y-%m-%d') }}"
           message: "Person detekterad, senaste bild"
           data:
-            file: /config/www/latest_person_away/1.jpg
+            file: /config/www/latest_person_away/camera_1_1.jpg
 
 #####################
 ### Shell command ###
 #####################
 shell_command:
-  # Delete 10 days old images from folder /config/camera_1/person
-  camera_1_remove_old_images: 'find /config/camera_1/person -mtime +14 -type f -delete' 
+  # Delete 10 days old images from folder /config/camera/person
+  camera_remove_old_images: 'find /config/camera/person -mtime +14 -type f -delete' 
 
   # Copy latest motion person
-  camera_1_copy_latest_motion_1: 'cp /config/camera_1/person/deepstack_camera_1_latest.jpg /config/www/latest_person/1.jpg'
+  camera_1_copy_latest_motion_1: 'cp /config/camera/person/deepstack_camera_1_latest.jpg /config/www/latest_person/camera_1_1.jpg'
 
   # Copy latest motion person away
-  camera_1_copy_latest_motion_away: 'cp /config/camera_1/person/deepstack_camera_1_latest.jpg /config/camera_1/latest_person_away/1.jpg'
-  camera_1_copy_latest_motion_away_5: 'cp /config/www/latest_person_away/4.jpg /config/www/latest_person_away/5.jpg'
-  camera_1_copy_latest_motion_away_4: 'cp /config/www/latest_person_away/3.jpg /config/www/latest_person_away/4.jpg'
-  camera_1_copy_latest_motion_away_3: 'cp /config/www/latest_person_away/2.jpg /config/www/latest_person_away/3.jpg'
-  camera_1_copy_latest_motion_away_2: 'cp /config/www/latest_person_away/1.jpg /config/www/latest_person_away/2.jpg'
-  camera_1_copy_latest_motion_away_1: 'cp /config/camera_1/latest_person_away/1.jpg /config/www/latest_person_away/1.jpg'
+  camera_1_copy_latest_motion_away: 'cp /config/camera/person/deepstack_camera_1_latest.jpg /config/camera/latest_person_away/camera_1_1.jpg'
+  camera_1_copy_latest_motion_away_5: 'cp /config/www/latest_person_away/camera_1_4.jpg /config/www/latest_person_away/camera_1_5.jpg'
+  camera_1_copy_latest_motion_away_4: 'cp /config/www/latest_person_away/camera_1_3.jpg /config/www/latest_person_away/camera_1_4.jpg'
+  camera_1_copy_latest_motion_away_3: 'cp /config/www/latest_person_away/camera_1_2.jpg /config/www/latest_person_away/camera_1_3.jpg'
+  camera_1_copy_latest_motion_away_2: 'cp /config/www/latest_person_away/camera_1_1.jpg /config/www/latest_person_away/camera_1_2.jpg'
+  camera_1_copy_latest_motion_away_1: 'cp /config/camera_1/latest_person_away/camera_1_1.jpg /config/www/latest_person_away/camera_1_1.jpg'
 
 #####################
 ### Input Boolean ###

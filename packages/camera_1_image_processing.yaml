@@ -7,7 +7,7 @@ image_processing:
     port: 5000
     api_key: !secret deepstack_password
     save_file_folder: /config/camera/person/
-    save_timestamped_file: True
+    save_timestamped_file: False
     targets:
       - person
     source:
@@ -63,37 +63,6 @@ automation:
         data:
           entity_id: image_processing.deepstack_camera_1
 
-  ############################################
-  ### Camera 1 Record when person detected ###
-  ############################################
-  - alias: Camera 1 Record when person detected
-    trigger:
-      - platform: state
-        entity_id: binary_sensor.camera_1_person_detected
-        to: 'on'
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_boolean.camera_1_recording
-          state: 'off'
-    action:
-      - service: input_boolean.turn_on
-        entity_id: input_boolean.camera_1_recording
-      - service: camera.snapshot
-        data:
-          entity_id: camera.kamera_1
-          filename: '/config/camera/person/camera_1_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
-      - service: camera.record
-        data:
-          entity_id: camera.kamera_1
-          filename: '/config/camera/person/camera_1_{{ now().strftime("%Y%m%d-%H%M%S") }}.mp4'
-          lookback: 5
-          duration: 30
-      - delay: '00:00:10'
-      - service: input_boolean.turn_off
-        entity_id: input_boolean.camera_1_recording
-
   ######################################################
   ### Processes image every 5 sec when home at night ###
   ######################################################
@@ -133,15 +102,36 @@ automation:
         data:
           entity_id: image_processing.deepstack_camera_1
 
-  #########################
-  ### Remove old images ###
-  #########################
-  - alias: Camera Remove old images
+  ############################################
+  ### Camera 1 Record when person detected ###
+  ############################################
+  - alias: Camera 1 Record when person detected
     trigger:
-      - platform: time
-        at: "00:01:00" # HH:MM:SS
+      - platform: state
+        entity_id: binary_sensor.camera_1_person_detected
+        to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.camera_1_recording
+          state: 'off'
     action:
-      - service: shell_command.camera_1_remove_old_images
+      - service: input_boolean.turn_on
+        entity_id: input_boolean.camera_1_recording
+      - service: camera.snapshot
+        data:
+          entity_id: camera.kamera_1
+          filename: '/config/camera/person/camera_1_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
+      - service: camera.record
+        data:
+          entity_id: camera.kamera_1
+          filename: '/config/camera/person/camera_1_{{ now().strftime("%Y%m%d-%H%M%S") }}.mp4'
+          lookback: 5
+          duration: 10
+      - delay: '00:00:10'
+      - service: input_boolean.turn_off
+        entity_id: input_boolean.camera_1_recording
 
   #########################################
   ### Copy latest motion detected image ###
@@ -330,9 +320,6 @@ script:
 ### Shell command ###
 #####################
 shell_command:
-  # Delete 10 days old images from folder /config/camera/person
-  camera_remove_old_images: 'find /config/camera/person -mtime +14 -type f -delete' 
-
   # Copy latest motion person
   camera_1_copy_latest_motion_1: 'cp /config/camera/person/deepstack_camera_1_latest.jpg /config/www/latest_person/camera_1_1.jpg'
 

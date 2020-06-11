@@ -1,0 +1,20 @@
+##################
+### Automation ###
+##################
+automation:
+  #########################
+  ### Remove old images ###
+  #########################
+  - alias: Camera Remove old images
+    trigger:
+      - platform: time
+        at: "00:01:00" # HH:MM:SS
+    action:
+      - service: shell_command.remove_old_images
+
+#####################
+### Shell command ###
+#####################
+shell_command:
+  # Delete 10 days old images from folder /config/camera/person
+  remove_old_images: 'find /config/camera/person -mtime +14 -type f -delete' 

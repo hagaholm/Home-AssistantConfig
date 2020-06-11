@@ -138,10 +138,14 @@ automation:
   #########################################
   - alias: Camera 2 Copy latest motion
     trigger:
-      - platform: event
-        event_type: folder_watcher
-        event_data:
-          event_type: created
+      - platform: time_pattern
+        seconds: "/1"
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: binary_sensor.camera_2_person_detected
+          state: 'on'
     action:
       - service: shell_command.camera_2_copy_latest_motion_1
 

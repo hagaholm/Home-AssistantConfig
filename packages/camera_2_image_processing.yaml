@@ -136,200 +136,200 @@ automation:
   #########################################
   ### Copy latest motion detected image ###
   #########################################
-  # - alias: Camera 2 Copy latest motion
-    # trigger:
-      # - platform: event
-        # event_type: folder_watcher
-        # event_data:
-          # event_type: created
-    # action:
-      # - service: shell_command.camera_2_copy_latest_motion_1
+  - alias: Camera 2 Copy latest motion
+    trigger:
+      - platform: event
+        event_type: folder_watcher
+        event_data:
+          event_type: created
+    action:
+      - service: shell_command.camera_2_copy_latest_motion_1
 
   ##############################################
   ### Copy latest motion away detected image ###
   ##############################################
-  # - alias:  Camera 2 Copy latest motion away
-    # trigger:
-      # - platform: state
-        # entity_id: binary_sensor.camera_2_person_detected
-        # to: 'on'
-    # condition:
-      # condition: and
-      # conditions:
-        # - condition: state
-          # entity_id: group.track_for_home_devices
-          # state: 'not_home'
-    # action:
-      # - service: system_log.write
-        # data_template:
-          # message: 'Start 2 sec delay'
-          # level: info
-      # - delay:
-          # seconds: 2 # Add delay as the new image do not exist yet
-      # - service: system_log.write
-        # data_template:
-          # message: 'Finish 2 sec delay'
-          # level: info
-      # - service: shell_command.camera_2_copy_latest_motion_away
-      # - service: system_log.write
-        # data_template:
-          # message: 'Start 2 min delay'
-          # level: info
-      # - delay:
-          # minutes: 2
-      # - service: system_log.write
-        # data_template:
-          # message: 'Finish 2 min delay'
-          # level: info
-      # - service: script.camera_2_latest_motion_away_1
+  - alias:  Camera 2 Copy latest motion away
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.camera_2_person_detected
+        to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
+    action:
+      - service: system_log.write
+        data_template:
+          message: 'Start 2 sec delay'
+          level: info
+      - delay:
+          seconds: 2 # Add delay as the new image do not exist yet
+      - service: system_log.write
+        data_template:
+          message: 'Finish 2 sec delay'
+          level: info
+      - service: shell_command.camera_2_copy_latest_motion_away
+      - service: system_log.write
+        data_template:
+          message: 'Start 2 min delay'
+          level: info
+      - delay:
+          minutes: 2
+      - service: system_log.write
+        data_template:
+          message: 'Finish 2 min delay'
+          level: info
+      - service: script.camera_2_latest_motion_away_1
 
   ####################################################
   ### Max light friggebod fasad if person detected ###
   ####################################################
-  # - alias: Max light friggebod fasad if person detected
-    # trigger:
-      # - platform: state
-        # entity_id: binary_sensor.camera_2_person_detected
-        # to: 'on'
-    # condition:
-      # condition: and
-      # conditions:
-        # - condition: state
-          # entity_id: light.friggebod_fasad
-          # state: 'on'
-    # action:
-      # - service: light.turn_on
-        # data:
-          # entity_id: light.friggebod_fasad
-          # brightness_pct: 100
-          # transition: 5
+  - alias: Max light friggebod fasad if person detected
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.camera_2_person_detected
+        to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.friggebod_fasad
+          state: 'on'
+    action:
+      - service: light.turn_on
+        data:
+          entity_id: light.friggebod_fasad
+          brightness_pct: 100
+          transition: 5
 
   ###################################################
   ### Max light förråd fasad if person detected ###
   ###################################################
-  # - alias: Max light förråd fasad if person detected
-    # trigger:
-      # - platform: state
-        # entity_id: binary_sensor.camera_2_person_detected
-        # to: 'on'
-    # condition:
-      # condition: and
-      # conditions:
-        # - condition: state
-          # entity_id: light.forrad_fasad
-          # state: 'on'
-    # action:
-      # - service: light.turn_on
-        # data:
-          # entity_id: light.forrad_fasad
-          # brightness_pct: 100
-          # transition: 5
+  - alias: Max light förråd fasad if person detected
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.camera_2_person_detected
+        to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.forrad_fasad
+          state: 'on'
+    action:
+      - service: light.turn_on
+        data:
+          entity_id: light.forrad_fasad
+          brightness_pct: 100
+          transition: 5
 
   #########################################################
   ### Reset light friggebod fasad if no person detected ###
   #########################################################
-  # - alias: Reset light friggebod fasad if person no detected
-    # trigger:
-      # - platform: state
-        # entity_id: binary_sensor.camera_2_person_detected
-        # to: 'off'
-    # condition:
-      # condition: and
-      # conditions:
-        # - condition: state
-          # entity_id: light.friggebod_fasad
-          # state: 'on'
-    # action:
-      # - service: light.turn_on
-        # data:
-          # entity_id: light.friggebod_fasad
-          # brightness_pct: 30
-          # transition: 5
+  - alias: Reset light friggebod fasad if person no detected
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.camera_2_person_detected
+        to: 'off'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.friggebod_fasad
+          state: 'on'
+    action:
+      - service: light.turn_on
+        data:
+          entity_id: light.friggebod_fasad
+          brightness_pct: 30
+          transition: 5
 
   ######################################################
   ### Reset light förråd fasad if no person detected ###
   ######################################################
-  # - alias: Reset light förråd fasad if person no detected
-    # trigger:
-      # - platform: state
-        # entity_id: binary_sensor.camera_2_person_detected
-        # to: 'off'
-    # condition:
-      # condition: and
-      # conditions:
-        # - condition: state
-          # entity_id: light.forrad_fasad
-          # state: 'on'
-    # action:
-      # - service: light.turn_on
-        # data:
-          # entity_id: light.forrad_fasad
-          # brightness_pct: 30
-          # transition: 5
+  - alias: Reset light förråd fasad if person no detected
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.camera_2_person_detected
+        to: 'off'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.forrad_fasad
+          state: 'on'
+    action:
+      - service: light.turn_on
+        data:
+          entity_id: light.forrad_fasad
+          brightness_pct: 30
+          transition: 5
 
   ######################################
   ### Flash light if person detected ###
   ######################################
-  # - alias: Flash light if person detected
-    # trigger:
-      # - platform: state
-        # entity_id: binary_sensor.camera_2_person_detected
-        # to: 'on'
-    # action:
-      # - service: light.toggle
-        # entity_id: light.hall_skap
-      # - service: light.toggle
-        # entity_id: light.hall_byra
-      # - delay:
-          # seconds: 2
-      # - service: light.toggle
-        # entity_id: light.hall_skap
-      # - service: light.toggle
-        # entity_id: light.hall_byra
-      # - service: automation.turn_off
-        # entity_id: automation.flash_light_if_person_detected
+  - alias: Flash light if person detected
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.camera_2_person_detected
+        to: 'on'
+    action:
+      - service: light.toggle
+        entity_id: light.hall_skap
+      - service: light.toggle
+        entity_id: light.hall_byra
+      - delay:
+          seconds: 2
+      - service: light.toggle
+        entity_id: light.hall_skap
+      - service: light.toggle
+        entity_id: light.hall_byra
+      - service: automation.turn_off
+        entity_id: automation.flash_light_if_person_detected
 
 ##############
 ### Script ###
 ##############
-# script:
-  # camera_2_latest_motion_away_1:
-    # sequence:
-      # - service: script.turn_on
-        # data_template:
-          # entity_id: >
-            # {% if is_state('group.track_for_home_devices', 'not_home') %}
-              # script.camera_2_latest_motion_away_2
-            # {% endif %}
+script:
+  camera_2_latest_motion_away_1:
+    sequence:
+      - service: script.turn_on
+        data_template:
+          entity_id: >
+            {% if is_state('group.track_for_home_devices', 'not_home') %}
+              script.camera_2_latest_motion_away_2
+            {% endif %}
 
-  # camera_2_latest_motion_away_2:
-    # sequence:
-      # - service: shell_command.camera_2_copy_latest_motion_away_5
-      # - service: shell_command.camera_2_copy_latest_motion_away_4
-      # - service: shell_command.camera_2_copy_latest_motion_away_3
-      # - service: shell_command.camera_2_copy_latest_motion_away_2
-      # - service: shell_command.camera_2_copy_latest_motion_away_1
-      # - service: notify.pushbullet
-        # data:
-          # title: "{{ now().strftime('%H:%M %Y-%m-%d') }}"
-          # message: "Person detekterad, senaste bild"
-          # data:
-            # file: /config/www/latest_person_away/camera_2_1.jpg
+  camera_2_latest_motion_away_2:
+    sequence:
+      - service: shell_command.camera_2_copy_latest_motion_away_5
+      - service: shell_command.camera_2_copy_latest_motion_away_4
+      - service: shell_command.camera_2_copy_latest_motion_away_3
+      - service: shell_command.camera_2_copy_latest_motion_away_2
+      - service: shell_command.camera_2_copy_latest_motion_away_1
+      - service: notify.pushbullet
+        data:
+          title: "{{ now().strftime('%H:%M %Y-%m-%d') }}"
+          message: "Person detekterad, senaste bild"
+          data:
+            file: /config/www/latest_person_away/camera_2_1.jpg
 
 #####################
 ### Shell command ###
 #####################
-# shell_command:
+shell_command:
   # Copy latest motion person
-  #camera_2_copy_latest_motion_1: 'cp /config/camera/person/deepstack_camera_2_latest.jpg /config/www/latest_person/camera_2_1.jpg'
+  camera_2_copy_latest_motion_1: 'cp /config/camera/person/deepstack_camera_2_latest.jpg /config/www/latest_person/camera_2_1.jpg'
 
   # Copy latest motion person away
-  #camera_2_copy_latest_motion_away: 'cp /config/camera/person/deepstack_camera_2_latest.jpg /config/camera/latest_person_away/camera_2_1.jpg'
-  #camera_2_copy_latest_motion_away_5: 'cp /config/www/latest_person_away/camera_2_4.jpg /config/www/latest_person_away/camera_2_5.jpg'
-  #camera_2_copy_latest_motion_away_4: 'cp /config/www/latest_person_away/camera_2_3.jpg /config/www/latest_person_away/camera_2_4.jpg'
-  #camera_2_copy_latest_motion_away_3: 'cp /config/www/latest_person_away/camera_2_2.jpg /config/www/latest_person_away/camera_2_3.jpg'
-  #camera_2_copy_latest_motion_away_2: 'cp /config/www/latest_person_away/camera_2_1.jpg /config/www/latest_person_away/camera_2_2.jpg'
-  #camera_2_copy_latest_motion_away_2: 'cp /config/camera_2/latest_person_away/camera_2_1.jpg /config/www/latest_person_away/camera_2_1.jpg'
+  camera_2_copy_latest_motion_away: 'cp /config/camera/person/deepstack_camera_2_latest.jpg /config/camera/latest_person_away/camera_2_1.jpg'
+  camera_2_copy_latest_motion_away_5: 'cp /config/www/latest_person_away/camera_2_4.jpg /config/www/latest_person_away/camera_2_5.jpg'
+  camera_2_copy_latest_motion_away_4: 'cp /config/www/latest_person_away/camera_2_3.jpg /config/www/latest_person_away/camera_2_4.jpg'
+  camera_2_copy_latest_motion_away_3: 'cp /config/www/latest_person_away/camera_2_2.jpg /config/www/latest_person_away/camera_2_3.jpg'
+  camera_2_copy_latest_motion_away_2: 'cp /config/www/latest_person_away/camera_2_1.jpg /config/www/latest_person_away/camera_2_2.jpg'
+  camera_2_copy_latest_motion_away_2: 'cp /config/camera_2/latest_person_away/camera_2_1.jpg /config/www/latest_person_away/camera_2_1.jpg'
 
 #####################
 ### Input Boolean ###

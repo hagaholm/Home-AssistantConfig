@@ -7,7 +7,7 @@ image_processing:
     port: 5000
     api_key: !secret deepstack_password
     save_file_folder: /config/camera/person/
-    save_timestamped_file: False
+    save_timestamped_file: True
     targets:
       - person
     source:
@@ -329,7 +329,7 @@ shell_command:
   camera_2_copy_latest_motion_away_4: 'cp /config/www/latest_person_away/camera_2_3.jpg /config/www/latest_person_away/camera_2_4.jpg'
   camera_2_copy_latest_motion_away_3: 'cp /config/www/latest_person_away/camera_2_2.jpg /config/www/latest_person_away/camera_2_3.jpg'
   camera_2_copy_latest_motion_away_2: 'cp /config/www/latest_person_away/camera_2_1.jpg /config/www/latest_person_away/camera_2_2.jpg'
-  camera_2_copy_latest_motion_away_1: 'cp /config/camera_2/latest_person_away/camera_2_1.jpg /config/www/latest_person_away/camera_2_1.jpg'
+  camera_2_copy_latest_motion_away_1: 'cp /config/camera/latest_person_away/camera_2_1.jpg /config/www/latest_person_away/camera_2_1.jpg'
 
 #####################
 ### Input Boolean ###

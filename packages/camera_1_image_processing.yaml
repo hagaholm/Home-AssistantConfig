@@ -124,7 +124,7 @@ automation:
   - alias: Camera 1 Image when person detected
     trigger:
       - platform: time_pattern
-        seconds: "/1"
+        seconds: "/2"
     condition:
       condition: and
       conditions:

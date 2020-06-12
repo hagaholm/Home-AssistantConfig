@@ -22,22 +22,6 @@ camera:
     name: Camera 1 Latest person
     file_path: /config/www/latest_person/camera_1_1.jpg
 
-  - platform: local_file
-    name: Camera 1 Latest person away
-    file_path: /config/www/latest_person_away/camera_1_1.jpg
-  - platform: local_file
-    name: Camera 1 Latest person away 2
-    file_path: /config/www/latest_person_away/camera_1_2.jpg
-  - platform: local_file
-    name: Camera 1 Latest person away 3
-    file_path: /config/www/latest_person_away/camera_1_3.jpg
-  - platform: local_file
-    name: Camera 1 Latest person away 4
-    file_path: /config/www/latest_person_away/camera_1_4.jpg
-  - platform: local_file
-    name: Camera 1 Latest person away 5
-    file_path: /config/www/latest_person_away/camera_1_5.jpg
-
 ##################
 ### Automation ###
 ##################
@@ -113,14 +97,17 @@ automation:
       condition: and
       conditions:
         - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
+        - condition: state
           entity_id: binary_sensor.camera_1_person_detected
           state: 'on'
-        - condition: state
-          entity_id: input_boolean.camera_1_recording
-          state: 'off'
+#        - condition: state
+#          entity_id: input_boolean.camera_1_recording
+#          state: 'off'
     action:
-      - service: input_boolean.turn_on
-        entity_id: input_boolean.camera_1_recording
+#      - service: input_boolean.turn_on
+#        entity_id: input_boolean.camera_1_recording
       - service: camera.record
         data:
           entity_id: camera.kamera_1
@@ -128,12 +115,12 @@ automation:
           lookback: 0
           duration: 10
       - delay: '00:00:10'
-      - service: input_boolean.turn_off
-        entity_id: input_boolean.camera_1_recording
+#      - service: input_boolean.turn_off
+#        entity_id: input_boolean.camera_1_recording
 
-  ############################################
+  ###########################################
   ### Camera 1 Image when person detected ###
-  ############################################
+  ###########################################
   - alias: Camera 1 Image when person detected
     trigger:
       - platform: time_pattern
@@ -141,6 +128,9 @@ automation:
     condition:
       condition: and
       conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
         - condition: state
           entity_id: binary_sensor.camera_1_person_detected
           state: 'on'
@@ -154,44 +144,6 @@ automation:
           entity_id: camera.kamera_1
           filename: '/config/www/person/camera_1_latest.jpg'
       - service: shell_command.camera_1_copy_latest_motion_1
-
-  ##############################################
-  ### Copy latest motion away detected image ###
-  ##############################################
-  - alias:  Camera 1 Copy latest motion away
-    trigger:
-      - platform: state
-        entity_id: binary_sensor.camera_1_person_detected
-        to: 'on'
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'not_home'
-    action:
-      - service: system_log.write
-        data_template:
-          message: 'Start 2 sec delay'
-          level: info
-      - delay:
-          seconds: 2 # Add delay as the new image do not exist yet
-      - service: system_log.write
-        data_template:
-          message: 'Finish 2 sec delay'
-          level: info
-      - service: shell_command.camera_1_copy_latest_motion_away
-      - service: system_log.write
-        data_template:
-          message: 'Start 2 min delay'
-          level: info
-      - delay:
-          minutes: 2
-      - service: system_log.write
-        data_template:
-          message: 'Finish 2 min delay'
-          level: info
-      - service: script.camera_1_latest_motion_away_1
 
   ####################################################
   ### Max light friggebod fasad if person detected ###
@@ -299,47 +251,12 @@ automation:
       - service: automation.turn_off
         entity_id: automation.flash_light_if_person_detected
 
-##############
-### Script ###
-##############
-script:
-  camera_1_latest_motion_away_1:
-    sequence:
-      - service: script.turn_on
-        data_template:
-          entity_id: >
-            {% if is_state('group.track_for_home_devices', 'not_home') %}
-              script.camera_1_latest_motion_away_2
-            {% endif %}
-
-  camera_1_latest_motion_away_2:
-    sequence:
-      - service: shell_command.camera_1_copy_latest_motion_away_5
-      - service: shell_command.camera_1_copy_latest_motion_away_4
-      - service: shell_command.camera_1_copy_latest_motion_away_3
-      - service: shell_command.camera_1_copy_latest_motion_away_2
-      - service: shell_command.camera_1_copy_latest_motion_away_1
-      - service: notify.pushbullet
-        data:
-          title: "{{ now().strftime('%H:%M %Y-%m-%d') }}"
-          message: "Person detekterad, senaste bild"
-          data:
-            file: /config/www/latest_person_away/camera_1_1.jpg
-
 #####################
 ### Shell command ###
 #####################
 shell_command:
   # Copy latest motion person
   camera_1_copy_latest_motion_1: 'cp /config/camera/person/deepstack_camera_1_latest.jpg /config/www/latest_person/camera_1_1.jpg'
-
-  # Copy latest motion person away
-  camera_1_copy_latest_motion_away: 'cp /config/camera/person/deepstack_camera_1_latest.jpg /config/camera/latest_person_away/camera_1_1.jpg'
-  camera_1_copy_latest_motion_away_5: 'cp /config/www/latest_person_away/camera_1_4.jpg /config/www/latest_person_away/camera_1_5.jpg'
-  camera_1_copy_latest_motion_away_4: 'cp /config/www/latest_person_away/camera_1_3.jpg /config/www/latest_person_away/camera_1_4.jpg'
-  camera_1_copy_latest_motion_away_3: 'cp /config/www/latest_person_away/camera_1_2.jpg /config/www/latest_person_away/camera_1_3.jpg'
-  camera_1_copy_latest_motion_away_2: 'cp /config/www/latest_person_away/camera_1_1.jpg /config/www/latest_person_away/camera_1_2.jpg'
-  camera_1_copy_latest_motion_away_1: 'cp /config/camera/latest_person_away/camera_1_1.jpg /config/www/latest_person_away/camera_1_1.jpg'
 
 #####################
 ### Input Boolean ###

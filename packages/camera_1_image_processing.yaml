@@ -107,31 +107,52 @@ automation:
   ############################################
   - alias: Camera 1 Record when person detected
     trigger:
-      - platform: state
-        entity_id: binary_sensor.camera_1_person_detected
-        to: 'on'
+      - platform: time_pattern
+        seconds: "/1"
     condition:
       condition: and
       conditions:
+        - condition: state
+          entity_id: binary_sensor.camera_1_person_detected
+          state: 'on'
         - condition: state
           entity_id: input_boolean.camera_1_recording
           state: 'off'
     action:
       - service: input_boolean.turn_on
         entity_id: input_boolean.camera_1_recording
-      - service: camera.snapshot
-        data:
-          entity_id: camera.kamera_1
-          filename: '/config/camera/person/camera_1_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
       - service: camera.record
         data:
           entity_id: camera.kamera_1
           filename: '/config/camera/person/camera_1_{{ now().strftime("%Y%m%d-%H%M%S") }}.mp4'
-          lookback: 5
+          lookback: 0
           duration: 10
       - delay: '00:00:10'
       - service: input_boolean.turn_off
         entity_id: input_boolean.camera_1_recording
+
+  ############################################
+  ### Camera 1 Image when person detected ###
+  ############################################
+  - alias: Camera 1 Image when person detected
+    trigger:
+      - platform: time_pattern
+        seconds: "/1"
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: binary_sensor.camera_1_person_detected
+          state: 'on'
+    action:
+      - service: camera.snapshot
+        data:
+          entity_id: camera.kamera_1
+          filename: '/config/camera/person/camera_1_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
+      - service: camera.snapshot
+        data:
+          entity_id: camera.kamera_1
+          filename: '/config/www/person/camera_1_1.jpg'
 
   #########################################
   ### Copy latest motion detected image ###

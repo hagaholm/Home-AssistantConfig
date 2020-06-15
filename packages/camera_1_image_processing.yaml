@@ -225,6 +225,9 @@ script:
     # Make a copy as latest motion, to be used when detect that nobody home
       - service: shell_command.camera_1_copy_to_latest_motion_1
 
+    # Make a copy as latest motion, to share    
+      - service: shell_command.camera_1_copy_to_latest_motion_2
+
     # Run part 2 of the script if person still detected, otherwise exit
       - service: script.turn_on
         data_template:
@@ -274,6 +277,7 @@ script:
 shell_command:
   # Copy latest motion person
   camera_1_copy_to_latest_motion_1: "cp '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp.state }}.jpg' '/config/camera/person/camera_1_latest.jpg'"
+  camera_1_copy_to_latest_motion_2: "cp '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp.state }}.jpg' '/config/www/latest_person/camera_1_1.jpg'"
   camera_1_copy_latest_motion_away_1: 'cp /config/camera/person/camera_1_*.jpg /config/www/latest_person_away/'
 
 #####################

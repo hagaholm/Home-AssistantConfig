@@ -260,7 +260,7 @@ script:
 #####################
 shell_command:
   # Copy latest motion person
-  camera_1_copy_to_latest_motion_1: "cp '/config/camera/person/camera_1_{{ states.input_text.deck_snap_timestamp.state }}.jpg' '/config/camera/person/camera_1_latest.jpg'"
+  camera_1_copy_to_latest_motion_1: "cp '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp.state }}.jpg' '/config/camera/person/camera_1_latest.jpg'"
   camera_1_copy_latest_motion_away_1: 'cp /config/camera/person/camera_1_*.jpg /config/www/latest_person_away/'
 
 #####################

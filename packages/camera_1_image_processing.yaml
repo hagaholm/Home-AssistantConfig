@@ -219,7 +219,7 @@ script:
       - service: camera.snapshot
         data:
           entity_id: camera.kamera_1
-          filename: '/config/camera/person/camera_1_{{ states.input_text.deck_snap_timestamp.state }}.jpg'
+          filename: '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp.state }}.jpg'
 
     # Make a copy as latest motion, to be used when detect that nobody home
       - service: shell_command.camera_1_copy_to_latest_motion_1

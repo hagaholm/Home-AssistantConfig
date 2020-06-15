@@ -92,7 +92,7 @@ automation:
           seconds: 2
 
     # Run script that repeat as long person detected
-      - service: script.camera_1_person_detected
+      - service: script.camera_1_person_detected_1
 
 
   ##################################
@@ -211,7 +211,7 @@ automation:
 ### Script ###
 ##############
 script:
-  camera_1_person_detected:
+  camera_1_person_detected_1:
     sequence:
     # Save timestamp for person detected
       - service: input_text.set_value
@@ -233,10 +233,10 @@ script:
         data_template:
           entity_id: >
             {% if is_state('binary_sensor.camera_1_person_detected', 'on') %}
-              script.camera_1_person_detected_part_2
+              script.camera_1_person_detected_2
             {% endif %}
 
-  camera_1_person_detected_part_2:
+  camera_1_person_detected_2:
     sequence:
 
     # Wait 2 sec before continue
@@ -249,7 +249,7 @@ script:
         data_template:
           entity_id: >
             {% if is_state('binary_sensor.camera_1_person_detected', 'on') %}
-              script.camera_1_person_detected_part
+              script.camera_1_person_detected_1
             {% endif %}
 
 

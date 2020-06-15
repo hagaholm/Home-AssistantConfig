@@ -87,9 +87,6 @@ automation:
           entity_id: group.track_for_home_devices
           state: 'not_home'
     action:
-    # Wait 2 sec before continue
-      - delay:
-          seconds: 2
 
     # Run script that repeat as long person detected
       - service: script.camera_1_person_detected_1
@@ -241,10 +238,9 @@ script:
 
     # Wait 2 sec before continue
       - delay:
-          seconds: 2
+          seconds: 1
 
-    # Run the script again if person still detected, otherwise exit
-    # Run part 2 of the script if person still detected, otherwise exit
+    # Run part 1 of the script if person still detected, otherwise exit
       - service: script.turn_on
         data_template:
           entity_id: >

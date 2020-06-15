@@ -228,10 +228,6 @@ script:
     # Make a copy as latest motion, to be used when detect that nobody home
       - service: shell_command.camera_1_copy_to_latest_motion_1
 
-    # Wait 2 sec before continue
-      - delay:
-          seconds: 2
-
     # Run part 2 of the script if person still detected, otherwise exit
       - service: script.turn_on
         data_template:
@@ -248,8 +244,13 @@ script:
           seconds: 2
 
     # Run the script again if person still detected, otherwise exit
+    # Run part 2 of the script if person still detected, otherwise exit
       - service: script.turn_on
-        script.camera_1_person_detected
+        data_template:
+          entity_id: >
+            {% if is_state('binary_sensor.camera_1_person_detected', 'on') %}
+              script.camera_1_person_detected_part
+            {% endif %}
 
 
   camera_1_latest_motion_away_1:

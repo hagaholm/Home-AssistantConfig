@@ -91,12 +91,28 @@ automation:
     # Run script that repeat as long person detected
       - service: script.camera_1_person_detected_1
 
+  ###########################################
+  ### Camera 1 Alarm when person detected ###
+  ###########################################
+  - alias: Camera 1 Alarm when person detected
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.camera_1_person_detected
+        to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
+    action:
 
-  ##################################
-  ### Camera 1 Copy photo if still nobody home after 2 minutesImage when person detected ###
-#      - delay:
-#          minutes: 2
-#      - service: script.camera_1_latest_motion_away_1
+    # Wait 2 minutes
+      - delay:
+          minutes: 2
+
+    # Run script
+      - service: script.camera_1_alarm_when_person_detected_1
 
   ####################################################
   ### Max light friggebod fasad if person detected ###
@@ -252,18 +268,17 @@ script:
             {% endif %}
 
 
-  camera_1_latest_motion_away_1:
+  camera_1_alarm_when_person_detected_1:
     sequence:
       - service: script.turn_on
         data_template:
           entity_id: >
             {% if is_state('group.track_for_home_devices', 'not_home') %}
-              script.camera_1_latest_motion_away_2
+              script.camera_1_alarm_when_person_detected_2
             {% endif %}
 
-  camera_1_latest_motion_away_2:
+  camera_1_alarm_when_person_detected_2:
     sequence:
-      - service: shell_command.camera_1_copy_latest_motion_away_1
       - service: notify.pushbullet
         data:
           title: "{{ now().strftime('%H:%M %Y-%m-%d') }}"

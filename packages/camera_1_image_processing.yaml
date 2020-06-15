@@ -6,7 +6,7 @@ image_processing:
     ip_address: localhost
     port: 5000
     api_key: !secret deepstack_password
-    save_file_folder: /config/camera/person/
+    save_file_folder: /config/camera/deepstack_photo/
     save_timestamped_file: True
     targets:
       - person
@@ -21,66 +21,21 @@ camera:
   - platform: local_file
     name: Camera 1 Latest person
     file_path: /config/www/latest_person/camera_1_1.jpg
+  - platform: local_file
+    name: Camera 1 Latest person away
+    file_path: /config/www/latest_person_away/camera_1_1.jpg
 
 ##################
 ### Automation ###
 ##################
 automation:
-  ####################################################
-  ### Processes image every 5 sec when home at day ###
-  ####################################################
-  - alias: Camera 1 Image processing when home at day
+  ###################################
+  ### Processes image every 5 sec ###
+  ###################################
+  - alias: Camera 1 Image processing
     trigger:
       - platform: time_pattern
         seconds: "/5"
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'home'
-        - condition: time
-          after: '05:00:00'
-          before: '22:00:00'
-    action:
-      - service: image_processing.scan
-        data:
-          entity_id: image_processing.deepstack_camera_1
-
-  ######################################################
-  ### Processes image every 5 sec when home at night ###
-  ######################################################
-  - alias: Camera 1 Image processing when home at night
-    trigger:
-      - platform: time_pattern
-        seconds: "/5"
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'home'
-        - condition: time
-          before: '05:00:00'
-          after: '22:00:00'
-    action:
-      - service: image_processing.scan
-        data:
-          entity_id: image_processing.deepstack_camera_1
-
-  #############################################
-  ### Processes image every 5 sec when away ###
-  #############################################
-  - alias: Camera 1 Image processing when away
-    trigger:
-      - platform: time_pattern
-        seconds: "/5"
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'not_home'
     action:
       - service: image_processing.scan
         data:
@@ -114,7 +69,6 @@ automation:
           filename: '/config/camera/person/camera_1_{{ now().strftime("%Y%m%d-%H%M%S") }}.mp4'
           lookback: 0
           duration: 10
-      - delay: '00:00:10'
 #      - service: input_boolean.turn_off
 #        entity_id: input_boolean.camera_1_recording
 
@@ -123,30 +77,25 @@ automation:
   ###########################################
   - alias: Camera 1 Image when person detected
     trigger:
-      - platform: time_pattern
-        seconds: "/2"
+      - platform: state
+        entity_id: binary_sensor.camera_1_person_detected
+        to: 'on'
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: group.track_for_home_devices
           state: 'not_home'
-        - condition: state
-          entity_id: binary_sensor.camera_1_person_detected
-          state: 'on'
     action:
-      - service: camera.snapshot
-        data:
-          entity_id: camera.kamera_1
-          filename: '/config/camera/person/camera_1_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
-      - service: camera.snapshot
-        data:
-          entity_id: camera.kamera_1
-          filename: '/config/www/person/camera_1_latest.jpg'
-      - service: shell_command.camera_1_copy_latest_motion_1
-      - delay:
-          minutes: 2
-      - service: script.camera_1_latest_motion_away_1
+    # Run script that repeat as long person detected
+      - service: script.camera_1_person_detected
+
+
+  ##################################
+  ### Camera 1 Copy photo if still nobody home after 2 minutesImage when person detected ###
+#      - delay:
+#          minutes: 2
+#      - service: script.camera_1_latest_motion_away_1
 
   ####################################################
   ### Max light friggebod fasad if person detected ###
@@ -258,6 +207,35 @@ automation:
 ### Script ###
 ##############
 script:
+  camera_1_person_detected:
+    sequence:
+    # Save timestamp for person detected
+      - service: input_text.set_value
+        entity_id: input_text.camera_1_person_detected_timestamp
+        data_template: 
+          value: '{{ now().strftime("%Y%m%d_%H%M%S") }}'
+
+    # Save a photo with timestamp 
+      - service: camera.snapshot
+        data:
+          entity_id: camera.kamera_1
+          filename: '/config/camera/person/camera_1_{{ states.input_text.deck_snap_timestamp.state }}.jpg'
+
+    # Make a copy as latest motion, to be used when detect that nobody home
+      - service: shell_command.camera_1_copy_to_latest_motion_1
+
+    # Wait 2 sec before continue
+      - delay:
+        seconds: 2
+
+    # Run the script again if person still detected, otherwise exit
+      - service: script.turn_on
+        data_template:
+          entity_id: >
+            {% if is_state('binary_sensor.camera_1_person_detected', 'on') %}
+              script.camera_1_person_detected
+            {% endif %}
+
   camera_1_latest_motion_away_1:
     sequence:
       - service: script.turn_on
@@ -282,7 +260,7 @@ script:
 #####################
 shell_command:
   # Copy latest motion person
-  camera_1_copy_latest_motion_1: 'cp /config/camera/person/camera_1_latest.jpg /config/www/latest_person/camera_1_1.jpg'
+  camera_1_copy_to_latest_motion_1: 'cp '/config/camera/person/camera_1_{{ states.input_text.deck_snap_timestamp.state }}.jpg' '/config/camera/person/camera_1_latest.jpg''
   camera_1_copy_latest_motion_away_1: 'cp /config/camera/person/camera_1_*.jpg /config/www/latest_person_away/'
 
 #####################
@@ -322,6 +300,11 @@ binary_sensor:
              or is_state('sensor.camera_1_num_person_detected', '8')
              or is_state('sensor.camera_1_num_person_detected', '9')
              or is_state('sensor.camera_1_num_person_detected', '10') }}
+
+input_text:
+  camera_1_person_detected_timestamp:
+    name: Camera 1 Tidpunkt för person detektering
+
 
 # Used: 
 # person, bicycle, car, motorcycle, bus, truck, boat,

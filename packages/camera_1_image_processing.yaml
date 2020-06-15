@@ -226,7 +226,7 @@ script:
 
     # Wait 2 sec before continue
       - delay:
-        seconds: 2
+          seconds: 2
 
     # Run the script again if person still detected, otherwise exit
       - service: script.turn_on

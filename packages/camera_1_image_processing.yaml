@@ -298,8 +298,11 @@ script:
           entity_id: camera.kamera_1
           filename: '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp.state }}.jpg'
 
-    # Make a copy used as latest motion, to be used when detect that nobody home
-      - service: shell_command.camera_1_copy_to_latest_motion_1
+    # Make a copy to be used when detect that nobody home
+      - service: shell_command.camera_1_copy_to_latest_motion_away_1
+
+    # Make a copy for latest person away, to be used when detect that nobody home
+      - service: shell_command.camera_1_copy_to_latest_motion_away_2
 
     # Run part 2 of the script if person still detected, otherwise exit
       - service: script.turn_on
@@ -354,9 +357,9 @@ shell_command:
   # Used by automation: Camera 1 Image when person detected
   camera_1_copy_latest_motion: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg /config/www/latest_person/camera_1_1.jpg'
 
-  # Used by automation Camera 1 person detected 1
-  # Used by script camera_1_person_detected_2
-  camera_1_copy_to_latest_motion_1: "cp '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp.state }}.jpg' '/config/camera/latest_person/camera_1_1.jpg'"
+  # Used by script camera_1_person_detected_away_1
+  camera_1_copy_to_latest_motion_away_1: "cp '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp.state }}.jpg' '/config/camera/latest_person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp.state }}.jpg'"
+  camera_1_copy_to_latest_motion_away_2: "cp '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp.state }}.jpg' '/config/camera/latest_person/camera_1_1.jpg'"
   
 #####################
 ### Input Boolean ###

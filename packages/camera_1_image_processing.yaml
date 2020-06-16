@@ -118,6 +118,9 @@ automation:
         entity_id: binary_sensor.camera_1_person_detected
         to: 'on'
     action:
+    # Need to add a delay, otherwise it take the old photo
+      - delay:
+          seconds: 1
     # copy /config/camera/deepstack_camera_1_latest.jpg
     # to /config/www/latest_person/camera_1_1.jpg
       - service: shell_command.camera_1_copy_latest_motion

@@ -382,8 +382,8 @@ sensor:
         friendly_name: Camera 1 antal personer
         value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['person'] }}"
 
-  - platform: folder
-    folder: /config/camera
+#  - platform: folder
+#    folder: /config/camera
 
 #####################
 ### Binary Sensor ###

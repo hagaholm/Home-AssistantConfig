@@ -1,3 +1,33 @@
+# Folder structure
+# /config/camera/deepstack_photo
+# Image is created here by deepstack if person is detected
+# File with format deepstack_camera_1_YYYYMMDD-HHMMSS.jpg is not used
+# File with format deepstack_camera_1_latest.jpg is copied and used as latest person /config/www/latest_person/camera_1_1.jpg
+
+# Folder
+# /config/camera/person
+# Not used
+
+# Folder
+# /config/camera/latest_person_away 
+# When person detected and no one is home, then create image to this folder
+# File with format camera_1_YYYYMMDD-HHMMSS.jpg is created
+# File with format camera_1_1.jpg is created
+# If home before 2 minutes, then all files in the foder is deleted
+# After 2 minutes:
+# If still away after 2 minutes, all files are moved into /config/www/latest_person
+# When no more detection and still away, all files are moved into /config/www/latest_person
+
+
+# Folder
+#  /config/www/latest_person
+# Only /config/www/latest_person/camera_1_1.jpg exist here
+
+# Folder
+# /config/www/latest_person_away
+# Files with format camera_1_YYYYMMDD-HHMMSS.jpg and format camera_1_1.jpg exists here
+
+
 ########################
 ### Image processing ###
 ########################
@@ -18,9 +48,11 @@ image_processing:
 ### Camera ###
 ##############
 camera:
+  # Keep latest image of a detected person
   - platform: local_file
     name: Camera 1 Latest person
     file_path: /config/www/latest_person/camera_1_1.jpg
+  # Keep latest image of a detected person away
   - platform: local_file
     name: Camera 1 Latest person away
     file_path: /config/www/latest_person_away/camera_1_1.jpg
@@ -29,9 +61,9 @@ camera:
 ### Automation ###
 ##################
 automation:
-  ###################################
-  ### Processes image every 5 sec ###
-  ###################################
+  #################################################
+  ### Processes image for detection every 5 sec ###    
+  #################################################
   - alias: Camera 1 Image processing
     trigger:
       - platform: time_pattern
@@ -72,10 +104,37 @@ automation:
 #      - service: input_boolean.turn_off
 #        entity_id: input_boolean.camera_1_recording
 
-  ###########################################
-  ### Camera 1 Image when person detected ###
-  ###########################################
+  ############################################################
+  ### Camera 1 Image when person detected                  ###
+  ############################################################
+  ### When person detected                                 ###
+  ### - Copy Deepstack image when person detected          ###
+  ###   from: /config/camera/deepstack_camera_1_latest.jpg ###
+  ###   to: /config/www/latest_person/camera_1_1.jpg       ###
+  ############################################################
   - alias: Camera 1 Image when person detected
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.camera_1_person_detected
+        to: 'on'
+    action:
+    # copy /config/camera/deepstack_camera_1_latest.jpg
+    # to /config/www/latest_person/camera_1_1.jpg
+      - service: shell_command.camera_1_copy_latest_motion
+
+  #######################################################################################
+  ### Camera 1 Image when person detected away                                        ###
+  #######################################################################################
+  ### When person detected and away                                                   ###
+  ### - Create snapshot saved as '/config/camera/person/camera_1_YYYYMMDD-HHMMSS.jpg' ###
+  ###   and a copy to '/config/camera/person/camera_1_1.jpg'                          ###
+  ### - Repeat these steps every second as long as person detected and away           ###
+  ### - If switch to home, then delete all files /config/camera/person/camera_1_*     ###
+  ### - If still away after 2 minutes, then start move files periodic                 ###
+  ###   from /config/camera/person to /config/www/latest_person_away                  ###
+  ###   until no detection or at home                                                 ###
+  #######################################################################################
+  - alias: Camera 1 Image when person detected away
     trigger:
       - platform: state
         entity_id: binary_sensor.camera_1_person_detected
@@ -86,10 +145,9 @@ automation:
         - condition: state
           entity_id: group.track_for_home_devices
           state: 'not_home'
-    action:
-
-    # Run script that repeat as long person detected
-      - service: script.camera_1_person_detected_1
+    action:    
+    # Run script that repeat as long person detected and away
+      - service: script.camera_1_person_detected_away_1
 
   ###########################################
   ### Camera 1 Alarm when person detected ###
@@ -224,7 +282,9 @@ automation:
 ### Script ###
 ##############
 script:
-  camera_1_person_detected_1:
+  # Used by automation Camera 1 Image when person detected away
+  # Used by script camera_1_person_detected_away_2
+  camera_1_person_detected_away_1:
     sequence:
     # Save timestamp for person detected
       - service: input_text.set_value
@@ -232,30 +292,28 @@ script:
         data_template: 
           value: '{{ now().strftime("%Y%m%d_%H%M%S") }}'
 
-    # Save a photo with timestamp 
+    # Save a photo with timestamp to '/config/camera/person/camera_1_YYYYMMDD-HHMMSS.jpg'
       - service: camera.snapshot
         data:
           entity_id: camera.kamera_1
           filename: '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp.state }}.jpg'
 
-    # Make a copy as latest motion, to be used when detect that nobody home
+    # Make a copy used as latest motion, to be used when detect that nobody home
       - service: shell_command.camera_1_copy_to_latest_motion_1
-
-    # Make a copy as latest motion, to share    
-      - service: shell_command.camera_1_copy_to_latest_motion_2
 
     # Run part 2 of the script if person still detected, otherwise exit
       - service: script.turn_on
         data_template:
           entity_id: >
             {% if is_state('binary_sensor.camera_1_person_detected', 'on') %}
-              script.camera_1_person_detected_2
+              script.camera_1_person_detected_away_2
             {% endif %}
 
-  camera_1_person_detected_2:
+  # Used by script camera_1_person_detected_away_1
+  camera_1_person_detected_away_2:
     sequence:
 
-    # Wait 2 sec before continue
+    # Wait 1 sec before continue
       - delay:
           seconds: 1
 
@@ -264,10 +322,12 @@ script:
         data_template:
           entity_id: >
             {% if is_state('binary_sensor.camera_1_person_detected', 'on') %}
-              script.camera_1_person_detected_1
+              script.camera_1_person_detected_away_1
             {% endif %}
 
 
+  # Used by automation Camera 1 Alarm when person detected
+  # Used by script camera_1_alarm_when_person_detected_2
   camera_1_alarm_when_person_detected_1:
     sequence:
       - service: script.turn_on
@@ -277,6 +337,7 @@ script:
               script.camera_1_alarm_when_person_detected_2
             {% endif %}
 
+  # Used by script camera_1_alarm_when_person_detected_1
   camera_1_alarm_when_person_detected_2:
     sequence:
       - service: notify.pushbullet
@@ -290,11 +351,13 @@ script:
 ### Shell command ###
 #####################
 shell_command:
-  # Copy latest motion person
-  camera_1_copy_to_latest_motion_1: "cp '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp.state }}.jpg' '/config/camera/person/camera_1_latest.jpg'"
-  camera_1_copy_to_latest_motion_2: "cp '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp.state }}.jpg' '/config/www/latest_person/camera_1_1.jpg'"
-  camera_1_copy_latest_motion_away_1: 'cp /config/camera/person/camera_1_*.jpg /config/www/latest_person_away/'
+  # Used by automation: Camera 1 Image when person detected
+  camera_1_copy_latest_motion: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg /config/www/latest_person/camera_1_1.jpg'
 
+  # Used by automation Camera 1 person detected 1
+  # Used by script camera_1_person_detected_2
+  camera_1_copy_to_latest_motion_1: "cp '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp.state }}.jpg' '/config/camera/latest_person/camera_1_1.jpg'"
+  
 #####################
 ### Input Boolean ###
 #####################

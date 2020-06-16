@@ -355,7 +355,7 @@ script:
 #####################
 shell_command:
   # Used by automation: Camera 1 Image when person detected
-  camera_1_copy_latest_motion: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg /config/www/latest_person/camera_1_1.jpg'
+  camera_1_copy_latest_motion: 'cp /config/camera/deepstack_photo/deepstack_camera_1_latest.jpg /config/www/latest_person/camera_1_1.jpg'
 
   # Used by script camera_1_person_detected_away_1
   camera_1_copy_to_latest_motion_away_1: "cp '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp.state }}.jpg' '/config/camera/latest_person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp.state }}.jpg'"

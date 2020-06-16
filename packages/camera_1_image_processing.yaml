@@ -353,15 +353,6 @@ script:
           data:
             file: /config/www/latest_person_away/camera_1_1.jpg
 
-  # Delete all files, Used by user
-  delete_camera_files:
-    sequence:
-      - service: shell_command.delete_camera_files_1
-      - service: shell_command.delete_camera_files_2
-      - service: shell_command.delete_camera_files_3
-      - service: shell_command.delete_camera_files_4
-      - service: shell_command.delete_camera_files_5
-
 #####################
 ### Shell command ###
 #####################
@@ -372,13 +363,6 @@ shell_command:
   # Used by script camera_1_person_detected_away_1
   camera_1_copy_to_latest_motion_away_1: "cp '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp.state }}.jpg' '/config/camera/latest_person_away/camera_1_{{ states.input_text.camera_1_person_detected_timestamp.state }}.jpg'"
   camera_1_copy_to_latest_motion_away_2: "cp '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp.state }}.jpg' '/config/camera/latest_person_away/camera_1_1.jpg'"
-
-  # Used by script delete_camera_files
-  delete_camera_files_1: 'rm /config/camera/deepstack_photo/*'
-  delete_camera_files_2: 'rm /config/camera/latest_person_away/*'
-  delete_camera_files_3: 'rm /config/camera/person/*'
-  delete_camera_files_4: 'rm /config/www/latest_person/*'
-  delete_camera_files_5: 'rm /config/www/latest_person_away/*'
 
 #####################
 ### Input Boolean ###
@@ -397,6 +381,9 @@ sensor:
       camera_1_num_person_detected:
         friendly_name: Camera 1 antal personer
         value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['person'] }}"
+
+  - platform: folder
+    folder: /config/camera
 
 #####################
 ### Binary Sensor ###

@@ -353,6 +353,12 @@ script:
           data:
             file: /config/www/latest_person_away/camera_1_1.jpg
 
+  # Delete all files, Used by user
+  delete_camera_files:
+    sequence:
+      - service: shell_command.delete_camera_files_1
+      - service: shell_command.delete_camera_files_2
+
 #####################
 ### Shell command ###
 #####################
@@ -363,7 +369,10 @@ shell_command:
   # Used by script camera_1_person_detected_away_1
   camera_1_copy_to_latest_motion_away_1: "cp '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp.state }}.jpg' '/config/camera/latest_person_away/camera_1_{{ states.input_text.camera_1_person_detected_timestamp.state }}.jpg'"
   camera_1_copy_to_latest_motion_away_2: "cp '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp.state }}.jpg' '/config/camera/latest_person_away/camera_1_1.jpg'"
-  
+
+  delete_camera_files_1: 'rm -r /config/camera/*'
+  delete_camera_files_2: 'rm -r /config/www/*'
+
 #####################
 ### Input Boolean ###
 #####################

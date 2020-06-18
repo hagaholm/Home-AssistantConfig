@@ -73,13 +73,14 @@ automation:
         data:
           entity_id: image_processing.deepstack_camera_1
 
-  ############################################
-  ### Camera 1 Record when person detected ###
-  ############################################
-  - alias: Camera 1 Record when person detected
+  #####################################################
+  ### Camera 1 Record when person detected and away ###
+  #####################################################
+  - alias: Camera 1 Record when person detected away
     trigger:
-      - platform: time_pattern
-        seconds: "/1"
+      - platform: state
+        entity_id: binary_sensor.camera_1_person_detected
+        to: 'on'
     condition:
       condition: and
       conditions:
@@ -89,20 +90,30 @@ automation:
         - condition: state
           entity_id: binary_sensor.camera_1_person_detected
           state: 'on'
-#        - condition: state
-#          entity_id: input_boolean.camera_1_recording
-#          state: 'off'
-    action:
-#      - service: input_boolean.turn_on
-#        entity_id: input_boolean.camera_1_recording
+        - condition: state
+          entity_id: input_boolean.camera_1_recording
+          state: 'off'
+    action:    
+      - service: input_boolean.turn_on
+        entity_id: input_boolean.camera_1_recording
+        
+    # Save timestamp for person detected
+      - service: input_text.set_value
+        entity_id: input_text.camera_1_person_detected_timestamp_video
+        data_template:
+          value: '{{ now().strftime("%Y%m%d_%H%M%S") }}'
+
+    # Save a video with timestamp to '/config/camera/person/camera_1_YYYYMMDD-HHMMSS.mp4'        
       - service: camera.record
         data:
           entity_id: camera.kamera_1
-          filename: '/config/camera/person/camera_1_{{ now().strftime("%Y%m%d-%H%M%S") }}.mp4'
+          filename: '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_video.state }}.mp4'
           lookback: 0
           duration: 10
-#      - service: input_boolean.turn_off
-#        entity_id: input_boolean.camera_1_recording
+      - delay:
+          seconds: 1
+      - service: input_boolean.turn_off
+        entity_id: input_boolean.camera_1_recording
 
   ############################################################
   ### Camera 1 Image when person detected                  ###
@@ -291,7 +302,7 @@ script:
     sequence:
     # Save timestamp for person detected
       - service: input_text.set_value
-        entity_id: input_text.camera_1_person_detected_timestamp
+        entity_id: input_text.camera_1_person_detected_timestamp_photo
         data_template: 
           value: '{{ now().strftime("%Y%m%d_%H%M%S") }}'
 
@@ -299,7 +310,7 @@ script:
       - service: camera.snapshot
         data:
           entity_id: camera.kamera_1
-          filename: '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp.state }}.jpg'
+          filename: '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg'
 
     # Make a copy to be used when detect that nobody home
       - service: shell_command.camera_1_copy_to_latest_motion_away_1
@@ -361,8 +372,8 @@ shell_command:
   camera_1_copy_latest_motion: 'cp /config/camera/deepstack_photo/deepstack_camera_1_latest.jpg /config/www/latest_person/camera_1_1.jpg'
 
   # Used by script camera_1_person_detected_away_1
-  camera_1_copy_to_latest_motion_away_1: "cp '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp.state }}.jpg' '/config/camera/latest_person_away/camera_1_{{ states.input_text.camera_1_person_detected_timestamp.state }}.jpg'"
-  camera_1_copy_to_latest_motion_away_2: "cp '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp.state }}.jpg' '/config/camera/latest_person_away/camera_1_1.jpg'"
+  camera_1_copy_to_latest_motion_away_1: "cp '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg' '/config/camera/latest_person_away/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg'"
+  camera_1_copy_to_latest_motion_away_2: "cp '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg' '/config/camera/latest_person_away/camera_1_1.jpg'"
 
 #####################
 ### Input Boolean ###
@@ -415,8 +426,10 @@ binary_sensor:
              or is_state('sensor.camera_1_num_person_detected', '10') }}
 
 input_text:
-  camera_1_person_detected_timestamp:
-    name: Camera 1 Tidpunkt för person detektering
+  camera_1_person_detected_timestamp_photo:
+    name: Camera 1 Tidpunkt för person detektering foto
+  camera_1_person_detected_timestamp_video:
+    name: Camera 1 Tidpunkt för person detektering video
 
 
 # Used: 

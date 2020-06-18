@@ -57,6 +57,15 @@ camera:
     name: Camera 1 Latest person away
     file_path: /config/www/latest_person_away/camera_1_1.jpg
 
+  # Keep latest video of a detected person
+  - platform: local_file
+    name: Camera 1 Latest person
+    file_path: /config/www/latest_person/camera_1_1.mp4
+  # Keep latest video of a detected person away
+  - platform: local_file
+    name: Camera 1 Latest person away
+    file_path: /config/www/latest_person_away/camera_1_1.mp4
+
 ##################
 ### Automation ###
 ##################

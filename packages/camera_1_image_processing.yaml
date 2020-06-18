@@ -378,7 +378,7 @@ shell_command:
   camera_1_copy_to_latest_motion_away_2: "cp '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg' '/config/camera/latest_person_away/camera_1_1.jpg'"
 
   # Used by automation Camera 1 Record when person detected away
-  camera_1_copy_to_latest_motion_away_1: "cp /config/www/latest_person/camera_1_1.mp4"
+  camera_1_copy_to_latest_motion_away_video_1: "cp /config/www/latest_person/camera_1_1.mp4"
 
 #####################
 ### Input Boolean ###

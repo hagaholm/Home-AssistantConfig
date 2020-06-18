@@ -109,11 +109,13 @@ automation:
           entity_id: camera.kamera_1
           filename: '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_video.state }}.mp4'
           lookback: 0
-          duration: 10
+          duration: 15
       - delay:
           seconds: 1
       - service: input_boolean.turn_off
         entity_id: input_boolean.camera_1_recording
+    # Make a copy to be used when detect that nobody home
+      - service: shell_command.camera_1_copy_to_latest_motion_away_video_1
 
   ############################################################
   ### Camera 1 Image when person detected                  ###
@@ -374,6 +376,9 @@ shell_command:
   # Used by script camera_1_person_detected_away_1
   camera_1_copy_to_latest_motion_away_1: "cp '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg' '/config/camera/latest_person_away/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg'"
   camera_1_copy_to_latest_motion_away_2: "cp '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg' '/config/camera/latest_person_away/camera_1_1.jpg'"
+
+  # Used by automation Camera 1 Record when person detected away
+  camera_1_copy_to_latest_motion_away_1: "cp /config/www/latest_person/camera_1_1.mp4"
 
 #####################
 ### Input Boolean ###

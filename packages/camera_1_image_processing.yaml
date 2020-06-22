@@ -89,6 +89,7 @@ automation:
     trigger:
       - platform: state
         entity_id: binary_sensor.camera_1_person_detected
+        from: 'off'
         to: 'on'
     condition:
       condition: and
@@ -138,6 +139,7 @@ automation:
     trigger:
       - platform: state
         entity_id: binary_sensor.camera_1_person_detected
+        from: 'off'
         to: 'on'
     action:
     # Need to add a delay, otherwise it take the old photo
@@ -163,6 +165,7 @@ automation:
     trigger:
       - platform: state
         entity_id: binary_sensor.camera_1_person_detected
+        from: 'off'
         to: 'on'
     condition:
       condition: and
@@ -181,6 +184,7 @@ automation:
     trigger:
       - platform: state
         entity_id: binary_sensor.camera_1_person_detected
+        from: 'off'
         to: 'on'
     condition:
       condition: and
@@ -204,6 +208,7 @@ automation:
     trigger:
       - platform: state
         entity_id: binary_sensor.camera_1_person_detected
+        from: 'off'
         to: 'on'
     condition:
       condition: and
@@ -225,6 +230,7 @@ automation:
     trigger:
       - platform: state
         entity_id: binary_sensor.camera_1_person_detected
+        from: 'off'
         to: 'on'
     condition:
       condition: and
@@ -288,6 +294,7 @@ automation:
     trigger:
       - platform: state
         entity_id: binary_sensor.camera_1_person_detected
+        from: 'off'
         to: 'on'
     action:
       - service: light.toggle

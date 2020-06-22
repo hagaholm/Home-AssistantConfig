@@ -109,6 +109,7 @@ automation:
     trigger:
       - platform: state
         entity_id: binary_sensor.camera_2_person_detected
+        from: 'off'
         to: 'on'
     condition:
       condition: and
@@ -156,6 +157,7 @@ automation:
     trigger:
       - platform: state
         entity_id: binary_sensor.camera_2_person_detected
+        from: 'off'
         to: 'on'
     condition:
       condition: and

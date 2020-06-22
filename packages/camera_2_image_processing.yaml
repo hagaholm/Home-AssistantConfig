@@ -107,10 +107,11 @@ automation:
   ############################################
   - alias: Camera 2 Record when person detected
     trigger:
-      - platform: state
-        entity_id: binary_sensor.camera_2_person_detected
-        from: 'off'
-        to: 'on'
+      - platform: event
+        event_type: folder_watcher
+        event_data:
+          event_type: modified
+          path: '/config/camera/deepstack_camera_2_latest.jpg'
     condition:
       condition: and
       conditions:
@@ -155,10 +156,11 @@ automation:
   ##############################################
   - alias:  Camera 2 Copy latest motion away
     trigger:
-      - platform: state
-        entity_id: binary_sensor.camera_2_person_detected
-        from: 'off'
-        to: 'on'
+      - platform: event
+        event_type: folder_watcher
+        event_data:
+          event_type: modified
+          path: '/config/camera/deepstack_camera_2_latest.jpg'
     condition:
       condition: and
       conditions:

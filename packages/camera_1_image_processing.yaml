@@ -137,10 +137,14 @@ automation:
   ############################################################
   - alias: Camera 1 Image when person detected
     trigger:
-      - platform: state
-        entity_id: binary_sensor.camera_1_person_detected
-        from: 'off'
-        to: 'on'
+      - platform: event
+        event_type: folder_watcher
+        event_data:
+          event_type: modified
+          path: '/config/camera/deepstack_camera_1_latest.jpg'
+    action:
+      - service: shell_command.camera_1_copy_latest_motion_1
+
     action:
     # Need to add a delay, otherwise it take the old photo
       - delay:
@@ -163,10 +167,11 @@ automation:
   #######################################################################################
   - alias: Camera 1 Image when person detected away
     trigger:
-      - platform: state
-        entity_id: binary_sensor.camera_1_person_detected
-        from: 'off'
-        to: 'on'
+      - platform: event
+        event_type: folder_watcher
+        event_data:
+          event_type: modified
+          path: '/config/camera/deepstack_camera_1_latest.jpg'
     condition:
       condition: and
       conditions:
@@ -182,10 +187,11 @@ automation:
   ###########################################
   - alias: Camera 1 Alarm when person detected
     trigger:
-      - platform: state
-        entity_id: binary_sensor.camera_1_person_detected
-        from: 'off'
-        to: 'on'
+      - platform: event
+        event_type: folder_watcher
+        event_data:
+          event_type: modified
+          path: '/config/camera/deepstack_camera_1_latest.jpg'
     condition:
       condition: and
       conditions:
@@ -206,10 +212,11 @@ automation:
   ####################################################
   - alias: Max light friggebod fasad if person detected
     trigger:
-      - platform: state
-        entity_id: binary_sensor.camera_1_person_detected
-        from: 'off'
-        to: 'on'
+      - platform: event
+        event_type: folder_watcher
+        event_data:
+          event_type: modified
+          path: '/config/camera/deepstack_camera_1_latest.jpg'
     condition:
       condition: and
       conditions:
@@ -228,10 +235,11 @@ automation:
   ###################################################
   - alias: Max light förråd fasad if person detected
     trigger:
-      - platform: state
-        entity_id: binary_sensor.camera_1_person_detected
-        from: 'off'
-        to: 'on'
+      - platform: event
+        event_type: folder_watcher
+        event_data:
+          event_type: modified
+          path: '/config/camera/deepstack_camera_1_latest.jpg'
     condition:
       condition: and
       conditions:
@@ -292,10 +300,11 @@ automation:
   ######################################
   - alias: Flash light if person detected
     trigger:
-      - platform: state
-        entity_id: binary_sensor.camera_1_person_detected
-        from: 'off'
-        to: 'on'
+      - platform: event
+        event_type: folder_watcher
+        event_data:
+          event_type: modified
+          path: '/config/camera/deepstack_camera_1_latest.jpg'
     action:
       - service: light.toggle
         entity_id: light.hall_skap

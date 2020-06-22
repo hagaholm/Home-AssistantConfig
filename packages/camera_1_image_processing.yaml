@@ -192,10 +192,18 @@ automation:
     condition:
       condition: and
       conditions:
+    # Only when nobody home
         - condition: state
           entity_id: group.track_for_home_devices
           state: 'not_home'
+    # Added to avoid duplicate alarm
+        - condition: state
+          entity_id: input_boolean.camera_1_alarm_active
+          state: 'off'
     action:
+    # Added to avoid duplicate alarm
+      - service: input_boolean.turn_on
+        entity_id: input_boolean.camera_1_alarm_active
 
     # Wait 2 minutes
       - delay:
@@ -203,6 +211,10 @@ automation:
 
     # Run script
       - service: script.camera_1_alarm_when_person_detected_1
+
+    # Added to avoid duplicate alarm
+      - service: input_boolean.turn_off
+        entity_id: input_boolean.camera_1_alarm_active
 
   ####################################################
   ### Max light friggebod fasad if person detected ###
@@ -409,6 +421,10 @@ input_boolean:
   camera_1_recording:
     name: Camera 1 spelar in
     initial: off
+  camera_1_alarm_active:
+    name: Camera 1 alarm aktiv
+    initial: off
+
 
 ##############
 ### Sensor ###

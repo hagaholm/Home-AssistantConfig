@@ -39,10 +39,10 @@ homeassistant:
 #                                                  #
 ####################################################
 # https://www.home-assistant.io/integrations/folder_watcher/
-#folder_watcher:
-#  - folder: /config/camera_1/person
-#    patterns:
-#      - '*.jpg'
+folder_watcher:
+  - folder: /config/camera/deepstack_photo
+    patterns:
+      - '*.jpg'
 
 # https://www.home-assistant.io/components/system_health/
 system_health:

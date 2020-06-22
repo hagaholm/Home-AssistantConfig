@@ -127,29 +127,26 @@ automation:
     # Make a copy to be used when detect that nobody home
       - service: shell_command.camera_1_copy_to_latest_motion_away_video_1
 
-  ############################################################
-  ### Camera 1 Image when person detected                  ###
-  ############################################################
-  ### When person detected                                 ###
-  ### - Copy Deepstack image when person detected          ###
-  ###   from: /config/camera/deepstack_camera_1_latest.jpg ###
-  ###   to: /config/www/latest_person/camera_1_1.jpg       ###
-  ############################################################
+  ############################################################################
+  ### Camera 1 Image when person detected                                  ###
+  ############################################################################
+  ### When person detected                                                 ###
+  ### - Copy Deepstack image when person detected                          ###
+  ###   from: /config/camera/deepstack_photo/deepstack_camera_1_latest.jpg ###
+  ###   to: /config/www/latest_person/camera_1_1.jpg                       ###
+  ############################################################################
   - alias: Camera 1 Image when person detected
     trigger:
       - platform: event
         event_type: folder_watcher
         event_data:
           event_type: modified
-          path: '/config/camera/deepstack_camera_1_latest.jpg'
-    action:
-      - service: shell_command.camera_1_copy_latest_motion_1
-
+          path: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg'
     action:
     # Need to add a delay, otherwise it take the old photo
       - delay:
           seconds: 1
-    # copy /config/camera/deepstack_camera_1_latest.jpg
+    # copy /config/camera/deepstack_photo/deepstack_camera_1_latest.jpg
     # to /config/www/latest_person/camera_1_1.jpg
       - service: shell_command.camera_1_copy_latest_motion
 
@@ -171,7 +168,7 @@ automation:
         event_type: folder_watcher
         event_data:
           event_type: modified
-          path: '/config/camera/deepstack_camera_1_latest.jpg'
+          path: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg'
     condition:
       condition: and
       conditions:
@@ -191,7 +188,7 @@ automation:
         event_type: folder_watcher
         event_data:
           event_type: modified
-          path: '/config/camera/deepstack_camera_1_latest.jpg'
+          path: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg'
     condition:
       condition: and
       conditions:
@@ -216,7 +213,7 @@ automation:
         event_type: folder_watcher
         event_data:
           event_type: modified
-          path: '/config/camera/deepstack_camera_1_latest.jpg'
+          path: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg'
     condition:
       condition: and
       conditions:
@@ -239,7 +236,7 @@ automation:
         event_type: folder_watcher
         event_data:
           event_type: modified
-          path: '/config/camera/deepstack_camera_1_latest.jpg'
+          path: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg'
     condition:
       condition: and
       conditions:
@@ -304,7 +301,7 @@ automation:
         event_type: folder_watcher
         event_data:
           event_type: modified
-          path: '/config/camera/deepstack_camera_1_latest.jpg'
+          path: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg'
     action:
       - service: light.toggle
         entity_id: light.hall_skap

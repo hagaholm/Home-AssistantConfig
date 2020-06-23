@@ -82,10 +82,10 @@ automation:
         data:
           entity_id: image_processing.deepstack_camera_1
 
-    ##########################################
-    ### TEST                               ###
-    ### Startar timer vid rörelse camera 1 ###
-    ##########################################
+    #########################################################################################
+    ### TEST                                                                              ###
+    ### Startar timer vid rörelse camera 1 och ingen är hemma och timern inte redan är på ###
+    #########################################################################################
   - alias: Startar Camera 1 detected timer
     trigger:
       - platform: event
@@ -93,6 +93,15 @@ automation:
         event_data:
           event_type: modified
           path: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
+        - condition: state
+          entity_id:  input_boolean.camera_1_detected_active
+          state: 'off'
     action:
       # Aktiverar rörelsevakt_aktiv
       - service: input_boolean.turn_on
@@ -101,15 +110,11 @@ automation:
 
       # Cancel timer, återställer till maxtid
       - service: timer.cancel
-        entity_id: timer.timer_camera_1_last_detected
+        entity_id: timer.timer_camera_1_detected
 
       # Start timer, börjar räkna ner tiden
       - service: timer.start
-        entity_id: timer.timer_camera_1_last_detected
-
-      # Start timer, börjar räkna ner tiden
-      - service: timer.start
-        entity_id: timer.timer_camera_1_first_detected
+        entity_id: timer.timer_camera_1_detected
 
     ##########################################
     ### TEST                               ###
@@ -120,7 +125,7 @@ automation:
       - platform: event
         event_type: timer.finished
         event_data:
-          entity_id: timer.timer_camera_1_first_detected
+          entity_id: timer.timer_camera_1_detected
     condition:
       condition: and
       conditions:
@@ -131,7 +136,6 @@ automation:
       - service: input_boolean.turn_off
         data:
           entity_id: input_boolean.camera_1_detected_activve
-
 
   #####################################################
   ### Camera 1 Record when person detected and away ###
@@ -531,14 +535,11 @@ input_text:
 
 ### TEST ###
 timer:
-  # Timer för camera 1 först detekterad
-  timer_camera_1_first_detected:
-    name: Tid kvar kamera 1 först detekterad
+  # Timer för camera 1 detekterad
+  timer_camera_1_detected:
+    name: Tid kvar kamera 1 detekterad
     duration: '00:02:00'
-  # Timer för camera 1 senast detekterad
-  timer_camera_1_last_detected:
-    name: Tid kvar kamera 1 senast detekterad
-    duration: '00:02:00'
+
 
 
 # Used: 

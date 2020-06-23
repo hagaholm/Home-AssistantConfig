@@ -86,7 +86,7 @@ automation:
     ### TEST                                                                              ###
     ### Startar timer vid rörelse camera 1 och ingen är hemma och timern inte redan är på ###
     #########################################################################################
-  - alias: Startar Camera 1 detected timer
+  - alias: Startar Camera 1 detected
     trigger:
       - platform: event
         event_type: folder_watcher
@@ -135,7 +135,7 @@ automation:
     action:
       - service: input_boolean.turn_off
         data:
-          entity_id: input_boolean.camera_1_detected_activve
+          entity_id: input_boolean.camera_1_detected_active
 
   #####################################################
   ### Camera 1 Record when person detected and away ###

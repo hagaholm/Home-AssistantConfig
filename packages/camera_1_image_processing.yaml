@@ -423,7 +423,6 @@ script:
           entity_id: >
             {% if is_state('binary_sensor.camera_1_person_detected', 'on') %}
               script.camera_1_person_detected_away_1
-#            {% else %}
             {% endif %}
 
 

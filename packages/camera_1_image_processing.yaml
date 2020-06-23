@@ -94,29 +94,33 @@ automation:
           event_type: modified
           path: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg'
     action:
-      # Aktiverar rorelsevakt_aktiv
+      # Aktiverar rörelsevakt_aktiv
       - service: input_boolean.turn_on
         data:
           entity_id: input_boolean.camera_1_detected_active
 
       # Cancel timer, återställer till maxtid
       - service: timer.cancel
-        entity_id: timer.timer_camera_1_detected
+        entity_id: timer.timer_camera_1_last_detected
 
       # Start timer, börjar räkna ner tiden
       - service: timer.start
-        entity_id: timer.timer_camera_1_detected
+        entity_id: timer.timer_camera_1_last_detected
+
+      # Start timer, börjar räkna ner tiden
+      - service: timer.start
+        entity_id: timer.timer_camera_1_first_detected
 
     ##########################################
     ### TEST                               ###
     ### Stänger av camera_1_detected_aktiv ###
     ##########################################
-  - alias: Stänger av camera 1 detected aktiv
+  - alias: Stänger av Camera 1 detected
     trigger:
       - platform: event
         event_type: timer.finished
         event_data:
-          entity_id: timer.timer_camera_1_detected
+          entity_id: timer.timer_camera_1_first_detected
     condition:
       condition: and
       conditions:
@@ -527,9 +531,13 @@ input_text:
 
 ### TEST ###
 timer:
-  # Timers för camera 1 detected
-  timer_camera_1_detected:
-    name: Tid kvar kamera 1 detekterad
+  # Timer för camera 1 först detekterad
+  timer_camera_1_first_detected:
+    name: Tid kvar kamera 1 först detekterad
+    duration: '00:02:00'
+  # Timer för camera 1 senast detekterad
+  timer_camera_1_last_detected:
+    name: Tid kvar kamera 1 senast detekterad
     duration: '00:02:00'
 
 

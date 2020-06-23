@@ -82,6 +82,53 @@ automation:
         data:
           entity_id: image_processing.deepstack_camera_1
 
+    ##########################################
+    ### TEST                               ###
+    ### Startar timer vid rörelse camera 1 ###
+    ##########################################
+  - alias: Startar Camera 1 detected timer
+    trigger:
+      - platform: event
+        event_type: folder_watcher
+        event_data:
+          event_type: modified
+          path: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg'
+    action:
+      # Aktiverar rorelsevakt_aktiv
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.camera_1_detected_active
+
+      # Cancel timer, återställer till maxtid
+      - service: timer.cancel
+        entity_id: timer.timer_camera_1_detected
+
+      # Start timer, börjar räkna ner tiden
+      - service: timer.start
+        entity_id: timer.timer_camera_1_detected
+
+    ##########################################
+    ### TEST                               ###
+    ### Stänger av camera_1_detected_aktiv ###
+    ##########################################
+  - alias: Stänger av camera 1 detected aktiv
+    trigger:
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.timer_camera_1_detected
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id:  input_boolean.camera_1_detected_active
+          state: 'on'
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.camera_1_detected_activve
+
+
   #####################################################
   ### Camera 1 Record when person detected and away ###
   #####################################################
@@ -376,6 +423,7 @@ script:
           entity_id: >
             {% if is_state('binary_sensor.camera_1_person_detected', 'on') %}
               script.camera_1_person_detected_away_1
+#            {% else %}
             {% endif %}
 
 
@@ -425,6 +473,10 @@ input_boolean:
     name: Camera 1 alarm aktiv
     initial: off
 
+### TEST ###
+  camera_1_detected_active:
+    name: Kamera 1 detekterad aktiv
+    initial: off
 
 ##############
 ### Sensor ###
@@ -473,6 +525,13 @@ input_text:
     name: Camera 1 Tidpunkt för person detektering foto
   camera_1_person_detected_timestamp_video:
     name: Camera 1 Tidpunkt för person detektering video
+
+### TEST ###
+timer:
+  # Timers för camera 1 detected
+  timer_camera_1_detected:
+    name: Tid kvar kamera 1 detekterad
+    duration: '00:02:00'
 
 
 # Used: 

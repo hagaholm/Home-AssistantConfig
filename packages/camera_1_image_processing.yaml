@@ -238,38 +238,26 @@ automation:
   ### Camera 1 Alarm when person detected ###
   ###########################################
   - alias: Camera 1 Alarm when person detected
+    # After 2 minutes after person detected
     trigger:
-      - platform: event
-        event_type: folder_watcher
-        event_data:
-          event_type: modified
-          path: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg'
+      platform: state
+      entity_id: input_boolean.camera_1_detected_active
+      to: 'off'
+    # Only if still nobody home
     condition:
       condition: and
       conditions:
-    # Only when nobody home
         - condition: state
           entity_id: group.track_for_home_devices
           state: 'not_home'
-    # Added to avoid duplicate alarm
-        - condition: state
-          entity_id: input_boolean.camera_1_alarm_active
-          state: 'off'
+    # Send notify
     action:
-    # Added to avoid duplicate alarm
-      - service: input_boolean.turn_on
-        entity_id: input_boolean.camera_1_alarm_active
-
-    # Wait 2 minutes
-      - delay:
-          minutes: 2
-
-    # Run script
-      - service: script.camera_1_alarm_when_person_detected_1
-
-    # Added to avoid duplicate alarm
-      - service: input_boolean.turn_off
-        entity_id: input_boolean.camera_1_alarm_active
+      - service: notify.pushbullet
+        data:
+          title: "{{ now().strftime('%H:%M %Y-%m-%d') }}"
+          message: "Person detekterad, senaste bild"
+          data:
+            file: /config/www/latest_person/camera_1_1.jpg
 
   ####################################################
   ### Max light friggebod fasad if person detected ###
@@ -433,28 +421,6 @@ script:
               script.camera_1_person_detected_away_1
             {% endif %}
 
-
-  # Used by automation Camera 1 Alarm when person detected
-  # Used by script camera_1_alarm_when_person_detected_2
-  camera_1_alarm_when_person_detected_1:
-    sequence:
-      - service: script.turn_on
-        data_template:
-          entity_id: >
-            {% if is_state('group.track_for_home_devices', 'not_home') %}
-              script.camera_1_alarm_when_person_detected_2
-            {% endif %}
-
-  # Used by script camera_1_alarm_when_person_detected_1
-  camera_1_alarm_when_person_detected_2:
-    sequence:
-      - service: notify.pushbullet
-        data:
-          title: "{{ now().strftime('%H:%M %Y-%m-%d') }}"
-          message: "Person detekterad, senaste bild"
-          data:
-            file: /config/www/latest_person/camera_1_1.jpg
-
 #####################
 ### Shell command ###
 #####################
@@ -476,9 +442,9 @@ input_boolean:
   camera_1_recording:
     name: Camera 1 spelar in
     initial: off
-  camera_1_alarm_active:
-    name: Camera 1 alarm aktiv
-    initial: off
+#  camera_1_alarm_active:
+#    name: Camera 1 alarm aktiv
+#    initial: off
 
 ### TEST ###
   camera_1_detected_active:

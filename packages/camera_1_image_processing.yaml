@@ -210,12 +210,7 @@ automation:
   #######################################################################################
   ### When person detected and away                                                   ###
   ### - Create snapshot saved as '/config/camera/person/camera_1_YYYYMMDD-HHMMSS.jpg' ###
-  ###   and a copy to '/config/camera/person/camera_1_1.jpg'                          ###
-  ### - Repeat these steps every second as long as person detected and away           ###
-  ### - If switch to home, then delete all files /config/camera/person/camera_1_*     ###
-  ### - If still away after 2 minutes, then start move files periodic                 ###
-  ###   from /config/camera/person to /config/www/latest_person_away                  ###
-  ###   until no detection or at home                                                 ###
+  ###   and a copy as '/config/camera/person/camera_1_1.jpg'                          ###
   #######################################################################################
   - alias: Camera 1 Image when person detected away
     trigger:
@@ -230,9 +225,24 @@ automation:
         - condition: state
           entity_id: group.track_for_home_devices
           state: 'not_home'
-    action:    
-    # Run script that repeat as long person detected and away
-      - service: script.camera_1_person_detected_away_1
+    action:
+    # Save timestamp for person detected
+      - service: input_text.set_value
+        entity_id: input_text.camera_1_person_detected_timestamp_photo
+        data_template: 
+          value: '{{ now().strftime("%Y%m%d_%H%M%S") }}'
+
+    # Save a photo with timestamp to '/config/camera/person/camera_1_YYYYMMDD-HHMMSS.jpg'
+      - service: camera.snapshot
+        data:
+          entity_id: camera.kamera_1
+          filename: '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg'
+
+    # Make a copy to be used when detect that nobody home
+      - service: shell_command.camera_1_copy_to_latest_motion_away_1
+
+    # Make a copy for latest person away, to be used when detect that nobody home
+      - service: shell_command.camera_1_copy_to_latest_motion_away_2
 
   ###########################################
   ### Camera 1 Alarm when person detected ###
@@ -371,64 +381,14 @@ automation:
       - service: automation.turn_off
         entity_id: automation.flash_light_if_person_detected
 
-##############
-### Script ###
-##############
-script:
-  # Used by automation Camera 1 Image when person detected away
-  # Used by script camera_1_person_detected_away_2
-  camera_1_person_detected_away_1:
-    sequence:
-    # Save timestamp for person detected
-      - service: input_text.set_value
-        entity_id: input_text.camera_1_person_detected_timestamp_photo
-        data_template: 
-          value: '{{ now().strftime("%Y%m%d_%H%M%S") }}'
-
-    # Save a photo with timestamp to '/config/camera/person/camera_1_YYYYMMDD-HHMMSS.jpg'
-      - service: camera.snapshot
-        data:
-          entity_id: camera.kamera_1
-          filename: '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg'
-
-    # Make a copy to be used when detect that nobody home
-      - service: shell_command.camera_1_copy_to_latest_motion_away_1
-
-    # Make a copy for latest person away, to be used when detect that nobody home
-      - service: shell_command.camera_1_copy_to_latest_motion_away_2
-
-    # Run part 2 of the script if person still detected, otherwise exit
-      - service: script.turn_on
-        data_template:
-          entity_id: >
-            {% if is_state('binary_sensor.camera_1_person_detected', 'on') %}
-              script.camera_1_person_detected_away_2
-            {% endif %}
-
-  # Used by script camera_1_person_detected_away_1
-  camera_1_person_detected_away_2:
-    sequence:
-
-    # Wait 1 sec before continue
-      - delay:
-          seconds: 1
-
-    # Run part 1 of the script if person still detected, otherwise exit
-      - service: script.turn_on
-        data_template:
-          entity_id: >
-            {% if is_state('binary_sensor.camera_1_person_detected', 'on') %}
-              script.camera_1_person_detected_away_1
-            {% endif %}
-
 #####################
 ### Shell command ###
 #####################
 shell_command:
-  # Used by automation: Camera 1 Image when person detected
+  # Used by automation Camera 1 Image when person detected
   camera_1_copy_latest_motion: 'cp /config/camera/deepstack_photo/deepstack_camera_1_latest.jpg /config/www/latest_person/camera_1_1.jpg'
 
-  # Used by script camera_1_person_detected_away_1
+  # Used by automation Camera 1 Image when person detected away
   camera_1_copy_to_latest_motion_away_1: "cp '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg' '/config/camera/latest_person_away/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg'"
   camera_1_copy_to_latest_motion_away_2: "cp '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg' '/config/camera/latest_person_away/camera_1_1.jpg'"
 
@@ -442,9 +402,6 @@ input_boolean:
   camera_1_recording:
     name: Camera 1 spelar in
     initial: off
-#  camera_1_alarm_active:
-#    name: Camera 1 alarm aktiv
-#    initial: off
 
 ### TEST ###
   camera_1_detected_active:

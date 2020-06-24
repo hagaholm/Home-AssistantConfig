@@ -299,7 +299,6 @@ automation:
   ### Camera 1 Move latest_person_away files when no detection ###
   ################################################################
   - alias: Camera 1 Move latest_person_away files when no detection
-    # After 2 minutes after person detected
     trigger:
       - platform: state
         entity_id: binary_sensor.camera_1_person_detected
@@ -317,6 +316,28 @@ automation:
 
     # Make a copy for all camera/latest_person_away to www/latest_person_away
       - service: shell_command.camera_1_move_camera_latest_person_away_to_www_latest_person_away
+
+  ################################################################
+  ### Camera 1 Delete latest_person_away files when home ###
+  ################################################################
+  - alias: Camera 1 Delete latest_person_away files when home
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.camera_1_person_detected
+        from: 'on'
+        to: 'off'
+    # Only if home
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'home'
+    # Send notify
+    action:
+
+    # Make a delete for all camera/latest_person_away
+      - service: shell_command.camera_1_delete_camera_latest_person_away
 
   ####################################################
   ### Max light friggebod fasad if person detected ###
@@ -448,6 +469,9 @@ shell_command:
   # Used by automation Camera 1 Move latest_person_away files after 2 min
   # Used by automation Camera 1 Move latest_person_away files when no detection
   camera_1_move_camera_latest_person_away_to_www_latest_person_away: "mv /config/camera/latest_person_away/*.jpg /config/www/latest_person_away/"
+
+  # Used by automation Camera 1 Delete latest_person_away files when home 
+  camera_1_delete_camera_latest_person_away: "rm /config/camera/latest_person_away/*.jpg"
 
 #####################
 ### Input Boolean ###

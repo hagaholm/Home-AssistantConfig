@@ -70,9 +70,11 @@ camera:
 ### Automation ###
 ##################
 automation:
-  #################################################
-  ### Processes image for detection every 5 sec ###    
-  #################################################
+  #####################################
+  ### Processes image for detection ###
+  #####################################
+  ### - every 5 sec                 ###    
+  #####################################
   - alias: Camera 1 Image processing
     trigger:
       - platform: time_pattern
@@ -82,11 +84,13 @@ automation:
         data:
           entity_id: image_processing.deepstack_camera_1
 
-    #########################################################################################
-    ### TEST                                                                              ###
-    ### Startar timer vid rörelse camera 1 och ingen är hemma och timern inte redan är på ###
-    #########################################################################################
-  - alias: Startar Camera 1 detected
+  ########################################
+  ### Camera detekterad, startar timer ###
+  ########################################
+  ### - om ingen är hemma              ###
+  ### - om timern är off               ###
+  ########################################
+  - alias: Camera 1 Start timer
     trigger:
       - platform: event
         event_type: folder_watcher
@@ -116,11 +120,13 @@ automation:
       - service: timer.start
         entity_id: timer.timer_camera_1_detected
 
-    ##########################################
-    ### TEST                               ###
-    ### Stänger av camera_1_detected_aktiv ###
-    ##########################################
-  - alias: Stänger av Camera 1 detected
+  #####################################################
+  ### Camera, vid stoppad timer                     ###
+  #####################################################
+  ### input_boolean.camera_1_detected_active == off ###
+  ### - efter 2 min                                 ###
+  #####################################################
+  - alias: Camera 1 Stop timer
     trigger:
       - platform: event
         event_type: timer.finished
@@ -138,6 +144,7 @@ automation:
           entity_id: input_boolean.camera_1_detected_active
 
   #####################################################
+  ### TO DEVELOP AND TEST                           ###
   ### Camera 1 Record when person detected and away ###
   #####################################################
   - alias: Camera 1 Record when person detected away
@@ -185,7 +192,7 @@ automation:
   ############################################################################
   ### Camera 1 Image when person detected                                  ###
   ############################################################################
-  ### When person detected                                                 ###
+  ### When person detected, make the last image available                  ###
   ### - Copy Deepstack image when person detected                          ###
   ###   from: /config/camera/deepstack_photo/deepstack_camera_1_latest.jpg ###
   ###   to: /config/www/latest_person/camera_1_1.jpg                       ###
@@ -205,13 +212,13 @@ automation:
     # to /config/www/latest_person/camera_1_1.jpg
       - service: shell_command.camera_1_copy_latest_motion
 
-  #######################################################################################
-  ### Camera 1 Image when person detected away                                        ###
-  #######################################################################################
-  ### When person detected and away                                                   ###
-  ### - Create snapshot saved as '/config/camera/person/camera_1_YYYYMMDD-HHMMSS.jpg' ###
-  ###   and a copy as '/config/camera/person/camera_1_1.jpg'                          ###
-  #######################################################################################
+  ###################################################################################################
+  ### Camera 1 Image when person detected away                                                    ###
+  ###################################################################################################
+  ### When person detected and away                                                               ###
+  ### - Create snapshot saved as '/config/camera/latest_person_away/camera_1_YYYYMMDD-HHMMSS.jpg' ###
+  ### - Also make a copy to '/config/latest_person_away/person/camera_1_1.jpg'                    ###
+  ###################################################################################################
   - alias: Camera 1 Image when person detected away
     trigger:
       - platform: event
@@ -232,17 +239,14 @@ automation:
         data_template: 
           value: '{{ now().strftime("%Y%m%d_%H%M%S") }}'
 
-    # Save a photo with timestamp to '/config/camera/person/camera_1_YYYYMMDD-HHMMSS.jpg'
+    # Save a photo with timestamp to '/config/camera/latest_person_away/camera_1_YYYYMMDD-HHMMSS.jpg'
       - service: camera.snapshot
         data:
           entity_id: camera.kamera_1
-          filename: '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg'
-
-    # Make a copy to be used when detect that nobody home
-      - service: shell_command.camera_1_copy_to_latest_motion_away_1
+          filename: '/config/camera/latest_person_away/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg'
 
     # Make a copy for latest person away, to be used when detect that nobody home
-      - service: shell_command.camera_1_copy_to_latest_motion_away_2
+      - service: shell_command.camera_1_copy_to_latest_motion_away_1
 
   ###########################################
   ### Camera 1 Alarm when person detected ###
@@ -292,9 +296,9 @@ automation:
           brightness_pct: 100
           transition: 5
 
-  ###################################################
+  #################################################
   ### Max light förråd fasad if person detected ###
-  ###################################################
+  #################################################
   - alias: Max light förråd fasad if person detected
     trigger:
       - platform: event
@@ -316,6 +320,7 @@ automation:
           transition: 5
 
   #########################################################
+  ### NEED A GOOD WAY TO TURN OFF                       ###
   ### Reset light friggebod fasad if no person detected ###
   #########################################################
   - alias: Reset light friggebod fasad if person no detected
@@ -337,6 +342,7 @@ automation:
           transition: 5
 
   ######################################################
+  ### NEED A GOOD WAY TO TURN OFF                    ###
   ### Reset light förråd fasad if no person detected ###
   ######################################################
   - alias: Reset light förråd fasad if person no detected
@@ -389,8 +395,7 @@ shell_command:
   camera_1_copy_latest_motion: 'cp /config/camera/deepstack_photo/deepstack_camera_1_latest.jpg /config/www/latest_person/camera_1_1.jpg'
 
   # Used by automation Camera 1 Image when person detected away
-  camera_1_copy_to_latest_motion_away_1: "cp '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg' '/config/camera/latest_person_away/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg'"
-  camera_1_copy_to_latest_motion_away_2: "cp '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg' '/config/camera/latest_person_away/camera_1_1.jpg'"
+  camera_1_copy_to_latest_motion_away_1: "cp '/config/camera/latest_person_away/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg' '/config/camera/latest_person_away/camera_1_1.jpg'"
 
   # Used by automation Camera 1 Record when person detected away
   camera_1_copy_to_latest_motion_away_video_1: "cp /config/www/latest_person/camera_1_1.mp4"

@@ -273,6 +273,28 @@ automation:
           data:
             file: /config/www/latest_person/camera_1_1.jpg
 
+  #####################################################
+  ### Camera 1 Copy latest_person_away files to www ###
+  #####################################################
+  - alias: Camera 1 Copy latest_person_away files to www
+    # After 2 minutes after person detected
+    trigger:
+      platform: state
+      entity_id: input_boolean.camera_1_detected_active
+      to: 'off'
+    # Only if still nobody home
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
+    # Send notify
+    action:
+
+    # Make a copy for all camera/latest_person_away to www/latest_person_away
+      - service: shell_command.camera_1_copy_camera_latest_person_away_to_www_latest_person_away
+
   ####################################################
   ### Max light friggebod fasad if person detected ###
   ####################################################
@@ -399,6 +421,9 @@ shell_command:
 
   # Used by automation Camera 1 Record when person detected away
   camera_1_copy_to_latest_motion_away_video_1: "cp /config/www/latest_person/camera_1_1.mp4"
+
+  # Used by automation Camera 1 Copy latest_person_away files to www
+  camera_1_copy_camera_latest_person_away_to_www_latest_person_away: "cp -r /config/camera/latest_person_away/. /config/www/latest_person_away/"
 
 #####################
 ### Input Boolean ###

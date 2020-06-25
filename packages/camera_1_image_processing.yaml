@@ -5,10 +5,6 @@
 # File with format deepstack_camera_1_latest.jpg is copied and used as latest person /config/www/latest_person/camera_1_1.jpg
 
 # Folder
-# /config/camera/person
-# Not used
-
-# Folder
 # /config/camera/latest_person_away 
 # When person detected and no one is home, then create image to this folder
 # File with format camera_1_YYYYMMDD-HHMMSS.jpg is created
@@ -17,7 +13,6 @@
 # After 2 minutes:
 # If still away after 2 minutes, all files are moved into /config/www/latest_person
 # When no more detection and still away, all files are moved into /config/www/latest_person
-
 
 # Folder
 #  /config/www/latest_person
@@ -52,6 +47,7 @@ camera:
   - platform: local_file
     name: Camera 1 Latest person
     file_path: /config/www/latest_person/camera_1_1.jpg
+
   # Keep latest image of a detected person away
   - platform: local_file
     name: Camera 1 Latest person away
@@ -61,6 +57,7 @@ camera:
   - platform: local_file
     name: Camera 1 Latest person video
     file_path: /config/www/latest_person/camera_1_1.mp4
+
   # Keep latest video of a detected person away
   - platform: local_file
     name: Camera 1 Latest person away video
@@ -76,20 +73,24 @@ automation:
   ### - every 5 sec                 ###    
   #####################################
   - alias: Camera 1 Image processing
+
+    # Every 5 sec
     trigger:
       - platform: time_pattern
         seconds: "/5"
+
+    # Scan a new image
     action:
       - service: image_processing.scan
         data:
           entity_id: image_processing.deepstack_camera_1
 
-  ########################################
-  ### Camera detekterad, startar timer ###
-  ########################################
-  ### - om ingen är hemma              ###
-  ### - om timern är off               ###
-  ########################################
+  ####################################
+  ### Camera detected, start timer ###
+  ####################################
+  ### - if away                    ###
+  ### - if timer off               ###
+  ####################################
   - alias: Camera 1 Start timer
     trigger:
       - platform: event
@@ -268,7 +269,7 @@ automation:
     action:
       - service: notify.pushbullet
         data:
-          title: "{{ now().strftime('%H:%M %Y-%m-%d') }}"
+          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           message: "Person detekterad, senaste bild"
           data:
             file: /config/www/latest_person/camera_1_1.jpg
@@ -386,7 +387,6 @@ automation:
           transition: 5
 
   #########################################################
-  ### NEED A GOOD WAY TO TURN OFF                       ###
   ### Reset light friggebod fasad if no person detected ###
   #########################################################
   - alias: Reset light friggebod fasad if person no detected
@@ -408,7 +408,6 @@ automation:
           transition: 5
 
   ######################################################
-  ### NEED A GOOD WAY TO TURN OFF                    ###
   ### Reset light förråd fasad if no person detected ###
   ######################################################
   - alias: Reset light förråd fasad if person no detected
@@ -481,7 +480,6 @@ input_boolean:
     name: Camera 1 spelar in
     initial: off
 
-### TEST ###
   camera_1_detected_active:
     name: Kamera 1 detekterad aktiv
     initial: off
@@ -495,18 +493,6 @@ sensor:
       camera_1_num_person_detected:
         friendly_name: Camera 1 antal personer
         value_template: "{{ states.image_processing.deepstack_camera_1.attributes.summary['person'] }}"
-
-  - platform: folder
-    folder: /config/camera
-    filter: '*'
-
-  - platform: folder
-    folder: /config/www
-    filter: '*'
-
-  - platform: filesize
-    file_paths:
-      - /config/home-assistant_v2.db
 
 #####################
 ### Binary Sensor ###

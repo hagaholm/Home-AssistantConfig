@@ -176,11 +176,11 @@ automation:
         data_template:
           value: '{{ now().strftime("%Y%m%d_%H%M%S") }}'
 
-    # Save a video with timestamp to '/config/camera/person/camera_1_YYYYMMDD-HHMMSS.mp4'        
+    # Save a video with timestamp to '/config/camera/latest_person_away/camera_1_YYYYMMDD-HHMMSS.mp4'        
       - service: camera.record
         data:
           entity_id: camera.kamera_1
-          filename: '/config/camera/person/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_video.state }}.mp4'
+          filename: '/config/camera/latest_person_away/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_video.state }}.mp4'
           lookback: 0
           duration: 15
       - delay:
@@ -188,7 +188,7 @@ automation:
       - service: input_boolean.turn_off
         entity_id: input_boolean.camera_1_recording
     # Make a copy to be used when detect that nobody home
-      - service: shell_command.camera_1_copy_to_latest_motion_away_video_1
+    #  - service: shell_command.camera_1_copy_to_latest_motion_away_video_1
 
   ############################################################################
   ### Camera 1 Image when person detected                                  ###

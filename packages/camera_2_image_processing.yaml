@@ -5,10 +5,6 @@
 # File with format deepstack_camera_2_latest.jpg is copied and used as latest person /config/www/latest_person/camera_2_1.jpg
 
 # Folder
-# /config/camera/person
-# Not used
-
-# Folder
 # /config/camera/latest_person_away 
 # When person detected and no one is home, then create image to this folder
 # File with format camera_2_YYYYMMDD-HHMMSS.jpg is created
@@ -175,11 +171,11 @@ automation:
         data_template:
           value: '{{ now().strftime("%Y%m%d_%H%M%S") }}'
 
-    # Save a video with timestamp to '/config/camera/person/camera_2_YYYYMMDD-HHMMSS.mp4'        
+    # Save a video with timestamp to '/config/latest_person_away/person/camera_2_YYYYMMDD-HHMMSS.mp4'        
       - service: camera.record
         data:
           entity_id: camera.kamera_2
-          filename: '/config/camera/person/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video.state }}.mp4'
+          filename: '/config/camera/latest_person_away/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video.state }}.mp4'
           lookback: 0
           duration: 15
       - delay:
@@ -187,7 +183,7 @@ automation:
       - service: input_boolean.turn_off
         entity_id: input_boolean.camera_2_recording
     # Make a copy to be used when detect that nobody home
-      - service: shell_command.camera_2_copy_to_latest_motion_away_video_1
+    #  - service: shell_command.camera_2_copy_to_latest_motion_away_video_1
 
   ############################################################################
   ### Camera 2 Image when person detected                                  ###

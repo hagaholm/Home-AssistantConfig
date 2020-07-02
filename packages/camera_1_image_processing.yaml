@@ -522,30 +522,30 @@ script:
       - service: automation.turn_off
         entity_id: automation.camera_1_move_video_if_still_away_after_2_min
 
-      - service: automation.turn_on
-        entity_id: automation.camera_1_delete_latest_person_away_files_when_home
-      - service: automation.turn_on
-        entity_id: automation.camera_1_move_latest_person_away_files_when_no_detection
-      - service: automation.turn_on
-        entity_id: automation.camera_1_move_latest_person_away_files_after_2_min
+#      - service: automation.turn_on
+#        entity_id: automation.camera_1_delete_latest_person_away_files_when_home
+#      - service: automation.turn_on
+#        entity_id: automation.camera_1_move_latest_person_away_files_when_no_detection
+#      - service: automation.turn_on
+#        entity_id: automation.camera_1_move_latest_person_away_files_after_2_min
       - service: automation.turn_on
         entity_id: automation.camera_1_image_when_person_detected_away
-      - service: automation.turn_on
-        entity_id: automation.camera_1_image_when_person_detected
+#      - service: automation.turn_on
+#        entity_id: automation.camera_1_image_when_person_detected
 
   camera_1_use_video:
     alias: Kamera 1 Aktivera videoläge
     sequence:
-      - service: automation.turn_off
-        entity_id: automation.camera_1_delete_latest_person_away_files_when_home
-      - service: automation.turn_off
-        entity_id: automation.camera_1_move_latest_person_away_files_when_no_detection
-      - service: automation.turn_off
-        entity_id: automation.camera_1_move_latest_person_away_files_after_2_min
+#      - service: automation.turn_off
+#        entity_id: automation.camera_1_delete_latest_person_away_files_when_home
+#      - service: automation.turn_off
+#        entity_id: automation.camera_1_move_latest_person_away_files_when_no_detection
+#      - service: automation.turn_off
+#        entity_id: automation.camera_1_move_latest_person_away_files_after_2_min
       - service: automation.turn_off
         entity_id: automation.camera_1_image_when_person_detected_away
-      - service: automation.turn_off
-        entity_id: automation.camera_1_image_when_person_detected
+#      - service: automation.turn_off
+#        entity_id: automation.camera_1_image_when_person_detected
 
       - service: automation.turn_on
         entity_id: automation.camera_1_record_when_person_detected_away

@@ -175,7 +175,7 @@ automation:
       - service: camera.record
         data:
           entity_id: camera.kamera_2
-          filename: '/config/camera/latest_person_away/camera_2_{{ states.input_text.camera_1_person_detected_timestamp_video.state }}.mp4'
+          filename: '/config/camera/latest_person_away/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video.state }}.mp4'
           lookback: 0
           duration: 15
       - delay:
@@ -190,7 +190,7 @@ automation:
   - alias: Camera 2 Record again if still away
     trigger:
       - platform: state
-        entity_id: input_boolean.camera_1_recording
+        entity_id: input_boolean.camera_2_recording
         to: 'off'
     condition:
       condition: and
@@ -449,7 +449,7 @@ shell_command:
   camera_2_copy_to_latest_motion_away_1: "cp '/config/camera/latest_person_away/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_photo.state }}.jpg' '/config/camera/latest_person_away/camera_2_1.jpg'"
 
   # Used by automation  Camera 2 Move video if still away after 2 min
-  camera_1_move_video: "mv /config/camera/latest_person_away/camera_2_*.mp4 /config/www/latest_person_away/"
+  camera_2_move_video: "mv /config/camera/latest_person_away/camera_2_*.mp4 /config/www/latest_person_away/"
 
   # Used by automation Camera 2 Move latest_person_away files after 2 min
   # Used by automation Camera 2 Move latest_person_away files when no detection

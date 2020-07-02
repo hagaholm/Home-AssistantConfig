@@ -150,7 +150,7 @@ automation:
   - alias: Camera 2 Record when person detected away
     trigger:
       - platform: state
-        entity_id:input_boolean.camera_2_detected_active
+        entity_id: input_boolean.camera_2_detected_active
         to: 'on'
     condition:
       condition: and

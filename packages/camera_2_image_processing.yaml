@@ -161,15 +161,30 @@ automation:
         - condition: state
           entity_id: input_boolean.camera_2_recording
           state: 'off'
-    action:    
+    action:
+      - service: system_log.write
+        data_template:
+        message: "A1. Camera 2 Record when person detected away"
+        level: info
+
       - service: input_boolean.turn_on
         entity_id: input_boolean.camera_2_recording
+
+      - service: system_log.write
+        data_template:
+        message: "A2. Camera 2 Record when person detected away"
+        level: info
         
     # Get timestamp when person detected
       - service: input_text.set_value
         entity_id: input_text.camera_2_person_detected_timestamp_video
         data_template:
           value: '{{ now().strftime("%Y%m%d_%H%M%S") }}'
+
+      - service: system_log.write
+        data_template:
+        message: "A3. Camera 2 Record when person detected away"
+        level: info
 
     # Save a video with timestamp to '/config/camera/latest_person_away/camera_2_YYYYMMDD-HHMMSS.mp4'        
       - service: camera.record
@@ -178,10 +193,27 @@ automation:
           filename: '/config/camera/latest_person_away/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video.state }}.mp4'
           lookback: 0
           duration: 15
+
+      - service: system_log.write
+        data_template:
+        message: "A4. Camera 2 Record when person detected away"
+        level: info
+
       - delay:
           seconds: 1
+
+      - service: system_log.write
+        data_template:
+        message: "A5. Camera 2 Record when person detected away"
+        level: info
+
       - service: input_boolean.turn_off
         entity_id: input_boolean.camera_2_recording
+
+      - service: system_log.write
+        data_template:
+        message: "A6. Camera 2 Record when person detected away"
+        level: info
 
   ###########################################
   ### TO DEVELOP AND TEST                 ###
@@ -201,15 +233,30 @@ automation:
         - condition: state
           entity_id: input_boolean.camera_2_detected_active
           state: 'on'
-    action:    
+    action:
+      - service: system_log.write
+        data_template:
+        message: "B1. Camera 2 Record again if still away"
+        level: info
+
       - service: input_boolean.turn_on
         entity_id: input_boolean.camera_2_recording
         
+      - service: system_log.write
+        data_template:
+        message: "B2. Camera 2 Record again if still away"
+        level: info
+
     # Get timestamp when person detected
       - service: input_text.set_value
         entity_id: input_text.camera_2_person_detected_timestamp_video
         data_template:
           value: '{{ now().strftime("%Y%m%d_%H%M%S") }}'
+
+      - service: system_log.write
+        data_template:
+        message: "B3. Camera 2 Record again if still away"
+        level: info
 
     # Save a video with timestamp to '/config/camera/latest_person_away/camera_2_YYYYMMDD-HHMMSS.mp4'        
       - service: camera.record
@@ -218,10 +265,26 @@ automation:
           filename: '/config/camera/latest_person_away/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video.state }}.mp4'
           lookback: 0
           duration: 15
+
+      - service: system_log.write
+        data_template:
+        message: "B4. Camera 2 Record again if still away"
+        level: info
+
       - delay:
           seconds: 1
+      - service: system_log.write
+        data_template:
+        message: "B5. Camera 2 Record again if still away"
+        level: info
+
       - service: input_boolean.turn_off
         entity_id: input_boolean.camera_2_recording
+
+      - service: system_log.write
+        data_template:
+        message: "B6. Camera 2 Record again if still away"
+        level: info
 
   #####################################################
   ### TO DEVELOP AND TEST                           ###
@@ -242,8 +305,18 @@ automation:
           state: 'not_home'
     action:
 
+      - service: system_log.write
+        data_template:
+        message: "C1. Camera 2 Move video if still away after 2 min"
+        level: info
+
     # Move camera/latest_person_away/*.mp4 to www/latest_person_away
       - service: shell_command.camera_2_move_video
+
+      - service: system_log.write
+        data_template:
+        message: "C2. Camera 2 Move video if still away after 2 min"
+        level: info
 
   ############################################################################
   ### Camera 2 Image when person detected                                  ###

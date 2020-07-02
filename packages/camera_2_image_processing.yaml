@@ -104,7 +104,7 @@ automation:
           entity_id: group.track_for_home_devices
           state: 'not_home'
         - condition: state
-          entity_id:  input_boolean.camera_2_detected_active
+          entity_id: input_boolean.camera_2_detected_active
           state: 'off'
     action:
       # Aktiverar rörelsevakt_aktiv
@@ -136,7 +136,7 @@ automation:
       condition: and
       conditions:
         - condition: state
-          entity_id:  input_boolean.camera_2_detected_active
+          entity_id: input_boolean.camera_2_detected_active
           state: 'on'
     action:
       - service: input_boolean.turn_off
@@ -190,7 +190,7 @@ automation:
   - alias: Camera 2 Record again if still away
     trigger:
       - platform: state
-        entity_id:input_boolean.camera_1_recording
+        entity_id: input_boolean.camera_1_recording
         to: 'off'
     condition:
       condition: and
@@ -199,7 +199,7 @@ automation:
           entity_id: group.track_for_home_devices
           state: 'not_home'
         - condition: state
-          entity_id:input_boolean.camera_2_detected_active
+          entity_id: input_boolean.camera_2_detected_active
           state: 'on'
     action:    
       - service: input_boolean.turn_on

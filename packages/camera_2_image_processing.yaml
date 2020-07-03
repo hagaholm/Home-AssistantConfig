@@ -200,7 +200,7 @@ automation:
           level: info
 
       - delay:
-          seconds: 1
+          seconds: 2
 
       - service: system_log.write
         data_template:

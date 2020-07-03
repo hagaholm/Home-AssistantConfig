@@ -14,6 +14,7 @@
 # If still away after 2 minutes, all files are moved into /config/www/latest_person
 # When no more detection and still away, all files are moved into /config/www/latest_person
 
+
 # Folder
 #  /config/www/latest_person
 # Only /config/www/latest_person/camera_1_1.jpg exist here
@@ -296,14 +297,17 @@ automation:
         data_template: 
           value: '{{ now().strftime("%Y%m%d_%H%M%S") }}'
 
-    # Save a photo with timestamp to '/config/camera/latest_person_away/camera_1_YYYYMMDD-HHMMSS.jpg'
-      - service: camera.snapshot
-        data:
-          entity_id: camera.kamera_1
-          filename: '/config/camera/latest_person_away/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg'
+#    # Save a photo with timestamp to '/config/camera/latest_person_away/camera_1_YYYYMMDD-HHMMSS.jpg'
+#      - service: camera.snapshot
+#        data:
+#          entity_id: camera.kamera_1
+#          filename: '/config/camera/latest_person_away/camera_1_{{ states.input_text.camera_2_person_detected_timestamp_photo.state }}.jpg'
+
+    # Make a copy from latest person, to latest person
+      - service: shell_command.camera_1_copy_to_latest_motion_away_1
 
     # Make a copy for latest person away, to be used when detect that nobody home
-      - service: shell_command.camera_1_copy_to_latest_motion_away_1
+      - service: shell_command.camera_1_copy_to_latest_motion_away_2
 
   ###########################################
   ### Camera 1 Alarm when person detected ###
@@ -562,7 +566,10 @@ shell_command:
   camera_1_copy_latest_motion: 'cp /config/camera/deepstack_photo/deepstack_camera_1_latest.jpg /config/www/latest_person/camera_1_1.jpg'
 
   # Used by automation Camera 1 Image when person detected away
-  camera_1_copy_to_latest_motion_away_1: "cp '/config/camera/latest_person_away/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg' '/config/camera/latest_person_away/camera_1_1.jpg'"
+  camera_1_copy_to_latest_motion_away_1: "cp /config/camera/deepstack_photo/deepstack_camera_1_latest.jpg '/config/camera/latest_person_away/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg'"
+
+  # Used by automation Camera 1 Image when person detected away
+  camera_1_copy_to_latest_motion_away_2: "cp '/config/camera/latest_person_away/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg' '/config/camera/latest_person_away/camera_1_1.jpg'"
 
   # Used by automation  Camera 1 Move video if still away after 2 min
   camera_1_move_video: "mv /config/camera/latest_person_away/camera_1_*.mp4 /config/www/latest_person_away/"

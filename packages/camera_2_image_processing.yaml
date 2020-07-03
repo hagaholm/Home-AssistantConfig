@@ -165,7 +165,7 @@ automation:
       - service: system_log.write
         data_template:
           message: "A1. Camera 2 Record when person detected away"
-          level: info
+          level: debug
 
       - service: input_boolean.turn_on
         entity_id: input_boolean.camera_2_recording
@@ -173,7 +173,7 @@ automation:
       - service: system_log.write
         data_template:
           message: "A2. Camera 2 Record when person detected away"
-          level: info
+          level: debug
         
     # Get timestamp when person detected
       - service: input_text.set_value
@@ -184,7 +184,7 @@ automation:
       - service: system_log.write
         data_template:
           message: "A3. Camera 2 Record when person detected away"
-          level: info
+          level: debug
 
     # Save a video with timestamp to '/config/camera/latest_person_away/camera_2_YYYYMMDD-HHMMSS.mp4'        
       - service: camera.record
@@ -197,7 +197,7 @@ automation:
       - service: system_log.write
         data_template:
           message: "A4. Camera 2 Record when person detected away"
-          level: info
+          level: debug
 
       - delay:
           seconds: 2
@@ -205,7 +205,7 @@ automation:
       - service: system_log.write
         data_template:
           message: "A5. Camera 2 Record when person detected away"
-          level: info
+          level: debug
 
       - service: input_boolean.turn_off
         entity_id: input_boolean.camera_2_recording
@@ -213,7 +213,7 @@ automation:
       - service: system_log.write
         data_template:
           message: "A6. Camera 2 Record when person detected away"
-          level: info
+          level: debug
 
   ###########################################
   ### TO DEVELOP AND TEST                 ###
@@ -237,7 +237,7 @@ automation:
       - service: system_log.write
         data_template:
           message: "B1. Camera 2 Record again if still away"
-          level: info
+          level: debug
 
       - service: input_boolean.turn_on
         entity_id: input_boolean.camera_2_recording
@@ -245,7 +245,7 @@ automation:
       - service: system_log.write
         data_template:
           message: "B2. Camera 2 Record again if still away"
-          level: info
+          level: debug
 
     # Get timestamp when person detected
       - service: input_text.set_value
@@ -256,7 +256,7 @@ automation:
       - service: system_log.write
         data_template:
           message: "B3. Camera 2 Record again if still away"
-          level: info
+          level: debug
 
     # Save a video with timestamp to '/config/camera/latest_person_away/camera_2_YYYYMMDD-HHMMSS.mp4'        
       - service: camera.record
@@ -269,14 +269,14 @@ automation:
       - service: system_log.write
         data_template:
           message: "B4. Camera 2 Record again if still away"
-          level: info
+          level: debug
 
       - delay:
           seconds: 1
       - service: system_log.write
         data_template:
           message: "B5. Camera 2 Record again if still away"
-          level: info
+          level: debug
 
       - service: input_boolean.turn_off
         entity_id: input_boolean.camera_2_recording
@@ -284,7 +284,7 @@ automation:
       - service: system_log.write
         data_template:
           message: "B6. Camera 2 Record again if still away"
-          level: info
+          level: debug
 
   #####################################################
   ### TO DEVELOP AND TEST                           ###
@@ -308,7 +308,7 @@ automation:
       - service: system_log.write
         data_template:
           message: "C1. Camera 2 Move video if still away after 2 min"
-          level: info
+          level: debug
 
     # Move camera/latest_person_away/*.mp4 to www/latest_person_away
       - service: shell_command.camera_2_move_video
@@ -316,7 +316,7 @@ automation:
       - service: system_log.write
         data_template:
           message: "C2. Camera 2 Move video if still away after 2 min"
-          level: info
+          level: debug
 
   ############################################################################
   ### Camera 2 Image when person detected                                  ###

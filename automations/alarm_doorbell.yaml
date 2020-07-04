@@ -14,8 +14,10 @@
         entity_id: switch.ringklocka_tvattstuga
       - service: notify.pushbullet
         data:
-          title: "Ringklocka tvättstuga."
-          message: "Det ringer på dörren..."
+          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+          message: "Ringklocka tvättstuga"
+          data:
+            file: /config/www/latest_person/camera_1_1.jpg
 
 #####################################################
 ### Ringklocka hall                               ###
@@ -34,8 +36,10 @@
         entity_id: switch.ringklocka_hall
       - service: notify.pushbullet
         data:
-          title: "Ringklocka hall."
-          message: "Det ringer på dörren..."
+          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+          message: "Ringklocka hall."
+          data:
+            file: /config/www/latest_person/camera_2_1.jpg
 
 #####################################################
 ### Ringklocka tänd allt lyse och tv 1            ###

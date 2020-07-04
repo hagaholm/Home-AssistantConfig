@@ -1,0 +1,611 @@
+# Folder structure
+# /config/camera/deepstack_photo
+# Image is created here by deepstack if person is detected
+# File with format deepstack_camera_2_YYYYMMDD-HHMMSS.jpg is not used
+# File with format deepstack_camera_2_latest.jpg is copied and used as latest person /config/www/latest_person/camera_2_1.jpg
+
+# Folder
+# /config/camera/latest_person_away 
+# When person detected and no one is home, then create image to this folder
+# File with format camera_2_YYYYMMDD-HHMMSS.jpg is created
+# File with format camera_2_1.jpg is created
+# If home before 2 minutes, then all files in the foder is deleted
+# After 2 minutes:
+# If still away after 2 minutes, all files are moved into /config/www/latest_person
+# When no more detection and still away, all files are moved into /config/www/latest_person
+
+
+# Folder
+#  /config/www/latest_person
+# Only /config/www/latest_person/camera_2_1.jpg exist here
+
+# Folder
+# /config/www/latest_person_away
+# Files with format camera_2_YYYYMMDD-HHMMSS.jpg and format camera_2_1.jpg exists here
+
+
+########################
+### Image processing ###
+########################
+image_processing:
+  - platform: deepstack_object
+    ip_address: localhost
+    port: 5000
+    api_key: !secret deepstack_password
+    save_file_folder: /config/camera/deepstack_photo/
+    save_timestamped_file: True
+    targets:
+      - person
+    source:
+      - entity_id: camera.kamera_2
+        name: deepstack_camera_2
+
+##############
+### Camera ###
+##############
+camera:
+  # Keep latest image of a detected person
+  - platform: local_file
+    name: Camera 2 Latest person
+    file_path: /config/www/latest_person/camera_2_1.jpg
+  # Keep latest image of a detected person away
+  - platform: local_file
+    name: Camera 2 Latest person away
+    file_path: /config/www/latest_person_away/camera_2_1.jpg
+
+  # Keep latest video of a detected person
+  - platform: local_file
+    name: Camera 2 Latest person video
+    file_path: /config/www/latest_person/camera_2_1.mp4
+  # Keep latest video of a detected person away
+  - platform: local_file
+    name: Camera 2 Latest person away video
+    file_path: /config/www/latest_person_away/camera_2_1.mp4
+
+##################
+### Automation ###
+##################
+automation:
+  #####################################
+  ### Processes image for detection ###
+  #####################################
+  ### - every 5 sec                 ###    
+  #####################################
+  - alias: Camera 2 Image processing
+
+    # Every 5 sec
+    trigger:
+      - platform: time_pattern
+        seconds: "/5"
+
+    # Scan a new image
+    action:
+      - service: image_processing.scan
+        data:
+          entity_id: image_processing.deepstack_camera_2
+
+  ####################################
+  ### Camera detected, start timer ###
+  ####################################
+  ### - if away                    ###
+  ### - if timer off               ###
+  ####################################
+  - alias: Camera 2 Start timer
+    trigger:
+      - platform: event
+        event_type: folder_watcher
+        event_data:
+          event_type: modified
+          path: '/config/camera/deepstack_photo/deepstack_camera_2_latest.jpg'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
+        - condition: state
+          entity_id: input_boolean.camera_2_detected_active
+          state: 'off'
+    action:
+      # Aktiverar rörelsevakt_aktiv
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.camera_2_detected_active
+
+      # Cancel timer, återställer till maxtid
+      - service: timer.cancel
+        entity_id: timer.timer_camera_2_detected
+
+      # Start timer, börjar räkna ner tiden
+      - service: timer.start
+        entity_id: timer.timer_camera_2_detected
+
+  #####################################################
+  ### Camera, vid stoppad timer                     ###
+  #####################################################
+  ### input_boolean.camera_2_detected_active == off ###
+  ### - efter 2 min                                 ###
+  #####################################################
+  - alias: Camera 2 Stop timer
+    trigger:
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.timer_camera_2_detected
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.camera_2_detected_active
+          state: 'on'
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.camera_2_detected_active
+
+  #####################################################
+  ### TO DEVELOP AND TEST                           ###
+  ### Camera 2 Record when person detected and away ###
+  #####################################################
+  - alias: Camera 2 Record when person detected away
+    trigger:
+      - platform: state
+        entity_id: input_boolean.camera_2_detected_active
+        to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
+        - condition: state
+          entity_id: input_boolean.camera_2_recording
+          state: 'off'
+    action:
+      - service: system_log.write
+        data_template:
+          message: "A1. Camera 2 Record when person detected away"
+          level: debug
+
+      - service: input_boolean.turn_on
+        entity_id: input_boolean.camera_2_recording
+
+      - service: system_log.write
+        data_template:
+          message: "A2. Camera 2 Record when person detected away"
+          level: debug
+        
+    # Get timestamp when person detected
+      - service: input_text.set_value
+        entity_id: input_text.camera_2_person_detected_timestamp_video
+        data_template:
+          value: '{{ now().strftime("%Y%m%d_%H%M%S") }}'
+
+      - service: system_log.write
+        data_template:
+          message: "A3. Camera 2 Record when person detected away"
+          level: debug
+
+    # Save a video with timestamp to '/config/camera/latest_person_away/camera_2_YYYYMMDD-HHMMSS.mp4'        
+      - service: camera.record
+        data:
+          entity_id: camera.kamera_2
+          filename: '/config/camera/latest_person_away/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video.state }}.mp4'
+          lookback: 0
+          duration: 15
+
+      - service: system_log.write
+        data_template:
+          message: "A4. Camera 2 Record when person detected away"
+          level: debug
+
+      - delay:
+          seconds: 2
+
+      - service: system_log.write
+        data_template:
+          message: "A5. Camera 2 Record when person detected away"
+          level: debug
+
+      - service: input_boolean.turn_off
+        entity_id: input_boolean.camera_2_recording
+
+      - service: system_log.write
+        data_template:
+          message: "A6. Camera 2 Record when person detected away"
+          level: debug
+
+  ###########################################
+  ### TO DEVELOP AND TEST                 ###
+  ### Camera 1 Record again if still away ###
+  ###########################################
+  - alias: Camera 2 Record again if still away
+    trigger:
+      - platform: state
+        entity_id: input_boolean.camera_2_recording
+        to: 'off'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
+        - condition: state
+          entity_id: input_boolean.camera_2_detected_active
+          state: 'on'
+    action:
+      - service: system_log.write
+        data_template:
+          message: "B1. Camera 2 Record again if still away"
+          level: debug
+
+      - service: input_boolean.turn_on
+        entity_id: input_boolean.camera_2_recording
+        
+      - service: system_log.write
+        data_template:
+          message: "B2. Camera 2 Record again if still away"
+          level: debug
+
+    # Get timestamp when person detected
+      - service: input_text.set_value
+        entity_id: input_text.camera_2_person_detected_timestamp_video
+        data_template:
+          value: '{{ now().strftime("%Y%m%d_%H%M%S") }}'
+
+      - service: system_log.write
+        data_template:
+          message: "B3. Camera 2 Record again if still away"
+          level: debug
+
+    # Save a video with timestamp to '/config/camera/latest_person_away/camera_2_YYYYMMDD-HHMMSS.mp4'        
+      - service: camera.record
+        data:
+          entity_id: camera.kamera_2
+          filename: '/config/camera/latest_person_away/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video.state }}.mp4'
+          lookback: 0
+          duration: 15
+
+      - service: system_log.write
+        data_template:
+          message: "B4. Camera 2 Record again if still away"
+          level: debug
+
+      - delay:
+          seconds: 1
+      - service: system_log.write
+        data_template:
+          message: "B5. Camera 2 Record again if still away"
+          level: debug
+
+      - service: input_boolean.turn_off
+        entity_id: input_boolean.camera_2_recording
+
+      - service: system_log.write
+        data_template:
+          message: "B6. Camera 2 Record again if still away"
+          level: debug
+
+  #####################################################
+  ### TO DEVELOP AND TEST                           ###
+  ### Camera 1 Move video if still away afer 2 min  ###
+  #####################################################
+  - alias: Camera 2 Move video if still away after 2 min 
+    # After 2 minutes after person detected
+    trigger:
+      platform: state
+      entity_id: input_boolean.camera_2_detected_active
+      to: 'off'
+    # Only if still nobody home
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
+    action:
+
+      - service: system_log.write
+        data_template:
+          message: "C1. Camera 2 Move video if still away after 2 min"
+          level: debug
+
+    # Move camera/latest_person_away/*.mp4 to www/latest_person_away
+      - service: shell_command.camera_2_move_video
+
+      - service: system_log.write
+        data_template:
+          message: "C2. Camera 2 Move video if still away after 2 min"
+          level: debug
+
+  ############################################################################
+  ### Camera 2 Image when person detected                                  ###
+  ############################################################################
+  ### When person detected, make the last image available                  ###
+  ### - Copy Deepstack image when person detected                          ###
+  ###   from: /config/camera/deepstack_photo/deepstack_camera_2_latest.jpg ###
+  ###   to: /config/www/latest_person/camera_2_1.jpg                       ###
+  ############################################################################
+  - alias: Camera 2 Image when person detected
+    trigger:
+      - platform: event
+        event_type: folder_watcher
+        event_data:
+          event_type: modified
+          path: '/config/camera/deepstack_photo/deepstack_camera_2_latest.jpg'
+    action:
+    # Need to add a delay, otherwise it take the old photo
+      - delay:
+          seconds: 1
+    # copy /config/camera/deepstack_photo/deepstack_camera_2_latest.jpg
+    # to /config/www/latest_person/camera_2_1.jpg
+      - service: shell_command.camera_2_copy_latest_motion
+
+  ###################################################################################################
+  ### Camera 2 Image when person detected away                                                    ###
+  ###################################################################################################
+  ### When person detected and away                                                               ###
+  ### - Create snapshot saved as '/config/camera/latest_person_away/camera_2_YYYYMMDD-HHMMSS.jpg' ###
+  ### - Also make a copy to '/config/latest_person_away/person/camera_2_1.jpg'                    ###
+  ###################################################################################################
+  - alias: Camera 2 Image when person detected away
+    trigger:
+      - platform: event
+        event_type: folder_watcher
+        event_data:
+          event_type: modified
+          path: '/config/camera/deepstack_photo/deepstack_camera_2_latest.jpg'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
+    action:
+    # Get timestamp when person detected
+      - service: input_text.set_value
+        entity_id: input_text.camera_2_person_detected_timestamp_photo
+        data_template: 
+          value: '{{ now().strftime("%Y%m%d_%H%M%S") }}'
+
+#    # Save a photo with timestamp to '/config/camera/latest_person_away/camera_2_YYYYMMDD-HHMMSS.jpg'
+#      - service: camera.snapshot
+#        data:
+#          entity_id: camera.kamera_2
+#          filename: '/config/camera/latest_person_away/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_photo.state }}.jpg'
+
+    # Make a copy from latest person, to latest person
+      - service: shell_command.camera_2_copy_to_latest_motion_away_1
+
+    # Make a copy for latest person away, to be used when detect that nobody home
+      - service: shell_command.camera_2_copy_to_latest_motion_away_2
+
+  ###########################################
+  ### Camera 2 Alarm when person detected ###
+  ###########################################
+  - alias: Camera 2 Alarm when person detected
+    # After 2 minutes after person detected
+    trigger:
+      platform: state
+      entity_id: input_boolean.camera_2_detected_active
+      to: 'off'
+    # Only if still nobody home
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
+    # Send notify
+    action:
+      - service: notify.pushbullet
+        data:
+          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+          message: "Person detekterad, senaste bild"
+          data:
+            file: /config/www/latest_person/camera_2_1.jpg
+
+  ##########################################################
+  ### Camera 2 Move latest_person_away files after 2 min ###
+  ##########################################################
+  - alias: Camera 2 Move latest_person_away files after 2 min
+    # After 2 minutes after person detected
+    trigger:
+      platform: state
+      entity_id: input_boolean.camera_2_detected_active
+      to: 'off'
+    # Only if still nobody home
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
+    action:
+
+    # Make a copy for all camera/latest_person_away to www/latest_person_away
+      - service: shell_command.camera_2_move_camera_latest_person_away_to_www_latest_person_away
+
+  ################################################################
+  ### Camera 2 Move latest_person_away files when no detection ###
+  ################################################################
+  - alias: Camera 2 Move latest_person_away files when no detection
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.camera_2_person_detected
+        from: 'on'
+        to: 'off'
+    # Only if still nobody home
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
+    action:
+
+    # Make a copy for all camera/latest_person_away to www/latest_person_away
+      - service: shell_command.camera_2_move_camera_latest_person_away_to_www_latest_person_away
+
+  ################################################################
+  ### Camera 2 Delete latest_person_away files when home ###
+  ################################################################
+  - alias: Camera 2 Delete latest_person_away files when home
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.camera_2_person_detected
+        from: 'on'
+        to: 'off'
+    # Only if home
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'home'
+    action:
+
+    # Make a delete for all camera/latest_person_away
+      - service: shell_command.camera_2_delete_camera_latest_person_away
+
+##############
+### Script ###
+##############
+script:
+  camera_2_use_image:
+    alias: Kamera 2 Aktivera bildläge
+    sequence:
+      - service: automation.turn_off
+        entity_id: automation.camera_2_record_when_person_detected_away
+      - service: automation.turn_off
+        entity_id: automation.camera_2_record_again_if_still_away
+      - service: automation.turn_off
+        entity_id: automation.camera_2_move_video_if_still_away_after_2_min
+
+#      - service: automation.turn_on
+#        entity_id: automation.camera_2_delete_latest_person_away_files_when_home
+#      - service: automation.turn_on
+#        entity_id: automation.camera_2_move_latest_person_away_files_when_no_detection
+#      - service: automation.turn_on
+#        entity_id: automation.camera_2_move_latest_person_away_files_after_2_min
+      - service: automation.turn_on
+        entity_id: automation.camera_2_image_when_person_detected_away
+#      - service: automation.turn_on
+#        entity_id: automation.camera_2_image_when_person_detected
+
+  camera_2_use_video:
+    alias: Kamera 2 Aktivera videoläge
+    sequence:
+#      - service: automation.turn_off
+#        entity_id: automation.camera_2_delete_latest_person_away_files_when_home
+#      - service: automation.turn_off
+#        entity_id: automation.camera_2_move_latest_person_away_files_when_no_detection
+#      - service: automation.turn_off
+#        entity_id: automation.camera_2_move_latest_person_away_files_after_2_min
+      - service: automation.turn_off
+        entity_id: automation.camera_2_image_when_person_detected_away
+#      - service: automation.turn_off
+#        entity_id: automation.camera_2_image_when_person_detected
+
+      - service: automation.turn_on
+        entity_id: automation.camera_2_record_when_person_detected_away
+      - service: automation.turn_on
+        entity_id: automation.camera_2_record_again_if_still_away
+      - service: automation.turn_on
+        entity_id: automation.camera_2_move_video_if_still_away_after_2_min
+
+#####################
+### Shell command ###
+#####################
+shell_command:
+  # Used by automation Camera 2 Image when person detected
+  camera_2_copy_latest_motion: 'cp /config/camera/deepstack_photo/deepstack_camera_2_latest.jpg /config/www/latest_person/camera_2_1.jpg'
+
+  # Used by automation Camera 2 Image when person detected away
+  camera_2_copy_to_latest_motion_away_1: "cp /config/camera/deepstack_photo/deepstack_camera_2_latest.jpg '/config/camera/latest_person_away/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_photo.state }}.jpg'"
+
+  # Used by automation Camera 2 Image when person detected away
+  camera_2_copy_to_latest_motion_away_2: "cp '/config/camera/latest_person_away/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_photo.state }}.jpg' '/config/camera/latest_person_away/camera_2_1.jpg'"
+
+  # Used by automation  Camera 2 Move video if still away after 2 min
+  camera_2_move_video: "mv /config/camera/latest_person_away/camera_2_*.mp4 /config/www/latest_person_away/"
+
+  # Used by automation Camera 2 Move latest_person_away files after 2 min
+  # Used by automation Camera 2 Move latest_person_away files when no detection
+  camera_2_move_camera_latest_person_away_to_www_latest_person_away: "mv /config/camera/latest_person_away/*.jpg /config/www/latest_person_away/"
+
+  # Used by automation Camera 2 Delete latest_person_away files when home 
+  camera_2_delete_camera_latest_person_away: "rm /config/camera/latest_person_away/*.jpg"
+
+#####################
+### Input Boolean ###
+#####################
+input_boolean:
+  camera_2_recording:
+    name: Camera 2 spelar in
+    initial: off
+
+  camera_2_detected_active:
+    name: Kamera 2 detekterad aktiv
+    initial: off
+
+##############
+### Sensor ###
+##############
+sensor:
+  - platform: template
+    sensors:
+      camera_2_num_person_detected:
+        friendly_name: Camera 2 antal personer
+        value_template: "{{ states.image_processing.deepstack_camera_2.attributes.summary['person'] }}"
+
+#####################
+### Binary Sensor ###
+#####################
+binary_sensor:
+  - platform: template
+    sensors:
+      camera_2_person_detected:
+        friendly_name: "Camera 2 Person detekterad"
+        value_template: >-
+          {{ is_state('sensor.camera_2_num_person_detected', '1')
+             or is_state('sensor.camera_2_num_person_detected', '2')
+             or is_state('sensor.camera_2_num_person_detected', '3')
+             or is_state('sensor.camera_2_num_person_detected', '4')
+             or is_state('sensor.camera_2_num_person_detected', '5')
+             or is_state('sensor.camera_2_num_person_detected', '6')
+             or is_state('sensor.camera_2_num_person_detected', '7')
+             or is_state('sensor.camera_2_num_person_detected', '8')
+             or is_state('sensor.camera_2_num_person_detected', '9')
+             or is_state('sensor.camera_2_num_person_detected', '10') }}
+
+input_text:
+  camera_2_person_detected_timestamp_photo:
+    name: Camera 2 Tidpunkt för person detektering foto
+  camera_2_person_detected_timestamp_video:
+    name: Camera 2 Tidpunkt för person detektering video
+
+### TEST ###
+timer:
+  # Timer för camera 2 detekterad
+  timer_camera_2_detected:
+    name: Tid kvar kamera 2 detekterad
+    duration: '00:02:00'
+
+
+
+# Used: 
+# person, bicycle, car, motorcycle, bus, truck, boat,
+# bird, cat, dog, horse, sheep, cow
+# Not used: elephant, bear, zebra, giraffe,
+
+# Unused:
+# airplane, train, traffic light, fire hydrant, stop_sign,
+# parking meter, bench,  backpack, umbrella, handbag, tie, suitcase,
+# frisbee, skis, snowboard, sports ball, kite, baseball bat, baseball glove,
+# skateboard, surfboard, tennis racket, bottle, wine glass, cup, fork,
+# knife, spoon, bowl, banana, apple, sandwich, orange, broccoli, carrot,
+# hot dog, pizza, donot, cake, chair, couch, potted plant, bed, dining table,
+# toilet, tv, laptop, mouse, remote, keyboard, cell phone, microwave,
+# oven, toaster, sink, refrigerator, book, clock, vase, scissors, teddy bear,
+# hair dryer, toothbrush.

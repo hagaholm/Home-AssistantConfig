@@ -1,0 +1,40 @@
+##################
+### Automation ###
+##################
+automation:
+  #########################
+  ### Remove old images ###
+  #########################
+  - alias: Camera Remove old images
+    trigger:
+      - platform: time
+        at: "00:01:00" # HH:MM:SS
+    action:
+      - service: shell_command.remove_old_images
+
+##############
+### Script ###
+##############
+script:
+  # Delete all files, Used by user
+  delete_camera_files:
+    sequence:
+      - service: shell_command.delete_camera_files_1
+      - service: shell_command.delete_camera_files_2
+      - service: shell_command.delete_camera_files_3
+      - service: shell_command.delete_camera_files_4
+      - service: shell_command.delete_camera_files_5
+
+#####################
+### Shell command ###
+#####################
+shell_command:
+  # Delete 10 days old images from folder /config/camera/deepstack_photo
+  remove_old_images: 'find /config/camera/deepstack_photo -mtime +14 -type f -delete' 
+
+  # Used by script delete_camera_files
+  delete_camera_files_1: 'rm /config/camera/deepstack_photo/*'
+  delete_camera_files_2: 'rm /config/camera/latest_person_away/*'
+  delete_camera_files_3: 'rm /config/camera/person/*'
+  delete_camera_files_4: 'rm /config/www/latest_person/*'
+  delete_camera_files_5: 'rm /config/www/latest_person_away/*'

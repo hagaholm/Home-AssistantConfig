@@ -35,11 +35,12 @@
     ##########################################################
     ### Tänder friggebod fasadbelysning när det blir mörkt ###
     ### T: sensor.ljusstyrka < 40                          ###
-    ### C: time: 12:00 - 22:00                             ###
+    ### C: group.track_for_home_devices == 'home'          ###
+    ###    time: 12:00 - 22:00                             ###
     ###    light.friggebod_fasad == off                    ###
     ### A: light.friggebod_fasad = on                      ###
     ##########################################################
-  - alias: Friggebod fasadbelysning on (<40)
+  - alias: Friggebod fasadbelysning on (home, <40) 
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
@@ -47,9 +48,44 @@
     condition:
       condition: and
       conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
         - condition: time
           after: '12:00:00'
           before: '22:00:00'
+        - condition: state
+          entity_id: light.friggebod_fasad
+          state: 'off'
+    action:
+      - service: light.turn_on
+        data:
+          entity_id: light.friggebod_fasad
+          brightness_pct: 30
+          transition: 5
+
+    #############################################################################
+    ### Tänder friggebod fasadbelysning när det blir mörkt och ingen är hemma ###
+    ### T: sensor.ljusstyrka < 40                                             ###
+    ### C: group.track_for_home_devices == not_home'                          ###
+    ### C: time: 12:00 - 05:00                                                ###
+    ###    light.friggebod_fasad == off                                       ###
+    ### A: light.friggebod_fasad = on                                         ###
+    #############################################################################
+  - alias: Friggebod fasadbelysning on (away, <40)
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      below: 40
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
+        - condition: time
+          after: '22:00:00'
+          before: '05:00:00'
         - condition: state
           entity_id: light.friggebod_fasad
           state: 'off'

@@ -66,7 +66,7 @@
     ### Släcker lampor kl 11:00 om ingen är hemma     ###
     ### T: time > '11:00:00'                          ###
     ### C: group.track_for_home_devices to 'not_home' ###
-    ### A: group.away_lights = off                    ###
+    ### A: script.lights_off                          ###
     #####################################################
   - alias: Bortabelysning off (>11:00:00, borta)
     trigger:
@@ -81,14 +81,14 @@
         data:
           entity_id: input_select.inside_lights
           option: Off
-      - service: script.away_lights_off
+      - service: script.lights_off
 
     ############################################################
     ### Släcker lampor på förmiddagen när det blir ljust ute ###
     ### T: sensor.ljusstyrka > 250                           ###
     ### C: group.track_for_home_devices == 'not_home'        ###
     ###    07:00:00 - 11:00:00                               ###
-    ### A: group.away_lights = off                           ###
+    ### A: script.lights_off                                 ###
     ############################################################
   - alias: Bortabelysning off (>250, borta, morgon)
     trigger:
@@ -109,7 +109,7 @@
         data:
           entity_id: input_select.inside_lights
           option: Off
-      - service: script.away_lights_off
+      - service: script.lights_off
 
     ###################
     ###################
@@ -207,7 +207,7 @@
     ### Släcker lampor kl 23:00 om ingen är hemma     ###
     ### T: time > '23:00:00'                          ###
     ### C: group.track_for_home_devices to 'not_home' ###
-    ### A: group.away_lights = off                    ###
+    ### A: script.lights_off                          ###
     #####################################################
   - alias: Bortabelysning off (>23:00:00, borta)
     trigger:
@@ -222,4 +222,4 @@
         data:
           entity_id: input_select.inside_lights
           option: Off
-      - service: script.away_lights_off
+      - service: script.lights_off

@@ -23,12 +23,26 @@ homeassistant:
   customize: !include customize.yaml
   # Package folder
   packages: !include_dir_named packages
-
+  # Whitelist external directories 
+  whitelist_external_dirs:
+    - /config/camera
+    - /config/camera/deepstack_photo 
+    - /config/camera/latest_person_away 
+    - /config/www
+    - /config/www/latest_person
+    - /config/www/latest_person_away
+    
 ####################################################
 #                                                  #
 #                     GENERAL                      #
 #                                                  #
 ####################################################
+# https://www.home-assistant.io/integrations/folder_watcher/
+folder_watcher:
+  - folder: /config/camera/deepstack_photo
+    patterns:
+      - '*.jpg'
+
 # https://www.home-assistant.io/components/system_health/
 system_health:
 
@@ -112,8 +126,8 @@ logger: !include logging/logger.yaml
 ###################################################
 # https://www.home-assistant.io/lovelace/yaml-mode/
 lovelace:
-#  mode: storage
-  mode: yaml
+  mode: storage
+#  mode: yaml
 
   # Add more dashboards
   dashboards:

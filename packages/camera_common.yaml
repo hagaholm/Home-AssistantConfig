@@ -1,3 +1,40 @@
+####################################################
+#                                                  #
+#                      FFMPEG                      #
+#                                                  #
+####################################################
+#https://www.home-assistant.io/integrations/ffmpeg/
+ffmpeg:
+
+####################################################
+#                                                  #
+#                     STREAM                       #
+#                                                  #
+####################################################
+# Enable stream
+# https://www.home-assistant.io/integrations/stream/
+stream:
+
+####################################################
+#                                                  #
+#                      CAMERA                      #
+#                                                  #
+####################################################
+camera:
+  - platform: reolink_dev
+    name: Kamera 1
+    host: 192.168.1.20
+    username: !secret Camera_User
+    password: !secret Camera_Password
+    scan_interval: 5
+
+  - platform: reolink_dev
+    name: Kamera 2
+    host: 192.168.1.21
+    username: !secret Camera_User
+    password: !secret Camera_Password
+    scan_interval: 5
+
 ##################
 ### Automation ###
 ##################

@@ -523,21 +523,6 @@ views:
     title: Kamera
     badges: []
     cards:
-      - type: entities
-        entities:
-          - entity: device_tracker.camera1
-            name: '1'
-          - entity: device_tracker.camera2
-            name: '2'
-          - timer.timer_camera_1
-          - timer.timer_camera_2
-          - entity: input_boolean.camera_1_aktiv
-            name: 1 aktiv
-          - entity: input_boolean.camera_2_aktiv
-            name: 2 aktiv
-          - input_boolean.camera_1_and_2_aktiv
-        title: Kamera
-        show_header_toggle: false
       - type: picture-entity
         entity: camera.kamera_1
       - type: picture-entity
@@ -546,36 +531,12 @@ views:
         entities:
           - binary_sensor.aqara_motion_sensor_1
           - binary_sensor.aqara_motion_sensor_2
-          - binary_sensor.tradfri_motion_sensor_5
-        title: Rörelsedetektor inne
-        show_header_toggle: false
-      - type: entities
-        entities:
-          - binary_sensor.motion_kamera_1
-          - binary_sensor.motion_kamera_2
           - binary_sensor.tradfri_motion_sensor_1
           - binary_sensor.tradfri_motion_sensor_2
           - binary_sensor.tradfri_motion_sensor_3
           - binary_sensor.tradfri_motion_sensor_4
-        title: Rörelsedetektor ute
-        show_header_toggle: false
-      - type: entities
-        entities:
-          - automation.startar_camera_1_timer
-          - automation.startar_camera_2_timer
-          - automation.stanger_av_camera_1_aktiv
-          - automation.stanger_av_camera_2_aktiv
-          - automation.startar_camera_1_and_2_aktiv_1_aktiv
-          - automation.startar_camera_1_and_2_aktiv_2_aktiv
-          - automation.stoppar_camera_1_and_2_aktiv_1_inaktiv
-          - automation.stoppar_camera_1_and_2_aktiv_2_inaktiv
-          - automation.larm_kamera_1_aktiv_home
-          - automation.larm_kamera_1_aktiv_away
-          - automation.larm_kamera_2_aktiv_home
-          - automation.larm_kamera_2_aktiv_away
-          - automation.larm_kameror_ar_aktiva_home
-          - automation.larm_kameror_ar_aktiva_away
-        title: Automation
+          - binary_sensor.tradfri_motion_sensor_5
+        title: Rörelsedetektor inne
         show_header_toggle: false
   - path: automation
     title: Automation

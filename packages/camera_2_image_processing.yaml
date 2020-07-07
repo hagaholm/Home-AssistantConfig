@@ -200,7 +200,7 @@ automation:
           level: debug
 
       - delay:
-          seconds: 65
+          seconds: 70
 
       - service: system_log.write
         data_template:
@@ -232,6 +232,9 @@ automation:
           state: 'not_home'
         - condition: state
           entity_id: input_boolean.camera_2_detected_active
+          state: 'on'
+        - condition: state
+          entity_id: binary_sensor.camera_2_person_detected
           state: 'on'
     action:
       - service: system_log.write
@@ -268,7 +271,7 @@ automation:
           entity_id: camera.kamera_2
           filename: '/config/camera/latest_person_away/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video.state }}.mp4'
           lookback: 0
-          duration: 15
+          duration: 60
 
       - service: system_log.write
         data_template:
@@ -276,7 +279,7 @@ automation:
           level: debug
 
       - delay:
-          seconds: 1
+          seconds: 70
 
       - service: system_log.write
         data_template:

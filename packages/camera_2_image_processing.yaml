@@ -239,9 +239,13 @@ automation:
           message: "B1. Camera 2 Record again if still away"
           level: debug
 
-      - service: input_boolean.turn_on
-        entity_id: input_boolean.camera_2_recording
-        
+#      - service: input_boolean.turn_on
+#        entity_id: input_boolean.camera_2_recording
+
+      - data:
+          entity_id: input_boolean.camera_2_recording
+        service: input_boolean.turn_on
+
       - service: system_log.write
         data_template:
           message: "B2. Camera 2 Record again if still away"
@@ -273,13 +277,18 @@ automation:
 
       - delay:
           seconds: 1
+
       - service: system_log.write
         data_template:
           message: "B5. Camera 2 Record again if still away"
           level: debug
 
-      - service: input_boolean.turn_off
-        entity_id: input_boolean.camera_2_recording
+#      - service: input_boolean.turn_off
+#        entity_id: input_boolean.camera_2_recording
+
+      - data:
+          entity_id: input_boolean.camera_2_recording
+        service: input_boolean.turn_off
 
       - service: system_log.write
         data_template:

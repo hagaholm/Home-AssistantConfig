@@ -160,11 +160,11 @@
   - platform: mqtt
     name: Ljusstyrka
     state_topic: "hassbian/tsl2591/lux_calibrated"
-    unit_of_measurement: "lux"
+    unit_of_measurement: "lx"
   - platform: mqtt
     name: Ljusstyrka2
     state_topic: "hassbian/tsl2591/lux_5"
-    unit_of_measurement: "lux"
+    unit_of_measurement: "lx"
   - platform: mqtt
     name: Infrarött ljus
     state_topic: "hassbian/tsl2591/infrared"

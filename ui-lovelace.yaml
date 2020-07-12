@@ -374,6 +374,7 @@ views:
             name: subbas
           - entity: switch.vardagsrum_extra_subbas
             name: extra subbas
+          - binary_sensor.tradfri_motion_sensor_1
         title: Vardagsrum
         show_header_toggle: true
       - type: entities
@@ -384,6 +385,11 @@ views:
           - sensor.fukt_badrumsfonster
           - switch.fan_speed
         title: Badrum
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - binary_sensor.tradfri_motion_sensor_3
+        title: Toalett
         show_header_toggle: true
       - type: entities
         entities:
@@ -456,9 +462,7 @@ views:
           - light.friggebod_ute
           - switch.ringklocka_tvattstuga
           - switch.ringklocka_hall
-          - binary_sensor.tradfri_motion_sensor_1
           - binary_sensor.tradfri_motion_sensor_2
-          - binary_sensor.tradfri_motion_sensor_3
           - binary_sensor.tradfri_motion_sensor_4
         title: Ute
         show_header_toggle: true

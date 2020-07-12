@@ -236,10 +236,10 @@ views:
           - light.kok_underskap_bank
           - light.kok_underskap_diskbank
           - light.kok_vitrinskap
-          - input_boolean.rorelsevakt_aktiv
-          - timer.timer_rorelsevakt_1_medium
-          - timer.timer_rorelsevakt_2_medium
-          - timer.timer_rorelsevakt_3_medium
+          - input_boolean.rorelsedetektor_aktiv
+          - timer.timer_rorelsedetektor_1_medium
+          - timer.timer_rorelsedetektor_2_medium
+          - timer.timer_rorelsedetektor_3_medium
         title: Köksbelysning
         show_header_toggle: true
       - type: entities
@@ -273,10 +273,10 @@ views:
         entities:
           - light.hall_byra
           - light.vardagsrum_fonster
-          - input_boolean.rorelsevakt_aktiv
-          - timer.timer_rorelsevakt_1_short
-          - timer.timer_rorelsevakt_2_short
-          - timer.timer_rorelsevakt_3_short
+          - input_boolean.rorelsedetektor_aktiv
+          - timer.timer_rorelsedetektor_1_short
+          - timer.timer_rorelsedetektor_2_short
+          - timer.timer_rorelsedetektor_3_short
         title: Nattbelysning
         show_header_toggle: true
       - type: entities
@@ -327,9 +327,9 @@ views:
             name: underskåp diskbänk
           - entity: light.kok_vitrinskap
             name: vitrinskåp
-          - input_boolean.rorelsevakt_aktiv
-          - timer.timer_rorelsevakt_1_medium
-          - timer.timer_rorelsevakt_3_medium
+          - input_boolean.rorelsedetektor_aktiv
+          - timer.timer_rorelsedetektor_1_medium
+          - timer.timer_rorelsedetektor_3_medium
         title: Kök
         show_header_toggle: true
       - type: entities
@@ -350,7 +350,7 @@ views:
           - sensor.tvattstuga_temperature
           - sensor.tvattstuga_humidity
           - sensor.varmepump_temperature
-          - timer.timer_rorelsevakt_2_medium
+          - timer.timer_rorelsedetektor_2_medium
         title: Tvättstuga
         show_header_toggle: true
       - type: entities
@@ -599,7 +599,7 @@ views:
           - automation.kok_off_borta
           - automation.kok_off_sensor_off
           - automation.kok_off_3000
-          - automation.kok_rorelsevakt_reset
+          - automation.kok_rorelsedetektor_reset
         title: Köksbelysning
         show_header_toggle: true
       - type: entities
@@ -703,7 +703,7 @@ views:
           - automation.uterum_larm_hog_temp
           - automation.friggebod_larm_hog_temp
           - automation.friggebod_larm_lag_temp
-          - automation.friggebod_frysvakt
+          - automation.friggebod_frysdetektor
           - automation.larm_hog_temp_i_kyl
           - automation.larm_lag_temp_i_kyl
           - automation.larm_varning_hog_temp_i_frys
@@ -840,12 +840,12 @@ views:
           - automation.startar_timers_1
           - automation.startar_timers_2
           - automation.startar_timers_3
-          - automation.stanger_av_rorelsevakt_aktiv_om_aktiv_1
-          - automation.stanger_av_rorelsevakt_aktiv_om_aktiv_2
-          - automation.stanger_av_rorelsevakt_aktiv_om_aktiv_3
-          - automation.stanger_av_rorelsevakt_aktiv_for_nattbelysning_1
-          - automation.stanger_av_rorelsevakt_aktiv_for_nattbelysning_2
-          - automation.stanger_av_rorelsevakt_aktiv_for_nattbelysning_3
+          - automation.stanger_av_rorelsedetektor_aktiv_om_aktiv_1
+          - automation.stanger_av_rorelsedetektor_aktiv_om_aktiv_2
+          - automation.stanger_av_rorelsedetektor_aktiv_om_aktiv_3
+          - automation.stanger_av_rorelsedetektor_aktiv_for_nattbelysning_1
+          - automation.stanger_av_rorelsedetektor_aktiv_for_nattbelysning_2
+          - automation.stanger_av_rorelsedetektor_aktiv_for_nattbelysning_3
         title: Rörelsedetektor i kök
         show_header_toggle: true
       - type: entities

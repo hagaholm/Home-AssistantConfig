@@ -316,6 +316,7 @@ views:
         entities:
           - sensor.kyl_temperature
           - sensor.frys_temperature
+          - sensor.aqara_motion_sensor_1
           - entity: light.kok_stora_fonstret
             name: stora fönstret
           - entity: light.kok_lilla_fonstret
@@ -335,6 +336,7 @@ views:
         entities:
           - sensor.hall_temperature
           - sensor.hall_humidity
+          - sensor.aqara_motion_sensor_2
           - entity: light.hall_byra
             name: byrå
           - entity: light.hall_skap

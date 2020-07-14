@@ -317,13 +317,21 @@ automation:
         data_template:
           message: "C1. Camera 1 Move video if still away after 2 min"
           level: debug
+          
+      - delay:
+          seconds: 10
+
+      - service: system_log.write
+        data_template:
+          message: "C2. Camera 1 Move video if still away after 2 min"
+          level: debug
 
     # Move camera/latest_person_away/*.mp4 to www/latest_person_away
       - service: shell_command.camera_1_move_video
 
       - service: system_log.write
         data_template:
-          message: "C2. Camera 1 Move video if still away after 2 min"
+          message: "C3. Camera 1 Move video if still away after 2 min"
           level: debug
 
   #################################################
@@ -350,12 +358,20 @@ automation:
           message: "D1. Camera 1 Delete video if home after 2 min"
           level: debug
 
+      - delay:
+          seconds: 10
+
+      - service: system_log.write
+        data_template:
+          message: "D2. Camera 1 Delete video if home after 2 min"
+          level: debug
+
     # Move camera/latest_person_away/*.mp4 to www/latest_person_away
       - service: shell_command.camera_1_delete_video
 
       - service: system_log.write
         data_template:
-          message: "D2. Camera 1 Delete video if home after 2 min"
+          message: "D3. Camera 1 Delete video if home after 2 min"
           level: debug
 
   ############################################################################

@@ -441,7 +441,7 @@ automation:
       - service: notify.pushbullet
         data:
           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-          message: "Camera 2 Person detekterad, senaste bild"
+          message: "Camera 2 Person detekterad: {{ states.input_text.camera_2_person_detected_timestamp_photo.state }}"
           data:
             file: /config/www/latest_person/camera_2_1.jpg
 

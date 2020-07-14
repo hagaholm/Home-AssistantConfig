@@ -107,7 +107,7 @@ automation:
           entity_id: input_boolean.camera_2_detected_active
           state: 'off'
     action:
-      # Aktiverar rörelsedetektor_aktiv
+      # Aktiverar camera_2_detected_active
       - service: input_boolean.turn_on
         data:
           entity_id: input_boolean.camera_2_detected_active

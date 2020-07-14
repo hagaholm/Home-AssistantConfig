@@ -236,7 +236,7 @@ views:
           - light.kok_underskap_bank
           - light.kok_underskap_diskbank
           - light.kok_vitrinskap
-          - input_boolean.rorelsedetektor_aktiv
+          - input_boolean.rorelsedetektor_kok_aktiv
           - timer.timer_rorelsedetektor_1_medium
           - timer.timer_rorelsedetektor_2_medium
           - timer.timer_rorelsedetektor_3_medium
@@ -273,7 +273,7 @@ views:
         entities:
           - light.hall_byra
           - light.vardagsrum_fonster
-          - input_boolean.rorelsedetektor_aktiv
+          - input_boolean.rorelsedetektor_kok_aktiv
           - timer.timer_rorelsedetektor_1_short
           - timer.timer_rorelsedetektor_2_short
           - timer.timer_rorelsedetektor_3_short
@@ -327,7 +327,7 @@ views:
             name: underskåp diskbänk
           - entity: light.kok_vitrinskap
             name: vitrinskåp
-          - input_boolean.rorelsedetektor_aktiv
+          - input_boolean.rorelsedetektor_kok_aktiv
           - timer.timer_rorelsedetektor_1_medium
           - timer.timer_rorelsedetektor_3_medium
         title: Kök
@@ -542,7 +542,7 @@ views:
           - binary_sensor.tradfri_motion_sensor_3
           - binary_sensor.tradfri_motion_sensor_4
           - binary_sensor.tradfri_motion_sensor_5
-        title: Rörelsedetektor inne
+        title: Rörelsedetektorer inne
         show_header_toggle: false
   - path: automation
     title: Automation
@@ -840,12 +840,12 @@ views:
           - automation.startar_timers_1
           - automation.startar_timers_2
           - automation.startar_timers_3
-          - automation.stanger_av_rorelsedetektor_aktiv_om_aktiv_1
-          - automation.stanger_av_rorelsedetektor_aktiv_om_aktiv_2
-          - automation.stanger_av_rorelsedetektor_aktiv_om_aktiv_3
-          - automation.stanger_av_rorelsedetektor_aktiv_for_nattbelysning_1
-          - automation.stanger_av_rorelsedetektor_aktiv_for_nattbelysning_2
-          - automation.stanger_av_rorelsedetektor_aktiv_for_nattbelysning_3
+          - automation.stanger_av_rorelsedetektor_kok_aktiv_om_aktiv_1
+          - automation.stanger_av_rorelsedetektor_kok_aktiv_om_aktiv_2
+          - automation.stanger_av_rorelsedetektor_kok_aktiv_om_aktiv_3
+          - automation.stanger_av_rorelsedetektor_kok_aktiv_for_nattbelysning_1
+          - automation.stanger_av_rorelsedetektor_kok_aktiv_for_nattbelysning_2
+          - automation.stanger_av_rorelsedetektor_kok_aktiv_for_nattbelysning_3
         title: Rörelsedetektor i kök
         show_header_toggle: true
       - type: entities

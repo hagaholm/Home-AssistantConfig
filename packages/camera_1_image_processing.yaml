@@ -326,12 +326,20 @@ automation:
           message: "C2. Camera 1 Move video if still away after 2 min"
           level: debug
 
-    # Move camera/latest_person_away/*.mp4 to www/latest_person_away
-      - service: shell_command.camera_1_move_video
+    # Copy camera/latest_person_away/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_video.state }}.mp4 to www/latest_person_away as camera_1_1.mp4
+      - service: shell_command.camera_1_copy_video
 
       - service: system_log.write
         data_template:
           message: "C3. Camera 1 Move video if still away after 2 min"
+          level: debug
+
+    # Move camera/latest_person_away/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_video.state }}.mp4 to www/latest_person_away
+      - service: shell_command.camera_1_move_video
+
+      - service: system_log.write
+        data_template:
+          message: "C4. Camera 1 Move video if still away after 2 min"
           level: debug
 
   #################################################
@@ -588,7 +596,10 @@ shell_command:
   camera_1_copy_to_latest_motion_away_2: "cp '/config/camera/latest_person_away/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg' '/config/camera/latest_person_away/camera_1_1.jpg'"
 
   # Used by automation  Camera 1 Move video if still away after 2 min
-  camera_1_move_video: "mv /config/camera/latest_person_away/camera_1_*.mp4 /config/www/latest_person_away/"
+  camera_1_copy_video: "cp /config/camera/latest_person_away/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_video.state }}.mp4 /config/www/latest_person/camera_1_1.mp4"
+
+  # Used by automation  Camera 1 Move video if still away after 2 min
+  camera_1_move_video: "mv /config/camera/latest_person_away/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_video.state }}.mp4 /config/www/latest_person_away/"
 
   # Used by automation  Camera 1 Delete video if home after 2 min
   camera_1_delete_video: "rm /config/camera/latest_person_away/camera_1_*.mp4"

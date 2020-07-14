@@ -107,7 +107,7 @@ automation:
           entity_id: input_boolean.camera_2_detected_active
           state: 'off'
     action:
-      # Aktiverar rörelsevakt_aktiv
+      # Aktiverar rörelsedetektor_aktiv
       - service: input_boolean.turn_on
         data:
           entity_id: input_boolean.camera_2_detected_active
@@ -192,7 +192,7 @@ automation:
           entity_id: camera.kamera_2
           filename: '/config/camera/latest_person_away/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video.state }}.mp4'
           lookback: 0
-          duration: 15
+          duration: 60
 
       - service: system_log.write
         data_template:
@@ -200,7 +200,7 @@ automation:
           level: debug
 
       - delay:
-          seconds: 2
+          seconds: 70
 
       - service: system_log.write
         data_template:
@@ -233,15 +233,22 @@ automation:
         - condition: state
           entity_id: input_boolean.camera_2_detected_active
           state: 'on'
+        - condition: state
+          entity_id: binary_sensor.camera_2_person_detected
+          state: 'on'
     action:
       - service: system_log.write
         data_template:
           message: "B1. Camera 2 Record again if still away"
           level: debug
 
-      - service: input_boolean.turn_on
-        entity_id: input_boolean.camera_2_recording
-        
+#      - service: input_boolean.turn_on
+#        entity_id: input_boolean.camera_2_recording
+
+      - data:
+          entity_id: input_boolean.camera_2_recording
+        service: input_boolean.turn_on
+
       - service: system_log.write
         data_template:
           message: "B2. Camera 2 Record again if still away"
@@ -264,7 +271,7 @@ automation:
           entity_id: camera.kamera_2
           filename: '/config/camera/latest_person_away/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video.state }}.mp4'
           lookback: 0
-          duration: 15
+          duration: 60
 
       - service: system_log.write
         data_template:
@@ -272,7 +279,8 @@ automation:
           level: debug
 
       - delay:
-          seconds: 1
+          seconds: 70
+
       - service: system_log.write
         data_template:
           message: "B5. Camera 2 Record again if still away"
@@ -316,6 +324,38 @@ automation:
       - service: system_log.write
         data_template:
           message: "C2. Camera 2 Move video if still away after 2 min"
+          level: debug
+
+  #################################################
+  ### TO DEVELOP AND TEST                       ###
+  ### Camera 1 Delete video if home afer 2 min  ###
+  #################################################
+  - alias: Camera 2 Delete video if home after 2 min 
+    # After 2 minutes after person detected
+    trigger:
+      platform: state
+      entity_id: input_boolean.camera_2_detected_active
+      to: 'off'
+    # Only if still nobody home
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'home'
+    action:
+
+      - service: system_log.write
+        data_template:
+          message: "D1. Camera 2 Delete video if home after 2 min"
+          level: debug
+
+    # Move camera/latest_person_away/*.mp4 to www/latest_person_away
+      - service: shell_command.camera_2_delete_video
+
+      - service: system_log.write
+        data_template:
+          message: "D2. Camera 2 Delete video if home after 2 min"
           level: debug
 
   ############################################################################
@@ -481,6 +521,8 @@ script:
         entity_id: automation.camera_2_record_again_if_still_away
       - service: automation.turn_off
         entity_id: automation.camera_2_move_video_if_still_away_after_2_min
+      - service: automation.turn_off
+        entity_id: automation.camera_2_delete_video_if_home_after_2_min
 
 #      - service: automation.turn_on
 #        entity_id: automation.camera_2_delete_latest_person_away_files_when_home
@@ -513,6 +555,8 @@ script:
         entity_id: automation.camera_2_record_again_if_still_away
       - service: automation.turn_on
         entity_id: automation.camera_2_move_video_if_still_away_after_2_min
+      - service: automation.turn_on
+        entity_id: automation.camera_2_delete_video_if_home_after_2_min
 
 #####################
 ### Shell command ###
@@ -529,6 +573,9 @@ shell_command:
 
   # Used by automation  Camera 2 Move video if still away after 2 min
   camera_2_move_video: "mv /config/camera/latest_person_away/camera_2_*.mp4 /config/www/latest_person_away/"
+
+  # Used by automation  Camera 2 Delete video if home after 2 min
+  camera_2_delete_video: "rm /config/camera/latest_person_away/camera_2_*.mp4"
 
   # Used by automation Camera 2 Move latest_person_away files after 2 min
   # Used by automation Camera 2 Move latest_person_away files when no detection
@@ -585,12 +632,11 @@ input_text:
   camera_2_person_detected_timestamp_video:
     name: Camera 2 Tidpunkt för person detektering video
 
-### TEST ###
 timer:
   # Timer för camera 2 detekterad
   timer_camera_2_detected:
     name: Tid kvar kamera 2 detekterad
-    duration: '00:02:00'
+    duration: '00:00:09'
 
 
 

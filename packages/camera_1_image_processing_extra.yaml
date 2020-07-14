@@ -1,0 +1,118 @@
+##################
+### Automation ###
+##################
+automation:
+  ####################################################
+  ### Max light friggebod fasad if person detected ###
+  ####################################################
+  - alias: Max light friggebod fasad if person detected
+    trigger:
+      - platform: event
+        event_type: folder_watcher
+        event_data:
+          event_type: modified
+          path: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.friggebod_fasad
+          state: 'on'
+    action:
+      - service: light.turn_on
+        data:
+          entity_id: light.friggebod_fasad
+          brightness_pct: 100
+          transition: 5
+
+  #################################################
+  ### Max light förråd fasad if person detected ###
+  #################################################
+  - alias: Max light förråd fasad if person detected
+    trigger:
+      - platform: event
+        event_type: folder_watcher
+        event_data:
+          event_type: modified
+          path: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.forrad_fasad
+          state: 'on'
+    action:
+      - service: light.turn_on
+        data:
+          entity_id: light.forrad_fasad
+          brightness_pct: 100
+          transition: 5
+
+  #########################################################
+  ### Reset light friggebod fasad if no person detected ###
+  #########################################################
+  - alias: Reset light friggebod fasad if person no detected
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.camera_1_person_detected
+        to: 'off'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.friggebod_fasad
+          state: 'on'
+    action:
+      - service: light.turn_on
+        data:
+          entity_id: light.friggebod_fasad
+          brightness_pct: 30
+          transition: 5
+
+  ######################################################
+  ### Reset light förråd fasad if no person detected ###
+  ######################################################
+  - alias: Reset light förråd fasad if person no detected
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.camera_1_person_detected
+        to: 'off'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.forrad_fasad
+          state: 'on'
+    action:
+      - service: light.turn_on
+        data:
+          entity_id: light.forrad_fasad
+          brightness_pct: 30
+          transition: 5
+
+  ######################################
+  ### Flash light if person detected ###
+  ######################################
+  - alias: Flash light if person detected
+    trigger:
+      - platform: event
+        event_type: folder_watcher
+        event_data:
+          event_type: modified
+          path: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg'
+    action:
+      - service: light.toggle
+        entity_id: light.hall_skap
+      - service: light.toggle
+        entity_id: light.hall_byra
+      - delay:
+          seconds: 2
+      - service: light.toggle
+        entity_id: light.hall_skap
+      - service: light.toggle
+        entity_id: light.hall_byra
+      - service: automation.turn_off
+        entity_id: automation.flash_light_if_person_detected
+
+      - service: automation.turn_off
+        entity_id: automation.flash_light_if_person_detected

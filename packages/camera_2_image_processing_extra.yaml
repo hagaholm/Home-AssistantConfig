@@ -1,0 +1,30 @@
+##################
+### Automation ###
+##################
+automation:
+  #####################################
+  ### Processes image for detection ###
+  #####################################
+  ### - every 5 sec                 ###    
+  ### - when away                   ###
+  #####################################
+  - alias: Camera 2 Image processing away
+
+    # Every 5 sec
+    trigger:
+      - platform: time_pattern
+        seconds: "/5"
+
+    # When away
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
+
+    # Scan a new image
+    action:
+      - service: image_processing.scan
+        data:
+          entity_id: image_processing.deepstack_camera_2

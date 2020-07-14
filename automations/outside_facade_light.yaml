@@ -3,7 +3,7 @@
     #################
     #######################################################################
     ### Tänder friggebod fasadbelysning på morgonen vid rörelse i köket ###
-    ### T: input_boolean.rorelsevakt_aktiv == on                        ###
+    ### T: input_boolean.rorelsedetektor_aktiv == on                    ###
     ### C: sensor.ljusstyrka < 40                                       ###
     ###    05:00:00 - 12:00:00                                          ###
     ### A: light.friggebod_fasad = on                                   ###
@@ -11,7 +11,7 @@
   - alias: Friggebod fasadbelysning on (sensor on, <40)
     trigger:
       platform: state
-      entity_id: input_boolean.rorelsevakt_aktiv
+      entity_id: input_boolean.rorelsedetektor_aktiv
       to: 'on'
     condition:
       condition: and
@@ -50,7 +50,7 @@
       conditions:
         - condition: state
           entity_id: group.track_for_home_devices
-          state: 'not_home'
+          state: 'home'
         - condition: time
           after: '12:00:00'
           before: '22:00:00'

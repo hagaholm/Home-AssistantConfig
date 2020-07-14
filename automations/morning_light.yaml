@@ -1,6 +1,6 @@
     ############################################################
     ### Tänder lampor på morgonen vid rörelse i köket        ###
-    ### T: input_boolean.rorelsevakt_aktiv == on             ###
+    ### T: input_boolean.rorelsedetektor_aktiv == on         ###
     ### C: sensor.ljusstyrka < input_number.morning_light_on ###
     ###    light.morgonbelysning == off                      ###
     ###    05:00:00 - 09:00:00                               ###
@@ -9,7 +9,7 @@
   - alias: Morgonbelysning on (sensor on, <1800)
     trigger:
       platform: state
-      entity_id: input_boolean.rorelsevakt_aktiv
+      entity_id: input_boolean.rorelsedetektor_aktiv
       to: 'on'
     condition:
       condition: and

@@ -8,15 +8,15 @@
 
     ##################################################################
     ### Skickar notification vid rörelse i köket om ingen är hemma ###
-    ### T: switch.rorelsevakt_1 == on                              ###
+    ### T: switch.rorelsedetektor_1 == on                          ###
     ### C: group.track_for_home_devices == not_home                ###
-    ###    switch.rorelsevakt_2 == off                             ###
+    ###    switch.rorelsedetektor_2 == off                         ###
     ### A: notify                                                  ###
     ##################################################################
   - alias: Larm rörelse i köket
     trigger:
       platform: state
-      entity_id: switch.rorelsevakt_1
+      entity_id: switch.rorelsedetektor_1
       to: 'on'
     condition:
       condition: and
@@ -25,7 +25,7 @@
           entity_id: group.track_for_home_devices
           state: 'not_home'
         - condition: state
-          entity_id: switch.rorelsevakt_2
+          entity_id: switch.rorelsedetektor_2
           state: 'off'
     action:
       - service: notify.pushbullet
@@ -36,8 +36,8 @@
     ### Skickar notification vid rörelse i hallen innan rörelse i kök/tvättstuga om ingen är hemma ###
     ### T: binary_sensor.aqara_motion_sensor_2 == on                                               ###
     ### C: group.track_for_home_devices == not_home                                                ###
-    ###    switch.rorelsevakt_1 == off                                                             ###
-    ###    switch.rorelsevakt_2 == off                                                             ###
+    ###    switch.rorelsedetektor_1 == off                                                         ###
+    ###    switch.rorelsedetektor_2 == off                                                         ###
     ###    binary_sensor.aqara_motion_sensor_1 == off                                              ###
     ###    vacuum.xiaomi_vacuum_cleaner == idle                                                    ###
     ### A: notify                                                                                  ###
@@ -54,10 +54,10 @@
           entity_id: group.track_for_home_devices
           state: 'not_home'
         - condition: state
-          entity_id: switch.rorelsevakt_1 # Kök
+          entity_id: switch.rorelsedetektor_1 # Kök
           state: 'off'
         - condition: state
-          entity_id: switch.rorelsevakt_2 # Tvättstuga
+          entity_id: switch.rorelsedetektor_2 # Tvättstuga
           state: 'off'
         - condition: state
           entity_id: binary_sensor.aqara_motion_sensor_1 # Kök

@@ -452,3 +452,26 @@ automation:
         entity_id: switch.vardagsrum_subbas
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_extra_subbas
+
+    ###################################
+    ### Sätt på tv bänk vid rörelse ###
+    ###################################
+  - alias: Sätt på tv bänk vid rörelse
+    trigger:
+      platform: state
+      entity_id: binary_sensor.tradfri_motion_sensor_1
+      to: 'on'
+    condition:
+      condition: or
+      conditions:
+        - condition: state
+          entity_id: switch.vardagsrum_stereobank
+          state: 'off'
+        - condition: state
+          entity_id: switch.vardagsrum_tv
+          state: 'off'
+    action:
+      - service: homeassistant.turn_on
+        entity_id: switch.vardagsrum_stereobank
+      - service: homeassistant.turn_on
+        entity_id: switch.vardagsrum_tv

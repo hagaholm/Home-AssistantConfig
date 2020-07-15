@@ -48,7 +48,7 @@ automation:
         at: "00:01:00" # HH:MM:SS
     action:
       - service: shell_command.remove_old_images_in_camera_deepstack_photo
-      - service: shell_command.remove_old_images_in_www
+      - service: shell_command.remove_old_images_in_www_latest_person_away
 
 ##############
 ### Script ###
@@ -71,7 +71,7 @@ shell_command:
   remove_old_images_in_camera_deepstack_photo: 'find /config/camera/deepstack_photo -mtime +14 -type f -delete' 
   
   # Delete 10 days old images from folder /config/www/latest_person_away
-  remove_old_images_in_camera: 'find /config/camera/www/latest_person_away -mtime +14 -type f -delete' 
+  remove_old_images_in_www_latest_person_away: 'find /config/camera/www/latest_person_away -mtime +14 -type f -delete' 
 
   # Used by script delete_camera_files
   delete_camera_files_1: 'rm /config/camera/deepstack_photo/*'

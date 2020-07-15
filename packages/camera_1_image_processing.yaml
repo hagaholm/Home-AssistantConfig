@@ -342,6 +342,14 @@ automation:
           message: "C4. Camera 1 Move video if still away after 2 min"
           level: debug
 
+    # Resize video
+#      - service: shell_command.camera_2_resize_video
+
+#      - service: system_log.write
+#        data_template:
+#          message: "C5. Camera 2 Move video if still away after 2 min"
+#          level: debug
+
   #################################################
   ### TO DEVELOP AND TEST                       ###
   ### Camera 1 Delete video if home afer 2 min  ###
@@ -374,7 +382,7 @@ automation:
           message: "D2. Camera 1 Delete video if home after 2 min"
           level: debug
 
-    # Move camera/latest_person_away/*.mp4 to www/latest_person_away
+    # Delete camera/latest_person_away/*.mp4
       - service: shell_command.camera_1_delete_video
 
       - service: system_log.write
@@ -596,10 +604,13 @@ shell_command:
   camera_1_copy_to_latest_motion_away_2: "cp '/config/camera/latest_person_away/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg' '/config/camera/latest_person_away/camera_1_1.jpg'"
 
   # Used by automation  Camera 1 Move video if still away after 2 min
-  camera_1_copy_video: "cp /config/camera/latest_person_away/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_video.state }}.mp4 /config/www/latest_person/camera_1_1.mp4"
+  camera_1_copy_video: "cp /config/camera/latest_person_away/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_video.state }}.mp4 /config/www/latest_person_away/camera_1_1.mp4"
 
   # Used by automation  Camera 1 Move video if still away after 2 min
   camera_1_move_video: "mv /config/camera/latest_person_away/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_video.state }}.mp4 /config/www/latest_person_away/"
+
+ # Used by automation  Camera 2 Move video if still away after 2 min
+  #camera_2_resize_video: "ffmpeg -y -loglevel error -i /config/www/latest_person_away/camera_2_1.mp4 -vf scale='320:-1' /config/www/latest_person_away/camera_2_1_320.mp4"
 
   # Used by automation  Camera 1 Delete video if home after 2 min
   camera_1_delete_video: "rm /config/camera/latest_person_away/camera_1_*.mp4"

@@ -350,6 +350,9 @@ automation:
           message: "C5. Camera 1 Move video if still away after 2 min"
           level: debug
 
+    # Copy resized video
+      - service: shell_command.camera_1_copy_resized_video
+
   #################################################
   ### TO DEVELOP AND TEST                       ###
   ### Camera 1 Delete video if home afer 2 min  ###
@@ -607,10 +610,13 @@ shell_command:
   camera_1_copy_video: "cp /config/camera/motion_detected/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_video.state }}.mp4 /config/www/motion_detected_away/camera_1_1.mp4"
 
   # Used by automation  Camera 1 Move video if still away after 2 min
-  camera_1_move_video: "mv /config/camera/motion_detected/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_video.state }}.mp4 /config/www/motion_detected_away/"
+  camera_1_move_video: "mv /config/camera/motion_detected/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_video.state }}.mp4 /config/www/motion_detected_away/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_video.state }}.mp4"
 
   # Used by automation  Camera 1 Move video if still away after 2 min
   camera_1_resize_video: "ffmpeg -y -loglevel error -i /config/www/motion_detected_away/camera_1_1.mp4 -vf scale='320:-1' /config/www/motion_detected_away_small/camera_1_1_320.mp4"
+
+  # Used by automation  Camera 1 Move video if still away after 2 min
+  camera_1_copy_resized_video: "cp /config/www/motion_detected_away_small/camera_1_1_320.mp4 /config/www/motion_detected_away_small/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_video.state }}_320.mp4"
 
   # Used by automation  Camera 1 Delete video if home after 2 min
   camera_1_delete_video: "rm /config/camera/motion_detected/camera_1_*.mp4"

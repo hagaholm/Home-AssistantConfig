@@ -70,12 +70,12 @@ shell_command:
   # Delete 10 days old images from folder /config/camera/deepstack_photo
   remove_old_images_in_camera_deepstack_photo: 'find /config/camera/deepstack_photo -mtime +14 -type f -delete' 
   
-  # Delete 10 days old images from folder /config/www/latest_person_away
-  remove_old_images_in_www_latest_person_away: 'find /config/camera/www/latest_person_away -mtime +14 -type f -delete' 
+  # Delete 10 days old images from folder /config/www/motion_detected_away
+  remove_old_images_in_www_latest_person_away: 'find /config/camera/www/motion_detected_away -mtime +14 -type f -delete' 
 
   # Used by script delete_camera_files
   delete_camera_files_1: 'rm /config/camera/deepstack_photo/*'
-  delete_camera_files_2: 'rm /config/camera/latest_person_away/*'
+  delete_camera_files_2: 'rm /config/camera/motion_detected_away/*'
   delete_camera_files_3: 'rm /config/camera/person/*'
-  delete_camera_files_4: 'rm /config/www/latest_person/*'
-  delete_camera_files_5: 'rm /config/www/latest_person_away/*'
+  delete_camera_files_4: 'rm /config/www/motion_detected/*'
+  delete_camera_files_5: 'rm /config/www/motion_detected_away/*'

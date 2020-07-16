@@ -354,16 +354,16 @@ automation:
           message: "C6. Camera 2 Move video if still away after 2 min"
           level: debug
 
-      - service: python_script.generate_directory_index
-        data:
-          top_dir: /config/www/motion_detected_away_small/
-          output_file: index_small.html
-          filter: "*.mp4"
+#      - service: python_script.generate_directory_index
+#        data:
+#          top_dir: /config/www/motion_detected_away_small/
+#          output_file: index_small.html
+#          filter: "*.mp4"
 
-      - service: system_log.write
-        data_template:
-          message: "C7. Camera 2 Move video if still away after 2 min"
-          level: debug
+#      - service: system_log.write
+#        data_template:
+#          message: "C7. Camera 2 Move video if still away after 2 min"
+#          level: debug
 
   #################################################
   ### TO DEVELOP AND TEST                       ###

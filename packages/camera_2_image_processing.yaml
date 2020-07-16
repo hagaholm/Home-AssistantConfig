@@ -213,7 +213,7 @@ automation:
       - service: input_text.set_value
         entity_id: input_text.camera_2_person_detected_timestamp_video_2
         data_template:
-          value: input_text.camera_2_person_detected_timestamp_video
+          value: {{ states.input_text.camera_2_person_detected_timestamp_video.state }}
 
       - service: system_log.write
         data_template:
@@ -302,7 +302,7 @@ automation:
       - service: input_text.set_value
         entity_id: input_text.camera_2_person_detected_timestamp_video_2
         data_template:
-          value: input_text.camera_2_person_detected_timestamp_video
+          value: {{ states.input_text.camera_2_person_detected_timestamp_video.state }}
 
       - service: system_log.write
         data_template:

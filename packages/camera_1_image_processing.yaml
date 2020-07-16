@@ -211,8 +211,8 @@ automation:
 
     # Move timestamp when person detected to another variable
       - service: input_text.set_value
-        entity_id: input_text.camera_1_person_detected_timestamp_video_2
         data_template:
+          entity_id: input_text.camera_1_person_detected_timestamp_video_2
           value: {{ states.input_text.camera_1_person_detected_timestamp_video }}
 
       - service: system_log.write
@@ -300,8 +300,8 @@ automation:
 
     # Move timestamp when person detected to another variable
       - service: input_text.set_value
-        entity_id: input_text.camera_1_person_detected_timestamp_video_2
         data_template:
+          entity_id: input_text.camera_1_person_detected_timestamp_video_2
           value: {{ states.input_text.camera_1_person_detected_timestamp_video }}
 
       - service: system_log.write

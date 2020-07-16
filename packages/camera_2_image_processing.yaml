@@ -375,7 +375,7 @@ automation:
           level: debug
 
       - delay:
-          seconds: 1
+          seconds: 15
 
     # Copy resized video
       - service: shell_command.camera_2_copy_resized_video

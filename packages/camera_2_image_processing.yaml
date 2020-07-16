@@ -167,6 +167,7 @@ automation:
           message: "A1. Camera 2 Record when person detected away"
           level: debug
 
+    # Turn on: input_boolean.camera_2_recording
       - service: input_boolean.turn_on
         entity_id: input_boolean.camera_2_recording
 
@@ -199,6 +200,7 @@ automation:
           message: "A4. Camera 2 Record when person detected away"
           level: debug
 
+    # 70 sec delay to make sure that record is finished
       - delay:
           seconds: 70
 
@@ -207,17 +209,29 @@ automation:
           message: "A5. Camera 2 Record when person detected away"
           level: debug
 
-      - service: input_boolean.turn_off
-        entity_id: input_boolean.camera_2_recording
+    # Move timestamp when person detected to another variable
+      - service: input_text.set_value
+        entity_id: input_text.camera_2_person_detected_timestamp_video_2
+        data_template:
+          value: input_text.camera_2_person_detected_timestamp_video
 
       - service: system_log.write
         data_template:
           message: "A6. Camera 2 Record when person detected away"
           level: debug
 
+    # Turn off: input_boolean.camera_2_recording
+      - service: input_boolean.turn_off
+        entity_id: input_boolean.camera_2_recording
+
+      - service: system_log.write
+        data_template:
+          message: "A7. Camera 2 Record when person detected away"
+          level: debug
+
   ###########################################
   ### TO DEVELOP AND TEST                 ###
-  ### Camera 1 Record again if still away ###
+  ### Camera 2 Record again if still away ###
   ###########################################
   - alias: Camera 2 Record again if still away
     trigger:
@@ -242,6 +256,7 @@ automation:
           message: "B1. Camera 2 Record again if still away"
           level: debug
 
+    # Turn on: input_boolean.camera_2_recording
       - service: input_boolean.turn_on
         entity_id: input_boolean.camera_2_recording
 
@@ -274,6 +289,7 @@ automation:
           message: "B4. Camera 2 Record again if still away"
           level: debug
 
+    # 70 sec delay to make sure that record is finished
       - delay:
           seconds: 70
 
@@ -282,17 +298,29 @@ automation:
           message: "B5. Camera 2 Record again if still away"
           level: debug
 
-      - service: input_boolean.turn_off
-        entity_id: input_boolean.camera_2_recording
+    # Move timestamp when person detected to another variable
+      - service: input_text.set_value
+        entity_id: input_text.camera_2_person_detected_timestamp_video_2
+        data_template:
+          value: input_text.camera_2_person_detected_timestamp_video
 
       - service: system_log.write
         data_template:
           message: "B6. Camera 2 Record again if still away"
           level: debug
 
+    # Turn off: input_boolean.camera_2_recording
+      - service: input_boolean.turn_off
+        entity_id: input_boolean.camera_2_recording
+
+      - service: system_log.write
+        data_template:
+          message: "B7. Camera 2 Record again if still away"
+          level: debug
+
   #####################################################
   ### TO DEVELOP AND TEST                           ###
-  ### Camera 1 Move video if still away afer 2 min  ###
+  ### Camera 2 Move video if still away afer 2 min  ###
   #####################################################
   - alias: Camera 2 Move video if still away after 2 min 
     # After 2 minutes after person detected
@@ -313,7 +341,7 @@ automation:
         data_template:
           message: "C1. Camera 2 Move video if still away after 2 min"
           level: debug
-
+          
       - delay:
           seconds: 10
 
@@ -322,7 +350,7 @@ automation:
           message: "C2. Camera 2 Move video if still away after 2 min"
           level: debug
 
-    # Copy camera/latest_person_away/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video.state }}.mp4 to www/latest_person_away as camera_2_1.mp4
+    # Copy camera/latest_person_away/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video_2.state }}.mp4 to www/latest_person_away as camera_2_1.mp4
       - service: shell_command.camera_2_copy_video
 
       - service: system_log.write
@@ -330,7 +358,7 @@ automation:
           message: "C3. Camera 2 Move video if still away after 2 min"
           level: debug
 
-    # Move camera/latest_person_away/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video.state }}.mp4 to www/latest_person_away
+    # Move camera/latest_person_away/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video_2.state }}.mp4 to www/latest_person_away
       - service: shell_command.camera_2_move_video
 
       - service: system_log.write
@@ -354,6 +382,7 @@ automation:
           message: "C6. Camera 2 Move video if still away after 2 min"
           level: debug
 
+    # Generate index.html
 #      - service: python_script.generate_directory_index
 #        data:
 #          top_dir: /config/www/motion_detected_away_small/
@@ -367,7 +396,7 @@ automation:
 
   #################################################
   ### TO DEVELOP AND TEST                       ###
-  ### Camera 1 Delete video if home afer 2 min  ###
+  ### Camera 2 Delete video if home afer 2 min  ###
   #################################################
   - alias: Camera 2 Delete video if home after 2 min 
     # After 2 minutes after person detected
@@ -619,16 +648,16 @@ shell_command:
   camera_2_copy_to_latest_motion_away_2: "cp '/config/camera/motion_detected/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_photo.state }}.jpg' '/config/camera/motion_detected/camera_2_1.jpg'"
 
   # Used by automation Camera 2 Move video if still away after 2 min
-  camera_2_copy_video: "cp /config/camera/motion_detected/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video.state }}.mp4 /config/www/motion_detected_away/camera_2_1.mp4"
+  camera_2_copy_video: "cp /config/camera/motion_detected/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video_2.state }}.mp4 /config/www/motion_detected_away/camera_2_1.mp4"
 
   # Used by automation Camera 2 Move video if still away after 2 min
-  camera_2_move_video: "mv /config/camera/motion_detected/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video.state }}.mp4 /config/www/motion_detected_away/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video.state }}.mp4"
+  camera_2_move_video: "mv /config/camera/motion_detected/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video_2.state }}.mp4 /config/www/motion_detected_away/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video_2.state }}.mp4"
 
   # Used by automation Camera 2 Move video if still away after 2 min
   camera_2_resize_video: "ffmpeg -y -loglevel error -i /config/www/motion_detected_away/camera_2_1.mp4 -vf scale='320:-1' /config/www/motion_detected_away_small/camera_2_1_320.mp4"
 
   # Used by automation Camera 2 Move video if still away after 2 min
-  camera_2_copy_resized_video: "cp /config/www/motion_detected_away_small/camera_2_1_320.mp4 /config/www/motion_detected_away_small/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video.state }}_320.mp4"
+  camera_2_copy_resized_video: "cp /config/www/motion_detected_away_small/camera_2_1_320.mp4 /config/www/motion_detected_away_small/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video_2.state }}_320.mp4"
 
   # Used by automation Camera 2 Delete video if home after 2 min
   camera_2_delete_video: "rm /config/camera/motion_detected/camera_2_*.mp4"
@@ -685,8 +714,12 @@ binary_sensor:
 input_text:
   camera_2_person_detected_timestamp_photo:
     name: Camera 2 Tidpunkt för person detektering foto
+  camera_2_person_detected_timestamp_photo_2:
+    name: Camera 2 Tidpunkt för person detektering foto föregående
   camera_2_person_detected_timestamp_video:
     name: Camera 2 Tidpunkt för person detektering video
+  camera_2_person_detected_timestamp_video_2:
+    name: Camera 2 Tidpunkt för person detektering video föregående
 
 timer:
   # Timer för camera 2 detekterad

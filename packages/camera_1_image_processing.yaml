@@ -357,8 +357,9 @@ automation:
     # Generate index.html
       - service: python_script.generate_directory_index
         data:
-          path: /config/www/motion_detected_away_small/
-          file: index_small.html
+          top_dir: /config/www/motion_detected_away_small/
+          output_file: index_small.html
+          filter: "*.mp4"
 
       - service: system_log.write
         data_template:

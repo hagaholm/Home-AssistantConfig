@@ -355,7 +355,10 @@ automation:
           level: debug
 
     # Generate index.html
-      - service: python_script.generate_directory_index /config/www/motion_detected_away_small/
+      - service: python_script.generate_directory_index
+        data:
+          path: /config/www/motion_detected_away_small/
+          file: index_small.html
 
       - service: system_log.write
         data_template:

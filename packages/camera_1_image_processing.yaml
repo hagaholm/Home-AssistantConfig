@@ -242,12 +242,8 @@ automation:
           message: "B1. Camera 1 Record again if still away"
           level: debug
 
-#      - service: input_boolean.turn_on
-#        entity_id: input_boolean.camera_1_recording
-
-      - data:
-          entity_id: input_boolean.camera_1_recording
-        service: input_boolean.turn_on
+      - service: input_boolean.turn_on
+        entity_id: input_boolean.camera_1_recording
 
       - service: system_log.write
         data_template:
@@ -359,7 +355,13 @@ automation:
           level: debug
 
     # Generate index.html
-      - service: shell_command.generate_index
+      - service: python_script.generate_directory_index  /config/www/motion_detected_away_small/
+
+
+      - service: system_log.write
+        data_template:
+          message: "C7. Camera 1 Move video if still away after 2 min"
+          level: debug
 
   #################################################
   ### TO DEVELOP AND TEST                       ###
@@ -625,9 +627,6 @@ shell_command:
 
   # Used by automation Camera 1 Move video if still away after 2 min
   camera_1_copy_resized_video: "cp /config/www/motion_detected_away_small/camera_1_1_320.mp4 /config/www/motion_detected_away_small/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_video.state }}_320.mp4"
-
-  # Used by automation Camera 1 Move video if still away after 2 min
-  camera_1_generate_index: "python3 /config/python_scripts/generate_directory_index.py /config/www/motion_detected_away_small/"
 
   # Used by automation Camera 1 Delete video if home after 2 min
   camera_1_delete_video: "rm /config/camera/motion_detected/camera_1_*.mp4"

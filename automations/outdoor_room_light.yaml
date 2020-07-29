@@ -274,26 +274,12 @@
         data:
           entity_id: input_select.uterum_led_lights
           option: Off
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_led
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_led
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_led
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_led
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_led
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_led
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_led
+      - repeat:
+          count: 10
+          sequence:
+            - service: homeassistant.turn_off
+              entity_id: light.uterum_led
+            - delay: '00:00:05'
 
     ##################################################################
     ### Släcker uterums ledbelysning på kvällen när ingen är hemma ###
@@ -316,26 +302,12 @@
         data:
           entity_id: input_select.uterum_led_lights
           option: Off
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_led
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_led
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_led
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_led
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_led
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_led
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_led
+      - repeat:
+          count: 10
+          sequence:
+            - service: homeassistant.turn_off
+              entity_id: light.uterum_led
+            - delay: '00:00:05'
 
     ###########################################################
     ### Släcker uterums ledbelysning när det blir för kallt ###
@@ -357,26 +329,12 @@
         data:
           entity_id: input_select.uterum_led_lights
           option: Off
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_led
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_led
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_led
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_led
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_led
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_led
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_led
+      - repeat:
+          count: 10
+          sequence:
+            - service: homeassistant.turn_off
+              entity_id: light.uterum_led
+            - delay: '00:00:05'
 
     #############################################################################
     ### Släcker uterums fotogenlampa på kvällen när allt släcks inne av någon ###
@@ -400,26 +358,12 @@
           entity_id: light.uterum_fotogenlampa
           state: 'on'
     action:
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_fotogenlampa
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_fotogenlampa
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_fotogenlampa
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_fotogenlampa
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_fotogenlampa
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_fotogenlampa
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_fotogenlampa
+      - repeat:
+          count: 10
+          sequence:
+            - service: homeassistant.turn_off
+              entity_id: light.uterum_fotogenlampa
+            - delay: '00:00:05'
 
     ##################################################################
     ### Släcker uterums fotogenlampa på kvällen när ingen är hemma ###
@@ -438,26 +382,12 @@
       entity_id: light.uterum_fotogenlampa
       state: 'on'
     action:
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_fotogenlampa
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_fotogenlampa
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_fotogenlampa
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_fotogenlampa
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_fotogenlampa
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_fotogenlampa
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_fotogenlampa
+      - repeat:
+          count: 10
+          sequence:
+            - service: homeassistant.turn_off
+              entity_id: light.uterum_fotogenlampa
+            - delay: '00:00:05'
 
     ###########################################################
     ### Släcker uterums fotogenlampa när det blir för kallt ###
@@ -475,23 +405,9 @@
       entity_id: light.uterum_fotogenlampa
       state: 'on'
     action:
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_fotogenlampa
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_fotogenlampa
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_fotogenlampa
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_fotogenlampa
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_fotogenlampa
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_fotogenlampa
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: light.uterum_fotogenlampa
+      - repeat:
+          count: 10
+          sequence:
+            - service: homeassistant.turn_off
+              entity_id: light.uterum_fotogenlampa
+            - delay: '00:00:05'

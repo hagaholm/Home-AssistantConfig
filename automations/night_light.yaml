@@ -1,6 +1,6 @@
     #######################################################################################
     ### Tänder nattbelysning övrig tid vid rörelse i köket 0-150 lux när någon är hemma ###
-    ### T: input_boolean.rorelsedetektor_aktiv = on                                     ###
+    ### T: input_boolean.rorelsedetektor_kok_aktiv = on                                 ###
     ### C: group.track_for_home_devices == 'home'                                       ###
     ###    sensor.ljusstyrka 0-150                                                      ###
     ###    12:00:00 - 05:00:00                                                          ###
@@ -10,7 +10,7 @@
   - alias: Nattbelysning (sensor on, Hemma, 0-150)
     trigger:
       platform: state
-      entity_id: input_boolean.rorelsedetektor_aktiv
+      entity_id: input_boolean.rorelsedetektor_kok_aktiv
       to: 'on'
     condition:
       condition: and
@@ -36,7 +36,7 @@
 
     ##############################################################
     ### Släcker nattbelysning när ingen varit i köket på 9 min ###
-    ### T: input_boolean.rorelsedetektor_aktiv == off          ###
+    ### T: input_boolean.rorelsedetektor_kok_aktiv == off      ###
     ### C: light.kok_lilla_fonstret == off                     ###
     ### C: light.hall_byra == on                               ###
     ### A: script.night_light_off                              ###
@@ -44,7 +44,7 @@
   - alias: Nattbelysning off (sensor off)
     trigger:
       platform: state
-      entity_id: input_boolean.rorelsedetektor_aktiv
+      entity_id: input_boolean.rorelsedetektor_kok_aktiv
       to: 'off'
     condition:
       condition: and

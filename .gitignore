@@ -1,18 +1,32 @@
+# Exclude some filetypes
 *.pid
 *.xml
 *.csr
 *.crt
 *.key
+
+# Exclude database
 home-assistant.log
 home-assistant_v2.db
 home-assistant_v2.db-wal
 home-assistant_v2.db-shm
+
+# Exclude some folders
 deps
 tts
-.uuid
+glances
+camera
+www
+
+# Exclude some files
 secrets.yaml
 known_devices.yaml
+Deepstack.txt
+IKEA Gateway.txt
+packages/car.yaml
+todo.txt
+
+# Other...
+.uuid
 .*
 !/.gitignore
-camera_1_target_found
-glances

@@ -4,56 +4,14 @@
   spa_light_on:
     alias: Spabelysning on
     sequence:
-      - service: light.turn_on
-        data:
-          entity_id: light.spabad_vagg
-          brightness_pct: 100
-      - delay: '00:01:00'
-      - service: light.turn_on
-        data:
-          entity_id: light.spabad_vagg
-          brightness_pct: 100
-      - delay: '00:01:00'
-      - service: light.turn_on
-        data:
-          entity_id: light.spabad_vagg
-          brightness_pct: 100
-      - delay: '00:01:00'
-      - service: light.turn_on
-        data:
-          entity_id: light.spabad_vagg
-          brightness_pct: 100
-      - delay: '00:01:00'
-      - service: light.turn_on
-        data:
-          entity_id: light.spabad_vagg
-          brightness_pct: 100
-      - delay: '00:01:00'
-      - service: light.turn_on
-        data:
-          entity_id: light.spabad_vagg
-          brightness_pct: 100
-      - delay: '00:01:00'
-      - service: light.turn_on
-        data:
-          entity_id: light.spabad_vagg
-          brightness_pct: 100
-      - delay: '00:01:00'
-      - service: light.turn_on
-        data:
-          entity_id: light.spabad_vagg
-          brightness_pct: 100
-      - delay: '00:01:00'
-      - service: light.turn_on
-        data:
-          entity_id: light.spabad_vagg
-          brightness_pct: 100
-      - delay: '00:01:00'
-      - service: light.turn_on
-        data:
-          entity_id: light.spabad_vagg
-          brightness_pct: 100
-      - delay: '00:01:00'
+      - repeat:
+          count: 10
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id: light.spabad_vagg
+                brightness_pct: 100
+            - delay: '00:01:00'
       - service: light.turn_on
         data:
           entity_id: light.spabad_vagg
@@ -76,82 +34,10 @@
     sequence:
       - service: homeassistant.turn_off
         entity_id: light.friggebod_fonster
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: light.friggebod_ute
-      - delay: '00:00:01'
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: light.friggebod_ute
-      - delay: '00:00:01'
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: light.friggebod_ute
-      - delay: '00:00:01'
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: light.friggebod_ute
-      - delay: '00:00:01'
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: light.friggebod_ute
-      - delay: '00:00:01'
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: light.friggebod_ute
-      - delay: '00:00:01'
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: light.friggebod_ute
-      - delay: '00:00:01'
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: light.friggebod_ute
-      - delay: '00:00:01'
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: light.friggebod_ute
-      - delay: '00:00:01'
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: light.friggebod_ute
-      - delay: '00:00:01'
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: light.friggebod_ute
-      - delay: '00:00:01'
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: light.friggebod_ute
-      - delay: '00:00:01'
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: light.friggebod_ute
-      - delay: '00:00:01'
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: light.friggebod_ute
-      - delay: '00:00:01'
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: light.friggebod_ute
-      - delay: '00:00:01'
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-      - service: homeassistant.turn_off
-        entity_id: light.friggebod_ute
+      - repeat:
+          count: 10
+          sequence:
+            - service: light.turn_off
+              entity_id: light.spabad_vagg
+            - service: homeassistant.turn_off
+              entity_id: light.friggebod_ute

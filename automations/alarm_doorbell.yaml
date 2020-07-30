@@ -17,14 +17,15 @@
           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           message: "Ringklocka tvättstuga"
           data:
-            file: /config/www/latest_person/camera_1_1.jpg
+            file: /config/www/motion_detected/camera_1_1.jpg
+      - delay:
+          seconds: 10
 
 #####################################################
 ### Ringklocka hall                               ###
 ### T: switch.ringklocka_hall == on               ###
 ### A: switch.ringklocka_hall = off               ###
 ###    notify.pushbullet                          ###
-###    python_script.flash_light_vardagsrum_skank ###
 #####################################################
   - alias: Ringklocka hall
     trigger:
@@ -39,7 +40,9 @@
           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           message: "Ringklocka hall."
           data:
-            file: /config/www/latest_person/camera_2_1.jpg
+            file: /config/www/motion_detected/camera_2_1.jpg
+      - delay:
+          seconds: 10
 
 #####################################################
 ### Ringklocka tänd allt lyse och tv 1            ###

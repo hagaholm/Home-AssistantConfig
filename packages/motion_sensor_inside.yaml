@@ -30,7 +30,7 @@ automation:
     ### Startar båda timers vid rörelse i kök            ###
     ### T: switch.rorelsedetektor_1 == on                ###
     ### A: switch.rorelsedetektor_1 = off                ###
-    ###    input_boolean.rorelsedetektor_aktiv = on      ###
+    ###    input_boolean.rorelsedetektor_kok_aktiv = on  ###
     ###    timer.timer_rorelsedetektor_1_short = cancel  ###
     ###    timer.timer_rorelsedetektor_1_medium = cancel ###
     ###    timer.timer_rorelsedetektor_1_short = start   ###
@@ -46,10 +46,10 @@ automation:
       - service: homeassistant.turn_off
         entity_id: switch.rorelsedetektor_1
 
-      # Aktiverar rorelsedetektor_aktiv
+      # Aktiverar rorelsedetektor_kok_aktiv
       - service: input_boolean.turn_on
         data:
-          entity_id: input_boolean.rorelsedetektor_aktiv
+          entity_id: input_boolean.rorelsedetektor_kok_aktiv
 
       # Cancel timers, återställer till maxtid
       - service: timer.cancel
@@ -67,7 +67,7 @@ automation:
     ### Startar båda timers vid rörelse i kök            ###
     ### T: switch.rorelsedetektor_2 == on                ###
     ### A: switch.rorelsedetektor_2 = off                ###
-    ###    input_boolean.rorelsedetektor_aktiv = on      ###
+    ###    input_boolean.rorelsedetektor_kok_aktiv = on  ###
     ###    timer.timer_rorelsedetektor_2_short = cancel  ###
     ###    timer.timer_rorelsedetektor_2_medium = cancel ###
     ###    timer.timer_rorelsedetektor_2_short = start   ###
@@ -83,10 +83,10 @@ automation:
       - service: homeassistant.turn_off
         entity_id: switch.rorelsedetektor_2
 
-      # Aktiverar rorelsedetektor_aktiv
+      # Aktiverar rorelsedetektor_kok_aktiv
       - service: input_boolean.turn_on
         data:
-          entity_id: input_boolean.rorelsedetektor_aktiv
+          entity_id: input_boolean.rorelsedetektor_kok_aktiv
 
       # Cancel timers, återställer till maxtid
       - service: timer.cancel
@@ -103,7 +103,7 @@ automation:
     ########################################################
     ### Startar båda timers vid rörelse i kök            ###
     ### T: binary_sensor.aqara_motion_sensor_1 == on     ###
-    ### A: input_boolean.rorelsedetektor_aktiv = on      ###
+    ### A: input_boolean.rorelsedetektor_kok_aktiv = on  ###
     ###    timer.timer_rorelsedetektor_3_short = cancel  ###
     ###    timer.timer_rorelsedetektor_3_medium = cancel ###
     ###    timer.timer_rorelsedetektor_3_short = start   ###
@@ -115,10 +115,10 @@ automation:
         entity_id: binary_sensor.aqara_motion_sensor_1
         to: 'on'
     action:
-      # Aktiverar rorelsedetektor_aktiv
+      # Aktiverar rorelsedetektor_kok_aktiv
       - service: input_boolean.turn_on
         data:
-          entity_id: input_boolean.rorelsedetektor_aktiv
+          entity_id: input_boolean.rorelsedetektor_kok_aktiv
 
       # Cancel timers, återställer till maxtid
       - service: timer.cancel
@@ -133,14 +133,14 @@ automation:
         entity_id: timer.timer_rorelsedetektor_3_medium
 
     ###########################################################
-    ### Stänger av rorelsedetektor_aktiv (om aktiv 1)       ###
+    ### Stänger av rorelsedetektor_kok_aktiv (om aktiv 1)   ###
     ### T: timer.timer_rorelsedetektor_1_medium == finished ###
-    ### C: input_boolean.rorelsedetektor_aktiv == on        ###
+    ### C: input_boolean.rorelsedetektor_kok_aktiv == on    ###
     ###    timer.timer_rorelsedetektor_2_medium == idle     ###
     ###    timer.timer_rorelsedetektor_3_medium == idle     ###
-    ### A: input_boolean.rorelsedetektor_aktiv = off        ###
+    ### A: input_boolean.rorelsedetektor_kok_aktiv = off    ###
     ###########################################################
-  - alias: Stänger av rorelsedetektor_aktiv (om aktiv 1)
+  - alias: Stänger av rorelsedetektor_kok_aktiv (om aktiv 1)
     trigger:
       - platform: event
         event_type: timer.finished
@@ -150,7 +150,7 @@ automation:
       condition: and
       conditions:
         - condition: state
-          entity_id:  input_boolean.rorelsedetektor_aktiv
+          entity_id:  input_boolean.rorelsedetektor_kok_aktiv
           state: 'on'
         - condition: state
           entity_id: timer.timer_rorelsedetektor_2_medium
@@ -161,17 +161,17 @@ automation:
     action:
       - service: input_boolean.turn_off
         data:
-          entity_id: input_boolean.rorelsedetektor_aktiv
+          entity_id: input_boolean.rorelsedetektor_kok_aktiv
 
     ###########################################################
-    ### Stänger av rorelsedetektor_aktiv (om aktiv 2)       ###
+    ### Stänger av rorelsedetektor_kok_aktiv (om aktiv 2)   ###
     ### T: timer.timer_rorelsedetektor_2_medium == finished ###
-    ### C: input_boolean.rorelsedetektor_aktiv == on        ###
+    ### C: input_boolean.rorelsedetektor_kok_aktiv == on    ###
     ###    timer.timer_rorelsedetektor_1_medium == idle     ###
     ###    timer.timer_rorelsedetektor_3_medium == idle     ###
-    ### A: input_boolean.rorelsedetektor_aktiv = off        ###
+    ### A: input_boolean.rorelsedetektor_kok_aktiv = off    ###
     ###########################################################
-  - alias: Stänger av rorelsedetektor_aktiv (om aktiv 2)
+  - alias: Stänger av rorelsedetektor_kok_aktiv (om aktiv 2)
     trigger:
       - platform: event
         event_type: timer.finished
@@ -181,7 +181,7 @@ automation:
       condition: and
       conditions:
         - condition: state
-          entity_id:  input_boolean.rorelsedetektor_aktiv
+          entity_id:  input_boolean.rorelsedetektor_kok_aktiv
           state: 'on'
         - condition: state
           entity_id: timer.timer_rorelsedetektor_1_medium
@@ -192,17 +192,17 @@ automation:
     action:
       - service: input_boolean.turn_off
         data:
-          entity_id: input_boolean.rorelsedetektor_aktiv
+          entity_id: input_boolean.rorelsedetektor_kok_aktiv
 
     ###########################################################
-    ### Stänger av rorelsedetektor_aktiv (om aktiv 3)       ###
+    ### Stänger av rorelsedetektor_kok_aktiv (om aktiv 3)   ###
     ### T: timer.timer_rorelsedetektor_3_medium == finished ###
-    ### C: input_boolean.rorelsedetektor_aktiv == on        ###
+    ### C: input_boolean.rorelsedetektor_kok_aktiv == on    ###
     ###    timer.timer_rorelsedetektor_1_medium == idle     ###
     ###    timer.timer_rorelsedetektor_2_medium == idle     ###
-    ### A: input_boolean.rorelsedetektor_aktiv = off        ###
+    ### A: input_boolean.rorelsedetektor_kok_aktiv = off    ###
     ###########################################################
-  - alias: Stänger av rorelsedetektor_aktiv (om aktiv 3)
+  - alias: Stänger av rorelsedetektor_kok_aktiv (om aktiv 3)
     trigger:
       - platform: event
         event_type: timer.finished
@@ -212,7 +212,7 @@ automation:
       condition: and
       conditions:
         - condition: state
-          entity_id:  input_boolean.rorelsedetektor_aktiv
+          entity_id:  input_boolean.rorelsedetektor_kok_aktiv
           state: 'on'
         - condition: state
           entity_id: timer.timer_rorelsedetektor_1_medium
@@ -223,17 +223,17 @@ automation:
     action:
       - service: input_boolean.turn_off
         data:
-          entity_id: input_boolean.rorelsedetektor_aktiv
+          entity_id: input_boolean.rorelsedetektor_kok_aktiv
 
-    ############################################################
-    ### Stänger av rorelsedetektor_aktiv för nattbelysning 1 ###
-    ### T: timer.timer_rorelsedetektor_1_short == finished   ###
-    ### C: input_select.inside_lights == 'Nattbelysning'     ###
-    ###    timer.timer_rorelsedetektor_2_short == idle       ###
-    ###    timer.timer_rorelsedetektor_3_short == idle       ###
-    ### A: input_boolean.rorelsedetektor_aktiv = off         ###
-    ############################################################
-  - alias: Stänger av rorelsedetektor_aktiv för nattbelysning 1
+    ################################################################
+    ### Stänger av rorelsedetektor_kok_aktiv för nattbelysning 1 ###
+    ### T: timer.timer_rorelsedetektor_1_short == finished       ###
+    ### C: input_select.inside_lights == 'Nattbelysning'         ###
+    ###    timer.timer_rorelsedetektor_2_short == idle           ###
+    ###    timer.timer_rorelsedetektor_3_short == idle           ###
+    ### A: input_boolean.rorelsedetektor_kok_aktiv = off         ###
+    ################################################################
+  - alias: Stänger av rorelsedetektor_kok_aktiv för nattbelysning 1
     trigger:
       - platform: event
         event_type: timer.finished
@@ -254,17 +254,17 @@ automation:
     action:
       - service: input_boolean.turn_off
         data:
-          entity_id: input_boolean.rorelsedetektor_aktiv
+          entity_id: input_boolean.rorelsedetektor_kok_aktiv
 
-    ############################################################
-    ### Stänger av rorelsedetektor_aktiv för nattbelysning 2 ###
-    ### T: timer.timer_rorelsedetektor_2_short == finished   ###
-    ### C: input_select.inside_lights == 'Nattbelysning'     ###
-    ###    timer.timer_rorelsedetektor_1_short == idle       ###    
-    ###    timer.timer_rorelsedetektor_3_short == idle       ###    
-    ### A: input_boolean.rorelsedetektor_aktiv = off         ###
-    ############################################################
-  - alias: Stänger av rorelsedetektor_aktiv för nattbelysning 2
+    ################################################################
+    ### Stänger av rorelsedetektor_kok_aktiv för nattbelysning 2 ###
+    ### T: timer.timer_rorelsedetektor_2_short == finished       ###
+    ### C: input_select.inside_lights == 'Nattbelysning'         ###
+    ###    timer.timer_rorelsedetektor_1_short == idle           ###    
+    ###    timer.timer_rorelsedetektor_3_short == idle           ###    
+    ### A: input_boolean.rorelsedetektor_kok_aktiv = off         ###
+    ################################################################
+  - alias: Stänger av rorelsedetektor_kok_aktiv för nattbelysning 2
     trigger:
       - platform: event
         event_type: timer.finished
@@ -285,17 +285,17 @@ automation:
     action:
       - service: input_boolean.turn_off
         data:
-          entity_id: input_boolean.rorelsedetektor_aktiv
+          entity_id: input_boolean.rorelsedetektor_kok_aktiv
 
-    ############################################################
-    ### Stänger av rorelsedetektor_aktiv för nattbelysning 3 ###
-    ### T: timer.timer_rorelsedetektor_3_short == finished   ###
-    ### C: input_select.inside_lights == 'Nattbelysning'     ###
-    ###    timer.timer_rorelsedetektor_1_short == idle       ###    
-    ###    timer.timer_rorelsedetektor_2_short == idle       ###    
-    ### A: input_boolean.rorelsedetektor_aktiv = off         ###
-    ############################################################
-  - alias: Stänger av rorelsedetektor_aktiv för nattbelysning 3
+    ################################################################
+    ### Stänger av rorelsedetektor_kok_aktiv för nattbelysning 3 ###
+    ### T: timer.timer_rorelsedetektor_3_short == finished       ###
+    ### C: input_select.inside_lights == 'Nattbelysning'         ###
+    ###    timer.timer_rorelsedetektor_1_short == idle           ###    
+    ###    timer.timer_rorelsedetektor_2_short == idle           ###    
+    ### A: input_boolean.rorelsedetektor_kok_aktiv = off         ###
+    ################################################################
+  - alias: Stänger av rorelsedetektor_kok_aktiv för nattbelysning 3
     trigger:
       - platform: event
         event_type: timer.finished
@@ -316,4 +316,4 @@ automation:
     action:
       - service: input_boolean.turn_off
         data:
-          entity_id: input_boolean.rorelsedetektor_aktiv
+          entity_id: input_boolean.rorelsedetektor_kok_aktiv

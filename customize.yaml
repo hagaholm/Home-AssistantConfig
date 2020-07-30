@@ -1,14 +1,24 @@
   # Add an entry for each entity that you want to overwrite.
 
+    # IKEA Trådfri
     binary_sensor.tradfri_motion_sensor_1:
       friendly_name: Rörelsedetektor vardagsrum
     binary_sensor.tradfri_motion_sensor_3:
       friendly_name: Rörelsedetektor toalett
+    binary_sensor.tradfri_motion_sensor_5:
+      friendly_name: Rörelsedetektor uterum
 
+    # Aqara
     binary_sensor.aqara_motion_sensor_1:
       friendly_name: Rörelsedetektor köksbänk
     binary_sensor.aqara_motion_sensor_2:
       friendly_name: Rörelsedetektor hall
+
+    # Tellstick
+    switch.rorelsedetektor_1
+      friendly_name: Rörelsedetektor kök
+    switch.rorelsedetektor_2
+      friendly_name: Rörelsedetektor tvättstuga
 
 
     sensor.aqara_motion_sensor_1:

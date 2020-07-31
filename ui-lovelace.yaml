@@ -403,9 +403,12 @@ views:
           - sensor.louise_rum_temperature
           - sensor.louise_rum_humidity
           - light.louise_fonster
-          - light.discolampa
-          - switch.ikea_gateway
         title: Louise rum
+        show_header_toggle: true
+      - type: entities
+        entities:
+          - switch.ikea_gateway
+        title: Klädkammare
         show_header_toggle: true
       - type: entities
         entities:

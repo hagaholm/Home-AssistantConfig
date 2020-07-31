@@ -1055,27 +1055,3 @@ views:
         title: Ubuntu Server (Hassbian)
         show_header_toggle: true
     icon: 'mdi:lan'
-  - path: test_view
-    title: Test UI
-    badges: []
-    cards:
-      - type: horizontal-stack
-        cards:        
-          - type: sensor
-            name: Ute
-            entity: sensor.ute
-            graph: line
-          - type: sensor
-            name: Inne
-            entity: sensor.inne_medel
-            graph: line
-          - type: sensor
-            name: Uterum
-            entity: sensor.uterum
-            graph: line
-      - type: horizontal-stack
-        cards:
-          - type: button
-            entity: light.belysning
-            name: Belysning
-    icon: 'mdi:information-outline'

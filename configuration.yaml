@@ -23,8 +23,8 @@ homeassistant:
   customize: !include customize.yaml
   # Package folder
   packages: !include_dir_named packages
-  # Whitelist external directories 
-  whitelist_external_dirs:
+
+  allowlist_external_dirs:
     - /config/camera
     - /config/camera/deepstack_photo 
     - /config/camera/motion_detected 

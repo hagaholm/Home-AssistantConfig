@@ -50,6 +50,9 @@
           state: 'home'
         - condition: time
           after: '05:00:00'
+        - condition: state
+          entity_id: input_select.home_away
+          state: 'Hemma av'
     action:
       - service: input_select.select_option
         data:

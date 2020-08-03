@@ -35,10 +35,49 @@ camera:
     password: !secret Camera_Password
     scan_interval: 5
 
+####################################################
+#                                                  #
+#                     INPUT_BOOLEAN                #
+#                                                  #
+####################################################
+input_boolean:
+  camera_detection_activated:
+    name: Kamera detektering aktiverad
+    icon: mdi:video-outline
+
 ##################
 ### Automation ###
 ##################
 automation:
+  #################################
+  ### Activate camera detection ###
+  #################################
+  - alias: Activate camera detection
+    trigger:
+      - platform: state
+        entity_id: input_select.home_status
+        to: 'Borta'
+      - platform: state
+        entity_id: input_select.home_status
+        to: 'Hemma av'
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.camera_detection_activated
+
+  ###################################
+  ### Deactivate camera detection ###
+  ###################################
+  - alias: Deactivate camera detection
+    trigger:
+      - platform: state
+        entity_id: input_select.home_status
+        to: 'Hemma på'
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.camera_detection_activated
+
   #########################
   ### Remove old images ###
   #########################

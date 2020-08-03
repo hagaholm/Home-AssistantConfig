@@ -1,7 +1,7 @@
     #####################################################
-    ### Aktivera borta mode                           ###
+    ### Aktivera Borta mode                           ###
     ### T: group.track_for_home_devices to 'not_home' ###
-    ### A: input_select.home_away = Borta             ###
+    ### A: input_select.home_status = Borta           ###
     #####################################################
   - alias: Aktivera borta mode
     trigger:
@@ -11,15 +11,15 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.home_away
+          entity_id: input_select.home_status
           option: Borta
 
     #################################################
-    ### Aktivera hemma på mode                    ###
+    ### Aktivera On mode                          ###
     ### T: group.track_for_home_devices to 'home' ###
-    ### A: input_select.home_away = Hemma på      ###
+    ### A: input_select.home_status = On          ###
     #################################################
-  - alias: Aktivera hemma på mode
+  - alias: Aktivera On mode
     trigger:
       platform: state
       entity_id: group.track_for_home_devices
@@ -27,17 +27,18 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.home_away
-          option: Hemma på
+          entity_id: input_select.home_status
+          option: On
 
     ######################################################
-    ### Aktivera hemma på mode vid rörelse             ###
+    ### Aktivera On mode vid rörelse                   ###
     ### T: binary_sensor.aqara_motion_sensor_2 to 'on' ###
     ### C: group.track_for_home_devices = on           ###
+    ###    time before: '21:00:00'                     ###
     ###    time after: '05:00:00'                      ###
-    ### A: input_select.home_away = Hemma på           ###
+    ### A: input_select.home_status = On               ###
     ######################################################
-  - alias: Aktivera hemma på mode vid rörelse
+  - alias: Aktivera On mode vid rörelse
     trigger:
       platform: state
       entity_id: binary_sensor.aqara_motion_sensor_2 # Hall
@@ -49,15 +50,17 @@
           entity_id: group.track_for_home_devices
           state: 'home'
         - condition: time
+          before: '21:00:00'
+        - condition: time
           after: '05:00:00'
         - condition: state
-          entity_id: input_select.home_away
-          state: 'Hemma av'
+          entity_id: input_select.home_status
+          state: 'Off'
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.home_away
-          option: Hemma på
+          entity_id: input_select.home_status
+          option: On
 
     #######################################################
     ### Stänger av mediaspelare när sista åker hemifrån ###

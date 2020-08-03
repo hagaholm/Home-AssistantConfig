@@ -20,8 +20,8 @@ automation:
       condition: and
       conditions:
         - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'not_home'
+          entity_id: input_boolean.camera_detection_activated
+          state: 'on'
 
     # Scan a new image
     action:

@@ -1,4 +1,9 @@
-  - alias: Activate away mode
+    #####################################################
+    ### Aktivera borta mode                           ###
+    ### T: group.track_for_home_devices to 'not_home' ###
+    ### A: input_select.home_away = Borta             ###
+    #####################################################
+  - alias: Aktivera borta mode
     trigger:
       platform: state
       entity_id: group.track_for_home_devices
@@ -9,17 +14,47 @@
           entity_id: input_select.home_away
           option: Borta
 
-  - alias: Activate home on mode
+    #################################################
+    ### Aktivera hemma på mode                    ###
+    ### T: group.track_for_home_devices to 'home' ###
+    ### A: input_select.home_away = Hemma på      ###
+    #################################################
+  - alias: Aktivera hemma på mode
     trigger:
       platform: state
       entity_id: group.track_for_home_devices
-      to: 'not_home'
+      to: 'home'
     action:
       - service: input_select.select_option
         data:
           entity_id: input_select.home_away
           option: Hemma på
 
+    ######################################################
+    ### Aktivera hemma på mode vid rörelse             ###
+    ### T: binary_sensor.aqara_motion_sensor_2 to 'on' ###
+    ### C: group.track_for_home_devices = on           ###
+    ###    time after: '05:00:00'                      ###
+    ### A: input_select.home_away = Hemma på           ###
+    ######################################################
+  - alias: Aktivera hemma på mode vid rörelse
+    trigger:
+      platform: state
+      entity_id: binary_sensor.aqara_motion_sensor_2 # Hall
+      to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'home'
+        - condition: time
+          after: '05:00:00'
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.home_away
+          option: Hemma på
 
     #######################################################
     ### Stänger av mediaspelare när sista åker hemifrån ###

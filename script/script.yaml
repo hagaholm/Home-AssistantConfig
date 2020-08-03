@@ -30,6 +30,11 @@
         entity_id: light.friggebod_fonster
       - service: homeassistant.turn_off
         entity_id: light.spabad_vagg
+# Set home off mode
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.home_away
+          option: Hemma av
 
   ###########################################
   ### Godnatt, släcker allt om 10 minuter ###
@@ -69,6 +74,11 @@
         entity_id: light.friggebod_fonster
       - service: homeassistant.turn_off
         entity_id: light.spabad_vagg
+# Set home off mode
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.home_away
+          option: Hemma av
 
   ################################
   ### Godnatt, stänger av allt ###
@@ -115,6 +125,11 @@
         entity_id: switch.vardagsrum_subbas
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_extra_subbas
+# Set home off mode
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.home_away
+          option: Hemma av
 
   ##############################################
   ### Godnatt, stänger av allt om 10 minuter ###
@@ -165,6 +180,11 @@
         entity_id: switch.vardagsrum_subbas
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_extra_subbas
+# Set home off mode
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.home_away
+          option: Hemma av
 
   ###################################################
   ### Godnatt, stänger av allt (tv om 10 minuter) ###
@@ -214,6 +234,11 @@
         entity_id: switch.vardagsrum_subbas
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_extra_subbas
+# Set home off mode
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.home_away
+          option: Hemma av
 
   #########################
   ### Släck i sovrummet ###

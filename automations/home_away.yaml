@@ -15,11 +15,11 @@
           option: Borta
 
     #################################################
-    ### Aktivera On mode                          ###
+    ### Aktivera Hemma på mode                    ###
     ### T: group.track_for_home_devices to 'home' ###
-    ### A: input_select.home_status = On          ###
+    ### A: input_select.home_status = Hemma på    ###
     #################################################
-  - alias: Aktivera On mode
+  - alias: Aktivera Hemma på mode
     trigger:
       platform: state
       entity_id: group.track_for_home_devices
@@ -28,17 +28,17 @@
       - service: input_select.select_option
         data:
           entity_id: input_select.home_status
-          option: On
+          option: Hemma på
 
     ######################################################
-    ### Aktivera On mode vid rörelse                   ###
+    ### Aktivera Hemma på mode vid rörelse             ###
     ### T: binary_sensor.aqara_motion_sensor_2 to 'on' ###
     ### C: group.track_for_home_devices = on           ###
     ###    time before: '21:00:00'                     ###
     ###    time after: '05:00:00'                      ###
-    ### A: input_select.home_status = On               ###
+    ### A: input_select.home_status = Hemma på         ###
     ######################################################
-  - alias: Aktivera On mode vid rörelse
+  - alias: Aktivera Hemma på mode vid rörelse
     trigger:
       platform: state
       entity_id: binary_sensor.aqara_motion_sensor_2 # Hall
@@ -55,12 +55,12 @@
           after: '05:00:00'
         - condition: state
           entity_id: input_select.home_status
-          state: 'Off'
+          state: 'Hemma av'
     action:
       - service: input_select.select_option
         data:
           entity_id: input_select.home_status
-          option: On
+          option: Hemma på
 
     #######################################################
     ### Stänger av mediaspelare när sista åker hemifrån ###

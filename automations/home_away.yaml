@@ -1,0 +1,49 @@
+  - alias: Activate away mode
+    trigger:
+      platform: state
+      entity_id: group.track_for_home_devices
+      to: 'not_home'
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.home_away
+          option: Borta
+
+  - alias: Activate home on mode
+    trigger:
+      platform: state
+      entity_id: group.track_for_home_devices
+      to: 'not_home'
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.home_away
+          option: Hemma på
+
+
+    #######################################################
+    ### Stänger av mediaspelare när sista åker hemifrån ###
+    ### T: group.track_for_home_devices to 'not_home'   ###
+    ### A: remote.harmony_hub = off                     ###
+    ###    switch.vardagsrum_stereobank                 ###
+    ###    switch.vardagsrum_tv                         ###
+    ###    switch.vardagsrum_subbas                     ###
+    ###    switch.vardagsrum_extra_subbas               ###
+    #######################################################
+  - alias: Mediaspelare off (-> borta)
+    trigger:
+      platform: state
+      entity_id: group.track_for_home_devices
+      to: 'not_home'
+    action:
+      - service: remote.turn_off
+        entity_id: remote.harmony_hub
+      - delay: '00:00:15'
+      - service: homeassistant.turn_off
+        entity_id: switch.vardagsrum_stereobank
+      - service: homeassistant.turn_off
+        entity_id: switch.vardagsrum_tv
+      - service: homeassistant.turn_off
+        entity_id: switch.vardagsrum_subbas
+      - service: homeassistant.turn_off
+        entity_id: switch.vardagsrum_extra_subbas

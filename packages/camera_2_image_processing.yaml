@@ -436,7 +436,7 @@ automation:
           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           message: "Camera 2 Person detekterad: {{ states.input_text.camera_2_person_detected_timestamp_photo.state }}"
           data:
-            file: /config/www/motion_detected/camera_2_1.jpg
+            file: /config/www/motion_detected_away/camera_2_1.jpg
 
   ##########################################################
   ### Camera 2 Move latest_person_away files after 2 min ###

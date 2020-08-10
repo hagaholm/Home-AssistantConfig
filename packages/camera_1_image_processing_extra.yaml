@@ -23,7 +23,7 @@ automation:
         data:
           entity_id: light.friggebod_fasad
           brightness_pct: 100
-          transition: 5
+          transition: 1
 
   #################################################
   ### Max light förråd fasad if person detected ###
@@ -46,7 +46,7 @@ automation:
         data:
           entity_id: light.forrad_fasad
           brightness_pct: 100
-          transition: 5
+          transition: 1
 
   #########################################################
   ### Reset light friggebod fasad if no person detected ###
@@ -63,11 +63,14 @@ automation:
           entity_id: light.friggebod_fasad
           state: 'on'
     action:
+      - delay:
+          seconds: 5
+
       - service: light.turn_on
         data:
           entity_id: light.friggebod_fasad
           brightness_pct: 30
-          transition: 5
+          transition: 1
 
   ######################################################
   ### Reset light förråd fasad if no person detected ###
@@ -84,11 +87,14 @@ automation:
           entity_id: light.forrad_fasad
           state: 'on'
     action:
+      - delay:
+          seconds: 5
+
       - service: light.turn_on
         data:
           entity_id: light.forrad_fasad
           brightness_pct: 30
-          transition: 5
+          transition: 1
 
   ######################################
   ### Flash light if person detected ###

@@ -66,23 +66,6 @@ camera:
 ### Automation ###
 ##################
 automation:
-  #####################################
-  ### Processes image for detection ###
-  #####################################
-  ### - every 5 sec                 ###    
-  #####################################
-  - alias: Camera 2 Image processing
-    trigger:
-      # Every 5 sec
-      - platform: time_pattern
-        seconds: "/5"
-
-    action:
-      # Scan image
-      - service: image_processing.scan
-        data:
-          entity_id: image_processing.deepstack_camera_2
-
   #######################################
   ### Camera detected, start timer    ###
   #######################################

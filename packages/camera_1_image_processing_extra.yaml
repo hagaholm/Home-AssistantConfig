@@ -2,6 +2,60 @@
 ### Automation ###
 ##################
 automation:
+  #####################################
+  ### Processes image for detection ###
+  #####################################
+  ### - every 3 sec                 ###    
+  ### - detection activated         ###
+  #####################################
+  - alias: Camera 1 Image processing detection activated
+
+    # Every 3 sec
+    trigger:
+      - platform: time_pattern
+        seconds: "/3"
+
+    # Alarm activated
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.camera_detection_activated
+          state: 'on'
+
+    # Scan a new image
+    action:
+      - service: image_processing.scan
+        data:
+          entity_id: image_processing.deepstack_camera_1
+
+  #####################################
+  ### Processes image for detection ###
+  #####################################
+  ### - every 4 sec                 ###
+  ### - detection inactivated       ###
+  #####################################
+  - alias: Camera 1 Image processing detection inactivated
+
+    # Every 4 sec
+    trigger:
+      - platform: time_pattern
+        seconds: "/4"
+
+    # Alarm activated
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.camera_detection_activated
+          state: 'off'
+
+    # Scan a new image
+    action:
+      - service: image_processing.scan
+        data:
+          entity_id: image_processing.deepstack_camera_1
+
   ####################################################
   ### Max light friggebod fasad if person detected ###
   ####################################################

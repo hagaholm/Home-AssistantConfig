@@ -601,16 +601,6 @@ input_boolean:
     name: Kamera 2 detekterad aktiv
     initial: off
 
-##############
-### Sensor ###
-##############
-sensor:
-  - platform: template
-    sensors:
-      camera_2_num_person_detected:
-        friendly_name: Camera 2 antal personer
-        value_template: "{{ states.image_processing.deepstack_camera_2.attributes.summary['person'] }}"
-
 #####################
 ### Binary Sensor ###
 #####################

@@ -510,9 +510,9 @@ script:
 #      - service: automation.turn_on
 #        entity_id: automation.camera_2_move_latest_person_away_files_after_2_min
       - service: automation.turn_on
-        entity_id: automation.camera_2_image_when_person_detected_away
-#      - service: automation.turn_on
-#        entity_id: automation.camera_2_image_when_person_detected
+        entity_id: automation.camera_2_image_processing_detection_activated
+      - service: automation.turn_on
+        entity_id: automation.camera_2_image_processing_detection_inactivated
 
   camera_2_use_video:
     alias: Kamera 2 Aktivera videoläge
@@ -524,9 +524,9 @@ script:
 #      - service: automation.turn_off
 #        entity_id: automation.camera_2_move_latest_person_away_files_after_2_min
       - service: automation.turn_off
-        entity_id: automation.camera_2_image_when_person_detected_away
-#      - service: automation.turn_off
-#        entity_id: automation.camera_2_image_when_person_detected
+        entity_id: automation.camera_2_image_processing_detection_activated
+      - service: automation.turn_off
+        entity_id: automation.camera_2_image_processing_detection_inactivated
 
       - service: automation.turn_on
         entity_id: automation.camera_2_record_when_person_detected_away

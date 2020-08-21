@@ -66,12 +66,12 @@ camera:
 ### Automation ###
 ##################
 automation:
-  #######################################
-  ### Camera detected, start timer    ###
-  #######################################
-  ### - if camera detection activated ###
-  ### - if timer off                  ###
-  #######################################
+  ####################################
+  ### Camera detected, start timer ###
+  ####################################
+  ### - if camera mode = Alarm     ###
+  ### - if timer off               ###
+  ####################################
   - alias: Camera 1 Start timer
     trigger:
       # File modified: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg'
@@ -84,7 +84,7 @@ automation:
     condition:
       condition: and
       conditions:
-        # Camera detection activated, activated when home status is "Borta" or "Hemma av"
+        # Camera mode = Alarm when home status is "Borta" or "Hemma av"
         - condition: state
           entity_id: input_select.camera_mode
           state: 'Larm'
@@ -136,14 +136,14 @@ automation:
           entity_id: input_boolean.camera_1_detected_active
 
   ############################################################################
-  ### Camera 1 Image when person detected and camera detection inactivated ###
+  ### Camera 1 Image when person detected and camera mode = Info           ###
   ############################################################################
   ### When person detected, make the last image available                  ###
   ### - Copy Deepstack image when person detected                          ###
   ###   from: /config/camera/deepstack_photo/deepstack_camera_1_latest.jpg ###
   ###   to: /config/www/motion_detected/camera_1_1.jpg                     ###
   ############################################################################
-  - alias: Camera 1 Image when person detected and camera detection inactivated
+  - alias: Camera 1 Image when person detected and camera mode Info
     trigger:
       - platform: event
         event_type: folder_watcher
@@ -167,13 +167,13 @@ automation:
       - service: shell_command.camera_1_copy_latest_motion
 
   ################################################################################################
-  ### Camera 1 Image when person detected and camera detection activated                       ###
+  ### Camera 1 Image when person detected and camera mode = Alarm                              ###
   ################################################################################################
   ### When person detected and away                                                            ###
   ### - Create snapshot saved as '/config/camera/motion_detected/camera_1_YYYYMMDD-HHMMSS.jpg' ###
   ### - Also make a copy to '/config/latest_person_away/person/camera_1_1.jpg'                 ###
   ################################################################################################
-  - alias: Camera 1 Image when person detected and camera detection activated
+  - alias: Camera 1 Image when person detected and camera mode Larm
     trigger:
       - platform: event
         event_type: folder_watcher
@@ -220,7 +220,7 @@ automation:
     condition:
       condition: and
       conditions:
-        # Only if camera detection activated
+        # Only if camera mode = Alarm
         - condition: state
           entity_id: input_select.camera_mode
           state: 'Larm'
@@ -247,7 +247,7 @@ automation:
     condition:
       condition: and
       conditions:
-        # Only if camera detection activated
+        # Only if camera mode = Alarm
         - condition: state
           entity_id: input_select.camera_mode
           state: 'Larm'
@@ -269,7 +269,7 @@ automation:
     condition:
       condition: and
       conditions:
-        # Only if camera detection activated
+        # Only if camera mode = Alarm
         - condition: state
           entity_id: input_select.camera_mode
           state: 'Larm'
@@ -291,7 +291,7 @@ automation:
     condition:
       condition: and
       conditions:
-        # Only if camera detection inactivated
+        # Only if camera mode = Info
         - condition: state
           entity_id: input_select.camera_mode
           state: 'Info'

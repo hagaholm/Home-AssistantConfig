@@ -2,10 +2,10 @@
 ### Automation ###
 ##################
 automation:
-  ###########################################################################
-  ### TO DEVELOP AND TEST                                                 ###
-  ### Camera 1 Record when person detected and camera detection activated ###
-  ###########################################################################
+  ##################################################################
+  ### TO DEVELOP AND TEST                                        ###
+  ### Camera 1 Record when person detected and camera mode Alarm ###
+  ##################################################################
   - alias: Camera 1 Record when person detected
     trigger:
       # Person detected activated
@@ -132,7 +132,7 @@ automation:
     condition:
       condition: and
       conditions:
-        # Only if camera detection activated
+        # Only if camera mode = Alarm
         - condition: state
           entity_id: input_select.camera_mode
           state: 'Larm'
@@ -177,7 +177,7 @@ automation:
     condition:
       condition: and
       conditions:
-        # Only if camera detection inactivated
+        # Only if camera mode = Info
         - condition: state
           entity_id: input_select.camera_mode
           state: 'Info'

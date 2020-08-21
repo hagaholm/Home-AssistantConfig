@@ -16,10 +16,10 @@ automation:
     condition:
       condition: and
       conditions:
-        # Camera detection activated
+        # Camera detection mode = Larm
         - condition: state
-          entity_id: input_boolean.camera_detection_activated
-          state: 'on'
+          entity_id: input_select.camera_detection_mode
+          state: 'Larm'
         # Camera 1 is not recording
         - condition: state
           entity_id: input_boolean.camera_1_recording
@@ -72,10 +72,10 @@ automation:
     condition:
       condition: and
       conditions:
-        # Camera detection activated 
+        # Camera detection mode = Larm 
         - condition: state
-          entity_id: input_boolean.camera_detection_activated
-          state: 'on'
+          entity_id: input_select.camera_detection_mode
+          state: 'Larm'
         - condition: state
         # Camera 1 detected active
           entity_id: input_boolean.camera_1_detected_active
@@ -134,8 +134,8 @@ automation:
       conditions:
         # Only if camera detection activated
         - condition: state
-          entity_id: input_boolean.camera_detection_activated
-          state: 'on'
+          entity_id: input_select.camera_detection_mode
+          state: 'Larm'
 
     action:
       - delay:
@@ -179,8 +179,8 @@ automation:
       conditions:
         # Only if camera detection inactivated
         - condition: state
-          entity_id: input_boolean.camera_detection_activated
-          state: 'off'
+          entity_id: input_select.camera_detection_mode
+          state: 'Info'
 
     action:
       - delay:

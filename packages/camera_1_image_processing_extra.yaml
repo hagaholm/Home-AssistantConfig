@@ -20,8 +20,8 @@ automation:
       condition: and
       conditions:
         - condition: state
-          entity_id: input_boolean.camera_detection_activated
-          state: 'on'
+          entity_id: input_select.camera_detection_mode
+          state: 'Larm'
 
     # Scan a new image
     action:
@@ -47,8 +47,8 @@ automation:
       condition: and
       conditions:
         - condition: state
-          entity_id: input_boolean.camera_detection_activated
-          state: 'off'
+          entity_id: input_select.camera_detection_mode
+          state: 'Info'
 
     # Scan a new image
     action:

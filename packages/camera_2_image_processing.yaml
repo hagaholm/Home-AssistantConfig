@@ -86,8 +86,8 @@ automation:
       conditions:
         # Camera detection activated, activated when home status is "Borta" or "Hemma av"
         - condition: state
-          entity_id: input_boolean.camera_detection_activated
-          state: 'on'
+          entity_id: input_select.camera_detection_mode
+          state: 'Larm'
         # Camera 2 has not detected any person earlier
         - condition: state
           entity_id: input_boolean.camera_2_detected_active
@@ -155,8 +155,8 @@ automation:
       condition: and
       conditions:
         - condition: state
-          entity_id: input_boolean.camera_detection_activated
-          state: 'off'
+          entity_id: input_select.camera_detection_mode
+          state: 'Info'
     action:
       # Need to add a delay, otherwise it take the old photo
       - delay:
@@ -185,8 +185,8 @@ automation:
       condition: and
       conditions:
         - condition: state
-          entity_id: input_boolean.camera_detection_activated
-          state: 'on'
+          entity_id: input_select.camera_detection_mode
+          state: 'Larm'
 
     action:
       # Get timestamp when person detected
@@ -222,8 +222,8 @@ automation:
       conditions:
         # Only if camera detection activated
         - condition: state
-          entity_id: input_boolean.camera_detection_activated
-          state: 'on'
+          entity_id: input_select.camera_detection_mode
+          state: 'Larm'
 
     action:
       # Send notify
@@ -249,8 +249,8 @@ automation:
       conditions:
         # Only if camera detection activated
         - condition: state
-          entity_id: input_boolean.camera_detection_activated
-          state: 'on'
+          entity_id: input_select.camera_detection_mode
+          state: 'Larm'
 
     action:
       # Make a copy for all camera/latest_person_away to www/latest_person_away
@@ -271,8 +271,8 @@ automation:
       conditions:
         # Only if camera detection activated
         - condition: state
-          entity_id: input_boolean.camera_detection_activated
-          state: 'on'
+          entity_id: input_select.camera_detection_mode
+          state: 'Larm'
 
     action:
       # Make a copy for all camera/latest_person_away to www/latest_person_away
@@ -293,8 +293,8 @@ automation:
       conditions:
         # Only if camera detection inactivated
         - condition: state
-          entity_id: input_boolean.camera_detection_activated
-          state: 'off'
+          entity_id: input_select.camera_detection_mode
+          state: 'Info'
 
     action:
       # Make a delete for all camera/latest_person_away

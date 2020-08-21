@@ -37,22 +37,26 @@ camera:
 
 ####################################################
 #                                                  #
-#                     INPUT_BOOLEAN                #
+#                    INPUT_SELECT                  #
 #                                                  #
 ####################################################
-input_boolean:
-  camera_detection_activated:
-    name: Kamera detektering aktiverad
+input_select:
+  camera_detection_mode:
+    name: Kamera detektering mode
     icon: mdi:video-outline
+    options:
+     - Off
+     - Info
+     - Larm
 
 ##################
 ### Automation ###
 ##################
 automation:
-  #################################
-  ### Activate camera detection ###
-  #################################
-  - alias: Activate camera detection
+  ############################################
+  ### Activate camera detection mode Alarm ###
+  ############################################
+  - alias: Camera detection mode Alarm
     trigger:
       - platform: state
         entity_id: input_select.home_status
@@ -61,22 +65,24 @@ automation:
         entity_id: input_select.home_status
         to: 'Hemma av'
     action:
-      - service: input_boolean.turn_on
+      - service: input_select.select_option
         data:
-          entity_id: input_boolean.camera_detection_activated
+          entity_id: input_select.camera_detection_mode
+          option: Larm
 
-  ###################################
-  ### Deactivate camera detection ###
-  ###################################
-  - alias: Deactivate camera detection
+  ###########################################
+  ### Activate camera detection mode Info ###
+  ###########################################
+  - alias: Camera detection mode Info
     trigger:
       - platform: state
         entity_id: input_select.home_status
         to: 'Hemma på'
     action:
-      - service: input_boolean.turn_off
+      - service: input_select.select_option
         data:
-          entity_id: input_boolean.camera_detection_activated
+          entity_id: input_select.camera_detection_mode
+          option: Info
 
   #########################
   ### Remove old images ###

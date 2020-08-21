@@ -86,7 +86,7 @@ automation:
       conditions:
         # Camera detection activated, activated when home status is "Borta" or "Hemma av"
         - condition: state
-          entity_id: input_select.camera_detection_mode
+          entity_id: input_select.camera_mode
           state: 'Larm'
         # Camera 2 has not detected any person earlier
         - condition: state
@@ -155,7 +155,7 @@ automation:
       condition: and
       conditions:
         - condition: state
-          entity_id: input_select.camera_detection_mode
+          entity_id: input_select.camera_mode
           state: 'Info'
     action:
       # Need to add a delay, otherwise it take the old photo
@@ -185,7 +185,7 @@ automation:
       condition: and
       conditions:
         - condition: state
-          entity_id: input_select.camera_detection_mode
+          entity_id: input_select.camera_mode
           state: 'Larm'
 
     action:
@@ -222,7 +222,7 @@ automation:
       conditions:
         # Only if camera detection activated
         - condition: state
-          entity_id: input_select.camera_detection_mode
+          entity_id: input_select.camera_mode
           state: 'Larm'
 
     action:
@@ -249,7 +249,7 @@ automation:
       conditions:
         # Only if camera detection activated
         - condition: state
-          entity_id: input_select.camera_detection_mode
+          entity_id: input_select.camera_mode
           state: 'Larm'
 
     action:
@@ -271,7 +271,7 @@ automation:
       conditions:
         # Only if camera detection activated
         - condition: state
-          entity_id: input_select.camera_detection_mode
+          entity_id: input_select.camera_mode
           state: 'Larm'
 
     action:
@@ -293,7 +293,7 @@ automation:
       conditions:
         # Only if camera detection inactivated
         - condition: state
-          entity_id: input_select.camera_detection_mode
+          entity_id: input_select.camera_mode
           state: 'Info'
 
     action:

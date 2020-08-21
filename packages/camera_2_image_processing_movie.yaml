@@ -18,7 +18,7 @@ automation:
       conditions:
         # Camera detection activated
         - condition: state
-          entity_id: input_select.camera_detection_mode
+          entity_id: input_select.camera_mode
           state: 'Larm'
         # Camera 2 is not recording
         - condition: state
@@ -74,7 +74,7 @@ automation:
       conditions:
         # Camera detection activated 
         - condition: state
-          entity_id: input_select.camera_detection_mode
+          entity_id: input_select.camera_mode
           state: 'Larm'
         - condition: state
         # Camera 2 detected active
@@ -134,7 +134,7 @@ automation:
       conditions:
         # Only if camera detection activated
         - condition: state
-          entity_id: input_select.camera_detection_mode
+          entity_id: input_select.camera_mode
           state: 'Larm'
 
     action:
@@ -179,7 +179,7 @@ automation:
       conditions:
         # Only if camera detection inactivated
         - condition: state
-          entity_id: input_select.camera_detection_mode
+          entity_id: input_select.camera_mode
           state: 'Info'
 
     action:

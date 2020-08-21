@@ -41,7 +41,7 @@ camera:
 #                                                  #
 ####################################################
 input_select:
-  camera_detection_mode:
+  camera_mode:
     name: Kamera detektering mode
     icon: mdi:video-outline
     options:
@@ -53,10 +53,10 @@ input_select:
 ### Automation ###
 ##################
 automation:
-  ############################################
-  ### Activate camera detection mode Alarm ###
-  ############################################
-  - alias: Camera detection mode Alarm
+  ##################################
+  ### Activate camera mode Alarm ###
+  ##################################
+  - alias: Camera mode Alarm
     trigger:
       - platform: state
         entity_id: input_select.home_status
@@ -67,13 +67,13 @@ automation:
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.camera_detection_mode
+          entity_id: input_select.camera_mode
           option: Larm
 
-  ###########################################
-  ### Activate camera detection mode Info ###
-  ###########################################
-  - alias: Camera detection mode Info
+  #################################
+  ### Activate camera mode Info ###
+  #################################
+  - alias: Camera mode Info
     trigger:
       - platform: state
         entity_id: input_select.home_status
@@ -81,7 +81,7 @@ automation:
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.camera_detection_mode
+          entity_id: input_select.camera_mode
           option: Info
 
   #########################

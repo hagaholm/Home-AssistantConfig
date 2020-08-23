@@ -371,10 +371,10 @@ shell_command:
 
   # Used by automation Camera 1 Move motion_detection files to warning after 2 min
   # Used by automation Camera 1 Move motion_detection files to warning when no detection
-  camera_1_move_camera_motion_detected_to_warning: "mv /config/camera/motion_detected/*.jpg /config/www/warning/"
+  camera_1_move_camera_motion_detected_to_warning: "mv /config/camera/motion_detected/camera_1_*.jpg /config/www/warning/"
 
   # Used by automation Camera 1 Delete motion_detected files
-  camera_1_delete_motion_detected_files: "rm /config/camera/motion_detected/*.jpg"
+  camera_1_delete_motion_detected_files: "rm /config/camera/motion_detected/camera_1_*.jpg"
 
 #####################
 ### Input Boolean ###

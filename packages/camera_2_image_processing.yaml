@@ -64,6 +64,7 @@ automation:
   ### - if timer off                                                                  ###
   #######################################################################################
   - alias: Camera 2 Start timer
+    mode: single
     trigger:
       # File modified: '/config/camera/deepstack_photo/deepstack_camera_2_latest.jpg'
       - platform: event
@@ -135,6 +136,7 @@ automation:
   ###   to: /config/www/info/camera_2_1.jpg                                ###
   ############################################################################
   - alias: Camera 2 Image when person detected and camera mode Info
+    mode: single
     trigger:
       - platform: event
         event_type: folder_watcher
@@ -165,6 +167,7 @@ automation:
   ### - Also make a copy to '/config/camera/motion_detected/camera_2_1.jpg'                    ###
   ################################################################################################
   - alias: Camera 2 Image when person detected and camera mode Warning
+    mode: single
     trigger:
       - platform: event
         event_type: folder_watcher

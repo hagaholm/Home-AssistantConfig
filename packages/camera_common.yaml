@@ -124,9 +124,9 @@ shell_command:
   remove_old_images_in_www_warning_small: 'find /config/camera/www/warning_small -mtime +14 -type f -delete' 
 
   # Used by script delete_camera_files
-  delete_camera_files_1: 'rm /config/camera/deepstack_photo/*'
-  delete_camera_files_2: 'rm /config/camera/motion_detected/*'
-  delete_camera_files_3: 'rm /config/camera/person/*'
-  delete_camera_files_4: 'rm /config/www/info/*'
-  delete_camera_files_5: 'rm /config/www/warning/*'
-  delete_camera_files_6: 'rm /config/www/warning_small/*'
+  delete_camera_files_1: 'rm -f /config/camera/deepstack_photo/*'
+  delete_camera_files_2: 'rm -f /config/camera/motion_detected/*'
+  delete_camera_files_3: 'rm -f /config/camera/person/*'
+  delete_camera_files_4: 'rm -f /config/www/info/*'
+  delete_camera_files_5: 'rm -f /config/www/warning/*'
+  delete_camera_files_6: 'rm -f /config/www/warning_small/*'

@@ -367,14 +367,14 @@ shell_command:
   camera_1_copy_resized_video: "cp /config/www/warning_small/camera_1_1_320.mp4 /config/www/warning_small/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_video_2.state }}_320.mp4"
 
   # Used by automation Camera 1 Delete video if home after 2 min
-  camera_1_delete_video: "rm /config/camera/motion_detected/camera_1_*.mp4"
+  camera_1_delete_video: "rm -f /config/camera/motion_detected/camera_1_*.mp4"
 
   # Used by automation Camera 1 Move motion_detection files to warning after 2 min
   # Used by automation Camera 1 Move motion_detection files to warning when no detection
   camera_1_move_camera_motion_detected_to_warning: "mv /config/camera/motion_detected/camera_1_*.jpg /config/www/warning/"
 
   # Used by automation Camera 1 Delete motion_detected files
-  camera_1_delete_motion_detected_files: "rm /config/camera/motion_detected/camera_1_*.jpg"
+  camera_1_delete_motion_detected_files: "rm -f /config/camera/motion_detected/camera_1_*.jpg"
 
 #####################
 ### Input Boolean ###

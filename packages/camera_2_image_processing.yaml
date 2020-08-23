@@ -93,11 +93,11 @@ automation:
 
       # Cancel timer and reset to max time
       - service: timer.cancel
-        entity_id: timer.timer_camera_2_detected
+        entity_id: timer.timer_camera_2_warning_detected
 
       # Start timer and count down
       - service: timer.start
-        entity_id: timer.timer_camera_2_detected
+        entity_id: timer.timer_camera_2_warning_detected
 
   #####################################################
   ### Camera, vid stoppad timer                     ###
@@ -111,7 +111,7 @@ automation:
       - platform: event
         event_type: timer.finished
         event_data:
-          entity_id: timer.timer_camera_2_detected
+          entity_id: timer.timer_camera_2_warning_detected
  
     condition:
       condition: and
@@ -379,7 +379,6 @@ shell_command:
   # Used by automation Camera 2 Delete motion_detected files
   camera_2_delete_motion_detected_files: "rm -f /config/camera/motion_detected/camera_2_*.jpg"
 
-
 #####################
 ### Input Boolean ###
 #####################
@@ -415,8 +414,8 @@ input_text:
 
 timer:
   # Timer för camera 2 detekterad
-  timer_camera_2_detected:
-    name: Tid kvar kamera 2 detekterad
+  timer_camera_2_warning_detected:
+    name: Timer kamera 2 varning detekterad
     duration: '00:02:00'
 
 

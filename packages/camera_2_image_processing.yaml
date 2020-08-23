@@ -398,7 +398,7 @@ binary_sensor:
   - platform: template
     sensors:
       camera_2_person_detected:
-        friendly_name: "Camera 2 Person detekterad"
+        friendly_name: "Person detekterad"
         value_template: >-
           {{ states('image_processing.deepstack_camera_2') != '0' }}
 

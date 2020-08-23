@@ -30,3 +30,10 @@
     # 2019-12-31 07:17:22 ERROR (MainThread) [aioharmony.hubconnector] 192.168.1.247: Exception on post: Connection timeout to host http://192.168.1.247:8088/
     # 2019-12-31 07:17:22 ERROR (MainThread) [aioharmony.hubconnector] 192.168.1.247: Unable to retrieve HUB id
     # 2019-12-31 07:22:31 ERROR (MainThread) [aioharmony.hubconnector] 192.168.1.247: Connection timed out for hub 12135421
+
+    # Added to remove:
+    # 2020-08-23 11:42:34 WARNING (MainThread) [homeassistant.components.automation.camera_1_image_when_person_detected_and_camera_mode_info] Camera 1 Image when person detected and camera mode Info: Already running
+    homeassistant.components.automation.camera_1_image_when_person_detected_and_camera_mode_info
+    homeassistant.components.automation.camera_2_image_when_person_detected_and_camera_mode_info
+    homeassistant.components.automation.camera_1_image_when_person_detected_and_camera_mode_warning
+    homeassistant.components.automation.camera_2_image_when_person_detected_and_camera_mode_warning

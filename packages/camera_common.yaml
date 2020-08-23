@@ -47,16 +47,16 @@ input_select:
     options:
      - Off
      - Info
-     - Larm
+     - Warning
 
 ##################
 ### Automation ###
 ##################
 automation:
-  ##################################
-  ### Activate camera mode Alarm ###
-  ##################################
-  - alias: Camera mode Alarm
+  ####################################
+  ### Activate camera mode Warning ###
+  ####################################
+  - alias: Camera mode Warning
     trigger:
       - platform: state
         entity_id: input_select.home_status
@@ -68,7 +68,7 @@ automation:
       - service: input_select.select_option
         data:
           entity_id: input_select.camera_mode
-          option: Larm
+          option: Warning
 
   #################################
   ### Activate camera mode Info ###
@@ -93,8 +93,8 @@ automation:
         at: "00:01:00" # HH:MM:SS
     action:
       - service: shell_command.remove_old_images_in_camera_deepstack_photo
-      - service: shell_command.remove_old_images_in_www_alarm
-      - service: shell_command.remove_old_images_in_www_alarm_small
+      - service: shell_command.remove_old_images_in_www_warning
+      - service: shell_command.remove_old_images_in_www_warning_small
 
 ##############
 ### Script ###
@@ -117,16 +117,16 @@ shell_command:
   # Delete 14 days old images from folder /config/camera/deepstack_photo
   remove_old_images_in_camera_deepstack_photo: 'find /config/camera/deepstack_photo -mtime +14 -type f -delete' 
   
-  # Delete 14 days old images from folder /config/www/alarm
-  remove_old_images_in_www_away: 'find /config/camera/www/alarm -mtime +14 -type f -delete' 
+  # Delete 14 days old images from folder /config/www/warning
+  remove_old_images_in_www_warning: 'find /config/camera/www/warning -mtime +14 -type f -delete' 
 
-  # Delete 14 days old images from folder /config/www/alarm_small
-  remove_old_images_in_www_away_small: 'find /config/camera/www/alarm_small -mtime +14 -type f -delete' 
+  # Delete 14 days old images from folder /config/www/warning_small
+  remove_old_images_in_www_warning_small: 'find /config/camera/www/warning_small -mtime +14 -type f -delete' 
 
   # Used by script delete_camera_files
   delete_camera_files_1: 'rm /config/camera/deepstack_photo/*'
   delete_camera_files_2: 'rm /config/camera/motion_detected/*'
   delete_camera_files_3: 'rm /config/camera/person/*'
   delete_camera_files_4: 'rm /config/www/info/*'
-  delete_camera_files_5: 'rm /config/www/alarm/*'
-  delete_camera_files_6: 'rm /config/www/alarm_small/*'
+  delete_camera_files_5: 'rm /config/www/warning/*'
+  delete_camera_files_6: 'rm /config/www/warning_small/*'

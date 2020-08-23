@@ -2,10 +2,10 @@
 ### Automation ###
 ##################
 automation:
-  ##################################################################
-  ### TO DEVELOP AND TEST                                        ###
-  ### Camera 1 Record when person detected and camera mode Alarm ###
-  ##################################################################
+  ####################################################################
+  ### TO DEVELOP AND TEST                                          ###
+  ### Camera 1 Record when person detected and camera mode Warning ###
+  ####################################################################
   - alias: Camera 1 Record when person detected
     trigger:
       # Person detected activated
@@ -16,10 +16,10 @@ automation:
     condition:
       condition: and
       conditions:
-        # Camera mode = Larm
+        # Camera mode = Warning
         - condition: state
           entity_id: input_select.camera_mode
-          state: 'Larm'
+          state: 'Warning'
         # Camera 1 is not recording
         - condition: state
           entity_id: input_boolean.camera_1_recording
@@ -72,10 +72,10 @@ automation:
     condition:
       condition: and
       conditions:
-        # Camera mode = Larm 
+        # Camera mode = Warning 
         - condition: state
           entity_id: input_select.camera_mode
-          state: 'Larm'
+          state: 'Warning'
         - condition: state
         # Camera 1 detected active
           entity_id: input_boolean.camera_1_detected_active
@@ -132,10 +132,10 @@ automation:
     condition:
       condition: and
       conditions:
-        # Only if camera mode = Alarm
+        # Only if camera mode = Warning
         - condition: state
           entity_id: input_select.camera_mode
-          state: 'Larm'
+          state: 'Warning'
 
     action:
       - delay:
@@ -159,7 +159,7 @@ automation:
       # Generate index.html
 #      - service: python_script.generate_directory_index
 #        data:
-#          top_dir: /config/www/alarm_small/
+#          top_dir: /config/www/warning_small/
 #          output_file: index_small.html
 #          filter: "*.mp4"
 

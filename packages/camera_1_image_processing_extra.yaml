@@ -2,26 +2,26 @@
 ### Automation ###
 ##################
 automation:
-  #####################################
-  ### Processes image for detection ###
-  #####################################
-  ### - every 3 sec                 ###    
-  ### - detection activated         ###
-  #####################################
-  - alias: Camera 1 Image processing detection activated
+  ####################################
+  ### Processes image mode Warning ###
+  ####################################
+  ### - every 3 sec                ###    
+  ### - mode Warning               ###
+  ####################################
+  - alias: Camera 1 Image processing mode Warning
 
     # Every 3 sec
     trigger:
       - platform: time_pattern
         seconds: "/3"
 
-    # Alarm activated
+    # Mode Warning
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: input_select.camera_mode
-          state: 'Larm'
+          state: 'Warning'
 
     # Scan a new image
     action:
@@ -29,20 +29,20 @@ automation:
         data:
           entity_id: image_processing.deepstack_camera_1
 
-  #####################################
-  ### Processes image for detection ###
-  #####################################
-  ### - every 4 sec                 ###
-  ### - detection inactivated       ###
-  #####################################
-  - alias: Camera 1 Image processing detection inactivated
+  #################################
+  ### Processes image mode Info ###
+  #################################
+  ### - every 4 sec             ###
+  ### - mode Info               ###
+  #################################
+  - alias: Camera 1 Image processing mode Info
 
     # Every 4 sec
     trigger:
       - platform: time_pattern
         seconds: "/4"
 
-    # Alarm activated
+    # Mode Info
     condition:
       condition: and
       conditions:

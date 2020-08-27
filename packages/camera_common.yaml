@@ -118,10 +118,10 @@ shell_command:
   remove_old_images_in_camera_deepstack_photo: 'find /config/camera/deepstack_photo -mtime +14 -type f -delete' 
   
   # Delete 14 days old images from folder /config/www/warning
-  remove_old_images_in_www_warning: 'find /config/camera/www/warning -mtime +14 -type f -delete' 
+  remove_old_images_in_www_warning: 'find /config/www/warning -mtime +14 -type f -delete' 
 
   # Delete 14 days old images from folder /config/www/warning_small
-  remove_old_images_in_www_warning_small: 'find /config/camera/www/warning_small -mtime +14 -type f -delete' 
+  remove_old_images_in_www_warning_small: 'find /config/www/warning_small -mtime +14 -type f -delete' 
 
   # Used by script delete_camera_files
   delete_camera_files_1: 'rm -f /config/camera/deepstack_photo/*'

@@ -39,6 +39,8 @@ image_processing:
     source:
       - entity_id: camera.kamera_1
         name: deepstack_camera_1
+    confidence: 85
+    timeout: 5
 
 ##############
 ### Camera ###
@@ -220,6 +222,10 @@ automation:
           state: 'Warning'
 
     action:
+      # Need to add a delay, otherwise it take the old photo
+      - delay:
+          seconds: 2
+
       # Send notify
       - service: notify.pushbullet
         data:

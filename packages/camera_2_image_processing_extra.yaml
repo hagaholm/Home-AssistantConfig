@@ -2,26 +2,26 @@
 ### Automation ###
 ##################
 automation:
-  ####################################
-  ### Processes image mode Warning ###
-  ####################################
-  ### - every 4 sec                ###    
-  ### - mode Warning               ###
-  ####################################
-  - alias: Camera 2 Image processing mode Warning
+  #################################
+  ### Processes image mode Away ###
+  #################################
+  ### - every 4 sec             ###    
+  ### - mode Away               ###
+  #################################
+  - alias: Camera 2 Image processing mode Away
 
     # Every 4 sec
     trigger:
       - platform: time_pattern
         seconds: "/4"
 
-    # Mode Warning
+    # Mode Away
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: input_select.camera_mode
-          state: 'Warning'
+          state: 'Away'
 
     # Scan a new image
     action:
@@ -29,26 +29,26 @@ automation:
         data:
           entity_id: image_processing.deepstack_camera_2
 
-  #################################
-  ### Processes image mode Info ###
-  #################################
-  ### - every 10 sec            ###
-  ### - mode Info               ###
-  #################################
-  - alias: Camera 2 Image processing mode Info
+  ################################
+  ### Processes image mode Day ###
+  ################################
+  ### - every 10 sec           ###
+  ### - mode Day               ###
+  ################################
+  - alias: Camera 2 Image processing mode Day
 
     # Every 10 sec
     trigger:
       - platform: time_pattern
         seconds: "/10"
 
-    # Mode Info
+    # Mode Day
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: input_select.camera_mode
-          state: 'Info'
+          state: 'Day'
 
     # Scan a new image
     action:

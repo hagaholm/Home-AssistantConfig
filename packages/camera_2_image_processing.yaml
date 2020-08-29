@@ -62,7 +62,7 @@ automation:
   #######################################################################################
   ### Camera detected, start timer and turn on input_boolean.camera_2_detected_active ###
   #######################################################################################
-  ### - if camera mode = Warning                                                      ###
+  ### - if camera mode = Away                                                         ###
   ### - if timer off                                                                  ###
   #######################################################################################
   - alias: Camera 2 Start timer
@@ -78,10 +78,10 @@ automation:
     condition:
       condition: and
       conditions:
-        # Camera mode = Warning when home status is "Borta" or "Hemma av"
+        # Camera mode = Away when home status is "Borta" or "Hemma av"
         - condition: state
           entity_id: input_select.camera_mode
-          state: 'Warning'
+          state: 'Away'
         # Camera 2 has not detected any person earlier (timer is not running since last detected person)
         - condition: state
           entity_id: input_boolean.camera_2_detected_active
@@ -95,11 +95,11 @@ automation:
 
       # Cancel timer and reset to max time
       - service: timer.cancel
-        entity_id: timer.timer_camera_2_warning_detected
+        entity_id: timer.timer_camera_2
 
       # Start timer and count down
       - service: timer.start
-        entity_id: timer.timer_camera_2_warning_detected
+        entity_id: timer.timer_camera_2
 
   #####################################################
   ### Camera, vid stoppad timer                     ###
@@ -113,7 +113,7 @@ automation:
       - platform: event
         event_type: timer.finished
         event_data:
-          entity_id: timer.timer_camera_2_warning_detected
+          entity_id: timer.timer_camera_2
  
     condition:
       condition: and
@@ -130,14 +130,14 @@ automation:
           entity_id: input_boolean.camera_2_detected_active
 
   ############################################################################
-  ### Camera 2 Image when person detected and camera mode = Info           ###
+  ### Camera 2 Image when person detected and camera mode = Day            ###
   ############################################################################
   ### When person detected, make the last image available                  ###
-  ### - Copy Deepstack image when person detected, mode Info               ###
+  ### - Copy Deepstack image when person detected, mode Day                ###
   ###   from: /config/camera/deepstack_photo/deepstack_camera_2_latest.jpg ###
   ###   to: /config/www/info/camera_2_1.jpg                                ###
   ############################################################################
-  - alias: Camera 2 Image when person detected and camera mode Info
+  - alias: Camera 2 Image when person detected and camera mode Day
     mode: single
     trigger:
       - platform: event
@@ -151,7 +151,7 @@ automation:
       conditions:
         - condition: state
           entity_id: input_select.camera_mode
-          state: 'Info'
+          state: 'Day'
     action:
       # Need to add a delay, otherwise it take the old photo
       - delay:
@@ -162,13 +162,13 @@ automation:
       - service: shell_command.camera_2_copy_deepstack_to_info
 
   ################################################################################################
-  ### Camera 2 Image when person detected and camera mode = Warning                            ###
+  ### Camera 2 Image when person detected and camera mode = Away                               ###
   ################################################################################################
   ### When person detected and away                                                            ###
   ### - Create snapshot saved as '/config/camera/motion_detected/camera_2_YYYYMMDD-HHMMSS.jpg' ###
   ### - Also make a copy to '/config/camera/motion_detected/camera_2_1.jpg'                    ###
   ################################################################################################
-  - alias: Camera 2 Image when person detected and camera mode Warning
+  - alias: Camera 2 Image when person detected and camera mode Away
     mode: single
     trigger:
       - platform: event
@@ -182,7 +182,7 @@ automation:
       conditions:
         - condition: state
           entity_id: input_select.camera_mode
-          state: 'Warning'
+          state: 'Away'
 
     action:
       # Get timestamp when person detected
@@ -216,10 +216,10 @@ automation:
     condition:
       condition: and
       conditions:
-        # Only if camera mode = Warning
+        # Only if camera mode = Away
         - condition: state
           entity_id: input_select.camera_mode
-          state: 'Warning'
+          state: 'Away'
 
     action:
       # Need to add a delay, otherwise it take the old photo
@@ -247,10 +247,10 @@ automation:
     condition:
       condition: and
       conditions:
-        # Only if camera mode = Warning
+        # Only if camera mode = Away
         - condition: state
           entity_id: input_select.camera_mode
-          state: 'Warning'
+          state: 'Away'
 
     action:
       # Make a copy for all camera/motion_detected to www/warning
@@ -269,10 +269,10 @@ automation:
     condition:
       condition: and
       conditions:
-        # Only if camera mode = Warning
+        # Only if camera mode = Away
         - condition: state
           entity_id: input_select.camera_mode
-          state: 'Warning'
+          state: 'Away'
 
     action:
       # Make a copy for all camera/motion_detected to www/warning
@@ -291,10 +291,10 @@ automation:
     condition:
       condition: and
       conditions:
-        # Only if camera mode = Info
+        # Only if camera mode = Day
         - condition: state
           entity_id: input_select.camera_mode
-          state: 'Info'
+          state: 'Day'
 
     action:
       # Make a delete for all camera/motion_detected
@@ -305,7 +305,7 @@ automation:
 ##############
 script:
   camera_2_use_image:
-    alias: Kamera 2 Aktivera bildläge
+    alias: Camera 2 Aktivera bildläge
     sequence:
       - service: automation.turn_off
         entity_id: automation.camera_2_record_when_person_detected_away
@@ -316,26 +316,14 @@ script:
       - service: automation.turn_off
         entity_id: automation.camera_2_delete_video_if_home_after_2_min
 
-#      - service: automation.turn_on
-#        entity_id: automation.camera_2_delete_latest_person_away_files_when_home
-#      - service: automation.turn_on
-#        entity_id: automation.camera_2_move_latest_person_away_files_when_no_detection
-#      - service: automation.turn_on
-#        entity_id: automation.camera_2_move_latest_person_away_files_after_2_min
       - service: automation.turn_on
         entity_id: automation.camera_2_image_processing_detection_activated
       - service: automation.turn_on
         entity_id: automation.camera_2_image_processing_detection_inactivated
 
   camera_2_use_video:
-    alias: Kamera 2 Aktivera videoläge
+    alias: Camera 2 Aktivera videoläge
     sequence:
-#      - service: automation.turn_off
-#        entity_id: automation.camera_2_delete_latest_person_away_files_when_home
-#      - service: automation.turn_off
-#        entity_id: automation.camera_2_move_latest_person_away_files_when_no_detection
-#      - service: automation.turn_off
-#        entity_id: automation.camera_2_move_latest_person_away_files_after_2_min
       - service: automation.turn_off
         entity_id: automation.camera_2_image_processing_detection_activated
       - service: automation.turn_off
@@ -394,7 +382,7 @@ input_boolean:
     initial: off
 
   camera_2_detected_active:
-    name: Kamera 2 detekterad aktiv
+    name: Camera 2 detekterad aktiv
     initial: off
 
 #####################
@@ -419,9 +407,9 @@ input_text:
     name: Camera 2 Tidpunkt för person detektering video föregående
 
 timer:
-  # Timer för camera 2 detekterad
-  timer_camera_2_warning_detected:
-    name: Timer kamera 2 varning detekterad
+  # Timer för camera 2
+  timer_camera_2_detected:
+    name: Timer camera 2
     duration: '00:02:00'
 
 

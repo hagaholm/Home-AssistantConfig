@@ -203,10 +203,10 @@ automation:
       # Rename the copy, to be used when detect that nobody home
       - service: shell_command.camera_2_deepstack_to_motion_detected_2
 
-  #############################################
-  ### Camera 2 Warning when person detected ###
-  #############################################
-  - alias: Camera 2 Warning when person detected
+  ############################################
+  ### Camera 2 Notify when person detected ###
+  ############################################
+  - alias: Camera 2 Notify when person detected
     trigger:
       # After 2 minutes after person detected
       platform: state

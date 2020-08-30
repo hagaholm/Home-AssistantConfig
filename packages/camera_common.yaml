@@ -85,6 +85,20 @@ automation:
           entity_id: input_select.camera_mode
           option: Day
 
+  ##################################
+  ### Activate camera mode Night ###
+  ##################################
+  - alias: Camera mode Night
+    trigger:
+      platform: state
+      entity_id: input_select.home_status
+      to: "Hemma av"
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.camera_mode
+          option: Night
+
   #########################
   ### Remove old images ###
   #########################

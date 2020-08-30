@@ -78,7 +78,7 @@ automation:
     condition:
       condition: and
       conditions:
-        # Camera mode = Away when home status is "Borta" or "Hemma av"
+        # Camera mode = Away
         - condition: state
           entity_id: input_select.camera_mode
           state: 'Away'
@@ -191,16 +191,10 @@ automation:
         data_template: 
           value: '{{ now().strftime("%Y%m%d_%H%M%S") }}'
 
-#      # Save a photo with timestamp to '/config/camera/motion_detected/camera_1_YYYYMMDD-HHMMSS.jpg'
-#      - service: camera.snapshot
-#        data:
-#          entity_id: camera.kamera_1
-#          filename: '/config/camera/motion_detected/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg'
-
-      # Make a copy from deepstack to motion_detected, to be used when detect that nobody home
+      # Make a copy from deepstack to motion_detected, to be used if still away after 2 min
       - service: shell_command.camera_1_deepstack_to_motion_detected_1
 
-      # Rename the copy, to be used when detect that nobody home
+      # Make a copy, to be used if still away after 2 min
       - service: shell_command.camera_1_deepstack_to_motion_detected_2
 
   ############################################
@@ -297,6 +291,9 @@ automation:
           state: 'Day'
 
     action:
+      # If exist, move camera_1_1.jpg from motion_detected to info before all files removes from motion_detected
+      - service: shell_command.camera_1_move_motion_detected_file_info
+      
       # Make a delete for all camera/motion_detected
       - service: shell_command.camera_1_delete_motion_detected_files
 
@@ -369,6 +366,9 @@ shell_command:
   # Used by automation Camera 1 Move motion_detection files to warning after 2 min
   # Used by automation Camera 1 Move motion_detection files to warning when no detection
   camera_1_move_camera_motion_detected_to_warning: "mv /config/camera/motion_detected/camera_1_*.jpg /config/www/warning/"
+
+  # Used by automation Camera 1 Delete motion_detected files
+  camera_1_move_motion_detected_file_info:  "mv -f /config/camera/motion_detected/camera_1_1.jpg /config/www/warning/"
 
   # Used by automation Camera 1 Delete motion_detected files
   camera_1_delete_motion_detected_files: "rm -f /config/camera/motion_detected/camera_1_*.jpg"

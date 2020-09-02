@@ -368,7 +368,7 @@ shell_command:
   camera_1_move_camera_motion_detected_to_warning: "mv -f /config/camera/motion_detected/camera_1_*.jpg /config/www/warning/"
 
   # Used by automation Camera 1 Delete motion_detected files
-  camera_1_move_motion_detected_file_info:  "mv -f /config/camera/motion_detected/camera_1_1.jpg /config/info/warning/"
+  camera_1_move_motion_detected_file_info:  "mv -f /config/camera/motion_detected/camera_1_1.jpg /config/www/info/"
 
   # Used by automation Camera 1 Delete motion_detected files
   camera_1_delete_motion_detected_files: "rm -f /config/camera/motion_detected/camera_1_*.jpg"

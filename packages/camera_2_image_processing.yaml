@@ -203,9 +203,9 @@ automation:
   - alias: Camera 2 Notify when person detected
     trigger:
       # After 2 minutes after person detected
-      platform: state
-      entity_id: input_boolean.camera_2_detected_active
-      to: 'off'
+      - platform: state
+        entity_id: input_boolean.camera_2_detected_active
+        to: 'off'
 
     condition:
       condition: and
@@ -234,9 +234,9 @@ automation:
   - alias: Camera 2 Move motion_detection files to warning after 2 min
     trigger:
       # After 2 minutes after person detected
-      platform: state
-      entity_id: input_boolean.camera_2_detected_active
-      to: 'off'
+      - platform: state
+        entity_id: input_boolean.camera_2_detected_active
+        to: 'off'
 
     condition:
       condition: and
@@ -255,9 +255,9 @@ automation:
   #########################################################################
   - alias: Camera 2 Move motion_detection files to warning when no detection
     trigger:
+      # After 2 minutes after person detected
       - platform: state
-        entity_id: binary_sensor.camera_2_person_detected
-        from: 'on'
+        entity_id: input_boolean.camera_2_detected_active
         to: 'off'
 
     condition:
@@ -277,9 +277,9 @@ automation:
   #############################################
   - alias: Camera 2 Delete motion_detected files
     trigger:
+      # After 2 minutes after person detected
       - platform: state
-        entity_id: binary_sensor.camera_2_person_detected
-        from: 'on'
+        entity_id: input_boolean.camera_2_detected_active
         to: 'off'
 
     condition:

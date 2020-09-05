@@ -303,22 +303,22 @@ automation:
   - alias: Camera 1 Other motion detected
     trigger:
       - platform: numeric_state 
-        entity_id: sensor.cats_found
+        entity_id: sensor.camera_1_cat_found
         above: 0
       - platform: numeric_state 
-        entity_id: sensor.birds_found
+        entity_id: sensor.camera_1_bird_found
         above: 0
       - platform: numeric_state 
-        entity_id: sensor.dogs_found
+        entity_id: sensor.camera_1_dog_found
         above: 0
       - platform: numeric_state 
-        entity_id: sensor.cows_found
+        entity_id: sensor.camera_1_cow_found
         above: 0
       - platform: numeric_state 
-        entity_id: sensor.sheeps_found
+        entity_id: sensor.camera_1_sheep_found
         above: 0
       - platform: numeric_state 
-        entity_id: sensor.horses_found
+        entity_id: sensor.camera_1_horse_found
         above: 0
         
     action:
@@ -458,7 +458,7 @@ timer:
 sensor:
   - platform: template
     sensors:
-      cars_found:
+      camera_1_car_found:
         friendly_name: "Bilar"
         value_template: >-
           {% set summary = (state_attr('image_processing.deepstack_camera_1', 'summary')) %}
@@ -468,7 +468,7 @@ sensor:
             0
           {% endif %}
 
-      cats_found:
+      camera_1_cat_found:
         friendly_name: "Katter"
         value_template: >-
           {% set summary = (state_attr('image_processing.deepstack_camera_1', 'summary')) %}
@@ -478,7 +478,7 @@ sensor:
             0
           {% endif %}
 
-      birds_found:
+      camera_1_bird_found:
         friendly_name: "Fåglar"
         value_template: >-
           {% set summary = (state_attr('image_processing.deepstack_camera_1', 'summary')) %}
@@ -488,7 +488,7 @@ sensor:
             0
           {% endif %}
 
-      dogs_found:
+      camera_1_dog_found:
         friendly_name: "Hundar"
         value_template: >-
           {% set summary = (state_attr('image_processing.deepstack_camera_1', 'summary')) %}
@@ -498,7 +498,7 @@ sensor:
             0
           {% endif %}
 
-      horses_found:
+      camera_1_horse_found:
         friendly_name: "Hästar"
         value_template: >-
           {% set summary = (state_attr('image_processing.deepstack_camera_1', 'summary')) %}
@@ -508,7 +508,7 @@ sensor:
             0
           {% endif %}
 
-      sheeps_found:
+      camera_1_sheep_found:
         friendly_name: "Får"
         value_template: >-
           {% set summary = (state_attr('image_processing.deepstack_camera_1', 'summary')) %}
@@ -518,7 +518,7 @@ sensor:
             0
           {% endif %}
 
-      cows_found:
+      camera_1_cow_found:
         friendly_name: "Kor"
         value_template: >-
           {% set summary = (state_attr('image_processing.deepstack_camera_1', 'summary')) %}

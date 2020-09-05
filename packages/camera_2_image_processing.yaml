@@ -297,6 +297,49 @@ automation:
       # Make a delete for all camera/motion_detected
       - service: shell_command.camera_2_delete_motion_detected_files
 
+  ######################################
+  ### Camera 2 Other motion detected ###
+  ######################################
+  - alias: Camera 2 Other motion detected
+    trigger:
+      - platform: numeric_state 
+        entity_id: sensor.cats_found
+        above: 0
+      - platform: numeric_state 
+        entity_id: sensor.birds_found
+        above: 0
+      - platform: numeric_state 
+        entity_id: sensor.dogs_found
+        above: 0
+      - platform: numeric_state 
+        entity_id: sensor.cows_found
+        above: 0
+      - platform: numeric_state 
+        entity_id: sensor.sheeps_found
+        above: 0
+      - platform: numeric_state 
+        entity_id: sensor.horses_found
+        above: 0
+        
+    action:
+      # Save a photo with timestamp to '/config/www/info/camera_2_other.jpg'
+      - service: camera.snapshot
+        data:
+          entity_id: camera.kamera_2
+          filename: '/config/www/info/camera_2_other.jpg'
+
+      # Need to add a delay, otherwise it take the old photo
+      - delay:
+          seconds: 2
+
+      # Send a notify with a photo
+      - service: notify.pushbullet
+        data:
+          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+          message: "Fångat av kamera 2"
+          data:
+            file: /config/www/info/camera_2_other.jpg
+
 ##############
 ### Script ###
 ##############
@@ -412,11 +455,83 @@ timer:
     name: Timer camera 2
     duration: '00:02:00'
 
+sensor:
+  - platform: template
+    sensors:
+      cars_found:
+        friendly_name: "Bilar"
+        value_template: >-
+          {% set summary = (state_attr('image_processing.deepstack_camera_2', 'summary')) %}
+          {% if summary.car %}
+            {{ summary.car }}
+          {% else %}
+            0
+          {% endif %}
 
+      cats_found:
+        friendly_name: "Katter"
+        value_template: >-
+          {% set summary = (state_attr('image_processing.deepstack_camera_2', 'summary')) %}
+          {% if summary.cat %}
+            {{ summary.cat }}
+          {% else %}
+            0
+          {% endif %}
+
+      birds_found:
+        friendly_name: "Fåglar"
+        value_template: >-
+          {% set summary = (state_attr('image_processing.deepstack_camera_2', 'summary')) %}
+          {% if summary.bird %}
+            {{ summary.bird }}
+          {% else %}
+            0
+          {% endif %}
+
+      dogs_found:
+        friendly_name: "Hundar"
+        value_template: >-
+          {% set summary = (state_attr('image_processing.deepstack_camera_2', 'summary')) %}
+          {% if summary.dog %}
+            {{ summary.dog }}
+          {% else %}
+            0
+          {% endif %}
+
+      horses_found:
+        friendly_name: "Hästar"
+        value_template: >-
+          {% set summary = (state_attr('image_processing.deepstack_camera_2', 'summary')) %}
+          {% if summary.horse %}
+            {{ summary.horse }}
+          {% else %}
+            0
+          {% endif %}
+
+      sheeps_found:
+        friendly_name: "Får"
+        value_template: >-
+          {% set summary = (state_attr('image_processing.deepstack_camera_2', 'summary')) %}
+          {% if summary.sheep %}
+            {{ summary.sheep }}
+          {% else %}
+            0
+          {% endif %}
+
+      cows_found:
+        friendly_name: "Kor"
+        value_template: >-
+          {% set summary = (state_attr('image_processing.deepstack_camera_2', 'summary')) %}
+          {% if summary.cow %}
+            {{ summary.cow }}
+          {% else %}
+            0
+          {% endif %}
 
 # Used: 
 # person, bicycle, car, motorcycle, bus, truck, boat,
 # bird, cat, dog, horse, sheep, cow
+
 # Not used: elephant, bear, zebra, giraffe,
 
 # Unused:

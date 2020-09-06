@@ -9,7 +9,8 @@ automation:
   ### - mode Away               ###
   #################################
   - alias: Camera 1 Image processing mode Away
-
+    mode: queued
+    
     # Every 3 sec
     trigger:
       - platform: time_pattern
@@ -36,7 +37,8 @@ automation:
   ### - mode Day               ###
   ################################
   - alias: Camera 1 Image processing mode Day
-
+    mode: queued
+    
     # Every 4 sec
     trigger:
       - platform: time_pattern

@@ -138,7 +138,8 @@ automation:
   ###   to: /config/www/info/camera_1_1.jpg                                ###
   ############################################################################
   - alias: Camera 1 Image when person detected and camera mode Day
-    mode: single
+    mode: queued
+
     trigger:
       - platform: event
         event_type: folder_watcher
@@ -169,7 +170,8 @@ automation:
   ### - Also make a copy to '/config/camera/motion_detected/camera_1_1.jpg'                    ###
   ################################################################################################
   - alias: Camera 1 Image when person detected and camera mode Away
-    mode: single
+    mode: queued
+    
     trigger:
       - platform: event
         event_type: folder_watcher

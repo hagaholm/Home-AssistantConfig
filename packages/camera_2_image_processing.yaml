@@ -458,16 +458,6 @@ timer:
 sensor:
   - platform: template
     sensors:
-      camera_2_car_found:
-        friendly_name: "Bilar"
-        value_template: >-
-          {% set summary = (state_attr('image_processing.deepstack_camera_2', 'summary')) %}
-          {% if summary.car %}
-            {{ summary.car }}
-          {% else %}
-            0
-          {% endif %}
-
       camera_2_cat_found:
         friendly_name: "Katter"
         value_template: >-

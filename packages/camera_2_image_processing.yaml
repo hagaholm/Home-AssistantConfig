@@ -171,7 +171,7 @@ automation:
   ################################################################################################
   - alias: Camera 2 Image when person detected and camera mode Away
     mode: queued
-
+    
     trigger:
       - platform: event
         event_type: folder_watcher
@@ -198,6 +198,56 @@ automation:
 
       # Make a copy, to be used if still away after 2 min
       - service: shell_command.camera_2_deepstack_to_motion_detected_2
+
+  #####################################################################################
+  ### Camera 2 Image when person detected and camera mode = Night                   ###
+  #####################################################################################
+  ### When person detected and night                                                ###
+  ### - Create snapshot saved as '/config/www/warning/camera_2_YYYYMMDD-HHMMSS.jpg' ###
+  ### - Also make a copy to '/config/www/warning/camera_2_1.jpg'                    ###
+  ### - Also send a notify about it                                                 ###
+  #####################################################################################
+  - alias: Camera 2 Image when person detected and camera mode Night
+    mode: queued
+    
+    trigger:
+      - platform: event
+        event_type: folder_watcher
+        event_data:
+          event_type: modified
+          path: '/config/camera/deepstack_photo/deepstack_camera_2_latest.jpg'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_select.camera_mode
+          state: 'Night'
+
+    action:
+      # Get timestamp when person detected
+      - service: input_text.set_value
+        entity_id: input_text.camera_2_person_detected_timestamp_photo
+        data_template: 
+          value: '{{ now().strftime("%Y%m%d_%H%M%S") }}'
+
+      # Make a copy from deepstack to warning
+      - service: shell_command.camera_2_deepstack_to_warning_1
+
+      # Make a copy
+      - service: shell_command.camera_2_deepstack_to_warning_2
+
+      # Need to add a delay, otherwise it take the old photo
+      - delay:
+          seconds: 2
+
+      # Send notify
+      - service: notify.pushbullet
+        data:
+          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+          message: "Camera 2 Person detekterad night: {{ states.input_text.camera_2_person_detected_timestamp_photo.state }}"
+          data:
+            file: /config/www/warning/camera_2_1.jpg
 
   ############################################
   ### Camera 2 Notify when person detected ###
@@ -226,7 +276,7 @@ automation:
       - service: notify.pushbullet
         data:
           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-          message: "Camera 2 Person detekterad: {{ states.input_text.camera_2_person_detected_timestamp_photo.state }}"
+          message: "Camera 2 Person detekterad away: {{ states.input_text.camera_2_person_detected_timestamp_photo.state }}"
           data:
             file: /config/www/warning/camera_2_1.jpg
 
@@ -308,9 +358,6 @@ automation:
         entity_id: sensor.camera_2_cat_found
         above: 0
       - platform: numeric_state 
-        entity_id: sensor.camera_2_bird_found
-        above: 0
-      - platform: numeric_state 
         entity_id: sensor.camera_2_dog_found
         above: 0
       - platform: numeric_state 
@@ -387,11 +434,17 @@ shell_command:
   # Used by automation Camera 2 Image when person detected
   camera_2_copy_deepstack_to_info: 'cp /config/camera/deepstack_photo/deepstack_camera_2_latest.jpg /config/www/info/camera_2_1.jpg'
 
-  # Used by automation Camera 2 Image when person detected away
+  # Used by automation Camera 2 Image when person detected Away
   camera_2_deepstack_to_motion_detected_1: "cp /config/camera/deepstack_photo/deepstack_camera_2_latest.jpg '/config/camera/motion_detected/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_photo.state }}.jpg'"
 
-  # Used by automation Camera 2 Image when person detected away
+  # Used by automation Camera 2 Image when person detected Away
   camera_2_deepstack_to_motion_detected_2: "cp '/config/camera/motion_detected/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_photo.state }}.jpg' '/config/camera/motion_detected/camera_2_1.jpg'"
+
+  # Used by automation Camera 2 Image when person detected Night
+  camera_2_deepstack_to_warning_1: "cp /config/camera/deepstack_photo/deepstack_camera_2_latest.jpg '/config/www/warning/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_photo.state }}.jpg'"
+
+  # Used by automation Camera 2 Image when person detected Night
+  camera_2_deepstack_to_warning_2: "cp '/config/camera/motion_detected/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_photo.state }}.jpg' '/config/www/warning/camera_2_1.jpg'"
 
   # Used by automation Camera 2 Move video if still away after 2 min
   camera_2_copy_video: "cp /config/camera/motion_detected/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video_2.state }}.mp4 /config/www/warning/camera_2_1.mp4"

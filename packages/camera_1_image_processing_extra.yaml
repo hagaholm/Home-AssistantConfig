@@ -58,6 +58,34 @@ automation:
         data:
           entity_id: image_processing.deepstack_camera_1
 
+  ##################################
+  ### Processes image mode Night ###
+  ##################################
+  ### - every 3 sec              ###    
+  ### - mode Night               ###
+  ##################################
+  - alias: Camera 1 Image processing mode Night
+    mode: queued
+    
+    # Every 3 sec
+    trigger:
+      - platform: time_pattern
+        seconds: "/3"
+
+    # Mode Night
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_select.camera_mode
+          state: 'Night'
+
+    # Scan a new image
+    action:
+      - service: image_processing.scan
+        data:
+          entity_id: image_processing.deepstack_camera_1
+
   ####################################################
   ### Max light friggebod fasad if person detected ###
   ####################################################

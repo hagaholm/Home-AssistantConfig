@@ -97,9 +97,7 @@ automation:
       - service: input_select.select_option
         data:
           entity_id: input_select.camera_mode
-# Temporary until code for Night is added
-#          option: Night
-          option: Away
+          option: Night
 
   #########################
   ### Remove old images ###

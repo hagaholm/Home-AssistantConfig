@@ -57,3 +57,31 @@ automation:
       - service: image_processing.scan
         data:
           entity_id: image_processing.deepstack_camera_2
+
+  ##################################
+  ### Processes image mode Night ###
+  ##################################
+  ### - every 4 sec              ###    
+  ### - mode Night               ###
+  ##################################
+  - alias: Camera 2 Image processing mode Night
+    mode: queued
+
+    # Every 4 sec
+    trigger:
+      - platform: time_pattern
+        seconds: "/4"
+
+    # Mode Night
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_select.camera_mode
+          state: 'Night'
+
+    # Scan a new image
+    action:
+      - service: image_processing.scan
+        data:
+          entity_id: image_processing.deepstack_camera_2

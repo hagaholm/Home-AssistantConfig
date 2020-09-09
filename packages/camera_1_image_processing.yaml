@@ -59,6 +59,36 @@ camera:
 ### Automation ###
 ##################
 automation:
+  - alias: Camera 1 Folder Watcher activated
+    mode: queued
+
+    trigger:
+      # File modified: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg'
+      - platform: event
+        event_type: folder_watcher
+        event_data:
+          event_type: modified
+          path: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.camera_1_folder_watcher_detected
+          state: 'off'
+
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.camera_1_folder_watcher_detected
+
+      - delay:
+          seconds: 1
+
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.camera_1_folder_watcher_detected
+
   #######################################################################################
   ### Camera detected, start timer and turn on input_boolean.camera_1_detected_active ###
   #######################################################################################
@@ -68,12 +98,9 @@ automation:
   - alias: Camera 1 Start timer
     mode: single
     trigger:
-      # File modified: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg'
-      - platform: event
-        event_type: folder_watcher
-        event_data:
-          event_type: modified
-          path: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg'
+      - platform: state
+        entity_id: input_boolean.camera_1_folder_watcher_detected
+        to: 'on'
 
     condition:
       condition: and
@@ -141,11 +168,9 @@ automation:
     mode: queued
 
     trigger:
-      - platform: event
-        event_type: folder_watcher
-        event_data:
-          event_type: modified
-          path: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg'
+      - platform: state
+        entity_id: input_boolean.camera_1_folder_watcher_detected
+        to: 'on'
 
     condition:
       condition: and
@@ -173,11 +198,9 @@ automation:
     mode: queued
     
     trigger:
-      - platform: event
-        event_type: folder_watcher
-        event_data:
-          event_type: modified
-          path: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg'
+      - platform: state
+        entity_id: input_boolean.camera_1_folder_watcher_detected
+        to: 'on'
 
     condition:
       condition: and
@@ -211,11 +234,9 @@ automation:
     mode: queued
     
     trigger:
-      - platform: event
-        event_type: folder_watcher
-        event_data:
-          event_type: modified
-          path: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg'
+      - platform: state
+        entity_id: input_boolean.camera_1_folder_watcher_detected
+        to: 'on'
 
     condition:
       condition: and
@@ -481,6 +502,10 @@ input_boolean:
 
   camera_1_detected_active:
     name: Camera 1 detekterad aktiv
+    initial: off
+
+  camera_1_folder_watcher_detected:
+    name: Camera 1 folder watcher detekterad
     initial: off
 
 #####################

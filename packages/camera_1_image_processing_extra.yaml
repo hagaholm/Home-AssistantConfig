@@ -92,17 +92,17 @@ automation:
   - alias: Max light friggebod fasad if person detected
     mode: single
     trigger:
-      - platform: event
-        event_type: folder_watcher
-        event_data:
-          event_type: modified
-          path: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg'
+      - platform: state
+        entity_id: input_boolean.camera_1_folder_watcher_detected
+        to: 'on'
+
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: light.friggebod_fasad
           state: 'on'
+
     action:
       - service: light.turn_on
         data:
@@ -116,17 +116,17 @@ automation:
   - alias: Max light förråd fasad if person detected
     mode: single
     trigger:
-      - platform: event
-        event_type: folder_watcher
-        event_data:
-          event_type: modified
-          path: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg'
+      - platform: state
+        entity_id: input_boolean.camera_1_folder_watcher_detected
+        to: 'on'
+ 
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: light.forrad_fasad
           state: 'on'
+
     action:
       - service: light.turn_on
         data:
@@ -188,11 +188,10 @@ automation:
   - alias: Flash light if person detected
     mode: single
     trigger:
-      - platform: event
-        event_type: folder_watcher
-        event_data:
-          event_type: modified
-          path: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg'
+      - platform: state
+        entity_id: input_boolean.camera_1_folder_watcher_detected
+        to: 'on'
+
     action:
       - service: light.toggle
         entity_id: light.hall_skap

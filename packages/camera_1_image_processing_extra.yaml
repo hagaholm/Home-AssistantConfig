@@ -115,6 +115,7 @@ automation:
   #################################################
   - alias: Max light förråd fasad if person detected
     mode: single
+
     trigger:
       - platform: state
         entity_id: input_boolean.camera_1_folder_watcher_detected
@@ -142,12 +143,14 @@ automation:
       - platform: state
         entity_id: binary_sensor.camera_1_person_detected
         to: 'off'
+
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: light.friggebod_fasad
           state: 'on'
+
     action:
       - delay:
           seconds: 5
@@ -166,12 +169,14 @@ automation:
       - platform: state
         entity_id: binary_sensor.camera_1_person_detected
         to: 'off'
+
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: light.forrad_fasad
           state: 'on'
+
     action:
       - delay:
           seconds: 5
@@ -187,6 +192,7 @@ automation:
   ######################################
   - alias: Flash light if person detected
     mode: single
+
     trigger:
       - platform: state
         entity_id: input_boolean.camera_1_folder_watcher_detected

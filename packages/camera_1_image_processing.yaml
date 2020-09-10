@@ -60,7 +60,7 @@ camera:
 ##################
 automation:
   - alias: Camera 1 Folder Watcher activated
-    mode: queued
+    mode: single
 
     trigger:
       # File modified: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg'
@@ -97,6 +97,7 @@ automation:
   #######################################################################################
   - alias: Camera 1 Start timer
     mode: single
+
     trigger:
       - platform: state
         entity_id: input_boolean.camera_1_folder_watcher_detected
@@ -253,22 +254,23 @@ automation:
           value: '{{ now().strftime("%Y%m%d_%H%M%S") }}'
 
       # Make a copy from deepstack to warning
-      - service: shell_command.camera_1_deepstack_to_warning_1
+      - service: shell_command.camera_1_deepstack_to_warning
 
-      # Make a copy
-      - service: shell_command.camera_1_deepstack_to_warning_2
+      # Make a copy of the file in warning
+      - service: shell_command.camera_1_warning_to_warning
 
       # Need to add a delay, otherwise it take the old photo
       - delay:
           seconds: 2
 
       # Send notify
-      - service: notify.pushbullet
-        data:
-          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-          message: "Camera 1 Person detekterad night: {{ states.input_text.camera_1_person_detected_timestamp_photo.state }}"
-          data:
-            file: /config/www/warning/camera_1_1.jpg
+# Need to find a solution to not send every time a new detection as it will send many notifies 
+#      - service: notify.pushbullet
+#        data:
+#          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+#          message: "Camera 1 Person detekterad night: {{ states.input_text.camera_1_person_detected_timestamp_photo.state }}"
+#          data:
+#            file: /config/www/warning/camera_1_1.jpg
 
   ############################################
   ### Camera 1 Notify when person detected ###
@@ -453,31 +455,31 @@ script:
 #####################
 shell_command:
   # Used by automation Camera 1 Image when person detected
-  camera_1_copy_deepstack_to_info: 'cp /config/camera/deepstack_photo/deepstack_camera_1_latest.jpg /config/www/info/camera_1_1.jpg'
+  camera_1_copy_deepstack_to_info: "cp /config/camera/deepstack_photo/deepstack_camera_1_latest.jpg /config/www/info/camera_1_1.jpg"
 
   # Used by automation Camera 1 Image when person detected Away
-  camera_1_deepstack_to_motion_detected_1: "cp /config/camera/deepstack_photo/deepstack_camera_1_latest.jpg '/config/camera/motion_detected/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg'"
+  camera_1_deepstack_to_motion_detected_1: "cp '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg' '/config/camera/motion_detected/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg'"
 
   # Used by automation Camera 1 Image when person detected Away
   camera_1_deepstack_to_motion_detected_2: "cp '/config/camera/motion_detected/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg' '/config/camera/motion_detected/camera_1_1.jpg'"
 
   # Used by automation Camera 1 Image when person detected Night
-  camera_1_deepstack_to_warning_1: "cp /config/camera/deepstack_photo/deepstack_camera_1_latest.jpg '/config/www/warning/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg'"
+  camera_1_deepstack_to_warning: "cp '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg' '/config/www/warning/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg'"
 
   # Used by automation Camera 1 Image when person detected Night
-  camera_1_deepstack_to_warning_2: "cp '/config/camera/motion_detected/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg' '/config/www/warning/camera_1_1.jpg'"
+  camera_1_warning_to_warning: "cp '/config/www/warning/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_photo.state }}.jpg' '/config/www/warning/camera_1_1.jpg'"
 
   # Used by automation Camera 1 Move video if still away after 2 min
-  camera_1_copy_video: "cp /config/camera/motion_detected/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_video_2.state }}.mp4 /config/www/warning/camera_1_1.mp4"
+  camera_1_copy_video: "cp '/config/camera/motion_detected/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_video_2.state }}.mp4' '/config/www/warning/camera_1_1.mp4'"
 
   # Used by automation Camera 1 Move video if still away after 2 min
-  camera_1_move_video: "mv /config/camera/motion_detected/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_video_2.state }}.mp4 /config/www/warning/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_video_2.state }}.mp4"
+  camera_1_move_video: "mv '/config/camera/motion_detected/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_video_2.state }}.mp4' '/config/www/warning/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_video_2.state }}.mp4'"
 
   # Used by automation Camera 1 Move video if still away after 2 min
   camera_1_resize_video: "ffmpeg -y -loglevel error -i /config/www/warning/camera_1_1.mp4 -vf scale='320:-1' /config/www/warning_small/camera_1_1_320.mp4"
 
   # Used by automation Camera 1 Move video if still away after 2 min
-  camera_1_copy_resized_video: "cp /config/www/warning_small/camera_1_1_320.mp4 /config/www/warning_small/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_video_2.state }}_320.mp4"
+  camera_1_copy_resized_video: "cp '/config/www/warning_small/camera_1_1_320.mp4' '/config/www/warning_small/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_video_2.state }}_320.mp4'"
 
   # Used by automation Camera 1 Delete video if home after 2 min
   camera_1_delete_video: "rm -f /config/camera/motion_detected/camera_1_*.mp4"

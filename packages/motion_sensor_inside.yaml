@@ -39,7 +39,7 @@ automation:
   - alias: Startar timers 1
     trigger:
       - platform: state
-        entity_id: switch.rorelsedetektor_1
+        entity_id: switch.rorelsedetektor_1 # Köksvägg
         to: 'on'
     action:
       # Reset switch.rorelsedetektor_1
@@ -76,7 +76,7 @@ automation:
   - alias: Startar timers 2
     trigger:
       - platform: state
-        entity_id: switch.rorelsedetektor_2
+        entity_id: switch.rorelsedetektor_2 # Tvättstuga
         to: 'on'
     action:
       # Reset switch.rorelsedetektor_2
@@ -112,7 +112,7 @@ automation:
   - alias: Startar timers 3
     trigger:
       - platform: state
-        entity_id: binary_sensor.aqara_motion_sensor_1
+        entity_id: binary_sensor.aqara_motion_sensor_1 # Köksskåp
         to: 'on'
     action:
       # Aktiverar rorelsedetektor_kok_aktiv

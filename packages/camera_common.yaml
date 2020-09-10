@@ -45,18 +45,19 @@ input_select:
     name: Kamera mode
     icon: mdi:video-outline
     options:
-     - Off
-     - Info
-     - Warning
+     - Off   # Off
+     - Day   # Info
+     - Night # Warning
+     - Away  # Warning
 
 ##################
 ### Automation ###
 ##################
 automation:
-  ####################################
-  ### Activate camera mode Warning ###
-  ####################################
-  - alias: Camera mode Warning
+  #################################
+  ### Activate camera mode Away ###
+  #################################
+  - alias: Camera mode Away
     trigger:
       - platform: state
         entity_id: input_select.home_status
@@ -68,12 +69,12 @@ automation:
       - service: input_select.select_option
         data:
           entity_id: input_select.camera_mode
-          option: Warning
+          option: Away
 
-  #################################
-  ### Activate camera mode Info ###
-  #################################
-  - alias: Camera mode Info
+  ################################
+  ### Activate camera mode Day ###
+  ################################
+  - alias: Camera mode Day
     trigger:
       - platform: state
         entity_id: input_select.home_status
@@ -82,7 +83,21 @@ automation:
       - service: input_select.select_option
         data:
           entity_id: input_select.camera_mode
-          option: Info
+          option: Day
+
+  ##################################
+  ### Activate camera mode Night ###
+  ##################################
+  - alias: Camera mode Night
+    trigger:
+      platform: state
+      entity_id: input_select.home_status
+      to: "Hemma av"
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.camera_mode
+          option: Night
 
   #########################
   ### Remove old images ###

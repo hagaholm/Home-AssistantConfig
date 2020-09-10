@@ -32,7 +32,9 @@
 
     ######################################################
     ### Aktivera Hemma på mode vid rörelse             ###
-    ### T: binary_sensor.aqara_motion_sensor_2 to 'on' ###
+    ### T: binary_sensor.aqara_motion_sensor_1 to 'on' ###
+    ###    binary_sensor.aqara_motion_sensor_2 to 'on' ###
+    ###    switch.rorelsedetektor_1 to 'on'            ###
     ### C: group.track_for_home_devices = on           ###
     ###    time before: '21:00:00'                     ###
     ###    time after: '05:00:00'                      ###
@@ -40,9 +42,15 @@
     ######################################################
   - alias: Aktivera Hemma på mode vid rörelse
     trigger:
-      platform: state
-      entity_id: binary_sensor.aqara_motion_sensor_2 # Hall
-      to: 'on'
+      - platform: state
+        entity_id: binary_sensor.aqara_motion_sensor_2 # Hall
+        to: 'on'
+      - platform: state
+        entity_id: binary_sensor.aqara_motion_sensor_1 # Köksskåp
+        to: 'on'
+      - platform: state
+        entity_id: switch.rorelsedetektor_1 # Köksvägg
+        to: 'on'
     condition:
       condition: and
       conditions:

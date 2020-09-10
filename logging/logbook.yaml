@@ -41,14 +41,17 @@
       - sensor.vardagsrum_temp_lastupdated
       - sensor.varmepump_temp_lastupdated
 
-      - automation.camera_1_image_processing_mode_info
-      - automation.camera_1_image_processing_mode_warning
-      - automation.camera_2_image_processing_mode_info
-      - automation.camera_2_image_processing_mode_warning
-      - automation.camera_1_Image_when_person_detected_and_camera_mode_info
-      - automation.camera_1_Image_when_person_detected_and_camera_mode_warning
-      - automation.camera_2_Image_when_person_detected_and_camera_mode_info
-      - automation.camera_2_Image_when_person_detected_and_camera_mode_warning
+      - automation.camera_1_image_processing_mode_day
+      - automation.camera_1_image_processing_mode_away
+      - automation.camera_1_image_processing_mode_night
+      - automation.camera_2_image_processing_mode_day
+      - automation.camera_2_image_processing_mode_away
+      - automation.camera_2_image_processing_mode_night
+
+    #  - automation.camera_1_Image_when_person_detected_and_camera_mode_day
+    #  - automation.camera_1_Image_when_person_detected_and_camera_mode_away
+    #  - automation.camera_2_Image_when_person_detected_and_camera_mode_day
+    #  - automation.camera_2_Image_when_person_detected_and_camera_mode_away
 
       - sensor.aqara_motion_sensor_1_lastupdated
       - sensor.aqara_motion_sensor_2_lastupdated

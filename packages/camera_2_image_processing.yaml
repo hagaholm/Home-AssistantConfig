@@ -59,14 +59,9 @@ camera:
 ### Automation ###
 ##################
 automation:
-  #######################################################################################
-  ### Camera detected, start timer and turn on input_boolean.camera_2_detected_active ###
-  #######################################################################################
-  ### - if camera mode = Warning                                                      ###
-  ### - if timer off                                                                  ###
-  #######################################################################################
-  - alias: Camera 2 Start timer
+  - alias: Camera 2 Folder Watcher activated
     mode: single
+
     trigger:
       # File modified: '/config/camera/deepstack_photo/deepstack_camera_2_latest.jpg'
       - platform: event
@@ -78,10 +73,43 @@ automation:
     condition:
       condition: and
       conditions:
-        # Camera mode = Warning when home status is "Borta" or "Hemma av"
+        - condition: state
+          entity_id: input_boolean.camera_2_folder_watcher_detected
+          state: 'off'
+
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.camera_2_folder_watcher_detected
+
+      - delay:
+          seconds: 1
+
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.camera_2_folder_watcher_detected
+
+  #######################################################################################
+  ### Camera detected, start timer and turn on input_boolean.camera_2_detected_active ###
+  #######################################################################################
+  ### - if camera mode = Away                                                         ###
+  ### - if timer off                                                                  ###
+  #######################################################################################
+  - alias: Camera 2 Start timer
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_boolean.camera_2_folder_watcher_detected
+        to: 'on'
+
+    condition:
+      condition: and
+      conditions:
+        # Camera mode = Away
         - condition: state
           entity_id: input_select.camera_mode
-          state: 'Warning'
+          state: 'Away'
         # Camera 2 has not detected any person earlier (timer is not running since last detected person)
         - condition: state
           entity_id: input_boolean.camera_2_detected_active
@@ -95,11 +123,11 @@ automation:
 
       # Cancel timer and reset to max time
       - service: timer.cancel
-        entity_id: timer.timer_camera_2_warning_detected
+        entity_id: timer.timer_camera_2
 
       # Start timer and count down
       - service: timer.start
-        entity_id: timer.timer_camera_2_warning_detected
+        entity_id: timer.timer_camera_2
 
   #####################################################
   ### Camera, vid stoppad timer                     ###
@@ -113,7 +141,7 @@ automation:
       - platform: event
         event_type: timer.finished
         event_data:
-          entity_id: timer.timer_camera_2_warning_detected
+          entity_id: timer.timer_camera_2
  
     condition:
       condition: and
@@ -130,28 +158,27 @@ automation:
           entity_id: input_boolean.camera_2_detected_active
 
   ############################################################################
-  ### Camera 2 Image when person detected and camera mode = Info           ###
+  ### Camera 2 Image when person detected and camera mode = Day            ###
   ############################################################################
   ### When person detected, make the last image available                  ###
-  ### - Copy Deepstack image when person detected, mode Info               ###
+  ### - Copy Deepstack image when person detected, mode Day                ###
   ###   from: /config/camera/deepstack_photo/deepstack_camera_2_latest.jpg ###
   ###   to: /config/www/info/camera_2_1.jpg                                ###
   ############################################################################
-  - alias: Camera 2 Image when person detected and camera mode Info
-    mode: single
+  - alias: Camera 2 Image when person detected and camera mode Day
+    mode: queued
+
     trigger:
-      - platform: event
-        event_type: folder_watcher
-        event_data:
-          event_type: modified
-          path: '/config/camera/deepstack_photo/deepstack_camera_2_latest.jpg'
+      - platform: state
+        entity_id: input_boolean.camera_2_folder_watcher_detected
+        to: 'on'
 
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: input_select.camera_mode
-          state: 'Info'
+          state: 'Day'
     action:
       # Need to add a delay, otherwise it take the old photo
       - delay:
@@ -162,27 +189,26 @@ automation:
       - service: shell_command.camera_2_copy_deepstack_to_info
 
   ################################################################################################
-  ### Camera 2 Image when person detected and camera mode = Warning                            ###
+  ### Camera 2 Image when person detected and camera mode = Away                               ###
   ################################################################################################
   ### When person detected and away                                                            ###
   ### - Create snapshot saved as '/config/camera/motion_detected/camera_2_YYYYMMDD-HHMMSS.jpg' ###
   ### - Also make a copy to '/config/camera/motion_detected/camera_2_1.jpg'                    ###
   ################################################################################################
-  - alias: Camera 2 Image when person detected and camera mode Warning
-    mode: single
+  - alias: Camera 2 Image when person detected and camera mode Away
+    mode: queued
+    
     trigger:
-      - platform: event
-        event_type: folder_watcher
-        event_data:
-          event_type: modified
-          path: '/config/camera/deepstack_photo/deepstack_camera_2_latest.jpg'
+      - platform: state
+        entity_id: input_boolean.camera_2_folder_watcher_detected
+        to: 'on'
 
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: input_select.camera_mode
-          state: 'Warning'
+          state: 'Away'
 
     action:
       # Get timestamp when person detected
@@ -191,35 +217,78 @@ automation:
         data_template: 
           value: '{{ now().strftime("%Y%m%d_%H%M%S") }}'
 
-#      # Save a photo with timestamp to '/config/camera/motion_detected/camera_2_YYYYMMDD-HHMMSS.jpg'
-#      - service: camera.snapshot
-#        data:
-#          entity_id: camera.kamera_2
-#          filename: '/config/camera/motion_detected/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_photo.state }}.jpg'
-
-      # Make a copy from deepstack to motion_detected, to be used when detect that nobody home
+      # Make a copy from deepstack to motion_detected, to be used if still away after 2 min
       - service: shell_command.camera_2_deepstack_to_motion_detected_1
 
-      # Rename the copy, to be used when detect that nobody home
+      # Make a copy, to be used if still away after 2 min
       - service: shell_command.camera_2_deepstack_to_motion_detected_2
 
-  #############################################
-  ### Camera 2 Warning when person detected ###
-  #############################################
-  - alias: Camera 2 Warning when person detected
+  #####################################################################################
+  ### Camera 2 Image when person detected and camera mode = Night                   ###
+  #####################################################################################
+  ### When person detected and night                                                ###
+  ### - Create snapshot saved as '/config/www/warning/camera_2_YYYYMMDD-HHMMSS.jpg' ###
+  ### - Also make a copy to '/config/www/warning/camera_2_1.jpg'                    ###
+  ### - Also send a notify about it                                                 ###
+  #####################################################################################
+  - alias: Camera 2 Image when person detected and camera mode Night
+    mode: queued
+    
     trigger:
-      # After 2 minutes after person detected
-      platform: state
-      entity_id: input_boolean.camera_2_detected_active
-      to: 'off'
+      - platform: state
+        entity_id: input_boolean.camera_2_folder_watcher_detected
+        to: 'on'
 
     condition:
       condition: and
       conditions:
-        # Only if camera mode = Warning
         - condition: state
           entity_id: input_select.camera_mode
-          state: 'Warning'
+          state: 'Night'
+
+    action:
+      # Get timestamp when person detected
+      - service: input_text.set_value
+        entity_id: input_text.camera_2_person_detected_timestamp_photo
+        data_template: 
+          value: '{{ now().strftime("%Y%m%d_%H%M%S") }}'
+
+      # Make a copy from deepstack to warning
+      - service: shell_command.camera_2_deepstack_to_warning
+
+      # Make a copy of the file in warning
+      - service: shell_command.camera_2_warning_to_warning
+
+      # Need to add a delay, otherwise it take the old photo
+      - delay:
+          seconds: 2
+
+      # Send notify
+# Need to find a solution to not send every time a new detection as it will send many notifies 
+#      - service: notify.pushbullet
+#        data:
+#          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+#          message: "Camera 2 Person detekterad night: {{ states.input_text.camera_2_person_detected_timestamp_photo.state }}"
+#          data:
+#            file: /config/www/warning/camera_2_1.jpg
+
+  ############################################
+  ### Camera 2 Notify when person detected ###
+  ############################################
+  - alias: Camera 2 Notify when person detected
+    trigger:
+      # After 2 minutes after person detected
+      - platform: state
+        entity_id: input_boolean.camera_2_detected_active
+        to: 'off'
+
+    condition:
+      condition: and
+      conditions:
+        # Only if camera mode = Away
+        - condition: state
+          entity_id: input_select.camera_mode
+          state: 'Away'
 
     action:
       # Need to add a delay, otherwise it take the old photo
@@ -230,7 +299,7 @@ automation:
       - service: notify.pushbullet
         data:
           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-          message: "Camera 2 Person detekterad: {{ states.input_text.camera_2_person_detected_timestamp_photo.state }}"
+          message: "Camera 2 Person detekterad away: {{ states.input_text.camera_2_person_detected_timestamp_photo.state }}"
           data:
             file: /config/www/warning/camera_2_1.jpg
 
@@ -240,17 +309,17 @@ automation:
   - alias: Camera 2 Move motion_detection files to warning after 2 min
     trigger:
       # After 2 minutes after person detected
-      platform: state
-      entity_id: input_boolean.camera_2_detected_active
-      to: 'off'
+      - platform: state
+        entity_id: input_boolean.camera_2_detected_active
+        to: 'off'
 
     condition:
       condition: and
       conditions:
-        # Only if camera mode = Warning
+        # Only if camera mode = Away
         - condition: state
           entity_id: input_select.camera_mode
-          state: 'Warning'
+          state: 'Away'
 
     action:
       # Make a copy for all camera/motion_detected to www/warning
@@ -261,18 +330,18 @@ automation:
   #########################################################################
   - alias: Camera 2 Move motion_detection files to warning when no detection
     trigger:
+      # After 2 minutes after person detected
       - platform: state
-        entity_id: binary_sensor.camera_2_person_detected
-        from: 'on'
+        entity_id: input_boolean.camera_2_detected_active
         to: 'off'
 
     condition:
       condition: and
       conditions:
-        # Only if camera mode = Warning
+        # Only if camera mode = Away
         - condition: state
           entity_id: input_select.camera_mode
-          state: 'Warning'
+          state: 'Away'
 
     action:
       # Make a copy for all camera/motion_detected to www/warning
@@ -283,29 +352,72 @@ automation:
   #############################################
   - alias: Camera 2 Delete motion_detected files
     trigger:
+      # After 2 minutes after person detected
       - platform: state
-        entity_id: binary_sensor.camera_2_person_detected
-        from: 'on'
+        entity_id: input_boolean.camera_2_detected_active
         to: 'off'
 
     condition:
       condition: and
       conditions:
-        # Only if camera mode = Info
+        # Only if camera mode = Day
         - condition: state
           entity_id: input_select.camera_mode
-          state: 'Info'
+          state: 'Day'
 
     action:
+      # If exist, move camera_2_1.jpg from motion_detected to info before all files removes from motion_detected
+      - service: shell_command.camera_2_move_motion_detected_file_info
+      
       # Make a delete for all camera/motion_detected
       - service: shell_command.camera_2_delete_motion_detected_files
+
+  ######################################
+  ### Camera 2 Other motion detected ###
+  ######################################
+  - alias: Camera 2 Other motion detected
+    trigger:
+      - platform: numeric_state 
+        entity_id: sensor.camera_2_cat_found
+        above: 0
+      - platform: numeric_state 
+        entity_id: sensor.camera_2_dog_found
+        above: 0
+      - platform: numeric_state 
+        entity_id: sensor.camera_2_cow_found
+        above: 0
+      - platform: numeric_state 
+        entity_id: sensor.camera_2_sheep_found
+        above: 0
+      - platform: numeric_state 
+        entity_id: sensor.camera_2_horse_found
+        above: 0
+        
+    action:
+      # Save a photo with timestamp to '/config/www/info/camera_2_other.jpg'
+      - service: camera.snapshot
+        data:
+          entity_id: camera.kamera_2
+          filename: '/config/www/info/camera_2_other.jpg'
+
+      # Need to add a delay, otherwise it take the old photo
+      - delay:
+          seconds: 2
+
+      # Send a notify with a photo
+      - service: notify.pushbullet
+        data:
+          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+          message: "Fångat av kamera 2"
+          data:
+            file: /config/www/info/camera_2_other.jpg
 
 ##############
 ### Script ###
 ##############
 script:
   camera_2_use_image:
-    alias: Kamera 2 Aktivera bildläge
+    alias: Camera 2 Aktivera bildläge
     sequence:
       - service: automation.turn_off
         entity_id: automation.camera_2_record_when_person_detected_away
@@ -316,26 +428,14 @@ script:
       - service: automation.turn_off
         entity_id: automation.camera_2_delete_video_if_home_after_2_min
 
-#      - service: automation.turn_on
-#        entity_id: automation.camera_2_delete_latest_person_away_files_when_home
-#      - service: automation.turn_on
-#        entity_id: automation.camera_2_move_latest_person_away_files_when_no_detection
-#      - service: automation.turn_on
-#        entity_id: automation.camera_2_move_latest_person_away_files_after_2_min
       - service: automation.turn_on
         entity_id: automation.camera_2_image_processing_detection_activated
       - service: automation.turn_on
         entity_id: automation.camera_2_image_processing_detection_inactivated
 
   camera_2_use_video:
-    alias: Kamera 2 Aktivera videoläge
+    alias: Camera 2 Aktivera videoläge
     sequence:
-#      - service: automation.turn_off
-#        entity_id: automation.camera_2_delete_latest_person_away_files_when_home
-#      - service: automation.turn_off
-#        entity_id: automation.camera_2_move_latest_person_away_files_when_no_detection
-#      - service: automation.turn_off
-#        entity_id: automation.camera_2_move_latest_person_away_files_after_2_min
       - service: automation.turn_off
         entity_id: automation.camera_2_image_processing_detection_activated
       - service: automation.turn_off
@@ -355,32 +455,41 @@ script:
 #####################
 shell_command:
   # Used by automation Camera 2 Image when person detected
-  camera_2_copy_deepstack_to_info: 'cp /config/camera/deepstack_photo/deepstack_camera_2_latest.jpg /config/www/info/camera_2_1.jpg'
+  camera_2_copy_deepstack_to_info: "cp /config/camera/deepstack_photo/deepstack_camera_2_latest.jpg /config/www/info/camera_2_1.jpg"
 
-  # Used by automation Camera 2 Image when person detected away
-  camera_2_deepstack_to_motion_detected_1: "cp /config/camera/deepstack_photo/deepstack_camera_2_latest.jpg '/config/camera/motion_detected/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_photo.state }}.jpg'"
+  # Used by automation Camera 2 Image when person detected Away
+  camera_2_deepstack_to_motion_detected_1: "cp '/config/camera/deepstack_photo/deepstack_camera_2_latest.jpg' '/config/camera/motion_detected/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_photo.state }}.jpg'"
 
-  # Used by automation Camera 2 Image when person detected away
+  # Used by automation Camera 2 Image when person detected Away
   camera_2_deepstack_to_motion_detected_2: "cp '/config/camera/motion_detected/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_photo.state }}.jpg' '/config/camera/motion_detected/camera_2_1.jpg'"
 
-  # Used by automation Camera 2 Move video if still away after 2 min
-  camera_2_copy_video: "cp /config/camera/motion_detected/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video_2.state }}.mp4 /config/www/warning/camera_2_1.mp4"
+  # Used by automation Camera 2 Image when person detected Night
+  camera_2_deepstack_to_warning: "cp '/config/camera/deepstack_photo/deepstack_camera_2_latest.jpg' '/config/www/warning/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_photo.state }}.jpg'"
+
+  # Used by automation Camera 2 Image when person detected Night
+  camera_2_warning_to_warning: "cp '/config/www/warning/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_photo.state }}.jpg' '/config/www/warning/camera_2_1.jpg'"
 
   # Used by automation Camera 2 Move video if still away after 2 min
-  camera_2_move_video: "mv /config/camera/motion_detected/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video_2.state }}.mp4 /config/www/warning/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video_2.state }}.mp4"
+  camera_2_copy_video: "cp '/config/camera/motion_detected/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video_2.state }}.mp4' '/config/www/warning/camera_2_1.mp4'"
+
+  # Used by automation Camera 2 Move video if still away after 2 min
+  camera_2_move_video: "mv '/config/camera/motion_detected/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video_2.state }}.mp4' '/config/www/warning/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video_2.state }}.mp4'"
 
   # Used by automation Camera 2 Move video if still away after 2 min
   camera_2_resize_video: "ffmpeg -y -loglevel error -i /config/www/warning/camera_2_1.mp4 -vf scale='320:-1' /config/www/warning_small/camera_2_1_320.mp4"
 
   # Used by automation Camera 2 Move video if still away after 2 min
-  camera_2_copy_resized_video: "cp /config/www/warning_small/camera_2_1_320.mp4 /config/www/warning_small/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video_2.state }}_320.mp4"
+  camera_2_copy_resized_video: "cp '/config/www/warning_small/camera_2_1_320.mp4' '/config/www/warning_small/camera_2_{{ states.input_text.camera_2_person_detected_timestamp_video_2.state }}_320.mp4'"
 
   # Used by automation Camera 2 Delete video if home after 2 min
   camera_2_delete_video: "rm -f /config/camera/motion_detected/camera_2_*.mp4"
 
   # Used by automation Camera 2 Move motion_detection files to warning after 2 min
   # Used by automation Camera 2 Move motion_detection files to warning when no detection
-  camera_2_move_camera_motion_detected_to_warning: "mv /config/camera/motion_detected/camera_2_*.jpg /config/www/warning/"
+  camera_2_move_camera_motion_detected_to_warning: "mv -f /config/camera/motion_detected/camera_2_*.jpg /config/www/warning/"
+
+  # Used by automation Camera 2 Delete motion_detected files
+  camera_2_move_motion_detected_file_info:  "mv -f /config/camera/motion_detected/camera_2_1.jpg /config/www/info/"
 
   # Used by automation Camera 2 Delete motion_detected files
   camera_2_delete_motion_detected_files: "rm -f /config/camera/motion_detected/camera_2_*.jpg"
@@ -394,7 +503,11 @@ input_boolean:
     initial: off
 
   camera_2_detected_active:
-    name: Kamera 2 detekterad aktiv
+    name: Camera 2 detekterad aktiv
+    initial: off
+
+  camera_2_folder_watcher_detected:
+    name: Camera 2 folder watcher detekterad
     initial: off
 
 #####################
@@ -419,16 +532,78 @@ input_text:
     name: Camera 2 Tidpunkt för person detektering video föregående
 
 timer:
-  # Timer för camera 2 detekterad
-  timer_camera_2_warning_detected:
-    name: Timer kamera 2 varning detekterad
+  # Timer för camera 2
+  timer_camera_2:
+    name: Timer camera 2
     duration: '00:02:00'
 
+sensor:
+  - platform: template
+    sensors:
+      camera_2_cat_found:
+        friendly_name: "Katter"
+        value_template: >-
+          {% set summary = (state_attr('image_processing.deepstack_camera_2', 'summary')) %}
+          {% if summary.cat %}
+            {{ summary.cat }}
+          {% else %}
+            0
+          {% endif %}
 
+      camera_2_bird_found:
+        friendly_name: "Fåglar"
+        value_template: >-
+          {% set summary = (state_attr('image_processing.deepstack_camera_2', 'summary')) %}
+          {% if summary.bird %}
+            {{ summary.bird }}
+          {% else %}
+            0
+          {% endif %}
+
+      camera_2_dog_found:
+        friendly_name: "Hundar"
+        value_template: >-
+          {% set summary = (state_attr('image_processing.deepstack_camera_2', 'summary')) %}
+          {% if summary.dog %}
+            {{ summary.dog }}
+          {% else %}
+            0
+          {% endif %}
+
+      camera_2_horse_found:
+        friendly_name: "Hästar"
+        value_template: >-
+          {% set summary = (state_attr('image_processing.deepstack_camera_2', 'summary')) %}
+          {% if summary.horse %}
+            {{ summary.horse }}
+          {% else %}
+            0
+          {% endif %}
+
+      camera_2_sheep_found:
+        friendly_name: "Får"
+        value_template: >-
+          {% set summary = (state_attr('image_processing.deepstack_camera_2', 'summary')) %}
+          {% if summary.sheep %}
+            {{ summary.sheep }}
+          {% else %}
+            0
+          {% endif %}
+
+      camera_2_cow_found:
+        friendly_name: "Kor"
+        value_template: >-
+          {% set summary = (state_attr('image_processing.deepstack_camera_2', 'summary')) %}
+          {% if summary.cow %}
+            {{ summary.cow }}
+          {% else %}
+            0
+          {% endif %}
 
 # Used: 
 # person, bicycle, car, motorcycle, bus, truck, boat,
 # bird, cat, dog, horse, sheep, cow
+
 # Not used: elephant, bear, zebra, giraffe,
 
 # Unused:

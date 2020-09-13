@@ -1,28 +1,28 @@
 timer:
   # Timers för släck nattbelysning
   timer_rorelsedetektor_1_short:
-    name: Rörelsedetektor 1
+    name: Rörelsedetektor köksvägg
     duration: '00:01:00'
 
   timer_rorelsedetektor_2_short:
-    name: Rörelsedetektor 2
+    name: Rörelsedetektor tvättstuga
     duration: '00:01:00'
 
   timer_rorelsedetektor_3_short:
-    name: Rörelsedetektor 3
+    name: Rörelsedetektor köksskåp
     duration: '00:01:00'
     
   # Timers för släck köksbelysning
   timer_rorelsedetektor_1_medium:
-    name: Rörelsedetektor 1
+    name: Rörelsedetektor köksvägg
     duration: '00:10:00'
 
   timer_rorelsedetektor_2_medium:
-    name: Rörelsedetektor 2
+    name: Rörelsedetektor tvättstuga
     duration: '00:10:00'
 
   timer_rorelsedetektor_3_medium:
-    name: Rörelsedetektor 3
+    name: Rörelsedetektor köksskåp
     duration: '00:10:00'
 
 automation:
@@ -36,7 +36,7 @@ automation:
     ###    timer.timer_rorelsedetektor_1_short = start   ###
     ###    timer.timer_rorelsedetektor_1_medium = start  ###
     ########################################################
-  - alias: Startar timers 1
+  - alias: Startar timers köksvägg
     trigger:
       - platform: state
         entity_id: switch.rorelsedetektor_1 # Köksvägg
@@ -73,7 +73,7 @@ automation:
     ###    timer.timer_rorelsedetektor_2_short = start   ###
     ###    timer.timer_rorelsedetektor_2_medium = start  ###
     ########################################################
-  - alias: Startar timers 2
+  - alias: Startar timers tvättstuga
     trigger:
       - platform: state
         entity_id: switch.rorelsedetektor_2 # Tvättstuga
@@ -109,7 +109,7 @@ automation:
     ###    timer.timer_rorelsedetektor_3_short = start   ###
     ###    timer.timer_rorelsedetektor_3_medium = start  ###
     ########################################################
-  - alias: Startar timers 3
+  - alias: Startar timers köksskåp
     trigger:
       - platform: state
         entity_id: binary_sensor.aqara_motion_sensor_1 # Köksskåp

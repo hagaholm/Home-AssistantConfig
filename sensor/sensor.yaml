@@ -191,25 +191,6 @@
     outdoor_temp_sensor: sensor.ute
     calibration_factor: 1.25
 
-######
-# YR #
-######
-  - platform: yr
-    monitored_conditions:
-      - temperature
-      - symbol
-      - precipitation
-      - windSpeed
-      - pressure
-      - windDirection
-      - humidity
-      - fog
-      - cloudiness
-#      - lowClouds
-#      - mediumClouds
-#      - highClouds
-      - dewpointTemperature
-
 ##################
 # Min/Max Sensor #
 ##################

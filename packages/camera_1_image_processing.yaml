@@ -261,7 +261,7 @@ automation:
 
       # Need to add a delay, otherwise it take the old photo
       - delay:
-          seconds: 2
+          seconds: 1
 
       # Send notify
 # Need to find a solution to not send every time a new detection as it will send many notifies 
@@ -293,7 +293,7 @@ automation:
     action:
       # Need to add a delay, otherwise it take the old photo
       - delay:
-          seconds: 2
+          seconds: 1
 
       # Send notify
       - service: notify.pushbullet
@@ -402,7 +402,7 @@ automation:
 
       # Need to add a delay, otherwise it take the old photo
       - delay:
-          seconds: 2
+          seconds: 1
 
       # Send a notify with a photo
       - service: notify.pushbullet

@@ -212,20 +212,6 @@ views:
           - switch.ventilationsaggregat
         title: Värmepump/Ventilation
         show_header_toggle: false
-      - type: entities
-        entities:
-          - sensor.yr_temperature
-          - sensor.yr_symbol
-          - sensor.yr_precipitation
-          - sensor.yr_wind_speed
-          - sensor.yr_wind_direction
-          - sensor.yr_pressure
-          - sensor.yr_humidity
-          - sensor.yr_fog
-          - sensor.yr_cloudiness
-          - sensor.yr_dewpoint_temperature
-        title: Yr
-        show_header_toggle: false
     icon: 'mdi:thermometer'
   - path: switch_view
     title: Belysning

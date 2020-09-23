@@ -12,7 +12,7 @@
       - service: light.turn_on
         data:
           entity_id: light.kok_underskap_diskbank
-          brightness_pct: 100
+          brightness_pct: 80
           transition: 2
       - service: light.turn_on
         data:
@@ -33,7 +33,7 @@
       - service: light.turn_on
         data:
           entity_id: light.kok_underskap_diskbank
-          brightness_pct: 25
+          brightness_pct: 10
       - service: light.turn_on
         data:
           entity_id: light.kok_vitrinskap

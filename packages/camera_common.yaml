@@ -132,16 +132,16 @@ shell_command:
   # Delete 14 days old images from folder /config/camera/deepstack_photo
   remove_old_images_in_camera_deepstack_photo: 'find /config/camera/deepstack_photo -mtime +14 -type f -delete' 
   
-  # Delete 14 days old images from folder /config/www/warning
-  remove_old_images_in_www_warning: 'find /config/www/warning -mtime +14 -type f -delete' 
+  # Delete 14 days old images from folder /media/warning
+  remove_old_images_in_www_warning: 'find /media/warning -mtime +14 -type f -delete' 
 
-  # Delete 14 days old images from folder /config/www/warning_small
-  remove_old_images_in_www_warning_small: 'find /config/www/warning_small -mtime +14 -type f -delete' 
+  # Delete 14 days old images from folder /media/warning_small
+  remove_old_images_in_www_warning_small: 'find /media/warning_small -mtime +14 -type f -delete' 
 
   # Used by script delete_camera_files
   delete_camera_files_1: 'rm -f /config/camera/deepstack_photo/*'
   delete_camera_files_2: 'rm -f /config/camera/motion_detected/*'
   delete_camera_files_3: 'rm -f /config/camera/person/*'
-  delete_camera_files_4: 'rm -f /config/www/info/*'
-  delete_camera_files_5: 'rm -f /config/www/warning/*'
-  delete_camera_files_6: 'rm -f /config/www/warning_small/*'
+  delete_camera_files_4: 'rm -f /media/info/*'
+  delete_camera_files_5: 'rm -f /media/warning/*'
+  delete_camera_files_6: 'rm -f /media/warning_small/*'

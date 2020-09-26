@@ -113,6 +113,12 @@ automation:
       platform: numeric_state
       entity_id: sensor.fukt_badrumsfonster
       above: '69'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: switch.fan_speed
+          state: 'off'
     action:
       - service: homeassistant.turn_on
         entity_id: switch.fan_speed
@@ -130,6 +136,12 @@ automation:
       platform: numeric_state
       entity_id: sensor.fukt_badrumsfonster
       below: '68'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: switch.fan_speed
+          state: 'on'
     action:
       - service: homeassistant.turn_off
         entity_id: switch.fan_speed

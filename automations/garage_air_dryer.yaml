@@ -8,6 +8,12 @@
     platform: numeric_state
     entity_id: sensor.forrad_humidity
     above: '66'
+     condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: switch.garage_luftavfuktare
+          state: 'off'
   action:
     - service: homeassistant.turn_on
       entity_id: switch.garage_luftavfuktare
@@ -22,6 +28,12 @@
     platform: numeric_state
     entity_id: sensor.forrad_humidity
     below: '64'
+     condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: switch.garage_luftavfuktare
+          state: 'on'
   action:
     - service: homeassistant.turn_off
       entity_id: switch.garage_luftavfuktare

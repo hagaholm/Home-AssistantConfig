@@ -12,6 +12,8 @@
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ringklocka_tvattstuga
+      - delay:
+          seconds: 5
       - service: notify.pushbullet
         data:
           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
@@ -35,6 +37,8 @@
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ringklocka_hall
+      - delay:
+          seconds: 5
       - service: notify.pushbullet
         data:
           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"

@@ -280,6 +280,7 @@ light:
       - light.sovrum_fonster
       - light.andreas_fonster
       - light.louise_fonster
+      - light.louise_golvlampa
 #jul      - light.louise_fonster_dimmer_julstjarna
       - light.uterum_fonster
 #jul      - light.uterum_julstjarnor
@@ -357,6 +358,12 @@ light:
       - light.kok_stora_fonstret
 #jul      - light.kok_stora_fonstret_ljusstake
       - light.kok_lilla_fonstret
+
+  - platform: group
+    name: Louise rum
+    entities:
+      - light.louise_fonster
+      - light.louise_golvlampa
 
 ####################################################
 #                                                  #

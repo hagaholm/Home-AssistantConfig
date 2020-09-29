@@ -81,7 +81,7 @@ views:
             tap_action:
               action: toggle
             type: button
-          - entity: light.louise_fonster
+          - entity: light.louise_rum
             icon: 'mdi:lightbulb'
             name: Louise rum
             tap_action:
@@ -252,6 +252,7 @@ views:
           - light.sovrum_fonster
           - light.andreas_fonster
           - light.louise_fonster
+          - light.louise_golvlampa
           - light.uterum_fonster
         title: Belysning
         show_header_toggle: true
@@ -389,6 +390,7 @@ views:
           - sensor.louise_rum_temperature
           - sensor.louise_rum_humidity
           - light.louise_fonster
+          - light.louise_golvlampa
         title: Louise rum
         show_header_toggle: true
       - type: entities

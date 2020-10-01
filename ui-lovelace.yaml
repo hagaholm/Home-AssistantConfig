@@ -124,10 +124,6 @@ views:
           - device_tracker.mobil_annelie
           - device_tracker.mobil_andreas
           - device_tracker.mobil_louise
-          - sensor.ute
-          - sensor.uterum
-          - sensor.inne_medel
-          - sensor.ljusstyrka
         title: Info
         show_header_toggle: false
       - type: entities
@@ -137,9 +133,6 @@ views:
           - script.goodnight_all
           - script.goodnight_all_10_min
           - script.goodnight_all_tv_10_min
-          - script.bedroom_off
-          - script.andreas_room_off
-          - script.louise_room_off
         title: Släck belysning
         show_header_toggle: false
       - type: entities
@@ -181,8 +174,9 @@ views:
         entities:
           - sensor.hall_humidity
           - sensor.louise_rum_humidity
-          - sensor.badrum_humidity
           - sensor.tvattstuga_humidity
+          - sensor.badrum_humidity
+          - sensor.fukt_badrumsfonster
         title: Inomhus luftfuktighet
         show_header_toggle: false
       - type: entities

@@ -244,3 +244,81 @@
     action:
       - service: light.turn_off
         entity_id: light.forrad_fasad
+
+###############################################################################
+###############################################################################
+###############################################################################
+
+    ###################
+    ### Tvättstugan ###
+    ###################
+    ###########################################################
+    ### Tänder tvättstuga fasadbelysning när det blir mörkt ###
+    ### T: sensor.ljusstyrka < 40                           ###
+    ### C: light.tvattstugan_fasad == off                   ###
+    ### A: light.tvattstugan_fasad = on                     ###
+    ###########################################################
+  - alias: Tvättstuga fasadbelysning on (<40, led off)
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      below: 40
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.tvattstugan_fasad
+          state: 'off'
+    action:
+      - service: light.turn_on
+        data:
+          entity_id: light.tvattstugan_fasad
+          brightness_pct: 65
+          transition: 5
+
+    #########################################################################
+    ### Tänder tvättstuga fasadbelysning när ledbelysning i uterum släcks ###
+    ### T: light.uterum_led = off                                         ###
+    ### C: sensor.ljusstyrka < 40                                         ###
+    ###    light.tvattstugan_fasad == off                                 ###
+    ### A: light.tvattstugan_fasad = on                                   ###
+    #########################################################################
+  - alias: Tvättstuga fasadbelysning on (led off, <40)
+    trigger:
+      platform: state
+      entity_id: light.uterum_led
+      to: 'off'
+    condition:
+      condition: and
+      conditions:
+        - condition: numeric_state
+          entity_id: sensor.ljusstyrka
+          below: 40
+        - condition: state
+          entity_id: light.tvattstugan_fasad
+          state: 'off'
+    action:
+      - service: light.turn_on
+        data:
+          entity_id: light.tvattstugan_fasad
+          brightness_pct: 65
+          transition: 5
+
+    ############################################################
+    ### Släcker tvättstuga fasadbelysning när det blir ljust ###
+    ### T: sensor.ljusstyrka > 60                            ###
+    ### C: light.forrtvattstugan_fasadad_fasad == on         ###
+    ### A: light.tvattstugan_fasad = off                     ###
+    ############################################################
+  - alias: Tvättstuga fasadbelysning off (>60)
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      above: 60
+    condition:
+      condition: state
+      entity_id: light.tvattstugan_fasad
+      state: 'on'
+    action:
+      - service: light.turn_off
+        entity_id: light.tvattstugan_fasad

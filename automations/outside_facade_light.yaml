@@ -294,3 +294,53 @@
     action:
       - service: light.turn_off
         entity_id: light.tvattstugan_fasad
+
+###############################################################################
+###############################################################################
+###############################################################################
+
+    ##################
+    ### Huvudentre ###
+    ##################
+    ######################################################
+    ### Tänder huvudentre belysning när det blir mörkt ###
+    ### T: sensor.ljusstyrka < 40                      ###
+    ### C: light.huvudentre == off                     ###
+    ### A: light.huvudentre = on                       ###
+    ######################################################
+  - alias: Huvudentre belysning on (<40)
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      below: 40
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.huvudentre
+          state: 'off'
+    action:
+      - service: light.turn_on
+        data:
+          entity_id: light.huvudentre
+          brightness_pct: 65
+          transition: 5
+
+    #######################################################
+    ### Släcker huvudentre belysning när det blir ljust ###
+    ### T: sensor.ljusstyrka > 60                       ###
+    ### C: light.huvudentre == on                       ###
+    ### A: light.huvudentre = off                       ###
+    #######################################################
+  - alias: Huvudentre belysning off (>60)
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      above: 60
+    condition:
+      condition: state
+      entity_id: light.huvudentre
+      state: 'on'
+    action:
+      - service: light.turn_off
+        entity_id: light.huvudentre

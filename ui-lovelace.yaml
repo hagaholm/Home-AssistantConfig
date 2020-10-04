@@ -273,6 +273,7 @@ views:
         show_header_toggle: true
       - type: entities
         entities:
+          - light.huvudentre
           - light.tvattstugan_fasad
           - light.forrad_fasad
           - light.friggebod_fasad
@@ -446,6 +447,7 @@ views:
           - sensor.ute
           - sensor.ute2_humidity
           - sensor.ljusstyrka
+          - light.huvudentre
           - light.tvattstugan_fasad
           - light.forrad_fasad
           - light.friggebod_fasad
@@ -660,11 +662,13 @@ views:
           - automation.friggebod_fasadbelysning_on_away_40
           - automation.forrad_fasadbelysning_on_40_led_off
           - automation.forrad_fasadbelysning_on_led_off_40
+          - automation.huvudentre_on_40
           - automation.tvattstuga_fasadbelysning_on_40
           - automation.friggebod_fasadbelysning_off
           - automation.friggebod_fasadbelysning_off_60
           - automation.forrad_fasadbelysning_off
           - automation.forrad_fasadbelysning_off_60
+          - automation.huvudentre_off_60
           - automation.tvattstuga_fasadbelysning_off_60
         title: Fasadbelysning
         show_header_toggle: true

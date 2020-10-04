@@ -112,6 +112,11 @@ notify:
 #  channel_name: !secret pushetta_channel_name
 #  api_key: !secret pushetta_api_key
 
+# Downloader
+# https://www.home-assistant.io/integrations/downloader/
+downloader:
+  download_dir: /config/www
+
 ####################################################
 #                                                  #
 #                      LOGGING                     #

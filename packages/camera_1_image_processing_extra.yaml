@@ -86,6 +86,30 @@ automation:
         data:
           entity_id: image_processing.deepstack_camera_1
 
+  #####################################################
+  ### Max light tvättstuga fasad if person detected ###
+  #####################################################
+  - alias: Max light tvättstuga fasad if person detected
+    mode: single
+    trigger:
+      - platform: state
+        entity_id: input_boolean.camera_1_folder_watcher_detected
+        to: 'on'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.tvattstuga_fasad
+          state: 'on'
+
+    action:
+      - service: light.turn_on
+        data:
+          entity_id: light.tvattstuga_fasad
+          brightness_pct: 100
+          transition: 1
+
   ####################################################
   ### Max light friggebod fasad if person detected ###
   ####################################################
@@ -133,6 +157,34 @@ automation:
         data:
           entity_id: light.forrad_fasad
           brightness_pct: 100
+          transition: 1
+
+  ##########################################################
+  ### Reset light tvättstuga fasad if no person detected ###
+  ##########################################################
+  - alias: Reset light tvättstuga fasad if person no detected
+    mode: restart
+
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.camera_1_person_detected
+        to: 'off'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.tvattstuga_fasad
+          state: 'on'
+
+    action:
+      - delay:
+          seconds: 15
+
+      - service: light.turn_on
+        data:
+          entity_id: light.tvattstuga_fasad
+          brightness_pct: 65
           transition: 1
 
   #########################################################

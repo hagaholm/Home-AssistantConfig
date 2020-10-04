@@ -124,13 +124,13 @@ automation:
       condition: and
       conditions:
         - condition: state
-          entity_id: light.tvattstuga_fasad
+          entity_id: light.tvattstugan_fasad
           state: 'on'
 
     action:
       - service: light.turn_on
         data:
-          entity_id: light.tvattstuga_fasad
+          entity_id: light.tvattstugan_fasad
           brightness_pct: 100
           transition: 1
 
@@ -223,7 +223,7 @@ automation:
       condition: and
       conditions:
         - condition: state
-          entity_id: light.tvattstuga_fasad
+          entity_id: light.tvattstugan_fasad
           state: 'on'
 
     action:
@@ -232,7 +232,7 @@ automation:
 
       - service: light.turn_on
         data:
-          entity_id: light.tvattstuga_fasad
+          entity_id: light.tvattstugan_fasad
           brightness_pct: 65
           transition: 1
 

@@ -262,10 +262,8 @@ views:
         show_header_toggle: true
       - type: entities
         entities:
-          - entity: light.uterum_led
-            name: led
-          - entity: light.uterum_fotogenlampa
-            name: fotogenlampa
+          - light.uterum_ledd
+          - light.uterum_fotogenlampa
         title: Uterum
         show_header_toggle: true
       - type: entities
@@ -300,15 +298,15 @@ views:
           - sensor.frys_temperature
           - sensor.aqara_motion_sensor_1
           - entity: light.kok_stora_fonstret
-            name: stora fönstret
+            name: Stora fönstret
           - entity: light.kok_lilla_fonstret
-            name: lilla fönstret
+            name: Lilla fönstret
           - entity: light.kok_underskap_bank
-            name: underskåp bänk
+            name: Underskåp bänk
           - entity: light.kok_underskap_diskbank
-            name: underskåp diskbänk
+            name: Underskåp diskbänk
           - entity: light.kok_vitrinskap
-            name: vitrinskåp
+            name: Vitrinskåp
           - input_boolean.rorelsedetektor_kok_aktiv
           - timer.timer_rorelsedetektor_1_medium
           - timer.timer_rorelsedetektor_3_medium
@@ -320,9 +318,9 @@ views:
           - sensor.hall_humidity
           - sensor.aqara_motion_sensor_2
           - entity: light.hall_byra
-            name: byrå
+            name: Byrå
           - entity: light.hall_skap
-            name: skåp
+            name: Skåp
           - switch.ringklocka
           - binary_sensor.aqara_motion_sensor_2
         title: Hall
@@ -339,30 +337,30 @@ views:
         entities:
           - sensor.vardagsrum_temperature
           - entity: light.vardagsrum_fonster
-            name: fönster
+            name: Fönster
           - entity: light.vardagsrum_skank
-            name: skänk
+            name: Skänk
           - entity: light.vardagsrum_vagn
-            name: vagn
+            name: Vagn
           - entity: light.vardagsrum_vitrinskap
-            name: vitrinskåp
+            name: Vitrinskåp
           - entity: light.vardagsrum_gran
-            name: gran
+            name: Gran
           - entity: switch.vardagsrum_stereobank
             name: stereobänk
           - entity: switch.vardagsrum_tv
-            name: tv
+            name: Tv
           - entity: switch.vardagsrum_subbas
-            name: subbas
+            name: Subbas
           - entity: switch.vardagsrum_extra_subbas
-            name: extra subbas
+            name: Extra subbas
           - binary_sensor.tradfri_motion_sensor_1
         title: Vardagsrum
         show_header_toggle: true
       - type: entities
         entities:
           - entity: sensor.badrum_temperature
-            name: temperature
+            name: Temperature
           - sensor.badrum_humidity
           - sensor.fukt_badrumsfonster
           - switch.fan_speed
@@ -377,7 +375,7 @@ views:
         entities:
           - sensor.sovrum
           - entity: light.sovrum_fonster
-            name: fönster
+            name: Fönster
         title: Sovrum
         show_header_toggle: true
       - type: entities
@@ -402,11 +400,11 @@ views:
         entities:
           - sensor.uterum
           - entity: light.uterum_fonster
-            name: fönster
+            name: Fönster
           - entity: light.uterum_led
-            name: led
+            name: Led
           - entity: light.uterum_fotogenlampa
-            name: fotogenlampa
+            name: Fotogenlampa
           - binary_sensor.tradfri_motion_sensor_5
         title: Uterum
         show_header_toggle: true
@@ -418,7 +416,7 @@ views:
       - type: entities
         entities:
           - entity: light.spabad_vagg
-            name: vägg
+            name: Vägg
         title: Spabad
         show_header_toggle: true
       - type: entities
@@ -426,7 +424,7 @@ views:
           - sensor.friggebod_temperature
           - sensor.friggebod_humidity
           - entity: light.friggebod_fonster
-            name: fönster
+            name: Fönster
         title: Friggebod
         show_header_toggle: true
       - type: entities
@@ -470,29 +468,29 @@ views:
       - type: entities
         entities:
           - entity: script.vacuum_house
-            name: huset
+            name: Huset
           - entity: script.vacuum_daily
-            name: dagligen
+            name: Dagligen
           - entity: script.vacuum_kitchen
-            name: köket
+            name: Köket
           - entity: script.vacuum_kitchen_carpet
-            name: köksmattan
+            name: Köksmattan
           - entity: script.vacuum_hall
-            name: hallen
+            name: Hallen
           - entity: script.vacuum_laundry
-            name: tvättstugan
+            name: Tvättstugan
           - entity: script.vacuum_laundry_carpet
-            name: mattan i tvättstugan
+            name: Mattan i tvättstugan
           - entity: script.vacuum_sovrum
-            name: sovrummet
+            name: Sovrummet
           - entity: script.vacuum_louise_rum
             name: Louise rum
           - entity: script.vacuum_andreas_rum
             name: Andreas rum
           - entity: script.vacuum_vardagsrum
-            name: vardagsrum
+            name: Vardagsrum
           - entity: script.vacuum_toalett
-            name: toalett
+            name: Toalett
         title: Dammsug
         show_header_toggle: false
       - type: entities
@@ -584,38 +582,26 @@ views:
         show_header_toggle: true
       - type: entities
         entities:
-          - entity: automation.morgonbelysning_on_sensor_on_1800
-            name: 'on (sensor on, <1800)'
-          - entity: automation.morgonbelysning_on_hemma_1800
-            name: 'on (-> hemma, <1800)'
-          - entity: automation.morgonbelysning_off_2500_hemma
-            name: 'off (>2500, hemma)'
-          - entity: automation.morgonbelysning_off_borta
-            name: off (-> borta)
+          - automation.morgonbelysning_on_sensor_on_1800
+          - automation.morgonbelysning_on_hemma_1800
+          - automation.morgonbelysning_off_2500_hemma
+          - automation.morgonbelysning_off_borta
         title: Morgonbelysning
         show_header_toggle: true
       - type: entities
         entities:
-          - entity: automation.belysning_on_09_00_00_1800_hemma
-            name: 'on (=09:00:00, <1800, hemma)'
-          - entity: automation.belysning_on_1800_hemma
-            name: 'on (<1800, hemma)'
-          - entity: automation.belysning_on_sensor_on_borta_1800
-            name: 'on (sensor on, borta, <1800)'
-          - entity: automation.belysning_on_hemma_1800
-            name: 'on (-> hemma, <1800)'
-          - entity: automation.belysning_off_2500_hemma
-            name: 'off (>2500, hemma)'
-          - entity: automation.belysning_off_borta
-            name: off (-> borta)
+          - automation.belysning_on_09_00_00_1800_hemma
+          - automation.belysning_on_1800_hemma
+          - automation.belysning_on_sensor_on_borta_1800
+          - automation.belysning_on_hemma_1800
+          - automation.belysning_off_2500_hemma
+          - automation.belysning_off_borta
         title: Belysning
         show_header_toggle: true
       - type: entities
         entities:
-          - entity: automation.nattbelysning_sensor_on_hemma_0_150
-            name: '(sensor on, Hemma, 0-150)'
-          - entity: automation.nattbelysning_off_sensor_off
-            name: off (sensor off)
+          - automation.nattbelysning_sensor_on_hemma_0_150
+          - automation.nattbelysning_off_sensor_off
         title: Nattbelysning
         show_header_toggle: true
       - type: entities
@@ -657,12 +643,9 @@ views:
           - automation.friggebod_belysning_on_1
           - automation.friggebod_belysning_ute_on_5
           - automation.spabelysning_on_5
-          - entity: automation.utebelysning_off_22_00_00_borta
-            name: 'off (>22:00:00, borta)'
-          - entity: automation.utebelysning_off_22_00_00_hemma_vardag
-            name: 'off (>22:00:00, hemma, vardag)'
-          - entity: automation.utebelysning_off_all_off_hemma_helg
-            name: 'off (All off, hemma, helg)'
+          - automation.utebelysning_off_22_00_00_borta
+          - automation.utebelysning_off_22_00_00_hemma_vardag
+          - automation.utebelysning_off_all_off_hemma_helg
         title: Utebelysning
         show_header_toggle: true
       - type: entities
@@ -721,8 +704,7 @@ views:
         show_header_toggle: true
       - type: entities
         entities:
-          - entity: automation.mediaspelare_off_borta
-            name: off (-> borta)
+          - automation.mediaspelare_off_borta
           - automation.satt_pa_mediaspelare_vid_watch_tv
           - automation.satt_pa_mediaspelare_vid_listen_to_radio
           - automation.satt_pa_mediaspelare_vid_watch_chromecast
@@ -738,32 +720,22 @@ views:
         show_header_toggle: true
       - type: entities
         entities:
-          - entity: automation.hassbian_startad
-            name: startad
-          - entity: automation.hassbian_stoppad
-            name: stoppad
+          - automation.hassbian_startad
+          - automation.hassbian_stoppad
           - automation.ny_enhet_hittad
-          - entity: automation.hassbian_uppdatering
-            name: uppdatering
+          - automation.hassbian_uppdatering
           - automation.restart_ha
         title: Hassbian
         show_header_toggle: true
       - type: entities
         entities:
-          - entity: automation.ringklocka_tvattstuga
-            name: tvättstuga
-          - entity: automation.ringklocka_hall
-            name: hall
-          - entity: automation.ringklocka_tand_allt_lyse_1
-            name: tänd allt lyse 1
-          - entity: automation.ringklocka_tand_allt_lyse_2
-            name: tänd allt lyse 2
-          - entity: automation.ringklocka_off_borta
-            name: off (-> borta)
-          - entity: automation.ringklocka_on_hemma
-            name: on (-> hemma)
-          - entity: automation.ringklocka_tvattstuga_blinka_lampa_kok_lilla_fonstret
-            name: tvättstuga blinka lampa kök lilla fönstret
+          - automation.ringklocka_tvattstuga
+          - automation.ringklocka_hall
+          - automation.ringklocka_tand_allt_lyse_1
+          - automation.ringklocka_tand_allt_lyse_2
+          - automation.ringklocka_off_borta
+          - automation.ringklocka_on_hemma
+          - automation.ringklocka_tvattstuga_blinka_lampa_kok_lilla_fonstret
         title: Ringklocka
         show_header_toggle: true
       - type: entities

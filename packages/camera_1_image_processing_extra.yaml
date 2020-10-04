@@ -201,6 +201,7 @@ automation:
           entity_id: light.huvudentre
           state: 'on'
 
+    action:
       - service: light.turn_on
         data:
           entity_id: light.huvudentre

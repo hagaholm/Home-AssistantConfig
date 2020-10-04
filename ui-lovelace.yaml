@@ -537,12 +537,9 @@ views:
     cards:
       - type: entities
         entities:
-          - entity: automation.larm_rorelse_i_koket
-            name: rörelse i köket
-          - entity: automation.larm_rorelse_i_hallen
-            name: rörelse i hallen
-          - entity: automation.larm_rorelse_i_uterummet
-            name: rörelse i uterummet
+          - automation.larm_rorelse_i_koket
+          - automation.larm_rorelse_i_hallen
+          - automation.larm_rorelse_i_uterummet
           - automation.blinkar_inne_hem
           - automation.blinkar_ute_hem
         title: Larm

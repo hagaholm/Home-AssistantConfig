@@ -139,11 +139,10 @@ lovelace:
 
   # Add more dashboards
   dashboards:
-
     # Standard
     lovelace-standard:
       mode: yaml
-      title: standard
+      title: Standard
       show_in_sidebar: true
       filename: ui-lovelace.yaml
 
@@ -155,21 +154,6 @@ lovelace:
       icon: mdi:tools
       show_in_sidebar: false
       require_admin: true
-
-    # Storage
-    lovelace-storage:
-      mode: yaml
-      title: Storage
-      icon: mdi:script
-      show_in_sidebar: false
-      filename: lovelace-storage.yaml
-
-    # Test
-    lovelace-test:
-      mode: yaml
-      title: test
-      show_in_sidebar: false
-      filename: ui-lovelace_test.yaml
 
 ####################################################
 #                                                  #

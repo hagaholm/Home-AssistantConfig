@@ -147,6 +147,11 @@ views:
           - script.away_lights_on
         title: Tänd belysning
         show_header_toggle: false
+      - type: entities
+        entities:
+          - switch.fan_speed
+        title: Övrigt
+        show_header_toggle: false
     icon: 'mdi:home-assistant'
   - path: temperature_view
     title: Temperatur

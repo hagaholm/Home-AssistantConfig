@@ -157,9 +157,8 @@ automation:
     ##################################################################################
   - alias: Badrumsfönster stabiliserad fukt
     trigger:
-      - platform: time
-        minutes: '/5'
-        seconds: 00
+      - platform: time_pattern
+        minutes: "/5"
 
     condition:
       condition: and

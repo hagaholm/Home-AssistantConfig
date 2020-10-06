@@ -157,9 +157,9 @@ automation:
           entity_id: input_boolean.camera_light_control
 
   ##################################
-  ### Camera Light control off a ###
+  ### Camera Light control off 1 ###
   ##################################
-  - alias: Camera Light control off a
+  - alias: Camera Light control off 1
     mode: restart
 
     trigger:
@@ -178,14 +178,14 @@ automation:
           state: 'on'
 
     action:
-      - service: input_boolean.turn_on
+      - service: input_boolean.turn_off
         data:
           entity_id: input_boolean.camera_light_control
 
   ##################################
-  ### Camera Light control off b ###
+  ### Camera Light control off 2 ###
   ##################################
-  - alias: Camera Light control off b
+  - alias: Camera Light control off 2
     mode: restart
 
     trigger:
@@ -204,7 +204,7 @@ automation:
           state: 'on'
 
     action:
-      - service: input_boolean.turn_on
+      - service: input_boolean.turn_off
         data:
           entity_id: input_boolean.camera_light_control
 

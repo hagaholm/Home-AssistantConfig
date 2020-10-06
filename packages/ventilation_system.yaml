@@ -119,6 +119,8 @@ automation:
         - condition: state
           entity_id: switch.fan_speed
           state: 'off'
+        - condition: template 
+          value_template: "{{ (trigger.to_state.state|int - trigger.from_state.state|int) >= 2 }}" 
     action:
       - service: homeassistant.turn_on
         entity_id: switch.fan_speed
@@ -142,6 +144,32 @@ automation:
         - condition: state
           entity_id: switch.fan_speed
           state: 'on'
+    action:
+      - service: homeassistant.turn_off
+        entity_id: switch.fan_speed
+
+    ##################################################################################
+    ### Badrumsfönster stabiliserad fukt                                           ###
+    ### Fukt värdet har varit still i minst 20 minuter --> stäng av forcerad fläkt ###
+    ### T: every 5 minutes                                                         ###
+    ### C: no changes last 20 minutes                                              ###
+    ### A: switch.fan_speed = off                                                  ###
+    ##################################################################################
+  - alias: Badrumsfönster stabiliserad fukt
+    trigger:
+      - platform: time
+        minutes: '/5'
+        seconds: 00
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: switch.fan_speed
+          state: 'on'
+        - condition: template
+          value_template: '{{ (as_timestamp(now())-as_timestamp(states.sensor.fukt_badrumsfonster.last_updated)) > 1200 }}'
+
     action:
       - service: homeassistant.turn_off
         entity_id: switch.fan_speed

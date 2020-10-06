@@ -184,7 +184,7 @@ automation:
           entity_id: switch.fan_speed
           state: 'on'
         - condition: template
-          value_template: '{{ (as_timestamp(now())-as_timestamp(states.sensor.fukt_badrumsfonster.last_updated)) > 1200 }}'
+          value_template: '{{ (as_timestamp(now())-as_timestamp(states.sensor.badrum_humidity.last_updated)) > 1200 }}'
 
     action:
       - service: homeassistant.turn_off

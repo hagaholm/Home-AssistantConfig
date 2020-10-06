@@ -20,11 +20,11 @@ input_boolean:
 timer:
   timer_camera_1_light_control:
     name: Timer camera 1 ljus kontroll
-    duration: '00:00:15'
+    duration: '00:00:20'
 
   timer_camera_2_light_control:
     name: Timer camera 2 ljus kontroll
-    duration: '00:00:15'
+    duration: '00:00:20'
 
 ##################
 ### Automation ###
@@ -62,7 +62,7 @@ automation:
   ##################################
   - alias: Camera 1 Light control off
     trigger:
-      # Timer finished after 15 sec
+      # Timer finished after 20 sec
       - platform: event
         event_type: timer.finished
         event_data:
@@ -112,7 +112,7 @@ automation:
   ##################################
   - alias: Camera 2 Light control off
     trigger:
-      # Timer finished after 15 sec
+      # Timer finished after 20 sec
       - platform: event
         event_type: timer.finished
         event_data:

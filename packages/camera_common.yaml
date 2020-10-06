@@ -65,6 +65,7 @@ automation:
       - platform: state
         entity_id: input_select.home_status
         to: 'Hemma av'
+
     action:
       - service: input_select.select_option
         data:
@@ -79,6 +80,7 @@ automation:
       - platform: state
         entity_id: input_select.home_status
         to: 'Hemma på'
+
     action:
       - service: input_select.select_option
         data:
@@ -93,6 +95,7 @@ automation:
       platform: state
       entity_id: input_select.home_status
       to: "Hemma av"
+
     action:
       - service: input_select.select_option
         data:
@@ -106,6 +109,7 @@ automation:
     trigger:
       - platform: time
         at: "00:01:00" # HH:MM:SS
+
     action:
       - service: shell_command.remove_old_images_in_camera_deepstack_photo
       - service: shell_command.remove_old_images_in_www_warning

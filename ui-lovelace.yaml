@@ -694,10 +694,11 @@ views:
         show_header_toggle: true
       - type: entities
         entities:
-          - automation.badrumsfonster_hog_fukt
-          - automation.badrumsfonster_lag_fukt
           - automation.badrumsfonster_hog_fukt_larm
-          - automation.badrumsfonster_stabiliserad_fukt 
+          - automation.vent_high_badrumsfonster_hog_fukt
+          - automation.vent_low_badrumsfonster_lag_fukt
+          - automation.vent_low_badrumsfonster_stabiliserad_fukt 
+          - automation.vent_low_hog_fukt_i_huset 
         title: Ventilation
         show_header_toggle: true
       - type: entities

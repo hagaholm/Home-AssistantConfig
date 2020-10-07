@@ -17,20 +17,20 @@ switch:
 ### autoamtion ###
 ##################
 automation:
-    #############
-    ### Larm ####
-    #############
+    ###############
+    ### NOTIFY ####
+    ###############
     ####################################################
     ### Larm! Hög fukt i badrummet, ingen hemma      ###
-    ### T: sensor.fukt_badrumsfonster > 69           ###
+    ### T: switch.fan_speed == on                    ###
     ### C: group.track_for_home_devices = 'not_home' ###
-    ### A: switch.fan_speed = on                     ###
+    ### A: notify                                    ###
     ####################################################
   - alias: Badrumsfönster hög fukt larm
     trigger:
-      platform: numeric_state
-      entity_id: sensor.fukt_badrumsfonster
-      above: '69'
+      platform: state
+      entity_id: switch.fan_speed
+      to: 'on'
     condition:
       condition: state
       entity_id: group.track_for_home_devices
@@ -38,13 +38,13 @@ automation:
     action:
       - service: notify.pushbullet
         data:
-          message: 'Larm! Hög fukt i badrummet, ingen är hemma'
+          message: 'Larm! Hög fukt i badrummet {{ states.sensor.fukt_badrumsfonster.state }} {{ states.sensor.fukt_badrumsfonster.unit_of_measurement }}, ingen är hemma'
 
-    #####################################
-    ### Låg temp ventilation frånluft ###
-    ### T: sensor.Franluft < 18       ###
-    ### A: notify.pushbullet          ###
-    #####################################
+    ###########################################
+    ### Larm! Låg temp ventilation frånluft ###
+    ### T: sensor.Franluft < 18             ###
+    ### A: notify.pushbullet                ###
+    ###########################################
   - alias: Låg temp frånluft
     trigger:
       platform: numeric_state
@@ -55,11 +55,11 @@ automation:
         data:
           message: 'Larm! Låg temp frånluft ventilation: {{ states.sensor.Franluft.state }} {{ states.sensor.Franluft.unit_of_measurement }}'
 
-    #####################################
-    ### Hög temp ventilation frånluft ###
-    ### T: sensor.Franluft > 35       ###
-    ### A: notify.pushbullet          ###
-    #####################################
+    ###########################################
+    ### Larm! Hög temp ventilation frånluft ###
+    ### T: sensor.Franluft > 35             ###
+    ### A: notify.pushbullet                ###
+    ###########################################
   - alias: Hög temp frånluft
     trigger:
       platform: numeric_state
@@ -70,11 +70,11 @@ automation:
         data:
           message: 'Larm! Hög temp frånluft ventilation: {{ states.sensor.Franluft.state }} {{ states.sensor.Franluft.unit_of_measurement }}'
 
-    ####################################
-    ### Låg temp ventilation tilluft ###
-    ### T: sensor.Tilluft < 15       ###
-    ### A: notify.pushbullet         ###
-    ####################################
+    ##########################################
+    ### Larm! Låg temp ventilation tilluft ###
+    ### T: sensor.Tilluft < 15             ###
+    ### A: notify.pushbullet               ###
+    ##########################################
   - alias: Låg temp tilluft
     trigger:
       platform: numeric_state
@@ -85,11 +85,11 @@ automation:
         data:
           message: 'Larm! Låg temp tilluft ventilation: {{ states.sensor.Tilluft.state }} {{ states.sensor.Tilluft.unit_of_measurement }}'
 
-    ####################################
-    ### Hög temp ventilation tilluft ###
-    ### T: sensor.Tilluft > 35       ###
-    ### A: notify.pushbullet         ###
-    ####################################
+    ##########################################
+    ### Larm! Hög temp ventilation tilluft ###
+    ### T: sensor.Tilluft > 35             ###
+    ### A: notify.pushbullet               ###
+    ##########################################
   - alias: Hög temp tilluft
     trigger:
       platform: numeric_state
@@ -108,7 +108,7 @@ automation:
     ### T: sensor.fukt_badrumsfonster > 69 ###
     ### A: switch.fan_speed = on           ###
     ##########################################
-  - alias: Badrumsfönster hög fukt
+  - alias: Vent high Badrumsfönster hög fukt
     trigger:
       platform: numeric_state
       entity_id: sensor.fukt_badrumsfonster
@@ -120,7 +120,7 @@ automation:
           entity_id: switch.fan_speed
           state: 'off'
         - condition: template 
-          value_template: "{{ (trigger.to_state.state|int - trigger.from_state.state|int) >= 2 }}" 
+          value_template: "{{ (trigger.to_state.state|int - trigger.from_state.state|int) >= 2 }}"
     action:
       - service: homeassistant.turn_on
         entity_id: switch.fan_speed
@@ -133,7 +133,7 @@ automation:
     ### T: sensor.fukt_badrumsfonster < 68 ###
     ### A: switch.fan_speed = off          ###
     ##########################################
-  - alias: Badrumsfönster låg fukt
+  - alias: Vent low Badrumsfönster låg fukt
     trigger:
       platform: numeric_state
       entity_id: sensor.fukt_badrumsfonster
@@ -148,14 +148,16 @@ automation:
       - service: homeassistant.turn_off
         entity_id: switch.fan_speed
 
-    ##################################################################################
-    ### Badrumsfönster stabiliserad fukt                                           ###
-    ### Fukt värdet har varit still i minst 20 minuter --> stäng av forcerad fläkt ###
-    ### T: every 5 minutes                                                         ###
-    ### C: no changes last 20 minutes                                              ###
-    ### A: switch.fan_speed = off                                                  ###
-    ##################################################################################
-  - alias: Badrumsfönster stabiliserad fukt
+    ##################################################################################################
+    ### Badrumsfönster stabiliserad fukt                                                           ###
+    ### Fukt värdet har varit still i minst 20 minuter,                                            ###
+    ### men det har kommit in nya ouppdaterade värden under denna tid --> stäng av forcerad fläkt  ###
+    ### T: every 5 minutes                                                                         ###
+    ### C: no changes last 20 minutes                                                              ###
+    ### C: updated last 20 minutes                                                                 ###
+    ### A: switch.fan_speed = off                                                                  ###
+    ##################################################################################################
+  - alias: Vent low Badrumsfönster stabiliserad fukt
     trigger:
       - platform: time_pattern
         minutes: "/5"
@@ -167,7 +169,42 @@ automation:
           entity_id: switch.fan_speed
           state: 'on'
         - condition: template
-          value_template: '{{ (as_timestamp(now())-as_timestamp(states.sensor.fukt_badrumsfonster.last_updated)) > 1200 }}'
+          value_template: '{{ (as_timestamp(now())-as_timestamp(states.sensor.fukt_badrumsfonster.last_changed)) > 1200 }}'
+        - condition: template
+          value_template: '{{ (as_timestamp(now())-as_timestamp(states.sensor.fukt_badrumsfonster.last_updated)) < 1200 }}'
+
+    action:
+      - service: homeassistant.turn_off
+        entity_id: switch.fan_speed
+
+#last_updated is the last time an entity did send its value to HA
+#last_changed is the last time there was a difference between the previous value and the new.
+
+    #################################################################################################
+    ### Hög fukt i huset                                                                          ###
+    ### Fukt värdet är högt i huset då kan vi stänga av forcerad fläkt vid högre värde än normalt ###
+    ### T: every 5 minutes                                                                        ###
+    ### C: mindre än 8% skillnad mellan badrum och hall                                           ###
+    ### C: sensorer uppdaterade de senaste 10 minuterna                                           ###
+    ### A: switch.fan_speed = off                                                                 ###
+    #################################################################################################
+  - alias: Vent low Hög fukt i huset
+    trigger:
+      - platform: time_pattern
+        minutes: "/5"
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: switch.fan_speed
+          state: 'on'
+        - condition: template
+          value_template: '{{ states.sensor.badrum_humidity.state - 8 =< states.sensor.hall_humidity.state }}'
+        - condition: template
+          value_template: '{{ (as_timestamp(now())-as_timestamp(states.sensor.badrum_humidity.last_updated)) < 600 }}'
+        - condition: template
+          value_template: '{{ (as_timestamp(now())-as_timestamp(states.sensor.hall_humidity.last_updated)) < 600 }}'
 
     action:
       - service: homeassistant.turn_off

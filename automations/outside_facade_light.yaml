@@ -154,11 +154,10 @@
     #######################################################
     ### Tänder förråd fasadbelysning när det blir mörkt ###
     ### T: sensor.ljusstyrka < 40                       ###
-    ### C: light.uterum_led = off                       ###
-    ###    light.forrad_fasad == off                    ###
+    ### C: light.forrad_fasad == off                    ###
     ### A: light.forrad_fasad = on                      ###
     #######################################################
-  - alias: Förråd fasadbelysning on (<40, led off)
+  - alias: Förråd fasadbelysning on (<40)
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
@@ -166,37 +165,6 @@
     condition:
       condition: and
       conditions:
-        - condition: state
-          entity_id: light.uterum_led
-          state: 'off'
-        - condition: state
-          entity_id: light.forrad_fasad
-          state: 'off'
-    action:
-      - service: light.turn_on
-        data:
-          entity_id: light.forrad_fasad
-          brightness_pct: 30
-          transition: 5
-
-    #####################################################################
-    ### Tänder förråd fasadbelysning när ledbelysning i uterum släcks ###
-    ### T: light.uterum_led = off                                     ###
-    ### C: sensor.ljusstyrka < 40                                     ###
-    ###    light.forrad_fasad == off                                  ###
-    ### A: light.forrad_fasad = on                                    ###
-    #####################################################################
-  - alias: Förråd fasadbelysning on (led off, <40)
-    trigger:
-      platform: state
-      entity_id: light.uterum_led
-      to: 'off'
-    condition:
-      condition: and
-      conditions:
-        - condition: numeric_state
-          entity_id: sensor.ljusstyrka
-          below: 40
         - condition: state
           entity_id: light.forrad_fasad
           state: 'off'
@@ -218,25 +186,6 @@
       platform: numeric_state
       entity_id: sensor.ljusstyrka
       above: 60
-    condition:
-      condition: state
-      entity_id: light.forrad_fasad
-      state: 'on'
-    action:
-      - service: light.turn_off
-        entity_id: light.forrad_fasad
-
-    #####################################################################
-    ### Släcker förråd fasadbelysning när ledbelysning i uterum tänds ###
-    ### T: light.uterum_led == on                                     ###
-    ### C: light.forrad_fasad == on                                   ###
-    ### A: light.forrad_fasad = off                                   ###
-    #####################################################################
-  - alias: Förråd fasadbelysning off
-    trigger:
-      platform: state
-      entity_id: light.uterum_led
-      to: 'on'
     condition:
       condition: state
       entity_id: light.forrad_fasad

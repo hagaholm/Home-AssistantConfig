@@ -14,6 +14,12 @@ input_boolean:
     name: Camera ljus kontroll 
     initial: off
 
+# Sätts till on när person detekterats vid kamera 2 och entre lampa är tänd
+# Sätts till off när entre lampa släcks
+  camera_2_max_light:
+    name: Camera 2 max ljus
+    initial: off
+
 #############
 ### Timer ###
 #############
@@ -30,6 +36,79 @@ timer:
 ### Automation ###
 ##################
 automation:
+  #############################
+  ### Camera 2 max light on ###
+  #############################
+  - alias: Camera 2 max light on
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_boolean.camera_2_light_control
+        to: 'on'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.camera_2_max_light
+          state: 'off'
+        - condition: state
+          entity_id: light.huvudentre
+          state: 'on'
+
+    action:
+      - delay:
+          seconds: 1 # Need to delay 1 sec to make automation "Camera 2 switch max light to normal" work
+          
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.camera_2_max_light
+
+  ##############################
+  ### Camera 2 max light off ###
+  ##############################
+  - alias: Camera 2 max light off
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: light.huvudentre
+        to: 'off'
+
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.camera_2_max_light
+
+  #################################################
+  ### Camera 2 entre switch max light to normal ###
+  #################################################
+  - alias: Camera 2 entre switch max light to normal
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_boolean.camera_light_control
+        to: 'off'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.camera_2_max_light
+          state: 'off'
+        - condition: state
+          entity_id: light.huvudentre
+          state: 'on'
+
+    action:
+      - service: light.turn_on
+        data:
+          entity_id: light.huvudentre
+          brightness_pct: 10
+          transition: 1
+
   #################################
   ### Camera 1 Light control on ###
   #################################

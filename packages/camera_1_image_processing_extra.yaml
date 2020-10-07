@@ -35,8 +35,9 @@ automation:
   ################################
   ### - every 4 sec            ###
   ### - mode Day               ###
+  ### - light control off      ###
   ################################
-  - alias: Camera 1 Image processing mode Day
+  - alias: Camera 1 Image processing mode Day Light control off
     mode: queued
     
     # Every 4 sec
@@ -51,6 +52,41 @@ automation:
         - condition: state
           entity_id: input_select.camera_mode
           state: 'Day'
+        - condition: state
+          entity_id: input_boolean.camera_light_control
+          state: 'off'
+
+    # Scan a new image
+    action:
+      - service: image_processing.scan
+        data:
+          entity_id: image_processing.deepstack_camera_1
+
+  ################################
+  ### Processes image mode Day ###
+  ################################
+  ### - every 3 sec            ###
+  ### - mode Day               ###
+  ### - light control on       ###
+  ################################
+  - alias: Camera 1 Image processing mode Day Light control on
+    mode: queued
+    
+    # Every 3 sec
+    trigger:
+      - platform: time_pattern
+        seconds: "/3"
+
+    # Mode Day
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_select.camera_mode
+          state: 'Day'
+        - condition: state
+          entity_id: input_boolean.camera_light_control
+          state: 'on'
 
     # Scan a new image
     action:

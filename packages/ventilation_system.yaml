@@ -103,6 +103,28 @@ automation:
     ################
     ### Hög fukt ###
     ################
+    ################################
+    ### Snabbt ökande fukt       ###
+    ### T: new - old >= 4        ###
+    ### A: switch.fan_speed = on ###
+    ################################
+  - alias: Vent high Snabbt ökande fukt
+    trigger:
+      - platform: state
+        entity_id: sensor.fukt_badrumsfonster
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: switch.fan_speed
+          state: 'off'
+        - condition: template 
+          value_template: "{{ (trigger.to_state.state|int - trigger.from_state.state|int) >= 4 }}"
+    action:
+      - service: homeassistant.turn_on
+        entity_id: switch.fan_speed
+
     ##########################################
     ### Hög fukt badrumsfönster            ###
     ### T: sensor.fukt_badrumsfonster > 69 ###
@@ -119,8 +141,8 @@ automation:
         - condition: state
           entity_id: switch.fan_speed
           state: 'off'
-#        - condition: template 
-#          value_template: "{{ (trigger.to_state.state|int - trigger.from_state.state|int) >= 2 }}"
+        - condition: template 
+          value_template: "{{ (trigger.to_state.state|int - trigger.from_state.state|int) >= 2 }}"
     action:
       - service: homeassistant.turn_on
         entity_id: switch.fan_speed
@@ -148,19 +170,19 @@ automation:
       - service: homeassistant.turn_off
         entity_id: switch.fan_speed
 
-    ##################################################################################################
-    ### Badrumsfönster stabiliserad fukt                                                           ###
-    ### Fukt värdet har varit still i minst 20 minuter,                                            ###
-    ### men det har kommit in nya ouppdaterade värden under denna tid --> stäng av forcerad fläkt  ###
-    ### T: every 5 minutes                                                                         ###
-    ### C: no changes last 20 minutes                                                              ###
-    ### C: updated last 20 minutes                                                                 ###
-    ### A: switch.fan_speed = off                                                                  ###
-    ##################################################################################################
+    #################################################################################################
+    ### Badrumsfönster stabiliserad fukt                                                          ###
+    ### Fukt värdet har varit still i minst 15 minuter,                                           ###
+    ### men det har kommit in nya ouppdaterade värden under denna tid --> stäng av forcerad fläkt ###
+    ### T: state sensor.fukt_badrumsfonster                                                       ###
+    ### C: no changes last 15 minutes                                                             ###
+    ### C: updated last 15 minutes                                                                ###
+    ### A: switch.fan_speed = off                                                                 ###
+    #################################################################################################
   - alias: Vent low Badrumsfönster stabiliserad fukt
     trigger:
-      - platform: time_pattern
-        minutes: "/5"
+      - platform: state
+        entity_id: sensor.fukt_badrumsfonster
 
     condition:
       condition: and
@@ -169,9 +191,9 @@ automation:
           entity_id: switch.fan_speed
           state: 'on'
         - condition: template
-          value_template: '{{ (as_timestamp(now())-as_timestamp(states.sensor.fukt_badrumsfonster.last_changed)) > 1200 }}'
+          value_template: '{{ (as_timestamp(now())-as_timestamp(trigger.last_changed)) > 900 }}'
         - condition: template
-          value_template: '{{ (as_timestamp(now())-as_timestamp(states.sensor.fukt_badrumsfonster.last_updated)) < 1200 }}'
+          value_template: '{{ (as_timestamp(now())-as_timestamp(trigger.last_updated)) < 900 }}'
 
     action:
       - service: homeassistant.turn_off

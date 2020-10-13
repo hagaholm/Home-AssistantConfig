@@ -106,7 +106,7 @@ automation:
       - service: light.turn_on
         data:
           entity_id: light.huvudentre
-          brightness_pct: 10
+          brightness_pct: 50
           transition: 1
 
   #################################
@@ -309,7 +309,7 @@ automation:
       - service: light.turn_on
         data:
           entity_id: light.huvudentre
-          brightness_pct: 50
+          brightness_pct: 100
           transition: 1
           
   #####################################################
@@ -412,7 +412,7 @@ automation:
       - service: light.turn_on
         data:
           entity_id: light.huvudentre
-          brightness_pct: 10
+          brightness_pct: 50
           transition: 1
           
   ##########################################################

@@ -830,20 +830,35 @@ views:
       - type: entities
         entities:
           - sensor.frys_temp_lastupdated
+          - sensor.frys_temp_lastchanged
           - sensor.kyl_temp_lastupdated
+          - sensor.kyl_temp_lastchanged
           - sensor.badrum_temp_lastupdated
+          - sensor.badrum_temp_lastchanged
           - sensor.badrum_fukt_lastupdated
+          - sensor.badrum_fukt_lastchanged
           - sensor.tvattstuga_temp_lastupdated
+          - sensor.tvattstuga_temp_lastchanged
           - sensor.tvattstuga_fukt_lastupdated
+          - sensor.tvattstuga_fukt_lastchanged
           - sensor.varmepump_temp_lastupdated
+          - sensor.varmepump_temp_lastchanged
           - sensor.vardagsrum_temp_lastupdated
+          - sensor.vardagsrum_temp_lastchanged
           - sensor.hall_temp_lastupdated
+          - sensor.hall_temp_lastchanged
           - sensor.hall_fukt_lastupdated
+          - sensor.hall_fukt_lastchanged
           - sensor.forrad_temp_lastupdated
+          - sensor.forrad_temp_lastchanged
           - sensor.forrad_fukt_lastupdated
+          - sensor.forrad_fukt_lastchanged
           - sensor.garage_temp_lastupdated
+          - sensor.garage_temp_lastchanged
           - sensor.friggebod_temp_lastupdated
+          - sensor.friggebod_temp_lastchanged
           - sensor.friggebod_fukt_lastupdated
+          - sensor.friggebod_fukt_lastchanged
         title: Temp sensor senast
         show_header_toggle: false
       - type: entities

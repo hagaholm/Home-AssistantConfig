@@ -65,7 +65,7 @@ views:
             type: button
         type: horizontal-stack
       - cards:
-          - entity: light.sovrum_fonster
+          - entity: light.sovrum
             hold_action:
               action: none
             icon: 'mdi:lightbulb'
@@ -73,7 +73,7 @@ views:
             tap_action:
               action: toggle
             type: button
-          - entity: light.andreas_fonster
+          - entity: light.andreas_rum
             icon: 'mdi:lightbulb'
             name: Andreas rum
             show_icon: true
@@ -249,6 +249,7 @@ views:
           - light.vardagsrum_vitrinskap
           - light.vardagsrum_gran
           - light.sovrum_fonster
+          - light.sovrum_sangbord
           - light.andreas_fonster
           - light.louise_fonster
           - light.louise_golvlampa
@@ -381,7 +382,7 @@ views:
         entities:
           - sensor.sovrum
           - entity: light.sovrum_fonster
-            name: Fönster
+          - entity: light.sovrum_sangbord
         title: Sovrum
         show_header_toggle: true
       - type: entities
@@ -601,6 +602,7 @@ views:
           - automation.belysning_on_1800_hemma
           - automation.belysning_on_sensor_on_borta_1800
           - automation.belysning_on_hemma_1800
+          - automation.belysning_on_sovrumsfonster_on
           - automation.belysning_off_2500_hemma
           - automation.belysning_off_borta
         title: Belysning
@@ -726,6 +728,8 @@ views:
           - automation.satt_pa_subbasar_vid_hog_volym
           - automation.stang_av_subbasar_vid_lag_volym
           - automation.satt_pa_tv_bank_vid_rorelse
+          - automation.sank_ljuset_vid_hog_volym_pa_tv
+          - automation.aterstall_ljuset_vid_lag_volym_pa_tv
         title: Mediaspelare
         show_header_toggle: true
       - type: entities

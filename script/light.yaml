@@ -26,7 +26,7 @@
       - service: light.turn_on
         entity_id: light.vardagsrum_vitrinskap
       - service: light.turn_on
-        entity_id: light.sovrum_fonster
+        entity_id: light.sovrum_sangbord
 
 # IKEA
       - service: light.turn_on
@@ -76,6 +76,11 @@
           transition: 30
       - service: light.turn_on
         data:
+          entity_id: light.sovrum_fonster
+          brightness_pct: 50
+          transition: 30
+      - service: light.turn_on
+        data:
           entity_id: light.uterum_fonster
           brightness_pct: 80
           transition: 30
@@ -97,7 +102,7 @@
       - service: light.turn_on
         entity_id: light.vardagsrum_gran
       - service: light.turn_on
-        entity_id: light.sovrum_fonster
+        entity_id: light.sovrum_sangbord
       - service: light.turn_on
         entity_id: light.andreas_fonster
       - service: light.turn_on
@@ -129,6 +134,11 @@
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_vagn
+          brightness_pct: 50
+          transition: 30
+      - service: light.turn_on
+        data:
+          entity_id: light.sovrum_fonster
           brightness_pct: 50
           transition: 30
 

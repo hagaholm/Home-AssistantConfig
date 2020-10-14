@@ -7,6 +7,8 @@
       - service: homeassistant.turn_off
         entity_id: light.sovrum_fonster
       - service: homeassistant.turn_off
+        entity_id: light.sovrum_sangbord
+      - service: homeassistant.turn_off
         entity_id: light.belysning
       - service: homeassistant.turn_off
         entity_id: light.koksbelysning
@@ -46,6 +48,8 @@
 
       - service: homeassistant.turn_off
         entity_id: light.sovrum_fonster
+      - service: homeassistant.turn_off
+        entity_id: light.sovrum_sangbord
       - service: homeassistant.turn_off
         entity_id: light.belysning
       - service: homeassistant.turn_off
@@ -88,6 +92,8 @@
     sequence:
       - service: homeassistant.turn_off
         entity_id: light.sovrum_fonster
+      - service: homeassistant.turn_off
+        entity_id: light.sovrum_sangbord
       - service: homeassistant.turn_off
         entity_id: light.belysning
       - service: homeassistant.turn_off
@@ -142,6 +148,8 @@
       - service: homeassistant.turn_off
         entity_id: light.sovrum_fonster
       - service: homeassistant.turn_off
+        entity_id: light.sovrum_sangbord
+      - service: homeassistant.turn_off
         entity_id: light.belysning
       - service: homeassistant.turn_off
         entity_id: light.koksbelysning
@@ -194,6 +202,8 @@
     sequence:
       - service: homeassistant.turn_off
         entity_id: light.sovrum_fonster
+      - service: homeassistant.turn_off
+        entity_id: light.sovrum_sangbord
       - service: homeassistant.turn_off
         entity_id: light.belysning
       - service: homeassistant.turn_off
@@ -248,6 +258,8 @@
     sequence:
       - service: homeassistant.turn_off
         entity_id: light.sovrum_fonster
+      - service: homeassistant.turn_off
+        entity_id: light.sovrum_sangbord
 
   ###########################
   ### Släck i Andreas rum ###

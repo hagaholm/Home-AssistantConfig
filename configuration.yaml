@@ -223,8 +223,8 @@ light:
     name: Kök stora fönstret ljusstake
     entity_id: switch.kok_stora_fonstret_ljusstake
   - platform: switch
-    name: Sovrum fönster
-    entity_id: switch.sovrum_fonster
+    name: Sovrum sängbord
+    entity_id: switch.sovrum_sangbord
 #  - platform: switch
 #    name: Uterum fönster
 #    entity_id: switch.uterum_fonster
@@ -267,6 +267,7 @@ light:
       - light.vardagsrum_vitrinskap
       - light.vardagsrum_gran
       - light.sovrum_fonster
+      - light.sovrum_sangbord
       - light.andreas_fonster
       - light.louise_fonster
       - light.louise_golvlampa
@@ -304,6 +305,8 @@ light:
   - platform: group
     name: Utomhusbelysning
     entities:
+      - light.huvudentre
+      - light.tvattstuga_fasad
       - light.forrad_fasad
       - light.friggebod_fasad
       - light.friggebod_ute
@@ -319,11 +322,19 @@ light:
       - light.hall_byra
       - light.vardagsrum_fonster
 #jul      - light.vardagsrum_fonster_ljusstake_2
-      - light.sovrum_fonster
+      - light.sovrum_sangbord
       - light.louise_fonster
 #jul      - light.louise_fonster_dimmer_julstjarna
       - light.uterum_fonster
 #jul      - light.uterum_julstjarnor
+
+
+
+  - platform: group
+    name: Sovrum
+    entities:
+      - light.sovrum_sangbord
+      - light.sovrum_fonster
 
   - platform: group
     name: Hall
@@ -353,6 +364,18 @@ light:
     entities:
       - light.louise_fonster
       - light.louise_golvlampa
+
+  - platform: group
+    name: Andreas rum
+    entities:
+      - light.andreas_fonster
+
+  - platform: group
+    name: uterum
+    entities:
+      - light.uterum_led_lights
+      - light.uterum_fonster
+      - light.uterum_fotogenlampa
 
 ####################################################
 #                                                  #

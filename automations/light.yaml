@@ -113,6 +113,34 @@
       - service: script.lights_on
 
     ##########################################################
+    ### Tänder lampor när fönsterbelysning i sovrum tänds  ###
+    ### T: light.sovrum_fonster to 'on'                    ###
+    ### C: input_select.inside_lights == 'Morgonbelysning' ###
+    ###    05:00:00 - 09:00:00                             ###
+    ### A: script.lights_on                                ###
+    ##########################################################
+  - alias: Belysning on (sovrumsfönster on)
+    trigger:
+      platform: state
+      entity_id: light.sovrum_fonster
+      to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_select.inside_lights
+          state: 'Morgonbelysning'
+        - condition: time
+          after: '05:00:00'
+          before: '09:00:00'
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Belysning
+      - service: script.lights_on
+
+    ##########################################################
     ### Släcker lampor om det blir för ljust ute övrig tid ###
     ### T: sensor.ljusstyrka > input_number.light_off      ###
     ### C: group.track_for_home_devices = 'home'           ###

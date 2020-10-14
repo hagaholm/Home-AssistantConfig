@@ -1,0 +1,146 @@
+  ###################################
+  ### Friggebod fasadbelysning on ###
+  ###################################
+  friggebod_fasadbelysning_on:
+    alias: Friggebod fasadbelysning on
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: light.friggebod_fasad
+          brightness_pct: 30
+          transition: 1
+
+  ####################################
+  ### Friggebod fasadbelysning max ###
+  ####################################
+  friggebod_fasadbelysning_max:
+    alias: Friggebod fasadbelysning max
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: light.friggebod_fasad
+          brightness_pct: 100
+          transition: 1
+
+  ####################################
+  ### Friggebod fasadbelysning off ###
+  ####################################
+  friggebod_fasadbelysning_off:
+    alias: Friggebod fasadbelysning off
+    sequence:
+      - service: light.turn_off
+        data:
+          entity_id: light.friggebod_fasad
+          transition: 1
+
+#---------------------------------------
+
+  ################################
+  ### Förråd fasadbelysning on ###
+  ################################
+  forrad_fasadbelysning_on:
+    alias: Förråd fasadbelysning on
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: light.forrad_fasad
+          brightness_pct: 30
+          transition: 1
+
+  #################################
+  ### Förråd fasadbelysning max ###
+  #################################
+  forrad_fasadbelysning_max:
+    alias: Förråd fasadbelysning max
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: light.forrad_fasad
+          brightness_pct: 100
+          transition: 1
+
+  #################################
+  ### Förråd fasadbelysning off ###
+  #################################
+  forrad_fasadbelysning_off:
+    alias: Förråd fasadbelysning off
+    sequence:
+      - service: light.turn_off
+        data:
+          entity_id: light.forrad_fasad
+          transition: 1
+
+#---------------------------------------
+
+  ####################################
+  ### Tvättstuga fasadbelysning on ###
+  ####################################
+  tvattstuga_fasadbelysning_on:
+    alias: Tvättstuga fasadbelysning on
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: light.tvattstugan_fasad
+          brightness_pct: 65
+          transition: 1
+
+  #####################################
+  ### Tvättstuga fasadbelysning max ###
+  #####################################
+  tvattstuga_fasadbelysning_max:
+    alias: Tvättstuga fasadbelysning max
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: light.tvattstugan_fasad
+          brightness_pct: 100
+          transition: 1
+
+  #####################################
+  ### Tvättstuga fasadbelysning off ###
+  #####################################
+  tvattstuga_fasadbelysning_off:
+    alias: Tvättstuga fasadbelysning off
+    sequence:
+      - service: light.turn_off
+        data:
+          entity_id: light.tvattstugan_fasad
+          transition: 1
+
+#---------------------------------------
+
+  ####################################
+  ### Huvudentre fasadbelysning on ###
+  ####################################
+  huvudentre_belysning_on:
+    alias: Huvudentre belysning on
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: light.huvudentre
+          brightness_pct: 50
+          transition: 1
+
+  #####################################
+  ### Huvudentre fasadbelysning max ###
+  #####################################
+  huvudentre_belysning_max:
+    alias: Huvudentre belysning max
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: light.huvudentre
+          brightness_pct: 100
+          transition: 1
+
+  #####################################
+  ### Huvudentre fasadbelysning off ###
+  #####################################
+  huvudentre_fasadbelysning_off:
+    alias: Huvudentre fasadbelysning off
+    sequence:
+      - service: light.turn_off
+        data:
+          entity_id: light.huvudentre
+          transition: 1
+  

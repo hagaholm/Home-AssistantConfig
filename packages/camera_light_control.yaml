@@ -103,11 +103,7 @@ automation:
           state: 'on'
 
     action:
-      - service: light.turn_on
-        data:
-          entity_id: light.huvudentre
-          brightness_pct: 50
-          transition: 1
+      - service: script.huvudentre_belysning_on
 
   #################################
   ### Camera 1 Light control on ###
@@ -306,11 +302,7 @@ automation:
           state: 'on'
 
     action:
-      - service: light.turn_on
-        data:
-          entity_id: light.huvudentre
-          brightness_pct: 100
-          transition: 1
+      - service: script.huvudentre_belysning_max
           
   #####################################################
   ### Max light tvättstuga fasad if person detected ###
@@ -331,11 +323,7 @@ automation:
           state: 'on'
 
     action:
-      - service: light.turn_on
-        data:
-          entity_id: light.tvattstugan_fasad
-          brightness_pct: 100
-          transition: 1
+      - service: script.tvattstugan_fasadbelysning_max
 
   ####################################################
   ### Max light friggebod fasad if person detected ###
@@ -356,11 +344,7 @@ automation:
           state: 'on'
 
     action:
-      - service: light.turn_on
-        data:
-          entity_id: light.friggebod_fasad
-          brightness_pct: 100
-          transition: 1
+      - service: script.friggebod_fasadbelysning_max
 
   #################################################
   ### Max light förråd fasad if person detected ###
@@ -381,11 +365,7 @@ automation:
           state: 'on'
 
     action:
-      - service: light.turn_on
-        data:
-          entity_id: light.forrad_fasad
-          brightness_pct: 100
-          transition: 1
+      - service: script.forrad_fasadbelysning_max
 
   #######################################################
   ### Reset light huvudentre when switch from home on ###
@@ -409,11 +389,7 @@ automation:
           state: 'on'
 
     action:
-      - service: light.turn_on
-        data:
-          entity_id: light.huvudentre
-          brightness_pct: 50
-          transition: 1
+      - service: script.huvudentre_belysning_on
           
   ##########################################################
   ### Reset light tvättstuga fasad if no person detected ###
@@ -434,11 +410,7 @@ automation:
           state: 'on'
 
     action:
-      - service: light.turn_on
-        data:
-          entity_id: light.tvattstugan_fasad
-          brightness_pct: 65
-          transition: 1
+      - service: script.tvattstuga_fasadbelysning_on
 
   #########################################################
   ### Reset light friggebod fasad if no person detected ###
@@ -459,11 +431,7 @@ automation:
           state: 'on'
 
     action:
-      - service: light.turn_on
-        data:
-          entity_id: light.friggebod_fasad
-          brightness_pct: 30
-          transition: 1
+      - service: script.friggebod_fasadbelysning_on
 
   ######################################################
   ### Reset light förråd fasad if no person detected ###
@@ -484,11 +452,7 @@ automation:
           state: 'on'
 
     action:
-      - service: light.turn_on
-        data:
-          entity_id: light.forrad_fasad
-          brightness_pct: 30
-          transition: 1
+      - service: script.forrad_fasadbelysning_on
 
   ######################################
   ### Flash light if person detected ###

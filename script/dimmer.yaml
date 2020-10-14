@@ -24,26 +24,6 @@
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_skank
-          brightness_pct: 75
-      - service: light.turn_on
-        data:
-          entity_id: light.vardagsrum_vagn
-          brightness_pct: 75
-      - service: light.turn_on
-        data:
-          entity_id: light.vardagsrum_fonster
-          brightness_pct: 75
-      - service: light.turn_on
-        data:
-          entity_id: light.hall_byra
-          brightness_pct: 75  
-
-  tv_light_look_at_tv:
-    alias: Tv lampor se på tv
-    sequence:
-      - service: light.turn_on
-        data:
-          entity_id: light.vardagsrum_skank
           brightness_pct: 50
       - service: light.turn_on
         data:
@@ -57,6 +37,26 @@
         data:
           entity_id: light.hall_byra
           brightness_pct: 40  
+
+  tv_light_look_at_tv:
+    alias: Tv lampor se på tv
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: light.vardagsrum_skank
+          brightness_pct: 40
+      - service: light.turn_on
+        data:
+          entity_id: light.vardagsrum_vagn
+          brightness_pct: 40
+      - service: light.turn_on
+        data:
+          entity_id: light.vardagsrum_fonster
+          brightness_pct: 40
+      - service: light.turn_on
+        data:
+          entity_id: light.hall_byra
+          brightness_pct: 30  
 
   tv_light_off:
     alias: Tv lampor off

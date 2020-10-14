@@ -475,3 +475,49 @@ automation:
         entity_id: switch.vardagsrum_stereobank
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_tv
+
+    #######################################
+    ### Sänk ljuset vid hög volym på tv ###
+    #######################################
+  - alias: Sänk ljuset vid hög volym på tv
+    trigger:
+      platform: numeric_state
+      entity_id: media_player.yamaha_receiver
+      value_template: "{{ state.attributes.volume_level }}"
+      above: '0.65' # > 35
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'on'
+        - condition: template
+          value_template: '{{ trigger.to_state.attributes.current_activity == "Watch TV" }}'
+        - condition: state
+          entity_id: light.belysning
+          state: 'on'
+    action:
+      - service: script.tv_light_look_at_tv
+
+    ############################################
+    ### Återställ ljuset vid låg volym på tv ###
+    ############################################
+  - alias: Återställ ljuset vid låg volym på tv
+    trigger:
+      platform: numeric_state
+      entity_id: media_player.yamaha_receiver
+      value_template: "{{ state.attributes.volume_level }}"
+      below: '0.65' # > 35
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'on'
+        - condition: template
+          value_template: '{{ trigger.to_state.attributes.current_activity == "Watch TV" }}'
+        - condition: state
+          entity_id: light.belysning
+          state: 'on'
+    action:
+      - service: script.tv_light_normal

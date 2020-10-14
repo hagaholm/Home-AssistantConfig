@@ -6,7 +6,7 @@
     ### T: input_boolean.rorelsedetektor_kok_aktiv == on                ###
     ### C: sensor.ljusstyrka < 40                                       ###
     ###    05:00:00 - 12:00:00                                          ###
-    ### A: light.friggebod_fasad = on                                   ###
+    ### A: script.friggebod_fasadbelysning_on                           ###
     #######################################################################
   - alias: Friggebod fasadbelysning on (sensor on, <40)
     trigger:
@@ -26,11 +26,7 @@
           after: '05:00:00'
           before: '12:00:00'
     action:
-      - service: light.turn_on
-        data:
-          entity_id: light.friggebod_fasad
-          brightness_pct: 30
-          transition: 5
+      - service: script.friggebod_fasadbelysning_on
 
     ##########################################################
     ### Tänder friggebod fasadbelysning när det blir mörkt ###
@@ -38,7 +34,7 @@
     ### C: group.track_for_home_devices == 'home'          ###
     ###    time: 12:00 - 22:00                             ###
     ###    light.friggebod_fasad == off                    ###
-    ### A: light.friggebod_fasad = on                      ###
+    ### A: script.friggebod_fasadbelysning_on              ###
     ##########################################################
   - alias: Friggebod fasadbelysning on (home, <40) 
     trigger:
@@ -58,11 +54,7 @@
           entity_id: light.friggebod_fasad
           state: 'off'
     action:
-      - service: light.turn_on
-        data:
-          entity_id: light.friggebod_fasad
-          brightness_pct: 30
-          transition: 5
+      - service: script.friggebod_fasadbelysning_on
 
     #############################################################################
     ### Tänder friggebod fasadbelysning när det blir mörkt och ingen är hemma ###
@@ -70,7 +62,7 @@
     ### C: group.track_for_home_devices == not_home'                          ###
     ### C: time: 12:00 - 05:00                                                ###
     ###    light.friggebod_fasad == off                                       ###
-    ### A: light.friggebod_fasad = on                                         ###
+    ### A: script.friggebod_fasadbelysning_on                                 ###
     #############################################################################
   - alias: Friggebod fasadbelysning on (away, <40)
     trigger:
@@ -90,11 +82,7 @@
           entity_id: light.friggebod_fasad
           state: 'off'
     action:
-      - service: light.turn_on
-        data:
-          entity_id: light.friggebod_fasad
-          brightness_pct: 30
-          transition: 5
+      - service: script.friggebod_fasadbelysning_on
 
     ###########################################################
     ### Släcker friggebod fasadbelysning när det blir ljust ###
@@ -112,8 +100,7 @@
       entity_id: light.friggebod_fasad
       state: 'on'
     action:
-      - service: light.turn_off
-        entity_id: light.friggebod_fasad
+      - service: script.friggebod_fasadbelysning_off
 
     ############################################################
     ### Släcker friggebod fasadbelysning när det släcks inne ###
@@ -141,8 +128,7 @@
           entity_id: light.friggebod_fasad
           state: 'on'
     action:
-      - service: light.turn_off
-        entity_id: light.friggebod_fasad
+      - service: script.friggebod_fasadbelysning_off
 
 ###############################################################################
 ###############################################################################
@@ -169,11 +155,7 @@
           entity_id: light.forrad_fasad
           state: 'off'
     action:
-      - service: light.turn_on
-        data:
-          entity_id: light.forrad_fasad
-          brightness_pct: 30
-          transition: 5
+      - service: script.forrad_fasadbelysning_on
 
     ########################################################
     ### Släcker förråd fasadbelysning när det blir ljust ###
@@ -191,8 +173,7 @@
       entity_id: light.forrad_fasad
       state: 'on'
     action:
-      - service: light.turn_off
-        entity_id: light.forrad_fasad
+      - service: script.forrad_fasadbelysning_off
 
 ###############################################################################
 ###############################################################################
@@ -219,11 +200,7 @@
           entity_id: light.tvattstugan_fasad
           state: 'off'
     action:
-      - service: light.turn_on
-        data:
-          entity_id: light.tvattstugan_fasad
-          brightness_pct: 65
-          transition: 5
+      - service: script.tvattstuga_fasadbelysning_on
 
     ############################################################
     ### Släcker tvättstuga fasadbelysning när det blir ljust ###
@@ -241,8 +218,7 @@
       entity_id: light.tvattstugan_fasad
       state: 'on'
     action:
-      - service: light.turn_off
-        entity_id: light.tvattstugan_fasad
+      - service: script.tvattstuga_fasadbelysning_off
 
 ###############################################################################
 ###############################################################################
@@ -269,11 +245,7 @@
           entity_id: light.huvudentre
           state: 'off'
     action:
-      - service: light.turn_on
-        data:
-          entity_id: light.huvudentre
-          brightness_pct: 50
-          transition: 5
+      - service: script.huvudentre_fasadbelysning_on
 
     #######################################################
     ### Släcker huvudentre belysning när det blir ljust ###
@@ -291,5 +263,4 @@
       entity_id: light.huvudentre
       state: 'on'
     action:
-      - service: light.turn_off
-        entity_id: light.huvudentre
+      - service: script.huvudentre_fasadbelysning_off

@@ -195,8 +195,8 @@ views:
           - sensor.friggebod_temperature
           - sensor.friggebod_humidity
           - sensor.forrad_temperature
-          - sensor.forrad_humidity
           - sensor.garage_temperature
+          - sensor.garage_humidity
           - sensor.pa_vinden
         title: Övrigt
         show_header_toggle: false
@@ -437,8 +437,8 @@ views:
       - type: entities
         entities:
           - sensor.forrad_temperature
-          - sensor.forrad_humidity
           - sensor.garage_temperature
+          - sensor.garage_humidity
           - switch.garage_luftavfuktare
           - switch.garage_elvarme
         title: Garage/Förråd
@@ -844,8 +844,8 @@ views:
           - sensor.hall_temp_lastupdated
           - sensor.hall_fukt_lastupdated
           - sensor.forrad_temp_lastupdated
-          - sensor.forrad_fukt_lastupdated
           - sensor.garage_temp_lastupdated
+          - sensor.garage_fukt_lastupdated
           - sensor.friggebod_temp_lastupdated
           - sensor.friggebod_fukt_lastupdated
         title: Temp sensor senast

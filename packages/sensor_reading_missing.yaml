@@ -147,30 +147,6 @@ sensor:
             mdi:progress-check
           {% endif %}
 
-      forrad_temp_lastupdated:
-        friendly_name: Förråd temp senast uppdaterad
-        value_template: >-
-          {{ states.sensor.forrad_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
-        device_class: timestamp
-        icon_template: >-
-          {% if (as_timestamp(now()) - as_timestamp(states.sensor.forrad_temperature.last_updated) > 100) %}
-            mdi:progress-alert
-          {% else %}
-            mdi:progress-check
-          {% endif %}
-
-      forrad_fukt_lastupdated:
-        friendly_name: Förråd fukt senast uppdaterad
-        value_template: >-
-          {{ states.sensor.forrad_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
-        device_class: timestamp
-        icon_template: >-
-          {% if (as_timestamp(now()) - as_timestamp(states.sensor.forrad_humidity.last_updated) > 100) %}
-            mdi:progress-alert
-          {% else %}
-            mdi:progress-check
-          {% endif %}
-
       garage_temp_lastupdated:
         friendly_name: Garage temp senast uppdaterad
         value_template: >-
@@ -178,6 +154,30 @@ sensor:
         device_class: timestamp
         icon_template: >-
           {% if (as_timestamp(now()) - as_timestamp(states.sensor.garage_temperature.last_updated) > 100) %}
+            mdi:progress-alert
+          {% else %}
+            mdi:progress-check
+          {% endif %}
+
+      garage_fukt_lastupdated:
+        friendly_name: Garage fukt senast uppdaterad
+        value_template: >-
+          {{ states.sensor.garage_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+        icon_template: >-
+          {% if (as_timestamp(now()) - as_timestamp(states.sensor.garage_humidity.last_updated) > 100) %}
+            mdi:progress-alert
+          {% else %}
+            mdi:progress-check
+          {% endif %}
+
+      forrad_temp_lastupdated:
+        friendly_name: Förråd temp senast uppdaterad
+        value_template: >-
+          {{ states.sensor.forrad_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+        icon_template: >-
+          {% if (as_timestamp(now()) - as_timestamp(states.sensor.forrad_temperature.last_updated) > 100) %}
             mdi:progress-alert
           {% else %}
             mdi:progress-check
@@ -397,31 +397,6 @@ automation:
 #        data:
 #          message: 'Hall - ingen avläsning på 2 timmar'
 #########################################################
-  - alias: Avläsning saknas, förråd
-    trigger:
-      - platform: time_pattern
-        minutes: "/5"
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_boolean.forrad_reading_missing_alarm
-          state: 'off'
-        - condition: or
-          conditions:
-            - condition: template
-              value_template: > 
-                {{ (as_timestamp(now())-as_timestamp(states.sensor.forrad_temperature.last_updated)) > 7200 }}
-            - condition: template
-              value_template: > 
-                {{ (as_timestamp(now())-as_timestamp(states.sensor.forrad_humidity.last_updated)) > 7200 }}
-    action:
-      - service: homeassistant.turn_on
-        entity_id: input_boolean.forrad_reading_missing_alarm
-#      - service: notify.pushbullet
-#        data:
-#          message: 'Förråd - ingen avläsning på 2 timmar'
-#########################################################
   - alias: Avläsning saknas, garage
     trigger:
       - platform: time_pattern
@@ -432,15 +407,40 @@ automation:
         - condition: state
           entity_id: input_boolean.garage_reading_missing_alarm
           state: 'off'
-        - condition: template
-          value_template: >
-            {{ (as_timestamp(now())-as_timestamp(states.sensor.garage_temperature.last_updated)) > 7200 }}
+        - condition: or
+          conditions:
+            - condition: template
+              value_template: > 
+                {{ (as_timestamp(now())-as_timestamp(states.sensor.garage_temperature.last_updated)) > 7200 }}
+            - condition: template
+              value_template: > 
+                {{ (as_timestamp(now())-as_timestamp(states.sensor.garage_humidity.last_updated)) > 7200 }}
     action:
       - service: homeassistant.turn_on
         entity_id: input_boolean.garage_reading_missing_alarm
 #      - service: notify.pushbullet
 #        data:
 #          message: 'Garage - ingen avläsning på 2 timmar'
+#########################################################
+  - alias: Avläsning saknas, förråd
+    trigger:
+      - platform: time_pattern
+        minutes: "/5"
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.forrad_reading_missing_alarm
+          state: 'off'
+        - condition: template
+          value_template: >
+            {{ (as_timestamp(now())-as_timestamp(states.sensor.forrad_temperature.last_updated)) > 7200 }}
+    action:
+      - service: homeassistant.turn_on
+        entity_id: input_boolean.forrad_reading_missing_alarm
+#      - service: notify.pushbullet
+#        data:
+#          message: 'Förråd - ingen avläsning på 2 timmar'
 #########################################################
   - alias: Avläsning saknas, friggebod
     trigger:

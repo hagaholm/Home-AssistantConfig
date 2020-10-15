@@ -1,12 +1,12 @@
   ###########################################
   ### Starta luftavfuktare                ###
-  ### T: sensor.forrad_humidity > 66      ###
+  ### T: sensor.garage_humidity > 66      ###
   ### A: switch.garage_luftavfuktare = on ###
   ###########################################
 - alias: Starta luftavfuktare
   trigger:
     platform: numeric_state
-    entity_id: sensor.forrad_humidity
+    entity_id: sensor.garage_humidity
     above: '66'
   condition:
     condition: and
@@ -20,13 +20,13 @@
 
   ############################################
   ### Stoppa luftavfuktare                 ###
-  ### T: sensor.forrad_humidity < 64       ###
+  ### T: sensor.garage_humidity < 64       ###
   ### A: switch.garage_luftavfuktare = off ###
   ############################################
 - alias: Stoppa luftavfuktare
   trigger:
     platform: numeric_state
-    entity_id: sensor.forrad_humidity
+    entity_id: sensor.garage_humidity
     below: '64'
   condition:
     condition: and

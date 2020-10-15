@@ -488,9 +488,6 @@ automation:
     condition:
       condition: and
       conditions:
-        - condition: state
-          entity_id: media_player.yamaha_receiver
-          state: 'on'
         - condition: template
           value_template: '{{ trigger.to_state.attributes.current_activity == "Watch TV" }}'
         - condition: state
@@ -511,9 +508,6 @@ automation:
     condition:
       condition: and
       conditions:
-        - condition: state
-          entity_id: media_player.yamaha_receiver
-          state: 'on'
         - condition: template
           value_template: '{{ trigger.to_state.attributes.current_activity == "Watch TV" }}'
         - condition: state

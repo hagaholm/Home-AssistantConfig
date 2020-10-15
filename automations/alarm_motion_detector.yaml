@@ -1,37 +1,3 @@
-#      - binary_sensor.aqara_motion_sensor_1 
-#      - binary_sensor.aqara_motion_sensor_2 
-#      - binary_sensor.tradfri_motion_sensor_1 
-#      - binary_sensor.tradfri_motion_sensor_2 
-#      - binary_sensor.tradfri_motion_sensor_3 
-#      - binary_sensor.tradfri_motion_sensor_4 
-#      - binary_sensor.tradfri_motion_sensor_5 
-
-    ##################################################################
-    ### Skickar notification vid rörelse i köket om ingen är hemma ###
-    ### T: switch.rorelsedetektor_1 == on                          ###
-    ### C: group.track_for_home_devices == not_home                ###
-    ###    switch.rorelsedetektor_2 == off                         ###
-    ### A: notify                                                  ###
-    ##################################################################
-  - alias: Larm rörelse i köket
-    trigger:
-      platform: state
-      entity_id: switch.rorelsedetektor_1
-      to: 'on'
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'not_home'
-        - condition: state
-          entity_id: switch.rorelsedetektor_2
-          state: 'off'
-    action:
-      - service: notify.pushbullet
-        data:
-          message: 'LARM! Rörelse i köket, ingen är hemma...'
-
     ##################################################################################################
     ### Skickar notification vid rörelse i hallen innan rörelse i kök/tvättstuga om ingen är hemma ###
     ### T: binary_sensor.aqara_motion_sensor_2 == on                                               ###
@@ -69,25 +35,3 @@
       - service: notify.pushbullet
         data:
           message: 'LARM! Rörelse i hallen, ingen är hemma...'
-
-    ######################################################################
-    ### Skickar notification vid rörelse i uterummet om ingen är hemma ###
-    ### T:binary_sensor.tradfri_motion_sensor_5 == on                  ###
-    ### C: group.track_for_home_devices == not_home                    ###
-    ### A: notify                                                      ###
-    ######################################################################
-  - alias: Larm rörelse i uterummet
-    trigger:
-      platform: state
-      entity_id: binary_sensor.tradfri_motion_sensor_5
-      to: 'on'
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'not_home'
-    action:
-      - service: notify.pushbullet
-        data:
-          message: 'LARM! Rörelse i uterummet, ingen är hemma...'

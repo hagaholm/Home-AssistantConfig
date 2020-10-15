@@ -245,7 +245,7 @@
           entity_id: light.huvudentre
           state: 'off'
     action:
-      - service: script.huvudentre_fasadbelysning_on
+      - service: script.huvudentre_belysning_on
 
     #######################################################
     ### Släcker huvudentre belysning när det blir ljust ###
@@ -263,4 +263,4 @@
       entity_id: light.huvudentre
       state: 'on'
     action:
-      - service: script.huvudentre_fasadbelysning_off
+      - service: script.huvudentre_belysning_off

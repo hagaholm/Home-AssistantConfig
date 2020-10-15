@@ -121,9 +121,9 @@
           brightness_pct: 50
           transition: 1
 
-  #####################################
-  ### Huvudentre fasadbelysning max ###
-  #####################################
+  ################################
+  ### Huvudentre belysning max ###
+  ################################
   huvudentre_belysning_max:
     alias: Huvudentre belysning max
     sequence:
@@ -133,11 +133,11 @@
           brightness_pct: 100
           transition: 1
 
-  #####################################
-  ### Huvudentre fasadbelysning off ###
-  #####################################
-  huvudentre_fasadbelysning_off:
-    alias: Huvudentre fasadbelysning off
+  ################################
+  ### Huvudentre belysning off ###
+  ################################
+  huvudentre_belysning_off:
+    alias: Huvudentre belysning off
     sequence:
       - service: light.turn_off
         data:

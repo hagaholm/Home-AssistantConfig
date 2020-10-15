@@ -189,3 +189,24 @@
           entity_id: input_select.inside_lights
           option: Off
       - service: script.lights_off
+
+    #######################################################################
+    ### Släcker lampor i sovrummet när fönsterbelysning i sovrum släcks ###
+    ### T: light.sovrum_fonster to 'unavailable'                        ###
+    ### C: light.sovrum_sangbord == on                                  ###
+    ### A: light.bedroom = off                                          ###
+    #######################################################################
+  - alias: Bedroom off (sovrumsfönster off)
+    trigger:
+      platform: state
+      entity_id: light.sovrum_fonster
+      to: 'unavailable'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.sovrum_sangbord
+          state: 'on'
+    action:
+      - service: light.turn_off
+        entity_id: light.sovrum

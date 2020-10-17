@@ -419,7 +419,7 @@ automation:
       platform: numeric_state
       entity_id: media_player.yamaha_receiver
       value_template: "{{ state.attributes.volume_level }}"
-      above: '0.65' # > 35
+      above: '0.59' # > 40
     condition:
       condition: and
       conditions:
@@ -440,7 +440,7 @@ automation:
       platform: numeric_state
       entity_id: media_player.yamaha_receiver
       value_template: "{{ state.attributes.volume_level }}"
-      below: '0.65' # < 35
+      below: '0.59' # < 40
     condition:
       condition: and
       conditions:

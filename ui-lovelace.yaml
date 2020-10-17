@@ -126,6 +126,7 @@ views:
           - device_tracker.mobil_louise
         title: Info
         show_header_toggle: false
+        state_color: true
       - type: entities
         entities:
           - script.goodnight
@@ -135,6 +136,7 @@ views:
           - script.goodnight_all_tv_10_min
         title: Släck belysning
         show_header_toggle: false
+        state_color: true
       - type: entities
         entities:
           - script.cleaning_lights_on
@@ -147,11 +149,13 @@ views:
           - script.away_lights_on
         title: Tänd belysning
         show_header_toggle: false
+        state_color: true
       - type: entities
         entities:
           - switch.fan_speed
         title: Övrigt
         show_header_toggle: false
+        state_color: true
     icon: 'mdi:home-assistant'
   - path: temperature_view
     title: Temperatur
@@ -164,6 +168,7 @@ views:
           - sensor.ljusstyrka
         title: Utomhus
         show_header_toggle: false
+        state_color: true
       - type: entities
         entities:
           - sensor.uterum
@@ -175,6 +180,7 @@ views:
           - sensor.tvattstuga_temperature
         title: Inomhus temperatur
         show_header_toggle: false
+        state_color: true
       - type: entities
         entities:
           - sensor.hall_humidity
@@ -184,12 +190,14 @@ views:
           - sensor.fukt_badrumsfonster
         title: Inomhus luftfuktighet
         show_header_toggle: false
+        state_color: true
       - type: entities
         entities:
           - sensor.kyl_temperature
           - sensor.frys_temperature
         title: Kyl/Frys
         show_header_toggle: false
+        state_color: true
       - type: entities
         entities:
           - sensor.friggebod_temperature
@@ -200,6 +208,7 @@ views:
           - sensor.pa_vinden
         title: Övrigt
         show_header_toggle: false
+        state_color: true
       - type: entities
         entities:
           - sensor.varmepump_temperature
@@ -211,6 +220,7 @@ views:
           - switch.ventilationsaggregat
         title: Värmepump/Ventilation
         show_header_toggle: false
+        state_color: true
     icon: 'mdi:thermometer'
   - path: switch_view
     title: Belysning
@@ -227,6 +237,7 @@ views:
           - timer.timer_rorelsedetektor_3_medium
         title: Köksbelysning
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - light.kok_stora_fonstret
@@ -237,6 +248,7 @@ views:
           - light.uterum_fonster
         title: Morgonbelysning
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - light.kok_stora_fonstret
@@ -256,6 +268,7 @@ views:
           - light.uterum_fonster
         title: Belysning
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - light.hall_byra
@@ -266,12 +279,14 @@ views:
           - timer.timer_rorelsedetektor_3_short
         title: Nattbelysning
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - light.uterum_led
           - light.uterum_fotogenlampa
         title: Uterum
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - light.huvudentre
@@ -283,6 +298,7 @@ views:
           - light.spabad_vagg
         title: Utomhusbelysning
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - light.kok_stora_fonstret
@@ -294,6 +310,7 @@ views:
           - light.uterum_fonster
         title: Bortabelysning
         show_header_toggle: true
+        state_color: true
     icon: 'mdi:lightbulb'
   - path: room
     title: Rum
@@ -319,6 +336,7 @@ views:
           - timer.timer_rorelsedetektor_3_medium
         title: Kök
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - sensor.hall_temperature
@@ -332,6 +350,7 @@ views:
           - binary_sensor.aqara_motion_sensor_2
         title: Hall
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - sensor.tvattstuga_temperature
@@ -340,6 +359,7 @@ views:
           - timer.timer_rorelsedetektor_2_medium
         title: Tvättstuga
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - sensor.vardagsrum_temperature
@@ -364,6 +384,7 @@ views:
           - binary_sensor.tradfri_motion_sensor_1
         title: Vardagsrum
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - entity: sensor.badrum_temperature
@@ -373,11 +394,13 @@ views:
           - switch.fan_speed
         title: Badrum
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - binary_sensor.tradfri_motion_sensor_3
         title: Toalett
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - sensor.sovrum
@@ -385,6 +408,7 @@ views:
           - entity: light.sovrum_sangbord
         title: Sovrum
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - sensor.louise_rum_temperature
@@ -393,16 +417,19 @@ views:
           - light.louise_golvlampa
         title: Louise rum
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - switch.ikea_gateway
         title: Klädkammare
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - light.andreas_fonster
         title: Andreas rum
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - sensor.uterum
@@ -415,17 +442,20 @@ views:
           - binary_sensor.tradfri_motion_sensor_5
         title: Uterum
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - sensor.pa_vinden
         title: Vinden
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - entity: light.spabad_vagg
             name: Vägg
         title: Spabad
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - sensor.friggebod_temperature
@@ -434,6 +464,7 @@ views:
             name: Fönster
         title: Friggebod
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - sensor.forrad_temperature
@@ -443,6 +474,7 @@ views:
           - switch.garage_elvarme
         title: Garage/Förråd
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - sensor.ute
@@ -459,6 +491,7 @@ views:
           - binary_sensor.tradfri_motion_sensor_4
         title: Ute
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - sensor.uteluft
@@ -469,6 +502,7 @@ views:
           - switch.ventilationsaggregat
         title: Ventilation
         show_header_toggle: true
+        state_color: true
   - path: cleaner_view
     title: Dammsugare
     badges: []
@@ -501,6 +535,7 @@ views:
             name: Toalett
         title: Dammsug
         show_header_toggle: false
+        state_color: true
       - type: entities
         entities:
           - vacuum.xiaomi_vacuum_cleaner
@@ -518,6 +553,7 @@ views:
           - sensor.vacuum_accessories
         title: Xiaomi S50
         show_header_toggle: false
+        state_color: true
   - path: camera_view
     title: Kamera
     badges: []
@@ -537,6 +573,7 @@ views:
           - binary_sensor.tradfri_motion_sensor_5
         title: Rörelsedetektorer inne
         show_header_toggle: false
+        state_color: true
   - path: automation
     title: Automation
     badges: []
@@ -546,6 +583,7 @@ views:
           - automation.larm_rorelse_i_hallen
         title: Larm
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - input_boolean.frys_reading_missing_alarm
@@ -570,6 +608,7 @@ views:
           - automation.avlasning_saknas_friggebod
         title: Larm avläsningar saknas
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - automation.kok_100_2500
@@ -584,6 +623,7 @@ views:
           - automation.kok_rorelsedetektor_reset
         title: Köksbelysning
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - automation.morgonbelysning_on_sensor_on_1800
@@ -592,6 +632,7 @@ views:
           - automation.morgonbelysning_off_borta
         title: Morgonbelysning
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - automation.belysning_on_09_00_00_1800_hemma
@@ -604,12 +645,14 @@ views:
           - automation.bedroom_off_sovrumsfonster_off
         title: Belysning
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - automation.nattbelysning_sensor_on_hemma_0_150
           - automation.nattbelysning_off_sensor_off
         title: Nattbelysning
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - automation.bortabelysning_on_07_00_00_200_borta
@@ -618,6 +661,7 @@ views:
           - automation.bortabelysning_off_250_borta_morgon
         title: Bortabelysning morgon
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - automation.bortabelysning_on_12_00_00_200_borta
@@ -626,6 +670,7 @@ views:
           - automation.bortabelysning_off_23_00_00_borta
         title: Bortabelysning kväll
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - automation.uterums_fotogenlampa_on_16
@@ -644,6 +689,7 @@ views:
           - automation.uterums_ledbelysning_off_borta
         title: Uterumsbelysning
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - automation.friggebod_belysning_on_1
@@ -654,6 +700,7 @@ views:
           - automation.utebelysning_off_all_off_hemma_helg
         title: Utebelysning
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - automation.friggebod_fasadbelysning_on_sensor_on_40
@@ -669,6 +716,7 @@ views:
           - automation.tvattstuga_fasadbelysning_off_60
         title: Fasadbelysning
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - automation.uterum_larm_hog_temp
@@ -689,6 +737,7 @@ views:
           - automation.hog_temp_tilluft
         title: Larm temperatur
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - automation.badrumsfonster_hog_fukt_larm
@@ -699,6 +748,7 @@ views:
           - automation.vent_low_hog_fukt_i_huset 
         title: Ventilation Low/High
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - automation.ventilation_off_60_borta_ute_24degc_inne_23degc
@@ -711,6 +761,7 @@ views:
           - automation.ventilation_on_ute_22degc_off
         title: Ventilation On/Off
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - automation.mediaspelare_off_borta
@@ -729,6 +780,7 @@ views:
           - automation.aterstall_ljuset_vid_lag_volym_pa_tv
         title: Mediaspelare
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - automation.hassbian_startad
@@ -738,6 +790,7 @@ views:
           - automation.restart_ha
         title: Hassbian
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - automation.ringklocka_tvattstuga
@@ -748,12 +801,14 @@ views:
           - automation.ringklocka_on_hemma
         title: Ringklocka
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - automation.starta_luftavfuktare
           - automation.stoppa_luftavfuktare
         title: Garage luftavfuktare
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - automation.starta_elvarme_5_grader
@@ -762,6 +817,7 @@ views:
           - automation.stoppa_elvarme_10_grader
         title: Garage elvärme
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - automation.raspberry_pi_b_1_wire_offline
@@ -771,6 +827,7 @@ views:
           - automation.raspberry_pi_4b_hassbian_offline
         title: Larm Raspberry Pi offline
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - automation.kor_annan_vag_hem
@@ -779,6 +836,7 @@ views:
           - automation.lang_restid_till_seb
         title: Restid till och från jobbet
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - automation.ingen_kontakt_med_forrad_fasadbelysning
@@ -801,6 +859,7 @@ views:
           - automation.kontakt_med_vardagsrum_vagn
         title: IKEA
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - automation.startar_timers_koksvagg
@@ -814,6 +873,7 @@ views:
           - automation.stanger_av_rorelsedetektor_kok_aktiv_for_nattbelysning_koksskap
         title: Rörelsedetektor i kök
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - automation.dagligen_mandag
@@ -822,6 +882,7 @@ views:
           - automation.dammsugaren_har_problem
         title: Dammsugare
         show_header_toggle: true
+        state_color: true
     icon: 'mdi:home-automation'
   - path: extra_view
     title: Extra
@@ -846,6 +907,7 @@ views:
           - sensor.friggebod_fukt_lastupdated
         title: Temp sensor senast
         show_header_toggle: false
+        state_color: true
       - type: entities
         entities:
           - sensor.aqara_motion_sensor_1_lastupdated
@@ -857,6 +919,7 @@ views:
           - sensor.tradfri_motion_sensor_5_lastupdated
         title: Rörelsesensor senast
         show_header_toggle: false
+        state_color: true
       - type: entities
         entities:
           - input_select.inside_lights
@@ -866,6 +929,7 @@ views:
           - input_boolean.christmas_light
         title: Inställningar
         show_header_toggle: false
+        state_color: true
       - type: entities
         entities:
           - sensor.badrum_humidity
@@ -874,6 +938,7 @@ views:
           - switch.ventilationsaggregat
         title: Ventilation badrum
         show_header_toggle: false
+        state_color: true
       - type: entities
         entities:
           - binary_sensor.aqara_motion_sensor_1
@@ -887,6 +952,7 @@ views:
           - sensor.aqara_motion_sensor_2
         title: Rörelsedetektorer
         show_header_toggle: false
+        state_color: true
   - path: car
     title: Bil
     badges: []
@@ -900,6 +966,7 @@ views:
           - binary_sensor.ykg498_service
         title: Volvo status
         show_header_toggle: true
+        state_color: true
     icon: 'mdi:car'
   - path: harmony
     title: Mediaspelare
@@ -918,6 +985,7 @@ views:
           - sensor.yamaha_volume_level
         title: Fjärrkontroll
         show_header_toggle: true
+        state_color: true
       - type: media-control
         entity: media_player.chromecast
       - type: media-control
@@ -938,6 +1006,7 @@ views:
           - sensor.herberts_dator
         title: Dator status
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - sensor.harmony_hub
@@ -952,6 +1021,7 @@ views:
           - sensor.dns320
         title: Mediaspelare status
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - sensor.mobil_louise
@@ -964,12 +1034,14 @@ views:
           - sensor.mobil_erik
         title: Mobil status
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - sensor.asus_rt_ac68u
           - sensor.asus_n66u
         title: Nätverks status
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - sensor.tradfri_gateway
@@ -979,28 +1051,33 @@ views:
           - sensor.garmin_fenix_5_plus
         title: Övrigt status
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - sensor.raspberry_pi_b_plus
         title: Raspberry Pi B+ (1-Wire)
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - sensor.raspberry_pi_3b_1
           - sensor.raspberry_pi_3b_1_temperature
         title: Raspberry Pi 3B (Hagaholm)
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - sensor.raspberry_pi_3b_2
           - sensor.raspberry_pi_3b_2_temperature
         title: Raspberry Pi 3B (Lux)
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - sensor.raspberry_pi_3b_plus
         title: Raspberry Pi 3B+ (Flightradar24)
         show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - sensor.raspberry_pi_4b
@@ -1021,4 +1098,5 @@ views:
           - sensor.current_ha_version
         title: Ubuntu Server (Hassbian)
         show_header_toggle: true
+        state_color: true
     icon: 'mdi:lan'

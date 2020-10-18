@@ -5,6 +5,7 @@ sensor:
   - platform: template 
     sensors: 
       ftx: 
+        friendly_name: 'FTX verkningsgrad'
         value_template: '{{ (((states.sensor.Tilluft.state | float ) - (states.sensor.Uteluft.state | float ))  / ((states.sensor.Franluft.state | float ) - (states.sensor.Uteluft.state | float )) * 100) | int }}' 
         unit_of_measurement: "%"
 

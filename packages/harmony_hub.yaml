@@ -417,9 +417,8 @@ automation:
   - alias: Sätt på subbasar vid hög volym
     trigger:
       platform: numeric_state
-      entity_id: media_player.yamaha_receiver
-      value_template: "{{ state.attributes.volume_level }}"
-      above: '0.59' # > 40
+      entity_id: sensor.yamaha_volume_level
+      above: '59' # > 40
     condition:
       condition: and
       conditions:
@@ -438,9 +437,8 @@ automation:
   - alias: Stäng av subbasar vid låg volym
     trigger:
       platform: numeric_state
-      entity_id: media_player.yamaha_receiver
-      value_template: "{{ state.attributes.volume_level }}"
-      below: '0.59' # < 40
+      entity_id: sensor.yamaha_volume_level
+      below: '59' # < 40
     condition:
       condition: and
       conditions:
@@ -482,9 +480,8 @@ automation:
   - alias: Sänk ljuset vid hög volym på tv
     trigger:
       platform: numeric_state
-      entity_id: media_player.yamaha_receiver
-      value_template: "{{ state.attributes.volume_level }}"
-      above: '0.65' # > 35
+      entity_id: sensor.yamaha_volume_level
+      above: '65' # > 35
     condition:
       condition: and
       conditions:
@@ -502,9 +499,8 @@ automation:
   - alias: Återställ ljuset vid låg volym på tv
     trigger:
       platform: numeric_state
-      entity_id: media_player.yamaha_receiver
-      value_template: "{{ state.attributes.volume_level }}"
-      below: '0.65' # > 35
+      entity_id: sensor.yamaha_volume_level
+      below: '65' # > 35
     condition:
       condition: and
       conditions:

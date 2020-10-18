@@ -1,4 +1,14 @@
 ##############
+### sensor ###
+##############
+sensor:
+  - platform: template 
+    sensors: 
+      FTX: 
+        value_template: '{{((states.sensor.Tilluft.state | float ) - (states.sensor.Uteluft.state | float ))  / ((states.sensor.Ftanluft.state | float ) - (states.sensor.Uteluft.state | float )) * 100}}' 
+        unit_of_measurement: "%"
+
+##############
 ### switch ###
 ##############
 switch:

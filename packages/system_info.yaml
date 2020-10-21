@@ -193,6 +193,9 @@ sensor:
       mobil_annelie:
         friendly_name: 'Annelie'
         value_template: "{{ 'Online' if is_state('device_tracker.mobil_annelie', 'home') else 'Offline' }}"
+      mobil_annelie_5G:
+        friendly_name: 'Annelie 5G'
+        value_template: "{{ 'Online' if is_state('device_tracker.mobil_annelie_5G', 'home') else 'Offline' }}"
       mobil_annelie_jobb:
         friendly_name: 'Annelie jobb'
         value_template: "{{ 'Online' if is_state('device_tracker.mobil_annelie_jobb', 'home') else 'Offline' }}"

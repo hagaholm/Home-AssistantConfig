@@ -32,12 +32,12 @@
   outside_light_off:
     alias: Utebelysning off
     sequence:
-      - service: homeassistant.turn_off
+      - service: light.turn_off
         entity_id: light.friggebod_fonster
       - repeat:
           count: 10
           sequence:
             - service: light.turn_off
               entity_id: light.spabad_vagg
-            - service: homeassistant.turn_off
+            - service: light.turn_off
               entity_id: light.friggebod_ute

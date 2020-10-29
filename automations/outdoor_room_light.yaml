@@ -277,7 +277,7 @@
       - repeat:
           count: 10
           sequence:
-            - service: homeassistant.turn_off
+            - service: light.turn_off
               entity_id: light.uterum_led
             - delay: '00:00:05'
 
@@ -305,7 +305,7 @@
       - repeat:
           count: 10
           sequence:
-            - service: homeassistant.turn_off
+            - service: light.turn_off
               entity_id: light.uterum_led
             - delay: '00:00:05'
 
@@ -332,7 +332,7 @@
       - repeat:
           count: 10
           sequence:
-            - service: homeassistant.turn_off
+            - service: light.turn_off
               entity_id: light.uterum_led
             - delay: '00:00:05'
 
@@ -361,7 +361,7 @@
       - repeat:
           count: 10
           sequence:
-            - service: homeassistant.turn_off
+            - service: light.turn_off
               entity_id: light.uterum_fotogenlampa
             - delay: '00:00:05'
 
@@ -385,7 +385,7 @@
       - repeat:
           count: 10
           sequence:
-            - service: homeassistant.turn_off
+            - service: light.turn_off
               entity_id: light.uterum_fotogenlampa
             - delay: '00:00:05'
 
@@ -408,6 +408,6 @@
       - repeat:
           count: 10
           sequence:
-            - service: homeassistant.turn_off
+            - service: light.turn_off
               entity_id: light.uterum_fotogenlampa
             - delay: '00:00:05'

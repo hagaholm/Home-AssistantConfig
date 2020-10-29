@@ -54,7 +54,7 @@
   night_light_off:
     alias: Nattbelysning off
     sequence:
-      - service: homeassistant.turn_off
+      - service: light.turn_off
         entity_id: light.nattbelysning
       - service: light.turn_off
         entity_id: light.vardagsrum_fonster_ljusstake_2

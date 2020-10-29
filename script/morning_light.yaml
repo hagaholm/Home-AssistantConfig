@@ -81,7 +81,7 @@
   morning_lights_off:
     alias: Morgonbelysning off
     sequence:
-      - service: homeassistant.turn_off
+      - service: light.turn_off
         entity_id: light.belysning
       - service: light.turn_off
         entity_id: light.vardagsrum_fonster_ljusstake_2

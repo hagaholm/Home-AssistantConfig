@@ -292,7 +292,7 @@
   lights_off:
     alias: Belysning off
     sequence:
-      - service: homeassistant.turn_off
+      - service: light.turn_off
         data:
           entity_id: light.belysning
           transition: 30

@@ -485,8 +485,9 @@ automation:
     condition:
       condition: and
       conditions:
-        - condition: template
-          value_template: '{{ trigger.to_state.attributes.current_activity == "Watch TV" }}'
+        - condition: state
+          entity_id: sensor.harmony_current
+          state: 'Watch TV'
         - condition: state
           entity_id: light.belysning
           state: 'on'
@@ -504,8 +505,9 @@ automation:
     condition:
       condition: and
       conditions:
-        - condition: template
-          value_template: '{{ trigger.to_state.attributes.current_activity == "Watch TV" }}'
+        - condition: state
+          entity_id: sensor.harmony_current
+          state: 'Watch TV'
         - condition: state
           entity_id: light.belysning
           state: 'on'

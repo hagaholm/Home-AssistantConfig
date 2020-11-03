@@ -486,11 +486,16 @@ automation:
       condition: and
       conditions:
         - condition: state
-          entity_id: sensor.harmony_current
-          state: 'Watch TV'
-        - condition: state
           entity_id: light.belysning
           state: 'on'
+        - condition: or
+          conditions:
+          - condition: state
+            entity_id: sensor.harmony_current
+            state: 'Watch TV'
+          - condition: state
+            entity_id: sensor.harmony_current
+            state: 'Watch ChromeCast'
     action:
       - service: script.tv_light_look_at_tv
 
@@ -506,10 +511,35 @@ automation:
       condition: and
       conditions:
         - condition: state
-          entity_id: sensor.harmony_current
-          state: 'Watch TV'
-        - condition: state
           entity_id: light.belysning
           state: 'on'
+        - condition: or
+          conditions:
+          - condition: state
+            entity_id: sensor.harmony_current
+            state: 'Watch TV'
+          - condition: state
+            entity_id: sensor.harmony_current
+            state: 'Watch ChromeCast'
     action:
       - service: script.tv_light_normal
+
+    ###############################################
+    ### Sänk ljuset vid start av tv på morgonen ###
+    ###############################################
+#  - alias: Sänk ljuset vid start av tv på morgonen
+#    trigger:
+#      platform: state
+#      entity_id: sensor.harmony_current
+#      state: 'Watch TV'
+#    condition:
+#      condition: and
+#      conditions:
+#        - condition: state
+#          entity_id: light.belysning
+#          state: 'on'
+#        - condition: time
+#          after: '05:00:00'
+#          before: '09:00:00'
+#    action:
+#      - service: script.tv_light_look_at_tv

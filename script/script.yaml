@@ -5,33 +5,31 @@
     alias: Godnatt, släcker allt
     sequence:
       - service: light.turn_off
-        entity_id: light.sovrum_fonster
+        data:
+          entity_id: light.belysning
+          transition: 2
       - service: light.turn_off
-        entity_id: light.sovrum_sangbord
+        data:
+          entity_id: light.koksbelysning
+          transition: 2
       - service: light.turn_off
-        entity_id: light.belysning
+        data:
+          entity_id: light.friggebod_fasad
+          transition: 2
       - service: light.turn_off
-        entity_id: light.koksbelysning
-# Removed
-#      - service: light.turn_off
-#        entity_id: light.utomhusbelysning
-# Added
+        data:
+          entity_id: light.friggebod_fonster
+          transition: 2
+
       - service: light.turn_off
         entity_id: light.vardagsrum_fonster_ljusstake_2
       - service: light.turn_off
         entity_id: light.louise_fonster_dimmer_julstjarna
-# Removed
-#      - service: light.turn_off
-#        entity_id: light.utomhusbelysning
-# Added
-      - service: light.turn_off
-        entity_id: light.friggebod_fasad
       - service: light.turn_off
         entity_id: light.friggebod_ute
       - service: light.turn_off
-        entity_id: light.friggebod_fonster
-      - service: light.turn_off
         entity_id: light.spabad_vagg
+
 # Set home off mode
       - service: input_select.select_option
         data:
@@ -47,37 +45,33 @@
       - delay: '00:10:00'
 
       - service: light.turn_off
-        entity_id: light.sovrum_fonster
+        data:
+          entity_id: light.belysning
+          transition: 2
       - service: light.turn_off
-        entity_id: light.sovrum_sangbord
+        data:
+          entity_id: light.koksbelysning
+          transition: 2
       - service: light.turn_off
-        entity_id: light.belysning
+        data:
+          entity_id: light.friggebod_fasad
+          transition: 2
       - service: light.turn_off
-        entity_id: light.koksbelysning
-# Removed
-#      - service: light.turn_off
-#        entity_id: light.utomhusbelysning
-# Added
-      - service: light.turn_off
-        entity_id: light.friggebod_fasad
+        data:
+          entity_id: light.friggebod_fonster
+          transition: 2
+
       - service: light.turn_off
         entity_id: light.friggebod_ute
       - service: light.turn_off
         entity_id: light.vardagsrum_fonster_ljusstake_2
       - service: light.turn_off
         entity_id: light.louise_fonster_dimmer_julstjarna
-# Removed
-#      - service: light.turn_off
-#        entity_id: light.utomhusbelysning
-# Added
-      - service: light.turn_off
-        entity_id: light.friggebod_fasad
       - service: light.turn_off
         entity_id: light.friggebod_ute
       - service: light.turn_off
-        entity_id: light.friggebod_fonster
-      - service: light.turn_off
         entity_id: light.spabad_vagg
+
 # Set home off mode
       - service: input_select.select_option
         data:
@@ -91,38 +85,36 @@
     alias: Godnatt, stänger av allt
     sequence:
       - service: light.turn_off
-        entity_id: light.sovrum_fonster
+        data:
+          entity_id: light.belysning
+          transition: 2
       - service: light.turn_off
-        entity_id: light.sovrum_sangbord
+        data:
+          entity_id: light.koksbelysning
+          transition: 2
       - service: light.turn_off
-        entity_id: light.belysning
+        data:
+          entity_id: light.friggebod_fasad
+          transition: 2
       - service: light.turn_off
-        entity_id: light.koksbelysning
-# Removed
-#      - service: light.turn_off
-#        entity_id: light.utomhusbelysning
-# Added
-      - service: light.turn_off
-        entity_id: light.friggebod_fasad
+        data:
+          entity_id: light.friggebod_fonster
+          transition: 2
+
       - service: light.turn_off
         entity_id: light.vardagsrum_fonster_ljusstake_2
       - service: light.turn_off
         entity_id: light.louise_fonster_dimmer_julstjarna
-# Removed
-#      - service: light.turn_off
-#        entity_id: light.utomhusbelysning
-# Added
-      - service: light.turn_off
-        entity_id: light.friggebod_fasad
       - service: light.turn_off
         entity_id: light.friggebod_ute
       - service: light.turn_off
-        entity_id: light.friggebod_fonster
-      - service: light.turn_off
         entity_id: light.spabad_vagg
+
       - service: remote.turn_off
         entity_id: remote.harmony_hub
+
       - delay: '00:00:15'
+
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_stereobank
       - service: homeassistant.turn_off
@@ -131,6 +123,7 @@
         entity_id: switch.vardagsrum_subbas
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_extra_subbas
+
 # Set home off mode
       - service: input_select.select_option
         data:
@@ -146,40 +139,36 @@
       - delay: '00:10:00'
 
       - service: light.turn_off
-        entity_id: light.sovrum_fonster
+        data:
+          entity_id: light.belysning
+          transition: 2
       - service: light.turn_off
-        entity_id: light.sovrum_sangbord
+        data:
+          entity_id: light.koksbelysning
+          transition: 2
       - service: light.turn_off
-        entity_id: light.belysning
+        data:
+          entity_id: light.friggebod_fasad
+          transition: 2
       - service: light.turn_off
-        entity_id: light.koksbelysning
-# Removed
-#      - service: light.turn_off
-#        entity_id: light.utomhusbelysning
-# Added
-      - service: light.turn_off
-        entity_id: light.friggebod_fasad
-      - service: light.turn_off
-        entity_id: light.friggebod_ute
+        data:
+          entity_id: light.friggebod_fonster
+          transition: 2
+
       - service: light.turn_off
         entity_id: light.vardagsrum_fonster_ljusstake_2
       - service: light.turn_off
         entity_id: light.louise_fonster_dimmer_julstjarna
-# Removed
-#      - service: light.turn_off
-#        entity_id: light.utomhusbelysning
-# Added
-      - service: light.turn_off
-        entity_id: light.friggebod_fasad
       - service: light.turn_off
         entity_id: light.friggebod_ute
       - service: light.turn_off
-        entity_id: light.friggebod_fonster
-      - service: light.turn_off
         entity_id: light.spabad_vagg
+
       - service: remote.turn_off
         entity_id: remote.harmony_hub
+
       - delay: '00:00:15'
+
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_stereobank
       - service: homeassistant.turn_off
@@ -188,6 +177,7 @@
         entity_id: switch.vardagsrum_subbas
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_extra_subbas
+
 # Set home off mode
       - service: input_select.select_option
         data:
@@ -201,32 +191,28 @@
     alias: Godnatt, stänger av allt (tv om 10 minuter)
     sequence:
       - service: light.turn_off
-        entity_id: light.sovrum_fonster
+        data:
+          entity_id: light.belysning
+          transition: 2
       - service: light.turn_off
-        entity_id: light.sovrum_sangbord
+        data:
+          entity_id: light.koksbelysning
+          transition: 2
       - service: light.turn_off
-        entity_id: light.belysning
+        data:
+          entity_id: light.friggebod_fasad
+          transition: 2
       - service: light.turn_off
-        entity_id: light.koksbelysning
-# Removed
-#      - service: light.turn_off
-#        entity_id: light.utomhusbelysning
-# Added
+        data:
+          entity_id: light.friggebod_fonster
+          transition: 2
+
       - service: light.turn_off
         entity_id: light.vardagsrum_fonster_ljusstake_2
       - service: light.turn_off
         entity_id: light.louise_fonster_dimmer_julstjarna
-
-# Removed
-#      - service: light.turn_off
-#        entity_id: light.utomhusbelysning
-# Added
-      - service: light.turn_off
-        entity_id: light.friggebod_fasad
       - service: light.turn_off
         entity_id: light.friggebod_ute
-      - service: light.turn_off
-        entity_id: light.friggebod_fonster
       - service: light.turn_off
         entity_id: light.spabad_vagg
 
@@ -234,6 +220,7 @@
 
       - service: remote.turn_off
         entity_id: remote.harmony_hub
+
       - delay: '00:00:15'
 
       - service: homeassistant.turn_off
@@ -244,6 +231,7 @@
         entity_id: switch.vardagsrum_subbas
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_extra_subbas
+
 # Set home off mode
       - service: input_select.select_option
         data:
@@ -257,9 +245,9 @@
     alias: Släck i sovrummet
     sequence:
       - service: light.turn_off
-        entity_id: light.sovrum_fonster
-      - service: light.turn_off
-        entity_id: light.sovrum_sangbord
+        data:
+          entity_id: light.sovrum
+          transition: 2
 
   ###########################
   ### Släck i Andreas rum ###
@@ -268,7 +256,9 @@
     alias: Släck i Andreas rum
     sequence:
       - service: light.turn_off
-        entity_id: light.andreas_fonster
+        data:
+          entity_id: light.andreas_rum
+          transition: 2
 
   ##########################
   ### Släck i Louise rum ###
@@ -277,8 +267,9 @@
     alias: Släck i Louise rum
     sequence:
       - service: light.turn_off
-        entity_id: light.louise_fonster
-      - service: light.turn_off
-        entity_id: light.louise_golvlampa
+        data:
+          entity_id: light.louise_rum
+          transition: 2
+
       - service: light.turn_off
         entity_id: light.louise_fonster_dimmer_julstjarna

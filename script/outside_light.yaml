@@ -33,7 +33,9 @@
     alias: Utebelysning off
     sequence:
       - service: light.turn_off
-        entity_id: light.friggebod_fonster
+        data:
+          entity_id: light.friggebod_fonster
+          transition: 2
       - repeat:
           count: 10
           sequence:

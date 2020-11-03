@@ -5,18 +5,22 @@
         data:
           entity_id: light.vardagsrum_skank
           brightness_pct: 100
+          transition: 2
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_vagn
           brightness_pct: 100
+          transition: 2
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_fonster
           brightness_pct: 100
+          transition: 2
       - service: light.turn_on
         data:
           entity_id: light.hall_byra
           brightness_pct: 100  
+          transition: 2
         
   tv_light_normal:
     alias: Tv lampor normal
@@ -25,18 +29,22 @@
         data:
           entity_id: light.vardagsrum_skank
           brightness_pct: 50
+          transition: 2
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_vagn
           brightness_pct: 50
+          transition: 2
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_fonster
           brightness_pct: 50
+          transition: 2
       - service: light.turn_on
         data:
           entity_id: light.hall_byra
-          brightness_pct: 40  
+          brightness_pct: 40
+          transition: 2
 
   tv_light_look_at_tv:
     alias: Tv lampor se på tv
@@ -45,28 +53,39 @@
         data:
           entity_id: light.vardagsrum_skank
           brightness_pct: 30
+          transition: 2
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_vagn
           brightness_pct: 30
+          transition: 2
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_fonster
           brightness_pct: 30
+          transition: 2
       - service: light.turn_on
         data:
           entity_id: light.hall_byra
-          brightness_pct: 30  
+          brightness_pct: 25
+          transition: 2
 
   tv_light_off:
     alias: Tv lampor off
     sequence:
       - service: light.turn_off
-        entity_id: light.vardagsrum_skank
+        data:
+          entity_id: light.vardagsrum_skank
+          transition: 2
       - service: light.turn_off
-        entity_id: light.vardagsrum_vagn
+        data:
+          entity_id: light.vardagsrum_vagn
+          transition: 2
       - service: light.turn_off
-        entity_id: light.vardagsrum_fonster
+        data:
+          entity_id: light.vardagsrum_fonster
+          transition: 2
       - service: light.turn_off
-        entity_id: light.hall_byra
- 
+        data:
+          entity_id: light.hall_byra
+          transition: 2

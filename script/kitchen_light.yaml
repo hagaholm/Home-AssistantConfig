@@ -30,13 +30,16 @@
         data:
           entity_id: light.kok_underskap_bank
           brightness_pct: 10
+          transition: 2
       - service: light.turn_on
         data:
           entity_id: light.kok_underskap_diskbank
           brightness_pct: 10
+          transition: 2
       - service: light.turn_on
         data:
           entity_id: light.kok_vitrinskap
+          transition: 2
           brightness_pct: 25
 
   #########################
@@ -46,8 +49,14 @@
     alias: Köksbelysning off
     sequence:
       - service: light.turn_off
-        entity_id: light.kok_underskap_bank
+        data:
+          entity_id: light.kok_underskap_bank
+          transition: 2
       - service: light.turn_off
-        entity_id: light.kok_underskap_diskbank
+        data:
+          entity_id: light.kok_underskap_diskbank
+          transition: 2
       - service: light.turn_off
-        entity_id: light.kok_vitrinskap
+        data:
+          entity_id: light.kok_vitrinskap
+          transition: 2

@@ -82,7 +82,9 @@
     alias: Morgonbelysning off
     sequence:
       - service: light.turn_off
-        entity_id: light.belysning
+        data:
+          entity_id: light.belysning
+          transition: 2
       - service: light.turn_off
         entity_id: light.vardagsrum_fonster_ljusstake_2
       - service: light.turn_off

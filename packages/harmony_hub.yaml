@@ -486,7 +486,7 @@ automation:
       condition: and
       conditions:
         - condition: state
-          entity_id: light.belysning
+          entity_id: light.vardagsrum_skank
           state: 'on'
         - condition: or
           conditions:
@@ -511,7 +511,7 @@ automation:
       condition: and
       conditions:
         - condition: state
-          entity_id: light.belysning
+          entity_id: light.vardagsrum_skank
           state: 'on'
         - condition: or
           conditions:
@@ -534,18 +534,41 @@ automation:
     condition:
       condition: and
       conditions:
-        - condition: template
-          value_template: '{{ trigger.from_state.attributes.current_activity == "PowerOff" }}'
-        - condition: template
-          value_template: '{{ trigger.to_state.attributes.current_activity == "Watch TV" }}'
         - condition: state
-          entity_id: switch.vardagsrum_stereobank
-          state: 'off'
+          entity_id: light.vardagsrum_skank
+          state: 'on'
+        - condition: time
+          after: '05:00:00'
+          before: '09:00:00'
+        - condition: or
+          conditions:
+          - condition: state
+            entity_id: sensor.harmony_current
+            state: 'Watch TV'
+          - condition: state
+            entity_id: sensor.harmony_current
+            state: 'Watch ChromeCast'
+    action:
+      - service: script.tv_light_look_at_tv
+
+    ####################################################
+    ### Återställ ljuset vid stäng av tv på morgonen ###
+    ####################################################
+  - alias: Återställ ljuset vid stäng av tv på morgonen
+    trigger:
+      platform: state
+      entity_id: remote.harmony_hub
+    condition:
+      condition: and
+      conditions:
         - condition: state
-          entity_id: light.belysning
+          entity_id: sensor.harmony_current
+          state: 'PowerOff'
+        - condition: state
+          entity_id: light.vardagsrum_skank
           state: 'on'
         - condition: time
           after: '05:00:00'
           before: '09:00:00'
     action:
-      - service: script.tv_light_look_at_tv
+      - service: script.tv_light_normal

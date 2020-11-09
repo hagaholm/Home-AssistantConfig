@@ -4,6 +4,11 @@
   morning_lights_on:
     alias: Morgonbelysning on
     sequence:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Morgonbelysning
+
       - service: script.turn_on
         data_template:
           entity_id: >
@@ -81,6 +86,11 @@
   morning_lights_off:
     alias: Morgonbelysning off
     sequence:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Off
+
       - service: light.turn_off
         data:
           entity_id: light.belysning

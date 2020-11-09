@@ -4,6 +4,12 @@
   goodnight:
     alias: Godnatt, släcker allt
     sequence:
+# Set home off mode
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.home_status
+          option: Hemma av
+
       - service: light.turn_off
         data:
           entity_id: light.belysning
@@ -29,12 +35,6 @@
         entity_id: light.friggebod_ute
       - service: light.turn_off
         entity_id: light.spabad_vagg
-
-# Set home off mode
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.home_status
-          option: Hemma av
 
   ###########################################
   ### Godnatt, släcker allt om 10 minuter ###
@@ -44,6 +44,12 @@
     sequence:
       - delay: '00:10:00'
 
+# Set home off mode
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.home_status
+          option: Hemma av
+
       - service: light.turn_off
         data:
           entity_id: light.belysning
@@ -72,18 +78,18 @@
       - service: light.turn_off
         entity_id: light.spabad_vagg
 
-# Set home off mode
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.home_status
-          option: Hemma av
-
   ################################
   ### Godnatt, stänger av allt ###
   ################################
   goodnight_all:
     alias: Godnatt, stänger av allt
     sequence:
+# Set home off mode
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.home_status
+          option: Hemma av
+
       - service: light.turn_off
         data:
           entity_id: light.belysning
@@ -123,12 +129,6 @@
         entity_id: switch.vardagsrum_subbas
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_extra_subbas
-
-# Set home off mode
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.home_status
-          option: Hemma av
 
   ##############################################
   ### Godnatt, stänger av allt om 10 minuter ###
@@ -138,6 +138,12 @@
     sequence:
       - delay: '00:10:00'
 
+# Set home off mode
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.home_status
+          option: Hemma av
+
       - service: light.turn_off
         data:
           entity_id: light.belysning
@@ -178,18 +184,18 @@
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_extra_subbas
 
-# Set home off mode
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.home_status
-          option: Hemma av
-
   ###################################################
   ### Godnatt, stänger av allt (tv om 10 minuter) ###
   ###################################################
   goodnight_all_tv_10_min:
     alias: Godnatt, stänger av allt (tv om 10 minuter)
     sequence:
+# Set home off mode
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.home_status
+          option: Hemma av
+
       - service: light.turn_off
         data:
           entity_id: light.belysning
@@ -231,12 +237,6 @@
         entity_id: switch.vardagsrum_subbas
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_extra_subbas
-
-# Set home off mode
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.home_status
-          option: Hemma av
 
   #########################
   ### Släck i sovrummet ###

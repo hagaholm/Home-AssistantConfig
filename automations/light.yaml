@@ -18,10 +18,6 @@
           entity_id: group.track_for_home_devices
           state: 'home'
     action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.inside_lights
-          option: Belysning
       - service: script.lights_on
 
     ########################################################
@@ -45,10 +41,6 @@
           after: '09:00:00'
           before: '22:00:00'
     action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.inside_lights
-          option: Belysning
       - service: script.lights_on
 
     ########################################################
@@ -78,10 +70,6 @@
           after: '09:00:00'
           before: '05:00:00'
     action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.inside_lights
-          option: Belysning
       - service: script.lights_on
 
     #####################################################
@@ -106,10 +94,6 @@
           after: '09:00:00'
           before: '05:00:00'
     action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.inside_lights
-          option: Belysning
       - service: script.lights_on
 
     ##########################################################
@@ -134,10 +118,6 @@
           after: '05:00:00'
           before: '09:00:00'
     action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.inside_lights
-          option: Belysning
       - service: script.lights_on_morning
 
     ##########################################################
@@ -161,10 +141,6 @@
           after: '09:00:00'
           before: '05:00:00'
     action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.inside_lights
-          option: Off
       - service: script.lights_off
 
     ########################################################
@@ -184,10 +160,6 @@
       after: '09:00:00'
       before: '05:00:00'
     action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.inside_lights
-          option: Off
       - service: script.lights_off
 
     #######################################################################

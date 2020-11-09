@@ -29,10 +29,6 @@
           after: '07:00:00'
           before: '10:45:00' 
     action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.inside_lights
-          option: Bortabelysning
       - service: script.away_lights_on
 
     #################################################################
@@ -56,10 +52,6 @@
           entity_id: group.track_for_home_devices
           state: 'not_home'
     action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.inside_lights
-          option: Bortabelysning
       - service: script.away_lights_on
 
     #####################################################
@@ -77,10 +69,6 @@
       entity_id: group.track_for_home_devices
       state: 'not_home'
     action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.inside_lights
-          option: Off
       - service: script.lights_off
 
     ############################################################

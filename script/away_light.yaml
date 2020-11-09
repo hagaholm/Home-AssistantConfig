@@ -4,6 +4,11 @@
   away_lights_on:
     alias: Bortabelysning on
     sequence:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Bortabelysning
+
       - service: script.turn_on
         data_template:
           entity_id: >

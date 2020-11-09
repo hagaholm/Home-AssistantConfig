@@ -23,10 +23,6 @@
           after: '05:00:00'
           before: '09:00:00'
     action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.inside_lights
-          option: Morgonbelysning
       - service: script.morning_lights_on
 
     ############################################################
@@ -51,10 +47,6 @@
           after: '05:00:00'
           before: '09:00:00'
     action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.inside_lights
-          option: Morgonbelysning
       - service: script.morning_lights_on
 
     #############################################################
@@ -81,10 +73,6 @@
           entity_id: input_boolean.christmas_light
           state: 'off'
     action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.inside_lights
-          option: Off
       - service: script.morning_lights_off
 
     #############################################################
@@ -104,8 +92,4 @@
       after: '05:00:00'
       before: '09:00:00'
     action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.inside_lights
-          option: Off
       - service: script.morning_lights_off

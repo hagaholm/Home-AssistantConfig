@@ -4,7 +4,7 @@
     ### C: 12:00:00 - 21:45:00                            ###
     ###    sensor.ljusstyrka < 250                        ###
     ###    sensor.uterum > 16                             ###
-    ### A: light.uterum_led = on                          ###
+    ### A: script.outdoor_room_led_light_on               ###
     #########################################################
   - alias: Uterums ledbelysning on (home)
     trigger:
@@ -25,12 +25,7 @@
           entity_id: sensor.uterum
           above: 16
     action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.uterum_led_lights
-          option: On
-      - service: light.turn_on
-        entity_id: light.uterum_led
+      - service: script.outdoor_room_led_light_on
 
     #######################################################
     ### Tänder ledbelysning i uterum när det blir varmt ###
@@ -38,7 +33,7 @@
     ### C: 12:00:00 - 21:45:00                          ###
     ###    sensor.ljusstyrka < 250                      ###
     ###    group.track_for_home_devices == home         ###
-    ### A: light.uterum_led = on                        ###
+    ### A: script.outdoor_room_led_light_on             ###
     #######################################################
   - alias: Uterums ledbelysning on (>16)
     trigger:
@@ -58,12 +53,7 @@
           entity_id: group.track_for_home_devices
           state: 'home'
     action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.uterum_led_lights
-          option: On
-      - service: light.turn_on
-        entity_id: light.uterum_led
+      - service: script.outdoor_room_led_light_on
 
     #######################################################
     ### Tänder ledbelysning i uterum när det blir mörkt ###
@@ -71,7 +61,7 @@
     ### C: 12:00:00 - 21:45:00                          ###
     ###    sensor.uterum > 16                           ###
     ###    group.track_for_home_devices == home         ###
-    ### A: light.uterum_led = on                        ###
+    ### A: script.outdoor_room_led_light_on             ###
     #######################################################
   - alias: Uterums ledbelysning on (<250)
     trigger:
@@ -91,12 +81,7 @@
           entity_id: group.track_for_home_devices
           state: 'home'
     action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.uterum_led_lights
-          option: On
-      - service: light.turn_on
-        entity_id: light.uterum_led
+      - service: script.outdoor_room_led_light_on
 
     ################################################
     ### Tänder ledbelysning vid rörelse i uterum ###
@@ -104,7 +89,7 @@
     ### C: 12:00:00 - 21:45:00                   ###
     ###    sensor.ljusstyrka < 250               ###
     ###    sensor.uterum > 16                    ###
-    ### A: light.uterum_led = on                 ###
+    ### A: script.outdoor_room_led_light_on      ###
     ################################################
   - alias: Uterums ledbelysning on (motion)
     trigger:
@@ -124,12 +109,82 @@
           entity_id: sensor.uterum
           above: 16
     action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.uterum_led_lights
-          option: On
-      - service: light.turn_on
-        entity_id: light.uterum_led
+      - service: script.outdoor_room_led_light_on
+
+    #############################################################################
+    ### Släcker uterums ledbelysning på kvällen när allt släcks inne av någon ###
+    ### T: light.kok_lilla_fonstret == off                                    ###
+    ### C: group.track_for_home_devices == home                               ###
+    ###    light.uterum_led = on                                              ###
+    ### A: script.outdoor_room_led_light_off                                  ###
+    #############################################################################
+  - alias: Uterums ledbelysning off (All off, hemma)
+    trigger:
+      platform: state
+      entity_id: light.kok_lilla_fonstret
+      to: 'off'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'home'
+        - condition: state
+          entity_id: light.uterum_led
+          state: 'on'
+    action:
+      - repeat:
+          count: 10
+          sequence:
+            - service: script.outdoor_room_led_light_off
+            - delay: '00:00:05'
+
+    ##################################################################
+    ### Släcker uterums ledbelysning på kvällen när ingen är hemma ###
+    ### T: group.track_for_home_devices == not_home                ###
+    ### C: light.uterum_led = on                                   ###
+    ### A: script.outdoor_room_led_light_of                        ###
+    ##################################################################
+  - alias: Uterums ledbelysning off (Borta)
+    trigger:
+      platform: state
+      entity_id: group.track_for_home_devices
+      from: 'home'
+      to: 'not_home'
+    condition:
+      condition: state
+      entity_id: light.uterum_led
+      state: 'on'
+    action:
+      - repeat:
+          count: 10
+          sequence:
+            - service: script.outdoor_room_led_light_off
+            - delay: '00:00:05'
+
+    ###########################################################
+    ### Släcker uterums ledbelysning när det blir för kallt ###
+    ### T: sensor.uterum < 15                               ###
+    ### C: light.uterum_led = on                            ###
+    ### A: script.outdoor_room_led_light_off                ###
+    ###########################################################
+  - alias: Uterums ledbelysning off (<15)
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.uterum
+      below: 15
+    condition:
+      condition: state
+      entity_id: light.uterum_led
+      state: 'on'
+    action:
+      - repeat:
+          count: 10
+          sequence:
+            - service: script.outdoor_room_led_light_off
+            - delay: '00:00:05'
+
+################################################################
 
     #########################################################
     ### Tänder fotogenlampa i uterum när någon kommer hem ###
@@ -137,7 +192,7 @@
     ### C: 12:00:00 - 21:45:00                            ###
     ###    sensor.ljusstyrka < 250                        ###
     ###    sensor.uterum > 16                             ###
-    ### A: light.uterum_fotogenlampa = on                 ###
+    ### A: script.outdoor_room_paraffin_light_on          ###
     #########################################################
   - alias: Uterums fotogenlampa on (home)
     trigger:
@@ -158,8 +213,7 @@
           entity_id: sensor.uterum
           above: 16
     action:
-      - service: light.turn_on
-        entity_id: light.uterum_fotogenlampa
+      - service: script.outdoor_room_paraffin_light_on
 
     #######################################################
     ### Tänder fotogenlampa i uterum när det blir varmt ###
@@ -167,7 +221,7 @@
     ### C: 12:00:00 - 21:45:00                          ###
     ###    sensor.ljusstyrka < 250                      ###
     ###    group.track_for_home_devices == home         ###
-    ### A: light.uterum_fotogenlampa = on               ###
+    ### A: script.outdoor_room_paraffin_light_on        ###
     #######################################################
   - alias: Uterums fotogenlampa on (>16)
     trigger:
@@ -187,8 +241,7 @@
           entity_id: group.track_for_home_devices
           state: 'home'
     action:
-      - service: light.turn_on
-        entity_id: light.uterum_fotogenlampa
+      - service: script.outdoor_room_paraffin_light_on
 
     #######################################################
     ### Tänder fotogenlampa i uterum när det blir mörkt ###
@@ -196,7 +249,7 @@
     ### C: 12:00:00 - 21:45:00                          ###
     ###    sensor.uterum > 16                           ###
     ###    group.track_for_home_devices == home         ###
-    ### A: light.uterum_fotogenlampa = on               ###
+    ### A: script.outdoor_room_paraffin_light_on        ###
     #######################################################
   - alias: Uterums fotogenlampa on (<250)
     trigger:
@@ -216,8 +269,7 @@
           entity_id: group.track_for_home_devices
           state: 'home'
     action:
-      - service: light.turn_on
-        entity_id: light.uterum_fotogenlampa
+      - service: script.outdoor_room_paraffin_light_on
 
     ################################################
     ### Tänder fotogenlampa vid rörelse i uterum ###
@@ -225,7 +277,7 @@
     ### C: 12:00:00 - 21:45:00                   ###
     ###    sensor.ljusstyrka < 250               ###
     ###    sensor.uterum > 16                    ###
-    ### A: light.uterum_led = on                 ###
+    ### A: script.outdoor_room_paraffin_light_on ###
     ################################################
   - alias: Uterums fotogenlampa on (motion)
     trigger:
@@ -245,95 +297,10 @@
           entity_id: sensor.uterum
           above: 16
     action:
-      - service: light.turn_on
-        entity_id: light.uterum_fotogenlampa
-
-    #############################################################################
-    ### Släcker uterums ledbelysning på kvällen när allt släcks inne av någon ###
-    ### T: light.kok_lilla_fonstret == off                                    ###
-    ### C: group.track_for_home_devices == home                               ###
-    ###    light.uterum_led = on                                              ###
-    ### A: light.uterum_led = off                                             ###
-    #############################################################################
-  - alias: Uterums ledbelysning off (All off, hemma)
-    trigger:
-      platform: state
-      entity_id: light.kok_lilla_fonstret
-      to: 'off'
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'home'
-        - condition: state
-          entity_id: light.uterum_led
-          state: 'on'
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.uterum_led_lights
-          option: Off
       - repeat:
           count: 10
           sequence:
-            - service: light.turn_off
-              entity_id: light.uterum_led
-            - delay: '00:00:05'
-
-    ##################################################################
-    ### Släcker uterums ledbelysning på kvällen när ingen är hemma ###
-    ### T: group.track_for_home_devices == not_home                ###
-    ### C: light.uterum_led = on                                   ###
-    ### A: light.uterum_led = off                                  ###
-    ##################################################################
-  - alias: Uterums ledbelysning off (Borta)
-    trigger:
-      platform: state
-      entity_id: group.track_for_home_devices
-      from: 'home'
-      to: 'not_home'
-    condition:
-      condition: state
-      entity_id: light.uterum_led
-      state: 'on'
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.uterum_led_lights
-          option: Off
-      - repeat:
-          count: 10
-          sequence:
-            - service: light.turn_off
-              entity_id: light.uterum_led
-            - delay: '00:00:05'
-
-    ###########################################################
-    ### Släcker uterums ledbelysning när det blir för kallt ###
-    ### T: sensor.uterum < 15                               ###
-    ### C: light.uterum_led = on                            ###
-    ### A: light.uterum_led = off                           ###
-    ###########################################################
-  - alias: Uterums ledbelysning off (<15)
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.uterum
-      below: 15
-    condition:
-      condition: state
-      entity_id: light.uterum_led
-      state: 'on'
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.uterum_led_lights
-          option: Off
-      - repeat:
-          count: 10
-          sequence:
-            - service: light.turn_off
-              entity_id: light.uterum_led
+            - service: script.outdoor_room_paraffin_light_on
             - delay: '00:00:05'
 
     #############################################################################
@@ -341,7 +308,7 @@
     ### T: light.kok_lilla_fonstret == off                                    ###
     ### C: group.track_for_home_devices == home                               ###
     ###    light.uterum_fotogenlampa = on                                     ###
-    ### A: light.uterum_fotogenlampa = off                                    ###
+    ### A: script.outdoor_room_paraffin_light_off                             ###
     #############################################################################
   - alias: Uterums fotogenlampa off (All off, hemma)
     trigger:
@@ -361,15 +328,14 @@
       - repeat:
           count: 10
           sequence:
-            - service: light.turn_off
-              entity_id: light.uterum_fotogenlampa
+            - service: script.outdoor_room_paraffin_light_off
             - delay: '00:00:05'
 
     ##################################################################
     ### Släcker uterums fotogenlampa på kvällen när ingen är hemma ###
     ### T: group.track_for_home_devices == not_home                ###
     ### C: light.uterum_fotogenlampa = on                          ###
-    ### A: light.uterum_fotogenlampa = off                         ###
+    ### A:script.outdoor_room_paraffin_light_off                   ###
     ##################################################################
   - alias: Uterums fotogenlampa off (Borta)
     trigger:
@@ -385,15 +351,14 @@
       - repeat:
           count: 10
           sequence:
-            - service: light.turn_off
-              entity_id: light.uterum_fotogenlampa
+            - service: script.outdoor_room_paraffin_light_off
             - delay: '00:00:05'
 
     ###########################################################
     ### Släcker uterums fotogenlampa när det blir för kallt ###
     ### T: sensor.uterum < 15                               ###
     ### C: light.uterum_fotogenlampa = on                   ###
-    ### A: light.uterum_fotogenlampa = off                  ###
+    ### A: script.outdoor_room_paraffin_light_off           ###
     ###########################################################
   - alias: Uterums fotogenlampa off (<15)
     trigger:
@@ -408,6 +373,5 @@
       - repeat:
           count: 10
           sequence:
-            - service: light.turn_off
-              entity_id: light.uterum_fotogenlampa
+            - service: script.outdoor_room_paraffin_light_off
             - delay: '00:00:05'

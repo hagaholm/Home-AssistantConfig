@@ -4,6 +4,11 @@
   lights_on:
     alias: Belysning on
     sequence:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Belysning
+
       - service: script.turn_on
         data_template:
           entity_id: >
@@ -148,6 +153,11 @@
   lights_on_morning:
     alias: Belysning on morgon
     sequence:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Belysning
+
       - service: script.turn_on
         data_template:
           entity_id: >
@@ -292,6 +302,11 @@
   lights_off:
     alias: Belysning off
     sequence:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Off
+
       - service: light.turn_off
         data:
           entity_id: light.belysning

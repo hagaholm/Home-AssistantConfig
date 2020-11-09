@@ -6,6 +6,11 @@
     sequence:
       - service: input_select.select_option
         data:
+          entity_id: input_select.home_status
+          option: Hemma på
+
+      - service: input_select.select_option
+        data:
           entity_id: input_select.inside_lights
           option: Belysning
 
@@ -155,6 +160,11 @@
     sequence:
       - service: input_select.select_option
         data:
+          entity_id: input_select.home_status
+          option: Hemma på
+
+      - service: input_select.select_option
+        data:
           entity_id: input_select.inside_lights
           option: Belysning
 
@@ -302,6 +312,11 @@
   lights_off:
     alias: Belysning off
     sequence:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.home_status
+          option: Hemma av
+
       - service: input_select.select_option
         data:
           entity_id: input_select.inside_lights

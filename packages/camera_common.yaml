@@ -62,9 +62,6 @@ automation:
       - platform: state
         entity_id: input_select.home_status
         to: 'Borta'
-      - platform: state
-        entity_id: input_select.home_status
-        to: 'Hemma av'
 
     action:
       - service: input_select.select_option

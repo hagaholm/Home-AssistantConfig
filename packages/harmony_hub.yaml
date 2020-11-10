@@ -457,7 +457,7 @@ automation:
   - alias: Sätt på tv bänk vid rörelse
     trigger:
       platform: state
-      entity_id: binary_sensor.tradfri_motion_sensor_1
+      entity_id: binary_sensor.tradfri_motion_sensor_3
       to: 'on'
     condition:
       condition: or

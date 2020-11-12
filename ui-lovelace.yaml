@@ -416,8 +416,10 @@ views:
         entities:
           - sensor.louise_rum_temperature
           - sensor.louise_rum_humidity
+          - sensor.aqara_motion_sensor_3
           - light.louise_fonster
           - light.louise_golvlampa
+          - binary_sensor.aqara_motion_sensor_3
         title: Louise rum
         show_header_toggle: true
         state_color: true
@@ -570,6 +572,8 @@ views:
         entities:
           - binary_sensor.aqara_motion_sensor_1
           - binary_sensor.aqara_motion_sensor_2
+          - binary_sensor.aqara_motion_sensor_3
+          - binary_sensor.aqara_motion_sensor_4
           - binary_sensor.tradfri_motion_sensor_1
           - binary_sensor.tradfri_motion_sensor_2
           - binary_sensor.tradfri_motion_sensor_3
@@ -641,6 +645,8 @@ views:
         entities:
           - binary_sensor.aqara_motion_sensor_1
           - binary_sensor.aqara_motion_sensor_2
+          - binary_sensor.aqara_motion_sensor_3
+          - binary_sensor.aqara_motion_sensor_4
           - binary_sensor.tradfri_motion_sensor_1
           - binary_sensor.tradfri_motion_sensor_2
           - binary_sensor.tradfri_motion_sensor_3
@@ -648,6 +654,8 @@ views:
           - binary_sensor.tradfri_motion_sensor_5
           - sensor.aqara_motion_sensor_1
           - sensor.aqara_motion_sensor_2
+          - sensor.aqara_motion_sensor_3
+          - sensor.aqara_motion_sensor_4
         title: Rörelsedetektorer
         show_header_toggle: false
         state_color: true

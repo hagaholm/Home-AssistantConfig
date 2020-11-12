@@ -35,3 +35,41 @@
       - service: notify.pushbullet
         data:
           message: 'LARM! Rörelse i hallen, ingen är hemma...'
+
+    ######################################################################################################
+    ### Skickar notification vid rörelse i Louise rum innan rörelse i kök/tvättstuga om ingen är hemma ###
+    ### T: binary_sensor.aqara_motion_sensor_3 == on                                                   ###
+    ### C: group.track_for_home_devices == not_home                                                    ###
+    ###    switch.rorelsedetektor_1 == off                                                             ###
+    ###    switch.rorelsedetektor_2 == off                                                             ###
+    ###    binary_sensor.aqara_motion_sensor_1 == off                                                  ###
+    ###    vacuum.xiaomi_vacuum_cleaner == idle                                                        ###
+    ### A: notify                                                                                      ###
+    ######################################################################################################
+  - alias: Larm rörelse i Louise rum
+    trigger:
+      platform: state
+      entity_id: binary_sensor.aqara_motion_sensor_3 # Louise rum
+      to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
+        - condition: state
+          entity_id: switch.rorelsedetektor_1 # Kök
+          state: 'off'
+        - condition: state
+          entity_id: switch.rorelsedetektor_2 # Tvättstuga
+          state: 'off'
+        - condition: state
+          entity_id: binary_sensor.aqara_motion_sensor_1 # Kök
+          state: 'off'
+        - condition: state
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+          state: idle
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'LARM! Rörelse i Louise rum, ingen är hemma...'

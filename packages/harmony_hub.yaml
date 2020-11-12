@@ -551,6 +551,34 @@ automation:
     action:
       - service: script.tv_light_look_at_tv
 
+    ############################################################
+    ### Sänk ljuset om tv är på när sovrum tänds på morgonen ###
+    ############################################################
+  - alias: Sänk ljuset om tv är på när sovrum tänds på morgonen
+    trigger:
+      platform: state
+      entity_id: light.sovrum
+      to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.vardagsrum_skank
+          state: 'on'
+        - condition: time
+          after: '05:00:00'
+          before: '09:00:00'
+        - condition: or
+          conditions:
+          - condition: state
+            entity_id: sensor.harmony_current
+            state: 'Watch TV'
+          - condition: state
+            entity_id: sensor.harmony_current
+            state: 'Watch ChromeCast'
+    action:
+      - service: script.tv_light_look_at_tv
+
     ####################################################
     ### Återställ ljuset vid stäng av tv på morgonen ###
     ####################################################

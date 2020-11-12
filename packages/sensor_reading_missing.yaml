@@ -207,6 +207,30 @@ sensor:
             mdi:progress-check
           {% endif %}
 
+      ute_friggebod_temp_lastupdated:
+        friendly_name: Ute friggebod temp senast uppdaterad
+        value_template: >-
+          {{ states.sensor.ute_friggebod_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+        icon_template: >-
+          {% if (as_timestamp(now()) - as_timestamp(states.sensor.ute_friggebod_temperature.last_updated) > 100) %}
+            mdi:progress-alert
+          {% else %}
+            mdi:progress-check
+          {% endif %}
+
+      ute_friggebod_fukt_lastupdated:
+        friendly_name: Ute friggebod fukt senast uppdaterad
+        value_template: >-
+          {{ states.sensor.ute_friggebod_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+        icon_template: >-
+          {% if (as_timestamp(now()) - as_timestamp(states.sensor.ute_friggebod_humidity.last_updated) > 100) %}
+            mdi:progress-alert
+          {% else %}
+            mdi:progress-check
+          {% endif %}
+
 #########################################################
 input_boolean:
   frys_reading_missing_alarm:
@@ -238,6 +262,9 @@ input_boolean:
     initial: off
   friggebod_reading_missing_alarm:
     name: Friggebod avläsning saknas larm aktiverat
+    initial: off
+  ute_friggebod_reading_missing_alarm:
+    name: Ute friggebod avläsning saknas larm aktiverat
     initial: off
 
 #########################################################
@@ -463,6 +490,31 @@ automation:
     action:
       - service: homeassistant.turn_on
         entity_id: input_boolean.friggebod_reading_missing_alarm
+#      - service: notify.pushbullet
+#        data:
+#          message: 'Friggebod - ingen avläsning på 2 timmar'
+#########################################################
+  - alias: Avläsning saknas, ute friggebod
+    trigger:
+      - platform: time_pattern
+        minutes: "/5"
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.ute_friggebod_reading_missing_alarm
+          state: 'off'
+        - condition: or
+          conditions:
+            - condition: template
+              value_template: > 
+                {{ (as_timestamp(now())-as_timestamp(states.sensor.ute_friggebod_temperature.last_updated)) > 7200 }}
+            - condition: template
+              value_template: > 
+                {{ (as_timestamp(now())-as_timestamp(states.sensor.ute_friggebod_humidity.last_updated)) > 7200 }}
+    action:
+      - service: homeassistant.turn_on
+        entity_id: input_boolean.ute_friggebod_reading_missing_alarm
 #      - service: notify.pushbullet
 #        data:
 #          message: 'Friggebod - ingen avläsning på 2 timmar'

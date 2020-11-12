@@ -166,6 +166,8 @@ views:
         entities:
           - sensor.ute
           - sensor.ute2_humidity
+          - sensor.ute_friggebod_temperature
+          - sensor.ute_friggebod_humidity
           - sensor.ljusstyrka
         title: Utomhus
         show_header_toggle: false
@@ -597,6 +599,8 @@ views:
           - sensor.garage_fukt_lastupdated
           - sensor.friggebod_temp_lastupdated
           - sensor.friggebod_fukt_lastupdated
+          - sensor.ute_friggebod_temp_lastupdated
+          - sensor.ute_friggebod_fukt_lastupdated
         title: Temperatursensor senast
         show_header_toggle: false
         state_color: true

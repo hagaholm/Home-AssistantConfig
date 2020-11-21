@@ -24,6 +24,37 @@ switch:
 # Sätt till Off: 'http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=CHANGE'
 # Sätt till On: 'http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=on&PIO.A=CHANGE'
 
+####################################################
+#                                                  #
+#                    INPUT_SELECT                  #
+#                                                  #
+####################################################
+input_select:
+#  ventilation_onoff:
+#    name: Ventilation onoff
+#    options:
+#     - Off manuell
+#     - On manuell
+#     - Off (Borta, ute >24°C, <60%, Inne > 23°C)
+#     - Off (Ute >24°C, Borta, <60%, Inne > 23°C)
+#     - Off (<60%, Borta, Ute >24°C, Inne > 23°C)
+#     - Off (Inne >23°C, Borta, <60%, Ute > 24°C)
+#     - On (Hemma, Off)
+#     - On (Ute <22°C, Off)
+#     - On (>60%, Off)
+#     - On (Inne <23°C, Off)
+
+  ventilation_mode:
+    name: Ventilation mode
+    options:
+     - Normal manuell
+     - Forcerad manuell
+     - Forcerad Snabbt ökande fukt
+     - Forcerad Badrumsfönster hög fukt
+     - Normal Badrumsfönster låg fukt
+     - Normal Badrumsfönster stabiliserad fukt
+     - Normal Hög fukt i huset
+
 ##################
 ### autoamtion ###
 ##################
@@ -119,7 +150,7 @@ automation:
     ### T: new - old >= 4        ###
     ### A: switch.fan_speed = on ###
     ################################
-  - alias: Vent high Snabbt ökande fukt
+  - alias: Forcerad Snabbt ökande fukt
     trigger:
       - platform: state
         entity_id: sensor.fukt_badrumsfonster
@@ -135,13 +166,17 @@ automation:
     action:
       - service: homeassistant.turn_on
         entity_id: switch.fan_speed
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.ventilation_mode
+          option: forcerad_snabbt_okande_fukt
 
     ##########################################
     ### Hög fukt badrumsfönster            ###
     ### T: sensor.fukt_badrumsfonster > 69 ###
     ### A: switch.fan_speed = on           ###
     ##########################################
-  - alias: Vent high Badrumsfönster hög fukt
+  - alias: Forcerad Badrumsfönster hög fukt
     trigger:
       platform: numeric_state
       entity_id: sensor.fukt_badrumsfonster
@@ -157,6 +192,10 @@ automation:
     action:
       - service: homeassistant.turn_on
         entity_id: switch.fan_speed
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.ventilation_mode
+          option: forcerad_badrumsfonster_hog_fukt
 
     ################
     ### Låg fukt ###
@@ -166,7 +205,7 @@ automation:
     ### T: sensor.fukt_badrumsfonster < 68 ###
     ### A: switch.fan_speed = off          ###
     ##########################################
-  - alias: Vent low Badrumsfönster låg fukt
+  - alias: Normal Badrumsfönster låg fukt
     trigger:
       platform: numeric_state
       entity_id: sensor.fukt_badrumsfonster
@@ -180,6 +219,10 @@ automation:
     action:
       - service: homeassistant.turn_off
         entity_id: switch.fan_speed
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.ventilation_mode
+          option: normal_badrumsfonster_lag_fukt
 
     #################################################################################################
     ### Badrumsfönster stabiliserad fukt                                                          ###
@@ -190,7 +233,7 @@ automation:
     ### C: updated last 15 minutes                                                                ###
     ### A: switch.fan_speed = off                                                                 ###
     #################################################################################################
-  - alias: Vent low Badrumsfönster stabiliserad fukt
+  - alias: Normal Badrumsfönster stabiliserad fukt
     trigger:
       - platform: state
         entity_id: sensor.fukt_badrumsfonster
@@ -209,6 +252,10 @@ automation:
     action:
       - service: homeassistant.turn_off
         entity_id: switch.fan_speed
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.ventilation_mode
+          option: normal_badrumsfonster_stabiliserad_fukt
 
 #last_updated is the last time an entity did send its value to HA
 #last_changed is the last time there was a difference between the previous value and the new.
@@ -221,7 +268,7 @@ automation:
     ### C: sensorer uppdaterade de senaste 10 minuterna                                           ###
     ### A: switch.fan_speed = off                                                                 ###
     #################################################################################################
-  - alias: Vent low Hög fukt i huset
+  - alias: Normal Hög fukt i huset
     trigger:
       - platform: time_pattern
         minutes: "/5"
@@ -242,6 +289,10 @@ automation:
     action:
       - service: homeassistant.turn_off
         entity_id: switch.fan_speed
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.ventilation_mode
+          option: normal_hog_fukt_i_huset
 
     #######################
     ### Ventilation off ###

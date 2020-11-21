@@ -6,9 +6,69 @@ views:
     cards:
       - type: entities
         entities:
+          - automation.hassbian_startad
+          - automation.hassbian_stoppad
+          - automation.ny_enhet_hittad
+          - automation.hassbian_uppdatering
+          - automation.restart_ha
+        title: Hassbian
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.ringklocka_tvattstuga
+          - automation.ringklocka_hall
+          - automation.ringklocka_tand_allt_lyse_1
+          - automation.ringklocka_tand_allt_lyse_2
+          - automation.ringklocka_off_borta
+          - automation.ringklocka_on_hemma
+        title: Ringklocka
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.starta_luftavfuktare
+          - automation.stoppa_luftavfuktare
+        title: Garage luftavfuktare
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.starta_elvarme_5_grader
+          - automation.stoppa_elvarme_7_grader
+          - automation.starta_elvarme_8_grader
+          - automation.stoppa_elvarme_10_grader
+        title: Garage elvärme
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.dagligen_mandag
+          - automation.dagligen_onsdag
+          - automation.dagligen_fredag
+          - automation.dammsugaren_har_problem
+        title: Dammsugare
+        show_header_toggle: true
+        state_color: true
+    icon: 'mdi:home-automation'
+  - path: alarm
+    title: Larm
+    badges: []
+    cards:
+      - type: entities
+        entities:
           - automation.larm_rorelse_i_hallen
           - automation.larm_rorelse_i_louise_rum
         title: Larm
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.kor_annan_vag_hem
+          - automation.kor_annan_vag_till_seb
+          - automation.lang_restid_hem
+          - automation.lang_restid_till_seb
+        title: Restid till och från jobbet
         show_header_toggle: true
         state_color: true
       - type: entities
@@ -36,6 +96,78 @@ views:
           - automation.avlasning_saknas_friggebod
           - automation.avlasning_saknas_ute_friggebod
         title: Larm avläsningar saknas
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.uterum_larm_hog_temp
+          - automation.friggebod_larm_hog_temp
+          - automation.friggebod_larm_lag_temp
+          - automation.friggebod_frysvakt
+          - automation.larm_hog_temp_i_kyl
+          - automation.larm_lag_temp_i_kyl
+          - automation.larm_varning_hog_temp_i_frys
+          - automation.larm_hog_temp_i_frys
+          - automation.larm_lag_temp_i_frys
+          - automation.hog_temp_raspberry
+          - automation.lag_temp_ackumulatortank
+          - automation.hog_temp_ackumulatortank
+          - automation.lag_temp_franluft
+          - automation.hog_temp_franluft
+          - automation.lag_temp_tilluft
+          - automation.hog_temp_tilluft
+        title: Larm temperatur
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.ingen_kontakt_med_forrad_fasadbelysning
+          - automation.ingen_kontakt_med_fotogenlampa_i_uterum
+          - automation.ingen_kontakt_med_friggebod_brytare_vid_stora_fonstret
+          - automation.ingen_kontakt_med_friggebod_fasadbelysning
+          - automation.ingen_kontakt_med_garage_avfuktare
+          - automation.ingen_kontakt_med_tvattstuga_fasadbelysning
+          - automation.ingen_kontakt_med_uterum_fonster
+          - automation.ingen_kontakt_med_vardagsrum_skank
+          - automation.ingen_kontakt_med_vardagsrum_vagn
+          - automation.kontakt_med_forrad_fasadbelysning
+          - automation.kontakt_med_fotogenlampa_i_uterum
+          - automation.kontakt_med_friggebod_brytare_vid_stora_fonstret
+          - automation.kontakt_med_friggebod_fasadbelysning
+          - automation.kontakt_med_garage_avfuktare
+          - automation.kontakt_med_tvattstuga_fasadbelysning
+          - automation.kontakt_med_uterum_fonster
+          - automation.kontakt_med_vardagsrum_skank
+          - automation.kontakt_med_vardagsrum_vagn
+        title: IKEA
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.raspberry_pi_b_1_wire_offline
+          - automation.raspberry_pi_3b_hagaholm_offline
+          - automation.raspberry_pi_3b_lux_offline
+          - automation.raspberry_pi_3b_offline
+          - automation.raspberry_pi_4b_hassbian_offline
+        title: Larm Raspberry Pi offline
+        show_header_toggle: true
+        state_color: true
+  - path: lights
+    title: Belysning
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - automation.startar_timers_koksvagg
+          - automation.startar_timers_tvattstuga
+          - automation.startar_timers_koksskap
+          - automation.stanger_av_rorelsedetektor_kok_aktiv_om_aktiv_koksvagg
+          - automation.stanger_av_rorelsedetektor_kok_aktiv_om_aktiv_tvattstuga
+          - automation.stanger_av_rorelsedetektor_kok_aktiv_om_aktiv_koksskap
+          - automation.stanger_av_rorelsedetektor_kok_aktiv_for_nattbelysning_koksvagg
+          - automation.stanger_av_rorelsedetektor_kok_aktiv_for_nattbelysning_tvattstuga
+          - automation.stanger_av_rorelsedetektor_kok_aktiv_for_nattbelysning_koksskap
+        title: Rörelsedetektor i kök
         show_header_toggle: true
         state_color: true
       - type: entities
@@ -146,27 +278,10 @@ views:
         title: Fasadbelysning
         show_header_toggle: true
         state_color: true
-      - type: entities
-        entities:
-          - automation.uterum_larm_hog_temp
-          - automation.friggebod_larm_hog_temp
-          - automation.friggebod_larm_lag_temp
-          - automation.friggebod_frysvakt
-          - automation.larm_hog_temp_i_kyl
-          - automation.larm_lag_temp_i_kyl
-          - automation.larm_varning_hog_temp_i_frys
-          - automation.larm_hog_temp_i_frys
-          - automation.larm_lag_temp_i_frys
-          - automation.hog_temp_raspberry
-          - automation.lag_temp_ackumulatortank
-          - automation.hog_temp_ackumulatortank
-          - automation.lag_temp_franluft
-          - automation.hog_temp_franluft
-          - automation.lag_temp_tilluft
-          - automation.hog_temp_tilluft
-        title: Larm temperatur
-        show_header_toggle: true
-        state_color: true
+  - path: ventilation
+    title: Ventilation
+    badges: []
+    cards:
       - type: entities
         entities:
           - automation.badrumsfonster_hog_fukt_larm
@@ -191,6 +306,10 @@ views:
         title: Ventilation On/Off
         show_header_toggle: true
         state_color: true
+  - path: mediaplayer
+    title: Mediaspelare
+    badges: []
+    cards:
       - type: entities
         entities:
           - automation.mediaspelare_off_borta
@@ -213,106 +332,3 @@ views:
         title: Mediaspelare
         show_header_toggle: true
         state_color: true
-      - type: entities
-        entities:
-          - automation.hassbian_startad
-          - automation.hassbian_stoppad
-          - automation.ny_enhet_hittad
-          - automation.hassbian_uppdatering
-          - automation.restart_ha
-        title: Hassbian
-        show_header_toggle: true
-        state_color: true
-      - type: entities
-        entities:
-          - automation.ringklocka_tvattstuga
-          - automation.ringklocka_hall
-          - automation.ringklocka_tand_allt_lyse_1
-          - automation.ringklocka_tand_allt_lyse_2
-          - automation.ringklocka_off_borta
-          - automation.ringklocka_on_hemma
-        title: Ringklocka
-        show_header_toggle: true
-        state_color: true
-      - type: entities
-        entities:
-          - automation.starta_luftavfuktare
-          - automation.stoppa_luftavfuktare
-        title: Garage luftavfuktare
-        show_header_toggle: true
-        state_color: true
-      - type: entities
-        entities:
-          - automation.starta_elvarme_5_grader
-          - automation.stoppa_elvarme_7_grader
-          - automation.starta_elvarme_8_grader
-          - automation.stoppa_elvarme_10_grader
-        title: Garage elvärme
-        show_header_toggle: true
-        state_color: true
-      - type: entities
-        entities:
-          - automation.raspberry_pi_b_1_wire_offline
-          - automation.raspberry_pi_3b_hagaholm_offline
-          - automation.raspberry_pi_3b_lux_offline
-          - automation.raspberry_pi_3b_offline
-          - automation.raspberry_pi_4b_hassbian_offline
-        title: Larm Raspberry Pi offline
-        show_header_toggle: true
-        state_color: true
-      - type: entities
-        entities:
-          - automation.kor_annan_vag_hem
-          - automation.kor_annan_vag_till_seb
-          - automation.lang_restid_hem
-          - automation.lang_restid_till_seb
-        title: Restid till och från jobbet
-        show_header_toggle: true
-        state_color: true
-      - type: entities
-        entities:
-          - automation.ingen_kontakt_med_forrad_fasadbelysning
-          - automation.ingen_kontakt_med_fotogenlampa_i_uterum
-          - automation.ingen_kontakt_med_friggebod_brytare_vid_stora_fonstret
-          - automation.ingen_kontakt_med_friggebod_fasadbelysning
-          - automation.ingen_kontakt_med_garage_avfuktare
-          - automation.ingen_kontakt_med_tvattstuga_fasadbelysning
-          - automation.ingen_kontakt_med_uterum_fonster
-          - automation.ingen_kontakt_med_vardagsrum_skank
-          - automation.ingen_kontakt_med_vardagsrum_vagn
-          - automation.kontakt_med_forrad_fasadbelysning
-          - automation.kontakt_med_fotogenlampa_i_uterum
-          - automation.kontakt_med_friggebod_brytare_vid_stora_fonstret
-          - automation.kontakt_med_friggebod_fasadbelysning
-          - automation.kontakt_med_garage_avfuktare
-          - automation.kontakt_med_tvattstuga_fasadbelysning
-          - automation.kontakt_med_uterum_fonster
-          - automation.kontakt_med_vardagsrum_skank
-          - automation.kontakt_med_vardagsrum_vagn
-        title: IKEA
-        show_header_toggle: true
-        state_color: true
-      - type: entities
-        entities:
-          - automation.startar_timers_koksvagg
-          - automation.startar_timers_tvattstuga
-          - automation.startar_timers_koksskap
-          - automation.stanger_av_rorelsedetektor_kok_aktiv_om_aktiv_koksvagg
-          - automation.stanger_av_rorelsedetektor_kok_aktiv_om_aktiv_tvattstuga
-          - automation.stanger_av_rorelsedetektor_kok_aktiv_om_aktiv_koksskap
-          - automation.stanger_av_rorelsedetektor_kok_aktiv_for_nattbelysning_koksvagg
-          - automation.stanger_av_rorelsedetektor_kok_aktiv_for_nattbelysning_tvattstuga
-          - automation.stanger_av_rorelsedetektor_kok_aktiv_for_nattbelysning_koksskap
-        title: Rörelsedetektor i kök
-        show_header_toggle: true
-        state_color: true
-      - type: entities
-        entities:
-          - automation.dagligen_mandag
-          - automation.dagligen_onsdag
-          - automation.dagligen_fredag
-          - automation.dammsugaren_har_problem
-        title: Dammsugare
-        show_header_toggle: true
-        state_color: true
-    icon: 'mdi:home-automation'

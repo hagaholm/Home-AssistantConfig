@@ -2,6 +2,26 @@
 ### Automation ###
 ##################
 automation:
+  #######################
+  ### Processes image ###
+  #######################
+  ### - every 3 sec   ###    
+  ### - allways       ###
+  #######################
+  - alias: Camera 2 Image processing
+    mode: queued
+    
+    # Every 3 sec
+    trigger:
+      - platform: time_pattern
+        seconds: "/3"
+
+    # Scan a new image
+    action:
+      - service: image_processing.scan
+        data:
+          entity_id: image_processing.deepstack_camera_2
+
   #################################
   ### Processes image mode Away ###
   #################################

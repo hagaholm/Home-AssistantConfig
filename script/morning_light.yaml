@@ -63,8 +63,14 @@
         entity_id: light.kok_stora_fonstret_ljusstake
       - service: light.turn_on
         entity_id: light.kok_lilla_fonstret
+
+#      - service: light.turn_on
+#        entity_id: light.uterum_julstjarnor
       - service: light.turn_on
-        entity_id: light.uterum_julstjarnor
+        data:
+          entity_id: light.uterum_fonster
+          brightness_pct: 80
+          transition: 5
 
 # IKEA
       - service: light.turn_on

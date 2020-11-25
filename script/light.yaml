@@ -163,6 +163,11 @@
           entity_id: light.sovrum_fonster
           brightness_pct: 50
           transition: 2
+      - service: light.turn_on
+        data:
+          entity_id: light.louise_golvlampa
+          brightness_pct: 80
+          transition: 2
 
   ####################
   ### Belysning on ###

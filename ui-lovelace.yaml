@@ -64,51 +64,82 @@ views:
               action: toggle
             type: button
         type: horizontal-stack
-      - cards:
-          - entity: light.sovrum
-            hold_action:
-              action: none
-            icon: 'mdi:lightbulb'
-            name: Sovrum
-            tap_action:
-              action: toggle
-            type: button
-          - entity: light.andreas_rum
-            icon: 'mdi:lightbulb'
-            name: Andreas rum
-            show_icon: true
-            show_name: true
-            tap_action:
-              action: toggle
-            type: button
-          - entity: light.louise_rum
-            icon: 'mdi:lightbulb'
-            name: Louise rum
-            tap_action:
-              action: toggle
-            type: button
-        type: horizontal-stack
-      - cards:
-          - entity: light.vardagsrum
-            hold_action:
-              action: more-info
-            icon: 'mdi:lightbulb'
-            tap_action:
-              action: toggle
-            type: button
-          - entity: light.hall
-            icon: 'mdi:lightbulb'
-            show_icon: true
-            show_name: true
-            tap_action:
-              action: toggle
-            type: button
-          - entity: light.kok
-            icon: 'mdi:lightbulb'
-            tap_action:
-              action: toggle
-            type: button
-        type: horizontal-stack
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'off'
+        card:
+          type: grid
+          cards:
+            - type: button
+              tap_action:
+                action: toggle
+              entity: light.sovrum
+            - type: button
+              tap_action:
+                action: toggle
+              entity: light.andreas_rum
+            - type: button
+              tap_action:
+                action: toggle
+              entity: light.louise_rum
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'on'
+        card:
+          type: grid
+          cards:
+            - type: button
+              tap_action:
+                action: toggle
+              entity: light.sovrum
+            - type: button
+              tap_action:
+                action: toggle
+              entity: light.andreas_rum
+            - type: button
+              tap_action:
+                action: toggle
+              entity: light.louise_rum
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'off'
+        card:
+          type: grid
+          cards:
+            - type: button
+              tap_action:
+                action: toggle
+              entity: light.vardagsrum
+            - type: button
+              tap_action:
+                action: toggle
+              entity: light.hall
+            - type: button
+              tap_action:
+                action: toggle
+              entity: light.kok
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'on'
+        card:
+          type: grid
+          cards:
+            - type: button
+              tap_action:
+                action: toggle
+              entity: light.vardagsrum_jul
+            - type: button
+              tap_action:
+                action: toggle
+              entity: light.hall
+            - type: button
+              tap_action:
+                action: toggle
+              entity: light.kok_jul
     icon: 'mdi:information-outline'
     panel: false
     path: Start

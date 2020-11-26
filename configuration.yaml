@@ -258,7 +258,7 @@ light:
 
 # Light group
 # https://www.home-assistant.io/integrations/light.group/
-
+ 
   - platform: group
     name: Belysning
     entities:
@@ -432,10 +432,18 @@ light:
       - light.andreas_fonster
 
   - platform: group
-    name: uterum
+    name: Uterum
     entities:
       - light.uterum_led_lights
       - light.uterum_fonster
+      - light.uterum_fotogenlampa
+
+  - platform: group
+    name: Uterum jul 
+    entities:
+      - light.uterum_led_lights
+      - light.uterum_fonster
+#      - light.uterum_julstjarnor 
       - light.uterum_fotogenlampa
 
 ####################################################

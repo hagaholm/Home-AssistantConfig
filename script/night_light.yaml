@@ -64,9 +64,27 @@
           entity_id: input_select.inside_lights
           option: Off
 
+      - service: script.turn_on
+        data_template:
+          entity_id: >
+            {% if is_state('input_boolean.christmas_light', 'on') %}
+              script.night_light_christmas_off
+            {% else %}
+              script.night_light_default_off
+            {% endif %}  
+
+  night_light_default_off:
+    alias: Nattbelysning default off
+    sequence:
       - service: light.turn_off
         data:
           entity_id: light.nattbelysning
           transition: 2
+
+  night_light_christmas_off:
+    alias: Nattjulbelysning off
+    sequence:
       - service: light.turn_off
-        entity_id: light.vardagsrum_fonster_ljusstake_2
+        data:
+          entity_id: light.nattbelysning_jul
+          transition: 2

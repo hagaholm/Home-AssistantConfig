@@ -262,12 +262,29 @@ light:
   - platform: group
     name: Belysning
     entities:
-#      - light.kok_stora_fonstret
+      - light.kok_stora_fonstret
+      - light.kok_lilla_fonstret
+      - light.hall_byra
+      - light.hall_skap
+      - light.vardagsrum_fonster
+      - light.vardagsrum_skank
+      - light.vardagsrum_vagn
+      - light.vardagsrum_vitrinskap
+      - light.vardagsrum_gran
+      - light.sovrum_fonster
+      - light.sovrum_sangbord
+      - light.andreas_fonster
+      - light.louise_fonster
+      - light.louise_golvlampa
+      - light.uterum_fonster
+
+  - platform: group
+    name: Belysning jul
+    entities:
       - light.kok_stora_fonstret_ljusstake #jul
       - light.kok_lilla_fonstret
       - light.hall_byra
       - light.hall_skap
-#      - light.vardagsrum_fonster
       - light.vardagsrum_fonster_ljusstake_2 #jul
       - light.vardagsrum_skank
       - light.vardagsrum_vagn
@@ -292,11 +309,20 @@ light:
   - platform: group
     name: Morgonbelysning
     entities:
-#      - light.kok_stora_fonstret
+      - light.kok_stora_fonstret
       - light.kok_stora_fonstret_ljusstake #jul
       - light.kok_lilla_fonstret
       - light.hall_byra
-#      - light.vardagsrum_fonster
+      - light.vardagsrum_fonster
+      - light.vardagsrum_gran
+      - light.uterum_fonster
+
+  - platform: group
+    name: Morgonbelysning jul
+    entities:
+      - light.kok_stora_fonstret_ljusstake #jul
+      - light.kok_lilla_fonstret
+      - light.hall_byra
       - light.vardagsrum_fonster_ljusstake_2 #jul
       - light.vardagsrum_gran
       - light.uterum_fonster
@@ -306,7 +332,12 @@ light:
     name: Nattbelysning
     entities:
       - light.hall_byra
-#      - light.vardagsrum_fonster
+      - light.vardagsrum_fonster
+
+  - platform: group
+    name: Nattbelysning jul
+    entities:
+      - light.hall_byra
       - light.vardagsrum_fonster_ljusstake_2 #jul
 
   - platform: group
@@ -316,25 +347,45 @@ light:
       - light.tvattstuga_fasad
       - light.forrad_fasad
       - light.friggebod_fasad
+
+  - platform: group
+    name: Utomhusbelysning jul
+    entities:
+      - light.huvudentre
+      - light.tvattstuga_fasad
+      - light.forrad_fasad
+      - light.friggebod_fasad
       - light.friggebod_ute
+
+  - platform: group
+    name: Utebelysning
+    entities:
       - light.friggebod_fonster
       - light.spabad_vagg
 
   - platform: group
     name: Bortabelysning
     entities:
-#      - light.kok_stora_fonstret
+      - light.kok_stora_fonstret
+      - light.kok_lilla_fonstret
+      - light.hall_byra
+      - light.vardagsrum_fonster
+      - light.sovrum_sangbord
+      - light.louise_fonster
+      - light.uterum_fonster
+
+  - platform: group
+    name: Bortabelysning jul
+    entities:
       - light.kok_stora_fonstret_ljusstake #jul
       - light.kok_lilla_fonstret
       - light.hall_byra
-#      - light.vardagsrum_fonster
       - light.vardagsrum_fonster_ljusstake_2 #jul
       - light.sovrum_sangbord
       - light.louise_fonster
 #jul      - light.louise_fonster_dimmer_julstjarna
       - light.uterum_fonster
 #jul      - light.uterum_julstjarnor
-
 
 
   - platform: group
@@ -352,7 +403,15 @@ light:
   - platform: group
     name: Vardagsrum
     entities:
-#      - light.vardagsrum_fonster
+      - light.vardagsrum_fonster
+      - light.vardagsrum_skank
+      - light.vardagsrum_vagn
+      - light.vardagsrum_vitrinskap
+      - light.vardagsrum_gran
+
+  - platform: group
+    name: Vardagsrum jul
+    entities:
       - light.vardagsrum_fonster_ljusstake_2 #jul
       - light.vardagsrum_skank
       - light.vardagsrum_vagn
@@ -362,7 +421,12 @@ light:
   - platform: group
     name: Kök
     entities:
-#      - light.kok_stora_fonstret
+      - light.kok_stora_fonstret
+      - light.kok_lilla_fonstret
+
+  - platform: group
+    name: Kök jul
+    entities:
       - light.kok_stora_fonstret_ljusstake #jul
       - light.kok_lilla_fonstret
 

@@ -15,11 +15,16 @@
           entity_id: input_select.inside_lights
           option: Off
 
-      - service: light.turn_off
-        data:
-          entity_id: light.belysning
-          transition: 2
-      - service: light.turn_off
+      - service: script.turn_on
+        data_template:
+          entity_id: >
+            {% if is_state('input_boolean.christmas_light', 'on') %}
+              script.lights_christmas_off
+            {% else %}
+              script.lights_default_off
+            {% endif %}
+
+     - service: light.turn_off
         data:
           entity_id: light.koksbelysning
           transition: 2
@@ -32,10 +37,6 @@
           entity_id: light.friggebod_fonster
           transition: 2
 
-      - service: light.turn_off
-        entity_id: light.vardagsrum_fonster_ljusstake_2
-      - service: light.turn_off
-        entity_id: light.louise_fonster_dimmer_julstjarna
       - service: light.turn_off
         entity_id: light.friggebod_ute
       - service: light.turn_off
@@ -60,11 +61,16 @@
           entity_id: input_select.inside_lights
           option: Off
 
-      - service: light.turn_off
-        data:
-          entity_id: light.belysning
-          transition: 2
-      - service: light.turn_off
+      - service: script.turn_on
+        data_template:
+          entity_id: >
+            {% if is_state('input_boolean.christmas_light', 'on') %}
+              script.lights_christmas_off
+            {% else %}
+              script.lights_default_off
+            {% endif %}
+
+     - service: light.turn_off
         data:
           entity_id: light.koksbelysning
           transition: 2
@@ -77,12 +83,6 @@
           entity_id: light.friggebod_fonster
           transition: 2
 
-      - service: light.turn_off
-        entity_id: light.friggebod_ute
-      - service: light.turn_off
-        entity_id: light.vardagsrum_fonster_ljusstake_2
-      - service: light.turn_off
-        entity_id: light.louise_fonster_dimmer_julstjarna
       - service: light.turn_off
         entity_id: light.friggebod_ute
       - service: light.turn_off
@@ -105,11 +105,16 @@
           entity_id: input_select.inside_lights
           option: Off
 
-      - service: light.turn_off
-        data:
-          entity_id: light.belysning
-          transition: 2
-      - service: light.turn_off
+      - service: script.turn_on
+        data_template:
+          entity_id: >
+            {% if is_state('input_boolean.christmas_light', 'on') %}
+              script.lights_christmas_off
+            {% else %}
+              script.lights_default_off
+            {% endif %}
+
+     - service: light.turn_off
         data:
           entity_id: light.koksbelysning
           transition: 2
@@ -122,10 +127,6 @@
           entity_id: light.friggebod_fonster
           transition: 2
 
-      - service: light.turn_off
-        entity_id: light.vardagsrum_fonster_ljusstake_2
-      - service: light.turn_off
-        entity_id: light.louise_fonster_dimmer_julstjarna
       - service: light.turn_off
         entity_id: light.friggebod_ute
       - service: light.turn_off
@@ -164,11 +165,16 @@
           entity_id: input_select.inside_lights
           option: Off
 
-      - service: light.turn_off
-        data:
-          entity_id: light.belysning
-          transition: 2
-      - service: light.turn_off
+      - service: script.turn_on
+        data_template:
+          entity_id: >
+            {% if is_state('input_boolean.christmas_light', 'on') %}
+              script.lights_christmas_off
+            {% else %}
+              script.lights_default_off
+            {% endif %}
+
+     - service: light.turn_off
         data:
           entity_id: light.koksbelysning
           transition: 2
@@ -181,10 +187,6 @@
           entity_id: light.friggebod_fonster
           transition: 2
 
-      - service: light.turn_off
-        entity_id: light.vardagsrum_fonster_ljusstake_2
-      - service: light.turn_off
-        entity_id: light.louise_fonster_dimmer_julstjarna
       - service: light.turn_off
         entity_id: light.friggebod_ute
       - service: light.turn_off
@@ -221,11 +223,16 @@
           entity_id: input_select.inside_lights
           option: Off
 
-      - service: light.turn_off
-        data:
-          entity_id: light.belysning
-          transition: 2
-      - service: light.turn_off
+      - service: script.turn_on
+        data_template:
+          entity_id: >
+            {% if is_state('input_boolean.christmas_light', 'on') %}
+              script.lights_christmas_off
+            {% else %}
+              script.lights_default_off
+            {% endif %}
+
+     - service: light.turn_off
         data:
           entity_id: light.koksbelysning
           transition: 2
@@ -238,10 +245,6 @@
           entity_id: light.friggebod_fonster
           transition: 2
 
-      - service: light.turn_off
-        entity_id: light.vardagsrum_fonster_ljusstake_2
-      - service: light.turn_off
-        entity_id: light.louise_fonster_dimmer_julstjarna
       - service: light.turn_off
         entity_id: light.friggebod_ute
       - service: light.turn_off

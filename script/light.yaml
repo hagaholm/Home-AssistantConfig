@@ -351,31 +351,48 @@
           entity_id: input_select.inside_lights
           option: Off
 
+      - service: script.turn_on
+        data_template:
+          entity_id: >
+            {% if is_state('input_boolean.christmas_light', 'on') %}
+              script.lights_christmas_off
+            {% else %}
+              script.lights_default_off
+            {% endif %}
+
+
+  lights_default_off:
+    alias: Belysning default off
+    sequence:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.home_status
+          option: Hemma av
+
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Off
+
       - service: light.turn_off
         data:
           entity_id: light.belysning
           transition: 2
-      - service: light.turn_off
-        entity_id: light.vardagsrum_fonster_ljusstake_2
-      - service: light.turn_off
-        entity_id: light.kok_stora_fonstret_ljusstake
-      - service: light.turn_off
-        entity_id: light.louise_fonster_dimmer_julstjarna
-      - service: light.turn_off
-        entity_id: light.uterum_julstjarnor
 
-      - delay:
-          seconds: 3
+  lights_christmas_off:
+    alias: Belysning jul off
+    sequence:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.home_status
+          option: Hemma av
+
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Off
 
       - service: light.turn_off
         data:
-          entity_id: light.vardagsrum_skank
-          transition: 2
-      - service: light.turn_off
-        data:
-          entity_id: light.louise_fonster
-          transition: 2
-      - service: light.turn_off
-        data:
-          entity_id: light.louise_golvlampa
+          entity_id: light.belysning_jul
           transition: 2

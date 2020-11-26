@@ -292,6 +292,14 @@ views:
         state_color: true
       - type: entities
         entities:
+          - light.friggebod_fonster
+          - light.friggebod_ute
+          - light.spabad_vagg
+        title: Utebelysning
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
           - light.huvudentre
           - light.tvattstugan_fasad
           - light.forrad_fasad
@@ -299,7 +307,7 @@ views:
           - light.friggebod_ute
           - light.friggebod_fonster
           - light.spabad_vagg
-        title: Utomhusbelysning
+        title: Fasadbelysning
         show_header_toggle: true
         state_color: true
       - type: entities

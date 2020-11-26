@@ -37,10 +37,13 @@
           entity_id: light.friggebod_fonster
           transition: 2
 
-      - service: light.turn_off
-        entity_id: light.friggebod_ute
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
+      - repeat:
+          count: 10
+          sequence:
+            - service: light.turn_off
+              entity_id: light.friggebod_ute
+            - service: light.turn_off
+              entity_id: light.spabad_vagg
 
   ###########################################
   ### Godnatt, släcker allt om 10 minuter ###
@@ -83,10 +86,13 @@
           entity_id: light.friggebod_fonster
           transition: 2
 
-      - service: light.turn_off
-        entity_id: light.friggebod_ute
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
+      - repeat:
+          count: 10
+          sequence:
+            - service: light.turn_off
+              entity_id: light.friggebod_ute
+            - service: light.turn_off
+              entity_id: light.spabad_vagg
 
   ################################
   ### Godnatt, stänger av allt ###
@@ -127,11 +133,6 @@
           entity_id: light.friggebod_fonster
           transition: 2
 
-      - service: light.turn_off
-        entity_id: light.friggebod_ute
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-
       - service: remote.turn_off
         entity_id: remote.harmony_hub
 
@@ -145,6 +146,14 @@
         entity_id: switch.vardagsrum_subbas
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_extra_subbas
+
+      - repeat:
+          count: 10
+          sequence:
+            - service: light.turn_off
+              entity_id: light.friggebod_ute
+            - service: light.turn_off
+              entity_id: light.spabad_vagg
 
   ##############################################
   ### Godnatt, stänger av allt om 10 minuter ###
@@ -187,11 +196,6 @@
           entity_id: light.friggebod_fonster
           transition: 2
 
-      - service: light.turn_off
-        entity_id: light.friggebod_ute
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
-
       - service: remote.turn_off
         entity_id: remote.harmony_hub
 
@@ -205,6 +209,14 @@
         entity_id: switch.vardagsrum_subbas
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_extra_subbas
+
+      - repeat:
+          count: 10
+          sequence:
+            - service: light.turn_off
+              entity_id: light.friggebod_ute
+            - service: light.turn_off
+              entity_id: light.spabad_vagg
 
   ###################################################
   ### Godnatt, stänger av allt (tv om 10 minuter) ###
@@ -240,15 +252,11 @@
         data:
           entity_id: light.friggebod_fasad
           transition: 2
+          
       - service: light.turn_off
         data:
           entity_id: light.friggebod_fonster
           transition: 2
-
-      - service: light.turn_off
-        entity_id: light.friggebod_ute
-      - service: light.turn_off
-        entity_id: light.spabad_vagg
 
       - delay: '00:10:00'
 
@@ -265,6 +273,14 @@
         entity_id: switch.vardagsrum_subbas
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_extra_subbas
+
+      - repeat:
+          count: 10
+          sequence:
+            - service: light.turn_off
+              entity_id: light.friggebod_ute
+            - service: light.turn_off
+              entity_id: light.spabad_vagg
 
   #########################
   ### Släck i sovrummet ###

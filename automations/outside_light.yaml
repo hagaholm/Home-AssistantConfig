@@ -1,14 +1,42 @@
-    #######################################################
-    ### Tänder belysning friggebod ute på eftermiddagen ###
-    ### T: sensor.ljusstyrka < 5                        ###
-    ### C: 12:00:00 - 21:45:00                          ###
-    ### A: light.friggebod_ute = on                     ###
-    #######################################################
-  - alias: Friggebod belysning ute on (<5)
+    ############################################################
+    ### Tänder friggebod ute på morgonen vid rörelse i köket ###
+    ### T: input_boolean.rorelsedetektor_kok_aktiv == on     ###
+    ### C: sensor.ljusstyrka < 500                           ###
+    ###    05:00:00 - 12:00:00                               ###
+    ### A: light.friggebod_ute = on                          ###
+    ############################################################
+  - alias: Friggebod ute on (sensor on, <500)
+    trigger:
+      platform: state
+      entity_id: input_boolean.rorelsedetektor_kok_aktiv
+      to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: numeric_state
+          entity_id: sensor.ljusstyrka
+          below: 500
+        - condition: state
+          entity_id: light.friggebod_fasad
+          state: 'off'
+        - condition: time
+          after: '05:00:00'
+          before: '12:00:00'
+    action:
+      - service: light.turn_on
+        entity_id: light.friggebod_ute
+
+    #############################################
+    ### Tänder friggebod ute på eftermiddagen ###
+    ### T: sensor.ljusstyrka < 500            ###
+    ### C: 12:00:00 - 21:45:00                ###
+    ### A: light.friggebod_ute = on           ###
+    #############################################
+  - alias: Friggebod ute on (<500)
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      below: 5
+      below: 500
     condition:
       condition: time
       after: '12:00:00'
@@ -16,6 +44,27 @@
     action:
       - service: light.turn_on
         entity_id: light.friggebod_ute
+
+    ################################################
+    ### Släcker friggebod ute när det blir ljust ###
+    ### T: sensor.ljusstyrka > 600               ###
+    ### C: light.friggebod_ute == on             ###
+    ### A: light.friggebod_ute = off             ###
+    ################################################
+  - alias: Friggebod ute off (>600)
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      above: 600
+    condition:
+      condition: state
+      entity_id: light.friggebod_ute
+      state: 'on'
+    action:
+      - service: light.turn_off
+        entity_id: light.friggebod_ute
+
+#############################################################
 
     #########################################################
     ### Tänder belysning vid Spabad på eftermiddagen      ###
@@ -40,6 +89,8 @@
           state: 'off'
     action:
       - service: script.spa_light_on
+
+#############################################################
 
     #####################################################
     ### Tänder belysning i Friggebod på eftermiddagen ###

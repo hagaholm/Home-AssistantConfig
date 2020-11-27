@@ -365,14 +365,84 @@
     alias: Belysning default off
     sequence:
       - service: light.turn_off
-        data:
-          entity_id: light.belysning
-          transition: 2
+        entity_id: light.kok_stora_fonstret
+      - service: light.turn_off
+        entity_id: light.kok_lilla_fonstret
+      - service: light.turn_off
+        entity_id: light.hall_byra
+      - service: light.turn_off
+        entity_id: light.hall_skap
+      - service: light.turn_off
+        entity_id: light.vardagsrum_fonster
+      - service: light.turn_off
+        entity_id: light.vardagsrum_skank
+      - service: light.turn_off
+        entity_id: light.vardagsrum_vagn
+      - service: light.turn_off
+        entity_id: light.vardagsrum_vitrinskap
+      - service: light.turn_off
+        entity_id: light.vardagsrum_gran
+      - service: light.turn_off
+        entity_id: light.sovrum_fonster
+      - service: light.turn_off
+        entity_id: light.sovrum_sangbord
+      - service: light.turn_off
+        entity_id: light.andreas_fonster
+      - service: light.turn_off
+        entity_id: light.louise_fonster
+      - service: light.turn_off
+        entity_id: light.louise_golvlampa
+      - service: light.turn_off
+        entity_id: light.uterum_fonster
+
+#      - service: light.turn_off
+#        entity_id: light.vardagsrum_fonster_ljusstake_2
+#      - service: light.turn_off
+#        entity_id: light.kok_stora_fonstret_ljusstake
+#      - service: light.turn_off
+#        entity_id: light.louise_fonster_dimmer_julstjarna
+#      - service: light.turn_off
+#        entity_id: light.uterum_julstjarnor
 
   lights_christmas_off:
     alias: Belysning jul off
     sequence:
+#      - service: light.turn_off
+#        entity_id: light.kok_stora_fonstret
       - service: light.turn_off
-        data:
-          entity_id: light.belysning_jul
-          transition: 2
+        entity_id: light.kok_lilla_fonstret
+      - service: light.turn_off
+        entity_id: light.hall_byra
+      - service: light.turn_off
+        entity_id: light.hall_skap
+#      - service: light.turn_off
+#        entity_id: light.vardagsrum_fonster
+      - service: light.turn_off
+        entity_id: light.vardagsrum_skank
+      - service: light.turn_off
+        entity_id: light.vardagsrum_vagn
+      - service: light.turn_off
+        entity_id: light.vardagsrum_vitrinskap
+      - service: light.turn_off
+        entity_id: light.vardagsrum_gran
+      - service: light.turn_off
+        entity_id: light.sovrum_fonster
+      - service: light.turn_off
+        entity_id: light.sovrum_sangbord
+      - service: light.turn_off
+        entity_id: light.andreas_fonster
+      - service: light.turn_off
+        entity_id: light.louise_fonster
+      - service: light.turn_off
+        entity_id: light.louise_golvlampa
+      - service: light.turn_off
+        entity_id: light.uterum_fonster
+
+      - service: light.turn_off
+        entity_id: light.vardagsrum_fonster_ljusstake_2
+      - service: light.turn_off
+        entity_id: light.kok_stora_fonstret_ljusstake
+#      - service: light.turn_off
+#        entity_id: light.louise_fonster_dimmer_julstjarna
+#      - service: light.turn_off
+#        entity_id: light.uterum_julstjarnor

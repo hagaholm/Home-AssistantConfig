@@ -211,9 +211,9 @@ light:
 #  - platform: switch
 #    name: Louise fönster
 #    entity_id: switch.louise_fonster
-#  - platform: switch
-#    name: Andreas fönster
-#    entity_id: switch.andreas_fonster
+  - platform: switch
+    name: Andreas fönster
+    entity_id: switch.andreas_fonster
   - platform: switch
     name: Friggebod fönster
     entity_id: switch.friggebod_fonster
@@ -255,6 +255,9 @@ light:
     name: Uterum julstjärnor
     entity_id: switch.uterum_julstjarnor
 
+  - platform: switch
+    name: Andreas fönster julstjärna
+    entity_id: switch.andreas_fonster
 
 # Light group
 # https://www.home-assistant.io/integrations/light.group/
@@ -291,7 +294,7 @@ light:
       - light.vardagsrum_gran
       - light.sovrum_fonster
       - light.sovrum_sangbord
-      - light.andreas_fonster
+      - light.andreas_fonster_julstjarna
       - light.louise_fonster
       - light.louise_golvlampa
 #jul      - light.louise_fonster_dimmer_julstjarna
@@ -429,6 +432,11 @@ light:
     name: Andreas rum
     entities:
       - light.andreas_fonster
+
+  - platform: group 
+    name: Andreas rum jul
+    entities:
+      - light.andreas_fonster_julstjarna
 
   - platform: group
     name: Uterum

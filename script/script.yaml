@@ -133,6 +133,12 @@
           entity_id: light.friggebod_fonster
           transition: 2
 
+# Need to add an extra off for just this one
+      - service: light.turn_off
+        data:
+          entity_id: light.andreas_fonster
+          transition: 2
+
       - service: remote.turn_off
         entity_id: remote.harmony_hub
 

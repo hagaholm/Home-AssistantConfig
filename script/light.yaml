@@ -364,16 +364,6 @@
   lights_default_off:
     alias: Belysning default off
     sequence:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.home_status
-          option: Hemma av
-
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.inside_lights
-          option: Off
-
       - service: light.turn_off
         data:
           entity_id: light.belysning
@@ -382,16 +372,6 @@
   lights_christmas_off:
     alias: Belysning jul off
     sequence:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.home_status
-          option: Hemma av
-
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.inside_lights
-          option: Off
-
       - service: light.turn_off
         data:
           entity_id: light.belysning_jul

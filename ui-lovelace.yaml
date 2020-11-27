@@ -274,48 +274,118 @@ views:
         title: Köksbelysning
         show_header_toggle: true
         state_color: true
-      - type: entities
-        entities:
-          - light.kok_stora_fonstret
-          - light.kok_lilla_fonstret
-          - light.hall_byra
-          - light.vardagsrum_fonster
-          - light.vardagsrum_gran
-          - light.uterum_fonster
-        title: Morgonbelysning
-        show_header_toggle: true
-        state_color: true
-      - type: entities
-        entities:
-          - light.kok_stora_fonstret
-          - light.kok_lilla_fonstret
-          - light.hall_byra
-          - light.hall_skap
-          - light.vardagsrum_fonster
-          - light.vardagsrum_skank
-          - light.vardagsrum_vagn
-          - light.vardagsrum_vitrinskap
-          - light.vardagsrum_gran
-          - light.sovrum_fonster
-          - light.sovrum_sangbord
-          - light.andreas_fonster
-          - light.louise_fonster
-          - light.louise_golvlampa
-          - light.uterum_fonster
-        title: Belysning
-        show_header_toggle: true
-        state_color: true
-      - type: entities
-        entities:
-          - light.hall_byra
-          - light.vardagsrum_fonster
-          - input_boolean.rorelsedetektor_kok_aktiv
-          - timer.timer_rorelsedetektor_1_short
-          - timer.timer_rorelsedetektor_2_short
-          - timer.timer_rorelsedetektor_3_short
-        title: Nattbelysning
-        show_header_toggle: true
-        state_color: true
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'off'
+        card:
+          type: entities
+          entities:
+          - entity: light.kok_stora_fonstret
+          - entity: light.kok_lilla_fonstret
+          - entity: light.hall_byra
+          - entity: light.vardagsrum_fonster
+          - entity: light.vardagsrum_gran
+          - entity: light.uterum_fonster
+          title: Morgonbelysning
+          show_header_toggle: true
+          state_color: true
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'on'
+        card:
+          type: entities
+          entities:
+          - entity: light.kok_stora_fonstret_ljusstake
+          - entity: light.kok_lilla_fonstret
+          - entity: light.hall_byra
+          - entity: light.vardagsrum_fonster_ljusstake_2
+          - entity: light.vardagsrum_gran
+          - entity: light.uterum_fonster
+          title: Morgonbelysning jul
+          show_header_toggle: true
+          state_color: true
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'off'
+        card:
+          type: entities
+          entities:
+            - entity: light.kok_stora_fonstret
+            - entity: light.kok_lilla_fonstret
+            - entity: light.hall_byra
+            - entity: light.hall_skap
+            - entity: light.vardagsrum_fonster
+            - entity: light.vardagsrum_skank
+            - entity: light.vardagsrum_vagn
+            - entity: light.vardagsrum_vitrinskap
+            - entity: light.sovrum_fonster
+            - entity: light.sovrum_sangbord
+            - entity: light.andreas_fonster
+            - entity: light.louise_fonster
+            - entity: light.louise_golvlampa
+            - entity: light.uterum_fonster
+          title: Belysning
+          show_header_toggle: true
+          state_color: true
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'on'
+        card:
+          type: entities
+          entities:
+            - entity: light.kok_stora_fonstret_ljusstake
+            - entity: light.kok_lilla_fonstret
+            - entity: light.hall_byra
+            - entity: light.hall_skap
+            - entity: light.vardagsrum_fonster_ljusstake_2
+            - entity: light.vardagsrum_skank
+            - entity: light.vardagsrum_vagn
+            - entity: light.vardagsrum_vitrinskap
+            - entity: light.sovrum_fonster
+            - entity: light.sovrum_sangbord
+            - entity: light.andreas_fonster
+            - entity: light.louise_fonster
+            - entity: light.louise_golvlampa
+            - entity: light.uterum_fonster
+          title: Belysning jul
+          show_header_toggle: true
+          state_color: true
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'off'
+        card:
+          type: entities
+          entities:
+            - light.hall_byra
+            - light.vardagsrum_fonster
+            - input_boolean.rorelsedetektor_kok_aktiv
+            - timer.timer_rorelsedetektor_1_short
+            - timer.timer_rorelsedetektor_2_short
+            - timer.timer_rorelsedetektor_3_short
+          title: Nattbelysning
+          show_header_toggle: true
+          state_color: true
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'on'
+        card:
+          type: entities
+          entities:
+            - entity: light.hall_byra
+            - entity: light.vardagsrum_fonster_ljusstake_2
+            - input_boolean.rorelsedetektor_kok_aktiv
+            - timer.timer_rorelsedetektor_1_short
+            - timer.timer_rorelsedetektor_2_short
+            - timer.timer_rorelsedetektor_3_short
+          title: Nattbelysning jul
+          show_header_toggle: true
+          state_color: true
       - type: entities
         entities:
           - light.uterum_led
@@ -340,18 +410,41 @@ views:
         title: Fasadbelysning
         show_header_toggle: true
         state_color: true
-      - type: entities
-        entities:
-          - light.kok_stora_fonstret
-          - light.kok_lilla_fonstret
-          - light.hall_byra
-          - light.vardagsrum_fonster
-          - light.sovrum_fonster
-          - light.louise_fonster
-          - light.uterum_fonster
-        title: Bortabelysning
-        show_header_toggle: true
-        state_color: true
+
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'off'
+        card:
+          type: entities
+          entities:
+            - light.kok_stora_fonstret
+            - light.kok_lilla_fonstret
+            - light.hall_byra
+            - light.vardagsrum_fonster
+            - light.sovrum_fonster
+            - light.louise_fonster
+            - light.uterum_fonster
+          title: Bortabelysning
+          show_header_toggle: true
+          state_color: true
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'on'
+        card:
+          type: entities
+          entities:
+            - light.kok_stora_fonstret_ljusstake
+            - light.kok_lilla_fonstret
+            - light.hall_byra
+            - light.vardagsrum_fonster_ljusstake_2
+            - light.sovrum_fonster
+            - light.louise_fonster
+            - light.uterum_fonster
+          title: Bortabelysning jul
+          show_header_toggle: true
+          state_color: true
     icon: 'mdi:lightbulb'
   - path: room
     title: Rum

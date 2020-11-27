@@ -124,13 +124,13 @@
           brightness_pct: 80
           transition: 2
 
-#      - service: light.turn_on
-#        entity_id: light.uterum_julstjarnor
       - service: light.turn_on
-        data:
-          entity_id: light.uterum_fonster
-          brightness_pct: 80
-          transition: 2
+        entity_id: light.uterum_julstjarnor
+#      - service: light.turn_on
+#        data:
+#          entity_id: light.uterum_fonster
+#          brightness_pct: 80
+#          transition: 2
 
 # IKEA
       - service: light.turn_on
@@ -295,13 +295,13 @@
           brightness_pct: 40
           transition: 2
 
-#      - service: light.turn_on
-#        entity_id: light.uterum_julstjarnor
       - service: light.turn_on
-        data:
-          entity_id: light.uterum_fonster
-          brightness_pct: 80
-          transition: 2
+        entity_id: light.uterum_julstjarnor
+#      - service: light.turn_on
+#        data:
+#          entity_id: light.uterum_fonster
+#          brightness_pct: 80
+#          transition: 2
 
 # IKEA
       - service: light.turn_on
@@ -444,5 +444,5 @@
         entity_id: light.kok_stora_fonstret_ljusstake
 #      - service: light.turn_off
 #        entity_id: light.louise_fonster_dimmer_julstjarna
-#      - service: light.turn_off
-#        entity_id: light.uterum_julstjarnor
+      - service: light.turn_off
+        entity_id: light.uterum_julstjarnor

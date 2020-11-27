@@ -296,7 +296,7 @@ light:
       - light.louise_golvlampa
 #jul      - light.louise_fonster_dimmer_julstjarna
       - light.uterum_fonster
-#jul      - light.uterum_julstjarnor
+      - light.uterum_julstjarnor #jul
 
   - platform: group
     name: Köksbelysning
@@ -323,7 +323,7 @@ light:
       - light.vardagsrum_fonster_ljusstake_2 #jul
       - light.vardagsrum_gran
       - light.uterum_fonster
-#jul      - light.uterum_julstjarnor
+      - light.uterum_julstjarnor #jul
 
   - platform: group
     name: Nattbelysning
@@ -374,7 +374,7 @@ light:
       - light.louise_fonster
 #jul      - light.louise_fonster_dimmer_julstjarna
       - light.uterum_fonster
-#jul      - light.uterum_julstjarnor
+      - light.uterum_julstjarnor #jul
 
 
   - platform: group
@@ -433,16 +433,16 @@ light:
   - platform: group
     name: Uterum
     entities:
-      - light.uterum_led_lights
+      - light.uterum_led
       - light.uterum_fonster
       - light.uterum_fotogenlampa
 
   - platform: group
     name: Uterum jul 
     entities:
-      - light.uterum_led_lights
+      - light.uterum_led
       - light.uterum_fonster
-#      - light.uterum_julstjarnor 
+      - light.uterum_julstjarnor #jul
       - light.uterum_fotogenlampa
 
 ####################################################

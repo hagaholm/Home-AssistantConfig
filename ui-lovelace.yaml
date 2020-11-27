@@ -302,7 +302,7 @@ views:
           - entity: light.hall_byra
           - entity: light.vardagsrum_fonster_ljusstake_2
           - entity: light.vardagsrum_gran
-          - entity: light.uterum_fonster
+          - entity: light.uterum_julstjarnor
           title: Morgonbelysning jul
           show_header_toggle: true
           state_color: true
@@ -350,7 +350,7 @@ views:
             - entity: light.andreas_fonster
             - entity: light.louise_fonster
             - entity: light.louise_golvlampa
-            - entity: light.uterum_fonster
+            - entity: light.uterum_julstjarnor
           title: Belysning jul
           show_header_toggle: true
           state_color: true
@@ -386,13 +386,34 @@ views:
           title: Nattbelysning jul
           show_header_toggle: true
           state_color: true
-      - type: entities
-        entities:
-          - light.uterum_led
-          - light.uterum_fotogenlampa
-        title: Uterum
-        show_header_toggle: true
-        state_color: true
+
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'off'
+        card:
+          type: entities
+          entities:
+            - light.uterum_led
+            - light.uterum_fonster
+            - light.uterum_fotogenlampa
+          title: Uterum
+          show_header_toggle: true
+          state_color: true
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'on'
+        card:
+          type: entities
+          entities:
+            - light.uterum_led
+            - light.uterum_fonster
+            - light.uterum_julstjarnor #jul
+            - light.uterum_fotogenlampa
+          title: Uterum jul
+          show_header_toggle: true
+          state_color: true
       - type: entities
         entities:
           - light.friggebod_fonster

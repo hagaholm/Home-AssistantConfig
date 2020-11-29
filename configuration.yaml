@@ -263,7 +263,7 @@ light:
 # https://www.home-assistant.io/integrations/light.group/
  
   - platform: group
-    name: Belysning
+    name: Dagsbelysning
     entities:
       - light.kok_stora_fonstret
       - light.kok_lilla_fonstret
@@ -281,7 +281,7 @@ light:
       - light.uterum_fonster
 
   - platform: group
-    name: Belysning jul
+    name: Dagsbelysning jul
     entities:
       - light.kok_stora_fonstret_ljusstake #jul
       - light.kok_lilla_fonstret
@@ -569,7 +569,7 @@ input_select:
     options:
      - Off
      - Morgonbelysning
-     - Belysning
+     - Dagsbelysning
      - Nattbelysning
      - Bortabelysning
 #    initial: Off

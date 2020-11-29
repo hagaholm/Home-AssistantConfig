@@ -1,8 +1,8 @@
-  ####################
-  ### Belysning on ###
-  ####################
-  lights_on:
-    alias: Belysning on
+  #######################
+  ### Dagbelysning on ###
+  #######################
+  daylights_on:
+    alias: Dagbelysning on
     sequence:
       - service: input_select.select_option
         data:
@@ -18,16 +18,16 @@
         data_template:
           entity_id: >
             {% if is_state('input_boolean.christmas_light', 'on') %}
-              script.lights_christmas_on
+              script.daylights_christmas_on
             {% else %}
-              script.lights_default_on
+              script.daylights_default_on
             {% endif %}
 
-  ### -------------------- ###
-  ### Belysning default on ###
-  ### -------------------- ###
-  lights_default_on:
-    alias: Belysning default on
+  ### ----------------------- ###
+  ### Dagbelysning default on ###
+  ### ----------------------- ###
+  daylights_default_on:
+    alias: Dagbelysning default on
     sequence:
 
 # Tellstick
@@ -95,11 +95,11 @@
           brightness_pct: 80
           transition: 2
 
-  ### --------------- ###
-  ### Julbelysning on ###
-  ### --------------- ###
-  lights_christmas_on:
-    alias: Julbelysning on
+  ### ------------------- ###
+  ### Dagbelysning Jul on ###
+  ### ------------------- ###
+  daylights_christmas_on:
+    alias: Dagbelysning jul on
     sequence:
 
 # Tellstick
@@ -169,11 +169,11 @@
           brightness_pct: 80
           transition: 2
 
-  ####################
-  ### Belysning on ###
-  ####################
-  lights_on_morning:
-    alias: Belysning on morgon
+  #######################
+  ### Dagbelysning on ###
+  #######################
+  daylights_on_morning:
+    alias: Dagbelysning on morgon
     sequence:
       - service: input_select.select_option
         data:
@@ -183,21 +183,21 @@
       - service: input_select.select_option
         data:
           entity_id: input_select.inside_lights
-          option: Belysning
+          option: Dagbelysning
 
       - service: script.turn_on
         data_template:
           entity_id: >
             {% if is_state('input_boolean.christmas_light', 'on') %}
-              script.lights_christmas_on
+              script.daylights_christmas_on
             {% else %}
-              script.lights_default_on
+              script.daylights_default_on
             {% endif %}
 
-  #####################
-  ### Belysning off ###
-  #####################
-  lights_off:
+  ########################
+  ### Dagbelysning off ###
+  ########################
+  daylights_off:
     alias: Belysning off
     sequence:
       - service: input_select.select_option
@@ -214,14 +214,14 @@
         data_template:
           entity_id: >
             {% if is_state('input_boolean.christmas_light', 'on') %}
-              script.lights_christmas_off
+              script.daylights_christmas_off
             {% else %}
-              script.lights_default_off
+              script.daylights_default_off
             {% endif %}
 
 
-  lights_default_off:
-    alias: Belysning default off
+  daylights_default_off:
+    alias: Dagbelysning default off
     sequence:
       - service: light.turn_off
         entity_id: light.kok_stora_fonstret
@@ -263,8 +263,8 @@
 #      - service: light.turn_off
 #        entity_id: light.uterum_julstjarnor
 
-  lights_christmas_off:
-    alias: Belysning jul off
+  daylights_christmas_off:
+    alias: Dagbelysning jul off
     sequence:
 #      - service: light.turn_off
 #        entity_id: light.kok_stora_fonstret

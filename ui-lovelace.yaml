@@ -17,7 +17,7 @@ views:
             type: sensor
         type: horizontal-stack
       - cards:
-          - entity: script.lights_on
+          - entity: script.daylights_on
             icon: 'mdi:lightbulb'
             name: Tänd allt
             tap_action:
@@ -177,7 +177,7 @@ views:
           - script.cleaning_lights_on
           - automation.kok_off_sensor_off
           - script.morning_lights_on
-          - script.lights_on
+          - script.daylights_on
           - script.night_light
           - script.kitchen_light_100
           - script.spa_light_on

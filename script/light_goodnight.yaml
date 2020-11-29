@@ -19,9 +19,9 @@
         data_template:
           entity_id: >
             {% if is_state('input_boolean.christmas_light', 'on') %}
-              script.lights_christmas_off
+              script.daylights_christmas_off
             {% else %}
-              script.lights_default_off
+              script.daylights_default_off
             {% endif %}
 
       - service: light.turn_off
@@ -68,9 +68,9 @@
         data_template:
           entity_id: >
             {% if is_state('input_boolean.christmas_light', 'on') %}
-              script.lights_christmas_off
+              script.daylights_christmas_off
             {% else %}
-              script.lights_default_off
+              script.daylights_default_off
             {% endif %}
 
       - service: light.turn_off
@@ -115,9 +115,9 @@
         data_template:
           entity_id: >
             {% if is_state('input_boolean.christmas_light', 'on') %}
-              script.lights_christmas_off
+              script.daylights_christmas_off
             {% else %}
-              script.lights_default_off
+              script.daylights_default_off
             {% endif %}
 
       - service: light.turn_off
@@ -178,9 +178,9 @@
         data_template:
           entity_id: >
             {% if is_state('input_boolean.christmas_light', 'on') %}
-              script.lights_christmas_off
+              script.daylights_christmas_off
             {% else %}
-              script.lights_default_off
+              script.daylights_default_off
             {% endif %}
 
       - service: light.turn_off
@@ -239,9 +239,9 @@
         data_template:
           entity_id: >
             {% if is_state('input_boolean.christmas_light', 'on') %}
-              script.lights_christmas_off
+              script.daylights_christmas_off
             {% else %}
-              script.lights_default_off
+              script.daylights_default_off
             {% endif %}
 
       - service: light.turn_off

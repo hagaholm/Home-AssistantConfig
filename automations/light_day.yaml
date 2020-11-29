@@ -5,7 +5,7 @@
     ###    group.track_for_home_devices == 'home'        ###
     ### A: script.daylights_on                           ###
     ########################################################
-  - alias: Dagsbelysning on (=09:00:00, <1800, hemma)
+  - alias: Dagbelysning on (=09:00:00, <1800, hemma)
     trigger:
       platform: time
       at: '09:00:00'
@@ -27,7 +27,7 @@
     ###    09:00:00 - 22:00:00                           ###
     ### A: script.daylights_on                           ###
     ########################################################
-  - alias: Dagsbelysning on (<1800, hemma)
+  - alias: Dagbelysning on (<1800, hemma)
     trigger:
       platform: template
       value_template: "{{(states.sensor.ljusstyrka.state | int) < (states.input_number.day_light_on.state | int )}}"
@@ -53,7 +53,7 @@
     ###    09:00:00 - 05:00:00                           ###
     ### A: script.daylights_on                           ###
     ########################################################
-  - alias: Dagsbelysning on (sensor on, borta, <1800)
+  - alias: Dagbelysning on (sensor on, borta, <1800)
     trigger:
       platform: state
       entity_id: input_boolean.rorelsedetektor_kok_aktiv
@@ -79,7 +79,7 @@
     ###    09:00:00 - 05:00:00                           ###
     ### A: script.daylights_on                           ###
     ########################################################
-  - alias: Dagsbelysning on (-> hemma, <1800)
+  - alias: Dagbelysning on (-> hemma, <1800)
     trigger:
       platform: state
       entity_id: group.track_for_home_devices
@@ -103,7 +103,7 @@
     ###    05:00:00 - 09:00:00                             ###
     ### A: script.daylights_on_morning                     ###
     ##########################################################
-  - alias: Dagsbelysning on (sovrumsfönster on)
+  - alias: Dagbelysning on (sovrumsfönster on)
     trigger:
       platform: state
       entity_id: light.sovrum_fonster
@@ -127,7 +127,7 @@
     ###    09:00:00 - 05:00:00                             ###
     ### A: script.daylights_off                            ###
     ##########################################################
-  - alias: Dagsbelysning off (>2500, hemma)
+  - alias: Dagbelysning off (>2500, hemma)
     trigger:
       platform: template
       value_template: "{{(states.sensor.ljusstyrka.state | int) > (states.input_number.day_light_off.state | int )}}"
@@ -149,7 +149,7 @@
     ### C: 09:00:00 - 05:00:00                           ###
     ### A: script.daylights_off                          ###
     ########################################################
-  - alias: Dagsbelysning off (-> borta)
+  - alias: Dagbelysning off (-> borta)
     trigger:
       platform: state
       entity_id: group.track_for_home_devices

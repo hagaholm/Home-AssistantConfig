@@ -12,7 +12,7 @@
       - service: input_select.select_option
         data:
           entity_id: input_select.inside_lights
-          option: Belysning
+          option: Dagbelysning
 
       - service: script.turn_on
         data_template:
@@ -198,7 +198,7 @@
   ### Dagbelysning off ###
   ########################
   daylights_off:
-    alias: Belysning off
+    alias: Dagbelysning off
     sequence:
       - service: input_select.select_option
         data:
@@ -218,7 +218,6 @@
             {% else %}
               script.daylights_default_off
             {% endif %}
-
 
   daylights_default_off:
     alias: Dagbelysning default off

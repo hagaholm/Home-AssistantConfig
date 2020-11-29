@@ -19,7 +19,7 @@
           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           message: "Ringklocka tvättstuga"
           data:
-            file: /config/www/info/camera_1_1.jpg
+            file: /media/info/camera_1_1.jpg
       - delay:
           seconds: 10
 
@@ -44,7 +44,7 @@
           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           message: "Ringklocka hall."
           data:
-            file: /config/www/info/camera_2_1.jpg
+            file: /media/info/camera_2_1.jpg
       - delay:
           seconds: 10
 

@@ -166,6 +166,7 @@
     ### Släcker lampor i sovrummet när fönsterbelysning i sovrum släcks ###
     ### T: light.sovrum_fonster to 'unavailable'                        ###
     ### C: light.sovrum_sangbord == on                                  ###
+    ### C: 21:00:00 - 23:00:00                                          ###
     ### A: light.bedroom = off                                          ###
     #######################################################################
   - alias: Bedroom off (sovrumsfönster off)
@@ -179,6 +180,9 @@
         - condition: state
           entity_id: light.sovrum_sangbord
           state: 'on'
+        - condition: time
+           after: '21:00:00'
+           before: '23:00:00'
     action:
       - service: light.turn_off
         data:

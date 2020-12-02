@@ -31,9 +31,18 @@
     #####################################################################
   - alias: Kök 100% morgon (sensor on, <2500)
     trigger:
-      platform: state
-      entity_id: input_boolean.rorelsedetektor_kok_aktiv
-      to: 'on'
+#      - platform: state
+#        entity_id: input_boolean.rorelsedetektor_kok_aktiv
+#        to: 'on'
+      - platform: state
+        entity_id: switch.rorelsedetektor_1
+        to: 'on'
+      - platform: state
+        entity_id: switch.rorelsedetektor_2
+        to: 'on'
+      - platform: state
+        entity_id: switch.rorelsedetektor_3
+        to: 'on'
     condition:
       condition: and
       conditions:
@@ -54,9 +63,18 @@
     #####################################################################
   - alias: Kök 100% (sensor on, 150-2500)
     trigger:
-      platform: state
-      entity_id: input_boolean.rorelsedetektor_kok_aktiv
-      to: 'on'
+#      - platform: state
+#        entity_id: input_boolean.rorelsedetektor_kok_aktiv
+#        to: 'on'
+      - platform: state
+        entity_id: switch.rorelsedetektor_1
+        to: 'on'
+      - platform: state
+        entity_id: switch.rorelsedetektor_2
+        to: 'on'
+      - platform: state
+        entity_id: switch.rorelsedetektor_3
+        to: 'on'
     condition:
       condition: and
       conditions:
@@ -81,9 +99,18 @@
     ##################################################################
   - alias: Kök 100% (sensor on, 0-150)
     trigger:
-      platform: state
-      entity_id: input_boolean.rorelsedetektor_kok_aktiv
-      to: 'on'
+#      - platform: state
+#        entity_id: input_boolean.rorelsedetektor_kok_aktiv
+#        to: 'on'
+      - platform: state
+        entity_id: switch.rorelsedetektor_1
+        to: 'on'
+      - platform: state
+        entity_id: switch.rorelsedetektor_2
+        to: 'on'
+      - platform: state
+        entity_id: switch.rorelsedetektor_3
+        to: 'on'
     condition:
       condition: and
       conditions:
@@ -110,9 +137,18 @@
     #####################################################################################
   - alias: Kök 100% (sensor on, Borta, 0-150)
     trigger:
-      platform: state
-      entity_id: input_boolean.rorelsedetektor_kok_aktiv
-      to: 'on'
+#      - platform: state
+#        entity_id: input_boolean.rorelsedetektor_kok_aktiv
+#        to: 'on'
+      - platform: state
+        entity_id: switch.rorelsedetektor_1
+        to: 'on'
+      - platform: state
+        entity_id: switch.rorelsedetektor_2
+        to: 'on'
+      - platform: state
+        entity_id: switch.rorelsedetektor_3
+        to: 'on'
     condition:
       condition: and
       conditions:
@@ -142,9 +178,18 @@
     ####################################################################################
   - alias: Kök 25% (sensor on, Hemma, 0-150)
     trigger:
-      platform: state
-      entity_id: input_boolean.rorelsedetektor_kok_aktiv
-      to: 'on'
+#      - platform: state
+#        entity_id: input_boolean.rorelsedetektor_kok_aktiv
+#        to: 'on'
+      - platform: state
+        entity_id: switch.rorelsedetektor_1
+        to: 'on'
+      - platform: state
+        entity_id: switch.rorelsedetektor_2
+        to: 'on'
+      - platform: state
+        entity_id: switch.rorelsedetektor_3
+        to: 'on'
     condition:
       condition: and
       conditions:

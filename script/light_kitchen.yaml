@@ -9,16 +9,24 @@
           entity_id: input_select.kitchen_lights
           option: 100%
 
-      - service: light.turn_on
-        data:
-          entity_id: light.kok_underskap_bank
-          brightness_pct: 80
-          transition: 2
-      - service: light.turn_on
-        data:
-          entity_id: light.kok_underskap_diskbank
-          brightness_pct: 80
-          transition: 2
+      - choose:
+        - conditions: "{{ is_state('light.kok_underskap_bank', 'off') }}"
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id: light.kok_underskap_bank
+                brightness_pct: 80
+                transition: 2
+
+      - choose:
+        - conditions: "{{ is_state('light.kok_underskap_diskbank', 'off') }}"
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id: light.kok_underskap_diskbank
+                brightness_pct: 80
+                transition: 2
+
       - service: light.turn_on
         data:
           entity_id: light.kok_vitrinskap
@@ -36,21 +44,29 @@
           entity_id: input_select.kitchen_lights
           option: 25%
 
-      - service: light.turn_on
-        data:
-          entity_id: light.kok_underskap_bank
-          brightness_pct: 10
-          transition: 2
-      - service: light.turn_on
-        data:
-          entity_id: light.kok_underskap_diskbank
-          brightness_pct: 10
-          transition: 2
+      - choose:
+        - conditions: "{{ is_state('light.kok_underskap_bank', 'off') }}"
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id: light.kok_underskap_bank
+                brightness_pct: 10
+                transition: 2
+
+      - choose:
+        - conditions: "{{ is_state('light.kok_underskap_diskbank', 'off') }}"
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id: light.kok_underskap_diskbank
+                brightness_pct: 10
+                transition: 2
+
       - service: light.turn_on
         data:
           entity_id: light.kok_vitrinskap
-          transition: 2
           brightness_pct: 25
+          transition: 2
 
   #########################
   ### Köksbelysning off ###

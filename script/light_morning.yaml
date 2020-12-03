@@ -24,11 +24,6 @@
   morning_lights_default_on:
     alias: Morgonbelysning default on
     sequence:
-
-# Tellstick
-      - service: light.turn_on
-        entity_id: light.kok_lilla_fonstret
-
 # IKEA
       - service: light.turn_on
         data:
@@ -51,33 +46,30 @@
           brightness_pct: 80
           transition: 5
 
+# Tellstick
+      - service: light.turn_on
+        entity_id: light.kok_lilla_fonstret
+
   ### --------------------- ###
   ### Morgonjulbelysning on ###
   ### --------------------- ###
   morning_lights_christmas_on:
     alias: Morgonjulbelysning on
     sequence:
-
-# Tellstick
-      - service: light.turn_on
-        entity_id: light.kok_stora_fonstret_ljusstake
-      - service: light.turn_on
-        entity_id: light.kok_lilla_fonstret
-
-      - service: light.turn_on
-        entity_id: light.uterum_julstjarnor
-#      - service: light.turn_on
-#        data:
-#          entity_id: light.uterum_fonster
-#          brightness_pct: 80
-#          transition: 5
-
 # IKEA
       - service: light.turn_on
         data:
           entity_id: light.hall_byra
           brightness_pct: 40
           transition: 5
+
+# Tellstick
+      - service: light.turn_on
+        entity_id: light.kok_stora_fonstret_ljusstake
+      - service: light.turn_on
+        entity_id: light.kok_lilla_fonstret
+      - service: light.turn_on
+        entity_id: light.uterum_julstjarnor
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_fonster_ljusstake_2

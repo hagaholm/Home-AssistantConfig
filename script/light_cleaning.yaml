@@ -5,14 +5,6 @@
     alias: Städbelysning on
     sequence:
 
-# Tellstick
-      - service: light.turn_on
-        entity_id: light.kok_lilla_fonstret
-      - service: light.turn_on
-        entity_id: light.vardagsrum_vitrinskap
-      - service: light.turn_on
-        entity_id: light.sovrum_sangbord
-
 # IKEA
       - service: light.turn_on
         data:
@@ -58,3 +50,11 @@
         data:
           entity_id: light.uterum_fonster
           brightness_pct: 100
+
+# Tellstick
+      - service: light.turn_on
+        entity_id: light.kok_lilla_fonstret
+      - service: light.turn_on
+        entity_id: light.vardagsrum_vitrinskap
+      - service: light.turn_on
+        entity_id: light.sovrum_sangbord

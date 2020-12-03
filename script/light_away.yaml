@@ -25,22 +25,11 @@
     alias: Bortabelysning default on
     sequence:
 
-# Tellstick
-      - service: light.turn_on
-        entity_id: light.kok_lilla_fonstret
-      - service: light.turn_on
-        entity_id: light.sovrum_sangbord
-
 # IKEA
       - service: light.turn_on
         data:
           entity_id: light.kok_stora_fonstret
           brightness_pct: 50
-          transition: 5
-      - service: light.turn_on
-        data:
-          entity_id: light.louise_fonster
-          brightness_pct: 80
           transition: 5
       - service: light.turn_on
         data:
@@ -57,52 +46,55 @@
           entity_id: light.uterum_fonster
           brightness_pct: 80
           transition: 5
-
-  ### -------------------- ###
-  ### Bortajulbelysning on ###
-  ### -------------------- ###
-  away_lights_christmas_on:
-    alias: Bortajulbelysning on
-    sequence:
-
-# Tellstick
-      - service: light.turn_on
-        entity_id: light.kok_stora_fonstret_ljusstake
-      - service: light.turn_on
-        entity_id: light.kok_lilla_fonstret
-      - service: light.turn_on
-        entity_id: light.sovrum_sangbord
-
-#      - service: light.turn_on
-#        entity_id: light.andreas_fonster_julstjarna
-
-#      - service: light.turn_on
-#        entity_id: light.louise_fonster_dimmer_julstjarna
       - service: light.turn_on
         data:
           entity_id: light.louise_fonster
           brightness_pct: 80
           transition: 5
-
+          
+# Tellstick
       - service: light.turn_on
-        entity_id: light.uterum_julstjarnor
-#      - service: light.turn_on
-#        data:
-#          entity_id: light.uterum_fonster
-#          brightness_pct: 80
-#          transition: 5
-
+        entity_id: light.kok_lilla_fonstret
       - service: light.turn_on
-        data:
-          entity_id: light.vardagsrum_fonster_ljusstake_2
-          brightness_pct: 100
-          transition: 5
+        entity_id: light.sovrum_sangbord
+
+
+  ### --------------------- ###
+  ### Bortabelysning jul on ###
+  ### --------------------- ###
+  away_lights_christmas_on:
+    alias: Bortabelysning jul on
+    sequence:
+
 # IKEA
       - service: light.turn_on
         data:
           entity_id: light.hall_byra
           brightness_pct: 40
           transition: 5
+      - service: light.turn_on
+        data:
+          entity_id: light.louise_fonster
+          brightness_pct: 80
+          transition: 5
+
+# Tellstick
+      - service: light.turn_on
+        entity_id: light.kok_lilla_fonstret
+      - service: light.turn_on
+        entity_id: light.kok_stora_fonstret_ljusstake
+      - service: light.turn_on
+        entity_id: light.sovrum_sangbord
+
+      - service: light.turn_on
+        entity_id: light.uterum_julstjarnor
+
+      - service: light.turn_on
+        data:
+          entity_id: light.vardagsrum_fonster_ljusstake_2
+          brightness_pct: 100
+          transition: 5
+
 
   ##########################
   ### Bortabelysning off ###
@@ -129,47 +121,60 @@
               script.away_daylights_default_off
             {% endif %}
 
+  ### -------------------------- ###
+  ### Bortabelysning default off ###
+  ### -------------------------- ###
   away_daylights_default_off:
     alias: Bortabelysning default off
     sequence:
+
+# IKEA
       - service: light.turn_off
         entity_id: light.kok_stora_fonstret
       - service: light.turn_off
-        entity_id: light.kok_lilla_fonstret
-      - service: light.turn_off
         entity_id: light.hall_byra
+      - service: light.turn_off
+        entity_id: light.uterum_fonster
       - service: light.turn_off
         entity_id: light.vardagsrum_fonster
       - service: light.turn_off
         entity_id: light.sovrum_fonster
       - service: light.turn_off
-        entity_id: light.sovrum_sangbord
-      - service: light.turn_off
         entity_id: light.louise_fonster
-      - service: light.turn_off
-        entity_id: light.uterum_fonster
 
-  away_lights_christmas_off:
-    alias: Bortabelysning jul off
-    sequence:
+# Tellstick
       - service: light.turn_off
         entity_id: light.kok_lilla_fonstret
       - service: light.turn_off
-        entity_id: light.hall_byra
-      - service: light.turn_off
-        entity_id: light.vardagsrum_gran
-      - service: light.turn_off
-        entity_id: light.sovrum_fonster
-      - service: light.turn_off
         entity_id: light.sovrum_sangbord
-      - service: light.turn_off
-        entity_id: light.louise_fonster
 
-      - service: light.turn_off
-        entity_id: light.vardagsrum_fonster_ljusstake_2
+  ### ---------------------- ###
+  ### Bortabelysning jul off ###
+  ### ---------------------- ###
+  away_lights_christmas_off:
+    alias: Bortabelysning jul off
+    sequence:
+
+# IKEA
       - service: light.turn_off
         entity_id: light.kok_stora_fonstret_ljusstake
       - service: light.turn_off
+        entity_id: light.hall_byra
+      - service: light.turn_off
+        entity_id: light.sovrum_fonster
+      - service: light.turn_off
+        entity_id: light.louise_fonster
+
+# Tellstick
+      - service: light.turn_off
+        entity_id: light.kok_lilla_fonstret
+      - service: light.turn_off
+        entity_id: light.vardagsrum_gran
+      - service: light.turn_off
+        entity_id: light.vardagsrum_fonster_ljusstake_2
+      - service: light.turn_off
         entity_id: light.uterum_julstjarnor
+      - service: light.turn_off
+        entity_id: light.sovrum_sangbord
       - service: light.turn_off
         entity_id: light.andreas_fonster_julstjarna

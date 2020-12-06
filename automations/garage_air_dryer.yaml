@@ -1,6 +1,7 @@
   ###########################################
   ### Starta luftavfuktare                ###
   ### T: sensor.garage_humidity > 66      ###
+  ### C: sensor.garage_temperature > 10   ###
   ### A: switch.garage_luftavfuktare = on ###
   ###########################################
 - alias: Starta luftavfuktare
@@ -14,6 +15,9 @@
       - condition: state
         entity_id: switch.garage_luftavfuktare
         state: 'off'
+      - condition: numeric_state
+        entity_id: sensor.garage_temperature
+        above: 10
   action:
     - service: homeassistant.turn_on
       entity_id: switch.garage_luftavfuktare

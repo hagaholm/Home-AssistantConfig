@@ -6,10 +6,58 @@ input_boolean:
     name: Jobbar hemifrån
 
 
-  ######################################
-  ### Flash light if person detected ###
-  ######################################
 automation:
+  ################################
+  ### Tänd skrivbordsbelysning ###
+  ################################
+  - alias: Tänd skrivbordsbelysning
+    mode: single
+
+    trigger:
+    - platform: time
+      at: "07:00:00"
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.working_at_home
+          state: 'on'
+        - condition: state
+          entity_id: binary_sensor.workday_today
+          state: 'on'
+
+    action:
+      - service: light.turn_on
+        entity_id: light.louise_skrivbord
+
+  #################################
+  ### Släck skrivbordsbelysning ###
+  #################################
+  - alias: Släck skrivbordsbelysning
+    mode: single
+
+    trigger:
+    - platform: time
+      at: "17:00:00"
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.working_at_home
+          state: 'on'
+        - condition: state
+          entity_id: binary_sensor.workday_today
+          state: 'on'
+
+    action:
+      - service: light.turn_off
+        entity_id: light.louise_skrivbord
+
+  #########################################
+  ### Blinka med lyset Louise skrivbord ###
+  #########################################
   - alias: Blinka med lyset Louise skrivbord
     mode: single
 

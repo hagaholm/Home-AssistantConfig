@@ -231,6 +231,54 @@ sensor:
             mdi:progress-check
           {% endif %}
 
+      aqara_multi_sensor_3_temp_lastupdated:
+        friendly_name: Aqara Multi Sensor 3 temp senast uppdaterad
+        value_template: >-
+          {{ states.sensor.aqara_multi_sensor_3_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+        icon_template: >-
+          {% if (as_timestamp(now()) - as_timestamp(states.sensor.aqara_multi_sensor_3_temperature.last_updated) > 100) %}
+            mdi:progress-alert
+          {% else %}
+            mdi:progress-check
+          {% endif %}
+
+      aqara_multi_sensor_3_fukt_lastupdated:
+        friendly_name: Aqara Multi Sensor 3 fukt senast uppdaterad
+        value_template: >-
+          {{ states.sensor.aqara_multi_sensor_3_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+        icon_template: >-
+          {% if (as_timestamp(now()) - as_timestamp(states.sensor.aqara_multi_sensor_3_humidity.last_updated) > 100) %}
+            mdi:progress-alert
+          {% else %}
+            mdi:progress-check
+          {% endif %}
+
+      aqara_multi_sensor_4_temp_lastupdated:
+        friendly_name: Aqara Multi Sensor 4 temp senast uppdaterad
+        value_template: >-
+          {{ states.sensor.aqara_multi_sensor_4_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+        icon_template: >-
+          {% if (as_timestamp(now()) - as_timestamp(states.sensor.aqara_multi_sensor_4_temperature.last_updated) > 100) %}
+            mdi:progress-alert
+          {% else %}
+            mdi:progress-check
+          {% endif %}
+
+      aqara_multi_sensor_4_fukt_lastupdated:
+        friendly_name: Aqara Multi Sensor 4 fukt senast uppdaterad
+        value_template: >-
+          {{ states.sensor.aqara_multi_sensor_4_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+        icon_template: >-
+          {% if (as_timestamp(now()) - as_timestamp(states.sensor.aqara_multi_sensor_4_humidity.last_updated) > 100) %}
+            mdi:progress-alert
+          {% else %}
+            mdi:progress-check
+          {% endif %}
+
 #########################################################
 input_boolean:
   frys_reading_missing_alarm:

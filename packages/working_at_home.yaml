@@ -1,0 +1,62 @@
+#####################
+### Input boolean ###
+#####################
+input_boolean:
+  - platform: template
+    sensors:
+      working_at_home:
+        friendly_name: "Jobbar hemifrån"
+
+
+  ######################################
+  ### Flash light if person detected ###
+  ######################################
+automation:
+  - alias: Blinka med lyset Louise skrivbord
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_boolean.camera_light_control
+        to: 'on'
+      - platform: state
+        entity_id: switch.ringklocka_tvattstuga
+        to: 'on'
+      - platform: state
+        entity_id: switch.ringklocka_hall
+        to: 'on'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.working_at_home
+          state: 'on'
+
+    action:
+      - service: script.flash_light_louise_skrivbord
+
+script:
+  flash_light_louise_skrivbord:
+    alias: Blinka lampa Louise skrivbord
+    sequence:
+      - service: light.toggle
+        entity_id: light.louise_skrivbord
+
+      - delay:
+          seconds: 2
+
+      - service: light.toggle
+        entity_id: light.light.louise_skrivbord
+
+      - delay:
+          seconds: 2
+
+      - service: light.toggle
+        entity_id: light.light.louise_skrivbord
+
+      - delay:
+          seconds: 2
+
+      - service: light.toggle
+        entity_id: light.light.louise_skrivbord

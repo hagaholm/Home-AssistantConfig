@@ -3,7 +3,7 @@
 #####################
 input_boolean:
   working_at_home:
-  name: Jobbar hemifrån
+    name: Jobbar hemifrån
 
 
   ######################################
@@ -33,6 +33,7 @@ automation:
 
     action:
       - service: script.flash_light_louise_skrivbord
+
 
 script:
   flash_light_louise_skrivbord:

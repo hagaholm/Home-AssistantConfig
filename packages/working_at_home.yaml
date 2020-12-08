@@ -14,8 +14,9 @@ automation:
     mode: single
 
     trigger:
-    - platform: time
-      at: "07:00:00"
+      - platform: state
+        entity_id: sensor.mickes_work_laptop
+        to: 'Online'
 
     condition:
       condition: and
@@ -38,8 +39,9 @@ automation:
     mode: single
 
     trigger:
-    - platform: time
-      at: "17:00:00"
+      - platform: state
+        entity_id: sensor.mickes_work_laptop
+        to: 'Offline'
 
     condition:
       condition: and

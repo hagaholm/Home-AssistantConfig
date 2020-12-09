@@ -104,11 +104,6 @@
     sequence:
       - service: input_select.select_option
         data:
-          entity_id: input_select.home_status
-          option: Borta
-
-      - service: input_select.select_option
-        data:
           entity_id: input_select.inside_lights
           option: Off
 

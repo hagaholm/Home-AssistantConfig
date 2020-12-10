@@ -59,10 +59,10 @@ automation:
       - service: light.turn_off
         entity_id: light.louise_skrivbord
 
-  #########################################
-  ### Blinka med lyset Louise skrivbord ###
-  #########################################
-  - alias: Blinka med lyset Louise skrivbord
+  ###########################################
+  ### Blinka med lyset vid jobba hemifrån ###
+  ###########################################
+  - alias: Blinka med lyset vid jobba hemifrån
     mode: single
 
     trigger:
@@ -90,32 +90,37 @@ automation:
           state: 'Online'
 
     action:
-      - service: script.flash_light_louise_skrivbord
+      - service: script.flash_light_working_at_home
 
 ##############
 ### SCRIPT ###
 ##############
 script:
-  flash_light_louise_skrivbord:
+  flash_light_working_at_home:
     alias: Blinka lampa Louise skrivbord
     sequence:
       - service: light.toggle
         entity_id: light.louise_skrivbord
-
+      - service: light.toggle
+        entity_id: light.vardagsrum_vitrinskap
       - delay:
-          seconds: 2
+          seconds: 1
 
       - service: light.toggle
         entity_id: light.louise_skrivbord
-
+      - service: light.toggle
+        entity_id: light.vardagsrum_vitrinskap
       - delay:
-          seconds: 2
+          seconds: 1
 
       - service: light.toggle
         entity_id: light.louise_skrivbord
-
+      - service: light.toggle
+        entity_id: light.vardagsrum_vitrinskap
       - delay:
-          seconds: 2
+          seconds: 1
 
       - service: light.toggle
         entity_id: light.louise_skrivbord
+      - service: light.toggle
+        entity_id: light.vardagsrum_vitrinskap

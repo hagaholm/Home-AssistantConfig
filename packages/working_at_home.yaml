@@ -90,14 +90,14 @@ automation:
           state: 'Online'
 
     action:
-      - service: script.flash_light_working_at_home
+      - service: script.flash_light
 
 ##############
 ### SCRIPT ###
 ##############
 script:
-  flash_light_working_at_home:
-    alias: Blinka lampa Louise skrivbord
+  flash_light:
+    alias: Blinka med lyset
     sequence:
       - service: light.toggle
         entity_id: light.louise_skrivbord

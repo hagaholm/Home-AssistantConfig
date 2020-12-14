@@ -1,0 +1,44 @@
+##################
+### AUTOMATION ###
+##################
+automation:
+  #################################################
+  ### Blinka med lyset när uppkopplad till wifi ###
+  #################################################
+  - alias: Blinka med lyset när uppkopplad till wifi
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: person.micke
+        to: 'home'
+
+    action:
+      - service: script.flash_light_garage
+
+##############
+### SCRIPT ###
+##############
+script:
+  flash_light_garage:
+    alias: Blinka med lyset
+    sequence:
+      - service: light.toggle
+        entity_id: light.forrad_fasad
+      - delay:
+          seconds: 1
+
+      - service: light.toggle
+        entity_id: light.forrad_fasad
+      - delay:
+          seconds: 1
+
+      - service: light.toggle
+        entity_id: light.forrad_fasad
+      - delay:
+          seconds: 1
+
+      - service: light.toggle
+        entity_id: light.forrad_fasad
+      - delay:
+          seconds: 1

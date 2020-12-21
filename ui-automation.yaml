@@ -6,12 +6,17 @@ views:
     cards:
       - type: entities
         entities:
-          - automation.hassbian_startad
-          - automation.hassbian_stoppad
           - automation.ny_enhet_hittad
           - automation.hassbian_uppdatering
-          - automation.restart_ha
         title: Hassbian
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.hassbian_startad
+          - automation.hassbian_stoppad
+          - automation.restart_ha
+        title: Hassbian off
         show_header_toggle: true
         state_color: true
       - type: entities
@@ -19,11 +24,16 @@ views:
           - automation.ringklocka_tvattstuga
           - automation.ringklocka_hall
           - automation.blinka_med_lyset_nar_ringklocka_ringer
-          - automation.ringklocka_tand_allt_lyse_1
-          - automation.ringklocka_tand_allt_lyse_2
           - automation.ringklocka_off_borta
           - automation.ringklocka_on_hemma
         title: Ringklocka
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.ringklocka_tand_allt_lyse_1
+          - automation.ringklocka_tand_allt_lyse_2
+        title: Ringklocka off
         show_header_toggle: true
         state_color: true
       - type: entities
@@ -48,7 +58,7 @@ views:
           - automation.dagligen_onsdag
           - automation.dagligen_fredag
           - automation.dammsugaren_har_problem
-        title: Dammsugare
+        title: Dammsugare off
         show_header_toggle: true
         state_color: true
     icon: 'mdi:home-automation'
@@ -103,10 +113,7 @@ views:
         entities:
           - automation.uterum_larm_hog_temp
           - automation.friggebod_larm_hog_temp
-          - automation.friggebod_larm_lag_temp
-          - automation.friggebod_frysvakt
           - automation.larm_hog_temp_i_kyl
-          - automation.larm_lag_temp_i_kyl
           - automation.larm_varning_hog_temp_i_frys
           - automation.larm_hog_temp_i_frys
           - automation.larm_lag_temp_i_frys
@@ -115,9 +122,17 @@ views:
           - automation.hog_temp_ackumulatortank
           - automation.lag_temp_franluft
           - automation.hog_temp_franluft
-          - automation.lag_temp_tilluft
           - automation.hog_temp_tilluft
         title: Larm temperatur
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.friggebod_larm_lag_temp
+          - automation.friggebod_frysvakt
+          - automation.larm_lag_temp_i_kyl
+          - automation.lag_temp_tilluft
+        title: Larm temperatur off
         show_header_toggle: true
         state_color: true
       - type: entities
@@ -150,7 +165,7 @@ views:
           - automation.raspberry_pi_3b_lux_offline
           - automation.raspberry_pi_3b_offline
           - automation.raspberry_pi_4b_hassbian_offline
-        title: Larm Raspberry Pi offline
+        title: Larm Raspberry Pi offline off
         show_header_toggle: true
         state_color: true
   - path: lights
@@ -173,7 +188,6 @@ views:
         state_color: true
       - type: entities
         entities:
-          - automation.kok_100_2500
           - automation.kok_100_morgon_sensor_on_2500
           - automation.kok_100_sensor_on_0_150
           - automation.kok_100_sensor_on_150_2500
@@ -184,6 +198,12 @@ views:
           - automation.kok_off_3000
           - automation.kok_rorelsedetektor_reset
         title: Köksbelysning
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.kok_100_2500
+        title: Köksbelysning off
         show_header_toggle: true
         state_color: true
       - type: entities
@@ -238,18 +258,23 @@ views:
           - automation.uterums_fotogenlampa_on_16
           - automation.uterums_fotogenlampa_on_250
           - automation.uterums_fotogenlampa_on_home
-          - automation.uterums_fotogenlampa_on_motion
           - automation.uterums_fotogenlampa_off_15
           - automation.uterums_fotogenlampa_off_all_off_hemma
           - automation.uterums_fotogenlampa_off_borta
           - automation.uterums_ledbelysning_on_16
           - automation.uterums_ledbelysning_on_250
           - automation.uterums_ledbelysning_on_home
-          - automation.uterums_ledbelysning_on_motion
           - automation.uterums_ledbelysning_off_15
           - automation.uterums_ledbelysning_off_all_off_hemma
           - automation.uterums_ledbelysning_off_borta
         title: Uterumsbelysning
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.uterums_fotogenlampa_on_motion
+          - automation.uterums_ledbelysning_on_motion
+        title: Uterumsbelysning off
         show_header_toggle: true
         state_color: true
       - type: entities
@@ -287,13 +312,18 @@ views:
     cards:
       - type: entities
         entities:
-          - automation.badrumsfonster_hog_fukt_larm
           - automation.forcerad_snabbt_okande_fukt
           - automation.forcerad_badrumsfonster_hog_fukt
           - automation.normal_badrumsfonster_lag_fukt
           - automation.normal_badrumsfonster_stabiliserad_fukt 
           - automation.normal_hog_fukt_i_huset 
         title: Ventilation Low/High
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.badrumsfonster_hog_fukt_larm
+        title: Ventilation Low/High off
         show_header_toggle: true
         state_color: true
       - type: entities

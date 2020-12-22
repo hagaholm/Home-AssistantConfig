@@ -242,6 +242,8 @@ views:
           - sensor.garage_temperature
           - sensor.garage_humidity
           - sensor.pa_vinden
+          - sensor.husvagn_temperature
+          - sensor.husvagn_humidity
         title: Övrigt
         show_header_toggle: false
         state_color: true
@@ -621,6 +623,13 @@ views:
           - entity: light.friggebod_fonster
             name: Fönster
         title: Friggebod
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - sensor.husvagn_temperature
+          - sensor.husvagn_humidity
+        title: Husvagn
         show_header_toggle: true
         state_color: true
       - type: entities

@@ -109,8 +109,14 @@ automation:
 
     action:
       - service: shell_command.remove_old_images_in_camera_deepstack_photo
-      - service: shell_command.remove_old_images_in_www_warning
-      - service: shell_command.remove_old_images_in_www_warning_small
+# Exclude this as it create errors in logfile if no images exists
+# Example of errors:
+# 2020-12-23 11:12:00 WARNING (SyncWorker_28) [homeassistant.components.local_file.camera] Could not read camera Camera 1 Latest person away image from file: /media/warning/camera_1_1.jpg
+# 2020-12-23 11:12:04 ERROR (MainThread) [homeassistant.components.image_processing] Error on receive image from entity: Unable to get image
+# 2020-12-23 11:12:08 ERROR (MainThread) [homeassistant.components.image_processing] Error on receive image from entity: Unable to get image
+# 2020-12-23 11:12:10 ERROR (MainThread) [homeassistant.components.image_processing] Error on receive image from entity: Unable to get image
+#      - service: shell_command.remove_old_images_in_www_warning
+#      - service: shell_command.remove_old_images_in_www_warning_small
 
 ##############
 ### Script ###

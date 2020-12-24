@@ -2,6 +2,20 @@
 ### AUTOMATION ###
 ##################
 automation:
+  ###############################
+  ### Keep IKEA Trådfri alive ###
+  ###############################
+  - alias: Keep IKEA Trådfri alive
+    mode: single
+
+    trigger:
+      - minutes: /1
+        platform: time_pattern
+
+    action:
+      - service_template: light_turn_{{ states('light.vardagsrum_skank') }}
+        entity_id: light.vardagsrum_skank
+
   #################################################
   ### Blinka med lyset när uppkopplad till wifi ###
   #################################################

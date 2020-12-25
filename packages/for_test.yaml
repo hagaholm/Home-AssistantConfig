@@ -13,7 +13,7 @@ automation:
         platform: time_pattern
 
     action:
-      - service_template: light_turn_{{ states('light.vardagsrum_skank') }}
+      - service_template: light.turn_{{ states('light.vardagsrum_skank') }}
         entity_id: light.vardagsrum_skank
 
   #################################################

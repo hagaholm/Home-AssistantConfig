@@ -138,6 +138,8 @@ automation:
     ###    switch.vardagsrum_extra_subbas = on                            ###
     #########################################################################
   - alias: "Sätt på subbasar vid PowerOn"
+    mode: queued
+
     trigger:
       platform: state
       entity_id: remote.harmony_hub
@@ -156,6 +158,7 @@ automation:
           value_template: '{{ trigger.to_state.attributes.current_activity == "Watch ChromeCast ultra" }}'
         - condition: template
           value_template: '{{ trigger.to_state.attributes.current_activity == "Listen to ChromeCast ultra" }}'
+
     action:
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_subbas

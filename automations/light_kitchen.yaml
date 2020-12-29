@@ -7,9 +7,12 @@
     ### A: script.kitchen_light_100                                     ###
     #######################################################################
   - alias: Kök 100% (<2500)
+    mode: single
+
     trigger:
       platform: template
       value_template: "{{(states.sensor.ljusstyrka.state | int) < (states.input_number.kitchen_light_on.state | int )}}"
+
     condition:
       condition: and
       conditions:
@@ -19,6 +22,7 @@
         - condition: state
           entity_id: group.track_for_home_devices
           state: 'home'
+
     action:
       - service: script.kitchen_light_100
 
@@ -30,6 +34,8 @@
     ### A: script.kitchen_light_100                                   ###
     #####################################################################
   - alias: Kök 100% morgon (sensor on, <2500)
+    mode: queued
+
     trigger:
 #      - platform: state
 #        entity_id: input_boolean.rorelsedetektor_kok_aktiv
@@ -43,6 +49,7 @@
       - platform: state
         entity_id: switch.rorelsedetektor_3
         to: 'on'
+
     condition:
       condition: and
       conditions:
@@ -51,6 +58,7 @@
         - condition: time
           after: '05:00:00'
           before: '12:00:00'
+
     action:
       - service: script.kitchen_light_100
 
@@ -62,6 +70,8 @@
     ### A: script.kitchen_light_100                                   ###
     #####################################################################
   - alias: Kök 100% (sensor on, 150-2500)
+    mode: queued
+
     trigger:
 #      - platform: state
 #        entity_id: input_boolean.rorelsedetektor_kok_aktiv
@@ -75,6 +85,7 @@
       - platform: state
         entity_id: switch.rorelsedetektor_3
         to: 'on'
+
     condition:
       condition: and
       conditions:
@@ -86,6 +97,7 @@
         - condition: time
           after: '12:00:00'
           before: '05:00:00'
+
     action:
       - service: script.kitchen_light_100
 
@@ -98,6 +110,8 @@
     ### A: script.kitchen_light_100                                ###
     ##################################################################
   - alias: Kök 100% (sensor on, 0-150)
+    mode: queued
+
     trigger:
 #      - platform: state
 #        entity_id: input_boolean.rorelsedetektor_kok_aktiv
@@ -111,6 +125,7 @@
       - platform: state
         entity_id: switch.rorelsedetektor_3
         to: 'on'
+
     condition:
       condition: and
       conditions:
@@ -123,6 +138,7 @@
         - condition: state
           entity_id: light.kok_lilla_fonstret
           state: 'on'
+
     action:
       - service: script.kitchen_light_100
 
@@ -136,6 +152,8 @@
     ### A: script.kitchen_light_100                                                   ###
     #####################################################################################
   - alias: Kök 100% (sensor on, Borta, 0-150)
+    mode: queued
+
     trigger:
 #      - platform: state
 #        entity_id: input_boolean.rorelsedetektor_kok_aktiv
@@ -149,6 +167,7 @@
       - platform: state
         entity_id: switch.rorelsedetektor_3
         to: 'on'
+
     condition:
       condition: and
       conditions:
@@ -164,6 +183,7 @@
         - condition: state
           entity_id: light.kok_lilla_fonstret
           state: 'off'
+
     action:
       - service: script.kitchen_light_100
 
@@ -177,6 +197,8 @@
     ### A: script.kitchen_light_25                                                   ###
     ####################################################################################
   - alias: Kök 25% (sensor on, Hemma, 0-150)
+    mode: queued
+
     trigger:
 #      - platform: state
 #        entity_id: input_boolean.rorelsedetektor_kok_aktiv
@@ -190,6 +212,7 @@
       - platform: state
         entity_id: switch.rorelsedetektor_3
         to: 'on'
+
     condition:
       condition: and
       conditions:
@@ -205,6 +228,7 @@
         - condition: state
           entity_id: light.kok_lilla_fonstret
           state: 'off'
+
     action:
       - service: script.kitchen_light_25
 
@@ -214,10 +238,13 @@
     ### A: script.kitchen_light_off                       ###
     #########################################################
   - alias: Kök off (sensor off)
+    mode: single
+
     trigger:
       platform: state
       entity_id: input_boolean.rorelsedetektor_kok_aktiv
       to: 'off'
+
     action:
       - service: input_select.select_option
         data:
@@ -231,11 +258,14 @@
     ### A: input_boolean.rorelsedetektor_kok_aktiv = off   ###
     ##########################################################
   - alias: Kök off (-> borta)
+    mode: single
+
     trigger:
       platform: state
       entity_id: group.track_for_home_devices
       from: 'home'
       to: 'not_home'
+
     action:
       - service: homeassistant.turn_off
         entity_id: input_boolean.rorelsedetektor_kok_aktiv
@@ -247,13 +277,17 @@
     ### A: input_boolean.rorelsedetektor_kok_aktiv = off       ###
     ##############################################################
   - alias: Kök off (>3000)
+    mode: single
+
     trigger:
       platform: template
       value_template: "{{(states.sensor.ljusstyrka.state | int) > (states.input_number.kitchen_light_off.state | int )}}"
+
     condition:
       condition: state
       entity_id: group.track_for_home_devices
       state: 'home'
+
     action:
       - service: homeassistant.turn_off
         entity_id: input_boolean.rorelsedetektor_kok_aktiv
@@ -266,15 +300,19 @@
     ### A: input_boolean.rorelsedetektor_kok_aktiv = off                  ###
     #########################################################################
   - alias: Kök Rörelsedetektor reset
+    mode: single
+
     trigger:
       - platform: state
         entity_id:
           - light.kok_underskap_bank
         to: 'off'
+
     condition:
       condition: state
       entity_id: input_boolean.rorelsedetektor_kok_aktiv
       state: 'on'
+
     action:
       - service: homeassistant.turn_off
         entity_id: input_boolean.rorelsedetektor_kok_aktiv
@@ -294,4 +332,3 @@
     # action:
       # - service: homeassistant.turn_off
         # entity_id: input_boolean.rorelsedetektor_kok_aktiv
-

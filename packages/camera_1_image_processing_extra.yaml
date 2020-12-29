@@ -5,16 +5,16 @@ automation:
   #######################
   ### Processes image ###
   #######################
-  ### - every 1 sec   ###    
+  ### - every 2 sec   ###    
   ### - always        ###
   #######################
   - alias: Camera 1 Image processing
     mode: queued
     
-    # Every 1 sec
+    # Every 2 sec
     trigger:
       - platform: time_pattern
-        seconds: "/1"
+        seconds: "/2"
 
     # Scan a new image
     action:

@@ -60,6 +60,69 @@ camera:
 ### Automation ###
 ##################
 automation:
+  ##########################################################
+  ### At startup, activate input_boolean.camera_1_active ###
+  ##########################################################
+  - alias: Camera 1 startup
+    mode: single
+
+    trigger:
+      - platform: homeassistant
+        event: start
+
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.camera_1_active
+
+      - delay:
+          seconds: 10
+
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.camera_1_active
+
+  #############################################################
+  ### At shutdown, inactivate input_boolean.camera_1_active ###
+  #############################################################
+  - alias: Camera 1 shutdown
+    mode: single
+
+    trigger:
+      - platform: homeassistant
+        event: shutdown
+
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.camera_1_active
+
+  ##############################
+  ### Start image processing ###
+  ##############################
+  - alias: Camera 1 Image processing
+    mode: queued
+    
+    trigger:
+      - platform: state
+        entity_id: input_boolean.camera_1_active
+        to: 'on'
+    
+    action:
+      repeat:
+        while:
+          - condition: state
+            entity_id: input_boolean.camera_1_active
+            state: 'on'
+        sequence:
+          # Scan a new image
+          - service: image_processing.scan
+            data:
+              entity_id: image_processing.deepstack_camera_1
+
+  #########################################
+  ### Camera 1 Folder Watcher activated ###
+  #########################################
   - alias: Camera 1 Folder Watcher activated
     mode: single
 
@@ -164,7 +227,7 @@ automation:
   ### When person detected, make the last image available                  ###
   ### - Copy Deepstack image when person detected, mode Day                ###
   ###   from: /config/camera/deepstack_photo/deepstack_camera_1_latest.jpg ###
-  ###   to: /media/info/camera_1_1.jpg                                ###
+  ###   to: /media/info/camera_1_1.jpg                                     ###
   ############################################################################
   - alias: Camera 1 Image when person detected and camera mode Day
     mode: queued
@@ -499,6 +562,10 @@ shell_command:
 ### Input Boolean ###
 #####################
 input_boolean:
+  camera_1_active:
+    name: Camera 1 aktiv
+    initial: off
+    
   camera_1_recording:
     name: Camera 1 spelar in
     initial: off

@@ -7,10 +7,13 @@
     ### A: script.morning_lights_on                          ###
     ############################################################
   - alias: Morgonbelysning on (sensor on, <1800)
+    mode: queued
+
     trigger:
       platform: state
       entity_id: input_boolean.rorelsedetektor_kok_aktiv
       to: 'on'
+
     condition:
       condition: and
       conditions:
@@ -22,6 +25,7 @@
         - condition: time
           after: '05:00:00'
           before: '09:00:00'
+
     action:
       - service: script.morning_lights_on
 
@@ -33,11 +37,14 @@
     ### A: script.morning_lights_on                          ###
     ############################################################
   - alias: Morgonbelysning on (-> hemma, <1800)
+    mode: single
+
     trigger:
       platform: state
       entity_id: group.track_for_home_devices
       from: 'not_home'
       to: 'home'
+
     condition:
       condition: and
       conditions:
@@ -46,6 +53,7 @@
         - condition: time
           after: '05:00:00'
           before: '09:00:00'
+
     action:
       - service: script.morning_lights_on
 
@@ -57,9 +65,12 @@
     ### A: script.morning_lights_off                          ###
     #############################################################
   - alias: Morgonbelysning off (>2500, hemma)
+    mode: single
+
     trigger:
       platform: template
       value_template: "{{(states.sensor.ljusstyrka.state | int) > (states.input_number.morning_light_off.state | int )}}"
+
     condition:
       condition: and
       conditions:
@@ -72,6 +83,7 @@
         - condition: state
           entity_id: input_boolean.christmas_light
           state: 'off'
+
     action:
       - service: script.morning_lights_off
 
@@ -82,14 +94,18 @@
     ### A: script.morning_lights_off                          ###
     #############################################################
   - alias: Morgonbelysning off (-> borta)
+    mode: single
+
     trigger:
       platform: state
       entity_id: group.track_for_home_devices
       from: 'home'
       to: 'not_home'
+
     condition:
       condition: time
       after: '05:00:00'
       before: '09:00:00'
+
     action:
       - service: script.morning_lights_off

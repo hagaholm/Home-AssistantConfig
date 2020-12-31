@@ -8,9 +8,12 @@
       - media_player
       - sensor
 #      - switch
+
   exclude:
     domains:
       - switch
+      - image_processing
+
     entities:
 #      - switch.rorelsedetektor_1
       - sensor.since_last_boot 

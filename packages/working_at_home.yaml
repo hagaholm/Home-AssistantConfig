@@ -1,0 +1,126 @@
+#####################
+### Input boolean ###
+#####################
+input_boolean:
+  working_at_home:
+    name: Jobbar hemifrån
+
+##################
+### AUTOMATION ###
+##################
+automation:
+  ################################
+  ### Tänd skrivbordsbelysning ###
+  ################################
+  - alias: Tänd skrivbordsbelysning
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: sensor.mickes_work_laptop
+        to: 'Online'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.working_at_home
+          state: 'on'
+        - condition: state
+          entity_id: binary_sensor.workday_today
+          state: 'on'
+
+    action:
+      - service: light.turn_on
+        entity_id: light.louise_skrivbord
+
+  #################################
+  ### Släck skrivbordsbelysning ###
+  #################################
+  - alias: Släck skrivbordsbelysning
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: sensor.mickes_work_laptop
+        to: 'Offline'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.working_at_home
+          state: 'on'
+        - condition: state
+          entity_id: binary_sensor.workday_today
+          state: 'on'
+
+    action:
+      - service: light.turn_off
+        entity_id: light.louise_skrivbord
+
+  ###########################################
+  ### Blinka med lyset vid jobba hemifrån ###
+  ###########################################
+  - alias: Blinka med lyset vid jobba hemifrån
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_boolean.camera_light_control
+        to: 'on'
+      - platform: state
+        entity_id: switch.ringklocka_tvattstuga
+        to: 'on'
+      - platform: state
+        entity_id: switch.ringklocka_hall
+        to: 'on'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.working_at_home
+          state: 'on'
+        - condition: state
+          entity_id: binary_sensor.workday_today
+          state: 'on'
+        - condition: state
+          entity_id: sensor.mickes_work_laptop
+          state: 'Online'
+
+    action:
+      - service: script.flash_light
+
+##############
+### SCRIPT ###
+##############
+script:
+  flash_light:
+    alias: Blinka med lyset
+    sequence:
+      - service: light.toggle
+        entity_id: light.louise_skrivbord
+      - service: light.toggle
+        entity_id: light.vardagsrum_vitrinskap
+      - delay:
+          seconds: 1
+
+      - service: light.toggle
+        entity_id: light.louise_skrivbord
+      - service: light.toggle
+        entity_id: light.vardagsrum_vitrinskap
+      - delay:
+          seconds: 1
+
+      - service: light.toggle
+        entity_id: light.louise_skrivbord
+      - service: light.toggle
+        entity_id: light.vardagsrum_vitrinskap
+      - delay:
+          seconds: 1
+
+      - service: light.toggle
+        entity_id: light.louise_skrivbord
+      - service: light.toggle
+        entity_id: light.vardagsrum_vitrinskap

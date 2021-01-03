@@ -17,7 +17,7 @@ views:
             type: sensor
         type: horizontal-stack
       - cards:
-          - entity: script.lights_on
+          - entity: script.daylights_on
             icon: 'mdi:lightbulb'
             name: Tänd allt
             tap_action:
@@ -64,51 +64,85 @@ views:
               action: toggle
             type: button
         type: horizontal-stack
-      - cards:
-          - entity: light.sovrum
-            hold_action:
-              action: none
-            icon: 'mdi:lightbulb'
-            name: Sovrum
-            tap_action:
-              action: toggle
-            type: button
-          - entity: light.andreas_rum
-            icon: 'mdi:lightbulb'
-            name: Andreas rum
-            show_icon: true
-            show_name: true
-            tap_action:
-              action: toggle
-            type: button
-          - entity: light.louise_rum
-            icon: 'mdi:lightbulb'
-            name: Louise rum
-            tap_action:
-              action: toggle
-            type: button
-        type: horizontal-stack
-      - cards:
-          - entity: light.vardagsrum
-            hold_action:
-              action: more-info
-            icon: 'mdi:lightbulb'
-            tap_action:
-              action: toggle
-            type: button
-          - entity: light.hall
-            icon: 'mdi:lightbulb'
-            show_icon: true
-            show_name: true
-            tap_action:
-              action: toggle
-            type: button
-          - entity: light.kok
-            icon: 'mdi:lightbulb'
-            tap_action:
-              action: toggle
-            type: button
-        type: horizontal-stack
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'off'
+        card:
+          type: grid
+          cards:
+            - type: button
+              tap_action:
+                action: toggle
+              entity: light.sovrum
+            - type: button
+              tap_action:
+                action: toggle
+              entity: light.andreas_rum
+            - type: button
+              tap_action:
+                action: toggle
+              entity: light.louise_rum
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'on'
+        card:
+          type: grid
+          cards:
+            - type: button
+              tap_action:
+                action: toggle
+              entity: light.sovrum
+            - type: button
+              tap_action:
+                action: toggle
+              entity: light.andreas_rum_jul
+              name: Andreas rum
+            - type: button
+              tap_action:
+                action: toggle
+              entity: light.louise_rum
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'off'
+        card:
+          type: grid
+          cards:
+            - type: button
+              tap_action:
+                action: toggle
+              entity: light.vardagsrum
+            - type: button
+              tap_action:
+                action: toggle
+              entity: light.hall
+            - type: button
+              tap_action:
+                action: toggle
+              entity: light.kok
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'on'
+        card:
+          type: grid
+          cards:
+            - type: button
+              tap_action:
+                action: toggle
+              entity: light.vardagsrum_jul
+              name: Vardagsrum
+            - type: button
+              tap_action:
+                action: toggle
+              entity: light.hall
+            - type: button
+              tap_action:
+                action: toggle
+              entity: light.kok_jul
+              name: Kök
     icon: 'mdi:information-outline'
     panel: false
     path: Start
@@ -143,7 +177,7 @@ views:
           - script.cleaning_lights_on
           - automation.kok_off_sensor_off
           - script.morning_lights_on
-          - script.lights_on
+          - script.daylights_on
           - script.night_light
           - script.kitchen_light_100
           - script.spa_light_on
@@ -208,6 +242,8 @@ views:
           - sensor.garage_temperature
           - sensor.garage_humidity
           - sensor.pa_vinden
+          - sensor.husvagn_temperature
+          - sensor.husvagn_humidity
         title: Övrigt
         show_header_toggle: false
         state_color: true
@@ -241,53 +277,153 @@ views:
         title: Köksbelysning
         show_header_toggle: true
         state_color: true
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'off'
+        card:
+          type: entities
+          entities:
+          - entity: light.kok_stora_fonstret
+          - entity: light.kok_lilla_fonstret
+          - entity: light.hall_byra
+          - entity: light.vardagsrum_fonster
+          - entity: light.vardagsrum_gran
+          - entity: light.uterum_fonster
+          title: Morgonbelysning
+          show_header_toggle: true
+          state_color: true
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'on'
+        card:
+          type: entities
+          entities:
+          - entity: light.kok_stora_fonstret_ljusstake
+          - entity: light.kok_lilla_fonstret
+          - entity: light.hall_byra
+          - entity: light.vardagsrum_fonster_ljusstake_2
+          - entity: light.vardagsrum_gran
+          - entity: light.uterum_julstjarnor
+          title: Morgonbelysning jul
+          show_header_toggle: true
+          state_color: true
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'off'
+        card:
+          type: entities
+          entities:
+            - entity: light.kok_stora_fonstret
+            - entity: light.kok_lilla_fonstret
+            - entity: light.hall_byra
+            - entity: light.hall_skap
+            - entity: light.vardagsrum_fonster
+            - entity: light.vardagsrum_skank
+            - entity: light.vardagsrum_vagn
+            - entity: light.vardagsrum_vitrinskap
+            - entity: light.sovrum_fonster
+            - entity: light.sovrum_sangbord
+            - entity: light.andreas_fonster
+            - entity: light.louise_fonster
+            - entity: light.louise_golvlampa
+            - entity: light.uterum_fonster
+          title: Dagbelysning
+          show_header_toggle: true
+          state_color: true
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'on'
+        card:
+          type: entities
+          entities:
+            - entity: light.kok_stora_fonstret_ljusstake
+            - entity: light.kok_lilla_fonstret
+            - entity: light.hall_byra
+            - entity: light.hall_skap
+            - entity: light.vardagsrum_fonster_ljusstake_2
+            - entity: light.vardagsrum_gran
+            - entity: light.vardagsrum_skank
+            - entity: light.vardagsrum_vagn
+            - entity: light.vardagsrum_vitrinskap
+            - entity: light.sovrum_fonster
+            - entity: light.sovrum_sangbord
+            - entity: light.andreas_fonster_julstjarna
+            - entity: light.louise_fonster
+            - entity: light.louise_golvlampa
+            - entity: light.uterum_julstjarnor
+          title: Dagbelysning jul
+          show_header_toggle: true
+          state_color: true
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'off'
+        card:
+          type: entities
+          entities:
+            - light.hall_byra
+            - light.vardagsrum_fonster
+            - input_boolean.rorelsedetektor_kok_aktiv
+            - timer.timer_rorelsedetektor_1_short
+            - timer.timer_rorelsedetektor_2_short
+            - timer.timer_rorelsedetektor_3_short
+          title: Nattbelysning
+          show_header_toggle: true
+          state_color: true
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'on'
+        card:
+          type: entities
+          entities:
+            - entity: light.hall_byra
+            - entity: light.vardagsrum_fonster_ljusstake_2
+            - input_boolean.rorelsedetektor_kok_aktiv
+            - timer.timer_rorelsedetektor_1_short
+            - timer.timer_rorelsedetektor_2_short
+            - timer.timer_rorelsedetektor_3_short
+          title: Nattbelysning jul
+          show_header_toggle: true
+          state_color: true
+
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'off'
+        card:
+          type: entities
+          entities:
+            - light.uterum_led
+            - light.uterum_fonster
+            - light.uterum_fotogenlampa
+          title: Uterum
+          show_header_toggle: true
+          state_color: true
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'on'
+        card:
+          type: entities
+          entities:
+            - light.uterum_led
+            - light.uterum_fonster
+            - light.uterum_julstjarnor #jul
+            - light.uterum_fotogenlampa
+          title: Uterum jul
+          show_header_toggle: true
+          state_color: true
       - type: entities
         entities:
-          - light.kok_stora_fonstret
-          - light.kok_lilla_fonstret
-          - light.hall_byra
-          - light.vardagsrum_fonster
-          - light.vardagsrum_gran
-          - light.uterum_fonster
-        title: Morgonbelysning
-        show_header_toggle: true
-        state_color: true
-      - type: entities
-        entities:
-          - light.kok_stora_fonstret
-          - light.kok_lilla_fonstret
-          - light.hall_byra
-          - light.hall_skap
-          - light.vardagsrum_fonster
-          - light.vardagsrum_skank
-          - light.vardagsrum_vagn
-          - light.vardagsrum_vitrinskap
-          - light.vardagsrum_gran
-          - light.sovrum_fonster
-          - light.sovrum_sangbord
-          - light.andreas_fonster
-          - light.louise_fonster
-          - light.louise_golvlampa
-          - light.uterum_fonster
-        title: Belysning
-        show_header_toggle: true
-        state_color: true
-      - type: entities
-        entities:
-          - light.hall_byra
-          - light.vardagsrum_fonster
-          - input_boolean.rorelsedetektor_kok_aktiv
-          - timer.timer_rorelsedetektor_1_short
-          - timer.timer_rorelsedetektor_2_short
-          - timer.timer_rorelsedetektor_3_short
-        title: Nattbelysning
-        show_header_toggle: true
-        state_color: true
-      - type: entities
-        entities:
-          - light.uterum_led
-          - light.uterum_fotogenlampa
-        title: Uterum
+          - light.friggebod_fonster
+          - light.friggebod_ute
+          - light.spabad_vagg
+        title: Utebelysning
         show_header_toggle: true
         state_color: true
       - type: entities
@@ -296,24 +432,44 @@ views:
           - light.tvattstugan_fasad
           - light.forrad_fasad
           - light.friggebod_fasad
-          - light.friggebod_ute
-          - light.friggebod_fonster
-          - light.spabad_vagg
-        title: Utomhusbelysning
+        title: Fasadbelysning
         show_header_toggle: true
         state_color: true
-      - type: entities
-        entities:
-          - light.kok_stora_fonstret
-          - light.kok_lilla_fonstret
-          - light.hall_byra
-          - light.vardagsrum_fonster
-          - light.sovrum_fonster
-          - light.louise_fonster
-          - light.uterum_fonster
-        title: Bortabelysning
-        show_header_toggle: true
-        state_color: true
+
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'off'
+        card:
+          type: entities
+          entities:
+            - light.kok_stora_fonstret
+            - light.kok_lilla_fonstret
+            - light.hall_byra
+            - light.vardagsrum_fonster
+            - light.sovrum_fonster
+            - light.louise_fonster
+            - light.uterum_fonster
+          title: Bortabelysning
+          show_header_toggle: true
+          state_color: true
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'on'
+        card:
+          type: entities
+          entities:
+            - light.kok_stora_fonstret_ljusstake
+            - light.kok_lilla_fonstret
+            - light.hall_byra
+            - light.vardagsrum_fonster_ljusstake_2
+            - light.sovrum_fonster
+            - light.louise_fonster
+            - light.uterum_julstjarnor
+          title: Bortabelysning jul
+          show_header_toggle: true
+          state_color: true
     icon: 'mdi:lightbulb'
   - path: room
     title: Rum
@@ -415,10 +571,10 @@ views:
         entities:
           - sensor.louise_rum_temperature
           - sensor.louise_rum_humidity
-          - sensor.aqara_motion_sensor_3
+          - sensor.aqara_motion_sensor_4
           - light.louise_fonster
           - light.louise_golvlampa
-          - binary_sensor.aqara_motion_sensor_3
+          - binary_sensor.aqara_motion_sensor_4
         title: Louise rum
         show_header_toggle: true
         state_color: true
@@ -467,6 +623,13 @@ views:
           - entity: light.friggebod_fonster
             name: Fönster
         title: Friggebod
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - sensor.husvagn_temperature
+          - sensor.husvagn_humidity
+        title: Husvagn
         show_header_toggle: true
         state_color: true
       - type: entities
@@ -718,7 +881,7 @@ views:
           - sensor.harmony_hub
           - sensor.yamaha
           - sensor.classic
-          - sensor.panasonic_tv
+          - sensor.samsung_tv
           - sensor.canal_digital
           - sensor.chromecast
           - sensor.chromecast_2

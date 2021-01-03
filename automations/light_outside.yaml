@@ -1,0 +1,177 @@
+    ############################################################
+    ### Tänder friggebod ute på morgonen vid rörelse i köket ###
+    ### T: input_boolean.rorelsedetektor_kok_aktiv == on     ###
+    ### C: sensor.ljusstyrka < 500                           ###
+    ###    05:00:00 - 12:00:00                               ###
+    ### A: light.friggebod_ute = on                          ###
+    ############################################################
+  - alias: Friggebod ute on (sensor on, <500)
+    trigger:
+      platform: state
+      entity_id: input_boolean.rorelsedetektor_kok_aktiv
+      to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: numeric_state
+          entity_id: sensor.ljusstyrka
+          below: 500
+        - condition: state
+          entity_id: light.friggebod_fasad
+          state: 'off'
+        - condition: time
+          after: '05:00:00'
+          before: '12:00:00'
+    action:
+      - service: light.turn_on
+        entity_id: light.friggebod_ute
+
+    #############################################
+    ### Tänder friggebod ute på eftermiddagen ###
+    ### T: sensor.ljusstyrka < 500            ###
+    ### C: 12:00:00 - 21:45:00                ###
+    ### A: light.friggebod_ute = on           ###
+    #############################################
+  - alias: Friggebod ute on (<500)
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      below: 500
+    condition:
+      condition: time
+      after: '12:00:00'
+      before: '21:45:00' 
+    action:
+      - service: light.turn_on
+        entity_id: light.friggebod_ute
+
+    ################################################
+    ### Släcker friggebod ute när det blir ljust ###
+    ### T: sensor.ljusstyrka > 600               ###
+    ### C: light.friggebod_ute == on             ###
+    ### A: light.friggebod_ute = off             ###
+    ################################################
+  - alias: Friggebod ute off (>600)
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      above: 600
+    condition:
+      condition: state
+      entity_id: light.friggebod_ute
+      state: 'on'
+    action:
+      - service: light.turn_off
+        entity_id: light.friggebod_ute
+
+#############################################################
+
+    #########################################################
+    ### Tänder belysning vid Spabad på eftermiddagen      ###
+    ### T: sensor.ljusstyrka < 5                          ###
+    ### C: 12:00:00 - 21:45:00                            ###
+    ### C: light.ight.spabad_vagg = off                   ###
+    ### A: script.night_light                             ###
+    #########################################################
+  - alias: Spabelysning on (<5)
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      below: 5
+    condition:
+      condition: and
+      conditions:
+        - condition: time
+          after: '12:00:00'
+          before: '21:45:00'
+        - condition: state
+          entity_id: light.spabad_vagg
+          state: 'off'
+    action:
+      - service: script.spa_light_on
+
+#############################################################
+
+    #####################################################
+    ### Tänder belysning i Friggebod på eftermiddagen ###
+    ### T: sensor.ljusstyrka < 1                      ###
+    ### C: 12:00:00 - 21:45:00                        ###
+    ### A: script.friggebod_light_on                  ###
+    #####################################################
+  - alias: Friggebod belysning on (<1)
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      below: 1
+    condition:
+      condition: time
+      after: '12:00:00'
+      before: '21:45:00' 
+    action:
+      - service: script.friggebod_light_on
+
+    ##########################################################
+    ### Släcker utebelysning på kvällen när ingen är hemma ###
+    ### T: 22:00:00                                        ###
+    ### C: group.track_for_home_devices == not_home        ###
+    ### A: service: script.outside_light_off               ###
+    ###    Service: script.uterum_window_light_off         ###
+    ##########################################################
+  - alias: Utebelysning off (>22:00:00, borta)
+    trigger:
+      platform: time
+      at: '22:00:00'
+    condition:
+      condition: state
+      entity_id: group.track_for_home_devices
+      state: 'not_home'
+    action:
+      - service: script.outside_light_off
+
+    #################################################################
+    ### Släcker utebelysning på vardagskvällar när någon är hemma ###
+    ### T: 22:00:00                                               ###
+    ### C: group.track_for_home_devices == home                   ###
+    ###    workday_tomorrow == on                                 ###
+    ### A: service: script.outside_light_off                      ###
+    #################################################################
+  - alias: Utebelysning off (>22:00:00, hemma, vardag)
+    trigger:
+      platform: time
+      at: '22:00:00'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'home'
+        - condition: state
+          entity_id: binary_sensor.workday_tomorrow
+          state: 'on'
+    action:
+      - service: script.outside_light_off
+
+    ##############################################################
+    ### Släcker utebelysning på helgkvällar när någon är hemma ###
+    ### T: switch.kok_lilla_fonstret == off                    ###
+    ### C: group.track_for_home_devices == home                ###
+    ###    workday_tomorrow == off                             ###
+    ### A: service: script.outside_light_off                   ###
+    ###    Service: script.uterum_window_light_off             ###
+    ##############################################################
+  - alias: Utebelysning off (All off, hemma, helg)
+    trigger:
+      platform: state
+      entity_id: switch.kok_lilla_fonstret
+      to: 'off'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'home'
+        - condition: state
+          entity_id: binary_sensor.workday_tomorrow
+          state: 'off'
+    action:
+      - service: script.outside_light_off

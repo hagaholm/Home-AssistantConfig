@@ -38,7 +38,7 @@
 
     ######################################################################################################
     ### Skickar notification vid rörelse i Louise rum innan rörelse i kök/tvättstuga om ingen är hemma ###
-    ### T: binary_sensor.aqara_motion_sensor_3 == on                                                   ###
+    ### T: binary_sensor.aqara_motion_sensor_4 == on                                                   ###
     ### C: group.track_for_home_devices == not_home                                                    ###
     ###    switch.rorelsedetektor_1 == off                                                             ###
     ###    switch.rorelsedetektor_2 == off                                                             ###
@@ -49,7 +49,7 @@
   - alias: Larm rörelse i Louise rum
     trigger:
       platform: state
-      entity_id: binary_sensor.aqara_motion_sensor_3 # Louise rum
+      entity_id: binary_sensor.aqara_motion_sensor_4 # Louise rum
       to: 'on'
     condition:
       condition: and

@@ -5,9 +5,21 @@
   ########################################
 - alias: Starta elvärme 5 grader
   trigger:
-    platform: numeric_state
-    entity_id: sensor.forrad_temperature
-    below: '5'
+    - platform: numeric_state
+      entity_id: sensor.forrad_temperature
+      below: '5'
+    - platform: numeric_state
+      entity_id: sensor.forrad_temperature
+      below: '4'
+    - platform: numeric_state
+      entity_id: sensor.forrad_temperature
+      below: '3'
+    - platform: numeric_state
+      entity_id: sensor.forrad_temperature
+      below: '2'
+    - platform: numeric_state
+      entity_id: sensor.forrad_temperature
+      below: '1'
   action:
     - service: homeassistant.turn_on
       entity_id: switch.garage_elvarme
@@ -19,9 +31,30 @@
   ########################################
 - alias: Starta elvärme 8 grader
   trigger:
-    platform: numeric_state
-    entity_id: sensor.forrad_temperature
-    below: '8'
+    - platform: numeric_state
+      entity_id: sensor.forrad_temperature
+      below: '8'
+    - platform: numeric_state
+      entity_id: sensor.forrad_temperature
+      below: '7'
+    - platform: numeric_state
+      entity_id: sensor.forrad_temperature
+      below: '6'
+    - platform: numeric_state
+      entity_id: sensor.forrad_temperature
+      below: '5'
+    - platform: numeric_state
+      entity_id: sensor.forrad_temperature
+      below: '4'
+    - platform: numeric_state
+      entity_id: sensor.forrad_temperature
+      below: '3'
+    - platform: numeric_state
+      entity_id: sensor.forrad_temperature
+      below: '2'
+    - platform: numeric_state
+      entity_id: sensor.forrad_temperature
+      below: '1'
   action:
     - service: homeassistant.turn_on
       entity_id: switch.garage_elvarme
@@ -29,13 +62,65 @@
   #########################################
   ### Stoppa elvärme garage             ###
   ### T: sensor.forrad_temperature > 7  ###
+  ### T: sensor.garage_temperature > 7  ###
   ### A: switch.garage_elvarme = off    ###
   #########################################
 - alias: Stoppa elvärme 7 grader
   trigger:
-    platform: numeric_state
-    entity_id: sensor.forrad_temperature
-    above: '7'
+    - platform: numeric_state
+      entity_id: sensor.forrad_temperature
+      above: '7'
+    - platform: numeric_state
+      entity_id: sensor.forrad_temperature
+      above: '8'
+    - platform: numeric_state
+      entity_id: sensor.forrad_temperature
+      above: '9'
+    - platform: numeric_state
+      entity_id: sensor.forrad_temperature
+      above: '10'
+    - platform: numeric_state
+      entity_id: sensor.forrad_temperature
+      above: '11'
+    - platform: numeric_state
+      entity_id: sensor.forrad_temperature
+      above: '12'
+    - platform: numeric_state
+      entity_id: sensor.forrad_temperature
+      above: '13'
+    - platform: numeric_state
+      entity_id: sensor.forrad_temperature
+      above: '14'
+    - platform: numeric_state
+      entity_id: sensor.forrad_temperature
+      above: '15'
+    - platform: numeric_state
+      entity_id: sensor.garage_temperature
+      above: '7'
+    - platform: numeric_state
+      entity_id: sensor.garage_temperature
+      above: '8'
+    - platform: numeric_state
+      entity_id: sensor.garage_temperature
+      above: '9'
+    - platform: numeric_state
+      entity_id: sensor.garage_temperature
+      above: '10'
+    - platform: numeric_state
+      entity_id: sensor.garage_temperature
+      above: '11'
+    - platform: numeric_state
+      entity_id: sensor.garage_temperature
+      above: '12'
+    - platform: numeric_state
+      entity_id: sensor.garage_temperature
+      above: '13'
+    - platform: numeric_state
+      entity_id: sensor.garage_temperature
+      above: '14'
+    - platform: numeric_state
+      entity_id: sensor.garage_temperature
+      above: '15'
   action:
     - service: homeassistant.turn_off
       entity_id: switch.garage_elvarme
@@ -43,13 +128,47 @@
   #########################################
   ### Stoppa elvärme garage             ###
   ### T: sensor.forrad_temperature > 10 ###
+  ### T: sensor.garage_temperature > 10 ###
   ### A: switch.garage_elvarme = off    ###
   #########################################
 - alias: Stoppa elvärme 10 grader
   trigger:
-    platform: numeric_state
-    entity_id: sensor.forrad_temperature
-    above: '10'
+    - platform: numeric_state
+      entity_id: sensor.forrad_temperature
+      above: '10'
+    - platform: numeric_state
+      entity_id: sensor.forrad_temperature
+      above: '11'
+    - platform: numeric_state
+      entity_id: sensor.forrad_temperature
+      above: '12'
+    - platform: numeric_state
+      entity_id: sensor.forrad_temperature
+      above: '13'
+    - platform: numeric_state
+      entity_id: sensor.forrad_temperature
+      above: '14'
+    - platform: numeric_state
+      entity_id: sensor.forrad_temperature
+      above: '15'
+    - platform: numeric_state
+      entity_id: sensor.garage_temperature
+      above: '10'
+    - platform: numeric_state
+      entity_id: sensor.garage_temperature
+      above: '11'
+    - platform: numeric_state
+      entity_id: sensor.garage_temperature
+      above: '12'
+    - platform: numeric_state
+      entity_id: sensor.garage_temperature
+      above: '13'
+    - platform: numeric_state
+      entity_id: sensor.garage_temperature
+      above: '14'
+    - platform: numeric_state
+      entity_id: sensor.garage_temperature
+      above: '15'
   action:
     - service: homeassistant.turn_off
       entity_id: switch.garage_elvarme

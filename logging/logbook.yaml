@@ -8,9 +8,12 @@
       - media_player
       - sensor
 #      - switch
+
   exclude:
     domains:
       - switch
+      - image_processing
+
     entities:
 #      - switch.rorelsedetektor_1
       - sensor.since_last_boot 
@@ -42,19 +45,14 @@
       - sensor.vardagsrum_temp_lastupdated
       - sensor.varmepump_temp_lastupdated
 
-      - automation.camera_1_image_processing_mode_day_light_control_off
-      - automation.camera_1_image_processing_mode_day_light_control_on
-      - automation.camera_1_image_processing_mode_away
-      - automation.camera_1_image_processing_mode_night
-      - automation.camera_2_image_processing_mode_day_light_control_off
-      - automation.camera_2_image_processing_mode_day_light_control_on
-      - automation.camera_2_image_processing_mode_away
-      - automation.camera_2_image_processing_mode_night
+      - automation.camera_1_image_processing
+      - automation.camera_2_image_processing
 
-    #  - automation.camera_1_Image_when_person_detected_and_camera_mode_day
-    #  - automation.camera_1_Image_when_person_detected_and_camera_mode_away
-    #  - automation.camera_2_Image_when_person_detected_and_camera_mode_day
-    #  - automation.camera_2_Image_when_person_detected_and_camera_mode_away
+      - image_processing.deepstack_camera_1
+      - image_processing.deepstack_camera_2
+
+      - sensor.annelie_till_jobbet
+      - sensor.annelie_hem_fran_jobbet
 
       - sensor.aqara_motion_sensor_1_lastupdated
       - sensor.aqara_motion_sensor_2_lastupdated
@@ -77,3 +75,11 @@
 
       - automation.camera_1_light_control_on
       - automation.camera_2_light_control_on
+
+      - automation.kok_100_morgon_sensor_on_2500
+      - automation.kok_100_sensor_on_150_2500
+      - automation.kok_100_sensor_on_0_150
+      - automation.kok_100_sensor_on_borta_0_150
+      - automation.kok_25_sensor_on_hemma_0_150
+
+      - automation.keep_ikea_tradfri_alive

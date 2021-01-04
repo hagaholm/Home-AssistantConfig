@@ -37,7 +37,7 @@ image_processing:
     targets:
       - person
     source:
-      - entity_id: camera.kamera_2
+      - entity_id: camera.kamera2
         name: deepstack_camera_2
     confidence: 80
     timeout: 5
@@ -461,7 +461,7 @@ automation:
       # Save a photo with timestamp to '/media/info/camera_2_other.jpg'
       - service: camera.snapshot
         data:
-          entity_id: camera.kamera_2
+          entity_id: camera.kamera2
           filename: '/media/info/camera_2_other.jpg'
 
       # Need to add a delay, otherwise it take the old photo

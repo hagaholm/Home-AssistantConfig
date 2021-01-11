@@ -39,7 +39,7 @@ automation:
       # Save a video with timestamp to '/config/camera/motion_detected/camera_1_YYYYMMDD-HHMMSS.mp4'        
       - service: camera.record
         data:
-          entity_id: camera.kamera_1
+          entity_id: camera.kamera1
           filename: '/config/camera/motion_detected/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_video.state }}.mp4'
           lookback: 0
           duration: 60
@@ -99,7 +99,7 @@ automation:
       # Save a video with timestamp to '/config/camera/motion_detected/camera_1_YYYYMMDD-HHMMSS.mp4'        
       - service: camera.record
         data:
-          entity_id: camera.kamera_1
+          entity_id: camera.kamera1
           filename: '/config/camera/motion_detected/camera_1_{{ states.input_text.camera_1_person_detected_timestamp_video.state }}.mp4'
           lookback: 0
           duration: 60

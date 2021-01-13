@@ -50,6 +50,31 @@ input_select:
      - Night # Warning
      - Away  # Warning
 
+####################################################
+#                                                  #
+#                    INPUT_NUMBER                  #
+#                                                  #
+####################################################
+input_number:
+  # Used for control the delay time between image processing
+  camera_duration:
+    name: Kamera väntetid mellan bild analys
+    initial: 500
+    min: 0
+    max: 1000
+    step: 100
+
+####################################################
+#                                                  #
+#                        TIMER                     #
+#                                                  #
+####################################################
+timer:
+  # Used for control the delay time between image processing
+  timer_camera_motion_detected:
+    name: Timer camera motion detected
+    duration: '00:00:30'
+
 ##################
 ### Automation ###
 ##################
@@ -117,6 +142,55 @@ automation:
 # 2020-12-23 11:12:10 ERROR (MainThread) [homeassistant.components.image_processing] Error on receive image from entity: Unable to get image
 #      - service: shell_command.remove_old_images_in_www_warning
 #      - service: shell_command.remove_old_images_in_www_warning_small
+
+  #######################################
+  ### Camera Motion Set duration time ###
+  #######################################
+  - alias: Camera Motion Set duration time
+    mode: restart
+
+    trigger:
+      - platform: event
+        event_type: folder_watcher
+        event_data:
+          event_type: modified
+          path: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg'
+      - platform: event
+        event_type: folder_watcher
+        event_data:
+          event_type: modified
+          path: '/config/camera/deepstack_photo/deepstack_camera_2_latest.jpg'
+
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.camera_duration
+          value: 0
+
+      # Cancel timer and reset to max time
+      - service: timer.cancel
+        entity_id: timer.timer_camera_motion_detected
+
+      # Start timer and count down
+      - service: timer.start
+        entity_id: timer.timer_camera_motion_detected
+
+  #########################################
+  ### Camera Motion Reset duration time ###
+  #########################################
+  - alias: Camera 1 Light control off
+    trigger:
+      # Timer finished after 30 sec
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.timer_camera_motion_detected
+ 
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.camera_duration
+          value: 500
 
 ##############
 ### Script ###

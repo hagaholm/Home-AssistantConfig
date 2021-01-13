@@ -1,0 +1,485 @@
+#####################
+### Input Boolean ###
+#####################
+input_boolean:
+  camera_1_light_control:
+    name: Camera 1 ljus kontroll 
+    initial: off
+
+  camera_2_light_control:
+    name: Camera 2 ljus kontroll 
+    initial: off
+
+  camera_light_control:
+    name: Camera ljus kontroll 
+    initial: off
+
+# Sätts till on när person detekterats vid kamera 2 och entre lampa är tänd
+# Sätts till off när entre lampa släcks
+  camera_2_max_light:
+    name: Camera 2 max ljus
+    initial: off
+
+#############
+### Timer ###
+#############
+timer:
+  timer_camera_1_light_control:
+    name: Timer camera 1 ljus kontroll
+    duration: '00:00:45'
+
+  timer_camera_2_light_control:
+    name: Timer camera 2 ljus kontroll
+    duration: '00:00:45'
+
+##################
+### Automation ###
+##################
+automation:
+  #############################
+  ### Camera 2 max light on ###
+  #############################
+  - alias: Camera 2 max light on
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_boolean.camera_2_light_control
+        to: 'on'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.camera_2_max_light
+          state: 'off'
+        - condition: state
+          entity_id: light.huvudentre
+          state: 'on'
+
+    action:
+      - delay:
+          seconds: 1 # Need to delay 1 sec to make automation "Camera 2 switch max light to normal" work
+          
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.camera_2_max_light
+
+  ##############################
+  ### Camera 2 max light off ###
+  ##############################
+  - alias: Camera 2 max light off
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: light.huvudentre
+        to: 'off'
+
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.camera_2_max_light
+
+  #################################################
+  ### Camera 2 entre switch max light to normal ###
+  #################################################
+  - alias: Camera 2 entre switch max light to normal
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_boolean.camera_light_control
+        to: 'off'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.camera_2_max_light
+          state: 'off'
+        - condition: state
+          entity_id: light.huvudentre
+          state: 'on'
+
+    action:
+      - service: script.huvudentre_belysning_on
+
+  #################################
+  ### Camera 1 Light control on ###
+  #################################
+  - alias: Camera 1 Light control on
+    mode: restart
+
+    trigger:
+      - platform: event
+        event_type: folder_watcher
+        event_data:
+          event_type: modified
+          path: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg'
+
+    action:
+      # camera_1_light_control = on
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.camera_1_light_control
+
+      # Cancel timer and reset to max time
+      - service: timer.cancel
+        entity_id: timer.timer_camera_1_light_control
+
+      # Start timer and count down
+      - service: timer.start
+        entity_id: timer.timer_camera_1_light_control
+
+  ##################################
+  ### Camera 1 Light control off ###
+  ##################################
+  - alias: Camera 1 Light control off
+    trigger:
+      # Timer finished after 45 sec
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.timer_camera_1_light_control
+ 
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.camera_1_light_control
+          state: 'on'
+ 
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.camera_1_light_control
+
+  #################################
+  ### Camera 2 Light control on ###
+  #################################
+  - alias: Camera 2 Light control on
+    mode: restart
+
+    trigger:
+      - platform: event
+        event_type: folder_watcher
+        event_data:
+          event_type: modified
+          path: '/config/camera/deepstack_photo/deepstack_camera_2_latest.jpg'
+
+    action:
+      # camera_2_light_control = on
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.camera_2_light_control
+
+      # Cancel timer and reset to max time
+      - service: timer.cancel
+        entity_id: timer.timer_camera_2_light_control
+
+      # Start timer and count down
+      - service: timer.start
+        entity_id: timer.timer_camera_2_light_control
+
+  ##################################
+  ### Camera 2 Light control off ###
+  ##################################
+  - alias: Camera 2 Light control off
+    trigger:
+      # Timer finished after 45 sec
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.timer_camera_2_light_control
+ 
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.camera_2_light_control
+          state: 'on'
+ 
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.camera_2_light_control
+
+  ###############################
+  ### Camera Light control on ###
+  ###############################
+  - alias: Camera Light control on
+    mode: restart
+
+    trigger:
+      - platform: state
+        entity_id: input_boolean.camera_1_light_control
+        to: 'on'
+      - platform: state
+        entity_id: input_boolean.camera_2_light_control
+        to: 'on'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.camera_light_control
+          state: 'off'
+
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.camera_light_control
+
+  ##################################
+  ### Camera Light control off 1 ###
+  ##################################
+  - alias: Camera Light control off 1
+    mode: restart
+
+    trigger:
+      - platform: state
+        entity_id: input_boolean.camera_1_light_control
+        to: 'off'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.camera_2_light_control
+          state: 'off'
+        - condition: state
+          entity_id: input_boolean.camera_light_control
+          state: 'on'
+
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.camera_light_control
+
+  ##################################
+  ### Camera Light control off 2 ###
+  ##################################
+  - alias: Camera Light control off 2
+    mode: restart
+
+    trigger:
+      - platform: state
+        entity_id: input_boolean.camera_2_light_control
+        to: 'off'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.camera_1_light_control
+          state: 'off'
+        - condition: state
+          entity_id: input_boolean.camera_light_control
+          state: 'on'
+
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.camera_light_control
+
+  ###############################################
+  ### Max light huvudentre if person detected ###
+  ###############################################
+  - alias: Max light huvudentre if person detected
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_boolean.camera_light_control
+        to: 'on'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.huvudentre
+          state: 'on'
+
+    action:
+      - service: script.huvudentre_belysning_max
+          
+  #####################################################
+  ### Max light tvättstuga fasad if person detected ###
+  #####################################################
+  - alias: Max light tvättstuga fasad if person detected
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_boolean.camera_light_control
+        to: 'on'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.tvattstugan_fasad
+          state: 'on'
+
+    action:
+      - service: script.tvattstuga_fasadbelysning_max
+
+  ####################################################
+  ### Max light friggebod fasad if person detected ###
+  ####################################################
+  - alias: Max light friggebod fasad if person detected
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_boolean.camera_light_control
+        to: 'on'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.friggebod_fasad
+          state: 'on'
+
+    action:
+      - service: script.friggebod_fasadbelysning_max
+
+  #################################################
+  ### Max light förråd fasad if person detected ###
+  #################################################
+  - alias: Max light förråd fasad if person detected
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_boolean.camera_light_control
+        to: 'on'
+ 
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.forrad_fasad
+          state: 'on'
+
+    action:
+      - service: script.forrad_fasadbelysning_max
+
+  #######################################################
+  ### Reset light huvudentre when switch from home on ###
+  #######################################################
+  - alias: Reset light huvudentre when switch from home on
+    mode: restart
+
+    trigger:
+      - platform: state
+        entity_id: input_select.home_status
+        to: 'Borta'
+      - platform: state
+        entity_id: input_select.home_status
+        to: 'Hemma av'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.huvudentre
+          state: 'on'
+
+    action:
+      - service: script.huvudentre_belysning_on
+          
+  ##########################################################
+  ### Reset light tvättstuga fasad if no person detected ###
+  ##########################################################
+  - alias: Reset light tvättstuga fasad if person no detected
+    mode: restart
+
+    trigger:
+      - platform: state
+        entity_id: input_boolean.camera_light_control
+        to: 'off'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.tvattstugan_fasad
+          state: 'on'
+
+    action:
+      - service: script.tvattstuga_fasadbelysning_on
+
+  #########################################################
+  ### Reset light friggebod fasad if no person detected ###
+  #########################################################
+  - alias: Reset light friggebod fasad if person no detected
+    mode: restart
+
+    trigger:
+      - platform: state
+        entity_id: input_boolean.camera_light_control
+        to: 'off'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.friggebod_fasad
+          state: 'on'
+
+    action:
+      - service: script.friggebod_fasadbelysning_on
+
+  ######################################################
+  ### Reset light förråd fasad if no person detected ###
+  ######################################################
+  - alias: Reset light förråd fasad if person no detected
+    mode: restart
+
+    trigger:
+      - platform: state
+        entity_id: input_boolean.camera_light_control
+        to: 'off'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.forrad_fasad
+          state: 'on'
+
+    action:
+      - service: script.forrad_fasadbelysning_on
+
+  ######################################
+  ### Flash light if person detected ###
+  ######################################
+  - alias: Flash light if person detected
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_boolean.camera_light_control
+        to: 'on'
+
+    action:        
+      - service: light.toggle
+        entity_id: light.vardagsrum_vitrinskap
+      - delay:
+          seconds: 2
+      - service: light.toggle
+        entity_id: light.vardagsrum_vitrinskap
+      - delay:
+          seconds: 2
+      - service: light.toggle
+        entity_id: light.vardagsrum_vitrinskap
+      - delay:
+          seconds: 2
+      - service: light.toggle
+        entity_id: light.vardagsrum_vitrinskap
+
+      - service: automation.turn_off
+        entity_id: automation.flash_light_if_person_detected

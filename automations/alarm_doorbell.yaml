@@ -12,12 +12,14 @@
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ringklocka_tvattstuga
+      - delay:
+          seconds: 5
       - service: notify.pushbullet
         data:
           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           message: "Ringklocka tvättstuga"
           data:
-            file: /config/www/info/camera_1_1.jpg
+            file: /media/info/camera_1_1.jpg
       - delay:
           seconds: 10
 
@@ -35,14 +37,53 @@
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ringklocka_hall
+      - delay:
+          seconds: 5
       - service: notify.pushbullet
         data:
           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           message: "Ringklocka hall."
           data:
-            file: /config/www/info/camera_2_1.jpg
+            file: /media/info/camera_2_1.jpg
       - delay:
           seconds: 10
+
+  ##############################################
+  ### Blinka med lyset när ringklocka ringer ###
+  ##############################################
+  - alias: Blinka med lyset när ringklocka ringer
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: switch.ringklocka_tvattstuga
+        to: 'on'
+      - platform: state
+        entity_id: switch.ringklocka_hall
+        to: 'on'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'home'
+
+    action:
+      - service: light.toggle
+        entity_id: light.vardagsrum_vitrinskap
+      - delay:
+          seconds: 1
+      - service: light.toggle
+        entity_id: light.vardagsrum_vitrinskap
+      - delay:
+          seconds: 1
+      - service: light.toggle
+        entity_id: light.vardagsrum_vitrinskap
+      - delay:
+          seconds: 1
+      - service: light.toggle
+        entity_id: light.vardagsrum_vitrinskap
 
 #####################################################
 ### Ringklocka tänd allt lyse och tv 1            ###
@@ -145,27 +186,3 @@
     action:
       - service: homeassistant.turn_on
         entity_id: switch.ringklocka
-
-    #################################################################################################
-    ### Blinka lampa kök lilla fönstret om det ringer på ringklocka tvättstuga och någon är hemma ###
-    ### T: switch.ringklocka_tvattstuga == on                                                     ###
-    ### C: group.track_for_home_devices = 'home'                                                  ###
-    ### A: light.kok_lilla_fonstret = toggle                                                      ###
-    ###    delay 1s                                                                               ###
-    ###    light.kok_lilla_fonstret = toggle                                                      ###
-    #################################################################################################
-  - alias: Ringklocka tvättstuga blinka lampa kök lilla fönstret
-    trigger:
-      - platform: state
-        entity_id: switch.ringklocka_tvattstuga
-        to: 'on'
-    condition:
-      condition: state
-      entity_id: group.track_for_home_devices
-      state: 'home'
-    action:
-      - service: light.toggle
-        entity_id: light.kok_lilla_fonstret
-      - delay: '00:00:01'
-      - service: light.toggle
-        entity_id: light.kok_lilla_fonstret

@@ -18,11 +18,11 @@
       - id: 18
         name: Regnmätare
 
-    ###############################
-    # Badrum, visar temp och fukt #
-    ###############################
+    ################################
+    # Husvagn, visar temp och fukt #
+    ################################
       - id: 135
-        name: Badrum
+        name: Husvagn
 
     ###########################################
     # Används inte, krockade med grannens :-) #
@@ -32,8 +32,8 @@
     ############################################
     # Grannens ute givare, visar temp och fukt #
     ############################################
-      - id: 151
-        name: Ute2
+#      - id: 151
+#        name: Ute2
 
     ######################################
     # Louise rum, visar på temp och fukt #
@@ -65,13 +65,13 @@
         name: Värmepump
 
     #####################################
-    # Förråd, visar temp och fukt       #
-    # Garage, visar temp                #
+    # Garage, visar temp och fukt       #
+    # Förråd, visar temp                #
     #####################################
       - id: 199
-        name: Förråd
-      - id: 200
         name: Garage
+      - id: 200
+        name: Förråd
 
     ##########################
     # Louise rum, visar temp #
@@ -91,8 +91,14 @@
     ################################
     # Hall, visar på temp och fukt #
     ################################
+#      - id: 247
+#        name: Hall
+
+    ############################################
+    # Ute på friggebod, visar på temp och fukt #
+    ############################################
       - id: 247
-        name: Hall
+        name: Ute friggebod
 
 #######################
 # command_line 1-Wire #
@@ -161,22 +167,22 @@
     name: Ljusstyrka
     state_topic: "hassbian/tsl2591/lux_calibrated"
     unit_of_measurement: "lx"
-  - platform: mqtt
-    name: Ljusstyrka2
-    state_topic: "hassbian/tsl2591/lux_5"
-    unit_of_measurement: "lx"
-  - platform: mqtt
-    name: Infrarött ljus
-    state_topic: "hassbian/tsl2591/infrared"
-    unit_of_measurement: ""
-  - platform: mqtt
-    name: Synligt ljus
-    state_topic: "hassbian/tsl2591/visible"
-    unit_of_measurement: ""
-  - platform: mqtt
-    name: Fullt spectrum ljus
-    state_topic: "hassbian/tsl2591/full_spectrum"
-    unit_of_measurement: ""
+  # - platform: mqtt
+    # name: Ljusstyrka2
+    # state_topic: "hassbian/tsl2591/lux_5"
+    # unit_of_measurement: "lx"
+  # - platform: mqtt
+    # name: Infrarött ljus
+    # state_topic: "hassbian/tsl2591/infrared"
+    # unit_of_measurement: ""
+  # - platform: mqtt
+    # name: Synligt ljus
+    # state_topic: "hassbian/tsl2591/visible"
+    # unit_of_measurement: ""
+  # - platform: mqtt
+    # name: Fullt spectrum ljus
+    # state_topic: "hassbian/tsl2591/full_spectrum"
+    # unit_of_measurement: ""
 
 ##################
 # mold_indicator #

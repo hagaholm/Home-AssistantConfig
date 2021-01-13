@@ -33,6 +33,9 @@ homeassistant:
     - /config/www/info
     - /config/www/warning
     - /config/www/warning_small
+    - /media/info
+    - /media/warning
+    - /media/warning_small
     
 ####################################################
 #                                                  #
@@ -54,9 +57,7 @@ system_health:
 
 #---------------------------------------------------
 # Enables the frontend
-# Add javascript_version: latest to see if it solve the current problem
 frontend:
-  javascript_version: latest
 
 #---------------------------------------------------
 # Enables configuration UI
@@ -111,6 +112,11 @@ notify:
 #  channel_name: !secret pushetta_channel_name
 #  api_key: !secret pushetta_api_key
 
+# Downloader
+# https://www.home-assistant.io/integrations/downloader/
+downloader:
+  download_dir: /config/www
+
 ####################################################
 #                                                  #
 #                      LOGGING                     #
@@ -133,13 +139,19 @@ lovelace:
 
   # Add more dashboards
   dashboards:
-
     # Standard
     lovelace-standard:
       mode: yaml
-      title: standard
+      title: Standard
       show_in_sidebar: true
       filename: ui-lovelace.yaml
+
+    # Automation
+    lovelace-automation:
+      mode: yaml
+      title: Automation
+      show_in_sidebar: true
+      filename: ui-automation.yaml
 
     # Generated
     lovelace-generated: # Needs to contain a hyphen (-)
@@ -149,21 +161,6 @@ lovelace:
       icon: mdi:tools
       show_in_sidebar: false
       require_admin: true
-
-    # Storage
-    lovelace-storage:
-      mode: yaml
-      title: Storage
-      icon: mdi:script
-      show_in_sidebar: false
-      filename: lovelace-storage.yaml
-
-    # Test
-    lovelace-test:
-      mode: yaml
-      title: test
-      show_in_sidebar: false
-      filename: ui-lovelace_test.yaml
 
 ####################################################
 #                                                  #
@@ -214,9 +211,12 @@ light:
 #  - platform: switch
 #    name: Louise fönster
 #    entity_id: switch.louise_fonster
-#  - platform: switch
-#    name: Andreas fönster
-#    entity_id: switch.andreas_fonster
+  - platform: switch
+    name: Louise skrivbord
+    entity_id: switch.louise_skrivbord
+  - platform: switch
+    name: Andreas fönster
+    entity_id: switch.andreas_fonster
   - platform: switch
     name: Friggebod fönster
     entity_id: switch.friggebod_fonster
@@ -233,8 +233,8 @@ light:
     name: Kök stora fönstret ljusstake
     entity_id: switch.kok_stora_fonstret_ljusstake
   - platform: switch
-    name: Sovrum fönster
-    entity_id: switch.sovrum_fonster
+    name: Sovrum sängbord
+    entity_id: switch.sovrum_sangbord
 #  - platform: switch
 #    name: Uterum fönster
 #    entity_id: switch.uterum_fonster
@@ -258,30 +258,51 @@ light:
     name: Uterum julstjärnor
     entity_id: switch.uterum_julstjarnor
 
+  - platform: switch
+    name: Andreas fönster julstjärna
+    entity_id: switch.andreas_fonster
 
 # Light group
 # https://www.home-assistant.io/integrations/light.group/
-
+ 
   - platform: group
-    name: Belysning
+    name: Dagbelysning
     entities:
       - light.kok_stora_fonstret
-#jul      - light.kok_stora_fonstret_ljusstake
       - light.kok_lilla_fonstret
       - light.hall_byra
       - light.hall_skap
       - light.vardagsrum_fonster
-#jul      - light.vardagsrum_fonster_ljusstake_2
+      - light.vardagsrum_skank
+      - light.vardagsrum_vagn
+      - light.vardagsrum_vitrinskap
+      - light.sovrum_fonster
+      - light.sovrum_sangbord
+      - light.andreas_fonster
+      - light.louise_fonster
+      - light.louise_golvlampa
+      - light.uterum_fonster
+
+  - platform: group
+    name: Dagbelysning jul
+    entities:
+      - light.kok_stora_fonstret_ljusstake #jul
+      - light.kok_lilla_fonstret
+      - light.hall_byra
+      - light.hall_skap
+      - light.vardagsrum_fonster_ljusstake_2 #jul
       - light.vardagsrum_skank
       - light.vardagsrum_vagn
       - light.vardagsrum_vitrinskap
       - light.vardagsrum_gran
       - light.sovrum_fonster
-      - light.andreas_fonster
+      - light.sovrum_sangbord
+      - light.andreas_fonster_julstjarna
       - light.louise_fonster
+      - light.louise_golvlampa
 #jul      - light.louise_fonster_dimmer_julstjarna
       - light.uterum_fonster
-#jul      - light.uterum_julstjarnor
+      - light.uterum_julstjarnor #jul
 
   - platform: group
     name: Köksbelysning
@@ -294,45 +315,79 @@ light:
     name: Morgonbelysning
     entities:
       - light.kok_stora_fonstret
-#jul      - light.kok_stora_fonstret_ljusstake
       - light.kok_lilla_fonstret
       - light.hall_byra
       - light.vardagsrum_fonster
-#jul      - light.vardagsrum_fonster_ljusstake_2
+      - light.uterum_fonster
+
+  - platform: group
+    name: Morgonbelysning jul
+    entities:
+      - light.kok_stora_fonstret_ljusstake #jul
+      - light.kok_lilla_fonstret
+      - light.hall_byra
+      - light.vardagsrum_fonster_ljusstake_2 #jul
       - light.vardagsrum_gran
       - light.uterum_fonster
-#jul      - light.uterum_julstjarnor
+      - light.uterum_julstjarnor #jul
 
   - platform: group
     name: Nattbelysning
     entities:
       - light.hall_byra
       - light.vardagsrum_fonster
-#jul      - light.vardagsrum_fonster_ljusstake_2
 
   - platform: group
-    name: Utomhusbelysning
+    name: Nattbelysning jul
     entities:
+      - light.hall_byra
+      - light.vardagsrum_fonster_ljusstake_2 #jul
+
+  - platform: group
+    name: Fasadbelysning
+    entities:
+      - light.huvudentre
+      - light.tvattstuga_fasad
       - light.forrad_fasad
       - light.friggebod_fasad
-      - light.friggebod_ute
+
+  - platform: group
+    name: Utebelysning
+    entities:
       - light.friggebod_fonster
+      - light.friggebod_ute
       - light.spabad_vagg
 
   - platform: group
     name: Bortabelysning
     entities:
       - light.kok_stora_fonstret
-#jul      - light.kok_stora_fonstret_ljusstake
       - light.kok_lilla_fonstret
       - light.hall_byra
       - light.vardagsrum_fonster
-#jul      - light.vardagsrum_fonster_ljusstake_2
-      - light.sovrum_fonster
+      - light.sovrum_sangbord
+      - light.louise_fonster
+      - light.uterum_fonster
+
+  - platform: group
+    name: Bortabelysning jul
+    entities:
+      - light.kok_stora_fonstret_ljusstake #jul
+      - light.kok_lilla_fonstret
+      - light.hall_byra
+      - light.vardagsrum_fonster_ljusstake_2 #jul
+      - light.sovrum_sangbord
       - light.louise_fonster
 #jul      - light.louise_fonster_dimmer_julstjarna
       - light.uterum_fonster
-#jul      - light.uterum_julstjarnor
+      - light.uterum_julstjarnor #jul
+
+
+  - platform: group
+    name: Sovrum
+    entities:
+      - light.sovrum_sangbord
+      - light.sovrum_fonster
 
   - platform: group
     name: Hall
@@ -344,7 +399,15 @@ light:
     name: Vardagsrum
     entities:
       - light.vardagsrum_fonster
-#jul      - light.vardagsrum_fonster_ljusstake_2
+      - light.vardagsrum_skank
+      - light.vardagsrum_vagn
+      - light.vardagsrum_vitrinskap
+      - light.vardagsrum_gran
+
+  - platform: group
+    name: Vardagsrum jul
+    entities:
+      - light.vardagsrum_fonster_ljusstake_2 #jul
       - light.vardagsrum_skank
       - light.vardagsrum_vagn
       - light.vardagsrum_vitrinskap
@@ -354,8 +417,44 @@ light:
     name: Kök
     entities:
       - light.kok_stora_fonstret
-#jul      - light.kok_stora_fonstret_ljusstake
       - light.kok_lilla_fonstret
+
+  - platform: group
+    name: Kök jul
+    entities:
+      - light.kok_stora_fonstret_ljusstake #jul
+      - light.kok_lilla_fonstret
+
+  - platform: group
+    name: Louise rum
+    entities:
+      - light.louise_fonster
+      - light.louise_golvlampa
+
+  - platform: group
+    name: Andreas rum
+    entities:
+      - light.andreas_fonster
+
+  - platform: group 
+    name: Andreas rum jul
+    entities:
+      - light.andreas_fonster_julstjarna
+
+  - platform: group
+    name: Uterum
+    entities:
+      - light.uterum_led
+      - light.uterum_fonster
+      - light.uterum_fotogenlampa
+
+  - platform: group
+    name: Uterum jul 
+    entities:
+      - light.uterum_led
+      - light.uterum_fonster
+      - light.uterum_julstjarnor #jul
+      - light.uterum_fotogenlampa
 
 ####################################################
 #                                                  #
@@ -473,7 +572,7 @@ input_select:
     options:
      - Off
      - Morgonbelysning
-     - Belysning
+     - Dagbelysning
      - Nattbelysning
      - Bortabelysning
 #    initial: Off
@@ -508,8 +607,8 @@ input_select:
     name: Hemma status
     options:
      - Borta
-     - Hemma på
-     - Hemma av
+     - Hemma på # Betyder: vaken
+     - Hemma av # Betyder: sover
 
 ####################################################
 #                                                  #
@@ -556,7 +655,7 @@ asuswrt:
 # Add broker used on Raspberry Pi 3B used for lux values
 # https://www.home-assistant.io/docs/mqtt/broker/
 mqtt:
-  broker: 192.168.1.9
+  broker: localhost
   port: 1883
 
 ####################################################

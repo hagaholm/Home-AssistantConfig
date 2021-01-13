@@ -58,6 +58,21 @@
         data:
           message: 'Ingen kontakt med vardagsrum vagn'
 
+    ###################################################
+    ### Ingen kontakt med tvättstuga fasadbelysning ###
+    ### T: light.tvattstugan_fasad == unavailable   ###
+    ### A: notify.pushbullet                        ###
+    ###################################################
+  - alias: Ingen kontakt med tvättstuga fasadbelysning
+    trigger:
+      platform: state
+      entity_id: light.tvattstugan_fasad
+      to: 'unavailable'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Ingen kontakt med tvättstuga fasadbelysning'
+
     ##############################################
     ### Ingen kontakt med uterum fönster       ###
     ### T: light.uterum_fonster == unavailable ###
@@ -151,6 +166,21 @@
       - service: notify.pushbullet
         data:
           message: 'Kontakt med friggebod fasadbelysning'
+
+    #################################################
+    ### Kontakt med tvättstuga fasadbelysning     ###
+    ### T: light.tvattstugan_fasad != unavailable ###
+    ### A: notify.pushbullet                      ###
+    #################################################
+  - alias: Kontakt med tvättstuga fasadbelysning
+    trigger:
+      platform: state
+      entity_id: light.tvattstugan_fasad
+      from: 'unavailable'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Kontakt med tvättstuga fasadbelysning'
 
     ################################################
     ### Kontakt med vardagsrum skänk             ###

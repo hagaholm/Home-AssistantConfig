@@ -27,7 +27,6 @@ sensor:
     # uptime #
     ##########
   - platform: uptime
-    unit_of_measurement: hours
 
     #############
     # CPU Speed #
@@ -136,9 +135,9 @@ sensor:
       chromecast_ultra:
         friendly_name: 'Chromecast ultra'
         value_template: "{{ 'Online' if is_state('device_tracker.chromecast_ultra', 'home') else 'Offline' }}"
-      panasonic_tv:
-        friendly_name: 'Tv Panasonic'
-        value_template: "{{ 'Online' if is_state('device_tracker.panasonic_tv', 'home') else 'Offline' }}"
+      samsung_tv:
+        friendly_name: 'Tv Samsung'
+        value_template: "{{ 'Online' if is_state('device_tracker.samsung_tv', 'home') else 'Offline' }}"
       google_home_mini:
         friendly_name: 'Google Home Mini'
         value_template: "{{ 'Online' if is_state('device_tracker.google_home_mini', 'home') else 'Offline' }}"
@@ -193,6 +192,9 @@ sensor:
       mobil_annelie:
         friendly_name: 'Annelie'
         value_template: "{{ 'Online' if is_state('device_tracker.mobil_annelie', 'home') else 'Offline' }}"
+      mobil_annelie_5g:
+        friendly_name: 'Annelie 5G'
+        value_template: "{{ 'Online' if is_state('device_tracker.mobil_annelie_5g', 'home') else 'Offline' }}"
       mobil_annelie_jobb:
         friendly_name: 'Annelie jobb'
         value_template: "{{ 'Online' if is_state('device_tracker.mobil_annelie_jobb', 'home') else 'Offline' }}"

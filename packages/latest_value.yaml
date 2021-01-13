@@ -13,6 +13,18 @@ sensor:
           {{ states.binary_sensor.aqara_motion_sensor_2.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
         device_class: timestamp
 
+      aqara_motion_sensor_3_lastupdated:
+        friendly_name: Aqara Motion Sensor 3 senast uppdaterad
+        value_template: >-
+          {{ states.binary_sensor.aqara_motion_sensor_3.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+
+      aqara_motion_sensor_4_lastupdated:
+        friendly_name: Aqara Motion Sensor 4 senast uppdaterad
+        value_template: >-
+          {{ states.binary_sensor.aqara_motion_sensor_4.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+        device_class: timestamp
+
       tradfri_motion_sensor_1_lastupdated:
         friendly_name: Trådfri Motion Sensor 1 senast uppdaterad
         value_template: >-

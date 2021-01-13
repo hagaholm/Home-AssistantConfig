@@ -20,20 +20,20 @@ stream:
 #                      CAMERA                      #
 #                                                  #
 ####################################################
-camera:
-  - platform: reolink_dev
-    name: Kamera 1
-    host: 192.168.1.20
-    username: !secret Camera_User
-    password: !secret Camera_Password
-    scan_interval: 5
+#camera:
+#  - platform: reolink_dev
+#    name: Kamera 1
+#    host: 192.168.1.20
+#    username: !secret Camera_User
+#    password: !secret Camera_Password
+#    scan_interval: 5
 
-  - platform: reolink_dev
-    name: Kamera 2
-    host: 192.168.1.21
-    username: !secret Camera_User
-    password: !secret Camera_Password
-    scan_interval: 5
+#  - platform: reolink_dev
+#    name: Kamera 2
+#    host: 192.168.1.21
+#    username: !secret Camera_User
+#    password: !secret Camera_Password
+#    scan_interval: 5
 
 ####################################################
 #                                                  #
@@ -62,9 +62,7 @@ automation:
       - platform: state
         entity_id: input_select.home_status
         to: 'Borta'
-      - platform: state
-        entity_id: input_select.home_status
-        to: 'Hemma av'
+
     action:
       - service: input_select.select_option
         data:
@@ -79,6 +77,7 @@ automation:
       - platform: state
         entity_id: input_select.home_status
         to: 'Hemma på'
+
     action:
       - service: input_select.select_option
         data:
@@ -93,6 +92,7 @@ automation:
       platform: state
       entity_id: input_select.home_status
       to: "Hemma av"
+
     action:
       - service: input_select.select_option
         data:
@@ -106,10 +106,17 @@ automation:
     trigger:
       - platform: time
         at: "00:01:00" # HH:MM:SS
+
     action:
       - service: shell_command.remove_old_images_in_camera_deepstack_photo
-      - service: shell_command.remove_old_images_in_www_warning
-      - service: shell_command.remove_old_images_in_www_warning_small
+# Exclude this as it create errors in logfile if no images exists
+# Example of errors:
+# 2020-12-23 11:12:00 WARNING (SyncWorker_28) [homeassistant.components.local_file.camera] Could not read camera Camera 1 Latest person away image from file: /media/warning/camera_1_1.jpg
+# 2020-12-23 11:12:04 ERROR (MainThread) [homeassistant.components.image_processing] Error on receive image from entity: Unable to get image
+# 2020-12-23 11:12:08 ERROR (MainThread) [homeassistant.components.image_processing] Error on receive image from entity: Unable to get image
+# 2020-12-23 11:12:10 ERROR (MainThread) [homeassistant.components.image_processing] Error on receive image from entity: Unable to get image
+#      - service: shell_command.remove_old_images_in_www_warning
+#      - service: shell_command.remove_old_images_in_www_warning_small
 
 ##############
 ### Script ###
@@ -132,16 +139,16 @@ shell_command:
   # Delete 14 days old images from folder /config/camera/deepstack_photo
   remove_old_images_in_camera_deepstack_photo: 'find /config/camera/deepstack_photo -mtime +14 -type f -delete' 
   
-  # Delete 14 days old images from folder /config/www/warning
-  remove_old_images_in_www_warning: 'find /config/www/warning -mtime +14 -type f -delete' 
+  # Delete 14 days old images from folder /media/warning
+  remove_old_images_in_www_warning: 'find /media/warning -mtime +14 -type f -delete' 
 
-  # Delete 14 days old images from folder /config/www/warning_small
-  remove_old_images_in_www_warning_small: 'find /config/www/warning_small -mtime +14 -type f -delete' 
+  # Delete 14 days old images from folder /media/warning_small
+  remove_old_images_in_www_warning_small: 'find /media/warning_small -mtime +14 -type f -delete' 
 
   # Used by script delete_camera_files
   delete_camera_files_1: 'rm -f /config/camera/deepstack_photo/*'
   delete_camera_files_2: 'rm -f /config/camera/motion_detected/*'
   delete_camera_files_3: 'rm -f /config/camera/person/*'
-  delete_camera_files_4: 'rm -f /config/www/info/*'
-  delete_camera_files_5: 'rm -f /config/www/warning/*'
-  delete_camera_files_6: 'rm -f /config/www/warning_small/*'
+  delete_camera_files_4: 'rm -f /media/info/*'
+  delete_camera_files_5: 'rm -f /media/warning/*'
+  delete_camera_files_6: 'rm -f /media/warning_small/*'

@@ -1,27 +1,43 @@
   ###########################################
   ### Starta luftavfuktare                ###
-  ### T: sensor.forrad_humidity > 66      ###
+  ### T: sensor.garage_humidity > 66      ###
+  ### C: sensor.garage_temperature > 10   ###
   ### A: switch.garage_luftavfuktare = on ###
   ###########################################
 - alias: Starta luftavfuktare
   trigger:
     platform: numeric_state
-    entity_id: sensor.forrad_humidity
+    entity_id: sensor.garage_humidity
     above: '66'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: switch.garage_luftavfuktare
+        state: 'off'
+      - condition: numeric_state
+        entity_id: sensor.garage_temperature
+        above: 10
   action:
     - service: homeassistant.turn_on
       entity_id: switch.garage_luftavfuktare
 
   ############################################
   ### Stoppa luftavfuktare                 ###
-  ### T: sensor.forrad_humidity < 64       ###
+  ### T: sensor.garage_humidity < 64       ###
   ### A: switch.garage_luftavfuktare = off ###
   ############################################
 - alias: Stoppa luftavfuktare
   trigger:
     platform: numeric_state
-    entity_id: sensor.forrad_humidity
+    entity_id: sensor.garage_humidity
     below: '64'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: switch.garage_luftavfuktare
+        state: 'on'
   action:
     - service: homeassistant.turn_off
       entity_id: switch.garage_luftavfuktare

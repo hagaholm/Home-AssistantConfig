@@ -2,9 +2,9 @@
 
     # IKEA Trådfri
     binary_sensor.tradfri_motion_sensor_1:
-      friendly_name: Rörelsedetektor vardagsrum
-    binary_sensor.tradfri_motion_sensor_3:
       friendly_name: Rörelsedetektor toalett
+    binary_sensor.tradfri_motion_sensor_3:
+      friendly_name: Rörelsedetektor vardagsrum
     binary_sensor.tradfri_motion_sensor_5:
       friendly_name: Rörelsedetektor uterum
 
@@ -13,6 +13,8 @@
       friendly_name: Rörelsedetektor köksskåp
     binary_sensor.aqara_motion_sensor_2:
       friendly_name: Rörelsedetektor hall
+    binary_sensor.aqara_motion_sensor_4:
+      friendly_name: Rörelsedetektor louise rum
 
     # Tellstick
     switch.rorelsedetektor_1:
@@ -25,6 +27,8 @@
       friendly_name: Lux kök
     sensor.aqara_motion_sensor_2:
       friendly_name: Lux hall
+    sensor.aqara_motion_sensor_4:
+      friendly_name: Lux louise rum
 
 #    sensor.Badrum:
 #      hidden: true
@@ -55,16 +59,20 @@
 #    sensor.Värmepump:
 #      hidden: true
 
+    sensor.hall_lufttryck:
+      friendly_name: Lufttryck
     sensor.ljusstyrka:
       friendly_name: Ute
-    sensor.ute2_humidity:
+    sensor.ute_friggebod_humidity:
       friendly_name: Ute
       icon: mdi:water-percent
+    sensor.badrum_temperature:
+      friendly_name: Badrum
     sensor.badrum_humidity:
       friendly_name: Badrum
       icon: mdi:water-percent
-    sensor.forrad_humidity:
-      friendly_name: Förråd
+    sensor.garage_humidity:
+      friendly_name: Garage
       icon: mdi:water-percent
     sensor.garage_temperature:
       friendly_name: Garage
@@ -77,6 +85,11 @@
       icon: mdi:water-percent
     sensor.friggebod_temperature:
       friendly_name: Friggebod
+    sensor.husvagn_temperature:
+      friendly_name: Husvagn
+    sensor.husvagn_humidity:
+      friendly_name: Husvagn
+      icon: mdi:water-percent
     sensor.frys_temperature:
       friendly_name: Frys
     sensor.fukt_badrumsfonster:
@@ -87,6 +100,8 @@
       icon: mdi:water-percent
     sensor.hall_temperature:
       friendly_name: Hall
+    sensor.ute_friggebod_temperature:
+      friendly_name: Ute friggebod
     sensor.inne_medel:
       friendly_name: Inne
       icon: mdi:thermometer
@@ -127,7 +142,7 @@
       icon: mdi:audio-video
     sensor.classic:
       icon: mdi:audio-video
-    sensor.panasonic_tv:
+    sensor.samsung_tv:
       icon: mdi:television
     sensor.canal_digital:
       icon: mdi:audio-video
@@ -152,6 +167,8 @@
     sensor.mobil_louise:
       icon: mdi:cellphone-android
     sensor.mobil_annelie:
+      icon: mdi:cellphone-android
+    sensor.mobil_annelie_5g:
       icon: mdi:cellphone-android
     sensor.mobil_annelie_jobb:
       icon: mdi:cellphone-android

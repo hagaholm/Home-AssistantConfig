@@ -108,9 +108,12 @@ automation:
     ###    switch.vardagsrum_extra_subbas = off ###
     ###############################################
   - alias: "Stäng av subbasar vid PowerOff"
+    mode: queued
+
     trigger:
       platform: state
       entity_id: remote.harmony_hub
+
     condition:
       condition: and
       conditions:
@@ -138,9 +141,12 @@ automation:
     ###    switch.vardagsrum_extra_subbas = on                            ###
     #########################################################################
   - alias: "Sätt på subbasar vid PowerOn"
+    mode: queued
+
     trigger:
       platform: state
       entity_id: remote.harmony_hub
+
     condition:
       condition: or
       conditions:
@@ -156,6 +162,7 @@ automation:
           value_template: '{{ trigger.to_state.attributes.current_activity == "Watch ChromeCast ultra" }}'
         - condition: template
           value_template: '{{ trigger.to_state.attributes.current_activity == "Listen to ChromeCast ultra" }}'
+
     action:
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_subbas
@@ -228,9 +235,12 @@ automation:
     ### A: switch.vardagsrum_extra_subbas = on ###
     ##############################################
   - alias: "Sätt på mediaspelare vid Watch TV"
+    mode: queued
+
     trigger:
       platform: state
       entity_id: remote.harmony_hub
+
     condition:
       condition: and
       conditions:
@@ -241,6 +251,7 @@ automation:
         - condition: state
           entity_id: switch.vardagsrum_stereobank
           state: 'off'
+
     action:
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_stereobank
@@ -260,9 +271,12 @@ automation:
     ### A: switch.vardagsrum_extra_subbas = on        ###
     #####################################################
   - alias: "Sätt på mediaspelare vid Listen to Radio"
+    mode: queued
+
     trigger:
       platform: state
       entity_id: remote.harmony_hub
+
     condition:
       condition: and
       conditions:
@@ -273,6 +287,7 @@ automation:
         - condition: state
           entity_id: switch.vardagsrum_stereobank
           state: 'off'
+
     action:
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_stereobank
@@ -292,9 +307,12 @@ automation:
     ### A: switch.vardagsrum_extra_subbas = on         ###
     ######################################################
   - alias: "Sätt på mediaspelare vid Watch ChromeCast"
+    mode: queued
+
     trigger:
       platform: state
       entity_id: remote.harmony_hub
+
     condition:
       condition: and
       conditions:
@@ -305,6 +323,7 @@ automation:
         - condition: state
           entity_id: switch.vardagsrum_stereobank
           state: 'off'
+
     action:
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_stereobank
@@ -324,9 +343,12 @@ automation:
     ### A: switch.vardagsrum_extra_subbas = on          ###
     #######################################################
   - alias: "Sätt på mediaspelare vid Listen to Spotify"
+    mode: queued
+
     trigger:
       platform: state
       entity_id: remote.harmony_hub
+
     condition:
       condition: and
       conditions:
@@ -337,6 +359,7 @@ automation:
         - condition: state
           entity_id: switch.vardagsrum_stereobank
           state: 'off'
+
     action:
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_stereobank
@@ -356,9 +379,12 @@ automation:
     ### A: switch.vardagsrum_extra_subbas = on               ###
     ############################################################
   - alias: "Sätt på mediaspelare vid Watch ChromeCast ultra"
+    mode: queued
+
     trigger:
       platform: state
       entity_id: remote.harmony_hub
+
     condition:
       condition: and
       conditions:
@@ -369,6 +395,7 @@ automation:
         - condition: state
           entity_id: switch.vardagsrum_stereobank
           state: 'off'
+
     action:
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_stereobank
@@ -388,9 +415,12 @@ automation:
     ### A: switch.vardagsrum_extra_subbas = on                   ###
     ################################################################
   - alias: "Sätt på mediaspelare vid Listen to ChromeCast ultra"
+    mode: queued
+
     trigger:
       platform: state
       entity_id: remote.harmony_hub
+
     condition:
       condition: and
       conditions:
@@ -401,6 +431,7 @@ automation:
         - condition: state
           entity_id: switch.vardagsrum_stereobank
           state: 'off'
+
     action:
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_stereobank
@@ -415,17 +446,20 @@ automation:
     ### Sätt på subbasar vid hög volym ###
     ######################################
   - alias: Sätt på subbasar vid hög volym
+    mode: queued
+
     trigger:
       platform: numeric_state
-      entity_id: media_player.yamaha_receiver
-      value_template: "{{ state.attributes.volume_level }}"
-      above: '0.65' # > 35
+      entity_id: sensor.yamaha_volume_level
+      above: '59' # > 40
+
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: media_player.yamaha_receiver
           state: 'on'
+
     action:
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_subbas
@@ -436,17 +470,20 @@ automation:
     ### Stäng av subbasar vid låg volym ###
     #######################################
   - alias: Stäng av subbasar vid låg volym
+    mode: queued
+
     trigger:
       platform: numeric_state
-      entity_id: media_player.yamaha_receiver
-      value_template: "{{ state.attributes.volume_level }}"
-      below: '0.65' # < 35
+      entity_id: sensor.yamaha_volume_level
+      below: '59' # < 40
+
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: media_player.yamaha_receiver
           state: 'on'
+
     action:
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_subbas
@@ -457,10 +494,13 @@ automation:
     ### Sätt på tv bänk vid rörelse ###
     ###################################
   - alias: Sätt på tv bänk vid rörelse
+    mode: queued
+
     trigger:
       platform: state
-      entity_id: binary_sensor.tradfri_motion_sensor_1
+      entity_id: binary_sensor.tradfri_motion_sensor_3
       to: 'on'
+
     condition:
       condition: or
       conditions:
@@ -470,8 +510,156 @@ automation:
         - condition: state
           entity_id: switch.vardagsrum_tv
           state: 'off'
+
     action:
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_stereobank
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_tv
+
+    #######################################
+    ### Sänk ljuset vid hög volym på tv ###
+    #######################################
+  - alias: Sänk ljuset vid hög volym på tv
+    mode: queued
+
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.yamaha_volume_level
+      above: '65' # > 35
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.vardagsrum_skank
+          state: 'on'
+        - condition: or
+          conditions:
+          - condition: state
+            entity_id: sensor.harmony_current
+            state: 'Watch TV'
+          - condition: state
+            entity_id: sensor.harmony_current
+            state: 'Watch ChromeCast'
+
+    action:
+      - service: script.tv_light_look_at_tv
+
+    ############################################
+    ### Återställ ljuset vid låg volym på tv ###
+    ############################################
+  - alias: Återställ ljuset vid låg volym på tv
+    mode: queued
+
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.yamaha_volume_level
+      below: '65' # > 35
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.vardagsrum_skank
+          state: 'on'
+        - condition: or
+          conditions:
+          - condition: state
+            entity_id: sensor.harmony_current
+            state: 'Watch TV'
+          - condition: state
+            entity_id: sensor.harmony_current
+            state: 'Watch ChromeCast'
+
+    action:
+      - service: script.tv_light_normal
+
+    ###############################################
+    ### Sänk ljuset vid start av tv på morgonen ###
+    ###############################################
+  - alias: Sänk ljuset vid start av tv på morgonen
+    mode: queued
+
+    trigger:
+      platform: state
+      entity_id: remote.harmony_hub
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.vardagsrum_skank
+          state: 'on'
+        - condition: time
+          after: '05:00:00'
+          before: '09:00:00'
+        - condition: or
+          conditions:
+          - condition: state
+            entity_id: sensor.harmony_current
+            state: 'Watch TV'
+          - condition: state
+            entity_id: sensor.harmony_current
+            state: 'Watch ChromeCast'
+
+    action:
+      - service: script.tv_light_look_at_tv
+
+    ############################################################
+    ### Sänk ljuset om tv är på när sovrum tänds på morgonen ###
+    ############################################################
+  - alias: Sänk ljuset om tv är på när sovrum tänds på morgonen
+    mode: queued
+
+    trigger:
+      platform: state
+      entity_id: light.sovrum
+      to: 'on'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.vardagsrum_skank
+          state: 'on'
+        - condition: time
+          after: '05:00:00'
+          before: '09:00:00'
+        - condition: or
+          conditions:
+          - condition: state
+            entity_id: sensor.harmony_current
+            state: 'Watch TV'
+          - condition: state
+            entity_id: sensor.harmony_current
+            state: 'Watch ChromeCast'
+
+    action:
+      - service: script.tv_light_look_at_tv
+
+    ####################################################
+    ### Återställ ljuset vid stäng av tv på morgonen ###
+    ####################################################
+  - alias: Återställ ljuset vid stäng av tv på morgonen
+    mode: queued
+
+    trigger:
+      platform: state
+      entity_id: remote.harmony_hub
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: sensor.harmony_current
+          state: 'PowerOff'
+        - condition: state
+          entity_id: light.vardagsrum_skank
+          state: 'on'
+        - condition: time
+          after: '05:00:00'
+          before: '09:00:00'
+
+    action:
+      - service: script.tv_light_normal

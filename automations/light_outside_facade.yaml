@@ -1,0 +1,266 @@
+    #################
+    ### Friggebod ###
+    #################
+    #######################################################################
+    ### Tänder friggebod fasadbelysning på morgonen vid rörelse i köket ###
+    ### T: input_boolean.rorelsedetektor_kok_aktiv == on                ###
+    ### C: sensor.ljusstyrka < 40                                       ###
+    ###    05:00:00 - 12:00:00                                          ###
+    ### A: script.friggebod_fasadbelysning_on                           ###
+    #######################################################################
+  - alias: Friggebod fasadbelysning on (sensor on, <40)
+    trigger:
+      platform: state
+      entity_id: input_boolean.rorelsedetektor_kok_aktiv
+      to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: numeric_state
+          entity_id: sensor.ljusstyrka
+          below: 40
+        - condition: state
+          entity_id: light.friggebod_fasad
+          state: 'off'
+        - condition: time
+          after: '05:00:00'
+          before: '12:00:00'
+    action:
+      - service: script.friggebod_fasadbelysning_on
+
+    ##########################################################
+    ### Tänder friggebod fasadbelysning när det blir mörkt ###
+    ### T: sensor.ljusstyrka < 40                          ###
+    ### C: group.track_for_home_devices == 'home'          ###
+    ###    time: 12:00 - 22:00                             ###
+    ###    light.friggebod_fasad == off                    ###
+    ### A: script.friggebod_fasadbelysning_on              ###
+    ##########################################################
+  - alias: Friggebod fasadbelysning on (home, <40) 
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      below: 40
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'home'
+        - condition: time
+          after: '12:00:00'
+          before: '22:00:00'
+        - condition: state
+          entity_id: light.friggebod_fasad
+          state: 'off'
+    action:
+      - service: script.friggebod_fasadbelysning_on
+
+    #############################################################################
+    ### Tänder friggebod fasadbelysning när det blir mörkt och ingen är hemma ###
+    ### T: sensor.ljusstyrka < 40                                             ###
+    ### C: group.track_for_home_devices == not_home'                          ###
+    ### C: time: 12:00 - 05:00                                                ###
+    ###    light.friggebod_fasad == off                                       ###
+    ### A: script.friggebod_fasadbelysning_on                                 ###
+    #############################################################################
+  - alias: Friggebod fasadbelysning on (away, <40)
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      below: 40
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
+        - condition: time
+          after: '12:00:00'
+          before: '05:00:00'
+        - condition: state
+          entity_id: light.friggebod_fasad
+          state: 'off'
+    action:
+      - service: script.friggebod_fasadbelysning_on
+
+    ###########################################################
+    ### Släcker friggebod fasadbelysning när det blir ljust ###
+    ### T: sensor.ljusstyrka > 60                           ###
+    ### C: light.friggebod_fasad == on                      ###
+    ### A: light.friggebod_fasad = off                      ###
+    ###########################################################
+  - alias: Friggebod fasadbelysning off (>60)
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      above: 60
+    condition:
+      condition: state
+      entity_id: light.friggebod_fasad
+      state: 'on'
+    action:
+      - service: script.friggebod_fasadbelysning_off
+
+    ############################################################
+    ### Släcker friggebod fasadbelysning när det släcks inne ###
+    ### T: light.kok_lilla_fonstret == off                   ###
+    ### C: time: 21:00 - 06:00                               ###
+    ###    group.track_for_home_devices = 'home'             ###
+    ###    light.friggebod_fasad == on                       ###
+    ### A: light.friggebod_fasad = off                       ###
+    ############################################################
+  - alias: Friggebod fasadbelysning off
+    trigger:
+      platform: state
+      entity_id: light.kok_lilla_fonstret
+      to: 'off'
+    condition:
+      condition: and
+      conditions:
+        - condition: time
+          after: '21:00:00'
+          before: '06:00:00'
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'home'
+        - condition: state
+          entity_id: light.friggebod_fasad
+          state: 'on'
+    action:
+      - service: script.friggebod_fasadbelysning_off
+
+###############################################################################
+###############################################################################
+###############################################################################
+
+    ##############
+    ### Förråd ###
+    ##############
+    #######################################################
+    ### Tänder förråd fasadbelysning när det blir mörkt ###
+    ### T: sensor.ljusstyrka < 40                       ###
+    ### C: light.forrad_fasad == off                    ###
+    ### A: light.forrad_fasad = on                      ###
+    #######################################################
+  - alias: Förråd fasadbelysning on (<40)
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      below: 40
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.forrad_fasad
+          state: 'off'
+    action:
+      - service: script.forrad_fasadbelysning_on
+
+    ########################################################
+    ### Släcker förråd fasadbelysning när det blir ljust ###
+    ### T: sensor.ljusstyrka > 60                        ###
+    ### C: light.forrad_fasad == on                      ###
+    ### A: light.forrad_fasad = off                      ###
+    ########################################################
+  - alias: Förråd fasadbelysning off (>60)
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      above: 60
+    condition:
+      condition: state
+      entity_id: light.forrad_fasad
+      state: 'on'
+    action:
+      - service: script.forrad_fasadbelysning_off
+
+###############################################################################
+###############################################################################
+###############################################################################
+
+    ###################
+    ### Tvättstugan ###
+    ###################
+    ###########################################################
+    ### Tänder tvättstuga fasadbelysning när det blir mörkt ###
+    ### T: sensor.ljusstyrka < 40                           ###
+    ### C: light.tvattstugan_fasad == off                   ###
+    ### A: light.tvattstugan_fasad = on                     ###
+    ###########################################################
+  - alias: Tvättstuga fasadbelysning on (<40)
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      below: 40
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.tvattstugan_fasad
+          state: 'off'
+    action:
+      - service: script.tvattstuga_fasadbelysning_on
+
+    ############################################################
+    ### Släcker tvättstuga fasadbelysning när det blir ljust ###
+    ### T: sensor.ljusstyrka > 60                            ###
+    ### C: light.tvattstugan_fasad == on                     ###
+    ### A: light.tvattstugan_fasad = off                     ###
+    ############################################################
+  - alias: Tvättstuga fasadbelysning off (>60)
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      above: 60
+    condition:
+      condition: state
+      entity_id: light.tvattstugan_fasad
+      state: 'on'
+    action:
+      - service: script.tvattstuga_fasadbelysning_off
+
+###############################################################################
+###############################################################################
+###############################################################################
+
+    ##################
+    ### Huvudentre ###
+    ##################
+    ######################################################
+    ### Tänder huvudentre belysning när det blir mörkt ###
+    ### T: sensor.ljusstyrka < 40                      ###
+    ### C: light.huvudentre == off                     ###
+    ### A: light.huvudentre = on                       ###
+    ######################################################
+  - alias: Huvudentre belysning on (<40)
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      below: 40
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.huvudentre
+          state: 'off'
+    action:
+      - service: script.huvudentre_belysning_on
+
+    #######################################################
+    ### Släcker huvudentre belysning när det blir ljust ###
+    ### T: sensor.ljusstyrka > 60                       ###
+    ### C: light.huvudentre == on                       ###
+    ### A: light.huvudentre = off                       ###
+    #######################################################
+  - alias: Huvudentre belysning off (>60)
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      above: 60
+    condition:
+      condition: state
+      entity_id: light.huvudentre
+      state: 'on'
+    action:
+      - service: script.huvudentre_belysning_off

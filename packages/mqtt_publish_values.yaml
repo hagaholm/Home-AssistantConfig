@@ -1,0 +1,21 @@
+##################
+### Automation ###
+##################
+automation:
+  ########################################
+  ### MQTT Publish outside temperature ###
+  ### Used by Thomas C.                ###
+  ########################################
+  - alias: MQTT Publish outside temperature
+    mode: single
+
+    trigger:
+      - platform: state
+        event: start
+        entity_id: sensor.ute
+    
+    action:
+      - service: mqtt.publish
+        data_template:
+          payload: "{{trigger.to_state.state}}"
+          topic: !secret mqtt_path_publish_outside_temperaure

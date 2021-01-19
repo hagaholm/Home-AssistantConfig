@@ -120,6 +120,14 @@ automation:
             data:
               entity_id: image_processing.deepstack_camera_1
 
+          # Add dynamic delay. input_number.camera_duration is controlled by another automation
+          - delay:
+              milliseconds: "{{ states.input_number.camera_duration.state }}"
+
+          # Alternative
+          # - delay: 
+          #     milliseconds: "{{ states('input_number.camera_duration') | int }}"
+
   #########################################
   ### Camera 1 Folder Watcher activated ###
   #########################################

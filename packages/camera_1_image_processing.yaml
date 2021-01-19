@@ -35,11 +35,11 @@ image_processing:
     save_file_folder: /config/camera/deepstack_photo/
     save_timestamped_file: True
     targets:
-      - person
+      - target: person
+        confidence: 65
     source:
       - entity_id: camera.kamera1
         name: deepstack_camera_1
-    confidence: 65
     timeout: 5
 
 ##############

@@ -43,12 +43,11 @@ automation:
     mode: single
 
     trigger:
-      - platform: state
-        entity_id: input_boolean.camera_1_light_control
-        to: 'on'
-      - platform: state
-        entity_id: input_boolean.camera_2_light_control
-        to: 'on'
+      # Timer finished after 30 sec
+      - platform: event
+        event_type: timer.started
+        event_data:
+          entity_id: timer.timer_camera_motion_detected
 
     condition:
       condition: and
@@ -67,12 +66,11 @@ automation:
     mode: single
 
     trigger:
-      - platform: state
-        entity_id: input_boolean.camera_1_light_control
-        to: 'off'
-      - platform: state
-        entity_id: input_boolean.camera_2_light_control
-        to: 'off'
+      # Timer finished after 30 sec
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.timer_camera_motion_detected
 
     condition:
       condition: and

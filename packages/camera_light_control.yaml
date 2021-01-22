@@ -36,6 +36,57 @@ timer:
 ### Automation ###
 ##################
 automation:
+  ###########################################################
+  ### Light Friggebod on if Person detected and light off ###
+  ###########################################################
+  - alias: Light Friggebod on if Person detected and light off
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_boolean.camera_1_light_control
+        to: 'on'
+      - platform: state
+        entity_id: input_boolean.camera_2_light_control
+        to: 'on'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.huvudentre
+          state: 'off'
+
+    action:
+      - service: script.friggebod_fasadbelysning_min
+
+  ############################################################
+  ### Light Friggebod off if Person detected and light off ###
+  ############################################################
+  - alias: Light Friggebod off if Person detected and light off
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_boolean.camera_1_light_control
+        to: 'off'
+      - platform: state
+        entity_id: input_boolean.camera_2_light_control
+        to: 'off'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.huvudentre
+          state: 'off'
+        - condition: state
+          entity_id: light.friggebod_fasad
+          state: 'on'
+
+    action:
+      - service: script.friggebod_fasadbelysning_off
+
   #############################
   ### Camera 2 max light on ###
   #############################

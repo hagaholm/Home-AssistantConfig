@@ -84,32 +84,5 @@
   morning_lights_off:
     alias: Morgonbelysning off
     sequence:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.inside_lights
-          option: Off
-
       - service: script.turn_on
-        data_template:
-          entity_id: >
-            {% if is_state('input_boolean.christmas_light', 'on') %}
-              script.morning_lights_christmas_off
-            {% else %}
-              script.morning_lights_default_off
-            {% endif %}
-
-  morning_lights_default_off:
-    alias: Morgonbelysning off
-    sequence:
-      - service: light.turn_off
-        data:
-          entity_id: light.morgonbelysning
-          transition: 2
-
-  morning_lights_christmas_off:
-    alias: Morgonbelysning off
-    sequence:
-      - service: light.turn_off
-        data:
-          entity_id: light.morgonbelysning_jul
-          transition: 2
+        script.daylights_off

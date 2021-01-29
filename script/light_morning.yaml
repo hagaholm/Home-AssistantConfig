@@ -85,4 +85,5 @@
     alias: Morgonbelysning off
     sequence:
       - service: script.turn_on
-        script.daylights_off
+        entity_id: script.daylights_off
+

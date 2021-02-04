@@ -222,7 +222,7 @@ sensor:
         value_template: "{{ 'Online' if is_state('device_tracker.mickes_laptop', 'home') else 'Offline' }}"
       mickes_work_laptop:
         friendly_name: 'Mickes jobb dator'
-        value_template: "{{ 'Online' if is_state('device_tracker.mickes_work_laptop', 'home') else 'Offline' }}"
+        value_template: "{{ 'Online' if is_state('device_tracker.mickes_work_laptop', 'home') or is_state('device_tracker.mickes_work_laptop_eth', 'home') else 'Offline' }}"
       louise_dator:
         friendly_name: 'Louise dator'
         value_template: "{{ 'Online' if is_state('device_tracker.louise_dator', 'home') else 'Offline' }}"

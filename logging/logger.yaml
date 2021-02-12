@@ -46,3 +46,15 @@
     # 2020-10-07 20:21:33 WARNING (MainThread) [homeassistant.components.automation.camera_1_folder_watcher_activated] Camera 1 Folder Watcher activated: Already running
     homeassistant.components.automation.camera_1_folder_watcher_activated: warning
     homeassistant.components.automation.camera_2_folder_watcher_activated: warning
+
+    # 2021-02-12 11:15:14 ERROR (SyncWorker_5) [rxv] Failed to fetch http://192.168.1.24:80/YamahaRemoteControl/desc.xml
+    rxv: error
+
+    # 2021-02-12 11:15:14 ERROR (MainThread) [homeassistant.components.media_player] Error while setting up yamaha platform for media_player
+    homeassistant.components.media_player: error
+
+    # 2021-02-12 11:15:28 ERROR (MainThread) [homeassistant.helpers.event] Error while processing template: Template("{{ states.media_player.yamaha_receiver.attributes.volume_level * 100}}")
+    homeassistant.helpers.: error
+
+    # 2021-02-12 11:15:28 ERROR (MainThread) [homeassistant.components.template.template_entity] TemplateError('UndefinedError: 'None' has no attribute 'attributes'') while processing template 'Template("{{ states.media_player.yamaha_receiver.attributes.volume_level * 100}}")' for attribute '_state' in entity 'sensor.yamaha_volume_level'
+    homeassistant.components.template.template_entity: error

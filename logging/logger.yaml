@@ -16,10 +16,6 @@
     # 2019-12-30 22:39:45 ERROR (MainThread) [homeassistant.components.squeezebox.media_player] Failed communicating with LMS: <class 'aiohttp.client_exceptions.ClientConnectorError'>
     homeassistant.components.squeezebox.media_player: fatal
 
-    # 2019-12-30 22:39:45 WARNING (MainThread) [homeassistant.components.media_player] Platform squeezebox not ready yet. Retrying in 120 seconds.
-    # 2019-12-30 22:40:20 WARNING (MainThread) [homeassistant.components.media_player] Updating yamaha media_player took longer than the scheduled update interval 0:00:10
-    homeassistant.components.media_player: error
-
     # 2019-12-30 22:40:19 WARNING (MainThread) [homeassistant.helpers.entity] Update of media_player.yamaha_receiver_zone_2 is taking over 10 seconds
     homeassistant.helpers.entity: error
 
@@ -44,17 +40,17 @@
 
 
     # 2020-10-07 20:21:33 WARNING (MainThread) [homeassistant.components.automation.camera_1_folder_watcher_activated] Camera 1 Folder Watcher activated: Already running
-    homeassistant.components.automation.camera_1_folder_watcher_activated: warning
-    homeassistant.components.automation.camera_2_folder_watcher_activated: warning
+    homeassistant.components.automation.camera_1_folder_watcher_activated: error
+    homeassistant.components.automation.camera_2_folder_watcher_activated: error
 
     # 2021-02-12 11:15:14 ERROR (SyncWorker_5) [rxv] Failed to fetch http://192.168.1.24:80/YamahaRemoteControl/desc.xml
-    rxv: error
+    rxv: fatal
 
     # 2021-02-12 11:15:14 ERROR (MainThread) [homeassistant.components.media_player] Error while setting up yamaha platform for media_player
-    homeassistant.components.media_player: error
+    homeassistant.components.media_player: fatal
 
     # 2021-02-12 11:15:28 ERROR (MainThread) [homeassistant.helpers.event] Error while processing template: Template("{{ states.media_player.yamaha_receiver.attributes.volume_level * 100}}")
-    homeassistant.helpers.: error
+    homeassistant.helpers.event: fatal
 
     # 2021-02-12 11:15:28 ERROR (MainThread) [homeassistant.components.template.template_entity] TemplateError('UndefinedError: 'None' has no attribute 'attributes'') while processing template 'Template("{{ states.media_player.yamaha_receiver.attributes.volume_level * 100}}")' for attribute '_state' in entity 'sensor.yamaha_volume_level'
-    homeassistant.components.template.template_entity: error
+    homeassistant.components.template.template_entity: fatal

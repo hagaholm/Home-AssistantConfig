@@ -133,6 +133,20 @@
         data:
           message: 'Ingen kontakt med garage avfuktare'
 
+    ###############################################
+    ### Ingen kontakt med garage element        ###
+    ### T: switch.garage_elvarme == unavailable ###
+    ### A: notify.pushbullet                    ###
+    ###############################################
+  - alias: Ingen kontakt med garage elvärme
+    trigger:
+      platform: state
+      entity_id: switch.garage_elvarme
+      to: 'unavailable'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Ingen kontakt med garage elvärme'
 ##################################################################
 ##################################################################
 ##################################################################
@@ -271,3 +285,18 @@
       - service: notify.pushbullet
         data:
           message: 'Kontakt med garage avfuktare'
+
+    ###############################################
+    ### Kontakt med garage element              ###
+    ### T: switch.garage_elvarme != unavailable ###
+    ### A: notify.pushbullet                    ###
+    ###############################################
+  - alias: Ingen kontakt med garage elvärme
+    trigger:
+      platform: state
+      entity_id: switch.garage_elvarme
+      from: 'unavailable'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'Kontakt med garage elvärme'

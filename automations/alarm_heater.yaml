@@ -15,14 +15,14 @@
 
     ############################################
     ### Hög temp ackumulatortank             ###
-    ### T: sensor.varmepump_temperature > 50 ###
+    ### T: sensor.varmepump_temperature > 52 ###
     ### A: notify.pushbullet                 ###
     ############################################
   - alias: Hög temp ackumulatortank
     trigger:
       platform: numeric_state
       entity_id: sensor.varmepump_temperature
-      above: '50'
+      above: '52'
     action:
       - service: notify.pushbullet
         data:

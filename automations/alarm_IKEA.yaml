@@ -291,7 +291,7 @@
     ### T: switch.garage_elvarme != unavailable ###
     ### A: notify.pushbullet                    ###
     ###############################################
-  - alias: Ingen kontakt med garage elvärme
+  - alias: Kontakt med garage elvärme
     trigger:
       platform: state
       entity_id: switch.garage_elvarme

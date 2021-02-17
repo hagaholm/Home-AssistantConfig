@@ -731,6 +731,8 @@ views:
         entity: camera.kamera1
       - type: picture-entity
         entity: camera.kamera2
+      - type: picture-entity
+        entity: camera.kamera3
       - type: entities
         entities:
           - binary_sensor.aqara_motion_sensor_1
@@ -888,6 +890,7 @@ views:
           - sensor.chromecast_ultra
           - sensor.google_home_mini
           - sensor.dns320
+          - sensor.apple_tv
         title: Mediaspelare status
         show_header_toggle: true
         state_color: true
@@ -918,6 +921,7 @@ views:
           - sensor.rockrobo
           - sensor.camera1
           - sensor.camera2
+          - sensor.camera3
           - sensor.garmin_fenix_5_plus
         title: Övrigt status
         show_header_toggle: true

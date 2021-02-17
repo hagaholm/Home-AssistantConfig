@@ -144,6 +144,9 @@ sensor:
       dns320:
         friendly_name: 'Nas DNS-320'
         value_template: "{{ 'Online' if is_state('device_tracker.dns320', 'home') else 'Offline' }}"
+      apple_tv:
+        friendly_name: 'Apple Tv'
+        value_template: "{{ 'Online' if is_state('device_tracker.apple_tv', 'home') else 'Offline' }}"
 
     #########
     # Other #
@@ -160,6 +163,9 @@ sensor:
       camera2:
         friendly_name: 'Kamera 2'
         value_template: "{{ 'Online' if is_state('device_tracker.camera2', 'home') else 'Offline' }}"
+      camera2:
+        friendly_name: 'Kamera 3'
+        value_template: "{{ 'Online' if is_state('device_tracker.camera3', 'home') else 'Offline' }}"
       garmin_fenix_5_plus:
         friendly_name: 'Garmin Fenix 5 Plus'
         value_template: "{{ 'Online' if is_state('device_tracker.GarminFenix5Plus', 'home') else 'Offline' }}"

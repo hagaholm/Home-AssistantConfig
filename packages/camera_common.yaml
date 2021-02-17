@@ -160,7 +160,11 @@ automation:
         event_data:
           event_type: modified
           path: '/config/camera/deepstack_photo/deepstack_camera_2_latest.jpg'
-
+      - platform: event
+        event_type: folder_watcher
+        event_data:
+          event_type: modified
+          path: '/config/camera/deepstack_photo/deepstack_camera_3_latest.jpg'
     action:
       - service: input_number.set_value
         data_template:

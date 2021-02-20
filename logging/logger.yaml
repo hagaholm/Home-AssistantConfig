@@ -55,3 +55,16 @@
 
     # 2021-02-12 11:15:28 ERROR (MainThread) [homeassistant.components.template.template_entity] TemplateError('UndefinedError: 'None' has no attribute 'attributes'') while processing template 'Template("{{ states.media_player.yamaha_receiver.attributes.volume_level * 100}}")' for attribute '_state' in entity 'sensor.yamaha_volume_level'
     homeassistant.components.template.template_entity: fatal
+
+    # 2021-02-19 05:54:31 WARNING (SyncWorker_45) [homeassistant.components.local_file.camera] Could not read camera Camera 3 Latest person away image from file: /media/warning/camera_3_1.jpg
+    homeassistant.components.local_file.camera: error
+
+    # 2021-02-19 09:00:55 WARNING (SyncWorker_28) [homeassistant.components.xiaomi_miio.vacuum] Got exception while fetching the state: Unable to discover the device 192.168.1.25
+    homeassistant.components.xiaomi_miio.vacuum: error
+
+    # 2021-02-19 13:21:22 ERROR (MainThread) [homeassistant.helpers.condition] Error during template condition: UndefinedError: 'dict object' has no attribute 'last_changed'
+    homeassistant.helpers.condition: fatal
+
+    # 2021-02-20 08:03:40 ERROR (MainThread) [homeassistant.helpers.entity] Update for media_player.yamaha_receiver fails
+    # 2021-02-20 08:03:40 ERROR (MainThread) [homeassistant.helpers.entity] Update for media_player.yamaha_receiver_zone_2 fails
+    homeassistant.helpers.entity: fatal

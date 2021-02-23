@@ -1,52 +1,51 @@
 input_number:
   kitchen_light_on:
-    name: On (3500)
-    initial: 3500
+    name: On (3000,3500)
+    initial: 3000
     max: 4000
-    min: 3000
+    min: 2500
     step: 100
     mode: box
 
   kitchen_light_off:
-    name: Off (4500)
-    initial: 4500
+    name: Off (3500,4500)
+    initial: 3500
     max: 5000
-    min: 4000
+    min: 3000
     step: 100
     mode: box
 
   morning_light_on:
-    name: On (2500)
-    initial: 2500
+    name: On (2000,2500)
+    initial: 2000
     max: 3000
     min: 2000
     step: 100
     mode: box
 
   morning_light_off:
-    name: Off (3500)
-    initial: 3500
+    name: Off (2500,3500)
+    initial: 2500
     max: 4000
-    min: 3000
+    min: 2000
     step: 100
     mode: box
 
   day_light_on:
-    name: On (3000)
-    initial: 3000
+    name: On (2000,3000)
+    initial: 2000
     max: 3500
-    min: 2500
+    min: 1500
     step: 100
     mode: box
 
   day_light_off:
-    name: Off (4000)
-    initial: 4000
-    max: 5000
-    min: 3000
+    name: Off (2500,4000)
+    initial: 2500
+    max: 4500
+    min: 2000
     step: 100
     mode: box
-
 
 #  number_away_light_on:
 #    name: On (200)
@@ -119,3 +118,82 @@ input_number:
 #    min: 1
 #    step: 1
 #    mode: box
+
+input_boolean:
+  snow_outside:
+    name: Snö ute, anpassa ljusstyrka
+    icon: mdi:pine-tree
+
+automation:
+  - alias: Switch to snow outside
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_boolean.snow_outside
+        to: 'on'
+
+    action:
+      - service: input_number.set_value
+        entity_id: input_number.kitchen_light_on
+        data_template: 
+          value: '3500'
+      - service: input_number.set_value
+        entity_id: input_number.kitchen_light_off
+        data_template: 
+          value: '4500'
+
+      - service: input_number.set_value
+        entity_id: input_number.morning_light_on
+        data_template: 
+          value: '2500'
+      - service: input_number.set_value
+        entity_id: input_number.morning_light_off
+        data_template: 
+          value: '3500'
+
+      - service: input_number.set_value
+        entity_id: input_number.day_light_on
+        data_template: 
+          value: '3000'
+      - service: input_number.set_value
+        entity_id: input_number.day_light_off
+        data_template: 
+          value: '4000'
+
+automation:
+  - alias: Switch to no snow outside
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_boolean.snow_outside
+        to: 'off'
+
+    action:
+      - service: input_number.set_value
+        entity_id: input_number.kitchen_light_on
+        data_template: 
+          value: '3000'
+      - service: input_number.set_value
+        entity_id: input_number.kitchen_light_off
+        data_template: 
+          value: '3500'
+
+      - service: input_number.set_value
+        entity_id: input_number.morning_light_on
+        data_template: 
+          value: '2000'
+      - service: input_number.set_value
+        entity_id: input_number.morning_light_off
+        data_template: 
+          value: '2500'
+
+      - service: input_number.set_value
+        entity_id: input_number.day_light_on
+        data_template: 
+          value: '2000'
+      - service: input_number.set_value
+        entity_id: input_number.day_light_off
+        data_template: 
+          value: '2500'

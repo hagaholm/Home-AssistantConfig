@@ -132,6 +132,9 @@ automation:
           state: 'off'
         - condition: template 
           value_template: "{{ (trigger.to_state.state|int - trigger.from_state.state|int) >= 4 }}"
+        - condition: numeric_state
+          entity_id: sensor.ute
+          above: -8
     action:
       - service: homeassistant.turn_on
         entity_id: switch.fan_speed
@@ -154,6 +157,9 @@ automation:
           state: 'off'
         - condition: template 
           value_template: "{{ (trigger.to_state.state|int - trigger.from_state.state|int) >= 2 }}"
+        - condition: numeric_state
+          entity_id: sensor.ute
+          above: -8
     action:
       - service: homeassistant.turn_on
         entity_id: switch.fan_speed

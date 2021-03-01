@@ -1,0 +1,61 @@
+    ######################################################
+    ### Varnar för hög temp i Förråd                   ###
+    ### T: sensor.forrad_temperature > 11              ###
+    ### C: sensor.ute < 5                              ###
+    ### A: notify.pushbullet "LARM! Hög temp i Förråd" ###
+    ######################################################
+  - alias: Förråd larm hög temp
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.forrad_temperature
+        above: '11'
+      - platform: numeric_state
+        entity_id: sensor.forrad_temperature
+        above: '12'
+      - platform: numeric_state
+        entity_id: sensor.forrad_temperature
+        above: '13'
+    condition:
+      condition: and
+      conditions:
+        - condition: numeric_state
+          entity_id: sensor.ute
+          below: '5'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'LARM! Hög temp i Förråd: {{ states.sensor.forrad_temperature.state }} {{ states.sensor.forrad_temperature.unit_of_measurement }}'
+
+    ######################################################
+    ### Varnar för låg temp i Förråd                   ###
+    ### T: sensor.forrad_temperature < 4               ###
+    ### C: sensor.ute < 5                              ###
+    ### A: notify.pushbullet "LARM! Låg temp i Förråd" ###
+    ######################################################
+  - alias: Förråd larm låg temp
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.forrad_temperature
+        below: '4'
+      - platform: numeric_state
+        entity_id: sensor.forrad_temperature
+        below: '3'
+      - platform: numeric_state
+        entity_id: sensor.forrad_temperature
+        below: '2'
+      - platform: numeric_state
+        entity_id: sensor.forrad_temperature
+        below: '1'
+      - platform: numeric_state
+        entity_id: sensor.forrad_temperature
+        below: '0'
+    condition:
+      condition: and
+      conditions:
+        - condition: numeric_state
+          entity_id: sensor.ute
+          below: '5'
+    action:
+      - service: notify.pushbullet
+        data:
+          message: 'LARM! Låg temp i Förråd: {{ states.sensor.forrad_temperature.state }} {{ states.sensor.forrad_temperature.unit_of_measurement }}'

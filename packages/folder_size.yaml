@@ -1,5 +1,0 @@
-sensor:
-  - platform: command_line
-    name: Camera deepstack photo size
-    command: du -sm /root/config/camera/deepstack_photo|cut -f1
-    unit_of_measurement: MB

@@ -415,7 +415,7 @@ automation:
         # Never record if camera mode is Day
         - condition: template
           value_template: >
-            {{ not is_state(' input_select.camera_mode', 'Day') }}
+            {{ not is_state('input_select.camera_mode', 'Day') }}
 
     action:
       # Videos vill be left if camera mode changes to Day when recording, start to delete these files 
@@ -443,7 +443,7 @@ automation:
       # If not Day, then continue
       - condition: template
         value_template: >
-          {{ not is_state(' input_select.camera_mode', 'Day') }}
+          {{ not is_state('input_select.camera_mode', 'Day') }}
 
       # Move video
       - data:

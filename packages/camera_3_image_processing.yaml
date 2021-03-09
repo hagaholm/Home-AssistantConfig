@@ -329,7 +329,7 @@ automation:
       - service: input_text.set_value
         entity_id: input_text.camera_3_person_time_fired
         data_template:
-          value: '{{ trigger.event.time_fired }}'
+          value: '{{ trigger.event.data.saved_file[50:-4] }}''
       # Get confidence, just for information
       - service: input_text.set_value
         entity_id: input_text.camera_3_person_confidence

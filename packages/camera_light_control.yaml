@@ -162,14 +162,27 @@ automation:
   ### Camera 3 Light control on ###
   #################################
   - alias: Camera 3 Light control on
-    mode: restart
+    mode: single
 
+    # Object detected
     trigger:
       - platform: event
-        event_type: folder_watcher
-        event_data:
-          event_type: modified
-          path: '/config/camera/deepstack_photo/deepstack_camera_3_latest.jpg'
+        event_type: deepstack.object_detected
+
+   # Need to be a person on the image from camera 3
+    condition:
+      condition: and
+      conditions:
+
+        # Needs to be image processing from camera 3
+        - condition: template
+          value_template: >
+            {{ trigger.event.data.entity_id == 'image_processing.deepstack_camera_3' }}
+
+        # Person on image is needed
+        - condition: template
+          value_template: >
+            {{ trigger.event.data.object_type == 'person' }}
 
     action:
       # camera_3_light_control = on
@@ -212,14 +225,28 @@ automation:
   ### Camera 2 Light control on ###
   #################################
   - alias: Camera 2 Light control on
-    mode: restart
+    mode: single
 
     trigger:
+    # Object detected
+    trigger:
       - platform: event
-        event_type: folder_watcher
-        event_data:
-          event_type: modified
-          path: '/config/camera/deepstack_photo/deepstack_camera_2_latest.jpg'
+        event_type: deepstack.object_detected
+
+   # Need to be a person on the image from camera 2
+    condition:
+      condition: and
+      conditions:
+
+        # Needs to be image processing from camera 2
+        - condition: template
+          value_template: >
+            {{ trigger.event.data.entity_id == 'image_processing.deepstack_camera_2' }}
+
+        # Person on image is needed
+        - condition: template
+          value_template: >
+            {{ trigger.event.data.object_type == 'person' }}
 
     action:
       # camera_2_light_control = on

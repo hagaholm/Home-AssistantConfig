@@ -35,6 +35,13 @@ stream:
 #    password: !secret Camera_Password
 #    scan_interval: 5
 
+#  - platform: reolink_dev
+#    name: Kamera 3
+#    host: 192.168.1.22
+#    username: !secret Camera_User
+#    password: !secret Camera_Password
+#    scan_interval: 5
+
 ####################################################
 #                                                  #
 #                    INPUT_SELECT                  #
@@ -134,14 +141,13 @@ automation:
 
     action:
       - service: shell_command.remove_old_images_in_camera_deepstack_photo
-# Exclude this as it create errors in logfile if no images exists
-# Example of errors:
-# 2020-12-23 11:12:00 WARNING (SyncWorker_28) [homeassistant.components.local_file.camera] Could not read camera Camera 1 Latest person away image from file: /media/warning/camera_1_1.jpg
-# 2020-12-23 11:12:04 ERROR (MainThread) [homeassistant.components.image_processing] Error on receive image from entity: Unable to get image
-# 2020-12-23 11:12:08 ERROR (MainThread) [homeassistant.components.image_processing] Error on receive image from entity: Unable to get image
-# 2020-12-23 11:12:10 ERROR (MainThread) [homeassistant.components.image_processing] Error on receive image from entity: Unable to get image
-#      - service: shell_command.remove_old_images_in_www_warning
-#      - service: shell_command.remove_old_images_in_www_warning_small
+      - service: shell_command.remove_old_images_in_camera_motion_detected
+      - service: shell_command.remove_old_images_in_media_animal
+      - service: shell_command.remove_old_images_in_media_Away
+      - service: shell_command.remove_old_images_in_media_Day
+      - service: shell_command.remove_old_images_in_media_Night
+      - service: shell_command.remove_old_videos_in_media_video_Away
+      - service: shell_command.remove_old_videos_in_media_video_Night
 
   #######################################
   ### Camera Motion Set duration time ###
@@ -151,20 +157,8 @@ automation:
 
     trigger:
       - platform: event
-        event_type: folder_watcher
-        event_data:
-          event_type: modified
-          path: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg'
-      - platform: event
-        event_type: folder_watcher
-        event_data:
-          event_type: modified
-          path: '/config/camera/deepstack_photo/deepstack_camera_2_latest.jpg'
-      - platform: event
-        event_type: folder_watcher
-        event_data:
-          event_type: modified
-          path: '/config/camera/deepstack_photo/deepstack_camera_3_latest.jpg'
+        event_type: deepstack.object_detected
+
     action:
       - service: input_number.set_value
         data_template:
@@ -209,24 +203,36 @@ script:
       - service: shell_command.delete_camera_files_4
       - service: shell_command.delete_camera_files_5
       - service: shell_command.delete_camera_files_6
+      - service: shell_command.delete_camera_files_7
+      - service: shell_command.delete_camera_files_8
+      - service: shell_command.delete_camera_files_9
 
 #####################
 ### Shell command ###
 #####################
 shell_command:
-  # Delete 14 days old images from folder /config/camera/deepstack_photo
+  # Delete 14 days old images from folders:
   remove_old_images_in_camera_deepstack_photo: 'find /config/camera/deepstack_photo -mtime +14 -type f -delete' 
-  
-  # Delete 14 days old images from folder /media/warning
-  remove_old_images_in_www_warning: 'find /media/warning -mtime +14 -type f -delete' 
+  remove_old_images_in_camera_motion_detected: 'find /config/camera/motion_detected -mtime +14 -type f -delete' 
+  remove_old_images_in_media_animal:           'find /media/animal -mtime +14 -type f -delete' 
+  remove_old_images_in_media_Away:             'find /media/Away -mtime +14 -type f -delete' 
+  remove_old_images_in_media_Day:              'find /media/Day -mtime +14 -type f -delete' 
+  remove_old_images_in_media_Night:            'find /media/Night -mtime +14 -type f -delete' 
 
-  # Delete 14 days old images from folder /media/warning_small
-  remove_old_images_in_www_warning_small: 'find /media/warning_small -mtime +14 -type f -delete' 
+  # Delete 14 days old videos from folders:
+  remove_old_videos_in_media_video_Away:       'find /media/video/Away -mtime +14 -type f -delete' 
+  remove_old_videos_in_media_video_Night:      'find /media/video/Night -mtime +14 -type f -delete' 
 
   # Used by script delete_camera_files
   delete_camera_files_1: 'rm -f /config/camera/deepstack_photo/*'
   delete_camera_files_2: 'rm -f /config/camera/motion_detected/*'
   delete_camera_files_3: 'rm -f /config/camera/person/*'
-  delete_camera_files_4: 'rm -f /media/info/*'
-  delete_camera_files_5: 'rm -f /media/warning/*'
-  delete_camera_files_6: 'rm -f /media/warning_small/*'
+  delete_camera_files_4: 'rm -f /media/animal/*'
+  delete_camera_files_5: 'rm -f /media/Away/*'
+  delete_camera_files_6: 'rm -f /media/Day/*'
+  delete_camera_files_7: 'rm -f /media/Night/*'
+  delete_camera_files_8: 'rm -f /media/video/Away/*'
+  delete_camera_files_9: 'rm -f /media/video/Night/*'
+
+
+

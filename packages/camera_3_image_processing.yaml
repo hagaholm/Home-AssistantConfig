@@ -147,22 +147,22 @@ camera:
   # Keep latest image of a detected person day
   - platform: local_file
     name: Camera 3 Latest person
-    file_path: /media/Day/deepstack_camera_3_latest.jpg
+    file_path: /media/Day/camera_3_latest.jpg
 
   # Keep latest image of a detected person away
   - platform: local_file
     name: Camera 3 Latest person away
-    file_path: /media/Away/deepstack_camera_3_latest.jpg
+    file_path: /media/Away/camera_3_latest.jpg
 
   # Keep latest image of a detected person night
   - platform: local_file
     name: Camera 3 Latest person night
-    file_path: /media/Night/deepstack_camera_3_latest.jpg
+    file_path: /media/Night/camera_3_latest.jpg
 
   # Keep latest image of a detected animal
   - platform: local_file
     name: Camera 3 Latest animal
-    file_path: /media/animal/deepstack_camera_3_latest.jpg
+    file_path: /media/animal/camera_3_latest.jpg
 
 #####################
 ### Shell command ###

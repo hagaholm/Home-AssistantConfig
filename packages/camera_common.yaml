@@ -143,11 +143,11 @@ automation:
       - service: shell_command.remove_old_images_in_camera_deepstack_photo
       - service: shell_command.remove_old_images_in_camera_motion_detected
       - service: shell_command.remove_old_images_in_media_animal
-      - service: shell_command.remove_old_images_in_media_Away
-      - service: shell_command.remove_old_images_in_media_Day
-      - service: shell_command.remove_old_images_in_media_Night
-      - service: shell_command.remove_old_videos_in_media_video_Away
-      - service: shell_command.remove_old_videos_in_media_video_Night
+      - service: shell_command.remove_old_images_in_media_away
+      - service: shell_command.remove_old_images_in_media_day
+      - service: shell_command.remove_old_images_in_media_night
+      - service: shell_command.remove_old_videos_in_media_video_away
+      - service: shell_command.remove_old_videos_in_media_video_night
 
   #######################################
   ### Camera Motion Set duration time ###
@@ -214,14 +214,14 @@ shell_command:
   # Delete 14 days old images from folders:
   remove_old_images_in_camera_deepstack_photo: 'find /config/camera/deepstack_photo -mtime +14 -type f -delete' 
   remove_old_images_in_camera_motion_detected: 'find /config/camera/motion_detected -mtime +14 -type f -delete' 
-  remove_old_images_in_media_animal:           'find /media/animal -mtime +14 -type f -delete' 
-  remove_old_images_in_media_Away:             'find /media/Away -mtime +14 -type f -delete' 
-  remove_old_images_in_media_Day:              'find /media/Day -mtime +14 -type f -delete' 
-  remove_old_images_in_media_Night:            'find /media/Night -mtime +14 -type f -delete' 
+  remove_old_images_in_media_animal: 'find /media/animal -mtime +14 -type f -delete' 
+  remove_old_images_in_media_away: 'find /media/Away -mtime +14 -type f -delete' 
+  remove_old_images_in_media_day: 'find /media/Day -mtime +14 -type f -delete' 
+  remove_old_images_in_media_night: 'find /media/Night -mtime +14 -type f -delete' 
 
   # Delete 14 days old videos from folders:
-  remove_old_videos_in_media_video_Away:       'find /media/video/Away -mtime +14 -type f -delete' 
-  remove_old_videos_in_media_video_Night:      'find /media/video/Night -mtime +14 -type f -delete' 
+  remove_old_videos_in_media_video_away: 'find /media/video/Away -mtime +14 -type f -delete' 
+  remove_old_videos_in_media_video_night: 'find /media/video/Night -mtime +14 -type f -delete' 
 
   # Used by script delete_camera_files
   delete_camera_files_1: 'rm -f /config/camera/deepstack_photo/*'

@@ -164,6 +164,16 @@ camera:
     name: Camera 2 Latest animal
     file_path: /media/animal/camera_2_latest.jpg
 
+  # Keep latest video when away
+  - platform: local_file
+    name: Camera 2 Video away
+    file_path: /media/video/Away/camera_2_video_latest.mp4
+
+  # Keep latest video when night
+  - platform: local_file
+    name: Camera 2 Video night
+    file_path: /media/video/Night/camera_2_video_latest.mp4
+
 #####################
 ### Shell command ###
 #####################
@@ -172,6 +182,9 @@ shell_command:
   # Used by automation Camera 2 Person detected
   # Used by automation Camera 2 Person detected create video
   camera_2_mv_deepstack: "mv -f {{source_file}} {{dest_file}}"
+
+  # Used by automation Camera 2 Person detected create video
+  camera_2_cp_deepstack: "cp -f {{source_file}} {{dest_file}}"
 
   # Used by automation Camera 2 Person detected create video
   camera_2_delete_videos: "rm -f /config/camera/motion_detected/*.mp4"#
@@ -444,6 +457,12 @@ automation:
       - condition: template
         value_template: >
           {{ not is_state('input_select.camera_mode', 'Day') }}
+
+      # Copy video
+      - data:
+          source_file: '/config/camera/motion_detected/camera_2_{{ states.input_select.camera_mode.state }}_{{ trigger.event.data.saved_file[41:-4] }}.mp4'
+          dest_file: '/media/video/{{ states.input_select.camera_mode.state }}/camera_2_video_latest.mp4'
+        service: shell_command.camera_2_cp_deepstack
 
       # Move video
       - data:

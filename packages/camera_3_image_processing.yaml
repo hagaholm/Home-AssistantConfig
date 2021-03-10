@@ -185,7 +185,7 @@ shell_command:
 
   # Used by automation Camera 3 Person detected create video
   camera_3_cp_deepstack: "cp -f {{source_file}} {{dest_file}}"
-  
+
   # Used by automation Camera 3 Person detected create video
   camera_3_delete_videos: "rm -f /config/camera/motion_detected/*.mp4"#
 
@@ -241,7 +241,7 @@ automation:
   ### then delay value gets from input_number.camera_duration     ###  
   ###################################################################
   - alias: Camera 3 Image processing
-    mode: queued
+    mode: single
     
     trigger:
       - platform: state
@@ -316,6 +316,7 @@ automation:
   ################################
   - alias: Camera 3 Person detected
     mode: parallel
+    max: 130 
 
     # Object detected
     trigger:
@@ -444,11 +445,11 @@ automation:
           entity_id: camera.kamera3
           filename: '/config/camera/motion_detected/camera_3_{{ states.input_select.camera_mode.state }}_{{ trigger.event.data.saved_file[41:-4] }}.mp4'
           lookback: 0
-          duration: 120
+          duration: 60
 
-      # Delay 130 sec to be sure the video is stopped and saved
+      # Delay 70 sec to be sure the video is stopped and saved
       - delay:
-          seconds: 130
+          seconds: 70
 
       - service: input_boolean.turn_off
         entity_id: input_boolean.camera_3_recording_video

@@ -454,6 +454,10 @@ automation:
       - service: input_boolean.turn_off
         entity_id: input_boolean.camera_3_recording_video
 
+      # Delay 50 sec, need to wait 120 sec until sure nobody get home
+      - delay:
+          seconds: 50
+
       # If not Day, then continue
       - condition: template
         value_template: >

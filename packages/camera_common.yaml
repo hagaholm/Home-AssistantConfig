@@ -159,6 +159,16 @@ automation:
       - platform: event
         event_type: deepstack.object_detected
 
+   # Need to be a person on the image from camera 3
+    condition:
+      condition: and
+      conditions:
+
+        # Person on image is needed
+        - condition: template
+          value_template: >
+            {{ trigger.event.data.object_type == 'person' }}
+
     action:
       - service: input_number.set_value
         data_template:

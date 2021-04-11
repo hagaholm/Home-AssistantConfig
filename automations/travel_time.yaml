@@ -65,8 +65,8 @@
         {% if state.attributes.distance is defined %}
           '{{ state.attributes.distance }}'
         {% else %}
-          '0'
-          {% endif %}
+          0
+        {% endif %}
       above: '41'
     condition:
       condition: and
@@ -97,8 +97,8 @@
         {% if state.attributes.distance is defined %}
           '{{ state.attributes.distance }}'
         {% else %}
-          '0'
-          {% endif %}
+          0
+        {% endif %}
       above: '41'
     condition:
       condition: and

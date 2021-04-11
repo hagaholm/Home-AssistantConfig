@@ -61,7 +61,12 @@
     trigger:
       platform: numeric_state
       entity_id: sensor.annelie_till_jobbet
-      value_template: "{{ state.attributes.distance }}"
+      value_template: >-
+        {% if state.attributes.distance is defined %}
+          '{{ state.attributes.distance }}'
+        {% else %}
+          '0'
+          {% endif %}
       above: '41'
     condition:
       condition: and
@@ -88,7 +93,12 @@
     trigger:
       platform: numeric_state
       entity_id: sensor.annelie_hem_fran_jobbet
-      value_template: "{{ state.attributes.distance }}"
+      value_template: >-
+        {% if state.attributes.distance is defined %}
+          '{{ state.attributes.distance }}'
+        {% else %}
+          '0'
+          {% endif %}
       above: '41'
     condition:
       condition: and

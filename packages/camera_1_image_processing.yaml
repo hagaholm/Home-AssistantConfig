@@ -104,7 +104,7 @@ sensor:
         friendly_name: "Personer"
         value_template: >-
           {% set summary = (state_attr('image_processing.deepstack_camera_1', 'summary')) %}
-          {% if summary.person %}
+          {% if summary.person is defined %}
             {{ summary.person }}
           {% else %}
             0
@@ -114,7 +114,7 @@ sensor:
         friendly_name: "Djur"
         value_template: >-
           {% set summary = (state_attr('image_processing.deepstack_camera_1', 'summary')) %}
-          {% if summary.animal %}
+          {% if summary.animal is defined %}
             {{ summary.animal }}
           {% else %}
             0

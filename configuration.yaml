@@ -181,7 +181,7 @@ lovelace:
 #---------------------------------------------------
 automation: !include_dir_merge_list automations/
 #---------------------------------------------------
-device_tracker: !include device_trackers.yaml
+# device_tracker: !include device_trackers.yaml
 #---------------------------------------------------
 sensor: !include_dir_merge_list sensor
 #---------------------------------------------------
@@ -644,16 +644,16 @@ input_select:
 #                       ASUSWRT                    #
 #                                                  #
 ####################################################
-asuswrt:
-    host: 192.168.1.1
-    username: admin
-    password: !secret asuswrt_password
-#    ssh_key: /config/ssh/asuswrt
-#    sensors:
-#    - upload
-#    - download
-#    - upload_speed
-#    - download_speed
+#asuswrt:
+#    host: 192.168.1.1
+#    username: admin
+#    password: !secret asuswrt_password
+##    ssh_key: /config/ssh/asuswrt
+##    sensors:
+##    - upload
+##    - download
+##    - upload_speed
+##    - download_speed
 
 ####################################################
 #                                                  #

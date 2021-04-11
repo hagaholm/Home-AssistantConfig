@@ -63,7 +63,7 @@
       entity_id: sensor.annelie_till_jobbet
       value_template: >-
         {% if state.attributes.distance is defined %}
-          '{{ state.attributes.distance }}'
+          {{ state.attributes.distance }}
         {% else %}
           0
         {% endif %}
@@ -95,7 +95,7 @@
       entity_id: sensor.annelie_hem_fran_jobbet
       value_template: >-
         {% if state.attributes.distance is defined %}
-          '{{ state.attributes.distance }}'
+          {{ state.attributes.distance }}
         {% else %}
           0
         {% endif %}

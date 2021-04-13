@@ -262,7 +262,7 @@ automation:
 
           # Add dynamic delay. input_number.camera_duration is controlled by another automation
           - delay:
-              milliseconds: "{{ states.input_number.camera_duration.state }}"
+              milliseconds: "{{ states('input_number.camera_duration') }}"
 
   ################################
   ### Camera 1 Animal detected ###
@@ -362,11 +362,11 @@ automation:
       # Move images
       - data:
           source_file: '/config/camera/deepstack_photo/deepstack_camera_1_latest.jpg'
-          dest_file: '/media/{{ states.input_select.camera_mode.state }}/camera_1_latest.jpg'
+          dest_file: "/media/{{ states('input_select.camera_mode') }}/camera_1_latest.jpg"
         service: shell_command.camera_1_mv_deepstack
       - data:
           source_file: '{{ trigger.event.data.saved_file }}'
-          dest_file: '/media/{{ states.input_select.camera_mode.state }}/{{ trigger.event.data.saved_file[41:] }}'
+          dest_file: "/media/{{ states('input_select.camera_mode') }}/{{ trigger.event.data.saved_file[41:] }}"
         service: shell_command.camera_1_mv_deepstack
 
       # If Camera mode is Away, then continue
@@ -393,7 +393,7 @@ automation:
           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           message: "Camera 1 Person detekterad away"
           data:
-            file: '/media/{{ states.input_select.camera_mode.state }}/{{ trigger.event.data.saved_file[41:] }}'
+            file: "/media/{{ states('input_select.camera_mode') }}/{{ trigger.event.data.saved_file[41:] }}"
 
   #############################################
   ### Camera 1 Person detected create video ###
@@ -443,7 +443,7 @@ automation:
       - service: camera.record
         data:
           entity_id: camera.kamera1
-          filename: '/config/camera/motion_detected/camera_1_{{ states.input_select.camera_mode.state }}_{{ trigger.event.data.saved_file[41:-4] }}.mp4'
+          filename: "/config/camera/motion_detected/camera_1_{{ states('input_select.camera_mode') }}_{{ trigger.event.data.saved_file[41:-4] }}.mp4"
           lookback: 0
           duration: 60
 
@@ -465,14 +465,14 @@ automation:
 
       # Copy video
       - data:
-          source_file: '/config/camera/motion_detected/camera_1_{{ states.input_select.camera_mode.state }}_{{ trigger.event.data.saved_file[41:-4] }}.mp4'
-          dest_file: '/media/video/{{ states.input_select.camera_mode.state }}/camera_1_video_latest.mp4'
+          source_file: "/config/camera/motion_detected/camera_1_{{ states('input_select.camera_mode') }}_{{ trigger.event.data.saved_file[41:-4] }}.mp4"
+          dest_file: "/media/video/{{ states('input_select.camera_mode') }}/camera_1_video_latest.mp4'
         service: shell_command.camera_1_cp_deepstack
 
       # Move video
       - data:
-          source_file: '/config/camera/motion_detected/camera_1_{{ states.input_select.camera_mode.state }}_{{ trigger.event.data.saved_file[41:-4] }}.mp4'
-          dest_file: '/media/video/{{ states.input_select.camera_mode.state }}/camera_1_{{ trigger.event.data.saved_file[41:-4] }}.mp4'
+          source_file: "/config/camera/motion_detected/camera_1_{{ states('input_select.camera_mode') }}_{{ trigger.event.data.saved_file[41:-4] }}.mp4"
+          dest_file: "/media/video/{{ states('input_select.camera_mode') }}/camera_1_{{ trigger.event.data.saved_file[41:-4] }}.mp4"
         service: shell_command.camera_1_mv_deepstack
 
 

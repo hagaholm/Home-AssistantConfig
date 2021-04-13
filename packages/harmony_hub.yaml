@@ -2,15 +2,15 @@ sensor:
   - platform: template
     sensors:
       harmony_current:
-        value_template: '{{ states.remote.harmony_hub.attributes.current_activity }}'
-        friendly_name: 'Aktuell aktivitet' 
+        value_template: "{{ state_attr('remote.harmony_hub', 'current_activity') }}"
+        friendly_name: "Aktuell aktivitet"
 
   - platform: template
     sensors:
       yamaha_volume_level:
-        value_template: '{{ states.media_player.yamaha_receiver.attributes.volume_level * 100}}'
+        value_template: "{{ state_attr('media_player.yamaha_receiver', 'volume_level') * 100}}"
         unit_of_measurement: '%'
-        friendly_name: 'Yamaha volym' 
+        friendly_name: "Yamaha volym"
 
 script:
   harmony_off:

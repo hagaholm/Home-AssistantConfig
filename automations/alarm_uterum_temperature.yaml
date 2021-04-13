@@ -11,4 +11,4 @@
     action:
       - service: notify.pushbullet
         data:
-          message: 'LARM! Hög temp i Uterum: {{ states.sensor.uterum.state }} {{ states.sensor.uterum.unit_of_measurement }}'
+          message: "LARM! Hög temp i Uterum: {{ states('sensor.uterum') }} {{ state_attr('sensor.uterum', 'unit_of_measurement') }}"

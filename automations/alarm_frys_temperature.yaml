@@ -11,11 +11,11 @@
     action:
       - service: notify.pushbullet
         data:
-          message: 'LARM! Varning hög temp i frysen: {{ states.sensor.frys_temperature.state }} {{ states.sensor.frys_temperature.unit_of_measurement }}'
+          message: "LARM! Varning hög temp i frysen: {{ states('sensor.frys_temperature') }} {{ state_attr('sensor.frys_temperature', 'unit_of_measurement') }}"
       - delay: '00:00:10'
       - service: notify.pushbullet
         data:
-          message: 'LARM! Varning hög temp i frysen: {{ states.sensor.frys_temperature.state }} {{ states.sensor.frys_temperature.unit_of_measurement }}'
+          message: "LARM! Varning hög temp i frysen: {{ states('sensor.frys_temperature') }} {{ state_attr('sensor.frys_temperature', 'unit_of_measurement') }}"
 
     ######################################################
     ### Varnar för hög temp i frysen                   ###
@@ -30,12 +30,12 @@
     action:
       - service: notify.pushbullet
         data:
-          message: 'LARM! Hög temp i frysen: {{ states.sensor.frys_temperature.state }} {{ states.sensor.frys_temperature.unit_of_measurement }}'
+          message: "LARM! Hög temp i frysen: {{ states('sensor.frys_temperature') }} {{ state_attr('sensor.frys_temperature', 'unit_of_measurement') }}"
 
     ####################################################
     ### Varnar för låg temp i Frys                   ###
     ### T: sensor.frys_temperature < - 25            ###
-    ### A: notify.pushbullet "LARM! Låg temp i Frys" ###
+    ### A: notify.pushbullet "LARM! Låg temp i Frys" ###"
     ####################################################
   - alias: Larm! Låg temp i frys
     trigger:
@@ -45,4 +45,4 @@
     action:
       - service: notify.pushbullet
         data:
-          message: 'LARM! Låg temp i frysen: {{ states.sensor.frys_temperature.state }} {{ states.sensor.frys_temperature.unit_of_measurement }}'
+          message: "LARM! Låg temp i frysen: {{ states('sensor.frys_temperature') }} {{ state_attr('sensor.frys_temperature', 'unit_of_measurement') }}"

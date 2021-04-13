@@ -466,7 +466,7 @@ automation:
       # Copy video
       - data:
           source_file: "/config/camera/motion_detected/camera_1_{{ states('input_select.camera_mode') }}_{{ trigger.event.data.saved_file[41:-4] }}.mp4"
-          dest_file: "/media/video/{{ states('input_select.camera_mode') }}/camera_1_video_latest.mp4'
+          dest_file: "/media/video/{{ states('input_select.camera_mode') }}/camera_1_video_latest.mp4"
         service: shell_command.camera_1_cp_deepstack
 
       # Move video

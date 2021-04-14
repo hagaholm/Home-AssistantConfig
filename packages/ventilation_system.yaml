@@ -208,9 +208,9 @@ automation:
           entity_id: switch.fan_speed
           state: 'on'
         - condition: template
-          value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.fukt_badrumsfonster', 'last_changed')))|int) > 900 }}"
+          value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.fukt_badrumsfonster', 'last_changed'))) > 900 }}"
         - condition: template
-          value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.fukt_badrumsfonster', 'last_updated')))|int) < 900 }}"
+          value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.fukt_badrumsfonster', 'last_updated'))) < 900 }}"
 
     action:
       - service: homeassistant.turn_off
@@ -241,9 +241,9 @@ automation:
         - condition: template
           value_template: "{{ (states('sensor.badrum_humidity')|int - 8) <= (states('sensor.hall_humidity')|int) }}"
         - condition: template
-          value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.badrum_humidity', 'last_updated')))|int) < 600 }}"
+          value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.badrum_humidity', 'last_updated'))) < 600 }}"
         - condition: template
-          value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.hall_humidity', 'last_updated')))|int) < 600 }}"
+          value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.hall_humidity', 'last_updated'))) < 600 }}"
     action:
       - service: homeassistant.turn_off
         entity_id: switch.fan_speed

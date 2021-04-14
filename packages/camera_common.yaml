@@ -222,27 +222,24 @@ script:
 #####################
 shell_command:
   # Delete 14 days old images from folders:
-  remove_old_images_in_camera_deepstack_photo: 'find /config/camera/deepstack_photo -mtime +14 -type f -delete' 
-  remove_old_images_in_camera_motion_detected: 'find /config/camera/motion_detected -mtime +14 -type f -delete' 
-  remove_old_images_in_media_animal: 'find /media/animal -mtime +14 -type f -delete' 
-  remove_old_images_in_media_away: 'find /media/Away -mtime +14 -type f -delete' 
-  remove_old_images_in_media_day: 'find /media/Day -mtime +14 -type f -delete' 
-  remove_old_images_in_media_night: 'find /media/Night -mtime +14 -type f -delete' 
+  remove_old_images_in_camera_deepstack_photo: 'find /config/camera/deepstack_photo -mtime +14 -type f -delete || true'
+  remove_old_images_in_camera_motion_detected: 'find /config/camera/motion_detected -mtime +14 -type f -delete || true'
+  remove_old_images_in_media_animal: 'find /media/animal -mtime +14 -type f -delete || true'
+  remove_old_images_in_media_away: 'find /media/Away -mtime +14 -type f -delete || true'
+  remove_old_images_in_media_day: 'find /media/Day -mtime +14 -type f -delete || true'
+  remove_old_images_in_media_night: 'find /media/Night -mtime +14 -type f -delete || true'
 
   # Delete 14 days old videos from folders:
-  remove_old_videos_in_media_video_away: 'find /media/video/Away -mtime +14 -type f -delete' 
-  remove_old_videos_in_media_video_night: 'find /media/video/Night -mtime +14 -type f -delete' 
+  remove_old_videos_in_media_video_away: 'find /media/video/Away -mtime +14 -type f -delete || true'
+  remove_old_videos_in_media_video_night: 'find /media/video/Night -mtime +14 -type f -delete || true'
 
   # Used by script delete_camera_files
-  delete_camera_files_1: 'rm -f /config/camera/deepstack_photo/*'
-  delete_camera_files_2: 'rm -f /config/camera/motion_detected/*'
-  delete_camera_files_3: 'rm -f /config/camera/person/*'
-  delete_camera_files_4: 'rm -f /media/animal/*'
-  delete_camera_files_5: 'rm -f /media/Away/*'
-  delete_camera_files_6: 'rm -f /media/Day/*'
-  delete_camera_files_7: 'rm -f /media/Night/*'
-  delete_camera_files_8: 'rm -f /media/video/Away/*'
-  delete_camera_files_9: 'rm -f /media/video/Night/*'
-
-
-
+  delete_camera_files_1: 'rm -f /config/camera/deepstack_photo/* || true'
+  delete_camera_files_2: 'rm -f /config/camera/motion_detected/* || true'
+  delete_camera_files_3: 'rm -f /config/camera/person/* || true'
+  delete_camera_files_4: 'rm -f /media/animal/* || true'
+  delete_camera_files_5: 'rm -f /media/Away/* || true'
+  delete_camera_files_6: 'rm -f /media/Day/* || true'
+  delete_camera_files_7: 'rm -f /media/Night/* || true'
+  delete_camera_files_8: 'rm -f /media/video/Away/* || true'
+  delete_camera_files_9: 'rm -f /media/video/Night/* || true'

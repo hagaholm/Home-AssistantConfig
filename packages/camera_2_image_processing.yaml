@@ -181,13 +181,13 @@ shell_command:
   # Used by automation Camera 2 Animal detected
   # Used by automation Camera 2 Person detected
   # Used by automation Camera 2 Person detected create video
-  camera_2_mv_deepstack: "mv -f {{source_file}} {{dest_file}}"
+  camera_2_mv_deepstack: "mv -f {{source_file}} {{dest_file}} || true"
 
   # Used by automation Camera 2 Person detected create video
-  camera_2_cp_deepstack: "cp -f {{source_file}} {{dest_file}}"
+  camera_2_cp_deepstack: "cp -f {{source_file}} {{dest_file}} || true"
 
   # Used by automation Camera 2 Person detected create video
-  camera_2_delete_videos: "rm -f /config/camera/motion_detected/*.mp4"#
+  camera_2_delete_videos: "rm -f /config/camera/motion_detected/*.mp4 || true"
 
 ##################
 ### Automation ###

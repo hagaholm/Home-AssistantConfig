@@ -208,9 +208,13 @@ automation:
           entity_id: switch.fan_speed
           state: 'on'
 
-        # Make a check that sensor.fukt_badrumsfonster exists, if not using this it will be an error in the next step 
+        # Make a check that needed parts exists, if not using this it will be an error in the next step 
         - condition: template
           value_template: "{{ not is_state('sensor.fukt_badrumsfonster', 'None') }}"
+        - condition: template
+          value_template: "{{ state_attr('sensor.fukt_badrumsfonster', 'last_changed') != None }}"
+        - condition: template
+          value_template: "{{ state_attr('sensor.fukt_badrumsfonster', 'last_updated') != None }}"
 
         - condition: template
           value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.fukt_badrumsfonster', 'last_changed'))) > 900 }}"
@@ -244,11 +248,15 @@ automation:
           entity_id: switch.fan_speed
           state: 'on'
 
-        # Make a check that sensor.fukt_badrumsfonster exists, if not using this it will be an error in the next step 
+        # Make a check that needed parts exists, if not using this it will be an error in the next step 
         - condition: template
           value_template: "{{ not is_state('sensor.badrum_humidity', 'None') }}"
         - condition: template
           value_template: "{{ not is_state('sensor.hall_humidity', 'None') }}"
+        - condition: template
+          value_template: "{{ state_attr('sensor.badrum_humidity', 'last_updated') != None }}"
+        - condition: template
+          value_template: "{{ state_attr('sensor.hall_humidity', 'last_updated') != None }}"
 
         - condition: template
           value_template: "{{ (states('sensor.badrum_humidity')|int - 8) <= (states('sensor.hall_humidity')|int) }}"

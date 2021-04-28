@@ -1,14 +1,21 @@
-#############################################
-### Ringklocka tvättstuga                 ###
-### T: switch.ringklocka_tvattstuga == on ###
-### A: switch.ringklocka_tvattstuga = off ###
-###    notify.pushbullet                  ###
-#############################################
-  - alias: Ringklocka tvättstuga
+###############################################
+### Ringklocka tvättstuga dag               ###
+### T: switch.ringklocka_tvattstuga == on   ###
+### C: input_select.home_status == hemma på ###
+### A: switch.ringklocka_tvattstuga = off   ###
+###    notify.pushbullet                    ###
+###############################################
+  - alias: Ringklocka tvättstuga dag
     trigger:
       platform: state
       entity_id: switch.ringklocka_tvattstuga
       to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_select.home_status
+          state: 'hemma på'
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ringklocka_tvattstuga
@@ -17,23 +24,94 @@
       - service: notify.pushbullet
         data:
           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-          message: "Ringklocka tvättstuga"
+          message: "Ringklocka tvättstuga, dag"
           data:
-            file: /media/info/camera_3_1.jpg
+            file: /media/Day/camera_3_latest.jpg
       - delay:
           seconds: 10
 
-#####################################################
-### Ringklocka hall                               ###
-### T: switch.ringklocka_hall == on               ###
-### A: switch.ringklocka_hall = off               ###
-###    notify.pushbullet                          ###
-#####################################################
-  - alias: Ringklocka hall
+###############################################
+### Ringklocka tvättstuga natt              ###
+### T: switch.ringklocka_tvattstuga == on   ###
+### C: input_select.home_status == hemma av ###
+### A: switch.ringklocka_tvattstuga = off   ###
+###    notify.pushbullet                    ###
+###############################################
+  - alias: Ringklocka tvättstuga dag
+    trigger:
+      platform: state
+      entity_id: switch.ringklocka_tvattstuga
+      to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_select.home_status
+          state: 'hemma av'
+    action:
+      - service: homeassistant.turn_off
+        entity_id: switch.ringklocka_tvattstuga
+      - delay:
+          seconds: 5
+      - service: notify.pushbullet
+        data:
+          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+          message: "Ringklocka tvättstuga, natt"
+          data:
+            file: /media/Night/camera_3_latest.jpg
+      - delay:
+          seconds: 10
+
+#############################################
+### Ringklocka tvättstuga borta           ###
+### T: switch.ringklocka_tvattstuga == on ###
+### C: input_select.home_status == borta  ###
+### A: switch.ringklocka_tvattstuga = off ###
+###    notify.pushbullet                  ###
+#############################################
+  - alias: Ringklocka tvättstuga borta
+    trigger:
+      platform: state
+      entity_id: switch.ringklocka_tvattstuga
+      to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_select.home_status
+          state: 'borta'
+    action:
+      - service: homeassistant.turn_off
+        entity_id: switch.ringklocka_tvattstuga
+      - delay:
+          seconds: 5
+      - service: notify.pushbullet
+        data:
+          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+          message: "Ringklocka tvättstuga, borta"
+          data:
+            file: /media/Away/camera_3_latest.jpg
+      - delay:
+          seconds: 10
+
+###############################################
+### Ringklocka hall dag                     ###
+### T: switch.ringklocka_hall == on         ###
+### C: input_select.home_status == hemma på ###
+### A: switch.ringklocka_hall = off         ###
+###    notify.pushbullet                    ###
+###############################################
+  - alias: Ringklocka hall dag
     trigger:
       platform: state
       entity_id: switch.ringklocka_hall
       to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_select.home_status
+          state: 'hemma på'
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ringklocka_hall
@@ -42,9 +120,73 @@
       - service: notify.pushbullet
         data:
           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-          message: "Ringklocka hall."
+          message: "Ringklocka hall, dag"
           data:
-            file: /media/info/camera_2_1.jpg
+            file: /media/Day/camera_2_latest.jpg
+      - delay:
+          seconds: 10
+
+###############################################
+### Ringklocka hall natt                    ###
+### T: switch.ringklocka_hall == on         ###
+### C: input_select.home_status == hemma av ###
+### A: switch.ringklocka_hall = off         ###
+###    notify.pushbullet                    ###
+###############################################
+  - alias: Ringklocka hall dag
+    trigger:
+      platform: state
+      entity_id: switch.ringklocka_hall
+      to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_select.home_status
+          state: 'hemma av'
+    action:
+      - service: homeassistant.turn_off
+        entity_id: switch.ringklocka_hall
+      - delay:
+          seconds: 5
+      - service: notify.pushbullet
+        data:
+          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+          message: "Ringklocka hall, natt"
+          data:
+            file: /media/Night/camera_2_latest.jpg
+      - delay:
+          seconds: 10
+
+############################################
+### Ringklocka hall borta                ###
+### T: switch.ringklocka_hall == on      ###
+### C: input_select.home_status == borta ###
+### A: switch.ringklocka_hall = off      ###
+###    notify.pushbullet                 ###
+############################################
+  - alias: Ringklocka hall borta
+    trigger:
+      platform: state
+      entity_id: switch.ringklocka_hall
+      to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_select.home_status
+          state: 'borta'
+    action:
+      - service: homeassistant.turn_off
+        entity_id: switch.ringklocka_hall
+      - delay:
+          seconds: 5
+      - service: notify.pushbullet
+        data:
+          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+          message: "Ringklocka hall, borta"
+          data:
+            file: /media/Away/camera_2_latest.jpg
       - delay:
           seconds: 10
 

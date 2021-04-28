@@ -37,7 +37,7 @@
 ### A: switch.ringklocka_tvattstuga = off   ###
 ###    notify.pushbullet                    ###
 ###############################################
-  - alias: Ringklocka tvättstuga dag
+  - alias: Ringklocka tvättstuga natt
     trigger:
       platform: state
       entity_id: switch.ringklocka_tvattstuga
@@ -133,7 +133,7 @@
 ### A: switch.ringklocka_hall = off         ###
 ###    notify.pushbullet                    ###
 ###############################################
-  - alias: Ringklocka hall dag
+  - alias: Ringklocka hall natt
     trigger:
       platform: state
       entity_id: switch.ringklocka_hall

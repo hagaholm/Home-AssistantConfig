@@ -13,7 +13,7 @@
       condition: and
       conditions:
         - condition: template
-          value_template: "{{(states.sensor.ljusstyrka.state | int) < (states.input_number.day_light_on.state | int )}}"
+          value_template: "{{(states('sensor.ljusstyrka') | int) < (states('input_number.day_light_on') | int )}}"
         - condition: state
           entity_id: group.track_for_home_devices
           state: 'home'
@@ -30,7 +30,7 @@
   - alias: Dagbelysning on (<1800, hemma)
     trigger:
       platform: template
-      value_template: "{{(states.sensor.ljusstyrka.state | int) < (states.input_number.day_light_on.state | int )}}"
+      value_template: "{{(states('sensor.ljusstyrka') | int) < (states('input_number.day_light_on') | int )}}"
     condition:
       condition: and
       conditions:
@@ -65,7 +65,7 @@
           entity_id: group.track_for_home_devices
           state: 'not_home'
         - condition: template
-          value_template: "{{(states.sensor.ljusstyrka.state | int) < (states.input_number.day_light_on.state | int )}}"
+          value_template: "{{(states('sensor.ljusstyrka') | int) < (states('input_number.day_light_on') | int )}}"
         - condition: time
           after: '09:00:00'
           before: '05:00:00'
@@ -89,7 +89,7 @@
       condition: and
       conditions:
         - condition: template
-          value_template: "{{(states.sensor.ljusstyrka.state | int) < (states.input_number.day_light_on.state | int )}}"
+          value_template: "{{(states('sensor.ljusstyrka') | int) < (states('input_number.day_light_on') | int )}}"
         - condition: time
           after: '09:00:00'
           before: '05:00:00'
@@ -130,7 +130,7 @@
   - alias: Dagbelysning off (>2500, hemma)
     trigger:
       platform: template
-      value_template: "{{(states.sensor.ljusstyrka.state | int) > (states.input_number.day_light_off.state | int )}}"
+      value_template: "{{(states('sensor.ljusstyrka') | int) > (states('input_number.day_light_off') | int )}}"
     condition:
       condition: and
       conditions:

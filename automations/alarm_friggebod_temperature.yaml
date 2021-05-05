@@ -18,7 +18,7 @@
     action:
       - service: notify.pushbullet
         data:
-          message: 'LARM! Hög temp i Friggebod: {{ states.sensor.friggebod_temperature.state }} {{ states.sensor.friggebod_temperature.unit_of_measurement }}'
+          message: "LARM! Hög temp i Friggebod: {{ states('sensor.friggebod_temperature') }} {{ state_attr('sensor.friggebod_temperature', 'unit_of_measurement') }}"
 
     #########################################################
     ### Varnar för låg temp i Friggebod                   ###
@@ -40,7 +40,7 @@
     action:
       - service: notify.pushbullet
         data:
-          message: 'LARM! Låg temp i Friggebod: {{ states.sensor.friggebod_temperature.state }} {{ states.sensor.friggebod_temperature.unit_of_measurement }}'
+          message: "LARM! Låg temp i Friggebod: {{ states('sensor.friggebod_temperature') }} {{ state_attr('sensor.friggebod_temperature', 'unit_of_measurement') }}"
 
     #######################################################
     ### Frysvakt Friggebod                              ###
@@ -55,4 +55,4 @@
     action:
       - service: notify.pushbullet
         data:
-          message: 'LARM! Frysvakt Friggebod: {{ states.sensor.friggebod_temperature.state }} {{ states.sensor.friggebod_temperature.unit_of_measurement }}'
+          message: "LARM! Frysvakt Friggebod: {{ states('sensor.friggebod_temperature') }} {{ state_attr('sensor.friggebod_temperature', 'unit_of_measurement') }}"

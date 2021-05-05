@@ -6,7 +6,7 @@ sensor:
     sensors: 
       ftx: 
         friendly_name: 'FTX verkningsgrad'
-        value_template: '{{ (((states.sensor.Tilluft.state | float ) - (states.sensor.Uteluft.state | float ))  / ((states.sensor.Franluft.state | float ) - (states.sensor.Uteluft.state | float )) * 100) | round(1) }}' 
+        value_template: "{{ (((states('sensor.Tilluft') | float ) - (states('sensor.Uteluft') | float ))  / ((states('sensor.Franluft') | float ) - (states('sensor.Uteluft') | float )) * 100) | round(1) }}"
         unit_of_measurement: "%"
 
 ##############
@@ -49,7 +49,7 @@ automation:
     action:
       - service: notify.pushbullet
         data:
-          message: 'Larm! Hög fukt i badrummet {{ states.sensor.fukt_badrumsfonster.state }} {{ states.sensor.fukt_badrumsfonster.unit_of_measurement }}, ingen är hemma'
+          message: "Larm! Hög fukt i badrummet {{ states('sensor.fukt_badrumsfonster') }} {{ state_attr('sensor.fukt_badrumsfonster', 'unit_of_measurement') }}, ingen är hemma"
 
     ###########################################
     ### Larm! Låg temp ventilation frånluft ###
@@ -64,7 +64,7 @@ automation:
     action:
       - service: notify.pushbullet
         data:
-          message: 'Larm! Låg temp frånluft ventilation: {{ states.sensor.Franluft.state }} {{ states.sensor.Franluft.unit_of_measurement }}'
+          message: "Larm! Låg temp frånluft ventilation: {{ states('sensor.Franluft') }} {{ state_attr('sensor.Franluft', 'unit_of_measurement') }}"
 
     ###########################################
     ### Larm! Hög temp ventilation frånluft ###
@@ -79,7 +79,7 @@ automation:
     action:
       - service: notify.pushbullet
         data:
-          message: 'Larm! Hög temp frånluft ventilation: {{ states.sensor.Franluft.state }} {{ states.sensor.Franluft.unit_of_measurement }}'
+          message: "Larm! Hög temp frånluft ventilation: {{ states('sensor.Franluft') }} {{ state_attr('sensor.Franluft', 'unit_of_measurement') }}"
 
     ##########################################
     ### Larm! Låg temp ventilation tilluft ###
@@ -94,7 +94,7 @@ automation:
     action:
       - service: notify.pushbullet
         data:
-          message: 'Larm! Låg temp tilluft ventilation: {{ states.sensor.Tilluft.state }} {{ states.sensor.Tilluft.unit_of_measurement }}'
+          message: "Larm! Låg temp tilluft ventilation: {{ states('sensor.Tilluft') }} {{ state_attr('sensor.Tilluft', 'unit_of_measurement') }}"
 
     ##########################################
     ### Larm! Hög temp ventilation tilluft ###
@@ -109,7 +109,7 @@ automation:
     action:
       - service: notify.pushbullet
         data:
-          message: 'Larm! Hög temp tilluft ventilation: {{ states.sensor.Tilluft.state }} {{ states.sensor.Tilluft.unit_of_measurement }}'
+          message: "Larm! Hög temp tilluft ventilation: {{ states('sensor.Tilluft') }} {{ state_attr('sensor.Tilluft', 'unit_of_measurement') }}"
 
     ################
     ### Hög fukt ###
@@ -130,6 +130,15 @@ automation:
         - condition: state
           entity_id: switch.fan_speed
           state: 'off'
+
+        # Make a check that needed parts exists, if not using this it will be an error in the next step 
+        - condition: template
+          value_template: "{{ not is_state('sensor.fukt_badrumsfonster', 'None') }}"
+        - condition: template
+          value_template: "{{ state_attr('sensor.fukt_badrumsfonster', 'last_changed') != None }}"
+        - condition: template
+          value_template: "{{ state_attr('sensor.fukt_badrumsfonster', 'last_updated') != None }}"
+                    
         - condition: template 
           value_template: "{{ (trigger.to_state.state|int - trigger.from_state.state|int) >= 4 }}"
         - condition: numeric_state
@@ -207,10 +216,19 @@ automation:
         - condition: state
           entity_id: switch.fan_speed
           state: 'on'
+
+        # Make a check that needed parts exists, if not using this it will be an error in the next step 
         - condition: template
-          value_template: '{{ (as_timestamp(now())-as_timestamp(trigger.last_changed)) > 900 }}'
+          value_template: "{{ not is_state('sensor.fukt_badrumsfonster', 'None') }}"
         - condition: template
-          value_template: '{{ (as_timestamp(now())-as_timestamp(trigger.last_updated)) < 900 }}'
+          value_template: "{{ state_attr('sensor.fukt_badrumsfonster', 'last_changed') != None }}"
+        - condition: template
+          value_template: "{{ state_attr('sensor.fukt_badrumsfonster', 'last_updated') != None }}"
+
+        - condition: template
+          value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.fukt_badrumsfonster', 'last_changed'))) > 900 }}"
+        - condition: template
+          value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.fukt_badrumsfonster', 'last_updated'))) < 900 }}"
 
     action:
       - service: homeassistant.turn_off
@@ -238,13 +256,23 @@ automation:
         - condition: state
           entity_id: switch.fan_speed
           state: 'on'
-        - condition: template
-          value_template: '{{ (states.sensor.badrum_humidity.state|int - 8) <= (states.sensor.hall_humidity.state|int) }}'
-        - condition: template
-          value_template: '{{ (as_timestamp(now())-as_timestamp(states.sensor.badrum_humidity.last_updated)) < 600 }}'
-        - condition: template
-          value_template: '{{ (as_timestamp(now())-as_timestamp(states.sensor.hall_humidity.last_updated)) < 600 }}'
 
+        # Make a check that needed parts exists, if not using this it will be an error in the next step 
+        - condition: template
+          value_template: "{{ not is_state('sensor.badrum_humidity', 'None') }}"
+        - condition: template
+          value_template: "{{ not is_state('sensor.hall_humidity', 'None') }}"
+        - condition: template
+          value_template: "{{ state_attr('sensor.badrum_humidity', 'last_updated') != None }}"
+        - condition: template
+          value_template: "{{ state_attr('sensor.hall_humidity', 'last_updated') != None }}"
+
+        - condition: template
+          value_template: "{{ (states('sensor.badrum_humidity')|int - 8) <= (states('sensor.hall_humidity')|int) }}"
+        - condition: template
+          value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.badrum_humidity', 'last_updated'))) < 600 }}"
+        - condition: template
+          value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.hall_humidity', 'last_updated'))) < 600 }}"
     action:
       - service: homeassistant.turn_off
         entity_id: switch.fan_speed

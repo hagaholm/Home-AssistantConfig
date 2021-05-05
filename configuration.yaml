@@ -28,11 +28,6 @@ homeassistant:
     - /config/camera
     - /config/camera/deepstack_photo 
     - /config/camera/motion_detected 
-    - /config/www
-    - /config/www/check
-    - /config/www/info
-    - /config/www/warning
-    - /config/www/warning_small
 
     - /media/animal
     - /media/Away
@@ -41,9 +36,6 @@ homeassistant:
     - /media/video/Away    
     - /media/video/Night
 
-    - /media/info
-    - /media/warning
-    - /media/warning_small
     
 ####################################################
 #                                                  #
@@ -122,6 +114,7 @@ notify:
 
 # Downloader
 # https://www.home-assistant.io/integrations/downloader/
+# Not used right now
 downloader:
   download_dir: /config/www
 
@@ -181,7 +174,7 @@ lovelace:
 #---------------------------------------------------
 automation: !include_dir_merge_list automations/
 #---------------------------------------------------
-device_tracker: !include device_trackers.yaml
+# device_tracker: !include device_trackers.yaml
 #---------------------------------------------------
 sensor: !include_dir_merge_list sensor
 #---------------------------------------------------
@@ -644,16 +637,16 @@ input_select:
 #                       ASUSWRT                    #
 #                                                  #
 ####################################################
-asuswrt:
-    host: 192.168.1.1
-    username: admin
-    password: !secret asuswrt_password
-#    ssh_key: /config/ssh/asuswrt
-#    sensors:
-#    - upload
-#    - download
-#    - upload_speed
-#    - download_speed
+#asuswrt:
+#    host: 192.168.1.1
+#    username: admin
+#    password: !secret asuswrt_password
+##    ssh_key: /config/ssh/asuswrt
+##    sensors:
+##    - upload
+##    - download
+##    - upload_speed
+##    - download_speed
 
 ####################################################
 #                                                  #

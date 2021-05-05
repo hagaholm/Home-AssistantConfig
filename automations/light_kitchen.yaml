@@ -11,7 +11,7 @@
 
     trigger:
       platform: template
-      value_template: "{{(states.sensor.ljusstyrka.state | int) < (states.input_number.kitchen_light_on.state | int )}}"
+      value_template: "{{(states('sensor.ljusstyrka') | int) < (states('input_number.kitchen_light_on') | int )}}"
 
     condition:
       condition: and
@@ -54,7 +54,7 @@
       condition: and
       conditions:
         - condition: template
-          value_template: "{{(states.sensor.ljusstyrka.state | int) < (states.input_number.kitchen_light_on.state | int )}}"
+          value_template: "{{(states('sensor.ljusstyrka') | int) < (states('input_number.kitchen_light_on') | int )}}"
         - condition: time
           after: '05:00:00'
           before: '12:00:00'
@@ -93,7 +93,7 @@
           entity_id: sensor.ljusstyrka
           above: 150
         - condition: template
-          value_template: "{{(states.sensor.ljusstyrka.state | int) < (states.input_number.kitchen_light_on.state | int )}}"
+          value_template: "{{(states('sensor.ljusstyrka') | int) < (states('input_number.kitchen_light_on') | int )}}"
         - condition: time
           after: '12:00:00'
           before: '05:00:00'
@@ -281,7 +281,7 @@
 
     trigger:
       platform: template
-      value_template: "{{(states.sensor.ljusstyrka.state | int) > (states.input_number.kitchen_light_off.state | int )}}"
+      value_template: "{{(states('sensor.ljusstyrka') | int) > (states('input_number.kitchen_light_off') | int )}}"
 
     condition:
       condition: state

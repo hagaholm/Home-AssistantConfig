@@ -68,3 +68,6 @@
     # 2021-02-20 08:03:40 ERROR (MainThread) [homeassistant.helpers.entity] Update for media_player.yamaha_receiver fails
     # 2021-02-20 08:03:40 ERROR (MainThread) [homeassistant.helpers.entity] Update for media_player.yamaha_receiver_zone_2 fails
     homeassistant.helpers.entity: fatal
+
+    # 2021-05-06 18:19:39 ERROR (MainThread) [homeassistant.components.shell_command] Error running command: `mv -f {{source_file}} {{dest_file}}`, return code: 1
+    homeassistant.components.shell_command: fatal

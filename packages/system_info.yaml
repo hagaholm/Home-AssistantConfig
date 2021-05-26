@@ -215,10 +215,10 @@ sensor:
         value_template: "{{ 'Online' if is_state('device_tracker.mobil_margareta', 'home') else 'Offline' }}"
       mobil_herbert:
         friendly_name: 'Herbert'
-        value_template: "{{ 'Online' if is_state('device_tracker.v', 'home') else 'Offline' }}"
+        value_template: "{{ 'Online' if is_state('device_tracker.mobil_herbert', 'home') else 'Offline' }}"
       mobil_erik:
         friendly_name: 'Erik'
-        value_template: "{{ 'Online' if is_state('device_tracker.v', 'home') else 'Offline' }}"
+        value_template: "{{ 'Online' if is_state('device_tracker.mobil_erik', 'home') else 'Offline' }}"
 
       ##########
       # Laptop #

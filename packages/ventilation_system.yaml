@@ -57,6 +57,12 @@ automation:
     ### A: notify.pushbullet                ###
     ###########################################
   - alias: Låg temp frånluft
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: switch.ventilationsaggregat
+          state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.Franluft
@@ -72,6 +78,12 @@ automation:
     ### A: notify.pushbullet                ###
     ###########################################
   - alias: Hög temp frånluft
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: switch.ventilationsaggregat
+          state: 'on'  
     trigger:
       platform: numeric_state
       entity_id: sensor.Franluft
@@ -87,6 +99,12 @@ automation:
     ### A: notify.pushbullet               ###
     ##########################################
   - alias: Låg temp tilluft
+     condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: switch.ventilationsaggregat
+          state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.Tilluft
@@ -102,6 +120,12 @@ automation:
     ### A: notify.pushbullet               ###
     ##########################################
   - alias: Hög temp tilluft
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: switch.ventilationsaggregat
+          state: 'on'
     trigger:
       platform: numeric_state
       entity_id: sensor.Tilluft

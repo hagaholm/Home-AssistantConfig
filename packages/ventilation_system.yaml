@@ -99,7 +99,7 @@ automation:
     ### A: notify.pushbullet               ###
     ##########################################
   - alias: Låg temp tilluft
-     condition:
+    condition:
       condition: and
       conditions:
         - condition: state

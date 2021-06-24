@@ -1,0 +1,17 @@
+
+  - alias: Extra Godnatt
+    trigger:
+      platform: state
+      entity_id: light.vardagsrum_vagn
+      to: 'unavailable'
+    action:
+      - service: script.goodnight_all
+
+
+  - alias: Extra Goddag
+    trigger:
+      platform: state
+      entity_id: light.vardagsrum_vagn
+      from: 'unavailable'
+    action:
+      - service: script.daylights_on

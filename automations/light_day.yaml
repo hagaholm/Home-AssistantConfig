@@ -1,14 +1,14 @@
     ########################################################
-    ### Tänder lampor kl 09:00 om det är mörkt           ###
-    ### T: Time = 09:00:00                               ###
+    ### Tänder lampor kl 11:00 om det är mörkt           ###
+    ### T: Time = 11:00:00                               ###
     ### C: sensor.ljusstyrka < input_number.day_light_on ###
     ###    group.track_for_home_devices == 'home'        ###
     ### A: script.daylights_on                           ###
     ########################################################
-  - alias: Dagbelysning on (=09:00:00, <1800, hemma)
+  - alias: Dagbelysning on (=11:00:00, <1800, hemma)
     trigger:
       platform: time
-      at: '09:00:00'
+      at: '11:00:00'
     condition:
       condition: and
       conditions:
@@ -24,7 +24,7 @@
     ### Tänder lampor när det blir mörkt fram till 22:00 ###
     ### T: sensor.ljusstyrka < input_number.day_light_on ###
     ### C: group.track_for_home_devices == 'home'        ###
-    ###    09:00:00 - 22:00:00                           ###
+    ###    11:00:00 - 22:00:00                           ###
     ### A: script.daylights_on                           ###
     ########################################################
   - alias: Dagbelysning on (<1800, hemma)
@@ -38,7 +38,7 @@
           entity_id: group.track_for_home_devices
           state: 'home'
         - condition: time
-          after: '09:00:00'
+          after: '11:00:00'
           before: '22:00:00'
     action:
       - service: script.daylights_on
@@ -50,7 +50,7 @@
     ### T: input_boolean.rorelsedetektor_kok_aktiv == on ###
     ### C: group.track_for_home_devices == 'not_home'    ###
     ###    sensor.ljusstyrka < input_number.day_light_on ###
-    ###    09:00:00 - 05:00:00                           ###
+    ###    11:00:00 - 05:00:00                           ###
     ### A: script.daylights_on                           ###
     ########################################################
   - alias: Dagbelysning on (sensor on, borta, <1800)
@@ -67,7 +67,7 @@
         - condition: template
           value_template: "{{(states('sensor.ljusstyrka') | int) < (states('input_number.day_light_on') | int )}}"
         - condition: time
-          after: '09:00:00'
+          after: '11:00:00'
           before: '05:00:00'
     action:
       - service: script.daylights_on
@@ -76,7 +76,7 @@
     ### Tänder lampor när första kommer hem övrig tid    ###
     ### T: group.track_for_home_devices to 'home'        ###
     ### C: sensor.ljusstyrka < input_number.day_light_on ###
-    ###    09:00:00 - 05:00:00                           ###
+    ###    11:00:00 - 05:00:00                           ###
     ### A: script.daylights_on                           ###
     ########################################################
   - alias: Dagbelysning on (-> hemma, <1800)
@@ -91,7 +91,7 @@
         - condition: template
           value_template: "{{(states('sensor.ljusstyrka') | int) < (states('input_number.day_light_on') | int )}}"
         - condition: time
-          after: '09:00:00'
+          after: '11:00:00'
           before: '05:00:00'
     action:
       - service: script.daylights_on
@@ -100,7 +100,7 @@
     ### Tänder lampor när fönsterbelysning i sovrum tänds  ###
     ### T: light.sovrum_fonster to 'on'                    ###
     ### C: input_select.inside_lights == 'Morgonbelysning' ###
-    ###    05:00:00 - 09:00:00                             ###
+    ###    05:00:00 - 11:00:00                             ###
     ### A: script.daylights_on_morning                     ###
     ##########################################################
   - alias: Dagbelysning on (sovrumsfönster on)
@@ -116,7 +116,7 @@
           state: 'Morgonbelysning'
         - condition: time
           after: '05:00:00'
-          before: '09:00:00'
+          before: '11:00:00'
     action:
       - service: script.daylights_on_morning
 
@@ -124,7 +124,7 @@
     ### Släcker lampor om det blir för ljust ute övrig tid ###
     ### T: sensor.ljusstyrka > input_number.day_light_off  ###
     ### C: group.track_for_home_devices = 'home'           ###
-    ###    09:00:00 - 05:00:00                             ###
+    ###    11:00:00 - 05:00:00                             ###
     ### A: script.daylights_off                            ###
     ##########################################################
   - alias: Dagbelysning off (>2500, hemma)
@@ -138,7 +138,7 @@
           entity_id: group.track_for_home_devices
           state: 'home'
         - condition: time
-          after: '09:00:00'
+          after: '11:00:00'
           before: '05:00:00'
     action:
       - service: script.daylights_off
@@ -146,7 +146,7 @@
     ########################################################
     ### Släcker lampor när sista åker hemifrån övrig tid ###
     ### T: group.track_for_home_devices to 'not_home'    ###
-    ### C: 09:00:00 - 05:00:00                           ###
+    ### C: 11:00:00 - 05:00:00                           ###
     ### A: script.daylights_off                          ###
     ########################################################
   - alias: Dagbelysning off (-> borta)
@@ -157,7 +157,7 @@
       to: 'not_home'
     condition:
       condition: time
-      after: '09:00:00'
+      after: '11:00:00'
       before: '05:00:00'
     action:
       - service: script.daylights_off

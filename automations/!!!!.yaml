@@ -1,10 +1,31 @@
-  - alias: Godnatt vid låg volym
+  - alias: "Godnatt vid Watch ChromeCast ultra"
     mode: queued
 
     trigger:
-      platform: numeric_state
-      entity_id: sensor.yamaha_volume_level
-      below: '25' # < 75
+      platform: state
+      entity_id: remote.harmony_hub
+
+    condition:
+      condition: and
+      conditions:
+        - condition: template
+          value_template: '{{ trigger.to_state.attributes.current_activity == "Watch ChromeCast ultra" }}'
 
     action:
-      - service: script.godnight_all
+      - service: script.goodnight_all
+
+  - alias: "Daylights vid Listen to ChromeCast ultra"
+    mode: queued
+
+    trigger:
+      platform: state
+      entity_id: remote.harmony_hub
+
+    condition:
+      condition: and
+      conditions:
+        - condition: template
+          value_template: '{{ trigger.to_state.attributes.current_activity == "Listen to ChromeCast ultra" }}'
+
+    action:
+      - service: script.daylights_on

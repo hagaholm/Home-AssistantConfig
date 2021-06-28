@@ -3,7 +3,7 @@
     ### T: input_boolean.rorelsedetektor_kok_aktiv == on     ###
     ### C: sensor.ljusstyrka < input_number.morning_light_on ###
     ###    light.morgonbelysning == off                      ###
-    ###    05:00:00 - 11:00:00                               ###
+    ###    05:00:00 - 09:00:00                               ###
     ### A: script.morning_lights_on                          ###
     ############################################################
   - alias: Morgonbelysning on (sensor on, <1800)
@@ -24,7 +24,7 @@
           state: 'off'
         - condition: time
           after: '05:00:00'
-          before: '11:00:00'
+          before: '09:00:00'
 
     action:
       - service: script.morning_lights_on
@@ -33,7 +33,7 @@
     ### Tänder lampor när första kommer hem på förmiddagen   ###
     ### T: group.track_for_home_devices to: 'home'           ###
     ### C: sensor.ljusstyrka < input_number.morning_light_on ###
-    ###    05:00:00 - 11:00:00                               ###
+    ###    05:00:00 - 09:00:00                               ###
     ### A: script.morning_lights_on                          ###
     ############################################################
   - alias: Morgonbelysning on (-> hemma, <1800)
@@ -52,7 +52,7 @@
           value_template: "{{(states('sensor.ljusstyrka') | int) < (states('input_number.morning_light_on') | int )}}"
         - condition: time
           after: '05:00:00'
-          before: '11:00:00'
+          before: '09:00:00'
 
     action:
       - service: script.morning_lights_on
@@ -61,7 +61,7 @@
     ### Släcker lampor på förmiddagen när det blir ljust ute  ###
     ### T: sensor.ljusstyrka > input_number.morning_light_off ###
     ### C: group.track_for_home_devices == 'home'             ###
-    ###    05:00:00 - 11:00:00                                ###
+    ###    05:00:00 - 09:00:00                                ###
     ### A: script.morning_lights_off                          ###
     #############################################################
   - alias: Morgonbelysning off (>2500, hemma)
@@ -79,7 +79,7 @@
           state: 'home'
         - condition: time
           after: '05:00:00'
-          before: '11:00:00'
+          before: '09:00:00'
         - condition: state
           entity_id: input_boolean.christmas_light
           state: 'off'
@@ -90,7 +90,7 @@
     #############################################################
     ### Släcker lampor på förmiddagen när sista åker hemifrån ###
     ### T: group.track_for_home_devices to: 'not_home'        ###
-    ### C: 05:00:00 - 11:00:00                                ###
+    ### C: 05:00:00 - 09:00:00                                ###
     ### A: script.morning_lights_off                          ###
     #############################################################
   - alias: Morgonbelysning off (-> borta)
@@ -105,7 +105,7 @@
     condition:
       condition: time
       after: '05:00:00'
-      before: '11:00:00'
+      before: '09:00:00'
 
     action:
       - service: script.morning_lights_off

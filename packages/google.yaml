@@ -1,0 +1,14 @@
+automation:
+  - alias: "Godnatt"
+    mode: queued
+
+    trigger:
+      platform: state
+      entity_id: switch.ha_godnatt
+      to: 'on'
+
+    action:
+      - service: script.goodnight_all
+      - delay: '00:00:05'
+      - service: homeassistant.turn_off
+        entity_id: switch.ha_godnatt

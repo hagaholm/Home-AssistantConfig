@@ -72,7 +72,7 @@
           transition: 2
       - service: light.turn_on
         data:
-          entity_id: light.andreas_fonster
+          entity_id: light.andreas_fonster_ikea
           brightness_pct: 30
           transition: 2
       - service: light.turn_on
@@ -222,7 +222,7 @@
       - service: light.turn_off
         entity_id: light.sovrum_fonster
       - service: light.turn_off
-        entity_id: light.andreas_fonster
+        entity_id: light.andreas_fonster_ikea
       - service: light.turn_off
         entity_id: light.louise_fonster
       - service: light.turn_off

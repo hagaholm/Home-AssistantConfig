@@ -32,7 +32,8 @@
     ### Tänder friggebod fasadbelysning när det blir mörkt ###
     ### T: sensor.ljusstyrka < 40                          ###
     ### C: group.track_for_home_devices == 'home'          ###
-    ###    time: 12:00 - 22:00                             ###
+    ###    input_select.home_status == 'hemma på'          ###
+    ###    time: 12:00 - 05:00                             ###
     ###    light.friggebod_fasad == off                    ###
     ### A: script.friggebod_fasadbelysning_on              ###
     ##########################################################
@@ -47,9 +48,12 @@
         - condition: state
           entity_id: group.track_for_home_devices
           state: 'home'
+        - condition: state
+          entity_id: input_select.home_status
+          state: 'hemma på'
         - condition: time
           after: '12:00:00'
-          before: '22:00:00'
+          before: '05:00:00'
         - condition: state
           entity_id: light.friggebod_fasad
           state: 'off'

@@ -205,6 +205,12 @@ automation:
     trigger:
       - platform: homeassistant
         event: start
+      - platform: state
+        entity_id: input_select.home_status
+        to: "Hemma av"
+      - platform: state
+        entity_id: input_select.home_status
+        to: 'Borta'
 
     action:
       - service: input_boolean.turn_off
@@ -228,6 +234,9 @@ automation:
     trigger:
       - platform: homeassistant
         event: shutdown
+      - platform: state
+        entity_id: input_select.home_status
+        to: "Hemma på"
 
     action:
       - service: input_boolean.turn_off

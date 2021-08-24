@@ -3,29 +3,36 @@ import asyncio
 from datetime import datetime
 import logging
 
-from haffmpeg.camera import CameraMjpeg
 import voluptuous as vol
 
+from haffmpeg.camera import CameraMjpeg
 from homeassistant.components.camera import SUPPORT_STREAM, Camera
 from homeassistant.components.ffmpeg import DATA_FFMPEG
+
 from homeassistant.helpers import config_validation as cv, entity_platform
 from homeassistant.helpers.aiohttp_client import (
     async_aiohttp_proxy_web,
+    async_aiohttp_proxy_stream,
     async_get_clientsession,
 )
 
 from .const import (
+    DOMAIN_DATA,
+    LAST_EVENT,
     SERVICE_PTZ_CONTROL,
+    SERVICE_QUERY_VOD,
     SERVICE_SET_BACKLIGHT,
     SERVICE_SET_DAYNIGHT,
     SERVICE_SET_SENSITIVITY,
+    SUPPORT_PLAYBACK,
+    SUPPORT_PTZ,
 )
 from .entity import ReolinkEntity
+from .typings import VoDEvent
 
 _LOGGER = logging.getLogger(__name__)
 
 
-@asyncio.coroutine
 async def async_setup_entry(hass, config_entry, async_add_devices):
     """Set up a Reolink IP Camera."""
 
@@ -65,6 +72,17 @@ async def async_setup_entry(hass, config_entry, async_add_devices):
             vol.Optional("speed"): cv.positive_int,
         },
         SERVICE_PTZ_CONTROL,
+        [SUPPORT_PTZ],
+    )
+    platform.async_register_entity_service(
+        SERVICE_QUERY_VOD,
+        {
+            vol.Required("event_id"): cv.string,
+            vol.Optional("start"): cv.datetime,
+            vol.Optional("end"): cv.datetime,
+        },
+        SERVICE_QUERY_VOD,
+        [SUPPORT_PLAYBACK],
     )
 
     async_add_devices([camera])
@@ -77,10 +95,10 @@ class ReolinkCamera(ReolinkEntity, Camera):
         """Initialize a Reolink camera."""
         ReolinkEntity.__init__(self, hass, config)
         Camera.__init__(self)
+        self._entry_id = config.entry_id
 
-        self._hass = hass
         self._ffmpeg = self._hass.data[DATA_FFMPEG]
-        self._last_image = None
+        # self._last_image = None
         self._ptz_commands = {
             "AUTO": "Auto",
             "DOWN": "Down",
@@ -126,6 +144,12 @@ class ReolinkCamera(ReolinkEntity, Camera):
         return self._base.api.ptz_support
 
     @property
+    def playback_support(self):
+        """ Return whethere the camera has VoDs. """
+        # TODO : this should probably be like ptz above, and be a property of the api
+        return bool(self._base.api.hdd_info)
+
+    @property
     def device_state_attributes(self):
         """Return the camera state attributes."""
         attrs = {}
@@ -143,12 +167,26 @@ class ReolinkCamera(ReolinkEntity, Camera):
         if self._base.api.sensitivity_presets:
             attrs["sensitivity"] = self.get_sensitivity_presets()
 
+        if self.playback_support:
+            data: dict = self.hass.data.get(DOMAIN_DATA)
+            data = data.get(self._base.unique_id) if data else None
+            last: VoDEvent = data.get(LAST_EVENT) if data else None
+            if last and last.url:
+                attrs["video_url"] = last.url
+                if last.thumbnail and last.thumbnail.exists:
+                    attrs["video_thumbnail"] = last.thumbnail.url
+
         return attrs
 
     @property
     def supported_features(self):
         """Return supported features."""
-        return SUPPORT_STREAM
+        features = SUPPORT_STREAM
+        if self.ptz_support:
+            features += SUPPORT_PTZ
+        if self.playback_support:
+            features += SUPPORT_PLAYBACK
+        return features
 
     async def stream_source(self):
         """Return the source of the stream."""
@@ -156,12 +194,20 @@ class ReolinkCamera(ReolinkEntity, Camera):
 
     async def handle_async_mjpeg_stream(self, request):
         """Generate an HTTP MJPEG stream from the camera."""
-        stream_source = await self.stream_source()
 
-        websession = async_get_clientsession(self._hass)
-        stream_coro = websession.get(stream_source, timeout=10)
+        stream = CameraMjpeg(self._ffmpeg.binary)
+        await stream.open_camera(self._input, extra_cmd=self._extra_arguments)
 
-        return await async_aiohttp_proxy_web(self._hass, request, stream_coro)
+        try:
+            stream_reader = await stream.get_reader()
+            return await async_aiohttp_proxy_stream(
+                self.hass,
+                request,
+                stream_reader,
+                self._ffmpeg.ffmpeg_stream_content_type,
+            )
+        finally:
+            await stream.close()
 
     async def async_camera_image(self):
         """Return a still image response from the camera."""
@@ -175,6 +221,16 @@ class ReolinkCamera(ReolinkEntity, Camera):
 
         await self._base.api.set_ptz_command(
             command=self._ptz_commands[command], **kwargs
+        )
+
+    async def query_vods(self, event_id, **kwargs):
+        """ Query camera for VoDs and emit results """
+        if not self.playback_support:
+            _LOGGER.error("Video Playback is not supported on this device")
+            return
+
+        await self._base.emit_search_results(
+            event_id, self._entry_id, context=self._context, **kwargs
         )
 
     def get_sensitivity_presets(self):

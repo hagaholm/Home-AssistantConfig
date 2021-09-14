@@ -159,10 +159,7 @@ automation:
         - condition: template
           value_template: "{{ not is_state('sensor.fukt_badrumsfonster', 'None') }}"
         - condition: template
-          value_template: "{{ state_attr('sensor.fukt_badrumsfonster', 'last_changed') != None }}"
-        - condition: template
-          value_template: "{{ state_attr('sensor.fukt_badrumsfonster', 'last_updated') != None }}"
-                    
+          value_template: "{{ not is_state('sensor.fukt_badrumsfonster_last_updated', 'None') }}"                
         - condition: template 
           value_template: "{{ (trigger.to_state.state|int - trigger.from_state.state|int) >= 4 }}"
         - condition: numeric_state
@@ -188,8 +185,8 @@ automation:
         - condition: state
           entity_id: switch.fan_speed
           state: 'off'
-        - condition: template 
-          value_template: "{{ (trigger.to_state.state|int - trigger.from_state.state|int) >= 2 }}"
+#        - condition: template 
+#          value_template: "{{ (trigger.to_state.state|int - trigger.from_state.state|int) >= 2 }}"
         - condition: numeric_state
           entity_id: sensor.ute
           above: -8

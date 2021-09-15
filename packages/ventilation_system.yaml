@@ -173,8 +173,8 @@ automation:
     ##########################################
   - alias: Forcerad Badrumsfönster hög fukt
     trigger:
-      platform: state
-      entity_id: sensor.fukt_badrumsfonster
+      - platform: state
+        entity_id: sensor.fukt_badrumsfonster
 
     condition:
       condition: and

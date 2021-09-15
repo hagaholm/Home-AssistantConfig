@@ -155,16 +155,13 @@ automation:
           entity_id: switch.fan_speed
           state: 'off'
 
-        # Make a check that needed parts exists, if not using this it will be an error in the next step 
-        - condition: template
-          value_template: "{{ not is_state('sensor.fukt_badrumsfonster', 'None') }}"
-        - condition: template
-          value_template: "{{ not is_state('sensor.fukt_badrumsfonster_last_updated', 'None') }}"                
         - condition: template 
           value_template: "{{ (trigger.to_state.state|int - trigger.from_state.state|int) >= 4 }}"
+
         - condition: numeric_state
           entity_id: sensor.ute
           above: -8
+
     action:
       - service: homeassistant.turn_on
         entity_id: switch.fan_speed
@@ -178,18 +175,24 @@ automation:
     trigger:
       platform: numeric_state
       entity_id: sensor.fukt_badrumsfonster
-      above: '69'
+
     condition:
       condition: and
       conditions:
+        - condition: numeric_state
+          entity_id: sensor.fukt_badrumsfonster
+          above: '69'
+
         - condition: state
           entity_id: switch.fan_speed
           state: 'off'
-#        - condition: template 
-#          value_template: "{{ (trigger.to_state.state|int - trigger.from_state.state|int) >= 2 }}"
+        - condition: template 
+          value_template: "{{ (trigger.to_state.state|int - trigger.from_state.state|int) >= 2 }}"
+
         - condition: numeric_state
           entity_id: sensor.ute
           above: -8
+
     action:
       - service: homeassistant.turn_on
         entity_id: switch.fan_speed

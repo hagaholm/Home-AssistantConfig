@@ -168,7 +168,7 @@ automation:
 
     ##########################################
     ### Hög fukt badrumsfönster            ###
-    ### T: sensor.fukt_badrumsfonster > 69 ###
+    ### T: sensor.fukt_badrumsfonster > 70 ###
     ### A: switch.fan_speed = on           ###
     ##########################################
   - alias: Forcerad Badrumsfönster hög fukt
@@ -181,7 +181,7 @@ automation:
       conditions:
         - condition: numeric_state
           entity_id: sensor.fukt_badrumsfonster
-          above: '69'
+          above: '70'
 
         - condition: state
           entity_id: switch.fan_speed
@@ -202,14 +202,14 @@ automation:
     ################
     ##########################################
     ### Låg fukt badrumsfönster            ###
-    ### T: sensor.fukt_badrumsfonster < 68 ###
+    ### T: sensor.fukt_badrumsfonster < 69 ###
     ### A: switch.fan_speed = off          ###
     ##########################################
   - alias: Normal Badrumsfönster låg fukt
     trigger:
       platform: numeric_state
       entity_id: sensor.fukt_badrumsfonster
-      below: '68'
+      below: '69'
     condition:
       condition: and
       conditions:

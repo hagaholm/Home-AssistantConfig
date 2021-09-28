@@ -1,7 +1,7 @@
 ###############################################
 ### Ringklocka tvättstuga dag               ###
 ### T: switch.ringklocka_tvattstuga == on   ###
-### C: input_select.home_status == hemma på ###
+### C: input_select.home_status == Hemma på ###
 ### A: switch.ringklocka_tvattstuga = off   ###
 ###    notify.pushbullet                    ###
 ###############################################
@@ -15,7 +15,7 @@
       conditions:
         - condition: state
           entity_id: input_select.home_status
-          state: 'hemma på'
+          state: 'Hemma på'
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ringklocka_tvattstuga
@@ -33,7 +33,7 @@
 ###############################################
 ### Ringklocka tvättstuga natt              ###
 ### T: switch.ringklocka_tvattstuga == on   ###
-### C: input_select.home_status == hemma av ###
+### C: input_select.home_status == Hemma av ###
 ### A: switch.ringklocka_tvattstuga = off   ###
 ###    notify.pushbullet                    ###
 ###############################################
@@ -47,7 +47,7 @@
       conditions:
         - condition: state
           entity_id: input_select.home_status
-          state: 'hemma av'
+          state: 'Hemma av'
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ringklocka_tvattstuga
@@ -97,7 +97,7 @@
 ###############################################
 ### Ringklocka hall dag                     ###
 ### T: switch.ringklocka_hall == on         ###
-### C: input_select.home_status == hemma på ###
+### C: input_select.home_status == Hemma på ###
 ### A: switch.ringklocka_hall = off         ###
 ###    notify.pushbullet                    ###
 ###############################################
@@ -111,7 +111,7 @@
       conditions:
         - condition: state
           entity_id: input_select.home_status
-          state: 'hemma på'
+          state: 'Hemma på'
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ringklocka_hall
@@ -129,7 +129,7 @@
 ###############################################
 ### Ringklocka hall natt                    ###
 ### T: switch.ringklocka_hall == on         ###
-### C: input_select.home_status == hemma av ###
+### C: input_select.home_status == Hemma av ###
 ### A: switch.ringklocka_hall = off         ###
 ###    notify.pushbullet                    ###
 ###############################################
@@ -143,7 +143,7 @@
       conditions:
         - condition: state
           entity_id: input_select.home_status
-          state: 'hemma av'
+          state: 'Hemma av'
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ringklocka_hall

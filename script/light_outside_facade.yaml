@@ -7,7 +7,7 @@
       - service: light.turn_on
         data:
           entity_id: light.friggebod_fasad
-          brightness_pct: 30
+          brightness_pct: 50
           transition: 1
 
   ####################################
@@ -56,7 +56,7 @@
       - service: light.turn_on
         data:
           entity_id: light.forrad_fasad
-          brightness_pct: 30
+          brightness_pct: 50
           transition: 1
 
   #################################
@@ -93,7 +93,7 @@
       - service: light.turn_on
         data:
           entity_id: light.tvattstugan_fasad
-          brightness_pct: 65
+          brightness_pct: 75
           transition: 1
 
   #####################################

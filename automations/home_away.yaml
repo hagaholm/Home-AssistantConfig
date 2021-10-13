@@ -5,9 +5,12 @@
     #####################################################
   - alias: Aktivera borta mode
     trigger:
-      platform: state
-      entity_id: group.track_for_home_devices
-      to: 'not_home'
+      - platform: state
+        entity_id: group.track_for_home_devices
+        to: 'not_home'
+      - platform: state
+        entity_id: group.persons
+        to: 'not_home'
     action:
       - service: input_select.select_option
         data:
@@ -21,9 +24,12 @@
     #################################################
   - alias: Aktivera Hemma på mode
     trigger:
-      platform: state
-      entity_id: group.track_for_home_devices
-      to: 'home'
+      - platform: state
+        entity_id: group.track_for_home_devices
+        to: 'home'
+      - platform: state
+        entity_id: group.persons
+        to: 'home'
     action:
       - service: input_select.select_option
         data:

@@ -1,9 +1,13 @@
+####################################################
+#                                                  #
+#                      PERSON                      #
+#                                                  #
+####################################################
 person:
   - name: Micke
     id: micke
     device_trackers:
       - device_tracker.galaxy_a52s_5g
-# Mickes mobil
   - name: Annelie
     id: annelie
     device_trackers:
@@ -30,3 +34,19 @@ person:
     id: erik
     device_trackers:
       - device_tracker.mobil_erik
+
+####################################################
+#                                                  #
+#                       GROUP                      #
+#                                                  #
+####################################################
+group:
+  Persons:
+    name: Personer hemma
+    entities:
+      - person.micke
+      - person.annelie
+      - person.louise
+      - person.andreas
+      - person.herbert
+      - person.margareta

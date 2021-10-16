@@ -29,7 +29,7 @@ script:
 
 rest_command:
   reload_ikea:
-    url: http://192.168.1.9:8123/api/config/config_entries/entry/08f9aae37f69486fbdcb2a45ce10fd59/reload 
+    url: http://192.168.1.9:8123/api/config/config_entries/entry/322c5a3db3cc555140caa8574613e3f9/reload 
     method: POST
     headers:
       authorization: !secret api_bearer_token

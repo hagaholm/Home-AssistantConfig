@@ -21,9 +21,9 @@ script:
   restart_ikea:
     alias: Starta om IKEA integration
     sequence: 
-      - conditions: state 
-        entity_id: input_boolean.reload_ikea
-        state: on
+#      - conditions: state 
+#        entity_id: input_boolean.reload_ikea
+#        state: on
       - service: rest_command.reload_ikea
         data: {}
       - delay: "00:00:01"

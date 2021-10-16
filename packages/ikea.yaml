@@ -1,3 +1,7 @@
+input_boolean:
+  reload_ikea:
+    name: Ladda om IKEA
+    initial: off
 
 automation:
 - alias: "Keep IKEA running" 
@@ -17,15 +21,12 @@ script:
   restart_ikea:
     alias: Starta om IKEA integration
     sequence: 
+      - conditions: state 
+        entity_id_ input_boolean.reload_ikea
+        state: on
       - service: rest_command.reload_ikea
-
-  update_entity:
-    alias: Uppdatera vardagsrums lampa
-    sequence: 
-      - service: homeassistant.update_entity
-        target:
-          entity_id:
-          - light.vardagsrum_fonster
+        data: {}
+      - delay: "00:00:01"
 
 rest_command:
   reload_ikea:

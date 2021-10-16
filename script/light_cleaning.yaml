@@ -6,6 +6,7 @@
     sequence:
 
 # IKEA
+      - service: script.restart_ikea
       - service: light.turn_on
         data:
           entity_id: light.kok_stora_fonstret

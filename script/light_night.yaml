@@ -26,6 +26,7 @@
     sequence:
 
 # IKEA
+      - service: script.restart_ikea
       - service: light.turn_on
         data:
           entity_id: light.hall_byra
@@ -43,6 +44,7 @@
     sequence:
 
 # IKEA
+      - service: script.restart_ikea
       - service: light.turn_on
         data:
           entity_id: light.hall_byra
@@ -78,6 +80,7 @@
   night_light_default_off:
     alias: Nattbelysning default off
     sequence:
+      - service: script.restart_ikea
       - service: light.turn_off
         data:
           entity_id: light.nattbelysning
@@ -86,6 +89,7 @@
   night_light_christmas_off:
     alias: Nattjulbelysning off
     sequence:
+      - service: script.restart_ikea
       - service: light.turn_off
         data:
           entity_id: light.nattbelysning_jul

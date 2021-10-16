@@ -5,6 +5,7 @@
     alias: Godnatt, släcker allt
     sequence:
 # Set home off mode
+      - service: script.restart_ikea
       - service: input_select.select_option
         data:
           entity_id: input_select.home_status
@@ -52,6 +53,7 @@
     alias: Godnatt, släcker allt om 10 minuter
     sequence:
       - delay: '00:10:00'
+      - service: script.restart_ikea
 
 # Set home off mode
       - service: input_select.select_option
@@ -101,6 +103,7 @@
     alias: Godnatt, stänger av allt
     sequence:
 # Set home off mode
+      - service: script.restart_ikea
       - service: input_select.select_option
         data:
           entity_id: input_select.home_status
@@ -164,6 +167,7 @@
       - delay: '00:10:00'
 
 # Set home off mode
+      - service: script.restart_ikea
       - service: input_select.select_option
         data:
           entity_id: input_select.home_status
@@ -225,6 +229,7 @@
     alias: Godnatt, stänger av allt (tv om 10 minuter)
     sequence:
 # Set home off mode
+      - service: script.restart_ikea
       - service: input_select.select_option
         data:
           entity_id: input_select.home_status
@@ -288,6 +293,7 @@
   bedroom_off:
     alias: Släck i sovrummet
     sequence:
+      - service: script.restart_ikea
       - service: light.turn_off
         data:
           entity_id: light.sovrum
@@ -299,6 +305,7 @@
   andreas_room_off:
     alias: Släck i Andreas rum
     sequence:
+      - service: script.restart_ikea
       - service: light.turn_off
         data:
           entity_id: light.andreas_rum
@@ -313,6 +320,7 @@
   louise_room_off:
     alias: Släck i Louise rum
     sequence:
+      - service: script.restart_ikea
       - service: light.turn_off
         data:
           entity_id: light.louise_rum

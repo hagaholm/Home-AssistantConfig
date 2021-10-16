@@ -4,6 +4,7 @@
   outdoor_room_led_light_on:
     alias: Uterums ledbelysning on
     sequence:
+      - service: script.restart_ikea
       - service: input_select.select_option
         data:
           entity_id: input_select.uterum_led_lights
@@ -17,6 +18,7 @@
   outdoor_room_led_light_off:
     alias: Uterums ledbelysning off
     sequence:
+      - service: script.restart_ikea
       - service: input_select.select_option
         data:
           entity_id: input_select.uterum_led_lights
@@ -30,6 +32,7 @@
   outdoor_room_paraffin_light_on:
     alias: Uterums fotogenlampa on
     sequence:
+      - service: script.restart_ikea
       - service: light.turn_on
         entity_id: light.uterum_fotogenlampa
 
@@ -39,5 +42,6 @@
   outdoor_room_paraffin_light_off:
     alias: Uterums fotogenlampa off
     sequence:
+      - service: script.restart_ikea
       - service: light.turn_off
         entity_id: light.uterum_fotogenlampa

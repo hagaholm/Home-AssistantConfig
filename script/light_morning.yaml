@@ -25,6 +25,7 @@
     alias: Morgonbelysning default on
     sequence:
 # IKEA
+      - service: script.restart_ikea
       - service: light.turn_on
         data:
           entity_id: light.kok_stora_fonstret
@@ -57,6 +58,7 @@
     alias: Morgonjulbelysning on
     sequence:
 # IKEA
+      - service: script.restart_ikea
       - service: light.turn_on
         data:
           entity_id: light.hall_byra
@@ -87,3 +89,4 @@
       - service: script.turn_on
         entity_id: script.daylights_off
 
+    

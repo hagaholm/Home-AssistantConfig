@@ -19,6 +19,14 @@ script:
     sequence: 
       - service: rest_command.reload_ikea
 
+  update_entity:
+    alias: Uppdatera vardagsrums lampa
+    sequence: 
+      - service: homeassistant.update_entity
+  target:
+    entity_id:
+    - light.vardagsrum_fonster
+
 rest_command:
   reload_ikea:
     url: http://192.168.1.9:8123/api/config/config_entries/entry/08f9aae37f69486fbdcb2a45ce10fd59/reload 

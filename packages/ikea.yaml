@@ -1,0 +1,28 @@
+
+automation:
+- alias: "Keep IKEA running" 
+  mode: single
+  description: 'Check IKEA HUB down'
+  trigger:
+  - platform: state
+    entity_id: light.vardagsrum_fonster # use any entity that is an IKEA device 
+    to: unavailable
+    for: 00:05:00
+  condition: []
+  action:
+  - service: rest_command.reload_ikea
+    data: {}
+
+script:
+  restart_ikea:
+    alias: Starta om IKEA integration
+    sequence: 
+      - service: rest_command.reload_ikea
+
+rest_command:
+  reload_ikea:
+    url: http://192.168.1.9:8123/api/config/config_entries/entry/08f9aae37f69486fbdcb2a45ce10fd59/reload 
+    method: POST
+    headers:
+      authorization: !secret api_bearer_token
+      content-type: 'application/json'

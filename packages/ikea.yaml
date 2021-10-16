@@ -22,7 +22,7 @@ script:
     alias: Starta om IKEA integration
     sequence: 
       - conditions: state 
-        entity_id_ input_boolean.reload_ikea
+        entity_id: input_boolean.reload_ikea
         state: on
       - service: rest_command.reload_ikea
         data: {}

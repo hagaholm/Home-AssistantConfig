@@ -154,14 +154,16 @@ views:
     cards:
       - type: entities
         entities:
-          - device_tracker.galaxy_a52s_5g # Mickes mobil
-          - device_tracker.mobil_annelie
-          - device_tracker.mobil_annelie_5g
-          - device_tracker.iphone # Andreas mobil
-          - device_tracker.mobil_louise
-        title: Info
-        show_header_toggle: false
+          - entity: person.micke
+          - entity: person.annelie
+          - entity: person.louise
+          - entity: person.andreas
+          - entity: person.herbert
+          - entity: person.margareta
+          - entity: person.erik
+        title: Personer
         state_color: true
+        show_header_toggle: false
       - type: entities
         entities:
           - script.goodnight

@@ -25,6 +25,7 @@ homeassistant:
   packages: !include_dir_named packages
 
   allowlist_external_dirs:
+    - /config
     - /config/camera
     - /config/camera/deepstack_photo 
     - /config/camera/motion_detected 

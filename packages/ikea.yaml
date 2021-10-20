@@ -1,3 +1,8 @@
+sensor:
+  - platform: file
+    name: last_log_line
+    file_path: /homeassistant/home-assistant.log
+
 input_boolean:
   reload_ikea:
     name: Ladda om IKEA

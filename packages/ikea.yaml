@@ -1,7 +1,7 @@
 sensor:
   - platform: file
     name: last_log_line
-    file_path: ./homeassistant/home-assistant.log
+    file_path: /config/home-assistant.log
 
 input_boolean:
   reload_ikea:

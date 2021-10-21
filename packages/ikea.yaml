@@ -1,29 +1,250 @@
 sensor:
   - platform: file
-    name: last_log_line
+    name: ikea_last_log_line
     file_path: /config/home-assistant.log
+    value_template: >
+      {{value|truncate(255,True)}}
 
+  - platform: command_line
+    command: grep -o -i '\[coap\]' home-assistant.log | wc -l
+    name: IKEA antal coap
+
+  - platform: command_line
+    command: grep -o -i '\[coap\] Exchange timed out' home-assistant.log | wc -l
+    name: IKEA antal coap timed out
+
+  - platform: command_line
+    command: grep -o -i 'ERROR' home-assistant.log | wc -l
+    name: IKEA antal ERROR
+
+  - platform: command_line
+    command: grep -o -i 'WARNING' home-assistant.log | wc -l
+    name: IKEA antal WARNING
+
+  - platform: command_line
+    command: grep -o -i 'INFO' home-assistant.log | wc -l
+    name: IKEA antal INFO
+
+  - platform: command_line
+    command: grep -o -i 'Setting up system_log' home-assistant.log | wc -l
+    name: IKEA antal system_log
+    
 input_boolean:
   reload_ikea:
     name: Ladda om IKEA
     initial: off
 
+input_number:
+  ikea_file_updated:
+    name: No file updated
+    initial: 0
+    min: 0
+    max: 10000
+
+  ikea_updated_coap:
+    name: No update coap
+    initial: 0
+    min: 0
+    max: 1000
+
+  ikea_updated_coap_timed_out:
+    name: No update coap timed out
+    initial: 0
+    min: 0
+    max: 1000
+
+  ikea_updated_info:
+    name: No update INFO
+    initial: 0
+    min: 0
+    max: 1000
+
+  ikea_updated_warning:
+    name: No update WARNING
+    initial: 0
+    min: 0
+    max: 1000
+
+  ikea_updated_error:
+    name: No update ERROR
+    initial: 0
+    min: 0
+    max: 1000
+
+  ikea_updated_system_log:
+    name: No update system_log
+    initial: 0
+    min: 0
+    max: 1000
+    
 automation:
-- alias: "Keep IKEA running" 
-  mode: single
-  description: 'Check IKEA HUB down'
-  trigger:
-  - platform: state
-    entity_id: light.vardagsrum_fonster # use any entity that is an IKEA device 
-    to: unavailable
-    for: 00:05:00
-  condition: []
-  action:
-  - service: rest_command.reload_ikea
-    data: {}
+  - alias: "Updated home-assistant.log"
+    mode: queued
+    max: 25
+    description: 'Körs vid uppdaterad home-assistant.log'
+
+    trigger:
+      - platform: state
+        entity_id: sensor.ikea_last_log_line
+
+    action:
+      - service: homeassistant.update_entity
+        entity_id:
+          - sensor.ikea_antal_coap
+          - sensor.ikea_antal_coap_timed_out
+          - sensor.ikea_antal_warning
+          - sensor.ikea_antal_info
+          - sensor.ikea_antal_error
+          - sensor.ikea_antal_system_log
+          
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.ikea_file_updated 
+          value: '{{ (states.input_number.ikea_file_updated.state | int ) + 1 }}'
+
+          
+  - alias: "Updated sensor ikea_antal_coap"
+    mode: single
+    description: 'Körs vid uppdaterad sensor ikea_antal_coap'
+
+    trigger:
+      - platform: state
+        entity_id: sensor.ikea_antal_coap
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.reload_ikea
+          state: 'off'
+
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.ikea_updated_coap 
+          value: '{{ (states.input_number.ikea_updated_coap.state | int ) + 1 }}'
+
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.reload_ikea
+ 
+      - delay: "00:00:01"
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.reload_ikea
+
+
+################################################################################
+  - alias: "Updated sensor ikea_antal_coap_timed_out"
+    mode: single
+    description: 'Körs vid uppdaterad sensor ikea_antal_coap_timed_out'
+
+    trigger:
+      - platform: state
+        entity_id: sensor.ikea_antal_coap_timed_out
+
+#    condition:
+#      condition: and
+#      conditions:
+#        - condition: state
+#          entity_id: input_boolean.reload_ikea
+#          state: 'off'
+
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.ikea_updated_coap_timed_out 
+          value: '{{ (states.input_number.ikea_updated_coap_timed_out.state | int ) + 1 }}'
+          
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.reload_ikea
+ 
+      - delay: "00:00:01"
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.reload_ikea
+################################################################################
+
+  - alias: "Updated sensor ikea_antal_error"
+    mode: single
+    description: 'Körs vid uppdaterad sensor ikea_antal_error'
+
+    trigger:
+      - platform: state
+        entity_id: sensor.ikea_antal_error
+
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.ikea_updated_error 
+          value: '{{ (states.input_number.ikea_updated_error.state | int ) + 1 }}'
+
+  - alias: "Updated sensor ikea_antal_warning"
+    mode: single
+    description: 'Körs vid uppdaterad sensor ikea_antal_warning'
+
+    trigger:
+      - platform: state
+        entity_id: sensor.ikea_antal_warning
+
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.ikea_updated_warning 
+          value: '{{ (states.input_number.ikea_updated_warning.state | int ) + 1 }}'
+
+  - alias: "Updated sensor ikea_antal_info"
+    mode: single
+    description: 'Körs vid uppdaterad sensor ikea_antal_info'
+
+    trigger:
+      - platform: state
+        entity_id: sensor.ikea_antal_info
+
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.ikea_updated_info 
+          value: '{{ (states.input_number.ikea_updated_info.state | int ) + 1 }}'
+
+  - alias: "Updated sensor ikea_antal_system_log"
+    mode: single
+    description: 'Körs vid uppdaterad sensor ikea_antal_info'
+
+    trigger:
+      - platform: state
+        entity_id: sensor.ikea_antal_system_log
+
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.ikea_updated_system_log 
+          value: '{{ (states.input_number.ikea_updated_system_log.state | int ) + 1 }}'
+
+  - alias: "Keep IKEA running" 
+    mode: single
+    description: 'Check IKEA HUB down'
+    trigger:
+      - platform: state
+        entity_id: light.vardagsrum_fonster # use any entity that is an IKEA device 
+        to: unavailable
+        for: 00:05:00
+    condition: []
+    action:
+      - service: rest_command.reload_ikea
+        data: {}
 
 script:
   restart_ikea:
+    alias: Vänta på restart av IKEA
+    sequence: 
+    
+      - wait_template: "{{ is_state('binary_sensor.reload_ikea', 'off') }}"
+        timeout: "00:00:10"
+
+
+  reload_ikea:
     alias: Starta om IKEA integration
     sequence: 
 #      - conditions: state 

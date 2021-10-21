@@ -17,6 +17,7 @@
   friggebod_fasadbelysning_min:
     alias: Friggebod fasadbelysning on
     sequence:
+      - service: script.restart_ikea
       - service: light.turn_on
         data:
           entity_id: light.friggebod_fasad
@@ -136,8 +137,8 @@
   huvudentre_belysning_on:
     alias: Huvudentre belysning on
     sequence:
-      - service: light.turn_on
       - service: script.restart_ikea
+      - service: light.turn_on
         data:
           entity_id: light.huvudentre
           brightness_pct: 50

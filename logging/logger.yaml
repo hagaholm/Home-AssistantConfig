@@ -3,14 +3,7 @@
 # Log Severities: notset, debug, info, warn, warning, error, fatal, critical
 #----------------------------------------------------------------------------
 
-  default: info
+  default: warn
 
   logs:
-    homeassistant.components.automation.camera_1_image_processing: warn
-    homeassistant.components.automation.camera_2_image_processing: warn
-    homeassistant.components.automation.camera_3_image_processing: warn
-
-    volvooncall.volvooncall: warn
-    WazeRouteCalculator.WazeRouteCalculator: warn
-    homeassistant.components.automation.mqtt_publish_outside_temperature: warn
-    
+    coap: notset

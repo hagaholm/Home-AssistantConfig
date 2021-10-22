@@ -155,7 +155,7 @@ automation:
       - service: system_log.write
         data:
           message: "Automatisk omstart av IKEA integrationen"
-          level: info
+          level: warning
 
       # Uppdaterar värdet, används inte av något
       - service: input_number.set_value
@@ -170,6 +170,20 @@ automation:
       - service: input_boolean.turn_off
         data:
           entity_id: input_boolean.reload_ikea_integration
+
+  - alias: "Notify Laddar om IKEA integration"
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_boolean.reload_ikea_integration
+        to: "on"
+
+    action:
+      - service: notify.pushbullet
+        data:
+          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+          message: "Laddar om IKEA integration"
 
 ##############
 ### script ###
@@ -190,7 +204,7 @@ script:
       - service: system_log.write
         data:
           message: "Manuell omstart av IKEA integrationen"
-          level: info
+          level: warning
 
 ####################
 ### rest_command ###

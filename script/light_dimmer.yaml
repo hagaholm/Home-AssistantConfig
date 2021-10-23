@@ -1,7 +1,7 @@
   tv_light_max:
     alias: Tv lampor max
     sequence:
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_skank
@@ -26,7 +26,7 @@
   tv_light_normal:
     alias: Tv lampor normal
     sequence:
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_skank
@@ -51,7 +51,7 @@
   tv_light_look_at_tv:
     alias: Tv lampor se på tv
     sequence:
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_skank
@@ -76,7 +76,7 @@
   tv_light_off:
     alias: Tv lampor off
     sequence:
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_off
         data:
           entity_id: light.vardagsrum_skank

@@ -30,7 +30,7 @@
     alias: Dagbelysning default on
     sequence:
 # IKEA
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_on
         data:
           entity_id: light.kok_stora_fonstret
@@ -102,7 +102,7 @@
     alias: Dagbelysning jul on
     sequence:
 # IKEA
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_on
         data:
           entity_id: light.hall_byra
@@ -209,7 +209,7 @@
     alias: Dagbelysning default off
     sequence:
 # IKEA
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_off
         entity_id: light.kok_stora_fonstret
       - service: light.turn_off
@@ -245,7 +245,7 @@
     alias: Dagbelysning jul off
     sequence:
 # IKEA
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_off
         entity_id: light.hall_byra
       - service: light.turn_off

@@ -12,12 +12,12 @@ sensor:
   # Antal förekomster av ordet "[coap]" i home-assistant.log
   - platform: command_line
     command: grep -o -i '\[coap\]' home-assistant.log | wc -l
-    name: IKEA antal coap
+    name: home_assistant_log_coap
 
   # Antal förekomster av ordet "[coap] Exchange timed out" i home-assistant.log
   - platform: command_line
     command: grep -o -i '\[coap\] Exchange timed out' home-assistant.log | wc -l
-    name: IKEA antal coap timed out
+    name: home_assistant_log_coap_timed_out
 
 #####################
 ### input_boolean ###
@@ -93,14 +93,14 @@ automation:
       condition: and
       conditions:
         - condition: state
-          entity_id: input_boolean.reload_ikea_integration
+          entity_id: input_boolean.ongoing_reload_ikea_integration
           state: 'off'
 
     action:
-      # Sätter reload_ikea_integration till on så att inget annat körs samtidigt
+      # Sätter ongoing_reload_ikea_integration till on så att inget annat körs samtidigt
       - service: input_boolean.turn_on
         data:
-          entity_id: input_boolean.reload_ikea_integration
+          entity_id: input_boolean.ongoing_reload_ikea_integration
 
       # Laddar om IKEA integrationen
       - service: rest_command.reload_ikea
@@ -114,16 +114,16 @@ automation:
       # Uppdaterar värdet, används inte av något
       - service: input_number.set_value
         data_template:
-          entity_id: input_number.ikea_updated_coap 
-          value: '{{ (states.input_number.ikea_updated_coap.state | int ) + 1 }}'
+          entity_id: input_number.home_assistant_log_coap 
+          value: '{{ (states.input_number.home_assistant_log_coap.state | int ) + 1 }}'
 
       # Väntar en sekund så att allt har gått klart
       - delay: "00:00:01"
 
-      # Sätter reload_ikea_integration till off efteråt
+      # Sätter ongoing_reload_ikea_integration till off efteråt
       - service: input_boolean.turn_off
         data:
-          entity_id: input_boolean.reload_ikea_integration
+          entity_id: input_boolean.ongoing_reload_ikea_integration
 
 ################################################################################
   - alias: "Updated sensor home_assistant_log_coap_timed_out"
@@ -139,14 +139,14 @@ automation:
       condition: and
       conditions:
         - condition: state
-          entity_id: input_boolean.reload_ikea_integration
+          entity_id: input_boolean.ongoing_reload_ikea_integration
           state: 'off'
 
     action:
-      # Sätter reload_ikea_integration till on så att inget annat körs samtidigt
+      # Sätter ongoing_reload_ikea_integration till on så att inget annat körs samtidigt
       - service: input_boolean.turn_on
         data:
-          entity_id: input_boolean.reload_ikea_integration
+          entity_id: input_boolean.ongoing_reload_ikea_integration
 
       # Laddar om IKEA integrationen
       - service: rest_command.reload_ikea
@@ -160,23 +160,23 @@ automation:
       # Uppdaterar värdet, används inte av något
       - service: input_number.set_value
         data_template:
-          entity_id: input_number.ikea_updated_coap_timed_out
-          value: '{{ (states.input_number.ikea_updated_coap_timed_out.state | int ) + 1 }}'
+          entity_id: input_number.home_assistant_log_coap_timed_out
+          value: '{{ (states.input_number.home_assistant_log_coap_timed_out.state | int ) + 1 }}'
 
       # Väntar en sekund så att allt har gått klart
       - delay: "00:00:01"
 
-      # Sätter reload_ikea_integration till off efteråt
+      # Sätter ongoing_reload_ikea_integration till off efteråt
       - service: input_boolean.turn_off
         data:
-          entity_id: input_boolean.reload_ikea_integration
+          entity_id: input_boolean.ongoing_reload_ikea_integration
 
   - alias: "Notify Laddar om IKEA integration"
     mode: single
 
     trigger:
       - platform: state
-        entity_id: input_boolean.reload_ikea_integration
+        entity_id: input_boolean.ongoing_reload_ikea_integration
         to: "on"
 
     action:
@@ -190,8 +190,8 @@ automation:
 ##############
 script:
   # Script som ska köras av alla script som uppdaterar IKEA enheter
-  restart_ikea:
-    alias: Vänta på restart av IKEA
+  wait_for_reload_ikea_integration:
+    alias: Vänta på restart av IKEA Integration
     sequence: 
     
       # Om en omstart av IKEA integrationen så väntar scriptet här till det är klart

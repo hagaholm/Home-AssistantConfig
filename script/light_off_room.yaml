@@ -4,7 +4,7 @@
   bedroom_off:
     alias: Släck i sovrummet
     sequence:
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_off
         data:
           entity_id: light.sovrum
@@ -16,7 +16,7 @@
   andreas_room_off:
     alias: Släck i Andreas rum
     sequence:
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_off
         data:
           entity_id: light.andreas_rum
@@ -31,7 +31,7 @@
   louise_room_off:
     alias: Släck i Louise rum
     sequence:
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_off
         data:
           entity_id: light.louise_rum

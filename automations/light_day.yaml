@@ -184,7 +184,7 @@
           after: '21:00:00'
           before: '23:00:00'
     action:
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_off
         data:
           entity_id: light.sovrum

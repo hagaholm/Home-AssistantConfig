@@ -4,7 +4,7 @@
   friggebod_fasadbelysning_on:
     alias: Friggebod fasadbelysning on
     sequence:
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_on
         data:
           entity_id: light.friggebod_fasad
@@ -17,7 +17,7 @@
   friggebod_fasadbelysning_min:
     alias: Friggebod fasadbelysning on
     sequence:
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_on
         data:
           entity_id: light.friggebod_fasad
@@ -30,7 +30,7 @@
   friggebod_fasadbelysning_max:
     alias: Friggebod fasadbelysning max
     sequence:
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_on
         data:
           entity_id: light.friggebod_fasad
@@ -43,7 +43,7 @@
   friggebod_fasadbelysning_off:
     alias: Friggebod fasadbelysning off
     sequence:
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_off
         data:
           entity_id: light.friggebod_fasad
@@ -57,7 +57,7 @@
   forrad_fasadbelysning_on:
     alias: Förråd fasadbelysning on
     sequence:
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_on
         data:
           entity_id: light.forrad_fasad
@@ -70,7 +70,7 @@
   forrad_fasadbelysning_max:
     alias: Förråd fasadbelysning max
     sequence:
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_on
         data:
           entity_id: light.forrad_fasad
@@ -83,7 +83,7 @@
   forrad_fasadbelysning_off:
     alias: Förråd fasadbelysning off
     sequence:
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_off
         data:
           entity_id: light.forrad_fasad
@@ -97,7 +97,7 @@
   tvattstuga_fasadbelysning_on:
     alias: Tvättstuga fasadbelysning on
     sequence:
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_on
         data:
           entity_id: light.tvattstugan_fasad
@@ -110,7 +110,7 @@
   tvattstuga_fasadbelysning_max:
     alias: Tvättstuga fasadbelysning max
     sequence:
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_on
         data:
           entity_id: light.tvattstugan_fasad
@@ -123,7 +123,7 @@
   tvattstuga_fasadbelysning_off:
     alias: Tvättstuga fasadbelysning off
     sequence:
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_off
         data:
           entity_id: light.tvattstugan_fasad
@@ -137,7 +137,7 @@
   huvudentre_belysning_on:
     alias: Huvudentre belysning on
     sequence:
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_on
         data:
           entity_id: light.huvudentre
@@ -150,7 +150,7 @@
   huvudentre_belysning_max:
     alias: Huvudentre belysning max
     sequence:
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_on
         data:
           entity_id: light.huvudentre
@@ -163,7 +163,7 @@
   huvudentre_belysning_off:
     alias: Huvudentre belysning off
     sequence:
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_off
         data:
           entity_id: light.huvudentre

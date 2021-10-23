@@ -4,7 +4,7 @@
   spa_light_on:
     alias: Spabelysning on
     sequence:
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - repeat:
           count: 10
           sequence:
@@ -24,7 +24,7 @@
   friggebod_light_on:
     alias: Friggebod belysning on
     sequence:
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_on
         entity_id: light.friggebod_fonster
 
@@ -34,7 +34,7 @@
   outside_light_off:
     alias: Utebelysning off
     sequence:
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_off
         data:
           entity_id: light.friggebod_fonster

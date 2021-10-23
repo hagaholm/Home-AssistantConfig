@@ -4,7 +4,7 @@
   kitchen_light_100:
     alias: Köksbelysning 100%
     sequence:
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - service: input_select.select_option
         data:
           entity_id: input_select.kitchen_lights
@@ -40,7 +40,7 @@
   kitchen_light_25:
     alias: Köksbelysning 25%
     sequence:
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - service: input_select.select_option
         data:
           entity_id: input_select.kitchen_lights
@@ -76,7 +76,7 @@
   kitchen_light_off:
     alias: Köksbelysning off
     sequence:
-      - service: script.restart_ikea
+      - service: script.wait_for_reload_ikea_integration
       - service: input_select.select_option
         data:
           entity_id: input_select.kitchen_lights

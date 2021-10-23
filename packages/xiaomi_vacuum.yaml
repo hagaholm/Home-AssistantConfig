@@ -1,8 +1,9 @@
 ################################################################################
-vacuum:
-  - platform: xiaomi_miio
-    host: 192.168.1.25
-    token: !secret vacuum_token
+# Not needed as it has been moved to an integration
+#vacuum:
+#  - platform: xiaomi_miio
+#    host: 192.168.1.25
+#    token: !secret vacuum_token
 
 ################################################################################
 sensor:

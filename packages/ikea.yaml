@@ -212,8 +212,12 @@ script:
 rest_command:
   # Kommando för att ladda om IKEA integrationen
   # Värdet efter entry måste bytas ut mot ett nytt korrekt om IKEA integrationen tas bort och läses in igen
+  # https://community.home-assistant.io/t/add-service-integration-reload/231940/37
+  # IP: is your home assistant IP
+  # Config Entry: is the unique config entry for your Tradfri and can be found in your directory config/.storage/core.config_entries. Search for Tradfri and use code Identity
+  # Long-Lived Access Token can be created in the HA menu under your instance name
   reload_ikea:
-    url: http://192.168.1.9:8123/api/config/config_entries/entry/dacd1b3f3313cc46cff31f8c1f0e87d2/reload 
+    url: http://192.168.1.9:8123/api/config/config_entries/entry/a182dbdc14b566174f6f4acf2595af02/reload 
     method: POST
     headers:
       authorization: !secret api_bearer_token

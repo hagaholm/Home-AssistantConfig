@@ -87,13 +87,18 @@ automation:
         data:
           entity_id: input_boolean.ongoing_reload_ikea_integration
 
+      - service: system_log.write
+        data:
+          message: "Automatisk omstart av IKEA integrationen, startar"
+          level: warning
+
       # Laddar om IKEA integrationen
       - service: rest_command.reload_ikea
         data: {}
  
       - service: system_log.write
         data:
-          message: "Automatisk omstart av IKEA integrationen"
+          message: "Automatisk omstart av IKEA integrationen, klar"
           level: warning
 
       # Uppdaterar värdet, används inte av något
@@ -142,7 +147,16 @@ script:
     sequence: 
       - service: system_log.write
         data:
-          message: "Manuell omstart av IKEA integrationen"
+          message: "Manuell omstart av IKEA integrationen, startar"
+          level: warning
+
+      # Laddar om IKEA integrationen
+      - service: rest_command.reload_ikea
+        data: {}
+
+      - service: system_log.write
+        data:
+          message: "Manuell omstart av IKEA integrationen, klar"
           level: warning
 
 ####################

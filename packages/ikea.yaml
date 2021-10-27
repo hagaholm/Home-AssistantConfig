@@ -94,7 +94,7 @@ automation:
       - service: system_log.write
         data:
           message: "Automatisk omstart av IKEA integrationen"
-          level: info
+          level: warning
 
       # Uppdaterar värdet, används inte av något
       - service: input_number.set_value

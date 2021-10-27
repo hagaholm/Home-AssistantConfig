@@ -14,11 +14,6 @@ sensor:
     command: grep -o -i '\[coap\]' home-assistant.log | wc -l
     name: home_assistant_log_coap
 
-  # Antal förekomster av ordet "[coap] Exchange timed out" i home-assistant.log
-  - platform: command_line
-    command: grep -o -i '\[coap\] Exchange timed out' home-assistant.log | wc -l
-    name: home_assistant_log_coap_timed_out
-
 #####################
 ### input_boolean ###
 #####################
@@ -39,16 +34,9 @@ input_number:
     min: 0
     max: 10000
 
-# Visar antal "[coap] i home-assistant.log, används inte till något
+# Visar antal gånger som "[coap]" i home-assistant.log hittats, används inte till något
   home_assistant_log_coap:
-    name: Antal coap i home-assistant.log
-    initial: 0
-    min: 0
-    max: 1000
-
-# Visar antal "[coap] Exchange timed out" i home-assistant.log, används inte till något
-  home_assistant_log_coap_timed_out:
-    name: Antal coap timed out i home-assistant.log
+    name: Hittat coap i home-assistant.log
     initial: 0
     min: 0
     max: 1000
@@ -71,15 +59,12 @@ automation:
       - service: homeassistant.update_entity
         entity_id:
           - sensor.home_assistant_log_coap
-          - sensor.home_assistant_log_coap_timed_out
           
       - service: input_number.set_value
         data_template:
           entity_id: input_number.home_assistant_log_updated 
           value: '{{ (states.input_number.home_assistant_log_updated.state | int ) + 1 }}'
 
-  # Vet inte vilken av följande 2 automationer som bör köras, men denna tar fler tillfällen an den andra, men den andra kanske räcker
-  # Se till att bara en av de två automationerna är igång
   - alias: "Updated sensor home_assistant_log_coap"
     mode: single
     description: 'Körs vid uppdaterad sensor home_assistant_log_coap'
@@ -116,52 +101,6 @@ automation:
         data_template:
           entity_id: input_number.home_assistant_log_coap 
           value: '{{ (states.input_number.home_assistant_log_coap.state | int ) + 1 }}'
-
-      # Väntar en sekund så att allt har gått klart
-      - delay: "00:00:01"
-
-      # Sätter ongoing_reload_ikea_integration till off efteråt
-      - service: input_boolean.turn_off
-        data:
-          entity_id: input_boolean.ongoing_reload_ikea_integration
-
-################################################################################
-  - alias: "Updated sensor home_assistant_log_coap_timed_out"
-    mode: single
-    description: 'Körs vid uppdaterad sensor home_assistant_log_coap_timed_out'
-
-    trigger:
-      - platform: state
-        entity_id: sensor.home_assistant_log_coap_timed_out
-
-    # Körs endast om det inte redan körs
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_boolean.ongoing_reload_ikea_integration
-          state: 'off'
-
-    action:
-      # Sätter ongoing_reload_ikea_integration till on så att inget annat körs samtidigt
-      - service: input_boolean.turn_on
-        data:
-          entity_id: input_boolean.ongoing_reload_ikea_integration
-
-      # Laddar om IKEA integrationen
-      - service: rest_command.reload_ikea
-        data: {}
- 
-      - service: system_log.write
-        data:
-          message: "Automatisk omstart av IKEA integrationen"
-          level: warning
-
-      # Uppdaterar värdet, används inte av något
-      - service: input_number.set_value
-        data_template:
-          entity_id: input_number.home_assistant_log_coap_timed_out
-          value: '{{ (states.input_number.home_assistant_log_coap_timed_out.state | int ) + 1 }}'
 
       # Väntar en sekund så att allt har gått klart
       - delay: "00:00:01"

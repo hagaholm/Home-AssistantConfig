@@ -32,11 +32,13 @@ from .const import (
     CONF_THUMBNAIL_PATH,
     DEFAULT_PLAYBACK_MONTHS,
     EVENT_DATA_RECEIVED,
+    CONF_USE_HTTPS,
     CONF_CHANNEL,
     CONF_MOTION_OFF_DELAY,
     CONF_PROTOCOL,
     CONF_STREAM,
     CONF_STREAM_FORMAT,
+    DEFAULT_USE_HTTPS,
     DEFAULT_CHANNEL,
     DEFAULT_MOTION_OFF_DELAY,
     DEFAULT_PROTOCOL,
@@ -52,6 +54,7 @@ from .const import (
 )
 
 _LOGGER = logging.getLogger(__name__)
+_LOGGER_DATA = logging.getLogger(__name__ + ".data")
 
 STORAGE_VERSION = 1
 
@@ -71,6 +74,15 @@ class ReolinkBase:
             self._channel = DEFAULT_CHANNEL
         else:
             self._channel = config[CONF_CHANNEL]
+
+        if CONF_USE_HTTPS not in config:
+            self._use_https = DEFAULT_USE_HTTPS
+        else:
+            self._use_https = config[CONF_USE_HTTPS]
+
+        if config[CONF_PORT] == 80 and self._use_https:
+            _LOGGER.warning("Port 80 is used, USE_HTTPS set back to False")
+            self._use_https = False
 
         if CONF_TIMEOUT not in options:
             self._timeout = DEFAULT_TIMEOUT
@@ -97,6 +109,7 @@ class ReolinkBase:
             config[CONF_PORT],
             self._username,
             self._password,
+            use_https=self._use_https,
             channel=self._channel - 1,
             stream=self._stream,
             stream_format=self._stream_format,
@@ -107,7 +120,10 @@ class ReolinkBase:
         self._hass = hass
         self.async_functions = list()
         self.sync_functions = list()
+
         self.motion_detection_state = True
+        self.object_person_detection_state = True
+        self.object_vehicle_detection_state = True
 
         if CONF_MOTION_OFF_DELAY not in options:
             self.motion_off_delay = DEFAULT_MOTION_OFF_DELAY
@@ -170,6 +186,10 @@ class ReolinkBase:
                 f"{STORAGE_DIR}/{DOMAIN}/{self.unique_id}"
             )
         return self._thumbnail_path
+
+    def enable_https(self, enable: bool):
+        self._use_https = enable
+        self._api.enable_https(enable)
 
     def set_thumbnail_path(self, value):
         """ Set custom thumbnail path"""
@@ -325,6 +345,10 @@ class ReolinkPush:
             )
             await self.set_available(True)
         else:
+            _LOGGER.error(
+                "Host %s subscription failed to its webhook, base object state will be set to NotAvailable",
+                self._host,
+            )
             await self.set_available(False)
         return True
 
@@ -356,6 +380,10 @@ class ReolinkPush:
                 await self.set_available(False)
                 await self._sman.subscribe(self._webhook_url)
             else:
+                _LOGGER.info(
+                    "Host %s SUCCESSFULLY renewed Reolink subscription",
+                    self._host,
+                )
                 await self.set_available(True)
         else:
             await self.set_available(True)
@@ -399,7 +427,8 @@ class ReolinkPush:
 
 async def handle_webhook(hass, webhook_id, request):
     """Handle incoming webhook from Reolink for inbound messages and calls."""
-    _LOGGER.debug("Reolink webhook triggered")
+
+    _LOGGER.debug("Webhook called")
 
     if not request.body_exists:
         _LOGGER.debug("Webhook triggered without payload")
@@ -409,7 +438,8 @@ async def handle_webhook(hass, webhook_id, request):
         _LOGGER.debug("Webhook triggered with unknown payload")
         return
 
-    _LOGGER.debug(data)
+    _LOGGER_DATA.debug("Webhook received payload: %s", data)
+
     matches = re.findall(r'Name="IsMotion" Value="(.+?)"', data)
     if matches:
         is_motion = matches[0] == "true"

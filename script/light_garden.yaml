@@ -1,0 +1,20 @@
+  ##############################
+  ### Tradgards belysning on ###
+  ##############################
+  tradgards_belysning_on:
+    alias: Tradgards belysning on
+    sequence:
+      - service: script.wait_for_reload_ikea_integration
+      - service: light.turn_on
+        entity_id: light.tradgard
+ 
+  ###############################
+  ### Tradgards belysning off ###
+  ###############################
+  friggebod_fasadbelysning_off:
+    alias: Tradgards belysning off
+    sequence:
+      - service: script.wait_for_reload_ikea_integration
+      - service: light.turn_off
+        entity_id: light.tradgard
+ 

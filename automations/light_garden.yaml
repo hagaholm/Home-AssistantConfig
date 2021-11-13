@@ -1,0 +1,135 @@
+    ##########################
+    ### Trädgårdsbelysning ###
+    ##########################
+    #################################################################
+    ### Tänder trädgårdsbelysning på morgonen vid rörelse i köket ###
+    ### T: input_boolean.rorelsedetektor_kok_aktiv == on          ###
+    ### C: sensor.ljusstyrka < 40                                 ###
+    ###    05:00:00 - 12:00:00                                    ###
+    ### A: script.tradgards_belysning_on                          ###
+    #################################################################
+  - alias: Trädgårdsbelysning on (sensor on, <40)
+    trigger:
+      platform: state
+      entity_id: input_boolean.rorelsedetektor_kok_aktiv
+      to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: numeric_state
+          entity_id: sensor.ljusstyrka
+          below: 40
+        - condition: state
+          entity_id: light.friggebod_fasad
+          state: 'off'
+        - condition: time
+          after: '05:00:00'
+          before: '12:00:00'
+    action:
+      - service: script.tradgards_belysning_on
+
+    ####################################################
+    ### Tänder trädgårdsbelysning när det blir mörkt ###
+    ### T: sensor.ljusstyrka < 40                    ###
+    ### C: group.track_for_home_devices == 'home'    ###
+    ###    input_select.home_status == 'hemma på'    ###
+    ###    time: 12:00 - 05:00                       ###
+    ###    light.garden == off                       ###
+    ### A: script.tradgards_belysning_on             ###
+    ####################################################
+  - alias: Trädgårdsbelysning on (home, <40) 
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      below: 40
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'home'
+        - condition: state
+          entity_id: input_select.home_status
+          state: 'Hemma på'
+        - condition: time
+          after: '12:00:00'
+          before: '05:00:00'
+        - condition: state
+          entity_id: light.garden
+          state: 'off'
+    action:
+      - service: script.tradgards_belysning_on
+
+    #######################################################################
+    ### Tänder trädgårdsbelysning när det blir mörkt och ingen är hemma ###
+    ### T: sensor.ljusstyrka < 40                                       ###
+    ### C: group.track_for_home_devices == not_home'                    ###
+    ### C: time: 12:00 - 05:00                                          ###
+    ###    light.tradgard == off                                        ###
+    ### A: script.tradgards_belysning_on                                ###
+    #######################################################################
+  - alias: Trädgårdsbelysning on (away, <40)
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      below: 40
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'not_home'
+        - condition: time
+          after: '12:00:00'
+          before: '05:00:00'
+        - condition: state
+          entity_id: light.tradgard
+          state: 'off'
+    action:
+      - service: script.tradgards_belysning_on
+
+    #####################################################
+    ### Släcker trädgårdsbelysning när det blir ljust ###
+    ### T: sensor.ljusstyrka > 60                     ###
+    ### C: light.tradgard == on                       ###
+    ### A: script.tradgards_belysning_off             ###
+    #####################################################
+  - alias: Trädgårdsbelysning off (>60)
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      above: 60
+    condition:
+      condition: state
+      entity_id: light.tradgard
+      state: 'on'
+    action:
+      - service: script.tradgards_belysning_off
+
+    ######################################################
+    ### Släcker trädgårdsbelysning när det släcks inne ###
+    ### T: light.kok_lilla_fonstret == off             ###
+    ### C: time: 21:00 - 06:00                         ###
+    ###    group.track_for_home_devices = 'home'       ###
+    ###    light.tradgard == on                        ###
+    ### A: script.tradgards_belysning_off              ###
+    ######################################################
+  - alias: Trädgårdsbelysning off
+    trigger:
+      platform: state
+      entity_id: light.kok_lilla_fonstret
+      to: 'off'
+    condition:
+      condition: and
+      conditions:
+        - condition: time
+          after: '21:00:00'
+          before: '06:00:00'
+        - condition: state
+          entity_id: group.track_for_home_devices
+          state: 'home'
+        - condition: state
+          entity_id: light.tradgard
+          state: 'on'
+    action:
+      - service: script.tradgards_belysning_off

@@ -37,6 +37,8 @@
         data:
           entity_id: light.friggebod_fonster
           transition: 2
+      - service: light.turn_off
+        entity_id: light.tradgard
 
       - repeat:
           count: 10
@@ -87,6 +89,8 @@
         data:
           entity_id: light.friggebod_fonster
           transition: 2
+      - service: light.turn_off
+        entity_id: light.tradgard
 
       - repeat:
           count: 10
@@ -135,6 +139,8 @@
         data:
           entity_id: light.friggebod_fonster
           transition: 2
+      - service: light.turn_off
+        entity_id: light.tradgard
 
       - service: remote.turn_off
         entity_id: remote.harmony_hub
@@ -199,6 +205,8 @@
         data:
           entity_id: light.friggebod_fonster
           transition: 2
+      - service: light.turn_off
+        entity_id: light.tradgard
 
       - service: remote.turn_off
         entity_id: remote.harmony_hub
@@ -262,6 +270,9 @@
         data:
           entity_id: light.friggebod_fonster
           transition: 2
+
+      - service: light.turn_off
+        entity_id: light.tradgard
 
       - delay: '00:10:00'
 

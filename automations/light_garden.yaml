@@ -20,7 +20,7 @@
           entity_id: sensor.ljusstyrka
           below: 40
         - condition: state
-          entity_id: light.friggebod_fasad
+          entity_id: light.tradgard
           state: 'off'
         - condition: time
           after: '05:00:00'
@@ -34,7 +34,7 @@
     ### C: group.track_for_home_devices == 'home'    ###
     ###    input_select.home_status == 'hemma på'    ###
     ###    time: 12:00 - 05:00                       ###
-    ###    light.garden == off                       ###
+    ###    light.tradgard == off                     ###
     ### A: script.tradgards_belysning_on             ###
     ####################################################
   - alias: Trädgårdsbelysning on (home, <40) 
@@ -55,7 +55,7 @@
           after: '12:00:00'
           before: '05:00:00'
         - condition: state
-          entity_id: light.garden
+          entity_id: light.tradgard
           state: 'off'
     action:
       - service: script.tradgards_belysning_on

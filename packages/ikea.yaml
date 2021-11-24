@@ -1,8 +1,12 @@
+###################################################################################################################################
+### ikea.yaml har skapats för att automatiskt kunna ladda om IKEA integrationen när ordet "[coap]" skrivs ut home-assistant.log ###
+###################################################################################################################################
+
 ##############
 ### sensor ###
 ##############
 sensor:
-  # Sensor som läser sista raden i när home-assistant.log uppdateras 
+  # Sensor som läser sista raden i home-assistant.log när den uppdaterats 
   - platform: file
     name: home_assistant_log
     file_path: /config/home-assistant.log
@@ -23,28 +27,14 @@ input_boolean:
     name: Pågående omladdning av IKEA integration
     initial: off
 
-####################
-### input_number ###
-####################
-input_number:
-  # Visar antal uppdateringar av home-assistant.log, används inte till något
-  home_assistant_log_updated:
-    name: Antal uppdateringar av home-assistant.log
-    initial: 0
-    min: 0
-    max: 10000
-
-# Visar antal gånger som "[coap]" i home-assistant.log hittats, används inte till något
-  home_assistant_log_coap:
-    name: Hittat coap i home-assistant.log
-    initial: 0
-    min: 0
-    max: 1000
-
 ##################
 ### automation ###
 ##################
 automation:
+  #########################################################################################################################
+  ### Körs när home-assistant.log uppdateras                                                                            ###
+  ### - Triggar sensor home_assistant_log_coap. Sensorn räknar antal förekomster av ordet "[coap]" i home_assistant.log ###
+  #########################################################################################################################
   - alias: "Updated home-assistant.log"
     mode: queued
     max: 10
@@ -55,16 +45,14 @@ automation:
         entity_id: sensor.home_assistant_log
 
     action:
-      # Ser till att sensorer uppdateras med nya värden av antal förekomster
       - service: homeassistant.update_entity
         entity_id:
           - sensor.home_assistant_log_coap
-          
-      - service: input_number.set_value
-        data_template:
-          entity_id: input_number.home_assistant_log_updated 
-          value: '{{ (states.input_number.home_assistant_log_updated.state | int ) + 1 }}'
 
+  ################################################################################################################
+  ### Körs när sensor home_assistant_log_coap har uppdaterats                                                  ###
+  ### - uppdaterar sensor home_assistant_log_coap med antal förekomster av ordet "[coap]" i home_assistant.log ###
+  ################################################################################################################
   - alias: "Updated sensor home_assistant_log_coap"
     mode: single
     description: 'Körs vid uppdaterad sensor home_assistant_log_coap'
@@ -87,6 +75,7 @@ automation:
         data:
           entity_id: input_boolean.ongoing_reload_ikea_integration
 
+      # Skriver till logfil
       - service: system_log.write
         data:
           message: "Automatisk omstart av IKEA integrationen, startar"
@@ -96,16 +85,11 @@ automation:
       - service: rest_command.reload_ikea
         data: {}
  
+      # Skriver till logfil
       - service: system_log.write
         data:
           message: "Automatisk omstart av IKEA integrationen, klar"
           level: warning
-
-      # Uppdaterar värdet, används inte av något
-      - service: input_number.set_value
-        data_template:
-          entity_id: input_number.home_assistant_log_coap 
-          value: '{{ (states.input_number.home_assistant_log_coap.state | int ) + 1 }}'
 
       # Väntar en sekund så att allt har gått klart
       - delay: "00:00:01"
@@ -115,6 +99,9 @@ automation:
         data:
           entity_id: input_boolean.ongoing_reload_ikea_integration
 
+  ##############################################################
+  ### Skickar pushbullet om att IKEA integrationen laddas om ###
+  ##############################################################
   - alias: "Notify Laddar om IKEA integration"
     mode: single
 
@@ -133,7 +120,9 @@ automation:
 ### script ###
 ##############
 script:
-  # Script som ska köras av alla script som uppdaterar IKEA enheter
+  #######################################################################
+  ### Script som ska köras av alla script som uppdaterar IKEA enheter ###
+  #######################################################################
   wait_for_reload_ikea_integration:
     alias: Vänta på restart av IKEA Integration
     sequence: 
@@ -142,9 +131,13 @@ script:
       - wait_template: "{{ is_state('input_boolean.ongoing_reload_ikea_integration', 'off') }}"
         timeout: "00:00:10"
 
+  ##########################################################
+  ### Script för att starta om IKEA integration manuellt ###
+  ##########################################################
   reload_ikea:
     alias: Starta om IKEA integration manuellt
     sequence: 
+      # Skriver till logfil
       - service: system_log.write
         data:
           message: "Manuell omstart av IKEA integrationen, startar"
@@ -154,6 +147,7 @@ script:
       - service: rest_command.reload_ikea
         data: {}
 
+      # Skriver till logfil
       - service: system_log.write
         data:
           message: "Manuell omstart av IKEA integrationen, klar"

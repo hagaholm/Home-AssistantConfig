@@ -103,19 +103,6 @@
     sequence:
 # IKEA
       - service: script.wait_for_reload_ikea_integration
-
-####################################
-      - service: light.turn_on
-        data:
-          entity_id: light.kok_stora_fonstret
-          brightness_pct: 50
-          transition: 2
-      - service: light.turn_on
-        data:
-          entity_id: light.uterum_fonster
-          brightness_pct: 80
-          transition: 2
-####################################
       - service: light.turn_on
         data:
           entity_id: light.hall_byra
@@ -155,10 +142,10 @@
 # Tellstick
       - service: light.turn_on
         entity_id: light.kok_lilla_fonstret
-#      - service: light.turn_on
-#        entity_id: light.kok_stora_fonstret_ljusstake
-#      - service: light.turn_on
-#        entity_id: light.uterum_julstjarnor
+      - service: light.turn_on
+        entity_id: light.kok_stora_fonstret_ljusstake
+      - service: light.turn_on
+        entity_id: light.uterum_julstjarnor
       - service: light.turn_on
         entity_id: light.vardagsrum_vitrinskap
       - service: light.turn_on
@@ -258,13 +245,6 @@
     alias: Dagbelysning jul off
     sequence:
 # IKEA
-
-####################################
-      - service: light.turn_off
-        entity_id: light.kok_stora_fonstret
-      - service: light.turn_off
-        entity_id: light.uterum_fonster
-####################################
       - service: script.wait_for_reload_ikea_integration
       - service: light.turn_off
         entity_id: light.hall_byra
@@ -294,9 +274,9 @@
         entity_id: light.sovrum_sangbord
       - service: light.turn_off
         entity_id: light.vardagsrum_fonster_ljusstake_2
-#      - service: light.turn_off
-#        entity_id: light.kok_stora_fonstret_ljusstake
-#      - service: light.turn_off
-#        entity_id: light.uterum_julstjarnor
+      - service: light.turn_off
+        entity_id: light.kok_stora_fonstret_ljusstake
+      - service: light.turn_off
+        entity_id: light.uterum_julstjarnor
       - service: light.turn_off
         entity_id: light.andreas_fonster_julstjarna

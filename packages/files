@@ -1,0 +1,14 @@
+- sensor
+    - platform: files
+      folder: /config/www/cards
+      filter: '**/*.*'
+      name: just_for_test
+      sort: date
+      recursive: True
+
+    - platform: files
+      folder: /media/Day
+      filter: '**/*.jpg'
+      name: Day images
+      sort: date
+      recursive: True

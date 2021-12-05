@@ -200,7 +200,12 @@
         data_template:
           entity_id: >
             {% if is_state('input_boolean.christmas_light', 'on') %}
-              script.daylights_christmas_off
+              {% if is_state('group.track_for_home_devices', 'home')  and 
+                    is_state('binary_sensor.workday', 'off') %}
+                script.daylights_christmas_off_when_home_at_workday_off
+              {% else %}
+                script.daylights_christmas_off
+              {% endif %}
             {% else %}
               script.daylights_default_off
             {% endif %}
@@ -280,3 +285,43 @@
         entity_id: light.uterum_julstjarnor
       - service: light.turn_off
         entity_id: light.andreas_fonster_julstjarna
+
+  daylights_christmas_off_when_home_at_workday_off:
+    alias: Dagbelysning jul off when home and not workday 
+    sequence:
+# IKEA
+      - service: script.wait_for_reload_ikea_integration
+      - service: light.turn_off
+        entity_id: light.hall_byra
+      - service: light.turn_off
+        entity_id: light.hall_skap
+      - service: light.turn_off
+        entity_id: light.vardagsrum_skank
+      - service: light.turn_off
+        entity_id: light.vardagsrum_vagn
+      - service: light.turn_off
+        entity_id: light.sovrum_fonster
+#      - service: light.turn_off
+#        entity_id: light.louise_fonster
+      - service: light.turn_off
+        entity_id: light.louise_golvlampa
+      - service: light.turn_off
+        entity_id: light.uterum_fonster
+
+# Tellstick
+#      - service: light.turn_off
+#        entity_id: light.kok_lilla_fonstret
+      - service: light.turn_off
+        entity_id: light.vardagsrum_vitrinskap
+#      - service: light.turn_off
+#        entity_id: light.vardagsrum_gran
+#      - service: light.turn_off
+#        entity_id: light.sovrum_sangbord
+#      - service: light.turn_off
+#        entity_id: light.vardagsrum_fonster_ljusstake_2
+#      - service: light.turn_off
+#        entity_id: light.kok_stora_fonstret_ljusstake
+#      - service: light.turn_off
+#        entity_id: light.uterum_julstjarnor
+#      - service: light.turn_off
+#        entity_id: light.andreas_fonster_julstjarna

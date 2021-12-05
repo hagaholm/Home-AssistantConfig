@@ -38,6 +38,9 @@ def get_files_list(folder_path, filter_term, sort, recursive):
     """Return the list of files, applying filter."""
     query = folder_path + filter_term
     """files_list = glob.glob(query)"""
+
+    _LOGGER.error("files MK2")
+
     if sort == "name":
         files_list = sorted(glob.glob(query, recursive=recursive))
     elif sort == "size":
@@ -49,6 +52,9 @@ def get_files_list(folder_path, filter_term, sort, recursive):
 
 def get_size(files_list):
     """Return the sum of the size in bytes of files in the list."""
+
+    _LOGGER.error("files MK3")
+
     size_list = [os.stat(f).st_size for f in files_list if os.path.isfile(f)]
     return sum(size_list)
 
@@ -57,6 +63,8 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
     """Set up the folder sensor."""
     path = config.get(CONF_FOLDER_PATHS)
     name = config.get(CONF_NAME)
+
+    _LOGGER.error("files MK1")
 
     if not hass.config.is_allowed_path(path):
         _LOGGER.error("folder %s is not valid or allowed", path)
@@ -78,6 +86,8 @@ class FilesSensor(Entity):
 
     def __init__(self, folder_path, name, filter_term, sort, recursive):
         """Initialize the data object."""
+        _LOGGER.error("files MK4")
+
         folder_path = os.path.join(folder_path, "")  # If no trailing / add it
         self._folder_path = folder_path  # Need to check its a valid path
         self._filter_term = filter_term
@@ -91,6 +101,8 @@ class FilesSensor(Entity):
 
     def update(self):
         """Update the sensor."""
+        _LOGGER.error("files MK5")
+
         files_list = get_files_list(
             self._folder_path, self._filter_term, self._sort, self._recursive
         )
@@ -101,11 +113,13 @@ class FilesSensor(Entity):
     @property
     def name(self):
         """Return the name of the sensor."""
+        _LOGGER.error("files MK6")
         return self._name
 
     @property
     def state(self):
         """Return the state of the sensor."""
+            _LOGGER.error("files MK7")
         decimals = 2
         size_mb = round(self._size / 1e6, decimals)
         return size_mb
@@ -113,11 +127,15 @@ class FilesSensor(Entity):
     @property
     def icon(self):
         """Icon to use in the frontend, if any."""
+            _LOGGER.error("files MK8")
+
         return self.ICON
 
     @property
     def device_state_attributes(self):
         """Return other details about the sensor state."""
+        _LOGGER.error("files MK9")
+
         attr = {
             "path": self._folder_path,
             "filter": self._filter_term,
@@ -132,4 +150,6 @@ class FilesSensor(Entity):
     @property
     def unit_of_measurement(self):
         """Return the unit of measurement of this entity, if any."""
+        _LOGGER.error("files MK10")
+
         return self._unit_of_measurement

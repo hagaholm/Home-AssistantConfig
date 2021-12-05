@@ -119,7 +119,7 @@ class FilesSensor(Entity):
     @property
     def state(self):
         """Return the state of the sensor."""
-            _LOGGER.error("files MK7")
+        _LOGGER.error("files MK7")
         decimals = 2
         size_mb = round(self._size / 1e6, decimals)
         return size_mb
@@ -127,7 +127,7 @@ class FilesSensor(Entity):
     @property
     def icon(self):
         """Icon to use in the frontend, if any."""
-            _LOGGER.error("files MK8")
+        _LOGGER.error("files MK8")
 
         return self.ICON
 

@@ -35,6 +35,34 @@ automation:
       - service: light.turn_on
         entity_id: light.louise_skrivbord
 
+  #####################################
+  ### Tänd övrig belysning i rummet ###
+  #####################################
+  - alias: Tänd övrig belysning i rummet
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: sensor.mickes_work_laptop
+        to: 'Online'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.working_at_home
+          state: 'on'
+        - condition: state
+          entity_id: binary_sensor.workday_today
+          state: 'on'
+
+    action:
+      - service: script.wait_for_reload_ikea_integration
+      - service: light.turn_on
+        entity_id: light.louise_fonster
+      - service: light.turn_on
+        entity_id: light.louise_golvlampa
+
   #################################
   ### Släck skrivbordsbelysning ###
   #################################

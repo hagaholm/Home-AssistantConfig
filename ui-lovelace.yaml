@@ -524,6 +524,7 @@ views:
       - type: entities
         entities:
           - sensor.vardagsrum_temperature
+          - sensor.aqara_motion_sensor_3
           - entity: light.vardagsrum_fonster
             name: Fönster
           - entity: light.vardagsrum_skank
@@ -540,7 +541,8 @@ views:
             name: Subbas
           - entity: switch.vardagsrum_extra_subbas
             name: Extra subbas
-          - binary_sensor.tradfri_motion_sensor_3
+#          - binary_sensor.tradfri_motion_sensor_3
+          - binary_sensor.aqara_motion_sensor_3
         title: Vardagsrum
         show_header_toggle: true
         state_color: true

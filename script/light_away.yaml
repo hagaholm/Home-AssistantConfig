@@ -9,6 +9,16 @@
           entity_id: input_select.inside_lights
           option: Bortabelysning
 
+        # Turn off before turn on
+      - service: script.turn_on
+        data_template:
+          entity_id: >
+            {% if is_state('input_boolean.christmas_light', 'on') %}
+              script.away_lights_christmas_off
+            {% else %}
+              script.away_daylights_default_off
+            {% endif %}
+
       - service: script.turn_on
         data_template:
           entity_id: >

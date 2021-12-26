@@ -5,10 +5,6 @@
     alias: Köksbelysning 100%
     sequence:
       - service: script.wait_for_reload_ikea_integration
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.kitchen_lights
-          option: 100%
 
       - choose:
         - conditions: "{{ is_state('light.kok_underskap_bank', 'off') }}"
@@ -41,10 +37,6 @@
     alias: Köksbelysning 25%
     sequence:
       - service: script.wait_for_reload_ikea_integration
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.kitchen_lights
-          option: 25%
 
       - choose:
         - conditions: "{{ is_state('light.kok_underskap_bank', 'off') }}"
@@ -77,10 +69,6 @@
     alias: Köksbelysning off
     sequence:
       - service: script.wait_for_reload_ikea_integration
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.kitchen_lights
-          option: off
 
       - service: light.turn_off
         data:

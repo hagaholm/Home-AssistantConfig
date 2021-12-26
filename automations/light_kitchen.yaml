@@ -1,17 +1,65 @@
+    ##############################################
+    ### Tänder lampor 100%                     ###
+    ### T: input_select.kitchen_lights == 100% ###
+    ### A: script.kitchen_light_100            ###
+    ##############################################
+  - alias: Tänd Kök 100%
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_select.kitchen_lights
+        to: 100%
+
+    action:
+      - service: script.kitchen_light_100
+
+    #############################################
+    ### Tänder lampor 25%                     ###
+    ### T: input_select.kitchen_lights == 25% ###
+    ### A: script.kitchen_light_25            ###
+    #############################################
+  - alias: Tänd Kök 25%
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_select.kitchen_lights
+        to: 100%
+
+    action:
+      - service: script.kitchen_light_25
+
+    #############################################
+    ### Släcker lampor                        ###
+    ### T: input_select.kitchen_lights == Off ###
+    ### A: script.kitchen_light_off           ###
+    #############################################
+  - alias: Släck Kök
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_select.kitchen_lights
+        to: 100%
+
+    action:
+      - service: script.kitchen_light_off
+
     #######################################################################
     ### Tänder lampor 100% när lux kommer under 2500                    ###
     ### För att förhindra att det inte tänds när någon redan är i köket ###
     ### T: sensor.ljusstyrka < input_number.kitchen_light_on            ###
     ### C: 12:00:00 - 22:00:00                                          ###
     ### C: group.track_for_home_devices == 'home'                       ###
-    ### A: script.kitchen_light_100                                     ###
+    ### A: input_select.kitchen_lights = 100%                           ###
     #######################################################################
   - alias: Kök 100% (<2500)
     mode: single
 
     trigger:
-      platform: template
-      value_template: "{{(states('sensor.ljusstyrka') | int) < (states('input_number.kitchen_light_on') | int )}}"
+      - platform: template
+        value_template: "{{(states('sensor.ljusstyrka') | int) < (states('input_number.kitchen_light_on') | int )}}"
 
     condition:
       condition: and
@@ -24,14 +72,17 @@
           state: 'home'
 
     action:
-      - service: script.kitchen_light_100
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.kitchen_lights
+          option: 100%
 
     #####################################################################
     ### Tänder lampor 100% på morgonen vid rörelse i köket < 2500 lux ###
     ### T: input_boolean.rorelsedetektor_kok_aktiv == on              ###
     ### C: sensor.ljusstyrka < input_number.kitchen_light_on          ###
     ###    05:00:00 - 12:00:00                                        ###
-    ### A: script.kitchen_light_100                                   ###
+    ### A: input_select.kitchen_lights = 100%                         ###
     #####################################################################
   - alias: Kök 100% morgon (sensor on, <2500)
     mode: queued
@@ -60,14 +111,17 @@
           before: '12:00:00'
 
     action:
-      - service: script.kitchen_light_100
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.kitchen_lights
+          option: 100%
 
     #####################################################################
     ### Tänder lampor 100% vid rörelse i köket 150-2500 lux övrig tid ###
     ### T: input_boolean.rorelsedetektor_kok_aktiv == on              ###
     ### C: sensor.ljusstyrka 150-input_number.kitchen_light_on        ###
     ###    12:00:00 - 05:00:00                                        ###
-    ### A: script.kitchen_light_100                                   ###
+    ### A: input_select.kitchen_lights = 100%                         ###
     #####################################################################
   - alias: Kök 100% (sensor on, 150-2500)
     mode: queued
@@ -98,8 +152,11 @@
           after: '12:00:00'
           before: '05:00:00'
 
-    action:
-      - service: script.kitchen_light_100
+'    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.kitchen_lights
+          option: 100%
 
     ##################################################################
     ### Tänder lampor 100% övrig tid vid rörelse i köket 0-150 lux ###
@@ -107,7 +164,7 @@
     ### C: sensor.ljusstyrka 0-150                                 ###
     ###    12:00:00 - 05:00:00                                     ###
     ###    light.kok_lilla_fonstret == 'on'                        ###
-    ### A: script.kitchen_light_100                                ###
+    ### A: input_select.kitchen_lights = 100%                      ###
     ##################################################################
   - alias: Kök 100% (sensor on, 0-150)
     mode: queued
@@ -140,7 +197,10 @@
           state: 'on'
 
     action:
-      - service: script.kitchen_light_100
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.kitchen_lights
+          option: 100%
 
     #####################################################################################
     ### Tänder lampor 100% övrig tid vid rörelse i köket 0-150 lux när ingen är hemma ###
@@ -149,7 +209,7 @@
     ###    sensor.ljusstyrka 0-150                                                    ###
     ###    12:00:00 - 05:00:00                                                        ###
     ###    light.kok_lilla_fonstret == 'off'                                          ###
-    ### A: script.kitchen_light_100                                                   ###
+    ### A: input_select.kitchen_lights = 100%                                         ###
     #####################################################################################
   - alias: Kök 100% (sensor on, Borta, 0-150)
     mode: queued
@@ -185,7 +245,10 @@
           state: 'off'
 
     action:
-      - service: script.kitchen_light_100
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.kitchen_lights
+          option: 100%
 
     ####################################################################################
     ### Tänder lampor 25% övrig tid vid rörelse i köket 0-150 lux när någon är hemma ###
@@ -194,7 +257,7 @@
     ###    sensor.ljusstyrka 0-150                                                   ###
     ###    12:00:00 - 05:00:00                                                       ###
     ###    light.kok_lilla_fonstret == 'off'                                         ###
-    ### A: script.kitchen_light_25                                                   ###
+    ### A: input_select.kitchen_lights = 25%                                         ###
     ####################################################################################
   - alias: Kök 25% (sensor on, Hemma, 0-150)
     mode: queued
@@ -230,12 +293,15 @@
           state: 'off'
 
     action:
-      - service: script.kitchen_light_25
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.kitchen_lights
+          option: 25%
 
     #########################################################
     ### Släcker lampor när ingen varit i köket på 9 min   ###
     ### T: input_boolean.rorelsedetektor_kok_aktiv == off ###
-    ### A: script.kitchen_light_off                       ###
+    ### A: input_select.kitchen_lights = Off              ###
     #########################################################
   - alias: Kök off (sensor off)
     mode: single
@@ -250,7 +316,6 @@
         data:
           entity_id: input_select.kitchen_lights
           option: Off
-      - service: script.kitchen_light_off
 
     ##########################################################
     ### Släcker lampor när sista åker hemifrån             ###
@@ -316,19 +381,3 @@
     action:
       - service: homeassistant.turn_off
         entity_id: input_boolean.rorelsedetektor_kok_aktiv
-
-    #########################################################
-    ### Släcker lampor när ingen varit i köket på 1 min   ###
-    ### T: input_boolean.rorelsedetektor_kok_aktiv == off ###
-    ### A: script.kitchen_light_off                       ###
-    #########################################################
-  # - alias: Kök off (sensor off 1 min)
-    # trigger:
-      # platform: state
-      # entity_id: input_boolean.rorelsedetektor_kok_aktiv
-      # to: 'on'
-      # for:
-        # minutes: 1
-    # action:
-      # - service: homeassistant.turn_off
-        # entity_id: input_boolean.rorelsedetektor_kok_aktiv

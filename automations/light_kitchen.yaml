@@ -152,7 +152,7 @@
           after: '12:00:00'
           before: '05:00:00'
 
-'   action:
+    action:
       - service: input_select.select_option
         data:
           entity_id: input_select.kitchen_lights

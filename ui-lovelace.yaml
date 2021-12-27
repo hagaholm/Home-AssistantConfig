@@ -269,6 +269,16 @@ views:
     cards:
       - type: entities
         entities:
+          - input_select.inside_lights
+          - input_select.kitchen_lights
+          - input_select.uterum_led_lights
+          - input_select.outside_lights
+          - input_boolean.christmas_light
+        title: Belysningsgrupper
+        show_header_toggle: false
+        state_color: true
+      - type: entities
+        entities:
           - light.kok_underskap_bank
           - light.kok_underskap_diskbank
           - light.kok_vitrinskap
@@ -788,16 +798,6 @@ views:
           - sensor.tradfri_motion_sensor_4_lastupdated
           - sensor.tradfri_motion_sensor_5_lastupdated
         title: Rörelsesensor senast
-        show_header_toggle: false
-        state_color: true
-      - type: entities
-        entities:
-          - input_select.inside_lights
-          - input_select.kitchen_lights
-          - input_select.uterum_led_lights
-          - input_select.outside_lights
-          - input_boolean.christmas_light
-        title: Inställningar
         show_header_toggle: false
         state_color: true
       - type: entities

@@ -580,16 +580,20 @@ input_select:
     options:
      - Off
      - Morgonbelysning
+     - Förmiddagsbelysning
      - Dagbelysning
+     - Kvällsbelysning
      - Nattbelysning
      - Bortabelysning
+     - Arbetsbelysning
+    
 #    initial: Off
     icon: mdi:lightbulb
 
   kitchen_lights:
     name: Köksbelysning
     options:
-     - Off
+     - Släckt
      - 25%
      - 100%
 #    initial: Off

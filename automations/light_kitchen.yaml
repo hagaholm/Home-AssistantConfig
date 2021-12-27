@@ -41,7 +41,7 @@
     trigger:
       - platform: state
         entity_id: input_select.kitchen_lights
-        to: Off
+        to: False
 
     action:
       - service: script.kitchen_light_off

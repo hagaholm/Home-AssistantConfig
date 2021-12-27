@@ -4,7 +4,7 @@
     ### C: sensor.ljusstyrka < input_number.morning_light_on ###
     ###    light.morgonbelysning == off                      ###
     ###    05:00:00 - 09:00:00                               ###
-    ### A: script.morning_lights_on                          ###
+    ### A: input_select.inside_lights = Morgonbelysning      ###
     ############################################################
   - alias: Morgonbelysning on (sensor on, <1800)
     mode: queued
@@ -27,14 +27,17 @@
           before: '09:00:00'
 
     action:
-      - service: script.morning_lights_on
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Morgonbelysning
 
     ############################################################
     ### Tänder lampor när första kommer hem på förmiddagen   ###
     ### T: group.track_for_home_devices to: 'home'           ###
     ### C: sensor.ljusstyrka < input_number.morning_light_on ###
     ###    05:00:00 - 09:00:00                               ###
-    ### A: script.morning_lights_on                          ###
+    ### A: input_select.inside_lights = Morgonbelysning      ###
     ############################################################
   - alias: Morgonbelysning on (-> hemma, <1800)
     mode: single
@@ -55,14 +58,17 @@
           before: '09:00:00'
 
     action:
-      - service: script.morning_lights_on
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Morgonbelysning
 
     #############################################################
     ### Släcker lampor på förmiddagen när det blir ljust ute  ###
     ### T: sensor.ljusstyrka > input_number.morning_light_off ###
     ### C: group.track_for_home_devices == 'home'             ###
     ###    05:00:00 - 09:00:00                                ###
-    ### A: script.morning_lights_off                          ###
+    ### A: input_select.inside_lights = Off                   ###
     #############################################################
   - alias: Morgonbelysning off (>2500, hemma)
     mode: single
@@ -80,18 +86,18 @@
         - condition: time
           after: '05:00:00'
           before: '09:00:00'
-        - condition: state
-          entity_id: input_boolean.christmas_light
-          state: 'off'
 
     action:
-      - service: script.morning_lights_off
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Off
 
     #############################################################
     ### Släcker lampor på förmiddagen när sista åker hemifrån ###
     ### T: group.track_for_home_devices to: 'not_home'        ###
     ### C: 05:00:00 - 09:00:00                                ###
-    ### A: script.morning_lights_off                          ###
+    ### A: input_select.inside_lights = Off                   ###
     #############################################################
   - alias: Morgonbelysning off (-> borta)
     mode: single
@@ -108,4 +114,7 @@
       before: '09:00:00'
 
     action:
-      - service: script.morning_lights_off
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Off

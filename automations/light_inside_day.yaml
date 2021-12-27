@@ -3,12 +3,13 @@
     ### T: Time = 09:00:00                               ###
     ### C: sensor.ljusstyrka < input_number.day_light_on ###
     ###    group.track_for_home_devices == 'home'        ###
-    ### A: script.daylights_on                           ###
+    ### A: input_select.inside_lights = Dagbelysning     ###
     ########################################################
   - alias: Dagbelysning on (=09:00:00, <1800, hemma)
     trigger:
       platform: time
       at: '09:00:00'
+
     condition:
       condition: and
       conditions:
@@ -17,20 +18,25 @@
         - condition: state
           entity_id: group.track_for_home_devices
           state: 'home'
+
     action:
-      - service: script.daylights_on
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Dagbelysning
 
     ########################################################
     ### Tänder lampor när det blir mörkt fram till 22:00 ###
     ### T: sensor.ljusstyrka < input_number.day_light_on ###
     ### C: group.track_for_home_devices == 'home'        ###
     ###    09:00:00 - 22:00:00                           ###
-    ### A: script.daylights_on                           ###
+    ### A: input_select.inside_lights = Dagbelysning     ###
     ########################################################
   - alias: Dagbelysning on (<1800, hemma)
     trigger:
       platform: template
       value_template: "{{(states('sensor.ljusstyrka') | int) < (states('input_number.day_light_on') | int )}}"
+
     condition:
       condition: and
       conditions:
@@ -40,8 +46,12 @@
         - condition: time
           after: '09:00:00'
           before: '22:00:00'
+
     action:
-      - service: script.daylights_on
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Dagbelysning
 
     ########################################################
     ### Tänder lampor vid rörelse i köket övrigt tid     ###
@@ -51,13 +61,14 @@
     ### C: group.track_for_home_devices == 'not_home'    ###
     ###    sensor.ljusstyrka < input_number.day_light_on ###
     ###    09:00:00 - 05:00:00                           ###
-    ### A: script.daylights_on                           ###
+    ### A: input_select.inside_lights = Dagbelysning     ###
     ########################################################
   - alias: Dagbelysning on (sensor on, borta, <1800)
     trigger:
       platform: state
       entity_id: input_boolean.rorelsedetektor_kok_aktiv
       to: 'on'
+
     condition:
       condition: and
       conditions:
@@ -69,15 +80,19 @@
         - condition: time
           after: '09:00:00'
           before: '05:00:00'
+
     action:
-      - service: script.daylights_on
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Dagbelysning
 
     ########################################################
     ### Tänder lampor när första kommer hem övrig tid    ###
     ### T: group.track_for_home_devices to 'home'        ###
     ### C: sensor.ljusstyrka < input_number.day_light_on ###
     ###    09:00:00 - 05:00:00                           ###
-    ### A: script.daylights_on                           ###
+    ### A: input_select.inside_lights = Dagbelysning     ###
     ########################################################
   - alias: Dagbelysning on (-> hemma, <1800)
     trigger:
@@ -85,6 +100,7 @@
       entity_id: group.track_for_home_devices
       from: 'not_home'
       to: 'home'
+
     condition:
       condition: and
       conditions:
@@ -93,21 +109,26 @@
         - condition: time
           after: '09:00:00'
           before: '05:00:00'
+
     action:
-      - service: script.daylights_on
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Dagbelysning
 
     ##########################################################
     ### Tänder lampor när fönsterbelysning i sovrum tänds  ###
     ### T: light.sovrum_fonster to 'on'                    ###
     ### C: input_select.inside_lights == 'Morgonbelysning' ###
     ###    05:00:00 - 09:00:00                             ###
-    ### A: script.daylights_on_morning                     ###
+    ### A: input_select.inside_lights = Dagbelysning       ###
     ##########################################################
   - alias: Dagbelysning on (sovrumsfönster on)
     trigger:
       platform: state
       entity_id: light.sovrum_fonster
       to: 'on'
+
     condition:
       condition: and
       conditions:
@@ -117,20 +138,25 @@
         - condition: time
           after: '05:00:00'
           before: '09:00:00'
+
     action:
-      - service: script.daylights_on_morning
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Dagbelysning
 
     ##########################################################
     ### Släcker lampor om det blir för ljust ute övrig tid ###
     ### T: sensor.ljusstyrka > input_number.day_light_off  ###
     ### C: group.track_for_home_devices = 'home'           ###
     ###    09:00:00 - 05:00:00                             ###
-    ### A: script.daylights_off                            ###
+    ### A: input_select.inside_lights = Off                ###
     ##########################################################
   - alias: Dagbelysning off (>2500, hemma)
     trigger:
       platform: template
       value_template: "{{(states('sensor.ljusstyrka') | int) > (states('input_number.day_light_off') | int )}}"
+
     condition:
       condition: and
       conditions:
@@ -140,14 +166,18 @@
         - condition: time
           after: '09:00:00'
           before: '05:00:00'
+
     action:
-      - service: script.daylights_off
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Off
 
     ########################################################
     ### Släcker lampor när sista åker hemifrån övrig tid ###
     ### T: group.track_for_home_devices to 'not_home'    ###
     ### C: 09:00:00 - 05:00:00                           ###
-    ### A: script.daylights_off                          ###
+    ### A: input_select.inside_lights = Off              ###
     ########################################################
   - alias: Dagbelysning off (-> borta)
     trigger:
@@ -155,12 +185,17 @@
       entity_id: group.track_for_home_devices
       from: 'home'
       to: 'not_home'
+
     condition:
       condition: time
       after: '09:00:00'
       before: '05:00:00'
+
     action:
-      - service: script.daylights_off
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Off
 
     #######################################################################
     ### Släcker lampor i sovrummet när fönsterbelysning i sovrum släcks ###
@@ -169,11 +204,12 @@
     ### C: 21:00:00 - 23:00:00                                          ###
     ### A: light.bedroom = off                                          ###
     #######################################################################
-  - alias: Bedroom off (sovrumsfönster off)
+  - alias: Dagbelysning -> Kvällsbelysning (sovrumsfönster off)
     trigger:
       platform: state
       entity_id: light.sovrum_fonster
       to: 'unavailable'
+
     condition:
       condition: and
       conditions:
@@ -183,9 +219,11 @@
         - condition: time
           after: '21:00:00'
           before: '23:00:00'
+
     action:
-      - service: script.wait_for_reload_ikea_integration
-      - service: light.turn_off
+      - service: input_select.select_option
         data:
-          entity_id: light.sovrum
+          entity_id: input_select.inside_lights
+          option: Kvällsbelysning
+
           transition: 2

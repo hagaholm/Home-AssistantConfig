@@ -4,10 +4,6 @@
   away_lights_on:
     alias: Bortabelysning on
     sequence:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.inside_lights
-          option: Bortabelysning
 
         # Turn off before turn on
       - service: script.turn_on
@@ -115,10 +111,6 @@
     alias: Bortabelysning off
     sequence:
       - service: script.wait_for_reload_ikea_integration
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.inside_lights
-          option: Off
 
       - service: script.turn_on
         data_template:

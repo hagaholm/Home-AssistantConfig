@@ -9,11 +9,6 @@
           entity_id: input_select.home_status
           option: Hemma på
 
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.inside_lights
-          option: Dagbelysning
-
       - service: script.turn_on
         data_template:
           entity_id: >
@@ -171,11 +166,6 @@
           entity_id: input_select.home_status
           option: Hemma på
 
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.inside_lights
-          option: Dagbelysning
-
       - service: script.turn_on
         data_template:
           entity_id: >
@@ -191,11 +181,6 @@
   daylights_off:
     alias: Dagbelysning off
     sequence:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.inside_lights
-          option: Off
-
       - service: script.turn_on
         data_template:
           entity_id: >

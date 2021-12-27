@@ -4,11 +4,6 @@
   night_light:
     alias: Nattbelysning
     sequence:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.inside_lights
-          option: Nattbelysning
-
       - service: script.turn_on
         data_template:
           entity_id: >
@@ -63,11 +58,6 @@
   night_light_off:
     alias: Nattbelysning off
     sequence:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.inside_lights
-          option: Off
-
       - service: script.turn_on
         data_template:
           entity_id: >

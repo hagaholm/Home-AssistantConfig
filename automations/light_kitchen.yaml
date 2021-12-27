@@ -41,7 +41,7 @@
     trigger:
       - platform: state
         entity_id: input_select.kitchen_lights
-        to: False
+        to: Släckt
 
     action:
       - service: script.kitchen_light_off
@@ -301,7 +301,7 @@
     #########################################################
     ### Släcker lampor när ingen varit i köket på 9 min   ###
     ### T: input_boolean.rorelsedetektor_kok_aktiv == off ###
-    ### A: input_select.kitchen_lights = Off              ###
+    ### A: input_select.kitchen_lights = Släckt           ###
     #########################################################
   - alias: Kök off (sensor off)
     mode: single
@@ -315,7 +315,7 @@
       - service: input_select.select_option
         data:
           entity_id: input_select.kitchen_lights
-          option: Off
+          option: Släckt
 
     ##########################################################
     ### Släcker lampor när sista åker hemifrån             ###

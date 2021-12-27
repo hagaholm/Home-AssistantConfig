@@ -5,13 +5,14 @@
     ###    sensor.ljusstyrka 0-150                                                      ###
     ###    12:00:00 - 05:00:00                                                          ###
     ###    light.kok_lilla_fonstret == 'off'                                            ###
-    ### A: script.night_light                                                           ###
+    ### A: input_select.inside_lights = Nattbelysning                                   ###
     #######################################################################################
   - alias: Nattbelysning (sensor on, Hemma, 0-150)
     trigger:
       platform: state
       entity_id: input_boolean.rorelsedetektor_kok_aktiv
       to: 'on'
+
     condition:
       condition: and
       conditions:
@@ -27,21 +28,26 @@
         - condition: state
           entity_id: light.kok_lilla_fonstret
           state: 'off'
+
     action:
-      - service: script.night_light
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Nattbelysning
 
     ##############################################################
     ### Släcker nattbelysning när ingen varit i köket på 9 min ###
     ### T: input_boolean.rorelsedetektor_kok_aktiv == off      ###
     ### C: light.kok_lilla_fonstret == off                     ###
     ### C: light.hall_byra == on                               ###
-    ### A: script.night_light_off                              ###
+    ### A: input_select.inside_lights = Släckt                 ###
     ##############################################################
   - alias: Nattbelysning off (sensor off)
     trigger:
       platform: state
       entity_id: input_boolean.rorelsedetektor_kok_aktiv
       to: 'off'
+
     condition:
       condition: and
       conditions:
@@ -51,5 +57,9 @@
         - condition: state
           entity_id: light.hall_byra
           state: 'on' 
+
     action:
-      - service: script.night_light_off
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Släckt

@@ -68,7 +68,7 @@
     ### Släcker lampor kl 11:00 om ingen är hemma     ###
     ### T: time > '11:00:00'                          ###
     ### C: group.track_for_home_devices to 'not_home' ###
-    ### A: input_select.inside_lights = Off           ###
+    ### A: input_select.inside_lights = Släckt        ###
     #####################################################
   - alias: Bortabelysning off (>11:00:00, borta)
     trigger:
@@ -84,14 +84,14 @@
       - service: input_select.select_option
         data:
           entity_id: input_select.inside_lights
-          option: Off
+          option: Släckt
 
     ############################################################
     ### Släcker lampor på förmiddagen när det blir ljust ute ###
     ### T: sensor.ljusstyrka > 250                           ###
     ### C: group.track_for_home_devices == 'not_home'        ###
     ###    07:00:00 - 11:00:00                               ###
-    ### A: input_select.inside_lights = Off                  ###
+    ### A: input_select.inside_lights = Släckt               ###
     ############################################################
   - alias: Bortabelysning off (>250, borta, morgon)
     trigger:
@@ -113,7 +113,7 @@
       - service: input_select.select_option
         data:
           entity_id: input_select.inside_lights
-          option: Off
+          option: Släckt
 
     ###################
     ###################
@@ -214,7 +214,7 @@
     ### Släcker lampor kl 23:00 om ingen är hemma     ###
     ### T: time > '23:00:00'                          ###
     ### C: group.track_for_home_devices to 'not_home' ###
-    ### A: input_select.inside_lights = Off           ###
+    ### A: input_select.inside_lights = Släckt        ###
     #####################################################
   - alias: Bortabelysning off (>23:00:00, borta)
     trigger:
@@ -230,4 +230,4 @@
       - service: input_select.select_option
         data:
           entity_id: input_select.inside_lights
-          option: Off
+          option: Släckt

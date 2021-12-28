@@ -150,7 +150,7 @@
     ### T: sensor.ljusstyrka > input_number.day_light_off  ###
     ### C: group.track_for_home_devices = 'home'           ###
     ###    09:00:00 - 05:00:00                             ###
-    ### A: input_select.inside_lights = Off                ###
+    ### A: input_select.inside_lights = Släckt             ###
     ##########################################################
   - alias: Dagbelysning off (>2500, hemma)
     trigger:
@@ -171,13 +171,13 @@
       - service: input_select.select_option
         data:
           entity_id: input_select.inside_lights
-          option: Off
+          option: Släckt
 
     ########################################################
     ### Släcker lampor när sista åker hemifrån övrig tid ###
     ### T: group.track_for_home_devices to 'not_home'    ###
     ### C: 09:00:00 - 05:00:00                           ###
-    ### A: input_select.inside_lights = Off              ###
+    ### A: input_select.inside_lights = Släckt           ###
     ########################################################
   - alias: Dagbelysning off (-> borta)
     trigger:
@@ -195,7 +195,7 @@
       - service: input_select.select_option
         data:
           entity_id: input_select.inside_lights
-          option: Off
+          option: Släckt
 
     #######################################################################
     ### Släcker lampor i sovrummet när fönsterbelysning i sovrum släcks ###

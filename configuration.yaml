@@ -586,8 +586,6 @@ input_select:
      - Nattbelysning
      - Bortabelysning
      - Arbetsbelysning
-    
-#    initial: Off
     icon: mdi:lightbulb
 
   kitchen_lights:
@@ -596,23 +594,44 @@ input_select:
      - Släckt
      - 25%
      - 100%
-#    initial: Off
     icon: mdi:lightbulb
 
   uterum_led_lights:
     name: Uterum ledbelysning
     options:
-     - Off
-     - On
-#    initial: Off
+     - Släckt
+     - Tänt
     icon: mdi:lightbulb
+
+  facade_lights: 
+    name: Fasadbelysning 
+    options: 
+     - Släckt 
+     - Normal 
+     - Normal, huvudentre max 
+     - Nattbelysning 
+     - Max
+    icon: mdi:lightbulb 
+     
+  garden_lights: 
+    name: Trädgårdsbelysning 
+    options: 
+     - Släckt 
+     - Tänt 
+    icon: mdi:lightbulb 
+ 
+  outdoor_room_lights: 
+    name: Uterumsbelysning 
+    options: 
+     - Släckt 
+     - Tänt  
+    icon: mdi:lightbulb 
 
   outside_lights:
     name: Utebelysning
     options:
-     - Off
-     - On
-#    initial: Off
+     - Släckt
+     - Tänt
     icon: mdi:lightbulb
 
   home_status:

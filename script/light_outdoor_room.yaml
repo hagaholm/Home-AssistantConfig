@@ -8,7 +8,7 @@
       - service: input_select.select_option
         data:
           entity_id: input_select.uterum_led_lights
-          option: On
+          option: Tänt
       - service: light.turn_on
         entity_id: light.uterum_led
 
@@ -22,7 +22,7 @@
       - service: input_select.select_option
         data:
           entity_id: input_select.uterum_led_lights
-          option: Off
+          option: Släckt
       - service: light.turn_off
         entity_id: light.uterum_led
 

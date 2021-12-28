@@ -3,7 +3,8 @@
     ### T: input_select.kitchen_lights == 100% ###
     ### A: script.kitchen_light_100            ###
     ##############################################
-  - alias: Tänd Kök 100%
+  - id: 20201228-1204
+    alias: Tänd Kök 100%
     mode: single
 
     trigger:
@@ -19,7 +20,8 @@
     ### T: input_select.kitchen_lights == 25% ###
     ### A: script.kitchen_light_25            ###
     #############################################
-  - alias: Tänd Kök 25%
+  - id: 20201228-1205
+    alias: Tänd Kök 25%
     mode: single
 
     trigger:
@@ -35,7 +37,8 @@
     ### T: input_select.kitchen_lights == Off ###
     ### A: script.kitchen_light_off           ###
     #############################################
-  - alias: Släck Kök
+  - id: 20201228-1206
+    alias: Släck Kök
     mode: single
 
     trigger:
@@ -54,7 +57,8 @@
     ### C: group.track_for_home_devices == 'home'                       ###
     ### A: input_select.kitchen_lights = 100%                           ###
     #######################################################################
-  - alias: Kök 100% (<2500)
+  - id: 20201228-1207
+    alias: Kök 100% (<2500)
     mode: single
 
     trigger:
@@ -84,7 +88,8 @@
     ###    05:00:00 - 12:00:00                                        ###
     ### A: input_select.kitchen_lights = 100%                         ###
     #####################################################################
-  - alias: Kök 100% morgon (sensor on, <2500)
+  - id: 20201228-1208
+    alias: Kök 100% morgon (sensor on, <2500)
     mode: queued
 
     trigger:
@@ -123,7 +128,8 @@
     ###    12:00:00 - 05:00:00                                        ###
     ### A: input_select.kitchen_lights = 100%                         ###
     #####################################################################
-  - alias: Kök 100% (sensor on, 150-2500)
+  - id: 20201228-1209
+    alias: Kök 100% (sensor on, 150-2500)
     mode: queued
 
     trigger:
@@ -166,7 +172,8 @@
     ###    light.kok_lilla_fonstret == 'on'                        ###
     ### A: input_select.kitchen_lights = 100%                      ###
     ##################################################################
-  - alias: Kök 100% (sensor on, 0-150)
+  - id: 20201228-1210
+    alias: Kök 100% (sensor on, 0-150)
     mode: queued
 
     trigger:
@@ -211,7 +218,8 @@
     ###    light.kok_lilla_fonstret == 'off'                                          ###
     ### A: input_select.kitchen_lights = 100%                                         ###
     #####################################################################################
-  - alias: Kök 100% (sensor on, Borta, 0-150)
+  - id: 20201228-1211
+    alias: Kök 100% (sensor on, Borta, 0-150)
     mode: queued
 
     trigger:
@@ -259,7 +267,8 @@
     ###    light.kok_lilla_fonstret == 'off'                                         ###
     ### A: input_select.kitchen_lights = 25%                                         ###
     ####################################################################################
-  - alias: Kök 25% (sensor on, Hemma, 0-150)
+  - id: 20201228-1212
+    alias: Kök 25% (sensor on, Hemma, 0-150)
     mode: queued
 
     trigger:
@@ -303,7 +312,8 @@
     ### T: input_boolean.rorelsedetektor_kok_aktiv == off ###
     ### A: input_select.kitchen_lights = Släckt           ###
     #########################################################
-  - alias: Kök off (sensor off)
+  - id: 20201228-1213
+    alias: Kök off (sensor off)
     mode: single
 
     trigger:
@@ -322,7 +332,8 @@
     ### T: group.track_for_home_devices to: 'not_home'     ###
     ### A: input_boolean.rorelsedetektor_kok_aktiv = off   ###
     ##########################################################
-  - alias: Kök off (-> borta)
+  - id: 20201228-1214
+    alias: Kök off (-> borta)
     mode: single
 
     trigger:
@@ -341,7 +352,8 @@
     ### C: group.track_for_home_devices == 'home'              ###
     ### A: input_boolean.rorelsedetektor_kok_aktiv = off       ###
     ##############################################################
-  - alias: Kök off (>3000)
+  - id: 20201228-1215
+    alias: Kök off (>3000)
     mode: single
 
     trigger:
@@ -364,7 +376,8 @@
     ### C: input_boolean.rorelsedetektor_kok_aktiv == on                  ###
     ### A: input_boolean.rorelsedetektor_kok_aktiv = off                  ###
     #########################################################################
-  - alias: Kök Rörelsedetektor reset
+  - id: 20201228-1216
+    alias: Kök Rörelsedetektor reset
     mode: single
 
     trigger:

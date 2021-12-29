@@ -97,25 +97,21 @@
     alias: Godnatt, stänger av allt
     sequence:
 # Set home off mode
-      - service: script.wait_for_reload_ikea_integration
       - service: input_select.select_option
         data:
           entity_id: input_select.home_status
           option: Hemma av
 
-      - service: script.turn_on
-        data_template:
-          entity_id: >
-            {% if is_state('input_boolean.christmas_light', 'on') %}
-              script.daylights_christmas_off
-            {% else %}
-              script.daylights_default_off
-            {% endif %}
-
-      - service: light.turn_off
+      - service: input_select.select_option
         data:
-          entity_id: light.koksbelysning
-          transition: 2
+          entity_id: input_select.inside_lights
+          option: Släckt
+
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.kitchen_lights
+          option: Släckt
+
       - service: light.turn_off
         data:
           entity_id: light.friggebod_fasad
@@ -158,25 +154,21 @@
       - delay: '00:10:00'
 
 # Set home off mode
-      - service: script.wait_for_reload_ikea_integration
       - service: input_select.select_option
         data:
           entity_id: input_select.home_status
           option: Hemma av
 
-      - service: script.turn_on
-        data_template:
-          entity_id: >
-            {% if is_state('input_boolean.christmas_light', 'on') %}
-              script.daylights_christmas_off
-            {% else %}
-              script.daylights_default_off
-            {% endif %}
-
-      - service: light.turn_off
+      - service: input_select.select_option
         data:
-          entity_id: light.koksbelysning
-          transition: 2
+          entity_id: input_select.inside_lights
+          option: Släckt
+
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.kitchen_lights
+          option: Släckt
+
       - service: light.turn_off
         data:
           entity_id: light.friggebod_fasad
@@ -217,25 +209,21 @@
     alias: Godnatt, stänger av allt (tv om 10 minuter)
     sequence:
 # Set home off mode
-      - service: script.wait_for_reload_ikea_integration
       - service: input_select.select_option
         data:
           entity_id: input_select.home_status
           option: Hemma av
 
-      - service: script.turn_on
-        data_template:
-          entity_id: >
-            {% if is_state('input_boolean.christmas_light', 'on') %}
-              script.daylights_christmas_off
-            {% else %}
-              script.daylights_default_off
-            {% endif %}
-
-      - service: light.turn_off
+      - service: input_select.select_option
         data:
-          entity_id: light.koksbelysning
-          transition: 2
+          entity_id: input_select.inside_lights
+          option: Släckt
+
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.kitchen_lights
+          option: Släckt
+
       - service: light.turn_off
         data:
           entity_id: light.friggebod_fasad

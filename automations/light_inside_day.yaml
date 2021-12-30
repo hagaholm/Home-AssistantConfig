@@ -169,18 +169,18 @@
           before: '05:00:00'
 
     action:
-      - service_template: >
-        {% if (is_state("input_boolean.christmas_light", "off")) -%}
-        - service: input_select.select_option
-          data:
+      - choose:
+          - conditions: "{{ is_state('input_boolean.christmas_light', 'on') }}"
+            sequence:
+              - servi   ce: input_select.select_option
+                entity_id: input_select.light_inside
+                data:
+                  option: Julbelysning
+        default:
+          - service: input_select.select_option
             entity_id: input_select.light_inside
-            option: Släckt
-        {%- else -%}
-        - service: input_select.select_option
-          data:
-            entity_id: input_select.light_inside
-            option: Julbelysning
-        {%- endif %}
+            data:
+              option: Släckt
 
     ########################################################
     ### Släcker lampor när sista åker hemifrån övrig tid ###

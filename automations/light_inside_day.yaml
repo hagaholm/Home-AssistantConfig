@@ -151,6 +151,7 @@
     ### C: group.track_for_home_devices = 'home'           ###
     ###    09:00:00 - 05:00:00                             ###
     ### A: input_select.light_inside = Släckt              ###
+    ###    input_select.light_inside = Julbelysning        ###
     ##########################################################
   - alias: Dagbelysning off (>2500, hemma)
     trigger:
@@ -168,10 +169,18 @@
           before: '05:00:00'
 
     action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_inside
-          option: Släckt
+      - service_template: >
+        {% if (is_state("input_boolean.christmas_light", "off")) -%}
+        - service: input_select.select_option
+          data:
+            entity_id: input_select.light_inside
+            option: Släckt
+        {%- else -%}
+        - service: input_select.select_option
+          data:
+            entity_id: input_select.light_inside
+            option: Julbelysning
+        {%- endif %}
 
     ########################################################
     ### Släcker lampor när sista åker hemifrån övrig tid ###

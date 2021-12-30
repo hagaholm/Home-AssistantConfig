@@ -17,7 +17,7 @@ views:
             type: sensor
         type: horizontal-stack
       - cards:
-          - entity: script.inside_lights_daylights
+          - entity: script.button_daylight
             icon: 'mdi:lightbulb'
             name: Tänd allt
             tap_action:
@@ -31,7 +31,7 @@ views:
             tap_action:
               action: toggle
             type: button
-          - entity: script.goodnight_all
+          - entity: script.button_goodnight
             hold_action:
               action: none
             icon: 'mdi:sleep'
@@ -269,7 +269,7 @@ views:
     cards:
       - type: entities
         entities:
-          - input_select.inside_lights
+          - input_select.light_inside
           - input_select.kitchen_lights
           - input_select.uterum_led_lights
           - input_select.outdoor_room_lights

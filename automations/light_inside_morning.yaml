@@ -4,7 +4,7 @@
     ### C: sensor.ljusstyrka < input_number.morning_light_on ###
     ###    light.morgonbelysning == off                      ###
     ###    05:00:00 - 09:00:00                               ###
-    ### A: input_select.inside_lights = Morgonbelysning      ###
+    ### A: input_select.light_inside = Morgonbelysning       ###
     ############################################################
   - alias: Morgonbelysning on (sensor on, <1800)
     mode: queued
@@ -29,7 +29,7 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.inside_lights
+          entity_id: input_select.light_inside
           option: Morgonbelysning
 
     ############################################################
@@ -37,7 +37,7 @@
     ### T: group.track_for_home_devices to: 'home'           ###
     ### C: sensor.ljusstyrka < input_number.morning_light_on ###
     ###    05:00:00 - 09:00:00                               ###
-    ### A: input_select.inside_lights = Morgonbelysning      ###
+    ### A: input_select.light_inside = Morgonbelysning       ###
     ############################################################
   - alias: Morgonbelysning on (-> hemma, <1800)
     mode: single
@@ -60,7 +60,7 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.inside_lights
+          entity_id: input_select.light_inside
           option: Morgonbelysning
 
     #############################################################
@@ -68,7 +68,7 @@
     ### T: sensor.ljusstyrka > input_number.morning_light_off ###
     ### C: group.track_for_home_devices == 'home'             ###
     ###    05:00:00 - 09:00:00                                ###
-    ### A: input_select.inside_lights = Släckt                ###
+    ### A: input_select.light_inside = Släckt                 ###
     #############################################################
   - alias: Morgonbelysning off (>2500, hemma)
     mode: single
@@ -90,14 +90,14 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.inside_lights
+          entity_id: input_select.light_inside
           option: Släckt
 
     #############################################################
     ### Släcker lampor på förmiddagen när sista åker hemifrån ###
     ### T: group.track_for_home_devices to: 'not_home'        ###
     ### C: 05:00:00 - 09:00:00                                ###
-    ### A: input_select.inside_lights = Släckt                ###
+    ### A: input_select.light_inside = Släckt                 ###
     #############################################################
   - alias: Morgonbelysning off (-> borta)
     mode: single
@@ -116,5 +116,5 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.inside_lights
+          entity_id: input_select.light_inside
           option: Släckt

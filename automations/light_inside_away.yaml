@@ -9,7 +9,7 @@
     ### T: group.track_for_home_devices to 'not_home' for 1 minute ###
     ### C: sensor.ljusstyrka < 200                                 ###
     ###    07:00:00 - 10:45:00                                     ###
-    ### A: input_select.inside_lights = Bortabelysning             ###
+    ### A: input_select.light_inside = Bortabelysning              ###
     ##################################################################
   - alias: Bortabelysning on (-> borta, <200, morgon)
     trigger:
@@ -33,7 +33,7 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.inside_lights
+          entity_id: input_select.light_inside
           option: Bortabelysning
 
     #################################################################
@@ -41,7 +41,7 @@
     ### T: time = '07:00:00'                                      ###
     ### C: group.track_for_home_devices to 'not_home'             ###
     ###    sensor.ljusstyrka < 200                                ###
-    ### A: input_select.inside_lights = Bortabelysning            ###
+    ### A: input_select.light_inside = Bortabelysning             ###
     #################################################################
   - alias: Bortabelysning on (=07:00:00, <200, borta)
     trigger:
@@ -61,14 +61,14 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.inside_lights
+          entity_id: input_select.light_inside
           option: Bortabelysning
 
     #####################################################
     ### Släcker lampor kl 11:00 om ingen är hemma     ###
     ### T: time > '11:00:00'                          ###
     ### C: group.track_for_home_devices to 'not_home' ###
-    ### A: input_select.inside_lights = Släckt        ###
+    ### A: input_select.light_inside = Släckt         ###
     #####################################################
   - alias: Bortabelysning off (>11:00:00, borta)
     trigger:
@@ -83,7 +83,7 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.inside_lights
+          entity_id: input_select.light_inside
           option: Släckt
 
     ############################################################
@@ -91,7 +91,7 @@
     ### T: sensor.ljusstyrka > 250                           ###
     ### C: group.track_for_home_devices == 'not_home'        ###
     ###    07:00:00 - 11:00:00                               ###
-    ### A: input_select.inside_lights = Släckt               ###
+    ### A: input_select.light_inside = Släckt                ###
     ############################################################
   - alias: Bortabelysning off (>250, borta, morgon)
     trigger:
@@ -112,7 +112,7 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.inside_lights
+          entity_id: input_select.light_inside
           option: Släckt
 
     ###################
@@ -126,7 +126,7 @@
     ### T: group.track_for_home_devices to 'not_home' for 1 minute ###
     ### C: sensor.ljusstyrka < 200                                 ###
     ###    12:00:00 - 22:30:00                                     ###
-    ### A: input_select.inside_lights = Bortabelysning             ###
+    ### A: input_select.light_inside = Bortabelysning              ###
     ##################################################################
   - alias: Bortabelysning on (-> borta, <200)
     trigger:
@@ -150,7 +150,7 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.inside_lights
+          entity_id: input_select.light_inside
           option: Bortabelysning
 
     ###########################################################
@@ -158,7 +158,7 @@
     ### T: sensor.ljusstyrka < 200                          ###
     ### C: group.track_for_home_devices to 'not_home'       ###
     ###    12:00:00 - 22:30:00                              ###
-    ### A: input_select.inside_lights = Bortabelysning      ###
+    ### A: input_select.light_inside = Bortabelysning       ###
     ###########################################################
   - alias: Bortabelysning on (<200, borta)
     trigger:
@@ -179,7 +179,7 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.inside_lights
+          entity_id: input_select.light_inside
           option: Bortabelysning
 
     #################################################################
@@ -187,7 +187,7 @@
     ### T: time = '12:00:00'                                      ###
     ### C: group.track_for_home_devices to 'not_home'             ###
     ###    sensor.ljusstyrka < 200                                ###
-    ### A: input_select.inside_lights = Bortabelysning            ###
+    ### A: input_select.light_inside = Bortabelysning             ###
     #################################################################
   - alias: Bortabelysning on (=12:00:00, <200, borta)
     trigger:
@@ -207,14 +207,14 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.inside_lights
+          entity_id: input_select.light_inside
           option: Bortabelysning
 
     #####################################################
     ### Släcker lampor kl 23:00 om ingen är hemma     ###
     ### T: time > '23:00:00'                          ###
     ### C: group.track_for_home_devices to 'not_home' ###
-    ### A: input_select.inside_lights = Släckt        ###
+    ### A: input_select.light_inside = Släckt         ###
     #####################################################
   - alias: Bortabelysning off (>23:00:00, borta)
     trigger:
@@ -229,5 +229,5 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.inside_lights
+          entity_id: input_select.light_inside
           option: Släckt

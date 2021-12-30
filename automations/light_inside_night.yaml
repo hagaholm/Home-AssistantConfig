@@ -5,7 +5,7 @@
     ###    sensor.ljusstyrka 0-150                                                      ###
     ###    12:00:00 - 05:00:00                                                          ###
     ###    light.kok_lilla_fonstret == 'off'                                            ###
-    ### A: input_select.inside_lights = Nattbelysning                                   ###
+    ### A: input_select.light_inside = Nattbelysning                                    ###
     #######################################################################################
   - alias: Nattbelysning (sensor on, Hemma, 0-150)
     trigger:
@@ -32,7 +32,7 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.inside_lights
+          entity_id: input_select.light_inside
           option: Nattbelysning
 
     ##############################################################
@@ -40,7 +40,7 @@
     ### T: input_boolean.rorelsedetektor_kok_aktiv == off      ###
     ### C: light.kok_lilla_fonstret == off                     ###
     ### C: light.hall_byra == on                               ###
-    ### A: input_select.inside_lights = Släckt                 ###
+    ### A: input_select.light_inside = Släckt                  ###
     ##############################################################
   - alias: Nattbelysning off (sensor off)
     trigger:
@@ -61,5 +61,5 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.inside_lights
+          entity_id: input_select.light_inside
           option: Släckt

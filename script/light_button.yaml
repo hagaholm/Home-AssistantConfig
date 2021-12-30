@@ -1,0 +1,20 @@
+  ##################################
+  ### swtich to Dagbelysning on  ###
+  ### Used by button "Tänd allt" ###
+  ##################################
+  button_daylight:
+    alias: Dagbelysning
+    sequence:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_inside
+          option: Dagbelysning
+
+  ################################
+  ### swtich to Godnatt        ###
+  ### Used by button "Godnatt" ###
+  ################################
+  button_goodnight:
+    alias: Godnatt
+    sequence:
+      - service: script.goodnight_all

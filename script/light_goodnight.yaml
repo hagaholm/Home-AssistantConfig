@@ -104,7 +104,7 @@
 
       - service: input_select.select_option
         data:
-          entity_id: input_select.inside_lights
+          entity_id: input_select.light_inside
           option: Släckt
 
       - service: input_select.select_option
@@ -161,7 +161,7 @@
 
       - service: input_select.select_option
         data:
-          entity_id: input_select.inside_lights
+          entity_id: input_select.light_inside
           option: Släckt
 
       - service: input_select.select_option
@@ -216,7 +216,7 @@
 
       - service: input_select.select_option
         data:
-          entity_id: input_select.inside_lights
+          entity_id: input_select.light_inside
           option: Släckt
 
       - service: input_select.select_option
@@ -299,6 +299,3 @@
         data:
           entity_id: light.louise_rum
           transition: 2
-
-#      - service: light.turn_off
-#        entity_id: light.louise_fonster_dimmer_julstjarna

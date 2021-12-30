@@ -1,87 +1,78 @@
-    ########################################################
-    ### Tänder morgonbelysning                           ###
-    ### T: input_select.inside_lights == Morgonbelysning ###
-    ### A: script.morninglight_on                        ###
-    ########################################################
+    #######################################################
+    ### Tänder morgonbelysning                          ###
+    ### T: input_select.light_inside == Morgonbelysning ###
+    ### A: script.morninglight_on                       ###
+    #######################################################
   - alias: Tänd morgonbelysning
     mode: single
 
     trigger:
       - platform: state
-        entity_id: input_select.inside_lights
+        entity_id: input_select.light_inside
         to: Morgonbelysning
 
     action:
       - service: script.morning_lights_on
 
-#    action:
-#      - choose:
-#          - conditions:
-#              - condition: template
-#                value_template: >-
-#                  {{ trigger.to_state.state == "Morgonbelysning" and trigger.from_state.state == "Släckt"}}
-#            sequence:
-#              - service: script.morning_lights_on
-
-    #####################################################
-    ### Tänder dagbelysning                           ###
-    ### T: input_select.inside_lights == Dagbelysning ###
-    ### A: script.daylights_on                        ###
-    #####################################################
+    ####################################################
+    ### Tänder dagbelysning                          ###
+    ### T: input_select.light_inside == Dagbelysning ###
+    ### A: script.daylights_on                       ###
+    ####################################################
   - alias: Tänd dagbelysning
     mode: single
 
     trigger:
       - platform: state
-        entity_id: input_select.inside_lights
+        entity_id: input_select.light_inside
         to: Dagbelysning
 
     action:
       - service: script.daylights_on
 
-    ######################################################
-    ### Tänder nattbelysning                           ###
-    ### T: input_select.inside_lights == Nattbelysning ###
-    ### A: script.night_light                          ###
-    ######################################################
+    #####################################################
+    ### Tänder nattbelysning                          ###
+    ### T: input_select.light_inside == Nattbelysning ###
+    ### A: script.night_light                         ###
+    #####################################################
   - alias: Tänd nattbelysning
     mode: single
 
     trigger:
       - platform: state
-        entity_id: input_select.inside_lights
+        entity_id: input_select.light_inside
         to: Nattbelysning
 
     action:
       - service: script.night_light
 
-    #######################################################
-    ### Tänder bortabelysning                           ###
-    ### T: input_select.inside_lights == Bortabelysning ###
-    ### A: script.away_lights_on                        ###
-    #######################################################
+    ######################################################
+    ### Tänder bortabelysning                          ###
+    ### T: input_select.light_inside == Bortabelysning ###
+    ### A: script.away_lights_on                       ###
+    ######################################################
   - alias: Tänd bortabelysning
     mode: single
 
     trigger:
       - platform: state
-        entity_id: input_select.inside_lights
+        entity_id: input_select.light_inside
         to: Bortabelysning
 
     action:
       - service: script.away_lights_on
 
-    ###############################################
-    ### Släcker innebelysning                   ###
-    ### T: input_select.inside_lights == Släckt ###
-    ### A: script.daylights_off                 ###
-    ###############################################
+    ##############################################
+    ### Släcker innebelysning                  ###
+    ### T: input_select.light_inside == Släckt ###
+    ### A: script.daylights_off                ###
+    ##############################################
   - alias: Släcker innebelysning
     mode: single
 
     trigger:
       - platform: state
-        entity_id: input_select.inside_lights
+        entity_id: input_select.light_inside
         to: Släckt
 
     action:
@@ -96,4 +87,3 @@
 #       - Nattbelysning
 #       - Bortabelysning
 #     - Arbetsbelysning
-

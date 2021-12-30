@@ -3,7 +3,7 @@
     ### T: Time = 09:00:00                               ###
     ### C: sensor.ljusstyrka < input_number.day_light_on ###
     ###    group.track_for_home_devices == 'home'        ###
-    ### A: input_select.inside_lights = Dagbelysning     ###
+    ### A: input_select.light_inside = Dagbelysning      ###
     ########################################################
   - alias: Dagbelysning on (=09:00:00, <1800, hemma)
     trigger:
@@ -22,7 +22,7 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.inside_lights
+          entity_id: input_select.light_inside
           option: Dagbelysning
 
     ########################################################
@@ -30,7 +30,7 @@
     ### T: sensor.ljusstyrka < input_number.day_light_on ###
     ### C: group.track_for_home_devices == 'home'        ###
     ###    09:00:00 - 22:00:00                           ###
-    ### A: input_select.inside_lights = Dagbelysning     ###
+    ### A: input_select.light_inside = Dagbelysning      ###
     ########################################################
   - alias: Dagbelysning on (<1800, hemma)
     trigger:
@@ -50,7 +50,7 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.inside_lights
+          entity_id: input_select.light_inside
           option: Dagbelysning
 
     ########################################################
@@ -61,7 +61,7 @@
     ### C: group.track_for_home_devices == 'not_home'    ###
     ###    sensor.ljusstyrka < input_number.day_light_on ###
     ###    09:00:00 - 05:00:00                           ###
-    ### A: input_select.inside_lights = Dagbelysning     ###
+    ### A: input_select.light_inside = Dagbelysning      ###
     ########################################################
   - alias: Dagbelysning on (sensor on, borta, <1800)
     trigger:
@@ -84,7 +84,7 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.inside_lights
+          entity_id: input_select.light_inside
           option: Dagbelysning
 
     ########################################################
@@ -92,7 +92,7 @@
     ### T: group.track_for_home_devices to 'home'        ###
     ### C: sensor.ljusstyrka < input_number.day_light_on ###
     ###    09:00:00 - 05:00:00                           ###
-    ### A: input_select.inside_lights = Dagbelysning     ###
+    ### A: input_select.light_inside = Dagbelysning      ###
     ########################################################
   - alias: Dagbelysning on (-> hemma, <1800)
     trigger:
@@ -113,16 +113,16 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.inside_lights
+          entity_id: input_select.light_inside
           option: Dagbelysning
 
-    ##########################################################
-    ### Tänder lampor när fönsterbelysning i sovrum tänds  ###
-    ### T: light.sovrum_fonster to 'on'                    ###
-    ### C: input_select.inside_lights == 'Morgonbelysning' ###
-    ###    05:00:00 - 09:00:00                             ###
-    ### A: input_select.inside_lights = Dagbelysning       ###
-    ##########################################################
+    #########################################################
+    ### Tänder lampor när fönsterbelysning i sovrum tänds ###
+    ### T: light.sovrum_fonster to 'on'                   ###
+    ### C: input_select.light_inside == 'Morgonbelysning' ###
+    ###    05:00:00 - 09:00:00                            ###
+    ### A: input_select.light_inside = Dagbelysning       ###
+    #########################################################
   - alias: Dagbelysning on (sovrumsfönster on)
     trigger:
       platform: state
@@ -133,7 +133,7 @@
       condition: and
       conditions:
         - condition: state
-          entity_id: input_select.inside_lights
+          entity_id: input_select.light_inside
           state: 'Morgonbelysning'
         - condition: time
           after: '05:00:00'
@@ -142,7 +142,7 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.inside_lights
+          entity_id: input_select.light_inside
           option: Dagbelysning
 
     ##########################################################
@@ -150,7 +150,7 @@
     ### T: sensor.ljusstyrka > input_number.day_light_off  ###
     ### C: group.track_for_home_devices = 'home'           ###
     ###    09:00:00 - 05:00:00                             ###
-    ### A: input_select.inside_lights = Släckt             ###
+    ### A: input_select.light_inside = Släckt              ###
     ##########################################################
   - alias: Dagbelysning off (>2500, hemma)
     trigger:
@@ -170,14 +170,14 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.inside_lights
+          entity_id: input_select.light_inside
           option: Släckt
 
     ########################################################
     ### Släcker lampor när sista åker hemifrån övrig tid ###
     ### T: group.track_for_home_devices to 'not_home'    ###
     ### C: 09:00:00 - 05:00:00                           ###
-    ### A: input_select.inside_lights = Släckt           ###
+    ### A: input_select.light_inside = Släckt            ###
     ########################################################
   - alias: Dagbelysning off (-> borta)
     trigger:
@@ -194,7 +194,7 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.inside_lights
+          entity_id: input_select.light_inside
           option: Släckt
 
     #######################################################################
@@ -223,7 +223,7 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.inside_lights
+          entity_id: input_select.light_inside
           option: Kvällsbelysning
 
           transition: 2

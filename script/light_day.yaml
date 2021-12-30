@@ -1,3 +1,22 @@
+  ##################################
+  ### swtich to Dagbelysning on  ###
+  ### Used by button "Tänd allt" ###
+  ##################################
+
+  inside_lights_daylights:
+    alias: Dagbelysning on
+    sequence:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.inside_lights
+          option: Dagbelysning
+
+
+### Below is started by autoamation triggered by:
+### input_select.inside_lights = Dagbelysning
+
+
+
   #######################
   ### Dagbelysning on ###
   #######################

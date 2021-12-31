@@ -172,7 +172,7 @@
       - choose:
           - conditions: "{{ is_state('input_boolean.christmas_light', 'on') }}"
             sequence:
-              - servi   ce: input_select.select_option
+              - service: input_select.select_option
                 entity_id: input_select.light_inside
                 data:
                   option: Julbelysning

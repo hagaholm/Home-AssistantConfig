@@ -264,26 +264,13 @@ views:
         state_color: true
       - type: entities
         entities:
-          - automation.uterums_fotogenlampa_on_16
-          - automation.uterums_fotogenlampa_on_250
-          - automation.uterums_fotogenlampa_on_home
-          - automation.uterums_fotogenlampa_off_15
-          - automation.uterums_fotogenlampa_off_all_off_hemma
-          - automation.uterums_fotogenlampa_off_borta
-          - automation.uterums_ledbelysning_on_16
-          - automation.uterums_ledbelysning_on_250
-          - automation.uterums_ledbelysning_on_home
-          - automation.uterums_ledbelysning_off_15
-          - automation.uterums_ledbelysning_off_all_off_hemma
-          - automation.uterums_ledbelysning_off_borta
+          - automation.uterums_belysning_on_16
+          - automation.uterums_belysning_on_250
+          - automation.uterums_belysning_on_home
+          - automation.uterums_belysning_off_15
+          - automation.uterums_belysning_off_all_off_hemma
+          - automation.uterums_belysning_off_borta
         title: Uterumsbelysning
-        show_header_toggle: true
-        state_color: true
-      - type: entities
-        entities:
-          - automation.uterums_fotogenlampa_on_motion
-          - automation.uterums_ledbelysning_on_motion
-        title: Uterumsbelysning off
         show_header_toggle: true
         state_color: true
       - type: entities

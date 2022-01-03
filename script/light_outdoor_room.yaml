@@ -1,47 +1,31 @@
-  ###############################
-  ### Uterums ledbelysning on ###
-  ###############################
-  outdoor_room_led_light_on:
-    alias: Uterums ledbelysning on
+  ############################
+  ### Uterums belysning on ###
+  ############################
+  outdoor_room_light_on:
+    alias: Uterums belysning on
     sequence:
       - service: script.wait_for_reload_ikea_integration
       - service: input_select.select_option
         data:
-          entity_id: input_select.uterum_led_lights
+          entity_id: input_select.uterum_lights
           option: Tänt
       - service: light.turn_on
         entity_id: light.uterum_led
+      - service: light.turn_on
+        entity_id: light.uterum_fotogenlampa
 
-  ################################
-  ### Uterums ledbelysning off ###
-  ################################
-  outdoor_room_led_light_off:
-    alias: Uterums ledbelysning off
+  #############################
+  ### Uterums belysning off ###
+  #############################
+  outdoor_room_light_off:
+    alias: Uterums belysning off
     sequence:
       - service: script.wait_for_reload_ikea_integration
       - service: input_select.select_option
         data:
-          entity_id: input_select.uterum_led_lights
+          entity_id: input_select.uterum_lights
           option: Släckt
       - service: light.turn_off
         entity_id: light.uterum_led
-
-  ###############################
-  ### Uterums fotogenlampa on ###
-  ###############################
-  outdoor_room_paraffin_light_on:
-    alias: Uterums fotogenlampa on
-    sequence:
-      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_on
-        entity_id: light.uterum_fotogenlampa
-
-  ################################
-  ### Uterums fotogenlampa off ###
-  ################################
-  outdoor_room_paraffin_light_off:
-    alias: Uterums fotogenlampa off
-    sequence:
-      - service: script.wait_for_reload_ikea_integration
-      - service: light.turn_off
         entity_id: light.uterum_fotogenlampa

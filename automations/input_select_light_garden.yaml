@@ -1,0 +1,31 @@
+    #############################################
+    ### Tänder trädgårdsbelysning             ###
+    ### T: input_select.garden_lights == Tänt ###
+    ### A: script.tradgards_belysning_on      ###
+    #############################################
+  - alias: Tänd trädgårdsbelysning
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_select.garden_lights
+        to: Tänt
+
+    action:
+      - service: script.tradgards_belysning_on
+
+    ###############################################
+    ### Släcker trädgårdsbelysning              ###
+    ### T: input_select.garden_lights == Släckt ###
+    ### A: script.tradgards_belysning_off       ###
+    ###############################################
+  - alias: Släck trädgårdsbelysning
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_select.garden_lights
+        to: Släckt
+
+    action:
+      - service: script.tradgards_belysning_off

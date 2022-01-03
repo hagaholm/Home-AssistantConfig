@@ -194,7 +194,7 @@ sensor:
     ##########
       mobil_louise:
         friendly_name: 'Louise'
-        value_template: "{{ 'Online' if is_state('device_tracker.mobil_louise', 'home') else 'Offline' }}"
+        value_template: "{{ 'Online' if is_state('device_tracker.louises_a52s', 'home') else 'Offline' }}"
       mobil_annelie:
         friendly_name: 'Annelie'
         value_template: "{{ 'Online' if is_state('device_tracker.mobil_annelie', 'home') else 'Offline' }}"

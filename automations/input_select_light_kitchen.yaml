@@ -1,0 +1,47 @@
+    ##############################################
+    ### Tänder lampor 100%                     ###
+    ### T: input_select.kitchen_lights == 100% ###
+    ### A: script.kitchen_light_100            ###
+    ##############################################
+  - alias: Tänd Kök 100%
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_select.kitchen_lights
+        to: 100%
+
+    action:
+      - service: script.kitchen_light_100
+
+    #############################################
+    ### Tänder lampor 25%                     ###
+    ### T: input_select.kitchen_lights == 25% ###
+    ### A: script.kitchen_light_25            ###
+    #############################################
+  - alias: Tänd Kök 25%
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_select.kitchen_lights
+        to: 25%
+
+    action:
+      - service: script.kitchen_light_25
+
+    #############################################
+    ### Släcker lampor                        ###
+    ### T: input_select.kitchen_lights == Off ###
+    ### A: script.kitchen_light_off           ###
+    #############################################
+  - alias: Släck Kök
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_select.kitchen_lights
+        to: Släckt
+
+    action:
+      - service: script.kitchen_light_off

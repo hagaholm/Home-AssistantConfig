@@ -1,36 +1,3 @@
-    ############################################
-    ### Tänder uterumsbelysning              ###
-    ### T: input_select.light_inside == Tänt ###
-    ### A: script.outdoor_room_light_on      ###
-    ############################################
-  - alias: Tänd uterumsbelysning
-    mode: single
-
-    trigger:
-      - platform: state
-        entity_id: input_select.uterum_lights
-        to: Tänt
-
-    action:
-      - service: script.outdoor_room_light_on
-
-    ##############################################
-    ### Släcker uterumsbelysning               ###
-    ### T: input_select.light_inside == Släckt ###
-    ### A: script.outdoor_room_light_off       ###
-    ##############################################
-  - alias: Släck uterumsbelysning
-    mode: single
-
-    trigger:
-      - platform: state
-        entity_id: input_select.uterum_lights
-        to: Släckt
-
-    action:
-      - service: script.outdoor_room_light_off
-
-
     ######################################################
     ### Tänder belysning i uterum när någon kommer hem ###
     ### T: group.track_for_home_devices == home        ###

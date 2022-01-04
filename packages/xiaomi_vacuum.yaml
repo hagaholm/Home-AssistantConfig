@@ -32,11 +32,11 @@ sensor:
         friendly_name: Fan Speed
         value_template: "Mode: {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'fan_speed') }}"
         icon_template: 'mdi:speedometer'
-      vacuum_battery:
-        friendly_name: Vacuum Battery
-        value_template: "Battery: {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'battery_level') }}"
-        unit_of_measurement: '%'
-        icon_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'battery_icon') }}"
+#      vacuum_battery:
+#        friendly_name: Vacuum Battery
+#        value_template: "Battery: {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'battery_level') }}"
+#        unit_of_measurement: '%'
+#        icon_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'battery_icon') }}"
       vacuum_cleaning_time:
         friendly_name: Time of Last Cycle
         value_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'cleaning_time') }}"

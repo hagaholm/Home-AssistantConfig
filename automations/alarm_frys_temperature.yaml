@@ -8,6 +8,10 @@
       platform: numeric_state
       entity_id: sensor.frys_temperature
       above: '-13'
+
+    conditions:
+      - "{{ states('sensor.frys_temperature') != 'unknown' }}"
+
     action:
       - service: notify.pushbullet
         data:
@@ -27,6 +31,10 @@
       platform: numeric_state
       entity_id: sensor.frys_temperature
       above: '-15'
+
+    conditions:
+      - "{{ states('sensor.frys_temperature') != 'unknown' }}"
+
     action:
       - service: notify.pushbullet
         data:
@@ -42,6 +50,10 @@
       platform: numeric_state
       entity_id: sensor.frys_temperature
       below: '-25'
+
+    conditions:
+      - "{{ states('sensor.frys_temperature') != 'unknown' }}"
+
     action:
       - service: notify.pushbullet
         data:

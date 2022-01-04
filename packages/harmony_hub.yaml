@@ -8,7 +8,12 @@ sensor:
   - platform: template
     sensors:
       yamaha_volume_level:
-        value_template: "{{ state_attr('media_player.yamaha_receiver', 'volume_level') * 100}}"
+        value_template: >
+          {% if state_attr('media_player.yamaha_receiver', 'volume_level') == None %} 
+            0 
+          {% else %} 
+            state_attr('media_player.yamaha_receiver', 'volume_level') 
+          {% endif %}
         unit_of_measurement: '%'
         friendly_name: "Yamaha volym"
 

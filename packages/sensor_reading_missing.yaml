@@ -30,10 +30,16 @@ sensor:
       frys_temp_lastupdated:
         friendly_name: Frys temp senast uppdaterad
         value_template: >-
-          {{ states.sensor.frys_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+          {% if state_attr('sensor.frys_temperature', 'last_updated') == None %} 
+            0 
+          {% else %} 
+            {{ states.sensor.frys_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
+          {% endif %}
         device_class: timestamp
         icon_template: >-
-          {% if (as_timestamp(now()) - as_timestamp(states.sensor.frys_temperature.last_updated) > 100) %}
+          {% if state_attr('sensor.frys_temperature', 'last_updated') == None %} 
+            mdi:progress-check
+          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.frys_temperature.last_updated) > 100) %}
             mdi:progress-alert
           {% else %}
             mdi:progress-check
@@ -42,10 +48,16 @@ sensor:
       kyl_temp_lastupdated:
         friendly_name: Kyl temp senast uppdaterad
         value_template: >-
-          {{ states.sensor.kyl_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+          {% if state_attr('sensor.kyl_temperature', 'last_updated') == None %} 
+            0 
+          {% else %} 
+            {{ states.sensor.kyl_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
+          {% endif %}
         device_class: timestamp
         icon_template: >-
-          {% if (as_timestamp(now()) - as_timestamp(states.sensor.kyl_temperature.last_updated) > 100) %}
+          {% if state_attr('sensor.kyl_temperature', 'last_updated') == None %} 
+            mdi:progress-check
+          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.kyl_temperature.last_updated) > 100) %}
             mdi:progress-alert
           {% else %}
             mdi:progress-check
@@ -54,10 +66,16 @@ sensor:
       badrum_temp_lastupdated:
         friendly_name: Badrum temp senast uppdaterad
         value_template: >-
-          {{ states.sensor.badrum_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+          {% if state_attr('sensor.badrum_temperature', 'last_updated') == None %} 
+            0 
+          {% else %} 
+            {{ states.sensor.badrum_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
+          {% endif %}
         device_class: timestamp
         icon_template: >-
-          {% if (as_timestamp(now()) - as_timestamp(states.sensor.badrum_temperature.last_updated) > 100) %}
+          {% if state_attr('sensor.badrum_temperature', 'last_updated') == None %} 
+            mdi:progress-check
+          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.badrum_temperature.last_updated) > 100) %}
             mdi:progress-alert
           {% else %}
             mdi:progress-check
@@ -66,10 +84,16 @@ sensor:
       badrum_fukt_lastupdated:
         friendly_name: Badrum fukt senast uppdaterad
         value_template: >-
-          {{ states.sensor.badrum_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+          {% if state_attr('sensor.badrum_humidity', 'last_updated') == None %} 
+            0 
+          {% else %} 
+            {{ states.sensor.badrum_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
+          {% endif %}
         device_class: timestamp
         icon_template: >-
-          {% if (as_timestamp(now()) - as_timestamp(states.sensor.badrum_humidity.last_updated) > 100) %}
+          {% if state_attr('sensor.badrum_humidity', 'last_updated') == None %} 
+            mdi:progress-check
+          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.badrum_humidity.last_updated) > 100) %}
             mdi:progress-alert
           {% else %}
             mdi:progress-check
@@ -78,10 +102,16 @@ sensor:
       tvattstuga_temp_lastupdated:
         friendly_name: Tvättstuga temp senast uppdaterad
         value_template: >-
-          {{ states.sensor.tvattstuga_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+          {% if state_attr('sensor.tvattstuga_temperature', 'last_updated') == None %} 
+            0 
+          {% else %} 
+            {{ states.sensor.tvattstuga_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
+          {% endif %}
         device_class: timestamp
         icon_template: >-
-          {% if (as_timestamp(now()) - as_timestamp(states.sensor.tvattstuga_temperature.last_updated) > 100) %}
+          {% if state_attr('sensor.tvattstuga_temperature', 'last_updated') == None %} 
+            mdi:progress-check
+          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.tvattstuga_temperature.last_updated) > 100) %}
             mdi:progress-alert
           {% else %}
             mdi:progress-check
@@ -90,10 +120,16 @@ sensor:
       tvattstuga_fukt_lastupdated:
         friendly_name: Tvättstuga fukt senast uppdaterad
         value_template: >-
-          {{ states.sensor.tvattstuga_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+          {% if state_attr('sensor.tvattstuga_humidity', 'last_updated') == None %} 
+            0 
+          {% else %} 
+            {{ states.sensor.tvattstuga_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
+          {% endif %}
         device_class: timestamp
         icon_template: >-
-          {% if (as_timestamp(now()) - as_timestamp(states.sensor.tvattstuga_humidity.last_updated) > 100) %}
+          {% if state_attr('sensor.tvattstuga_humidity', 'last_updated') == None %} 
+            mdi:progress-check
+          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.tvattstuga_humidity.last_updated) > 100) %}
             mdi:progress-alert
           {% else %}
             mdi:progress-check
@@ -102,10 +138,16 @@ sensor:
       varmepump_temp_lastupdated:
         friendly_name: Värmepump temp senast uppdaterad
         value_template: >-
-          {{ states.sensor.varmepump_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+          {% if state_attr('sensor.varmepump_temperature', 'last_updated') == None %} 
+            0 
+          {% else %} 
+            {{ states.sensor.varmepump_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
+          {% endif %}
         device_class: timestamp
         icon_template: >-
-          {% if (as_timestamp(now()) - as_timestamp(states.sensor.varmepump_temperature.last_updated) > 100) %}
+          {% if state_attr('sensor.varmepump_temperature', 'last_updated') == None %} 
+            mdi:progress-check
+          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.varmepump_temperature.last_updated) > 100) %}
             mdi:progress-alert
           {% else %}
             mdi:progress-check
@@ -114,10 +156,16 @@ sensor:
       vardagsrum_temp_lastupdated:
         friendly_name: Vardagsum temp senast uppdaterad
         value_template: >-
-          {{ states.sensor.vardagsrum_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+          {% if state_attr('sensor.vardagsrum_temperature', 'last_updated') == None %} 
+            0 
+          {% else %} 
+            {{ states.sensor.vardagsrum_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
+          {% endif %}
         device_class: timestamp
         icon_template: >-
-          {% if (as_timestamp(now()) - as_timestamp(states.sensor.vardagsrum_temperature.last_updated) > 100) %}
+          {% if state_attr('sensor.vardagsrum_temperature', 'last_updated') == None %} 
+            mdi:progress-check
+          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.vardagsrum_temperature.last_updated) > 100) %}
             mdi:progress-alert
           {% else %}
             mdi:progress-check
@@ -126,10 +174,16 @@ sensor:
       hall_temp_lastupdated:
         friendly_name: Hall temp senast uppdaterad
         value_template: >-
-          {{ states.sensor.hall_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+          {% if state_attr('sensor.hall_temperature', 'last_updated') == None %} 
+            0 
+          {% else %} 
+            {{ states.sensor.hall_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
+          {% endif %}
         device_class: timestamp
         icon_template: >-
-          {% if (as_timestamp(now()) - as_timestamp(states.sensor.hall_temperature.last_updated) > 100) %}
+          {% if state_attr('sensor.hall_temperature', 'last_updated') == None %} 
+            mdi:progress-check
+          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.hall_temperature.last_updated) > 100) %}
             mdi:progress-alert
           {% else %}
             mdi:progress-check
@@ -138,10 +192,16 @@ sensor:
       hall_fukt_lastupdated:
         friendly_name: Hall fukt senast uppdaterad
         value_template: >-
-          {{ states.sensor.hall_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+          {% if state_attr('sensor.hall_humidity', 'last_updated') == None %} 
+            0 
+          {% else %} 
+            {{ states.sensor.hall_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
+          {% endif %}
         device_class: timestamp
         icon_template: >-
-          {% if (as_timestamp(now()) - as_timestamp(states.sensor.hall_humidity.last_updated) > 100) %}
+          {% if state_attr('sensor.hall_humidity', 'last_updated') == None %} 
+            mdi:progress-check
+          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.hall_humidity.last_updated) > 100) %}
             mdi:progress-alert
           {% else %}
             mdi:progress-check
@@ -150,10 +210,16 @@ sensor:
       garage_temp_lastupdated:
         friendly_name: Garage temp senast uppdaterad
         value_template: >-
-          {{ states.sensor.garage_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+          {% if state_attr('sensor.garage_temperature', 'last_updated') == None %} 
+            0 
+          {% else %} 
+            {{ states.sensor.garage_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
+          {% endif %}
         device_class: timestamp
         icon_template: >-
-          {% if (as_timestamp(now()) - as_timestamp(states.sensor.garage_temperature.last_updated) > 100) %}
+          {% if state_attr('sensor.garage_temperature', 'last_updated') == None %} 
+            mdi:progress-check
+          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.garage_temperature.last_updated) > 100) %}
             mdi:progress-alert
           {% else %}
             mdi:progress-check
@@ -162,10 +228,16 @@ sensor:
       garage_fukt_lastupdated:
         friendly_name: Garage fukt senast uppdaterad
         value_template: >-
-          {{ states.sensor.garage_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+          {% if state_attr('sensor.garage_humidity', 'last_updated') == None %} 
+            0 
+          {% else %} 
+            {{ states.sensor.garage_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
+          {% endif %}
         device_class: timestamp
         icon_template: >-
-          {% if (as_timestamp(now()) - as_timestamp(states.sensor.garage_humidity.last_updated) > 100) %}
+          {% if state_attr('sensor.garage_humidity', 'last_updated') == None %} 
+            mdi:progress-check
+          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.garage_humidity.last_updated) > 100) %}
             mdi:progress-alert
           {% else %}
             mdi:progress-check
@@ -174,10 +246,16 @@ sensor:
       forrad_temp_lastupdated:
         friendly_name: Förråd temp senast uppdaterad
         value_template: >-
-          {{ states.sensor.forrad_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+          {% if state_attr('sensor.forrad_temperature', 'last_updated') == None %} 
+            0 
+          {% else %} 
+            {{ states.sensor.forrad_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
+          {% endif %}
         device_class: timestamp
         icon_template: >-
-          {% if (as_timestamp(now()) - as_timestamp(states.sensor.forrad_temperature.last_updated) > 100) %}
+          {% if state_attr('sensor.forrad_temperature', 'last_updated') == None %} 
+            mdi:progress-check
+          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.forrad_temperature.last_updated) > 100) %}
             mdi:progress-alert
           {% else %}
             mdi:progress-check
@@ -186,10 +264,16 @@ sensor:
       friggebod_temp_lastupdated:
         friendly_name: Friggebod temp senast uppdaterad
         value_template: >-
-          {{ states.sensor.friggebod_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+          {% if state_attr('sensor.friggebod_temperature', 'last_updated') == None %} 
+            0 
+          {% else %} 
+            {{ states.sensor.friggebod_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
+          {% endif %}
         device_class: timestamp
         icon_template: >-
-          {% if (as_timestamp(now()) - as_timestamp(states.sensor.friggebod_temperature.last_updated) > 100) %}
+          {% if state_attr('sensor.friggebod_temperature', 'last_updated') == None %} 
+            mdi:progress-check
+          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.friggebod_temperature.last_updated) > 100) %}
             mdi:progress-alert
           {% else %}
             mdi:progress-check
@@ -198,10 +282,16 @@ sensor:
       friggebod_fukt_lastupdated:
         friendly_name: Friggebod fukt senast uppdaterad
         value_template: >-
-          {{ states.sensor.friggebod_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+          {% if state_attr('sensor.friggebod_humidity', 'last_updated') == None %} 
+            0 
+          {% else %} 
+            {{ states.sensor.friggebod_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
+          {% endif %}
         device_class: timestamp
         icon_template: >-
-          {% if (as_timestamp(now()) - as_timestamp(states.sensor.friggebod_humidity.last_updated) > 100) %}
+          {% if state_attr('sensor.friggebod_humidity', 'last_updated') == None %} 
+            mdi:progress-check
+          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.friggebod_humidity.last_updated) > 100) %}
             mdi:progress-alert
           {% else %}
             mdi:progress-check
@@ -210,10 +300,16 @@ sensor:
       ute_friggebod_temp_lastupdated:
         friendly_name: Ute friggebod temp senast uppdaterad
         value_template: >-
-          {{ states.sensor.ute_friggebod_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+          {% if state_attr('sensor.ute_friggebod_temperature', 'last_updated') == None %} 
+            0 
+          {% else %} 
+            {{ states.sensor.ute_friggebod_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
+          {% endif %}
         device_class: timestamp
         icon_template: >-
-          {% if (as_timestamp(now()) - as_timestamp(states.sensor.ute_friggebod_temperature.last_updated) > 100) %}
+          {% if state_attr('sensor.ute_friggebod_temperature', 'last_updated') == None %} 
+            mdi:progress-check
+          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.ute_friggebod_temperature.last_updated) > 100) %}
             mdi:progress-alert
           {% else %}
             mdi:progress-check
@@ -222,10 +318,16 @@ sensor:
       ute_friggebod_fukt_lastupdated:
         friendly_name: Ute friggebod fukt senast uppdaterad
         value_template: >-
-          {{ states.sensor.ute_friggebod_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+          {% if state_attr('sensor.ute_friggebod_humidity', 'last_updated') == None %} 
+            0 
+          {% else %} 
+            {{ states.sensor.ute_friggebod_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
+          {% endif %}
         device_class: timestamp
         icon_template: >-
-          {% if (as_timestamp(now()) - as_timestamp(states.sensor.ute_friggebod_humidity.last_updated) > 100) %}
+          {% if state_attr('sensor.ute_friggebod_humidity', 'last_updated') == None %} 
+            mdi:progress-check
+          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.ute_friggebod_humidity.last_updated) > 100) %}
             mdi:progress-alert
           {% else %}
             mdi:progress-check
@@ -234,10 +336,16 @@ sensor:
       aqara_multi_sensor_3_temp_lastupdated:
         friendly_name: Aqara Multi Sensor 3 temp senast uppdaterad
         value_template: >-
-          {{ states.sensor.aqara_multi_sensor_3_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+          {% if state_attr('sensor.aqara_multi_sensor_3_temperature', 'last_updated') == None %} 
+            0 
+          {% else %} 
+            {{ states.sensor.aqara_multi_sensor_3_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
+          {% endif %}
         device_class: timestamp
         icon_template: >-
-          {% if (as_timestamp(now()) - as_timestamp(states.sensor.aqara_multi_sensor_3_temperature.last_updated) > 100) %}
+          {% if state_attr('sensor.aqara_multi_sensor_3_temperature', 'last_updated') == None %} 
+            mdi:progress-check
+          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.aqara_multi_sensor_3_temperature.last_updated) > 100) %}
             mdi:progress-alert
           {% else %}
             mdi:progress-check
@@ -246,10 +354,16 @@ sensor:
       aqara_multi_sensor_3_fukt_lastupdated:
         friendly_name: Aqara Multi Sensor 3 fukt senast uppdaterad
         value_template: >-
-          {{ states.sensor.aqara_multi_sensor_3_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+          {% if state_attr('sensor.aqara_multi_sensor_3_humidity', 'last_updated') == None %} 
+            0 
+          {% else %} 
+            {{ states.sensor.aqara_multi_sensor_3_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
+          {% endif %}
         device_class: timestamp
         icon_template: >-
-          {% if (as_timestamp(now()) - as_timestamp(states.sensor.aqara_multi_sensor_3_humidity.last_updated) > 100) %}
+          {% if state_attr('sensor.aqara_multi_sensor_3_humidity', 'last_updated') == None %} 
+            mdi:progress-check
+          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.aqara_multi_sensor_3_humidity.last_updated) > 100) %}
             mdi:progress-alert
           {% else %}
             mdi:progress-check
@@ -258,10 +372,16 @@ sensor:
       aqara_multi_sensor_4_temp_lastupdated:
         friendly_name: Aqara Multi Sensor 4 temp senast uppdaterad
         value_template: >-
-          {{ states.sensor.aqara_multi_sensor_4_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+          {% if state_attr('sensor.aqara_multi_sensor_4_temperature', 'last_updated') == None %} 
+            0 
+          {% else %} 
+            {{ states.sensor.aqara_multi_sensor_4_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
+          {% endif %}
         device_class: timestamp
         icon_template: >-
-          {% if (as_timestamp(now()) - as_timestamp(states.sensor.aqara_multi_sensor_4_temperature.last_updated) > 100) %}
+          {% if state_attr('sensor.aqara_multi_sensor_4_temperature', 'last_updated') == None %} 
+            mdi:progress-check
+          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.aqara_multi_sensor_4_temperature.last_updated) > 100) %}
             mdi:progress-alert
           {% else %}
             mdi:progress-check
@@ -270,10 +390,16 @@ sensor:
       aqara_multi_sensor_4_fukt_lastupdated:
         friendly_name: Aqara Multi Sensor 4 fukt senast uppdaterad
         value_template: >-
-          {{ states.sensor.aqara_multi_sensor_4_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+          {% if state_attr('sensor.aqara_multi_sensor_4_humidity', 'last_updated') == None %} 
+            0 
+          {% else %} 
+            {{ states.sensor.aqara_multi_sensor_4_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
+          {% endif %}
         device_class: timestamp
         icon_template: >-
-          {% if (as_timestamp(now()) - as_timestamp(states.sensor.aqara_multi_sensor_4_humidity.last_updated) > 100) %}
+          {% if state_attr('sensor.aqara_multi_sensor_4_humidity', 'last_updated') == None %} 
+            mdi:progress-check
+          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.aqara_multi_sensor_4_humidity.last_updated) > 100) %}
             mdi:progress-alert
           {% else %}
             mdi:progress-check
@@ -321,6 +447,7 @@ automation:
     trigger:
       - platform: time_pattern
         minutes: "/5"
+
     condition:
       condition: and
       conditions:
@@ -329,7 +456,12 @@ automation:
           state: 'off'
         - condition: template
           value_template: >
-            {{ (as_timestamp(now())-as_timestamp(states.sensor.frys_temperature.last_updated)) > 7200 }}
+            {% if state_attr('sensor.frys_temperature', 'last_updated') == None %} 
+              0
+            {% else %} 
+              {{ (as_timestamp(now())-as_timestamp(states.sensor.frys_temperature.last_updated)) > 7200 }}
+            {% endif %}
+
     action:
       - service: homeassistant.turn_on
         entity_id: input_boolean.frys_reading_missing_alarm
@@ -341,6 +473,7 @@ automation:
     trigger:
       - platform: time_pattern
         minutes: "/5"
+
     condition:
       condition: and
       conditions:
@@ -349,7 +482,12 @@ automation:
           state: 'off'
         - condition: template
           value_template: >
-            {{ (as_timestamp(now())-as_timestamp(states.sensor.kyl_temperature.last_updated)) > 7200 }}
+            {% if state_attr('sensor.kyl_temperature', 'last_updated') == None %} 
+              0
+            {% else %} 
+              {{ (as_timestamp(now())-as_timestamp(states.sensor.kyl_temperature.last_updated)) > 7200 }}
+            {% endif %}
+
     action:
       - service: homeassistant.turn_on
         entity_id: input_boolean.kyl_reading_missing_alarm
@@ -361,6 +499,7 @@ automation:
     trigger:
       - platform: time_pattern
         minutes: "/5"
+
     condition:
       condition: and
       conditions:
@@ -370,11 +509,20 @@ automation:
         - condition: or
           conditions:
             - condition: template
-              value_template: > 
-                {{ (as_timestamp(now())-as_timestamp(states.sensor.badrum_temperature.last_updated)) > 10800 }}
+              value_template: >
+                {% if state_attr('sensor.badrum_temperature', 'last_updated') == None %} 
+                  0
+                {% else %} 
+                  {{ (as_timestamp(now())-as_timestamp(states.sensor.badrum_temperature.last_updated)) > 7200 }}
+                {% endif %}
             - condition: template
               value_template: > 
-                {{ (as_timestamp(now())-as_timestamp(states.sensor.badrum_humidity.last_updated)) > 10800 }}
+                {% if state_attr('sensor.badrum_humidity', 'last_updated') == None %} 
+                  0
+                {% else %} 
+                  {{ (as_timestamp(now())-as_timestamp(states.sensor.badrum_humidity.last_updated)) > 7200 }}
+                {% endif %}
+
     action:
       - service: homeassistant.turn_on
         entity_id: input_boolean.badrum_reading_missing_alarm
@@ -386,6 +534,7 @@ automation:
     trigger:
       - platform: time_pattern
         minutes: "/5"
+
     condition:
       condition: and
       conditions:
@@ -396,10 +545,19 @@ automation:
           conditions:
             - condition: template
               value_template: > 
-                {{ (as_timestamp(now())-as_timestamp(states.sensor.tvattstuga_temperature.last_updated)) > 10800 }}
+                {% if state_attr('sensor.tvattstuga_temperature', 'last_updated') == None %} 
+                  0
+                {% else %} 
+                  {{ (as_timestamp(now())-as_timestamp(states.sensor.tvattstuga_temperature.last_updated)) > 7200 }}
+                {% endif %}
             - condition: template
               value_template: > 
-                {{ (as_timestamp(now())-as_timestamp(states.sensor.tvattstuga_humidity.last_updated)) > 10800 }}
+                {% if state_attr('sensor.tvattstuga_humidity', 'last_updated') == None %} 
+                  0
+                {% else %} 
+                  {{ (as_timestamp(now())-as_timestamp(states.sensor.tvattstuga_humidity.last_updated)) > 7200 }}
+                {% endif %}
+
     action:
       - service: homeassistant.turn_on
         entity_id: input_boolean.tvattstuga_reading_missing_alarm
@@ -411,6 +569,7 @@ automation:
     trigger:
       - platform: time_pattern
         minutes: "/5"
+
     condition:
       condition: and
       conditions:
@@ -419,7 +578,12 @@ automation:
           state: 'off'
         - condition: template
           value_template: >
-            {{ (as_timestamp(now())-as_timestamp(states.sensor.varmepump_temperature.last_updated)) > 7200 }}
+            {% if state_attr('sensor.varmepump_temperature', 'last_updated') == None %} 
+              0
+            {% else %} 
+              {{ (as_timestamp(now())-as_timestamp(states.sensor.varmepump_temperature.last_updated)) > 7200 }}
+            {% endif %}
+
     action:
       - service: homeassistant.turn_on
         entity_id: input_boolean.varmepump_reading_missing_alarm
@@ -431,6 +595,7 @@ automation:
     trigger:
       - platform: time_pattern
         minutes: "/5"
+
     condition:
       condition: and
       conditions:
@@ -439,7 +604,12 @@ automation:
           state: 'off'
         - condition: template
           value_template: >
-            {{ (as_timestamp(now())-as_timestamp(states.sensor.vardagsrum_temperature.last_updated)) > 7200 }}
+            {% if state_attr('sensor.vardagsrum_temperature', 'last_updated') == None %} 
+              0
+            {% else %} 
+              {{ (as_timestamp(now())-as_timestamp(states.sensor.vardagsrum_temperature.last_updated)) > 7200 }}
+            {% endif %}
+
     action:
       - service: homeassistant.turn_on
         entity_id: input_boolean.vardagsrum_reading_missing_alarm
@@ -451,6 +621,7 @@ automation:
     trigger:
       - platform: time_pattern
         minutes: "/5"
+
     condition:
       condition: and
       conditions:
@@ -460,11 +631,20 @@ automation:
         - condition: or
           conditions:
             - condition: template
-              value_template: > 
-                {{ (as_timestamp(now())-as_timestamp(states.sensor.hall_temperature.last_updated)) > 7200 }}
+              value_template: >
+                {% if state_attr('sensor.hall_temperature', 'last_updated') == None %} 
+                  0
+                {% else %} 
+                  {{ (as_timestamp(now())-as_timestamp(states.sensor.hall_temperature.last_updated)) > 7200 }}
+                {% endif %}
             - condition: template
               value_template: > 
-                {{ (as_timestamp(now())-as_timestamp(states.sensor.hall_humidity.last_updated)) > 7200 }}
+                {% if state_attr('sensor.hall_humidity', 'last_updated') == None %} 
+                  0
+                {% else %} 
+                  {{ (as_timestamp(now())-as_timestamp(states.sensor.hall_humidity.last_updated)) > 7200 }}
+                {% endif %}
+
     action:
       - service: homeassistant.turn_on
         entity_id: input_boolean.hall_reading_missing_alarm
@@ -476,6 +656,7 @@ automation:
     trigger:
       - platform: time_pattern
         minutes: "/5"
+
     condition:
       condition: and
       conditions:
@@ -486,10 +667,19 @@ automation:
           conditions:
             - condition: template
               value_template: > 
-                {{ (as_timestamp(now())-as_timestamp(states.sensor.garage_temperature.last_updated)) > 7200 }}
+                {% if state_attr('sensor.garage_temperature', 'last_updated') == None %} 
+                  0
+                {% else %} 
+                  {{ (as_timestamp(now())-as_timestamp(states.sensor.garage_temperature.last_updated)) > 7200 }}
+                {% endif %}
             - condition: template
               value_template: > 
-                {{ (as_timestamp(now())-as_timestamp(states.sensor.garage_humidity.last_updated)) > 7200 }}
+                {% if state_attr('sensor.garage_humidity', 'last_updated') == None %} 
+                  0
+                {% else %} 
+                  {{ (as_timestamp(now())-as_timestamp(states.sensor.garage_humidity.last_updated)) > 7200 }}
+                {% endif %}
+
     action:
       - service: homeassistant.turn_on
         entity_id: input_boolean.garage_reading_missing_alarm
@@ -501,6 +691,7 @@ automation:
     trigger:
       - platform: time_pattern
         minutes: "/5"
+
     condition:
       condition: and
       conditions:
@@ -509,7 +700,12 @@ automation:
           state: 'off'
         - condition: template
           value_template: >
-            {{ (as_timestamp(now())-as_timestamp(states.sensor.forrad_temperature.last_updated)) > 7200 }}
+            {% if state_attr('sensor.forrad_temperature', 'last_updated') == None %} 
+              0
+            {% else %} 
+              {{ (as_timestamp(now())-as_timestamp(states.sensor.forrad_temperature.last_updated)) > 7200 }}
+            {% endif %}
+
     action:
       - service: homeassistant.turn_on
         entity_id: input_boolean.forrad_reading_missing_alarm
@@ -521,6 +717,7 @@ automation:
     trigger:
       - platform: time_pattern
         minutes: "/5"
+
     condition:
       condition: and
       conditions:
@@ -531,10 +728,19 @@ automation:
           conditions:
             - condition: template
               value_template: > 
-                {{ (as_timestamp(now())-as_timestamp(states.sensor.friggebod_temperature.last_updated)) > 7200 }}
+                {% if state_attr('sensor.friggebod_temperature', 'last_updated') == None %} 
+                  0
+                {% else %} 
+                  {{ (as_timestamp(now())-as_timestamp(states.sensor.friggebod_temperature.last_updated)) > 7200 }}
+                {% endif %}
             - condition: template
               value_template: > 
-                {{ (as_timestamp(now())-as_timestamp(states.sensor.friggebod_humidity.last_updated)) > 7200 }}
+                {% if state_attr('sensor.friggebod_humidity', 'last_updated') == None %} 
+                  0
+                {% else %} 
+                  {{ (as_timestamp(now())-as_timestamp(states.sensor.friggebod_humidity.last_updated)) > 7200 }}
+                {% endif %}
+
     action:
       - service: homeassistant.turn_on
         entity_id: input_boolean.friggebod_reading_missing_alarm
@@ -556,10 +762,19 @@ automation:
           conditions:
             - condition: template
               value_template: > 
-                {{ (as_timestamp(now())-as_timestamp(states.sensor.ute_friggebod_temperature.last_updated)) > 7200 }}
+                {% if state_attr('sensor.ute_friggebod_temperature', 'last_updated') == None %} 
+                  0
+                {% else %} 
+                  {{ (as_timestamp(now())-as_timestamp(states.sensor.ute_friggebod_temperature.last_updated)) > 7200 }}
+                {% endif %}
             - condition: template
               value_template: > 
-                {{ (as_timestamp(now())-as_timestamp(states.sensor.ute_friggebod_humidity.last_updated)) > 7200 }}
+                {% if state_attr('sensor.ute_friggebod_humidity', 'last_updated') == None %} 
+                  0
+                {% else %} 
+                  {{ (as_timestamp(now())-as_timestamp(states.sensor.ute_friggebod_humidity.last_updated)) > 7200 }}
+                {% endif %}
+
     action:
       - service: homeassistant.turn_on
         entity_id: input_boolean.ute_friggebod_reading_missing_alarm

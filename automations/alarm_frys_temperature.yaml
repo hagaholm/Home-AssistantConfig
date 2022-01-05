@@ -9,16 +9,17 @@
       entity_id: sensor.frys_temperature
       above: '-13'
 
-    conditions: "{{ states('sensor.frys_temperature') != 'unknown' }}"
-
     action:
-      - service: notify.pushbullet
-        data:
-          message: "LARM! Varning hög temp i frysen: {{ states('sensor.frys_temperature') }} {{ state_attr('sensor.frys_temperature', 'unit_of_measurement') }}"
-      - delay: '00:00:10'
-      - service: notify.pushbullet
-        data:
-          message: "LARM! Varning hög temp i frysen: {{ states('sensor.frys_temperature') }} {{ state_attr('sensor.frys_temperature', 'unit_of_measurement') }}"
+      - choose:
+          - conditions: "{{ states('sensor.frys_temperature') != 'unknown' }}"
+            sequence:
+              - service: notify.pushbullet
+                data:
+                  message: "LARM! Varning hög temp i frysen: {{ states('sensor.frys_temperature') }} {{ state_attr('sensor.frys_temperature', 'unit_of_measurement') }}"
+              - delay: '00:00:10'
+              - service: notify.pushbullet
+                data:
+                  message: "LARM! Varning hög temp i frysen: {{ states('sensor.frys_temperature') }} {{ state_attr('sensor.frys_temperature', 'unit_of_measurement') }}"
 
     ######################################################
     ### Varnar för hög temp i frysen                   ###
@@ -31,12 +32,13 @@
       entity_id: sensor.frys_temperature
       above: '-15'
 
-    conditions: "{{ states('sensor.frys_temperature') != 'unknown' }}"
-
     action:
-      - service: notify.pushbullet
-        data:
-          message: "LARM! Hög temp i frysen: {{ states('sensor.frys_temperature') }} {{ state_attr('sensor.frys_temperature', 'unit_of_measurement') }}"
+      - choose:
+          - conditions: "{{ states('sensor.frys_temperature') != 'unknown' }}"
+            sequence:
+              - service: notify.pushbullet
+                data:
+                  message: "LARM! Hög temp i frysen: {{ states('sensor.frys_temperature') }} {{ state_attr('sensor.frys_temperature', 'unit_of_measurement') }}"
 
     ####################################################
     ### Varnar för låg temp i Frys                   ###
@@ -49,9 +51,10 @@
       entity_id: sensor.frys_temperature
       below: '-25'
 
-    conditions: "{{ states('sensor.frys_temperature') != 'unknown' }}"
-
     action:
-      - service: notify.pushbullet
-        data:
-          message: "LARM! Låg temp i frysen: {{ states('sensor.frys_temperature') }} {{ state_attr('sensor.frys_temperature', 'unit_of_measurement') }}"
+      - choose:
+          - conditions: "{{ states('sensor.frys_temperature') != 'unknown' }}"
+            sequence:
+              - service: notify.pushbullet
+                data:
+                  message: "LARM! Låg temp i frysen: {{ states('sensor.frys_temperature') }} {{ state_attr('sensor.frys_temperature', 'unit_of_measurement') }}"

@@ -151,7 +151,7 @@
     ### C: group.track_for_home_devices = 'home'           ###
     ###    09:00:00 - 05:00:00                             ###
     ### A: input_select.light_inside = Släckt              ###
-    ###    input_select.light_inside = Julbelysning        ###
+    ###    input_select.light_inside = Fönsterbelysning    ###
     ##########################################################
   - alias: Dagbelysning off (>2500, hemma)
     trigger:
@@ -175,7 +175,7 @@
               - service: input_select.select_option
                 entity_id: input_select.light_inside
                 data:
-                  option: Julbelysning
+                  option: Fönsterbelysning
         default:
           - service: input_select.select_option
             entity_id: input_select.light_inside

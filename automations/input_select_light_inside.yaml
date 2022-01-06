@@ -63,21 +63,21 @@
       - service: script.away_lights_on
 
     ###################################################################
-    ### Tänder julbelysning                                         ###
+    ### Tänder fönterbelysning                                      ###
     ### För att julbelysning ska vara tänd även om det är ljust ute ###
-    ### T: input_select.light_inside == Julbelysning                ###
+    ### T: input_select.light_inside == Fönsterbelysning            ###
     ### A: script.christmas_lights_on                               ###
     ###################################################################
-  - alias: Tänd bortabelysning
+  - alias: Tänd fönsterbelysning
     mode: single
 
     trigger:
       - platform: state
         entity_id: input_select.light_inside
-        to: Julbelysning
+        to: Fönsterbelysning
 
     action:
-      - service: script.christmas_lights_on
+      - service: script.window_lights_on
 
     ##############################################
     ### Släcker innebelysning                  ###

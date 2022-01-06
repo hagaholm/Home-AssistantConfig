@@ -1,8 +1,8 @@
-  #######################
-  ### Julbelysning on ###
-  #######################
-  christmas_lights_on:
-    alias: Julbelysning on
+  ###########################
+  ### Fönsterbelysning on ###
+  ###########################
+  window_lights_on:
+    alias: Fönsterbelysning on
     sequence:
       - service: script.wait_for_reload_ikea_integration
 

@@ -112,6 +112,11 @@
           entity_id: input_select.kitchen_lights
           option: Släckt
 
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.garden
+          option: Släckt
+
       - service: light.turn_off
         data:
           entity_id: light.friggebod_fasad
@@ -120,8 +125,6 @@
         data:
           entity_id: light.friggebod_fonster
           transition: 2
-      - service: light.turn_off
-        entity_id: light.tradgard
 
       - service: remote.turn_off
         entity_id: remote.harmony_hub
@@ -169,6 +172,11 @@
           entity_id: input_select.kitchen_lights
           option: Släckt
 
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.garden
+          option: Släckt
+
       - service: light.turn_off
         data:
           entity_id: light.friggebod_fasad
@@ -177,8 +185,6 @@
         data:
           entity_id: light.friggebod_fonster
           transition: 2
-      - service: light.turn_off
-        entity_id: light.tradgard
 
       - service: remote.turn_off
         entity_id: remote.harmony_hub
@@ -224,6 +230,11 @@
           entity_id: input_select.kitchen_lights
           option: Släckt
 
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.garden
+          option: Släckt
+
       - service: light.turn_off
         data:
           entity_id: light.friggebod_fasad
@@ -233,9 +244,6 @@
         data:
           entity_id: light.friggebod_fonster
           transition: 2
-
-      - service: light.turn_off
-        entity_id: light.tradgard
 
       - delay: '00:10:00'
 

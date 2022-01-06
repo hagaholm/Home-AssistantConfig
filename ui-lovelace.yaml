@@ -143,6 +143,9 @@ views:
                 action: toggle
               entity: light.kok_jul
               name: Kök
+      - entity: input_select.light_inside
+        type: entity
+        state_color: true
     icon: 'mdi:information-outline'
     panel: false
     path: Start

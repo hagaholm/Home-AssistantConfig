@@ -4,7 +4,7 @@
     ### T: sensor.ljusstyrka < input_number.kitchen_light_on            ###
     ### C: 12:00:00 - 22:00:00                                          ###
     ### C: group.track_for_home_devices == 'home'                       ###
-    ### A: input_select.kitchen_lights = 100%                           ###
+    ### A: input_select.light_kitchen = 100%                            ###
     #######################################################################
   - alias: Kök 100% (<2500)
     mode: single
@@ -26,7 +26,7 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.kitchen_lights
+          entity_id: input_select.light_kitchen
           option: 100%
 
     #####################################################################
@@ -34,7 +34,7 @@
     ### T: input_boolean.rorelsedetektor_kok_aktiv == on              ###
     ### C: sensor.ljusstyrka < input_number.kitchen_light_on          ###
     ###    05:00:00 - 12:00:00                                        ###
-    ### A: input_select.kitchen_lights = 100%                         ###
+    ### A: input_select.light_kitchen = 100%                          ###
     #####################################################################
   - alias: Kök 100% morgon (sensor on, <2500)
     mode: queued
@@ -65,7 +65,7 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.kitchen_lights
+          entity_id: input_select.light_kitchen
           option: 100%
 
     #####################################################################
@@ -73,7 +73,7 @@
     ### T: input_boolean.rorelsedetektor_kok_aktiv == on              ###
     ### C: sensor.ljusstyrka 150-input_number.kitchen_light_on        ###
     ###    12:00:00 - 05:00:00                                        ###
-    ### A: input_select.kitchen_lights = 100%                         ###
+    ### A: input_select.light_kitchen = 100%                          ###
     #####################################################################
   - alias: Kök 100% (sensor on, 150-2500)
     mode: queued
@@ -107,7 +107,7 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.kitchen_lights
+          entity_id: input_select.light_kitchen
           option: 100%
 
     ##################################################################
@@ -116,7 +116,7 @@
     ### C: sensor.ljusstyrka 0-150                                 ###
     ###    12:00:00 - 05:00:00                                     ###
     ###    light.kok_lilla_fonstret == 'on'                        ###
-    ### A: input_select.kitchen_lights = 100%                      ###
+    ### A: input_select.light_kitchen = 100%                       ###
     ##################################################################
   - alias: Kök 100% (sensor on, 0-150)
     mode: queued
@@ -151,7 +151,7 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.kitchen_lights
+          entity_id: input_select.light_kitchen
           option: 100%
 
     #####################################################################################
@@ -161,7 +161,7 @@
     ###    sensor.ljusstyrka 0-150                                                    ###
     ###    12:00:00 - 05:00:00                                                        ###
     ###    light.kok_lilla_fonstret == 'off'                                          ###
-    ### A: input_select.kitchen_lights = 100%                                         ###
+    ### A: input_select.light_kitchen = 100%                                          ###
     #####################################################################################
   - alias: Kök 100% (sensor on, Borta, 0-150)
     mode: queued
@@ -199,7 +199,7 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.kitchen_lights
+          entity_id: input_select.light_kitchen
           option: 100%
 
     ####################################################################################
@@ -209,7 +209,7 @@
     ###    sensor.ljusstyrka 0-150                                                   ###
     ###    12:00:00 - 05:00:00                                                       ###
     ###    light.kok_lilla_fonstret == 'off'                                         ###
-    ### A: input_select.kitchen_lights = 25%                                         ###
+    ### A: input_select.light_kitchen = 25%                                          ###
     ####################################################################################
   - alias: Kök 25% (sensor on, Hemma, 0-150)
     mode: queued
@@ -247,13 +247,13 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.kitchen_lights
+          entity_id: input_select.light_kitchen
           option: 25%
 
     #########################################################
     ### Släcker lampor när ingen varit i köket på 9 min   ###
     ### T: input_boolean.rorelsedetektor_kok_aktiv == off ###
-    ### A: input_select.kitchen_lights = Släckt           ###
+    ### A: input_select.light_kitchen = Släckt            ###
     #########################################################
   - alias: Kök off (sensor off)
     mode: single
@@ -266,7 +266,7 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.kitchen_lights
+          entity_id: input_select.light_kitchen
           option: Släckt
 
     ##########################################################

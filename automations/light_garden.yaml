@@ -6,7 +6,7 @@
     ### T: input_boolean.rorelsedetektor_kok_aktiv == on          ###
     ### C: sensor.ljusstyrka < 40                                 ###
     ###    05:00:00 - 12:00:00                                    ###
-    ### A: input_select.garden_lights = Tänt                      ###
+    ### A: input_select.light_garden = Tänt                       ###
     #################################################################
   - alias: Trädgårdsbelysning on (sensor on, <40)
     trigger:
@@ -30,7 +30,7 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.garden_lights
+          entity_id: input_select.light_garden
           option: Tänt
 
     ####################################################
@@ -40,7 +40,7 @@
     ###    input_select.home_status == 'hemma på'    ###
     ###    time: 12:00 - 05:00                       ###
     ###    light.tradgard == off                     ###
-    ### A: input_select.garden_lights = Tänt         ###
+    ### A: input_select.light_garden = Tänt          ###
     ####################################################
   - alias: Trädgårdsbelysning on (home, <40) 
     trigger:
@@ -67,7 +67,7 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.garden_lights
+          entity_id: input_select.light_garden
           option: Tänt
 
     #######################################################################
@@ -76,7 +76,7 @@
     ### C: group.track_for_home_devices == not_home'                    ###
     ### C: time: 12:00 - 05:00                                          ###
     ###    light.tradgard == off                                        ###
-    ### A: input_select.garden_lights = Tänt                            ###
+    ### A: input_select.light_garden = Tänt                             ###
     #######################################################################
   - alias: Trädgårdsbelysning on (away, <40)
     trigger:
@@ -100,14 +100,14 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.garden_lights
+          entity_id: input_select.light_garden
           option: Tänt
 
     #####################################################
     ### Släcker trädgårdsbelysning när det blir ljust ###
     ### T: sensor.ljusstyrka > 60                     ###
     ### C: light.tradgard == on                       ###
-    ### A: input_select.garden_lights = Släckt        ###
+    ### A: input_select.light_garden = Släckt         ###
     #####################################################
   - alias: Trädgårdsbelysning off (>60)
     trigger:
@@ -123,7 +123,7 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.garden_lights
+          entity_id: input_select.light_garden
           option: Släckt
 
     ######################################################
@@ -132,7 +132,7 @@
     ### C: time: 21:00 - 06:00                         ###
     ###    group.track_for_home_devices = 'home'       ###
     ###    light.tradgard == on                        ###
-    ### A: input_select.garden_lights = Släckt         ###
+    ### A: input_select.light_garden = Släckt          ###
     ######################################################
   - alias: Trädgårdsbelysning off
     trigger:
@@ -156,5 +156,5 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.garden_lights
+          entity_id: input_select.light_garden
           option: Släckt

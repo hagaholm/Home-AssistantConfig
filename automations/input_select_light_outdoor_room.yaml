@@ -1,6 +1,6 @@
     ############################################
     ### Tänder uterumsbelysning              ###
-    ### T: input_select.light_inside == Tänt ###
+    ### T: input_select.light_uterum == Tänt ###
     ### A: script.outdoor_room_light_on      ###
     ############################################
   - alias: Tänd uterumsbelysning
@@ -8,7 +8,7 @@
 
     trigger:
       - platform: state
-        entity_id: input_select.uterum_lights
+        entity_id: input_select.light_uterum
         to: Tänt
 
     action:
@@ -16,7 +16,7 @@
 
     ##############################################
     ### Släcker uterumsbelysning               ###
-    ### T: input_select.light_inside == Släckt ###
+    ### T: input_select.light_uterum == Släckt ###
     ### A: script.outdoor_room_light_off       ###
     ##############################################
   - alias: Släck uterumsbelysning
@@ -24,7 +24,7 @@
 
     trigger:
       - platform: state
-        entity_id: input_select.uterum_lights
+        entity_id: input_select.light_uterum
         to: Släckt
 
     action:

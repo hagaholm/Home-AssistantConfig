@@ -4,7 +4,7 @@
     ### C: 12:00:00 - 21:45:00                         ###
     ###    sensor.ljusstyrka < 250                     ###
     ###    sensor.uterum > 16                          ###
-    ### A: input_select.uterum_lights = Tänt           ###
+    ### A: input_select.light_uterum = Tänt            ###
     ######################################################
   - alias: Uterums belysning on (home)
     trigger:
@@ -29,7 +29,7 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.uterum_lights
+          entity_id: input_select.light_uterum
           option: Tänt
 
     ####################################################
@@ -38,7 +38,7 @@
     ### C: 12:00:00 - 21:45:00                       ###
     ###    sensor.ljusstyrka < 250                   ###
     ###    group.track_for_home_devices == home      ###
-    ### A: input_select.uterum_lights = Tänt         ###
+    ### A: input_select.light_uterum = Tänt          ###
     ####################################################
   - alias: Uterums belysning on (>16)
     trigger:
@@ -62,7 +62,7 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.uterum_lights
+          entity_id: input_select.light_uterum
           option: Tänt
 
     ####################################################
@@ -71,7 +71,7 @@
     ### C: 12:00:00 - 21:45:00                       ###
     ###    sensor.uterum > 16                        ###
     ###    group.track_for_home_devices == home      ###
-    ### A: input_select.uterum_lights = Tänt         ###
+    ### A: input_select.light_uterum = Tänt          ###
     ####################################################
   - alias: Uterums belysning on (<250)
     trigger:
@@ -95,14 +95,14 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.uterum_lights
+          entity_id: input_select.light_uterum
           option: Tänt
 
     ##########################################################################
     ### Släcker uterums belysning på kvällen när allt släcks inne av någon ###
     ### T: light.kok_lilla_fonstret == off                                 ###
     ### C: group.track_for_home_devices == home                            ###
-    ### A: input_select.uterum_lights = Släckt                             ###
+    ### A: input_select.light_uterum = Släckt                              ###
     ##########################################################################
   - alias: Uterums belysning off (All off, hemma)
     trigger:
@@ -120,13 +120,13 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.uterum_lights
+          entity_id: input_select.light_uterum
           option: Släckt
 
     ###############################################################
     ### Släcker uterums belysning på kvällen när ingen är hemma ###
     ### T: group.track_for_home_devices == not_home             ###
-    ### A: input_select.uterum_lights = Släckt                  ###
+    ### A: input_select.light_uterum = Släckt                   ###
     ###############################################################
   - alias: Uterums belysning off (Borta)
     trigger:
@@ -138,13 +138,13 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.uterum_lights
+          entity_id: input_select.light_uterum
           option: Släckt
 
     ########################################################
     ### Släcker uterums belysning när det blir för kallt ###
     ### T: sensor.uterum < 15                            ###
-    ### A: input_select.uterum_lights = Släckt           ###
+    ### A: input_select.light_uterum = Släckt            ###
     ########################################################
   - alias: Uterums belysning off (<15)
     trigger:
@@ -155,5 +155,5 @@
     action:
       - service: input_select.select_option
         data:
-          entity_id: input_select.uterum_lights
+          entity_id: input_select.light_uterum
           option: Släckt

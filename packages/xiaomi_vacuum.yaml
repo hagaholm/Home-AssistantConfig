@@ -79,7 +79,7 @@ sensor:
           {% if val == 'on' %}
             mdi:do-not-disturb
           {% else %}
-            mdi:do-not-disturb-off
+            mdi:minus-circle-off
           {% endif %}
       vacuum_operation:
         value_template: 'Operation'

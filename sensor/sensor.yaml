@@ -45,7 +45,7 @@
     # Frys i köket, visar temperature #
     # Ny termometer                   #
     ###################################
-      - id: 180
+      - id: 208
         name: Frys
 
     ##################################
@@ -73,12 +73,17 @@
       - id: 200
         name: Förråd
 
-    ##########################
-    # Louise rum, visar temp #
-    # Ny termometer          #
-    ##########################
-      - id: 208
+    ##################################
+    # Vardagsrum, visar temp         #
+    # Ny termometer                  #
+    # Fungerar inte, vet inte varför #
+    ##################################
+      - id: 180
         name: Vardagsrum
+
+    ##################################
+    # friggebod, visar temp och fukt #
+    ##################################
       - id: 215
         name: Friggebod
 
@@ -205,7 +210,7 @@
     type: mean
     entity_ids:
       - sensor.hall_temperature
-      - sensor.vardagsrum_temperature
+#      - sensor.vardagsrum_temperature
       - sensor.sovrum
       - sensor.louise_rum_temperature
     round_digits: 1

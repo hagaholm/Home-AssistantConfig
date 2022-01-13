@@ -5,6 +5,14 @@
   ########################################
 - alias: Starta elvärme 5 grader
   mode: queued
+
+  condition:
+    condition: and
+    conditions:
+      - condition: numeric_state
+        entity_id: sensor.ute
+        below: 4
+
   trigger:
     - platform: numeric_state
       entity_id: sensor.forrad_temperature
@@ -32,6 +40,13 @@
   ########################################
 - alias: Starta elvärme 8 grader
   mode: queued
+
+    condition: and
+    conditions:
+      - condition: numeric_state
+        entity_id: sensor.ute
+        below: 7
+
   trigger:
     - platform: numeric_state
       entity_id: sensor.forrad_temperature
@@ -124,6 +139,7 @@
     - platform: numeric_state
       entity_id: sensor.garage_temperature
       above: '15'
+
   action:
     - service: homeassistant.turn_off
       entity_id: switch.garage_elvarme
@@ -173,6 +189,7 @@
     - platform: numeric_state
       entity_id: sensor.garage_temperature
       above: '15'
+
   action:
     - service: homeassistant.turn_off
       entity_id: switch.garage_elvarme

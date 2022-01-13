@@ -41,6 +41,7 @@
 - alias: Starta elvärme 8 grader
   mode: queued
 
+  condition:
     condition: and
     conditions:
       - condition: numeric_state

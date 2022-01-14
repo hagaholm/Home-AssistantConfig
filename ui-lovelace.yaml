@@ -217,6 +217,7 @@ views:
           - sensor.vardagsrum_temperature
           - sensor.sovrum
           - sensor.louise_rum_temperature
+          - sensor.andreas_rum_temperature
           - sensor.badrum_temperature
           - sensor.tvattstuga_temperature
         title: Inomhus temperatur
@@ -603,6 +604,7 @@ views:
         state_color: true
       - type: entities
         entities:
+          - sensor.andreas_rum_temperature
           - light.andreas_fonster_ikea
         title: Andreas rum
         show_header_toggle: true

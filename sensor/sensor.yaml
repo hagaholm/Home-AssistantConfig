@@ -15,8 +15,8 @@
     # Grannens regnmätare, visar senaste timme och total #
     ######################################################
     #13: Regnmätare
-      - id: 18
-        name: Regnmätare
+    #  - id: 18
+    #    name: Regnmätare
 
     ################################
     # Husvagn, visar temp och fukt #
@@ -73,13 +73,20 @@
       - id: 200
         name: Förråd
 
-    ##################################
-    # Vardagsrum, visar temp         #
-    # Ny termometer                  #
-    # Fungerar inte, vet inte varför #
-    ##################################
+    #####################################
+    # Vardagsrum, visar temp            #
+    # Ny termometer                     #
+    # Fungerar inte, men hittad som 127 #
+    #####################################
     #  - id: 180
     #    name: Vardagsrum
+
+    ##################################
+    # Andreas rum, visar temp        #
+    # Ny termometer                  #
+    ##################################
+      - id: 127
+        name: Andreas rum
 
     ##################################
     # friggebod, visar temp och fukt #
@@ -90,8 +97,8 @@
     #############################################
     # Grannens inne givare, visar temp och fukt #
     #############################################
-      - id: 231
-        name: Inne grannen
+    #  - id: 231
+    #       name: Inne grannen
 
     ################################
     # Hall, visar på temp och fukt #
@@ -213,6 +220,7 @@
       - sensor.vardagsrum_temperature
       - sensor.sovrum
       - sensor.louise_rum_temperature
+      - sensor.andreas_rum_temperature
     round_digits: 1
 
 ########

@@ -245,3 +245,14 @@
 #    origin: !secret gps_coordinates_work
 #    destination: !secret gps_coordinates_home
 #    region: EU
+
+
+##############
+# Statistics #
+##############
+  - platform: statistics
+    name: "Ftx medel"
+    entity_id: sensor.ftx
+    state_characteristic: mean
+    max_age:
+      hours: 24

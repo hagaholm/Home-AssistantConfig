@@ -947,14 +947,12 @@ views:
       - type: entities
         entities:
           - sensor.raspberry_pi_3b_1
-          - sensor.raspberry_pi_3b_1_temperature
         title: Raspberry Pi 3B (Hagaholm)
         show_header_toggle: true
         state_color: true
       - type: entities
         entities:
           - sensor.raspberry_pi_3b_2
-          - sensor.raspberry_pi_3b_2_temperature
         title: Raspberry Pi 3B (Lux)
         show_header_toggle: true
         state_color: true
@@ -970,7 +968,6 @@ views:
           - sensor.last_boot
           - sensor.uptime
           - sensor.cpu_temperature
-          - sensor.cpu
           - sensor.load_1m
           - sensor.load_5m
           - sensor.load_15m

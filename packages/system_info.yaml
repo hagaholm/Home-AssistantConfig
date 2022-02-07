@@ -187,13 +187,13 @@ sensor:
         value_template: "{{ 'Online' if is_state('device_tracker.louises_a52s', 'home') else 'Offline' }}"
       mobil_annelie:
         friendly_name: 'Annelie'
-        value_template: "{{ 'Online' if is_state('device_tracker.mobil_annelie', 'home') else 'Offline' }}"
+        value_template: "{{ 'Online' if is_state('device_tracker.annelies_galaxy_a71', 'home') else 'Offline' }}"
       mobil_annelie_5g:
         friendly_name: 'Annelie 5G'
         value_template: "{{ 'Online' if is_state('device_tracker.mobil_annelie_5g', 'home') else 'Offline' }}"
       mobil_annelie_jobb:
         friendly_name: 'Annelie jobb'
-        value_template: "{{ 'Online' if is_state('device_tracker.mobil_annelie_jobb', 'home') else 'Offline' }}"
+        value_template: "{{ 'Online' if is_state('device_tracker.6a_39_76_15_04_d9', 'home') else 'Offline' }}"
       mobil_micke:
         friendly_name: 'Micke'
         value_template: "{{ 'Online' if is_state('device_tracker.galaxy_a52s_5g', 'home') else 'Offline' }}" # Mickes mobil

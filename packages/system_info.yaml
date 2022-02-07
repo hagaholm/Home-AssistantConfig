@@ -154,9 +154,9 @@ sensor:
       tradfri_gateway:
         friendly_name: 'Trådfri Gateway'
         value_template: "{{ 'Online' if is_state('device_tracker.tradfri_gateway', 'home') else 'Offline' }}"
-      rockrobo:
-        friendly_name: 'Xiaomi Roborock S5'
-        value_template: "{{ 'Online' if is_state('device_tracker.rockrobo', 'home') else 'Offline' }}"
+#      rockrobo:
+#        friendly_name: 'Xiaomi Roborock S5'
+#        value_template: "{{ 'Online' if is_state('device_tracker.rockrobo', 'home') else 'Offline' }}"
       camera1:
         friendly_name: 'Kamera 1'
         value_template: "{{ 'Online' if is_state('device_tracker.camera1', 'home') else 'Offline' }}"

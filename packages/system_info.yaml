@@ -119,7 +119,7 @@ sensor:
         value_template: "{{ 'Online' if is_state('device_tracker.harmony_hub', 'home') else 'Offline' }}"
       canal_digital:
         friendly_name: 'Canal Digital'
-        value_template: "{{ 'Online' if is_state('device_tracker.canal_digital', 'home') else 'Offline' }}"
+        value_template: "{{ 'Online' if is_state('device_tracker.68_63_59_44_5a_17', 'home') else 'Offline' }}"
       classic:
         friendly_name: 'SqueezeBox Classic'
         value_template: "{{ 'Online' if is_state('device_tracker.classic', 'home') else 'Offline' }}"
@@ -137,7 +137,7 @@ sensor:
         value_template: "{{ 'Online' if is_state('device_tracker.chromecast_ultra', 'home') else 'Offline' }}"
       samsung_tv:
         friendly_name: 'Tv Samsung'
-        value_template: "{{ 'Online' if is_state('device_tracker.samsung_tv', 'home') else 'Offline' }}"
+        value_template: "{{ 'Online' if is_state('device_tracker.samsung', 'home') else 'Offline' }}"
       google_home_mini:
         friendly_name: 'Google Home Mini'
         value_template: "{{ 'Online' if is_state('device_tracker.google_home_mini', 'home') else 'Offline' }}"
@@ -153,19 +153,19 @@ sensor:
     #########
       tradfri_gateway:
         friendly_name: 'Trådfri Gateway'
-        value_template: "{{ 'Online' if is_state('device_tracker.tradfri_gateway', 'home') else 'Offline' }}"
+        value_template: "{{ 'Online' if is_state('device_tracker.gw_a0c9a0d8bf11', 'home') else 'Offline' }}"
       rockrobo:
         friendly_name: 'Xiaomi Roborock S5'
         value_template: "{{ 'Online' if is_state('device_tracker.rockrobo', 'home') else 'Offline' }}"
       camera1:
         friendly_name: 'Kamera 1'
-        value_template: "{{ 'Online' if is_state('device_tracker.camera1', 'home') else 'Offline' }}"
+        value_template: "{{ 'Online' if is_state('device_tracker.kamera1', 'home') else 'Offline' }}"
       camera2:
         friendly_name: 'Kamera 2'
-        value_template: "{{ 'Online' if is_state('device_tracker.camera2', 'home') else 'Offline' }}"
+        value_template: "{{ 'Online' if is_state('device_tracker.kamera2', 'home') else 'Offline' }}"
       camera3:
         friendly_name: 'Kamera 3'
-        value_template: "{{ 'Online' if is_state('device_tracker.camera3', 'home') else 'Offline' }}"
+        value_template: "{{ 'Online' if is_state('device_tracker.kamera3', 'home') else 'Offline' }}"
       garmin_fenix_5_plus:
         friendly_name: 'Garmin Fenix 5 Plus'
         value_template: "{{ 'Online' if is_state('device_tracker.GarminFenix5Plus', 'home') else 'Offline' }}"

@@ -101,16 +101,6 @@ sensor:
 
   - platform: template
     sensors:
-    ###########
-    # Network #
-    ###########
-      asus_rt_ac68u:
-        friendly_name: 'Asus RT-AC68U'
-        value_template: "{{ 'Online' if is_state('device_tracker.asus_rt_ac68u', 'home') else 'Offline' }}"
-      asus_n66u:
-        friendly_name: 'Asus EA-N66U'
-        value_template: "{{ 'Online' if is_state('device_tracker.asus_n66u', 'home') else 'Offline' }}"
-
     ###############
     # Mediaplayer #
     ###############
@@ -228,7 +218,7 @@ sensor:
         value_template: "{{ 'Online' if is_state('device_tracker.laptop_664qq6s0', 'home') else 'Offline' }}"
       mickes_work_laptop:
         friendly_name: 'Mickes jobb dator'
-        value_template: "{{ 'Online' if is_state('device_tracker.mseeskwjcpc8g3', 'home') or is_state('device_tracker.seeskwjcpc8g3_2', 'home') else 'Offline' }}"
+        value_template: "{{ 'Online' if is_state('device_tracker.seeskwjcpc8g3', 'home') or is_state('device_tracker.seeskwjcpc8g3_2', 'home') else 'Offline' }}"
       louise_dator:
         friendly_name: 'Louise dator'
         value_template: "{{ 'Online' if is_state('device_tracker.louise_dator', 'home') else 'Offline' }}"

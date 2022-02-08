@@ -101,6 +101,13 @@ sensor:
 
   - platform: template
     sensors:
+    ###########
+    # Network #
+    ###########
+      asus_rt_ac86u:
+        friendly_name: 'Asus RT-AC86U'
+        value_template: "{{ 'Online' if is_state('device_tracker.24_4b_fe_be_c1_58', 'home') else 'Offline' }}"
+    
     ###############
     # Mediaplayer #
     ###############

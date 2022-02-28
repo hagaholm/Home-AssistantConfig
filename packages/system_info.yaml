@@ -206,13 +206,13 @@ sensor:
         value_template: "{{ 'Online' if is_state('device_tracker.galaxy_a52s_5g', 'home') else 'Offline' }}" # Mickes mobil
       mobil_andreas:
         friendly_name: 'Andreas'
-        value_template: "{{ 'Online' if is_state('device_tracker.iphone', 'home') else 'Offline' }}"
+        value_template: "{{ 'Online' if is_state('device_tracker.ee_34_12_e0_64_4e', 'home') else 'Offline' }}"
       mobil_margareta:
         friendly_name: 'Margareta'
-        value_template: "{{ 'Online' if is_state('device_tracker.mobil_margareta', 'home') else 'Offline' }}"
+        value_template: "{{ 'Online' if is_state('device_tracker.galaxy_a71', 'home') else 'Offline' }}"
       mobil_herbert:
         friendly_name: 'Herbert'
-        value_template: "{{ 'Online' if is_state('device_tracker.mobil_herbert', 'home') else 'Offline' }}"
+        value_template: "{{ 'Online' if is_state('device_tracker.42_88_c9_e7_5e_3d', 'home') else 'Offline' }}"
       mobil_erik:
         friendly_name: 'Erik'
         value_template: "{{ 'Online' if is_state('device_tracker.mobil_erik', 'home') else 'Offline' }}"

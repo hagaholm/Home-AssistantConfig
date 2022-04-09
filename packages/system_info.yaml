@@ -32,8 +32,8 @@ sensor:
     # CPU Speed #
     #############
     # https://home-assistant.io/components/sensor.cpuspeed/
-  - platform: cpuspeed
-    name: CPU
+#  - platform: cpuspeed
+#    name: CPU
 
     #################
     # Websocket API #
@@ -224,7 +224,7 @@ sensor:
         friendly_name: 'Mickes dator'
         value_template: "{{ 'Online' if is_state('device_tracker.laptop_664qq6s0', 'home') else 'Offline' }}"
       mickes_work_laptop:
-        friendly_name: 'Mickes jobb dator'
+        friendly_name: 'Mickes jobb dator'                                                            
         value_template: "{{ 'Online' if is_state('device_tracker.seeskwjcpc8g3', 'home') or is_state('device_tracker.seeskwjcpc8g3_2', 'home') else 'Offline' }}"
       louise_dator:
         friendly_name: 'Louise dator'

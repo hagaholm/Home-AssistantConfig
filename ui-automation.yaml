@@ -79,15 +79,6 @@ views:
         state_color: true
       - type: entities
         entities:
-          - automation.kor_annan_vag_hem
-          - automation.kor_annan_vag_till_seb
-          - automation.lang_restid_hem
-          - automation.lang_restid_till_seb
-        title: Restid till och från jobbet
-        show_header_toggle: true
-        state_color: true
-      - type: entities
-        entities:
           - input_boolean.frys_reading_missing_alarm
           - input_boolean.kyl_reading_missing_alarm
           - input_boolean.badrum_reading_missing_alarm

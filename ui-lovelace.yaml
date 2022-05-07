@@ -342,7 +342,7 @@ views:
             - entity: light.vardagsrum_skank
             - entity: light.vardagsrum_vagn
             - entity: light.vardagsrum_vitrinskap
-            - entity: light.sovrum_fonster
+            - entity: light.sovrum_fonster_e27
             - entity: light.sovrum_sangbord
             - entity: light.andreas_fonster_ikea
             - entity: light.louise_fonster
@@ -465,7 +465,7 @@ views:
             - light.kok_lilla_fonstret
             - light.hall_byra
             - light.vardagsrum_fonster
-            - light.sovrum_fonster
+            - light.sovrum_fonster_e27
             - light.louise_fonster
             - light.uterum_fonster
           title: Bortabelysning
@@ -580,7 +580,7 @@ views:
       - type: entities
         entities:
           - sensor.sovrum
-          - entity: light.sovrum_fonster
+          - entity: light.sovrum_fonster_e27
           - entity: light.sovrum_sangbord
         title: Sovrum
         show_header_toggle: true

@@ -450,7 +450,7 @@ automation:
     trigger:
       platform: numeric_state
       entity_id: sensor.yamaha_volume_level
-      above: '59' # > 40
+      above: '0.59' # > 40
 
     condition:
       condition: and
@@ -474,7 +474,7 @@ automation:
     trigger:
       platform: numeric_state
       entity_id: sensor.yamaha_volume_level
-      below: '59' # < 40
+      below: '0.59' # < 40
 
     condition:
       condition: and

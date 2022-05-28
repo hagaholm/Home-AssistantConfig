@@ -12,7 +12,7 @@ sensor:
           {% if state_attr('media_player.yamaha_receiver', 'volume_level') == None %} 
             0 
           {% else %} 
-            state_attr('media_player.yamaha_receiver', 'volume_level') 
+            {{state_attr('media_player.yamaha_receiver', 'volume_level')}}
           {% endif %}
         unit_of_measurement: '%'
         friendly_name: "Yamaha volym"

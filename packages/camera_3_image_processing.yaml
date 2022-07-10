@@ -296,6 +296,17 @@ automation:
             {{ trigger.event.data.object_type != 'person' }}
 
     action:
+      # Get timestamp when animal detected, just for information
+      - service: input_text.set_value
+        entity_id: input_text.camera_3_animal_time_fired
+        data_template:
+          value: '{{ trigger.event.data.saved_file[50:-4] }}'
+      # Get confidence, just for information
+      - service: input_text.set_value
+        entity_id: input_text.camera_3_animal_confidence
+        data_template:
+          value: '{{ trigger.event.data.confidence }}'
+
 
       # Delay 1 sec to be sure the images is saved
       - delay:

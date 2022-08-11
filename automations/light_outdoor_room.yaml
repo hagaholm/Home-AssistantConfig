@@ -2,8 +2,8 @@
     ### Tänder belysning i uterum när någon kommer hem ###
     ### T: group.track_for_home_devices == home        ###
     ### C: 12:00:00 - 21:45:00                         ###
-    ###    sensor.ljusstyrka < 250                     ###
-    ###    sensor.uterum > 16                          ###
+    ###    sensor.ljusstyrka < 150                     ###
+    ###    sensor.uterum > 18                          ###
     ### A: input_select.light_uterum = Tänt            ###
     ######################################################
   - alias: Uterums belysning on (home)
@@ -21,10 +21,10 @@
           before: '21:45:00' 
         - condition: numeric_state
           entity_id: sensor.ljusstyrka
-          below: 250
+          below: 150
         - condition: numeric_state
           entity_id: sensor.uterum
-          above: 16
+          above: 18
 
     action:
       - service: input_select.select_option
@@ -34,17 +34,17 @@
 
     ####################################################
     ### Tänder belysning i uterum när det blir varmt ###
-    ### T: sensor.uterum > 16                        ###
+    ### T: sensor.uterum > 18                        ###
     ### C: 12:00:00 - 21:45:00                       ###
-    ###    sensor.ljusstyrka < 250                   ###
+    ###    sensor.ljusstyrka < 150                   ###
     ###    group.track_for_home_devices == home      ###
     ### A: input_select.light_uterum = Tänt          ###
     ####################################################
-  - alias: Uterums belysning on (>16)
+  - alias: Uterums belysning on (>18)
     trigger:
       platform: numeric_state
       entity_id: sensor.uterum
-      above: 16
+      above: 18
 
     condition:
       condition: and
@@ -54,7 +54,7 @@
           before: '21:45:00' 
         - condition: numeric_state
           entity_id: sensor.ljusstyrka
-          below: 250
+          below: 150
         - condition: state
           entity_id: group.track_for_home_devices
           state: 'home'
@@ -67,17 +67,17 @@
 
     ####################################################
     ### Tänder belysning i uterum när det blir mörkt ###
-    ### T: sensor.ljusstyrka < 250                   ###
+    ### T: sensor.ljusstyrka < 150                   ###
     ### C: 12:00:00 - 21:45:00                       ###
-    ###    sensor.uterum > 16                        ###
+    ###    sensor.uterum > 18                        ###
     ###    group.track_for_home_devices == home      ###
     ### A: input_select.light_uterum = Tänt          ###
     ####################################################
-  - alias: Uterums belysning on (<250)
+  - alias: Uterums belysning on (<150)
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      below: 250
+      below: 150
 
     condition:
       condition: and
@@ -87,7 +87,7 @@
           before: '21:45:00' 
         - condition: numeric_state
           entity_id: sensor.uterum
-          above: '16'
+          above: '18'
         - condition: state
           entity_id: group.track_for_home_devices
           state: 'home'
@@ -143,14 +143,14 @@
 
     ########################################################
     ### Släcker uterums belysning när det blir för kallt ###
-    ### T: sensor.uterum < 15                            ###
+    ### T: sensor.uterum < 17                            ###
     ### A: input_select.light_uterum = Släckt            ###
     ########################################################
-  - alias: Uterums belysning off (<15)
+  - alias: Uterums belysning off (<17)
     trigger:
       platform: numeric_state
       entity_id: sensor.uterum
-      below: 15
+      below: 17
 
     action:
       - service: input_select.select_option

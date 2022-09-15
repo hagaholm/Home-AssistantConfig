@@ -686,6 +686,30 @@ mqtt:
 #  username: !secret mqtt_broker_username
 #  password: !secret mqtt_broker_password
 
+########
+# mqtt #
+########
+  sensor:
+    - state_topic: "hassbian/tsl2591/lux_calibrated"
+      name: Ljusstyrka
+      unit_of_measurement: "lx"
+  # - platform: mqtt
+    # name: Ljusstyrka2
+    # state_topic: "hassbian/tsl2591/lux_5"
+    # unit_of_measurement: "lx"
+  # - platform: mqtt
+    # name: Infrarött ljus
+    # state_topic: "hassbian/tsl2591/infrared"
+    # unit_of_measurement: ""
+  # - platform: mqtt
+    # name: Synligt ljus
+    # state_topic: "hassbian/tsl2591/visible"
+    # unit_of_measurement: ""
+  # - platform: mqtt
+    # name: Fullt spectrum ljus
+    # state_topic: "hassbian/tsl2591/full_spectrum"
+    # unit_of_measurement: ""
+
 ####################################################
 #                                                  #
 #                  VOLVO ON CALL                   #

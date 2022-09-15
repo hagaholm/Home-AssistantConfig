@@ -172,30 +172,6 @@
     unit_of_measurement: "°C"
     value_template: '{{ value | multiply(0.001) | round(1) }}'
 
-########
-# mqtt #
-########
-  - platform: mqtt
-    name: Ljusstyrka
-    state_topic: "hassbian/tsl2591/lux_calibrated"
-    unit_of_measurement: "lx"
-  # - platform: mqtt
-    # name: Ljusstyrka2
-    # state_topic: "hassbian/tsl2591/lux_5"
-    # unit_of_measurement: "lx"
-  # - platform: mqtt
-    # name: Infrarött ljus
-    # state_topic: "hassbian/tsl2591/infrared"
-    # unit_of_measurement: ""
-  # - platform: mqtt
-    # name: Synligt ljus
-    # state_topic: "hassbian/tsl2591/visible"
-    # unit_of_measurement: ""
-  # - platform: mqtt
-    # name: Fullt spectrum ljus
-    # state_topic: "hassbian/tsl2591/full_spectrum"
-    # unit_of_measurement: ""
-
 ##################
 # mold_indicator #
 ##################

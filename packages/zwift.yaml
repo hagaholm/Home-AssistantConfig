@@ -40,6 +40,6 @@ automation:
 
     action:
       - delay:
-        seconds: 900
+          seconds: 900
       - service: homeassistant.turn_off
         entity_id: switch.garage_luftavfuktare 

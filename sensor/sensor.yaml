@@ -202,9 +202,12 @@
 ##############
 # Statistics #
 ##############
-  - platform: statistics
-    name: "Ftx medel"
-    entity_id: sensor.ftx
-    state_characteristic: mean
-    max_age:
-      hours: 24
+# Not valid anymore in 2022.12. For more info:
+# https://www.home-assistant.io/integrations/statistics/
+# https://github.com/home-assistant/core/pull/69700
+#  - platform: statistics
+#    name: "Ftx medel"
+#    entity_id: sensor.ftx
+#    state_characteristic: mean
+#    max_age:
+#      hours: 24

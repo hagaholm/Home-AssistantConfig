@@ -118,11 +118,14 @@
     sequence:
 
 # IKEA
-#      - service: light.turn_on
-#        data:
-#          entity_id: light.kok_stora_fonstret
-#          brightness_pct: 50
-#          transition: 2
+
+# --> Added in xmas22.1
+      - service: light.turn_on
+        data:
+          entity_id: light.kok_stora_fonstret
+          brightness_pct: 50
+          transition: 2
+# <-- Added in xmas22.1
 
       - service: light.turn_on
         data:
@@ -289,8 +292,11 @@
     sequence:
 
 # IKEA
-#      - service: light.turn_off
-#        entity_id: light.kok_stora_fonstret
+
+# --> Added in xmas22.1
+      - service: light.turn_off
+        entity_id: light.kok_stora_fonstret
+# <-- Added in xmas22.1
 
       - service: light.turn_off
         entity_id: light.hall_byra

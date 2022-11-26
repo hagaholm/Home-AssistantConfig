@@ -263,9 +263,9 @@ light:
     name: Uterum julstjärnor
     entity_id: switch.uterum_julstjarnor
 
-  - platform: switch
-    name: Andreas fönster julstjärna
-    entity_id: switch.andreas_fonster_julstjarna
+#  - platform: switch
+#    name: Andreas fönster julstjärna
+#    entity_id: switch.andreas_fonster_julstjarna
  
   - platform: switch
     name: Trädgård
@@ -306,7 +306,7 @@ light:
       - light.vardagsrum_gran
       - light.sovrum_fonster_e27
       - light.sovrum_sangbord
-      - light.andreas_fonster_julstjarna
+      - light.andreas_fonster
       - light.louise_fonster
       - light.louise_golvlampa
 #jul      - light.louise_fonster_dimmer_julstjarna
@@ -448,7 +448,7 @@ light:
   - platform: group 
     name: Andreas rum jul
     entities:
-      - light.andreas_fonster_julstjarna
+      - light.andreas_fonster
 
   - platform: group
     name: Uterum

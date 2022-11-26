@@ -440,6 +440,9 @@ views:
           - light.friggebod_fonster
           - light.friggebod_ute
           - light.spabad_vagg
+          - light.spabad_vanster
+          - light.spabad_mitten
+          - light.spabad_hoger
           - light.tradgard
         title: Utebelysning
         show_header_toggle: true
@@ -632,6 +635,12 @@ views:
         entities:
           - entity: light.spabad_vagg
             name: Vägg
+          - entity: light.spabad_vanster
+            name: Vägg vänster
+          - entity: light.spabad_mitten
+            name: Vägg mitten
+          - entity: light.spabad_hoger
+            name: Vägg höger
         title: Spabad
         show_header_toggle: true
         state_color: true

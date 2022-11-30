@@ -82,7 +82,7 @@
     ##############################################
     ### Släcker innebelysning                  ###
     ### T: input_select.light_inside == Släckt ###
-    ### A: script.daylights_off                ###
+    ### A: script.inside_lights_off            ###
     ##############################################
   - alias: Släcker innebelysning
     mode: single
@@ -93,7 +93,7 @@
         to: Släckt
 
     action:
-      - service: script.daylights_off
+      - service: script.inside_lights_off
 
 
 #       - Släckt

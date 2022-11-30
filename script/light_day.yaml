@@ -242,11 +242,11 @@
               script.daylights_default_on
             {% endif %}
 
-  ########################
-  ### Dagbelysning off ###
-  ########################
-  daylights_off:
-    alias: Dagbelysning off
+  #########################
+  ### Innebelysning off ###
+  #########################
+  inside_lights_off:
+    alias: Innebelysning off
     sequence:
       - service: script.wait_for_reload_ikea_integration
 
@@ -254,13 +254,13 @@
         data_template:
           entity_id: >
             {% if is_state('input_boolean.christmas_light', 'on') %}
-              script.daylights_christmas_off
+              script.inseide_lights_christmas_off
             {% else %}
-              script.daylights_default_off
+              script.inside_lights_default_off
             {% endif %}
 
-  daylights_default_off:
-    alias: Dagbelysning default off
+  inside_lights_default_off:
+    alias: Innebelysning default off
     sequence:
 # IKEA
       - service: light.turn_off
@@ -319,8 +319,8 @@
 #      - service: light.turn_off
 #        entity_id: light.sovrum_sangbord
 
-  daylights_christmas_off:
-    alias: Dagbelysning jul off
+  inseide_lights_christmas_off:
+    alias: Innebelysning jul off
     sequence:
 # IKEA
 

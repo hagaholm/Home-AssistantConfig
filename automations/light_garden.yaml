@@ -21,7 +21,7 @@
           entity_id: sensor.ljusstyrka
           below: 40
         - condition: state
-          entity_id: light.tradgard
+          entity_id: light.tradgard_3
           state: 'off'
         - condition: time
           after: '05:00:00'
@@ -39,7 +39,7 @@
     ### C: group.track_for_home_devices == 'home'    ###
     ###    input_select.home_status == 'hemma på'    ###
     ###    time: 12:00 - 05:00                       ###
-    ###    light.tradgard == off                     ###
+    ###    light.tradgard_3 == off                     ###
     ### A: input_select.light_garden = Tänt          ###
     ####################################################
   - alias: Trädgårdsbelysning on (home, <40) 
@@ -61,7 +61,7 @@
           after: '12:00:00'
           before: '05:00:00'
         - condition: state
-          entity_id: light.tradgard
+          entity_id: light.tradgard_3
           state: 'off'
 
     action:
@@ -75,7 +75,7 @@
     ### T: sensor.ljusstyrka < 40                                       ###
     ### C: group.track_for_home_devices == not_home'                    ###
     ### C: time: 12:00 - 05:00                                          ###
-    ###    light.tradgard == off                                        ###
+    ###    light.tradgard_3 == off                                        ###
     ### A: input_select.light_garden = Tänt                             ###
     #######################################################################
   - alias: Trädgårdsbelysning on (away, <40)
@@ -94,7 +94,7 @@
           after: '12:00:00'
           before: '05:00:00'
         - condition: state
-          entity_id: light.tradgard
+          entity_id: light.tradgard_3
           state: 'off'
 
     action:
@@ -106,7 +106,7 @@
     #####################################################
     ### Släcker trädgårdsbelysning när det blir ljust ###
     ### T: sensor.ljusstyrka > 60                     ###
-    ### C: light.tradgard == on                       ###
+    ### C: light.tradgard_3 == on                       ###
     ### A: input_select.light_garden = Släckt         ###
     #####################################################
   - alias: Trädgårdsbelysning off (>60)
@@ -117,7 +117,7 @@
 
     condition:
       condition: state
-      entity_id: light.tradgard
+      entity_id: light.tradgard_3
       state: 'on'
 
     action:
@@ -131,7 +131,7 @@
     ### T: light.kok_lilla_fonstret == off             ###
     ### C: time: 21:00 - 06:00                         ###
     ###    group.track_for_home_devices = 'home'       ###
-    ###    light.tradgard == on                        ###
+    ###    light.tradgard_3 == on                        ###
     ### A: input_select.light_garden = Släckt          ###
     ######################################################
   - alias: Trädgårdsbelysning off
@@ -150,7 +150,7 @@
           entity_id: group.track_for_home_devices
           state: 'home'
         - condition: state
-          entity_id: light.tradgard
+          entity_id: light.tradgard_3
           state: 'on'
 
     action:

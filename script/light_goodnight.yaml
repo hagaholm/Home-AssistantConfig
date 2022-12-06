@@ -30,10 +30,10 @@
           transition: 2
       - service: light.turn_off
         data:
-          entity_id: light.friggebod_fonster
+          entity_id: light.friggebod_fonster_2
           transition: 2
       - service: light.turn_off
-        entity_id: light.tradgard
+        entity_id: light.tradgard_3
 
       - repeat:
           count: 10
@@ -77,10 +77,10 @@
           transition: 2
       - service: light.turn_off
         data:
-          entity_id: light.friggebod_fonster
+          entity_id: light.friggebod_fonster_2
           transition: 2
       - service: light.turn_off
-        entity_id: light.tradgard
+        entity_id: light.tradgard_3
 
       - repeat:
           count: 10
@@ -123,7 +123,7 @@
           transition: 2
       - service: light.turn_off
         data:
-          entity_id: light.friggebod_fonster
+          entity_id: light.friggebod_fonster_2
           transition: 2
 
       - service: remote.turn_off
@@ -183,7 +183,7 @@
           transition: 2
       - service: light.turn_off
         data:
-          entity_id: light.friggebod_fonster
+          entity_id: light.friggebod_fonster_2
           transition: 2
 
       - service: remote.turn_off
@@ -242,7 +242,7 @@
           
       - service: light.turn_off
         data:
-          entity_id: light.friggebod_fonster
+          entity_id: light.friggebod_fonster_2
           transition: 2
 
       - delay: '00:10:00'

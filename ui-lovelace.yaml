@@ -437,13 +437,13 @@ views:
           state_color: true
       - type: entities
         entities:
-          - light.friggebod_fonster
+          - light.friggebod_fonster_2
           - light.friggebod_ute
           - light.spabad_vagg
           - light.spabad_vanster
           - light.spabad_mitten
           - light.spabad_hoger
-          - light.tradgard
+          - light.tradgard_3
         title: Utebelysning
         show_header_toggle: true
         state_color: true
@@ -648,7 +648,7 @@ views:
         entities:
           - sensor.friggebod_temperature
           - sensor.friggebod_humidity
-          - entity: light.friggebod_fonster
+          - entity: light.friggebod_fonster_2
             name: Fönster
         title: Friggebod
         show_header_toggle: true
@@ -682,7 +682,7 @@ views:
           - light.forrad_fasad
           - light.friggebod_fasad
           - light.friggebod_ute
-          - light.tradgard
+          - light.tradgard_3
           - switch.ringklocka_tvattstuga
           - switch.ringklocka_hall
           - binary_sensor.tradfri_motion_sensor_2

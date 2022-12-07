@@ -18,8 +18,8 @@
   friggebod_light_on:
     alias: Friggebod belysning on
     sequence:
-      - service: light.turn_on
-        entity_id: light.friggebod_fonster_2
+      - service: switch.turn_on
+        entity_id: switch.friggebod_fonster
 
   ########################
   ### Utebelysning off ###
@@ -27,10 +27,9 @@
   outside_light_off:
     alias: Utebelysning off
     sequence:
-      - service: light.turn_off
+      - service: switch.turn_off
         data:
-          entity_id: light.friggebod_fonster_2
-          transition: 2
+          entity_id: switch.friggebod_fonster
       - repeat:
           count: 10
           sequence:

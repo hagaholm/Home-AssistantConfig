@@ -437,7 +437,7 @@ views:
           state_color: true
       - type: entities
         entities:
-          - light.friggebod_fonster_2
+          - switch.friggebod_fonster
           - light.friggebod_ute
           - light.spabad_vagg
           - light.spabad_vanster
@@ -648,7 +648,7 @@ views:
         entities:
           - sensor.friggebod_temperature
           - sensor.friggebod_humidity
-          - entity: light.friggebod_fonster_2
+          - entity: switch  .friggebod_fonster
             name: Fönster
         title: Friggebod
         show_header_toggle: true

@@ -222,9 +222,9 @@ light:
   - platform: switch
     name: Andreas fönster
     entity_id: switch.andreas_fonster
-  - platform: switch
-    name: Friggebod fönster
-    entity_id: switch.friggebod_fonster
+#  - platform: switch
+#    name: Friggebod fönster
+#    entity_id: switch.friggebod_fonster
   - platform: switch
     name: Friggebod ute
     entity_id: switch.friggebod_ute
@@ -363,7 +363,7 @@ light:
   - platform: group
     name: Utebelysning
     entities:
-      - light.friggebod_fonster_2
+      - switch.friggebod_fonster
       - light.friggebod_ute
       - light.spabad_vagg
       - light.spabad_vanster

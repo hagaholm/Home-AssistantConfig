@@ -31,8 +31,8 @@
         data:
           entity_id: light.friggebod_fonster_2
           transition: 2
-      - service: light.turn_off
-        entity_id: light.tradgard_3
+      - service: switch.turn_off
+        entity_id: switch.tradgard
 
       - repeat:
           count: 10
@@ -76,8 +76,8 @@
         data:
           entity_id: light.friggebod_fonster_2
           transition: 2
-      - service: light.turn_off
-        entity_id: light.tradgard_3
+      - service: switch.turn_off
+        entity_id: switch.tradgard
 
       - repeat:
           count: 10

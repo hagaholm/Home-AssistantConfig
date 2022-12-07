@@ -4,8 +4,6 @@
   morning_lights_on:
     alias: Morgonbelysning on
     sequence:
-      - service: script.wait_for_reload_ikea_integration
-
       - service: script.turn_on
         data_template:
           entity_id: >
@@ -187,8 +185,6 @@
   morning_lights_off:
     alias: Morgonbelysning off
     sequence:
-      - service: script.wait_for_reload_ikea_integration
-
       - service: script.turn_on
         data_template:
           entity_id: >

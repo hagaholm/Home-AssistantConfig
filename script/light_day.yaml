@@ -4,8 +4,6 @@
   daylights_on:
     alias: Dagbelysning on
     sequence:
-      - service: script.wait_for_reload_ikea_integration
-
       - service: input_select.select_option
         data:
           entity_id: input_select.home_status
@@ -226,8 +224,6 @@
   daylights_on_morning:
     alias: Dagbelysning on morgon
     sequence:
-      - service: script.wait_for_reload_ikea_integration
-
       - service: input_select.select_option
         data:
           entity_id: input_select.home_status

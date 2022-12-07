@@ -4,7 +4,6 @@
   outdoor_room_light_on:
     alias: Uterums belysning on
     sequence:
-      - service: script.wait_for_reload_ikea_integration
       - service: input_select.select_option
         data:
           entity_id: input_select.light_uterum
@@ -20,7 +19,6 @@
   outdoor_room_light_off:
     alias: Uterums belysning off
     sequence:
-      - service: script.wait_for_reload_ikea_integration
       - service: input_select.select_option
         data:
           entity_id: input_select.light_uterum

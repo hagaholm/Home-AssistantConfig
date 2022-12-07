@@ -31,7 +31,6 @@ automation:
           state: 'on'
 
     action:
-      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_on
         entity_id: light.louise_skrivbord
 
@@ -57,7 +56,6 @@ automation:
           state: 'on'
 
     action:
-      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_on
         entity_id: light.louise_fonster
       - service: light.turn_on
@@ -85,7 +83,6 @@ automation:
           state: 'on'
 
     action:
-      - service: script.wait_for_reload_ikea_integration
       - service: light.turn_off
         entity_id: light.louise_skrivbord
 

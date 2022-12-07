@@ -30,6 +30,22 @@
     action:
       - service: script.daylights_on
 
+    #######################################################
+    ### Tänder kvällsbelysning                          ###
+    ### T: input_select.light_inside == Kvällsbelysning ###
+    ### A: script.eveninglights_on                      ###
+    #######################################################
+  - alias: Tänd kvällsbelysning
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_select.light_inside
+        to: Kvällsbelysning
+
+    action:
+      - service: script.eveninglights_on
+
     #####################################################
     ### Tänder nattbelysning                          ###
     ### T: input_select.light_inside == Nattbelysning ###

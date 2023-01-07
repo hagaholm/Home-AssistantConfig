@@ -108,10 +108,11 @@ sun:
 #---------------------------------------------------
 # Notifier
 #https://home-assistant.io/components/notify.pushetta/
-notify:
-  name: pushbullet
-  platform: pushbullet
-  api_key: !secret pushbullet_api_key
+# Needs to be reoved before 2023.2.0
+#notify:
+#  name: pushbullet
+#  platform: pushbullet
+#  api_key: !secret pushbullet_api_key
 
 #  name: pushetta
 #  platform: pushetta

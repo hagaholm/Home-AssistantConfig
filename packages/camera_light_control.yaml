@@ -188,9 +188,9 @@ automation:
               {{ trigger.event.data.object_type == 'person' }}
 
           # Or animal on image is needed
-          - condition: template
-            value_template: >
-              {{ trigger.event.data.object_type == 'animal' }}
+#          - condition: template
+#            value_template: >
+#              {{ trigger.event.data.object_type == 'animal' }}
 
     action:
       # camera_3_light_control = on

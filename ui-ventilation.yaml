@@ -1,0 +1,70 @@
+title: Ventilation
+views:
+  - title: Vent & Värme
+    path: ventilation
+    badges: []
+    cards:
+      - type: history-graph
+        entities:
+          - entity: switch.ventilationsaggregat
+          - entity: switch.fan_speed
+          - entity: switch.garage_luftavfuktare
+          - entity: switch.garage_elvarme
+        hours_to_show: 24
+        refresh_interval: 0
+        title: Status
+      - type: entities
+        entities:
+          - entity: switch.ventilationsaggregat
+          - entity: switch.fan_speed
+          - entity: switch.garage_luftavfuktare
+          - entity: switch.garage_elvarme
+        title: Status
+      - entities:
+          - entity: sensor.franluft
+          - entity: sensor.tilluft
+          - entity: sensor.avluft
+          - entity: sensor.uteluft
+          - entity: sensor.forrad_temperature
+          - entity: sensor.garage_temperature
+        hours_to_show: 12
+        refresh_interval: 0
+        type: history-graph
+      - type: history-graph
+        entities:
+          - entity: sensor.badrum_humidity
+          - entity: sensor.fukt_badrumsfonster
+          - entity: sensor.hall_humidity
+          - entity: sensor.garage_humidity
+        hours_to_show: 48
+        refresh_interval: 0
+      - type: history-graph
+        entities:
+          - entity: sensor.ftx
+          - entity: sensor.ftx_medel
+        hours_to_show: 48
+        refresh_interval: 0
+      - type: logbook
+        entities:
+          - switch.fan_speed
+          - automation.forcerad_badrumsfonster_hog_fukt
+          - automation.forcerad_snabbt_okande_fukt
+          - automation.normal_badrumsfonster_lag_fukt
+          - automation.normal_badrumsfonster_stabiliserad_fukt
+          - automation.normal_hog_fukt_i_huset
+        hours_to_show: 24
+        title: FTX logg
+      - type: logbook
+        entities:
+          - automation.starta_luftavfuktare
+          - automation.stoppa_luftavfuktare
+        hours_to_show: 24
+        title: Avfuktare
+      - type: logbook
+        entities:
+          - automation.starta_elvarme_5_grader
+          - automation.starta_elvarme_8_grader
+          - automation.stoppa_elvarme_7_grader
+          - automation.stoppa_elvarme_10_grader
+        hours_to_show: 24
+        title: Värme förråd

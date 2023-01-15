@@ -24,10 +24,60 @@ switch:
 # Sätt till Off: 'http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=CHANGE'
 # Sätt till On: 'http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=on&PIO.A=CHANGE'
 
+#########
+# TIMER #
+#########
+timer:
+  # Reset everytime humidity is changes in bathroom
+  timer_humidity_bathroom:
+    name: Timer for changed humidity in bathroom
+    duration: '00:15:00'
+
 ##################
 ### autoamtion ###
 ##################
 automation:
+  #####################################
+  ### Bathroom humidity Start Timer ###
+  #####################################
+  - alias: Restart timer badrum
+    mode: restart
+
+    trigger:
+      - platform: state
+        entity_id: sensor.fukt_badrumsfonster
+
+    action:
+      # Cancel timer and reset to max time
+      - service: timer.cancel
+        entity_id: timer.timer_humidity_bathroom
+
+      # Start timer and count down
+      - service: timer.start
+        entity_id: timer.timer_humidity_bathroom
+
+  ##################################################################
+  ### Bathroom humidity stable Set vent normal speed if high speed #
+  ##################################################################
+  - alias: Set vent normal när fukt stabil 
+    trigger:
+      # Timer finished after 15 minutes
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.timer_humidity_bathroom
+      
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: switch.fan_speed
+          state: 'on'
+ 
+    action:
+      - service: homeassistant.turn_off
+        entity_id: switch.fan_speed
+
     ###############
     ### NOTIFY ####
     ###############
@@ -220,43 +270,43 @@ automation:
       - service: homeassistant.turn_off
         entity_id: switch.fan_speed
 
-    #################################################################################################
-    ### Badrumsfönster stabiliserad fukt                                                          ###
-    ### Fukt värdet har varit still i minst 15 minuter,                                           ###
-    ### men det har kommit in nya ouppdaterade värden under denna tid --> stäng av forcerad fläkt ###
-    ### T: state sensor.fukt_badrumsfonster                                                       ###
-    ### C: no changes last 15 minutes                                                             ###
-    ### C: updated last 15 minutes                                                                ###
-    ### A: switch.fan_speed = off                                                                 ###
-    #################################################################################################
-  - alias: Normal Badrumsfönster stabiliserad fukt
-    trigger:
-      - platform: state
-        entity_id: sensor.fukt_badrumsfonster
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: switch.fan_speed
-          state: 'on'
-
-        # Make a check that needed parts exists, if not using this it will be an error in the next step 
-        - condition: template
-          value_template: "{{ not is_state('sensor.fukt_badrumsfonster', 'None') }}"
-        - condition: template
-          value_template: "{{ state_attr('sensor.fukt_badrumsfonster', 'last_changed') != None }}"
-        - condition: template
-          value_template: "{{ state_attr('sensor.fukt_badrumsfonster', 'last_updated') != None }}"
-
-        - condition: template
-          value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.fukt_badrumsfonster', 'last_changed'))) > 900 }}"
-        - condition: template
-          value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.fukt_badrumsfonster', 'last_updated'))) < 900 }}"
-
-    action:
-      - service: homeassistant.turn_off
-        entity_id: switch.fan_speed
+#    #################################################################################################
+#    ### Badrumsfönster stabiliserad fukt                                                          ###
+#    ### Fukt värdet har varit still i minst 15 minuter,                                           ###
+#    ### men det har kommit in nya ouppdaterade värden under denna tid --> stäng av forcerad fläkt ###
+#    ### T: state sensor.fukt_badrumsfonster                                                       ###
+#    ### C: no changes last 15 minutes                                                             ###
+#    ### C: updated last 15 minutes                                                                ###
+#    ### A: switch.fan_speed = off                                                                 ###
+#    #################################################################################################
+#  - alias: Normal Badrumsfönster stabiliserad fukt
+#    trigger:
+#      - platform: state
+#        entity_id: sensor.fukt_badrumsfonster
+#
+#    condition:
+#      condition: and
+#      conditions:
+#        - condition: state
+#          entity_id: switch.fan_speed
+#          state: 'on'
+#
+#        # Make a check that needed parts exists, if not using this it will be an error in the next step 
+#        - condition: template
+#          value_template: "{{ not is_state('sensor.fukt_badrumsfonster', 'None') }}"
+#        - condition: template
+#          value_template: "{{ state_attr('sensor.fukt_badrumsfonster', 'last_changed') != None }}"
+#        - condition: template
+#          value_template: "{{ state_attr('sensor.fukt_badrumsfonster', 'last_updated') != None }}"
+#
+#        - condition: template
+#          value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.fukt_badrumsfonster', 'last_changed'))) > 900 }}"
+#        - condition: template
+#          value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.fukt_badrumsfonster', 'last_updated'))) < 900 }}"
+#
+#    action:
+#      - service: homeassistant.turn_off
+#        entity_id: switch.fan_speed
 
 #last_updated is the last time an entity did send its value to HA
 #last_changed is the last time there was a difference between the previous value and the new.

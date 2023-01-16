@@ -76,6 +76,7 @@ automation:
     ### Startar Timer när luftfuktighet ändras i badrummet ###
     ### T: sensor.badrum_humidity                          ###
     ### C: switch.fan_speed == 'on'                        ###
+    ###    sensor.fukt_badrumsfonster < 100                ###
     ### A: Cancel timer timer.timer_humidity_bathroom      ###
     ###    Start timer timer.timer_humidity_bathroom       ###
     ##########################################################
@@ -92,6 +93,9 @@ automation:
         - condition: state
           entity_id: switch.fan_speed
           state: 'on'
+        - condition: numeric_state
+          entity_id: sensor.fukt_badrumsfonster
+          below: '100'
 
     action:
       # Cancel timer and reset to max time

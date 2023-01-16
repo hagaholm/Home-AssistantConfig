@@ -1,73 +1,119 @@
 title: Ventilation
 views:
-  - title: Vent & Värme
-    path: ventilation
+  - theme: Backend-selected
+    title: Status
+    badges: []
+    cards:
+      - type: tile
+        entity: switch.ventilationsaggregat
+      - type: tile
+        entity: switch.fan_speed
+        name: Forcerad fläkt
+      - type: tile
+        entity: input_boolean.alarm_ventilation
+      - type: entities
+        entities:
+          - entity: sensor.ftx
+          - entity: sensor.uteluft
+          - entity: sensor.tilluft
+          - entity: sensor.franluft
+          - entity: sensor.avluft
+          - entity: sensor.badrum_humidity
+          - entity: sensor.fukt_badrumsfonster
+        state_color: true
+      - type: entities
+        entities:
+          - timer.timer_humidity_bathroom
+        state_color: true
+  - theme: Backend-selected
+    title: Grafer
+    path: varden
     badges: []
     cards:
       - type: history-graph
         entities:
           - entity: switch.ventilationsaggregat
+            name: På/Av
           - entity: switch.fan_speed
-          - entity: switch.garage_luftavfuktare
-          - entity: switch.garage_elvarme
+            name: Max
         hours_to_show: 24
         refresh_interval: 0
-        title: Status
-      - type: entities
+      - type: history-graph
         entities:
-          - entity: timer.timer_humidity_bathroom
-          - entity: switch.ventilationsaggregat
-          - entity: switch.fan_speed
-          - entity: switch.garage_luftavfuktare
-          - entity: switch.garage_elvarme
-        title: Status
-      - entities:
-          - entity: sensor.franluft
-          - entity: sensor.tilluft
-          - entity: sensor.avluft
-          - entity: sensor.uteluft
-          - entity: sensor.forrad_temperature
-          - entity: sensor.garage_temperature
+          - entity: sensor.ftx
         hours_to_show: 12
-        refresh_interval: 0
-        type: history-graph
+      - type: history-graph
+        entities:
+          - entity: sensor.uteluft
+          - entity: sensor.tilluft
+          - entity: sensor.franluft
+          - entity: sensor.avluft
+        hours_to_show: 12
       - type: history-graph
         entities:
           - entity: sensor.badrum_humidity
           - entity: sensor.fukt_badrumsfonster
           - entity: sensor.hall_humidity
-          - entity: sensor.garage_humidity
-        hours_to_show: 48
-        refresh_interval: 0
-      - type: history-graph
+        hours_to_show: 12
+  - theme: Backend-selected
+    title: Larm
+    path: larm
+    badges: []
+    cards:
+      - type: entities
         entities:
-          - entity: sensor.ftx
-          - entity: sensor.ftx_medel
-        hours_to_show: 48
-        refresh_interval: 0
-      - type: logbook
+          - entity: input_boolean.alarm_ventilation
+          - entity: input_boolean.high_humidity_bathroom_away
+          - entity: input_boolean.high_temp_tilluft
+          - entity: input_boolean.low_temp_tilluft
+          - entity: input_boolean.high_temp_franluft
+          - entity: input_boolean.low_temp_franluft
+        state_color: true
+  - theme: Backend-selected
+    title: Automationer
+    path: automationer
+    badges: []
+    cards:
+      - type: entities
         entities:
-          - switch.fan_speed
-          - automation.forcerad_badrumsfonster_hog_fukt
-          - automation.forcerad_snabbt_okande_fukt
-          - automation.normal_badrumsfonster_lag_fukt
-#          - automation.normal_badrumsfonster_stabiliserad_fukt
-          - automation.normal_hog_fukt_i_huset
-          - automation.restart_timer_badrum
-          - automation.set_vent_normal_nar_fukt_stabil
-        hours_to_show: 24
-        title: FTX logg
-      - type: logbook
+          - entity: automation.restart_timer_badrum
+        title: Timers - Stabiliserad fukt
+        state_color: true
+      - type: entities
         entities:
-          - automation.starta_luftavfuktare
-          - automation.stoppa_luftavfuktare
-        hours_to_show: 24
-        title: Avfuktare
-      - type: logbook
+          - entity: automation.satt_larm_for_vent
+          - entity: automation.badrumsfonster_hog_fukt_larm
+          - entity: automation.lag_temp_franluft
+          - entity: automation.hog_temp_franluft
+          - entity: automation.lag_temp_tilluft
+          - entity: automation.hog_temp_tilluft
+        title: Larm
+        state_color: true
+      - type: entities
         entities:
-          - automation.starta_elvarme_5_grader
-          - automation.starta_elvarme_8_grader
-          - automation.stoppa_elvarme_7_grader
-          - automation.stoppa_elvarme_10_grader
-        hours_to_show: 24
-        title: Värme förråd
+          - entity: automation.forcerad_badrumsfonster_hog_fukt
+        state_color: true
+        title: Forcerad fläkt
+      - type: entities
+        entities:
+          - entity: automation.normal_badrumsfonster_lag_fukt
+          - entity: automation.normal_hog_fukt_i_huset
+          - entity: automation.normal_vid_stabiliserad_fukt
+        state_color: true
+        title: Normal fläkt
+      - type: entities
+        entities:
+          - entity: automation.vent_on_hemma_off
+          - entity: automation.vent_on_ute_22degc_off
+          - entity: automation.vent_on_60_off
+          - entity: automation.vent_on_inne_23degc_off
+        state_color: true
+        title: Ventilation På
+      - type: entities
+        entities:
+          - entity: automation.vent_off_borta_ute_24degc_60_inne_23degc
+          - entity: automation.vent_off_ute_24degc_borta_60_inne_23degc
+          - entity: automation.vent_off_60_borta_ute_24degc_inne_23degc
+          - entity: automation.vent_off_inne_23degc_borta_60_ute_24degc
+        state_color: true
+        title: Ventilation Av

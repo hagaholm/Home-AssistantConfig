@@ -30,7 +30,7 @@ switch:
 timer:
   # Reset everytime humidity is changes in bathroom
   timer_humidity_bathroom:
-    name: Timer for changed humidity in bathroom
+    name: Timer stabil fukt i badrum
     duration: '00:15:00'
 
 #####################
@@ -38,7 +38,7 @@ timer:
 #####################
 input_boolean:
   # Used for diagnostic
-  alarm_vetilation:
+  alarm_ventilation:
     name: Larm ventilation 
     initial: off
 
@@ -110,7 +110,7 @@ automation:
     ###    input_boolean.low_temp_tilluft == on               ###
     ###    input_boolean.high_temp_tiluft == on               ###
     ### C: switch.fan_speed == 'on'                           ###
-    ### A: input_boolean.alarm_vetilation = on                ###
+    ### A: input_boolean.alarm_ventilation = on               ###
     #############################################################
   - alias: Sätt larm för vent 
     trigger:
@@ -133,7 +133,7 @@ automation:
     action:
       - service: input_boolean.turn_on
         data:
-          entity_id: input_boolean.alarm_vetilation
+          entity_id: input_boolean.alarm_ventilation
 
 
     #######################
@@ -169,7 +169,7 @@ automation:
     ### T: sensor.Franluft < 18             ###
     ### A: notify.pushbullet                ###
     ###########################################
-  - alias:  
+  - alias: Låg temp frånluft
     trigger:
       platform: numeric_state
       entity_id: sensor.Franluft
@@ -469,7 +469,7 @@ automation:
     ### C: sensor.inne_medel > 23                     ###
     ### A: switch.ventilationsaggregat = off          ###
     #####################################################
-  - alias: Ventilation off (Borta, ute >24°C, <60%, Inne > 23°C)
+  - alias: Vent off (Borta, ute >24°C, <60%, Inne > 23°C)
     trigger:
       platform: state
       entity_id: group.track_for_home_devices
@@ -526,7 +526,7 @@ automation:
     ### C: sensor.inne_medel > 23                     ###
     ### A: switch.ventilationsaggregat = off          ###
     #####################################################
-  - alias: Ventilation off (Ute >24°C, Borta, <60%, Inne > 23°C)
+  - alias: Vent off (Ute >24°C, Borta, <60%, Inne > 23°C)
     trigger:
       platform: numeric_state
       entity_id: sensor.ute
@@ -582,7 +582,7 @@ automation:
     ### C: sensor.inne_medel > 23                     ###
     ### A: switch.ventilationsaggregat = off          ###
     #####################################################
-  - alias: Ventilation off (<60%, Borta, Ute >24°C, Inne > 23°C)
+  - alias: Vent off (<60%, Borta, Ute >24°C, Inne > 23°C)
     trigger:
       platform: numeric_state
       entity_id: sensor.fukt_badrumsfonster
@@ -638,7 +638,7 @@ automation:
     ### C: sensor.ute > 24                            ###
     ### A: switch.ventilationsaggregat = off          ###
     #####################################################
-  - alias: Ventilation off (Inne >23°C, Borta, <60%, Ute > 24°C)
+  - alias: Vent off (Inne >23°C, Borta, <60%, Ute > 24°C)
     trigger:
       platform: numeric_state
       entity_id: sensor.inne_medel
@@ -694,7 +694,7 @@ automation:
     ### C: switch.ventilationsaggregat == off     ###
     ### A: switch.ventilationsaggregat = on       ###
     #################################################
-  - alias: Ventilation on (Hemma, Off)
+  - alias: Vent on (Hemma, Off)
     trigger:
       platform: state
       entity_id: group.track_for_home_devices
@@ -737,7 +737,7 @@ automation:
     ### C: switch.ventilationsaggregat == off ###
     ### A: switch.ventilationsaggregat = on   ###
     #############################################
-  - alias: Ventilation on (Ute <22°C, Off)
+  - alias: Vent on (Ute <22°C, Off)
     trigger:
       platform: numeric_state
       entity_id: sensor.ute
@@ -779,7 +779,7 @@ automation:
     ### C: switch.ventilationsaggregat == off ###
     ### A: switch.ventilationsaggregat = on   ###
     #############################################
-  - alias: Ventilation on (>60%, Off)
+  - alias: Vent on (>60%, Off)
     trigger:
       platform: numeric_state
       entity_id: sensor.fukt_badrumsfonster
@@ -821,7 +821,7 @@ automation:
     ### C: switch.ventilationsaggregat == off ###
     ### A: switch.ventilationsaggregat = on   ###
     #############################################
-  - alias: Ventilation on (Inne <23°C, Off)
+  - alias: Vent on (Inne <23°C, Off)
     trigger:
       platform: numeric_state
       entity_id: sensor.inne_medel

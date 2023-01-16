@@ -1,5 +1,5 @@
 ##############
-### sensor ###
+### Sensor ###
 ##############
 sensor:
   - platform: template 
@@ -10,7 +10,7 @@ sensor:
         unit_of_measurement: "%"
 
 ##############
-### switch ###
+### Switch ###
 ##############
 switch:
   - platform: command_line
@@ -24,28 +24,67 @@ switch:
 # Sätt till Off: 'http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=CHANGE'
 # Sätt till On: 'http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=on&PIO.A=CHANGE'
 
-#########
-# TIMER #
-#########
+#############
+### Timer ###
+#############
 timer:
   # Reset everytime humidity is changes in bathroom
   timer_humidity_bathroom:
     name: Timer for changed humidity in bathroom
     duration: '00:15:00'
 
+#####################
+### Input Boolean ###
+#####################
+input_boolean:
+  # Used for diagnostic
+  alarm_vetilation:
+    name: Larm ventilation 
+    initial: off
+
+  # Used for diagnostic
+  high_humidity_bathroom_away:
+    name: Hög luftfuktighet ingen hemma 
+    initial: off
+
+  # Used for diagnostic
+  low_temp_franluft:
+    name: Lågtemp frånluft 
+    initial: off
+
+  # Used for diagnostic
+  high_temp_franluft:
+    name: Högtemp frånluft 
+    initial: off
+
+  # Used for diagnostic
+  low_temp_tilluft:
+    name: Lågtemp tilluft 
+    initial: off
+
+  # Used for diagnostic
+  high_temp_tilluft:
+    name: Högtemp tilluft 
+    initial: off
+
+
 ##################
-### autoamtion ###
+### Automation ###
 ##################
 automation:
-  #####################################
-  ### Bathroom humidity Start Timer ###
-  #####################################
-  - alias: Restart timer badrum
+    ##########################################################
+    ### Startar Timer när luftfuktighet ändras i badrummet ###
+    ### T: sensor.badrum_humidity                          ###
+    ### C: switch.fan_speed == 'on'                        ###
+    ### A: Cancel timer timer.timer_humidity_bathroom      ###
+    ###    Start timer timer.timer_humidity_bathroom       ###
+    ##########################################################
+  - alias: Restart timer Badrum
     mode: restart
 
     trigger:
       - platform: state
-        entity_id: sensor.fukt_badrumsfonster
+        entity_id: sensor.badrum_humidity
 
     condition:
       condition: and
@@ -63,10 +102,13 @@ automation:
       - service: timer.start
         entity_id: timer.timer_humidity_bathroom
 
-  ##################################################################
-  ### Bathroom humidity stable Set vent normal speed if high speed #
-  ##################################################################
-  - alias: Set vent normal när fukt stabil 
+    #####################################################################################
+    ### Sätter ventilation till Normal när luftfuktigheten stabiliserats i 15 minuter ###
+    ### T: timer_humidity_bathroom == timer.finished                                  ###
+    ### C: switch.fan_speed == 'on'                                                   ###
+    ### A: switch.fan_speed = 'off'                                                   ###
+    #####################################################################################
+  - alias: Sätt Vent Normal när fukt stabil 
     trigger:
       # Timer finished after 15 minutes
       - platform: event
@@ -85,9 +127,43 @@ automation:
       - service: homeassistant.turn_off
         entity_id: switch.fan_speed
 
-    ###############
-    ### NOTIFY ####
-    ###############
+    #############################################################
+    ### Sätter larm för ventilation om något annat larm sätts ###
+    ### T: input_boolean.high_humidity_bathroom_away == on    ###
+    ###    input_boolean.low_temp_franluft == on              ###
+    ###    input_boolean.high_temp_franluft == on             ###
+    ###    input_boolean.low_temp_tilluft == on               ###
+    ###    input_boolean.high_temp_tiluft == on               ###
+    ### C: switch.fan_speed == 'on'                           ###
+    ### A: input_boolean.alarm_vetilation = on                ###
+    #############################################################
+  - alias: Sätt larm för vent 
+    trigger:
+      - platform: state
+        entity_id: input_boolean.high_humidity_bathroom_away
+        to: 'on'
+      - platform: state
+        entity_id: input_boolean.low_temp_franluft
+        to: 'on'
+      - platform: state
+        entity_id: input_boolean.high_temp_franluft
+        to: 'on'
+      - platform: state
+        entity_id: input_boolean.low_temp_tilluft
+        to: 'on'
+      - platform: state
+        entity_id: input_boolean.high_temp_tiluft
+        to: 'on'
+       
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.alarm_vetilation
+
+
+    #######################
+    ### ALARM - NOTIFY ####
+    #######################
     ####################################################
     ### Larm! Hög fukt i badrummet, ingen hemma      ###
     ### T: switch.fan_speed == on                    ###
@@ -99,11 +175,16 @@ automation:
       platform: state
       entity_id: switch.fan_speed
       to: 'on'
+
     condition:
       condition: state
       entity_id: group.track_for_home_devices
       state: 'not_home'
+    
     action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.high_humidity_bathroom_away
       - service: notify.pushbullet
         data:
           message: "Larm! Hög fukt i badrummet {{ states('sensor.fukt_badrumsfonster') }} {{ state_attr('sensor.fukt_badrumsfonster', 'unit_of_measurement') }}, ingen är hemma"
@@ -114,17 +195,22 @@ automation:
     ### A: notify.pushbullet                ###
     ###########################################
   - alias: Låg temp frånluft
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.Franluft
+      below: '18'
+      
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: switch.ventilationsaggregat
           state: 'on'
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.Franluft
-      below: '18'
+
     action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.low_temp_franluft
       - service: notify.pushbullet
         data:
           message: "Larm! Låg temp frånluft ventilation: {{ states('sensor.Franluft') }} {{ state_attr('sensor.Franluft', 'unit_of_measurement') }}"
@@ -135,17 +221,22 @@ automation:
     ### A: notify.pushbullet                ###
     ###########################################
   - alias: Hög temp frånluft
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.Franluft
+      above: '35'
+
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: switch.ventilationsaggregat
           state: 'on'  
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.Franluft
-      above: '35'
+
     action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.high_temp_franluft
       - service: notify.pushbullet
         data:
           message: "Larm! Hög temp frånluft ventilation: {{ states('sensor.Franluft') }} {{ state_attr('sensor.Franluft', 'unit_of_measurement') }}"
@@ -156,17 +247,22 @@ automation:
     ### A: notify.pushbullet               ###
     ##########################################
   - alias: Låg temp tilluft
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.Tilluft
+      below: '15'
+
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: switch.ventilationsaggregat
           state: 'on'
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.Tilluft
-      below: '15'
+
     action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.low_temp_tilluft
       - service: notify.pushbullet
         data:
           message: "Larm! Låg temp tilluft ventilation: {{ states('sensor.Tilluft') }} {{ state_attr('sensor.Tilluft', 'unit_of_measurement') }}"
@@ -177,17 +273,22 @@ automation:
     ### A: notify.pushbullet               ###
     ##########################################
   - alias: Hög temp tilluft
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.Tilluft
+      above: '35'
+
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: switch.ventilationsaggregat
           state: 'on'
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.Tilluft
-      above: '35'
+
     action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.high_temp_tilluft
       - service: notify.pushbullet
         data:
           message: "Larm! Hög temp tilluft ventilation: {{ states('sensor.Tilluft') }} {{ state_attr('sensor.Tilluft', 'unit_of_measurement') }}"
@@ -211,10 +312,8 @@ automation:
         - condition: state
           entity_id: switch.fan_speed
           state: 'off'
-
         - condition: template 
           value_template: "{{ (trigger.to_state.state|int - trigger.from_state.state|int) >= 4 }}"
-
         - condition: numeric_state
           entity_id: sensor.ute
           above: -8
@@ -239,13 +338,11 @@ automation:
         - condition: numeric_state
           entity_id: sensor.fukt_badrumsfonster
           above: '70'
-
         - condition: state
           entity_id: switch.fan_speed
           state: 'off'
         - condition: template 
           value_template: "{{ (trigger.to_state.state|int - trigger.from_state.state|int) >= 2 }}"
-
         - condition: numeric_state
           entity_id: sensor.ute
           above: -8
@@ -267,12 +364,14 @@ automation:
       platform: numeric_state
       entity_id: sensor.fukt_badrumsfonster
       below: '69'
+
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: switch.fan_speed
           state: 'on'
+
     action:
       - service: homeassistant.turn_off
         entity_id: switch.fan_speed
@@ -376,6 +475,7 @@ automation:
       entity_id: group.track_for_home_devices
       from: 'home'
       to: 'not_home'
+
     condition:
       condition: and
       conditions:
@@ -391,6 +491,7 @@ automation:
         - condition: numeric_state
           entity_id: sensor.inne_medel
           above: '23'
+
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ventilationsaggregat
@@ -430,6 +531,7 @@ automation:
       platform: numeric_state
       entity_id: sensor.ute
       above: '24'
+
     condition:
       condition: and
       conditions:
@@ -445,6 +547,7 @@ automation:
         - condition: numeric_state
           entity_id: sensor.inne_medel
           above: '23'
+
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ventilationsaggregat
@@ -484,6 +587,7 @@ automation:
       platform: numeric_state
       entity_id: sensor.fukt_badrumsfonster
       below: '60'
+
     condition:
       condition: and
       conditions:
@@ -499,6 +603,7 @@ automation:
         - condition: numeric_state
           entity_id: sensor.inne_medel
           above: '23'
+
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ventilationsaggregat
@@ -538,6 +643,7 @@ automation:
       platform: numeric_state
       entity_id: sensor.inne_medel
       above: '23'
+
     condition:
       condition: and
       conditions:
@@ -553,6 +659,7 @@ automation:
         - condition: numeric_state
           entity_id: sensor.ute
           above: '24'
+
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ventilationsaggregat
@@ -593,10 +700,12 @@ automation:
       entity_id: group.track_for_home_devices
       from: 'not_home'
       to: 'home'
+
     condition:
       condition: state
       entity_id: switch.ventilationsaggregat
       state: 'off'
+
     action:
       - service: homeassistant.turn_on
         entity_id: switch.ventilationsaggregat
@@ -633,10 +742,12 @@ automation:
       platform: numeric_state
       entity_id: sensor.ute
       below: '23'
+
     condition:
       condition: state
       entity_id: switch.ventilationsaggregat
       state: 'off'
+
     action:
       - service: homeassistant.turn_on
         entity_id: switch.ventilationsaggregat
@@ -673,10 +784,12 @@ automation:
       platform: numeric_state
       entity_id: sensor.fukt_badrumsfonster
       above: '60'
+
     condition:
       condition: state
       entity_id: switch.ventilationsaggregat
       state: 'off'
+
     action:
       - service: homeassistant.turn_on
         entity_id: switch.ventilationsaggregat
@@ -713,10 +826,12 @@ automation:
       platform: numeric_state
       entity_id: sensor.inne_medel
       below: '23'
+
     condition:
       condition: state
       entity_id: switch.ventilationsaggregat
       state: 'off'
+
     action:
       - service: homeassistant.turn_on
         entity_id: switch.ventilationsaggregat

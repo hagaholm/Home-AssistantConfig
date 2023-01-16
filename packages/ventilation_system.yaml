@@ -47,6 +47,13 @@ automation:
       - platform: state
         entity_id: sensor.fukt_badrumsfonster
 
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: switch.fan_speed
+          state: 'on'
+
     action:
       # Cancel timer and reset to max time
       - service: timer.cancel

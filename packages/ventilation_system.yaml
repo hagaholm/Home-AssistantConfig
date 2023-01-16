@@ -102,31 +102,6 @@ automation:
       - service: timer.start
         entity_id: timer.timer_humidity_bathroom
 
-    #####################################################################################
-    ### Sätter ventilation till Normal när luftfuktigheten stabiliserats i 15 minuter ###
-    ### T: timer_humidity_bathroom == timer.finished                                  ###
-    ### C: switch.fan_speed == 'on'                                                   ###
-    ### A: switch.fan_speed = 'off'                                                   ###
-    #####################################################################################
-  - alias: Sätt Vent Normal när fukt stabil 
-    trigger:
-      # Timer finished after 15 minutes
-      - platform: event
-        event_type: timer.finished
-        event_data:
-          entity_id: timer.timer_humidity_bathroom
-      
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: switch.fan_speed
-          state: 'on'
- 
-    action:
-      - service: homeassistant.turn_off
-        entity_id: switch.fan_speed
-
     #############################################################
     ### Sätter larm för ventilation om något annat larm sätts ###
     ### T: input_boolean.high_humidity_bathroom_away == on    ###
@@ -194,7 +169,7 @@ automation:
     ### T: sensor.Franluft < 18             ###
     ### A: notify.pushbullet                ###
     ###########################################
-  - alias: Låg temp frånluft
+  - alias:  
     trigger:
       platform: numeric_state
       entity_id: sensor.Franluft
@@ -453,6 +428,31 @@ automation:
           value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.badrum_humidity', 'last_updated'))) < 600 }}"
         - condition: template
           value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.hall_humidity', 'last_updated'))) < 600 }}"
+    action:
+      - service: homeassistant.turn_off
+        entity_id: switch.fan_speed
+
+    #####################################################################################
+    ### Sätter ventilation till Normal när luftfuktigheten stabiliserats i 15 minuter ###
+    ### T: timer_humidity_bathroom == timer.finished                                  ###
+    ### C: switch.fan_speed == 'on'                                                   ###
+    ### A: switch.fan_speed = 'off'                                                   ###
+    #####################################################################################
+  - alias: Normal vid stabiliserad fukt 
+    trigger:
+      # Timer finished after 15 minutes
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.timer_humidity_bathroom
+      
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: switch.fan_speed
+          state: 'on'
+ 
     action:
       - service: homeassistant.turn_off
         entity_id: switch.fan_speed

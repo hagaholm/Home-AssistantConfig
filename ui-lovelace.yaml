@@ -758,11 +758,20 @@ views:
     badges: []
     cards:
       - type: picture-entity
-        entity: camera.kamera1
+        entity: camera.kamera1_sub
+        show_state: true
+        show_name: true
+        camera_view: auto
       - type: picture-entity
-        entity: camera.kamera2
+        entity: camera.kamera2_sub
+        show_state: true
+        show_name: true
+        camera_view: auto
       - type: picture-entity
-        entity: camera.kamera3
+        entity: camera.kamera3_sub
+        show_state: true
+        show_name: true
+        camera_view: auto
       - type: entities
         entities:
           - binary_sensor.aqara_motion_sensor_1

@@ -136,7 +136,7 @@ image_processing:
       - target: animal
         confidence: 80
     source:
-      - entity_id: camera.kamera2
+      - entity_id: camera.kamera2_sub
         name: deepstack_camera_2
     timeout: 5
 
@@ -442,7 +442,7 @@ automation:
       # Save a video with timestamp to '/config/camera/motion_detected/camera_2_YYYYMMDD-HHMMSS.mp4'
       - service: camera.record
         data:
-          entity_id: camera.kamera2
+          entity_id: camera.kamera2_sub
           filename: "/config/camera/motion_detected/camera_2_{{ states('input_select.camera_mode') }}_{{ trigger.event.data.saved_file[41:-4] }}.mp4"
           lookback: 0
           duration: 60

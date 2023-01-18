@@ -212,7 +212,7 @@ automation:
     trigger:
       platform: numeric_state
       entity_id: sensor.cpu_temperature
-          below: '58.0'
+      below: '58.0'
 
     condition: state
       entity_id: timer.vehicle_timer
@@ -228,8 +228,8 @@ automation:
     trigger:
       platform: numeric_state
       entity_id: sensor.cpu_temperature
-          above: '58.0'
-          below: '58.5'
+      above: '58.0'
+      below: '58.5'
 
     condition: state
       entity_id: timer.vehicle_timer
@@ -245,8 +245,8 @@ automation:
     trigger:
       platform: numeric_state
       entity_id: sensor.cpu_temperature
-          above: '58.5'
-          below: '59.0'
+      above: '58.5'
+      below: '59.0'
 
     condition: state
       entity_id: timer.vehicle_timer
@@ -262,8 +262,8 @@ automation:
     trigger:
       platform: numeric_state
       entity_id: sensor.cpu_temperature
-          above: '59.0'
-          below: '59.5'
+      above: '59.0'
+      below: '59.5'
 
     condition: state
       entity_id: timer.vehicle_timer

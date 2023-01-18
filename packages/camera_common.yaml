@@ -217,9 +217,9 @@ automation:
     condition:
       condition: and
       conditions:
-        - condition: state
-          entity_id: timer.vehicle_timer
-          state: finished
+        - condition: numeric_state
+          entity_id: input_number.camera_duration
+          above: '0'
 
     action:
       - service: input_number.set_value
@@ -237,9 +237,9 @@ automation:
     condition:
       condition: and
       conditions:
-        - condition: state
-          entity_id: timer.vehicle_timer
-          state: finished
+        - condition: numeric_state
+          entity_id: input_number.camera_duration
+          above: '0'
 
     action:
       - service: input_number.set_value
@@ -257,9 +257,9 @@ automation:
     condition:
       condition: and
       conditions:
-        - condition: state
-          entity_id: timer.vehicle_timer
-          state: finished
+        - condition: numeric_state
+          entity_id: input_number.camera_duration
+          above: '0'
 
     action:
       - service: input_number.set_value
@@ -277,9 +277,9 @@ automation:
     condition:
       condition: and
       conditions:
-        - condition: state
-          entity_id: timer.vehicle_timer
-          state: finished
+        - condition: numeric_state
+          entity_id: input_number.camera_duration
+          above: '0'
 
     action:
       - service: input_number.set_value

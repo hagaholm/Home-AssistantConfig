@@ -208,68 +208,123 @@ automation:
           value: 500
 
 
-  - alias: 'Camera duration changed on temp'
-#    description: ''
+  - alias: Cpu temp below 58.0
     trigger:
-      - platform: numeric_state
-        entity_id: sensor.cpu_temperature
+      platform: numeric_state
+      entity_id: sensor.cpu_temperature
+      below: '58.0'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: numeric_state
+          entity_id: input_number.camera_duration
+          above: '0'
 
     action:
-      - choose:
-          - conditions: numeric_state
-            entity_id: sensor.cpu_temperature
-            below: '58.0'
-            sequence:
-              - service: input_number.set_value
-                data_template:
-                  entity_id: input_number.camera_duration
-                  value: 500
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.camera_duration
+          value: 500
 
-          - conditions: numeric_state
-            entity_id: sensor.cpu_temperature
-            below: '58.5'
-            above: '58.0'
-            sequence:
-              - service: input_number.set_value
-                data_template:
-                  entity_id: input_number.camera_duration
-                  value: 600
+  - alias: Cpu temp 58.0
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.cpu_temperature
+      below: '58.1'
+      above: '57.9'
 
-          - conditions: numeric_state
-            entity_id: sensor.cpu_temperature
-            below: '59.0'
-            above: '58.5'
-            sequence:
-              - service: input_number.set_value
-                data_template:
-                  entity_id: input_number.camera_duration
-                  value: 700
+    condition:
+      condition: and
+      conditions:
+        - condition: numeric_state
+          entity_id: input_number.camera_duration
+          above: '0'
 
-          - conditions: numeric_state
-            entity_id: sensor.cpu_temperature
-            below: '59.5'
-            above: '59.0'
-            sequence:
-              - service: input_number.set_value
-                data_template:
-                  entity_id: input_number.camera_duration
-                  value: 800
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.camera_duration
+          value: 600
 
-          - conditions: numeric_state
-            entity_id: sensor.cpu_temperature
-            above: '59.5'
-            sequence:
-              - service: input_number.set_value
-                data_template:
-                  entity_id: input_number.camera_duration
-                  value: 900
+  - alias: Cpu temp 58.5
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.cpu_temperature
+      below: '58.6'
+      above: '58.4'
 
-        default:
-          - service: input_number.camera_duration
-            data_template:
-              entity_id: input_number.camera_duration
-              value: 400
+    condition:
+      condition: and
+      conditions:
+        - condition: numeric_state
+          entity_id: input_number.camera_duration
+          above: '0'
 
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.camera_duration
+          value: 700
+
+  - alias: Cpu temp 59.0
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.cpu_temperature
+      below: '59.1'
+      above: '58.9'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: numeric_state
+          entity_id: input_number.camera_duration
+          above: '0'
+
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.camera_duration
+          value: 800
+
+  - alias: Cpu temp 59.5
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.cpu_temperature
+      below: '59.6'
+      above: '59.4'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: numeric_state
+          entity_id: input_number.camera_duration
+          above: '0'
+
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.camera_duration
+          value: 900
+
+  - alias: Cpu temp above 59.5
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.cpu_temperature
+      above: '59.9'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: numeric_state
+          entity_id: input_number.camera_duration
+          above: '0'
+
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.camera_duration
+          value: 1000
 
 ##############
 ### Script ###

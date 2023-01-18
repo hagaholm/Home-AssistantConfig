@@ -2,6 +2,10 @@
 ### Input Boolean ###
 #####################
 input_boolean:
+  camera_4_light_control:
+    name: Camera 4 ljus kontroll 
+    initial: off
+    
   camera_3_light_control:
     name: Camera 3 ljus kontroll 
     initial: off
@@ -24,6 +28,10 @@ input_boolean:
 ### Timer ###
 #############
 timer:
+  timer_camera_4_light_control:
+    name: Timer camera 4 ljus kontroll
+    duration: '00:00:45'
+
   timer_camera_3_light_control:
     name: Timer camera 3 ljus kontroll
     duration: '00:00:45'
@@ -43,6 +51,9 @@ automation:
     mode: single
 
     trigger:
+      - platform: state
+        entity_id: input_boolean.camera_4_light_control
+        to: 'on'
       - platform: state
         entity_id: input_boolean.camera_3_light_control
         to: 'on'
@@ -69,6 +80,9 @@ automation:
     mode: single
 
     trigger:
+      - platform: state
+        entity_id: input_boolean.camera_4_light_control
+        to: 'on'
       - platform: state
         entity_id: input_boolean.camera_3_light_control
         to: 'off'
@@ -157,6 +171,77 @@ automation:
 
     action:
       - service: script.huvudentre_belysning_on
+
+  #################################
+  ### Camera 4 Light control on ###
+  #################################
+  - alias: Camera 4 Light control on
+    mode: parallel
+
+    # Object detected
+    trigger:
+      - platform: event
+        event_type: deepstack.object_detected
+
+   # Need to be a person on the image from camera 4
+    condition:
+      condition: and
+      conditions:
+
+        # Needs to be image processing from camera 4
+        - condition: template
+          value_template: >
+            {{ trigger.event.data.entity_id == 'image_processing.deepstack_camera_4' }}
+
+        - condition: or
+          conditions:
+
+          # Person on image is needed
+          - condition: template
+            value_template: >
+              {{ trigger.event.data.object_type == 'person' }}
+
+          # Or animal on image is needed
+#          - condition: template
+#            value_template: >
+#              {{ trigger.event.data.object_type == 'animal' }}
+
+    action:
+      # camera_4_light_control = on
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.camera_4_light_control
+
+      # Cancel timer and reset to max time
+      - service: timer.cancel
+        entity_id: timer.timer_camera_4_light_control
+
+      # Start timer and count down
+      - service: timer.start
+        entity_id: timer.timer_camera_4_light_control
+
+  ##################################
+  ### Camera 4 Light control off ###
+  ##################################
+  - alias: Camera 4 Light control off
+    trigger:
+      # Timer finished after 45 sec
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.timer_camera_4_light_control
+ 
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.camera_4_light_control
+          state: 'on'
+ 
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.camera_4_light_control
 
   #################################
   ### Camera 3 Light control on ###
@@ -300,6 +385,9 @@ automation:
 
     trigger:
       - platform: state
+        entity_id: input_boolean.camera_4_light_control
+        to: 'on'
+      - platform: state
         entity_id: input_boolean.camera_3_light_control
         to: 'on'
       - platform: state
@@ -319,6 +407,35 @@ automation:
           entity_id: input_boolean.camera_light_control
 
   ##################################
+  ### Camera Light control off 4 ###
+  ##################################
+  - alias: Camera Light control off 4
+    mode: restart
+
+    trigger:
+      - platform: state
+        entity_id: input_boolean.camera_4_light_control
+        to: 'off'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.camera_3_light_control
+          state: 'off'
+        - condition: state
+          entity_id: input_boolean.camera_2_light_control
+          state: 'off'
+        - condition: state
+          entity_id: input_boolean.camera_light_control
+          state: 'on'
+
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.camera_light_control
+
+  ##################################
   ### Camera Light control off 3 ###
   ##################################
   - alias: Camera Light control off 3
@@ -332,6 +449,9 @@ automation:
     condition:
       condition: and
       conditions:
+        - condition: state
+          entity_id: input_boolean.camera_4_light_control
+          state: 'off'
         - condition: state
           entity_id: input_boolean.camera_2_light_control
           state: 'off'
@@ -358,6 +478,9 @@ automation:
     condition:
       condition: and
       conditions:
+        - condition: state
+          entity_id: input_boolean.camera_4_light_control
+          state: 'off'
         - condition: state
           entity_id: input_boolean.camera_3_light_control
           state: 'off'

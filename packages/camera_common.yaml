@@ -207,6 +207,75 @@ automation:
           entity_id: input_number.camera_duration
           value: 500
 
+
+  - alias: Cpu temp below 58.0
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.cpu_temperature
+          below: '58.0'
+
+    condition: state
+      entity_id: timer.vehicle_timer
+      state: finished
+
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.camera_duration
+          value: 500
+
+  - alias: Cpu temp max 58.5
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.cpu_temperature
+          above: '58.0'
+          below: '58.5'
+
+    condition: state
+      entity_id: timer.vehicle_timer
+      state: finished
+
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.camera_duration
+          value: 600
+
+  - alias: Cpu temp max 59.0
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.cpu_temperature
+          above: '58.5'
+          below: '59.0'
+
+    condition: state
+      entity_id: timer.vehicle_timer
+      state: finished
+
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.camera_duration
+          value: 700
+
+  - alias: Cpu temp max 59.5
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.cpu_temperature
+          above: '59.0'
+          below: '59.5'
+
+    condition: state
+      entity_id: timer.vehicle_timer
+      state: finished
+
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.camera_duration
+          value: 800
+
+
 ##############
 ### Script ###
 ##############

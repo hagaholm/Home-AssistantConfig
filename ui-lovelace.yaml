@@ -772,17 +772,22 @@ views:
         show_state: true
         show_name: true
         camera_view: auto
+      - type: picture-entity
+        entity: camera.kamera4_main
+        show_state: true
+        show_name: true
+        camera_view: auto
       - type: entities
         entities:
           - binary_sensor.aqara_motion_sensor_1
           - binary_sensor.aqara_motion_sensor_2
           - binary_sensor.aqara_motion_sensor_3
           - binary_sensor.aqara_motion_sensor_4
-          - binary_sensor.tradfri_motion_sensor_1
-          - binary_sensor.tradfri_motion_sensor_2
-          - binary_sensor.tradfri_motion_sensor_3
-          - binary_sensor.tradfri_motion_sensor_4
-          - binary_sensor.tradfri_motion_sensor_5
+#          - binary_sensor.tradfri_motion_sensor_1
+#          - binary_sensor.tradfri_motion_sensor_2
+#          - binary_sensor.tradfri_motion_sensor_3
+#          - binary_sensor.tradfri_motion_sensor_4
+#          - binary_sensor.tradfri_motion_sensor_5
         title: Rörelsedetektorer inne
         show_header_toggle: false
         state_color: true

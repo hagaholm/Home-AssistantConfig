@@ -75,7 +75,7 @@ automation:
     ##########################################################
     ### Startar Timer när luftfuktighet ändras i badrummet ###
     ### T: sensor.badrum_humidity                          ###
-    ### C: sensor.fukt_badrumsfonster < 100                ###
+    ### C: sensor.fukt_badrumsfonster < 90                 ###
     ###    sensor.fukt_badrumsfonster > 75                 ###
     ### A: Cancel timer timer.timer_humidity_bathroom      ###
     ###    Start timer timer.timer_humidity_bathroom       ###
@@ -92,7 +92,7 @@ automation:
       conditions:
         - condition: numeric_state
           entity_id: sensor.fukt_badrumsfonster
-          below: 100
+          below: 90
           above: 75
 
     action:

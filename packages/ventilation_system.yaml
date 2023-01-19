@@ -438,6 +438,8 @@ automation:
     ### Sätter ventilation till Normal när luftfuktigheten stabiliserats i 15 minuter ###
     ### T: timer_humidity_bathroom == timer.finished                                  ###
     ### C: switch.fan_speed == 'on'                                                   ###
+    ###    sensor.fukt_badrumsfonster < 90                                            ###
+    ###    sensor.fukt_badrumsfonster > 75                                            ###
     ### A: switch.fan_speed = 'off'                                                   ###
     #####################################################################################
   - alias: Normal vid stabiliserad fukt 
@@ -454,7 +456,11 @@ automation:
         - condition: state
           entity_id: switch.fan_speed
           state: 'on'
- 
+        - condition: numeric_state
+          entity_id: sensor.fukt_badrumsfonster
+          below: 90
+          above: 75
+
     action:
       - service: homeassistant.turn_off
         entity_id: switch.fan_speed

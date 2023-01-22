@@ -132,9 +132,9 @@ image_processing:
     save_timestamped_file: True
     targets:
       - target: person
-        confidence: 60
+        confidence: 50
       - target: animal
-        confidence: 80
+        confidence: 50
     source:
       - entity_id: camera.kamera1_main
         name: deepstack_camera_1

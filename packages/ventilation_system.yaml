@@ -246,14 +246,14 @@ automation:
 
     ##########################################
     ### Larm! Låg temp ventilation tilluft ###
-    ### T: sensor.Tilluft < 15             ###
+    ### T: sensor.Tilluft < 13             ###
     ### A: notify.pushbullet               ###
     ##########################################
   - alias: Låg temp tilluft
     trigger:
       platform: numeric_state
       entity_id: sensor.Tilluft
-      below: '15'
+      below: '13'
 
     condition:
       condition: and

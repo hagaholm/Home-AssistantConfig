@@ -28,6 +28,11 @@ switch:
 ### Timer ###
 #############
 timer:
+  # Max timer
+  timer_humidity_bathroom_max_time:
+    name: Timer max tid
+    duration: '01:00:00'
+
   # Reset everytime humidity is changes in bathroom
   timer_humidity_bathroom:
     name: Timer stabil fukt i badrum
@@ -72,6 +77,27 @@ input_boolean:
 ### Automation ###
 ##################
 automation:
+    ##############################################################
+    ### Startar Timer när forcerad fläkt startar               ###
+    ### T: switch.fan_speed == on                              ###
+    ### A: Cancel timer timer.timer_humidity_bathroom_max_time ###
+    ###    Start timer timer.timer_humidity_bathroom_max_time  ###
+    ##############################################################
+  - alias: Startar max timer Badrum
+    trigger:
+      platform: state
+      entity_id: switch.fan_speed
+      to: 'on'
+
+    action:
+      # Cancel timer and reset to max time
+      - service: timer.cancel
+        entity_id: timer.timer_humidity_bathroom_max_time
+
+      # Start timer and count down
+      - service: timer.start
+        entity_id: timer.timer_humidity_bathroom_max_time
+
     ##########################################################
     ### Startar Timer när luftfuktighet ändras i badrummet ###
     ### T: sensor.badrum_humidity                          ###
@@ -462,6 +488,37 @@ automation:
           above: 75
 
     action:
+      # Cancel timer and reset to max time
+      - service: timer.cancel
+        entity_id: timer.timer_humidity_bathroom
+      - service: homeassistant.turn_off
+        entity_id: switch.fan_speed
+
+    #############################################################################
+    ### Sätter ventilation till Normal efter maxtid uppnåtts efter 60 minuter ###
+    ### T: timer_humidity_bathroom_max_time == timer.finished                 ###
+    ### C: switch.fan_speed == 'on'                                           ###
+    ### A: switch.fan_speed = 'off'                                           ###
+    #############################################################################
+  - alias: Normal efter maxtid 
+    trigger:
+      # Timer finished after 15 minutes
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.timer_humidity_bathroom_max_time
+      
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: switch.fan_speed
+          state: 'on'
+
+    action:
+      # Cancel timer and reset to max time
+      - service: timer.cancel
+        entity_id: timer.timer_humidity_bathroom
       - service: homeassistant.turn_off
         entity_id: switch.fan_speed
 

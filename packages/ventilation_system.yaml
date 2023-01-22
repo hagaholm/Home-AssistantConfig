@@ -488,9 +488,6 @@ automation:
           above: 75
 
     action:
-      # Cancel timer and reset to max time
-      - service: timer.cancel
-        entity_id: timer.timer_humidity_bathroom
       - service: homeassistant.turn_off
         entity_id: switch.fan_speed
 
@@ -515,6 +512,22 @@ automation:
           entity_id: switch.fan_speed
           state: 'on'
 
+    action:
+      - service: homeassistant.turn_off
+        entity_id: switch.fan_speed
+
+    #############################################################
+    ### Reset timer när ventilationen sätts till Normal       ###
+    ### T: switch.fan_speed == 'on                            ###
+    ### A: timer_humidity_bathroom == timer.finished          ###
+    ###    timer_humidity_bathroom_max_time == timer.finished ###
+    #############################################################
+  - alias: Reset timer när vent sätts till Normal 
+    trigger:
+      platform: state
+      entity_id: switch.fan_speed
+      to: 'off'
+      
     action:
       # Cancel timer and reset to max time
       - service: timer.cancel

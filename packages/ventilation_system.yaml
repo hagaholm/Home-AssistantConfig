@@ -9,102 +9,100 @@ sensor:
         value_template: "{{ (((states('sensor.Tilluft') | float ) - (states('sensor.Uteluft') | float ))  / ((states('sensor.Franluft') | float ) - (states('sensor.Uteluft') | float )) * 100) | round(1) }}"
         unit_of_measurement: "%"
 
-    sensor:
-      name: "Ute ändrat"
-      icon: mdi:clock-outline
-      state: >
-          {% set t = states('sensor.time') %}
-          {{ relative_time(states.sensor.ute.last_changed) }}
+      ute_changed:
+        friendly_name: "Ute ändrad"
+        icon: mdi:clock-outline
+        state: >
+            {% set t = states('sensor.time') %}
+            {{ relative_time(states.sensor.ute.last_changed) }}
 
-    sensor:
-      name: "Ute uppdaterad"
-      icon: mdi:clock-outline
-      state: >
-          {% set t = states('sensor.time') %}
-          {{ relative_time(states.sensor.ute.last_updated) }}
-    sensor:
-      name: "Uteluft ändrat"
-      icon: mdi:clock-outline
-      state: >
-          {% set t = states('sensor.time') %}
-          {{ relative_time(states.sensor.uteluft.last_changed) }}
+      ute_updated:
+        friendly_name: "Ute uppdaterad"
+        icon: mdi:clock-outline
+        state: >
+            {% set t = states('sensor.time') %}
+            {{ relative_time(states.sensor.ute.last_updated) }}
 
-    sensor:
-      name: "Uteluft uppdaterad"
-      icon: mdi:clock-outline
-      state: >
-          {% set t = states('sensor.time') %}
-          {{ relative_time(states.sensor.uteluft.last_updated) }}
+#      name: "Uteluft ändrat"
+#      icon: mdi:clock-outline
+#      state: >
+#          {% set t = states('sensor.time') %}
+#          {{ relative_time(states.sensor.uteluft.last_changed) }}
 
-    sensor:
-      name: "Tilluft ändrat"
-      icon: mdi:clock-outline
-      state: >
-          {% set t = states('sensor.time') %}
-          {{ relative_time(states.sensor.tilluft.last_changed) }}
+#      name: "Uteluft uppdaterad"
+#      icon: mdi:clock-outline
+#      state: >
+#          {% set t = states('sensor.time') %}
+#          {{ relative_time(states.sensor.uteluft.last_updated) }}
 
-    sensor:
-      name: "Tilluft uppdaterad"
-      icon: mdi:clock-outline
-      state: >
-          {% set t = states('sensor.time') %}
-          {{ relative_time(states.sensor.tilluft.last_updated) }}
+#      name: "Tilluft ändrat"
+#      icon: mdi:clock-outline
+#      state: >
+#          {% set t = states('sensor.time') %}
+#          {{ relative_time(states.sensor.tilluft.last_changed) }}
 
-    sensor:
-      name: "Frånluft ändrat"
-      icon: mdi:clock-outline
-      state: >
-          {% set t = states('sensor.time') %}
-          {{ relative_time(states.sensor.franluft.last_changed) }}
+#    sensor:
+#      name: "Tilluft uppdaterad"
+#      icon: mdi:clock-outline
+#      state: >
+#          {% set t = states('sensor.time') %}
+#          {{ relative_time(states.sensor.tilluft.last_updated) }}
 
-    sensor:
-      name: "Frånluft uppdaterad"
-      icon: mdi:clock-outline
-      state: >
-          {% set t = states('sensor.time') %}
-          {{ relative_time(states.sensor.franluft.last_updated) }}
+#    sensor:
+#      name: "Frånluft ändrat"
+#      icon: mdi:clock-outline
+#      state: >
+#          {% set t = states('sensor.time') %}
+#          {{ relative_time(states.sensor.franluft.last_changed) }}
 
-    sensor:
-      name: "Avluft ändrat"
-      icon: mdi:clock-outline
-      state: >
-          {% set t = states('sensor.time') %}
-          {{ relative_time(states.sensor.avluft.last_changed) }}
+#    sensor:
+#      name: "Frånluft uppdaterad"
+#      icon: mdi:clock-outline
+#      state: >
+#          {% set t = states('sensor.time') %}
+#          {{ relative_time(states.sensor.franluft.last_updated) }}
 
-    sensor:
-      name: "Avluft uppdaterad"
-      icon: mdi:clock-outline
-      state: >
-          {% set t = states('sensor.time') %}
-          {{ relative_time(states.sensor.avluft.last_updated) }}
+#    sensor:
+#      name: "Avluft ändrat"
+#      icon: mdi:clock-outline
+#      state: >
+#          {% set t = states('sensor.time') %}
+#          {{ relative_time(states.sensor.avluft.last_changed) }}
 
-    sensor:
-      name: "Badrumsfönster fukt ändrat"
-      icon: mdi:clock-outline
-      state: >
-          {% set t = states('sensor.time') %}
-          {{ relative_time(states.sensor.fukt_badrumsfonster.last_changed) }}
+#    sensor:
+#      name: "Avluft uppdaterad"
+#      icon: mdi:clock-outline
+#      state: >
+#          {% set t = states('sensor.time') %}
+#          {{ relative_time(states.sensor.avluft.last_updated) }}
 
-    sensor:
-      name: "Badrumsfönster fukt uppdaterad"
-      icon: mdi:clock-outline
-      state: >
-          {% set t = states('sensor.time') %}
-          {{ relative_time(states.sensor.fukt_badrumsfonster.last_updated) }}
+#    sensor:
+#      name: "Badrumsfönster fukt ändrat"
+#      icon: mdi:clock-outline
+#      state: >
+#          {% set t = states('sensor.time') %}
+#          {{ relative_time(states.sensor.fukt_badrumsfonster.last_changed) }}
 
-    sensor:
-      name: "Hall temp ändrat"
-      icon: mdi:clock-outline
-      state: >
-          {% set t = states('sensor.time') %}
-          {{ relative_time(states.sensor.hall_temperature.last_changed) }}
+#    sensor:
+#      name: "Badrumsfönster fukt uppdaterad"
+#      icon: mdi:clock-outline
+#      state: >
+#          {% set t = states('sensor.time') %}
+#          {{ relative_time(states.sensor.fukt_badrumsfonster.last_updated) }}
 
-    sensor:
-      name: "Hall temp uppdaterad"
-      icon: mdi:clock-outline
-      state: >
-          {% set t = states('sensor.time') %}
-          {{ relative_time(states.sensor.hall_temperature.last_updated) }}
+#    sensor:
+#      name: "Hall temp ändrat"
+#      icon: mdi:clock-outline
+#      state: >
+#          {% set t = states('sensor.time') %}
+#          {{ relative_time(states.sensor.hall_temperature.last_changed) }}
+
+#    sensor:
+#      name: "Hall temp uppdaterad"
+#      icon: mdi:clock-outline
+#      state: >
+#          {% set t = states('sensor.time') %}
+#          {{ relative_time(states.sensor.hall_temperature.last_updated) }}
 
 
 ##############

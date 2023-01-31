@@ -9,19 +9,19 @@ sensor:
         value_template: "{{ (((states('sensor.Tilluft') | float ) - (states('sensor.Uteluft') | float ))  / ((states('sensor.Franluft') | float ) - (states('sensor.Uteluft') | float )) * 100) | round(1) }}"
         unit_of_measurement: "%"
 
-      ute_changed:
-        friendly_name: "Ute ändrad"
-        icon: mdi:clock-outline
-        state: >
-            {% set t = states('sensor.time') %}
-            {{ relative_time(states.sensor.ute.last_changed) }}
+#      ute_changed:
+#        friendly_name: "Ute ändrad"
+#        icon: mdi:clock-outline
+#        state: >
+#            {% set t = states('sensor.time') %}
+#            {{ relative_time(states.sensor.ute.last_changed) }}
 
-      ute_updated:
-        friendly_name: "Ute uppdaterad"
-        icon: mdi:clock-outline
-        state: >
-            {% set t = states('sensor.time') %}
-            {{ relative_time(states.sensor.ute.last_updated) }}
+#      ute_updated:
+#        friendly_name: "Ute uppdaterad"
+#        icon: mdi:clock-outline
+#        state: >
+#            {% set t = states('sensor.time') %}
+#            {{ relative_time(states.sensor.ute.last_updated) }}
 
 #      name: "Uteluft ändrat"
 #      icon: mdi:clock-outline

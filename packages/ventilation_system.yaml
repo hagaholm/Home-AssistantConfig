@@ -290,14 +290,14 @@ automation:
 
     ###########################################
     ### Larm! Låg temp ventilation frånluft ###
-    ### T: sensor.Franluft < 18             ###
+    ### T: sensor.Franluft < 17             ###
     ### A: notify.pushbullet                ###
     ###########################################
   - alias: Låg temp frånluft
     trigger:
       platform: numeric_state
       entity_id: sensor.Franluft
-      below: '18'
+      below: '17'
       
     condition:
       condition: and
@@ -342,14 +342,14 @@ automation:
 
     ##########################################
     ### Larm! Låg temp ventilation tilluft ###
-    ### T: sensor.Tilluft < 13             ###
+    ### T: sensor.Tilluft < 12             ###
     ### A: notify.pushbullet               ###
     ##########################################
   - alias: Låg temp tilluft
     trigger:
       platform: numeric_state
       entity_id: sensor.Tilluft
-      below: '13'
+      below: '12'
 
     condition:
       condition: and

@@ -127,12 +127,12 @@ timer:
   # Max timer
   timer_humidity_bathroom_max_time:
     name: Timer max tid
-    duration: '01:00:00'
+    duration: '01:30:00'
 
   # Reset everytime humidity is changes in bathroom
   timer_humidity_bathroom:
     name: Timer stabil fukt i badrum
-    duration: '00:15:00'
+    duration: '00:20:00'
 
 #####################
 ### Input Boolean ###
@@ -557,7 +557,7 @@ automation:
         entity_id: switch.fan_speed
 
     #####################################################################################
-    ### Sätter ventilation till Normal när luftfuktigheten stabiliserats i 15 minuter ###
+    ### Sätter ventilation till Normal när luftfuktigheten stabiliserats i 20 minuter ###
     ### T: timer_humidity_bathroom == timer.finished                                  ###
     ### C: switch.fan_speed == 'on'                                                   ###
     ###    sensor.fukt_badrumsfonster < 90                                            ###
@@ -566,7 +566,7 @@ automation:
     #####################################################################################
   - alias: Normal vid stabiliserad fukt 
     trigger:
-      # Timer finished after 15 minutes
+      # Timer finished after20 minutes
       - platform: event
         event_type: timer.finished
         event_data:
@@ -588,14 +588,14 @@ automation:
         entity_id: switch.fan_speed
 
     #############################################################################
-    ### Sätter ventilation till Normal efter maxtid uppnåtts efter 60 minuter ###
+    ### Sätter ventilation till Normal efter maxtid uppnåtts efter 90 minuter ###
     ### T: timer_humidity_bathroom_max_time == timer.finished                 ###
     ### C: switch.fan_speed == 'on'                                           ###
     ### A: switch.fan_speed = 'off'                                           ###
     #############################################################################
   - alias: Normal efter maxtid 
     trigger:
-      # Timer finished after 15 minutes
+      # Timer finished after 90 minutes
       - platform: event
         event_type: timer.finished
         event_data:

@@ -140,26 +140,21 @@ automation:
       - service: timer.start
         entity_id: timer.timer_rorelsedetektor_3_medium
 
-    ########################################################
-    ### Startar båda timers vid rörelse i kök            ###
-    ### T: switch.rorelsedetektor_4 == on                ###
-    ### A: switch.rorelsedetektor_4 = off                ###
-    ###    input_boolean.rorelsedetektor_kok_aktiv = on  ###
-    ###    timer.timer_rorelsedetektor_4_short = cancel  ###
-    ###    timer.timer_rorelsedetektor_4_medium = cancel ###
-    ###    timer.timer_rorelsedetektor_4_short = start   ###
-    ###    timer.timer_rorelsedetektor_4_medium = start  ###
-    ########################################################
-  - alias: Startar timers köksvägg
+    #########################################################
+    ### Startar båda timers vid rörelse i kök fönsterbänk ###
+    ### T: binary_sensor.aqara_motion_sensor_4 == on      ###
+    ### A: input_boolean.rorelsedetektor_kok_aktiv = on   ###
+    ###    timer.timer_rorelsedetektor_4_short = cancel   ###
+    ###    timer.timer_rorelsedetektor_4_medium = cancel  ###
+    ###    timer.timer_rorelsedetektor_4_short = start    ###
+    ###    timer.timer_rorelsedetektor_4_medium = start   ###
+    #########################################################
+  - alias: Startar timers kök fönsterbänk
     trigger:
       - platform: state
-        entity_id: switch.rorelsedetektor_4 # Kök fönsterbänk
+        entity_id: binary_sensor.aqara_motion_sensor_4 # Köksskåp
         to: 'on'
     action:
-      # Reset switch.rorelsedetektor_4
-      - service: homeassistant.turn_off
-        entity_id: switch.rorelsedetektor_4
-
       # Aktiverar rorelsedetektor_kok_aktiv
       - service: input_boolean.turn_on
         data:
@@ -186,7 +181,7 @@ automation:
     ###    timer.timer_rorelsedetektor_4_medium == idle          ###
     ### A: input_boolean.rorelsedetektor_kok_aktiv = off         ###
     ################################################################
-  - alias: Stänger av rorelsedetektor_kok_aktiv (om aktiv köksvägg)
+  - alias: Stänger av rörelsedetektor kök aktiv (om aktiv köksvägg)
     trigger:
       - platform: event
         event_type: timer.finished
@@ -221,7 +216,7 @@ automation:
     ###    timer.timer_rorelsedetektor_4_medium == idle            ###
     ### A: input_boolean.rorelsedetektor_kok_aktiv = off           ###
     ##################################################################
-  - alias: Stänger av rorelsedetektor_kok_aktiv (om aktiv tvättstuga)
+  - alias: Stänger av rörelsedetektor kök aktiv (om aktiv tvättstuga)
     trigger:
       - platform: event
         event_type: timer.finished
@@ -256,7 +251,7 @@ automation:
     ###    timer.timer_rorelsedetektor_4_medium == idle          ###
     ### A: input_boolean.rorelsedetektor_kok_aktiv = off         ###
     ################################################################
-  - alias: Stänger av rorelsedetektor_kok_aktiv (om aktiv köksskåp)
+  - alias: Stänger av rörelsedetektor kök aktiv (om aktiv köksskåp)
     trigger:
       - platform: event
         event_type: timer.finished
@@ -291,7 +286,7 @@ automation:
     ###    timer.timer_rorelsedetektor_3_medium == idle                 ###
     ### A: input_boolean.rorelsedetektor_kok_aktiv = off                ###
     #######################################################################
-  - alias: Stänger av rorelsedetektor_kok_aktiv (om aktiv kök fönsterbänk)
+  - alias: Stänger av rörelsedetektor kök aktiv (om aktiv kök fönsterbänk)
     trigger:
       - platform: event
         event_type: timer.finished
@@ -326,7 +321,7 @@ automation:
     ###    timer.timer_rorelsedetektor_4_short == idle                  ###
     ### A: input_boolean.rorelsedetektor_kok_aktiv = off                ###
     #######################################################################
-  - alias: Stänger av rorelsedetektor_kok_aktiv för nattbelysning köksvägg
+  - alias: Stänger av rörelsedetektor kök aktiv för nattbelysning köksvägg
     trigger:
       - platform: event
         event_type: timer.finished
@@ -361,7 +356,7 @@ automation:
     ###    timer.timer_rorelsedetektor_4_short == idle                    ###
     ### A: input_boolean.rorelsedetektor_kok_aktiv = off                  ###
     #########################################################################
-  - alias: Stänger av rorelsedetektor_kok_aktiv för nattbelysning tvättstuga
+  - alias: Stänger av rörelsedetektor kök aktiv för nattbelysning tvättstuga
     trigger:
       - platform: event
         event_type: timer.finished
@@ -396,7 +391,7 @@ automation:
     ###    timer.timer_rorelsedetektor_4_short == idle                  ###
     ### A: input_boolean.rorelsedetektor_kok_aktiv = off                ###
     #######################################################################
-  - alias: Stänger av rorelsedetektor_kok_aktiv för nattbelysning köksskåp
+  - alias: Stänger av rörelsedetektor kök aktiv för nattbelysning köksskåp
     trigger:
       - platform: event
         event_type: timer.finished
@@ -431,7 +426,7 @@ automation:
     ###    timer.timer_rorelsedetektor_3_short == idle                         ###
     ### A: input_boolean.rorelsedetektor_kok_aktiv = off                       ###
     ##############################################################################
-  - alias: Stänger av rorelsedetektor_kok_aktiv för nattbelysning kök fönsterbänk
+  - alias: Stänger av rörelsedetektor kök aktiv för nattbelysning kök fönsterbänk
     trigger:
       - platform: event
         event_type: timer.finished

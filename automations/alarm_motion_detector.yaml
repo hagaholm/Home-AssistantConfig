@@ -5,6 +5,7 @@
     ###    switch.rorelsedetektor_1 == off                                                         ###
     ###    switch.rorelsedetektor_2 == off                                                         ###
     ###    binary_sensor.aqara_motion_sensor_1 == off                                              ###
+    ###    binary_sensor.aqara_motion_sensor_4 == off                                              ###
     ###    vacuum.xiaomi_vacuum_cleaner == idle                                                    ###
     ### A: notify                                                                                  ###
     ##################################################################################################
@@ -26,7 +27,10 @@
           entity_id: switch.rorelsedetektor_2 # Tvättstuga
           state: 'off'
         - condition: state
-          entity_id: binary_sensor.aqara_motion_sensor_1 # Kök
+          entity_id: binary_sensor.aqara_motion_sensor_1 # Kök köksskåp
+          state: 'off'
+        - condition: state
+          entity_id: binary_sensor.aqara_motion_sensor_4 # Kök fönsterbänk
           state: 'off'
         - condition: state
           entity_id: vacuum.xiaomi_vacuum_cleaner

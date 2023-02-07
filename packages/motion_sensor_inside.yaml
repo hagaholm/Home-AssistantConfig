@@ -152,7 +152,7 @@ automation:
   - alias: Startar timers kök fönsterbänk
     trigger:
       - platform: state
-        entity_id: binary_sensor.aqara_motion_sensor_4 # Köksskåp
+        entity_id: binary_sensor.aqara_motion_sensor_4 # Kök fönsterbänk
         to: 'on'
     action:
       # Aktiverar rorelsedetektor_kok_aktiv

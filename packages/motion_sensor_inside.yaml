@@ -110,7 +110,7 @@ automation:
 
     ########################################################
     ### Startar båda timers vid rörelse i kök            ###
-    ### T: binary_sensor.aqara_motion_sensor_1 == on     ###
+    ### T: binary_sensor.aqara_motion_sensor_1           ###
     ### A: input_boolean.rorelsedetektor_kok_aktiv = on  ###
     ###    timer.timer_rorelsedetektor_3_short = cancel  ###
     ###    timer.timer_rorelsedetektor_3_medium = cancel ###
@@ -121,7 +121,6 @@ automation:
     trigger:
       - platform: state
         entity_id: binary_sensor.aqara_motion_sensor_1 # Köksskåp
-        to: 'on'
     action:
       # Aktiverar rorelsedetektor_kok_aktiv
       - service: input_boolean.turn_on
@@ -142,7 +141,7 @@ automation:
 
     #########################################################
     ### Startar båda timers vid rörelse i kök fönsterbänk ###
-    ### T: binary_sensor.aqara_motion_sensor_4 == on      ###
+    ### T: binary_sensor.aqara_motion_sensor_4            ###
     ### A: input_boolean.rorelsedetektor_kok_aktiv = on   ###
     ###    timer.timer_rorelsedetektor_4_short = cancel   ###
     ###    timer.timer_rorelsedetektor_4_medium = cancel  ###
@@ -153,7 +152,6 @@ automation:
     trigger:
       - platform: state
         entity_id: binary_sensor.aqara_motion_sensor_4 # Kök fönsterbänk
-        to: 'on'
     action:
       # Aktiverar rorelsedetektor_kok_aktiv
       - service: input_boolean.turn_on

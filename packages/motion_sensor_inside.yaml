@@ -1,65 +1,28 @@
 timer:
   # Timers för släck nattbelysning
-  timer_rorelsedetektor_1_short:
+  timer_rorelsedetektor_kok_short:
     name: Rörelsedetektor köksskåp
-    duration: '00:01:00'
-    
-  timer_rorelsedetektor_4_short:
-    name: Rörelsedetektor kök fönsterbänk
     duration: '00:01:00'
 
   # Timers för släck köksbelysning
-  timer_rorelsedetektor_1_medium:
+  timer_rorelsedetektor_kok_medium:
     name: Rörelsedetektor köksskåp
     duration: '00:10:00'
 
-  timer_rorelsedetektor_4_medium:
-    name: Rörelsedetektor kök fönsterbänk
-    duration: '00:10:00'
-
 automation:
-    ########################################################
-    ### Startar båda timers vid rörelse i kök            ###
-    ### T: binary_sensor.aqara_motion_sensor_1           ###
-    ### A: input_boolean.rorelsedetektor_kok_aktiv = on  ###
-    ###    timer.timer_rorelsedetektor_1_short = cancel  ###
-    ###    timer.timer_rorelsedetektor_1_medium = cancel ###
-    ###    timer.timer_rorelsedetektor_1_short = start   ###
-    ###    timer.timer_rorelsedetektor_1_medium = start  ###
-    ########################################################
-  - alias: Startar timers köksskåp
+    ##########################################################
+    ### Startar båda timers vid rörelse i kök              ###
+    ### T: binary_sensor.aqara_motion_sensor_1             ###
+    ### A: input_boolean.rorelsedetektor_kok_aktiv = on    ###
+    ###    timer.timer_rorelsedetektor_kok_short = cancel  ###
+    ###    timer.timer_rorelsedetektor_kok_medium = cancel ###
+    ###    timer.timer_rorelsedetektor_kok_short = start   ###
+    ###    timer.timer_rorelsedetektor_kok_medium = start  ###
+    ##########################################################
+  - alias: Startar timers kök
     trigger:
       - platform: state
         entity_id: binary_sensor.aqara_motion_sensor_1 # Köksskåp
-    action:
-      # Aktiverar rorelsedetektor_kok_aktiv
-      - service: input_boolean.turn_on
-        data:
-          entity_id: input_boolean.rorelsedetektor_kok_aktiv
-
-      # Cancel timers, återställer till maxtid
-      - service: timer.cancel
-        entity_id: timer.timer_rorelsedetektor_1_short
-      - service: timer.cancel
-        entity_id: timer.timer_rorelsedetektor_1_medium
-
-      # Start timers, börjar räkna ner tiden
-      - service: timer.start
-        entity_id: timer.timer_rorelsedetektor_1_short
-      - service: timer.start
-        entity_id: timer.timer_rorelsedetektor_1_medium
-
-    #########################################################
-    ### Startar båda timers vid rörelse i kök fönsterbänk ###
-    ### T: binary_sensor.aqara_motion_sensor_4            ###
-    ### A: input_boolean.rorelsedetektor_kok_aktiv = on   ###
-    ###    timer.timer_rorelsedetektor_4_short = cancel   ###
-    ###    timer.timer_rorelsedetektor_4_medium = cancel  ###
-    ###    timer.timer_rorelsedetektor_4_short = start    ###
-    ###    timer.timer_rorelsedetektor_4_medium = start   ###
-    #########################################################
-  - alias: Startar timers kök fönsterbänk
-    trigger:
       - platform: state
         entity_id: binary_sensor.aqara_motion_sensor_4 # Kök fönsterbänk
     action:
@@ -70,119 +33,57 @@ automation:
 
       # Cancel timers, återställer till maxtid
       - service: timer.cancel
-        entity_id: timer.timer_rorelsedetektor_4_short
+        entity_id: timer.timer_rorelsedetektor_kok_short
       - service: timer.cancel
-        entity_id: timer.timer_rorelsedetektor_4_medium
+        entity_id: timer.timer_rorelsedetektor_kok_medium
 
       # Start timers, börjar räkna ner tiden
       - service: timer.start
-        entity_id: timer.timer_rorelsedetektor_4_short
+        entity_id: timer.timer_rorelsedetektor_kok_short
       - service: timer.start
-        entity_id: timer.timer_rorelsedetektor_4_medium
+        entity_id: timer.timer_rorelsedetektor_kok_medium
 
-    ################################################################
-    ### Stänger av rorelsedetektor_kok_aktiv (om aktiv köksskåp) ###
-    ### T: timer.timer_rorelsedetektor_1_medium == finished      ###
-    ### C: input_boolean.rorelsedetektor_kok_aktiv == on         ###
-    ###    timer.timer_rorelsedetektor_4_medium == idle          ###
-    ### A: input_boolean.rorelsedetektor_kok_aktiv = off         ###
-    ################################################################
-  - alias: Stänger av rörelsedetektor kök aktiv (om aktiv köksskåp)
+    #############################################################
+    ### Stänger av rorelsedetektor_kok_aktiv                  ###
+    ### T: timer.timer_rorelsedetektor_kok_medium == finished ###
+    ### C: input_boolean.rorelsedetektor_kok_aktiv == on      ###
+    ### A: input_boolean.rorelsedetektor_kok_aktiv = off      ###
+    #############################################################
+  - alias: Stänger av rörelsedetektor kök aktiv
     trigger:
       - platform: event
         event_type: timer.finished
         event_data:
-          entity_id: timer.timer_rorelsedetektor_1_medium
+          entity_id: timer.timer_rorelsedetektor_kok_medium
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id:  input_boolean.rorelsedetektor_kok_aktiv
           state: 'on'
-        - condition: state
-          entity_id: timer.timer_rorelsedetektor_4_medium
-          state: idle
     action:
       - service: input_boolean.turn_off
         data:
           entity_id: input_boolean.rorelsedetektor_kok_aktiv
 
-    #######################################################################
-    ### Stänger av rorelsedetektor_kok_aktiv (om aktiv kök fönsterbänk) ###
-    ### T: timer.timer_rorelsedetektor_4_medium == finished             ###
-    ### C: input_boolean.rorelsedetektor_kok_aktiv == on                ###
-    ###    timer.timer_rorelsedetektor_1_medium == idle                 ###
-    ### A: input_boolean.rorelsedetektor_kok_aktiv = off                ###
-    #######################################################################
-  - alias: Stänger av rörelsedetektor kök aktiv (om aktiv kök fönsterbänk)
+    ##############################################################
+    ### Stänger av rorelsedetektor_kok_aktiv för nattbelysning ###
+    ### T: timer.timer_rorelsedetektor_kok_short == finished   ###
+    ### C: input_select.light_inside == 'Nattbelysning'        ###
+    ### A: input_boolean.rorelsedetektor_kok_aktiv = off       ###
+    ##############################################################
+  - alias: Stänger av rörelsedetektor kök aktiv för nattbelysning
     trigger:
       - platform: event
         event_type: timer.finished
         event_data:
-          entity_id: timer.timer_rorelsedetektor_4_medium
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id:  input_boolean.rorelsedetektor_kok_aktiv
-          state: 'on'
-        - condition: state
-          entity_id: timer.timer_rorelsedetektor_1_medium
-          state: idle
-    action:
-      - service: input_boolean.turn_off
-        data:
-          entity_id: input_boolean.rorelsedetektor_kok_aktiv
-
-    #######################################################################
-    ### Stänger av rorelsedetektor_kok_aktiv för nattbelysning köksskåp ###
-    ### T: timer.timer_rorelsedetektor_1_short == finished              ###
-    ### C: input_select.light_inside == 'Nattbelysning'                 ###
-    ###    timer.timer_rorelsedetektor_4_short == idle                  ###
-    ### A: input_boolean.rorelsedetektor_kok_aktiv = off                ###
-    #######################################################################
-  - alias: Stänger av rörelsedetektor kök aktiv för nattbelysning köksskåp
-    trigger:
-      - platform: event
-        event_type: timer.finished
-        event_data:
-          entity_id: timer.timer_rorelsedetektor_1_short
+          entity_id: timer.timer_rorelsedetektor_kok_short
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: input_select.light_inside
           state: 'Nattbelysning'
-        - condition: state
-          entity_id: timer.timer_rorelsedetektor_4_short
-          state: idle
-    action:
-      - service: input_boolean.turn_off
-        data:
-          entity_id: input_boolean.rorelsedetektor_kok_aktiv
-
-    ##############################################################################
-    ### Stänger av rorelsedetektor_kok_aktiv för nattbelysning kök fönsterbänk ###
-    ### T: timer.timer_rorelsedetektor_4_short == finished                     ###
-    ### C: input_select.light_inside == 'Nattbelysning'                        ###
-    ###    timer.timer_rorelsedetektor_1_short == idle                         ###
-    ### A: input_boolean.rorelsedetektor_kok_aktiv = off                       ###
-    ##############################################################################
-  - alias: Stänger av rörelsedetektor kök aktiv för nattbelysning kök fönsterbänk
-    trigger:
-      - platform: event
-        event_type: timer.finished
-        event_data:
-          entity_id: timer.timer_rorelsedetektor_4_short
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_select.light_inside
-          state: 'Nattbelysning'
-        - condition: state
-          entity_id: timer.timer_rorelsedetektor_1_short
-          state: idle
     action:
       - service: input_boolean.turn_off
         data:

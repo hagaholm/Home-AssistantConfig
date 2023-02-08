@@ -15,7 +15,6 @@
       - image_processing
 
     entities:
-#      - switch.rorelsedetektor_1
       - sensor.since_last_boot 
       - sensor.since_last_boot_templated
       - automation.startar_timers_1
@@ -65,9 +64,7 @@
 
       - sensor.tradfri_gateway
 
-      - automation.startar_timers_koksskap
-      - automation.startar_timers_koksvagg
-      - automation.startar_timers_tvattstuga
+      - automation.startar_timers_kok
       - automation.camera_1_folder_watcher_activated
       - automation.camera_2_folder_watcher_activated
       - automation.camera_3_folder_watcher_activated

@@ -43,15 +43,6 @@
       - platform: state
         entity_id: input_boolean.rorelsedetektor_kok_aktiv
         to: 'on'
-      - platform: state
-        entity_id: switch.rorelsedetektor_1
-        to: 'on'
-      - platform: state
-        entity_id: switch.rorelsedetektor_2
-        to: 'on'
-      - platform: state
-        entity_id: switch.rorelsedetektor_3
-        to: 'on'
 
     condition:
       condition: and
@@ -81,15 +72,6 @@
     trigger:
       - platform: state
         entity_id: input_boolean.rorelsedetektor_kok_aktiv
-        to: 'on'
-      - platform: state
-        entity_id: switch.rorelsedetektor_1
-        to: 'on'
-      - platform: state
-        entity_id: switch.rorelsedetektor_2
-        to: 'on'
-      - platform: state
-        entity_id: switch.rorelsedetektor_3
         to: 'on'
 
     condition:
@@ -124,15 +106,6 @@
     trigger:
       - platform: state
         entity_id: input_boolean.rorelsedetektor_kok_aktiv
-        to: 'on'
-      - platform: state
-        entity_id: switch.rorelsedetektor_1
-        to: 'on'
-      - platform: state
-        entity_id: switch.rorelsedetektor_2
-        to: 'on'
-      - platform: state
-        entity_id: switch.rorelsedetektor_3
         to: 'on'
 
     condition:
@@ -169,15 +142,6 @@
     trigger:
       - platform: state
         entity_id: input_boolean.rorelsedetektor_kok_aktiv
-        to: 'on'
-      - platform: state
-        entity_id: switch.rorelsedetektor_1
-        to: 'on'
-      - platform: state
-        entity_id: switch.rorelsedetektor_2
-        to: 'on'
-      - platform: state
-        entity_id: switch.rorelsedetektor_3
         to: 'on'
 
     condition:
@@ -217,15 +181,6 @@
     trigger:
       - platform: state
         entity_id: input_boolean.rorelsedetektor_kok_aktiv
-        to: 'on'
-      - platform: state
-        entity_id: switch.rorelsedetektor_1
-        to: 'on'
-      - platform: state
-        entity_id: switch.rorelsedetektor_2
-        to: 'on'
-      - platform: state
-        entity_id: switch.rorelsedetektor_3
         to: 'on'
 
     condition:

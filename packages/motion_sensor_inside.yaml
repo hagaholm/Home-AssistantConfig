@@ -23,8 +23,10 @@ automation:
     trigger:
       - platform: state
         entity_id: binary_sensor.aqara_motion_sensor_1 # Köksskåp
+        to: 'on'
       - platform: state
         entity_id: binary_sensor.aqara_motion_sensor_4 # Kök fönsterbänk
+        to: 'on'
     action:
       # Aktiverar rorelsedetektor_kok_aktiv
       - service: input_boolean.turn_on

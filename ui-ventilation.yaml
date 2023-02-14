@@ -18,11 +18,19 @@ views:
           - entity: sensor.tilluft
           - entity: sensor.franluft
           - entity: sensor.avluft
-          - entity: sensor.badrum_humidity
-          - entity: sensor.fukt_badrumsfonster
         state_color: true
+        title: FTX aggregat
       - type: entities
         entities:
+          - entity: sensor.badrum_humidity
+          - entity: sensor.fukt_badrumsfonster
+          - entity: sensor.hall_humidity
+          - entity: sensor.ute_friggebod_humidity
+        state_color: true
+        title: Luftfuktighet
+      - type: entities
+        entities:
+          - timer.timer_humidity_bathroom_max_time
           - timer.timer_humidity_bathroom
         state_color: true
   - theme: Backend-selected
@@ -48,6 +56,8 @@ views:
           - entity: sensor.tilluft
           - entity: sensor.franluft
           - entity: sensor.avluft
+          - entity: sensor.ute
+          - entity: sensor.inne_medel
         hours_to_show: 12
       - type: history-graph
         entities:
@@ -55,6 +65,14 @@ views:
           - entity: sensor.fukt_badrumsfonster
           - entity: sensor.hall_humidity
         hours_to_show: 12
+      - type: gauge
+        entity: sensor.fukt_badrumsfonster
+        severity:
+          green: 0
+          yellow: 70
+          red: 80
+        needle: true
+        name: Fukt badrum
   - theme: Backend-selected
     title: Larm
     path: larm
@@ -76,8 +94,10 @@ views:
     cards:
       - type: entities
         entities:
+          - entity: automation.startar_max_timer_badrum
           - entity: automation.restart_timer_badrum
-        title: Timers - Stabiliserad fukt
+          - entity: automation.reset_timer_nar_vent_satts_till_normal
+        title: Timers - Forcerad till Normal fläkt
         state_color: true
       - type: entities
         entities:
@@ -99,6 +119,7 @@ views:
           - entity: automation.normal_badrumsfonster_lag_fukt
           - entity: automation.normal_hog_fukt_i_huset
           - entity: automation.normal_vid_stabiliserad_fukt
+          - entity: automation.normal_efter_maxtid
         state_color: true
         title: Normal fläkt
       - type: entities

@@ -363,3 +363,14 @@ views:
         title: Mediaspelare
         show_header_toggle: true
         state_color: true
+  - path: bilen
+    title: Bilen
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - automation.bilen_startar
+          - automation.bilen_stannar
+        title: Bilen
+        show_header_toggle: true
+        state_color: true

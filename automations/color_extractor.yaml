@@ -1,43 +1,43 @@
-- alias: "Cam 1 color extractor"
-  trigger:
-    - platform: time_pattern
-      seconds: "/30"
+#- alias: "Cam 1 color extractor"
+#  trigger:
+#    - platform: time_pattern
+#      seconds: "/30"
 
-  action:
-    - service: color_extractor.turn_on
-      data_template:
-        color_extract_path: /media/Day/camera_1_latest.jpg
-        entity_id: light.cam_1_color
+#  action:
+#    - service: color_extractor.turn_on
+#      data_template:
+#        color_extract_path: /media/Day/camera_1_latest.jpg
+#        entity_id: light.cam_1_color
 
-- alias: "Cam 2 color extractor"
-  trigger:
-    - platform: time_pattern
-      seconds: "/30"
+#- alias: "Cam 2 color extractor"
+#  trigger:
+#    - platform: time_pattern
+#      seconds: "/30"
 
-  action:
-    - service: color_extractor.turn_on
-      data_template:
-        color_extract_path: /media/Day/camera_2_latest.jpg
-        entity_id: light.cam_2_color
+#  action:
+#    - service: color_extractor.turn_on
+#      data_template:
+#        color_extract_path: /media/Day/camera_2_latest.jpg
+#        entity_id: light.cam_2_color
 
-- alias: "Cam 3 color extractor"
-  trigger:
-    - platform: time_pattern
-      seconds: "/30"
+#- alias: "Cam 3 color extractor"
+#  trigger:
+#    - platform: time_pattern
+#      seconds: "/30"
 
-  action:
-    - service: color_extractor.turn_on
-      data_template:
-        color_extract_path: /media/Day/camera_3_latest.jpg
-        entity_id: light.cam_3_color
+#  action:
+#    - service: color_extractor.turn_on
+#      data_template:
+#        color_extract_path: /media/Day/camera_3_latest.jpg
+#        entity_id: light.cam_3_color
 
-- alias: "Cam 4 color extractor"
-  trigger:
-    - platform: time_pattern
-      seconds: "/30"
+#- alias: "Cam 4 color extractor"
+#  trigger:
+#    - platform: time_pattern
+#      seconds: "/30"
 
-  action:
-    - service: color_extractor.turn_on
-      data_template:
-        color_extract_path: /media/Day/camera_4_latest.jpg
-        entity_id: light.cam_4_color
+#  action:
+#    - service: color_extractor.turn_on
+#      data_template:
+#        color_extract_path: /media/Day/camera_4_latest.jpg
+#        entity_id: light.cam_4_color

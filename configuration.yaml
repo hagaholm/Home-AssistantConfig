@@ -125,6 +125,8 @@ sun:
 downloader:
   download_dir: /config/www
 
+color_extractor:
+
 ####################################################
 #                                                  #
 #                      LOGGING                     #
@@ -222,6 +224,11 @@ cover:
 #                                                  #
 ####################################################
 light:
+  - platform: template
+    lights:
+      light_cam1:
+        friendly_name: "Light Cam 1"
+
   - platform: tellstick
 
 #  - platform: switch

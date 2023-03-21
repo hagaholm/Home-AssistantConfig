@@ -1,7 +1,7 @@
 - alias: "Cam1"
   trigger:
     - platform: time_pattern
-      seconds: "/60"
+      seconds: "/30"
 
   action:
     - service: color_extractor.turn_on

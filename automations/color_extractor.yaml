@@ -1,0 +1,10 @@
+- alias: "Cam1"
+  trigger:
+    - platform: time_pattern
+      seconds: "/60"
+
+  action:
+    - service: color_extractor.turn_on
+      data_template:
+        color_extract_path: /media/Day/camera_3_latest.jpg
+        entity_id: light.light_cam1

@@ -35,13 +35,17 @@
     - service: automation.turn_off
       entity_id: automation.cam_3_color_extractor
 
-#- alias: "Cam 4 color extractor"
-#  trigger:
-#    - platform: time_pattern
-#      seconds: "/30"
+- alias: "Cam 4 color extractor"
+  trigger:
+    - platform: time_pattern
+      minutes: "/2"
 
-#  action:
-#    - service: color_extractor.turn_on
-#      data_template:
-#        color_extract_path: /media/Day/camera_4_latest.jpg
-#        entity_id: light.cam_4_color
+  action:
+    - service: color_extractor.turn_on
+      data_template:
+        color_extract_path: "/media/Day/camera_4_latest.jpg"
+        entity_id: light.cam_4_color
+        brightness_pct: 100
+
+    - service: automation.turn_off
+      entity_id: automation.cam_4_color_extractor

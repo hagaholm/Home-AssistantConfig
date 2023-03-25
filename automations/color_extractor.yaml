@@ -1,29 +1,37 @@
-#- alias: "Cam 1 color extractor"
-#  trigger:
-#    - platform: time_pattern
-#      seconds: "/30"
+- alias: "Cam 1 color extractor"
+  trigger:
+    - platform: time_pattern
+      seconds: "/2"
 
-#  action:
-#    - service: color_extractor.turn_on
-#      data_template:
-#        color_extract_path: /media/Day/camera_1_latest.jpg
-#        entity_id: light.cam_1_color
+  action:
+    - service: color_extractor.turn_on
+      data_template:
+        color_extract_path: "/media/Day/camera_1_latest.jpg"
+        entity_id: light.cam_1_color
+        brightness_pct: 100
 
-#- alias: "Cam 2 color extractor"
-#  trigger:
-#    - platform: time_pattern
-#      seconds: "/30"
+    - service: automation.turn_off
+      entity_id: automation.cam_1_color_extractor
 
-#  action:
-#    - service: color_extractor.turn_on
-#      data_template:
-#        color_extract_path: /media/Day/camera_2_latest.jpg
-#        entity_id: light.cam_2_color
+- alias: "Cam 2 color extractor"
+  trigger:
+    - platform: time_pattern
+      seconds: "/2"
 
+  action:
+    - service: color_extractor.turn_on
+      data_template:
+        color_extract_path: "/media/Day/camera_2_latest.jpg"
+        entity_id: light.cam_2_color
+        brightness_pct: 100
+
+    - service: automation.turn_off
+      entity_id: automation.cam_2_color_extractor
+      
 - alias: "Cam 3 color extractor"
   trigger:
     - platform: time_pattern
-      minutes: "/2"
+      seconds: "/2"
 
   action:
     - service: color_extractor.turn_on
@@ -38,7 +46,7 @@
 - alias: "Cam 4 color extractor"
   trigger:
     - platform: time_pattern
-      minutes: "/2"
+      seconds: "/2"
 
   action:
     - service: color_extractor.turn_on

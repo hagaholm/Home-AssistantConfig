@@ -173,7 +173,7 @@ automation:
         target:
           entity_id: camera.kamera1_snapshots
         data:
-          filename: '/media/color_extractor/cam_1_{{ now().strftime("%Y%m%d-%H%") }}.jpg'
+          filename: '/media/color_extractor/cam_1_{{ now().strftime("%Y%m%d-%H:%M") }}.jpg'
 
       - service: color_extractor.turn_on
         data_template:
@@ -193,7 +193,7 @@ automation:
         target:
           entity_id: camera.kamera2_snapshots
         data:
-          filename: '/media/color_extractor/cam_2_{{ now().strftime("%Y%m%d-%H%") }}.jpg'
+          filename: '/media/color_extractor/cam_2_{{ now().strftime("%Y%m%d-%H:%M") }}.jpg'
 
       - service: color_extractor.turn_on
         data_template:
@@ -213,7 +213,7 @@ automation:
         target:
           entity_id: camera.kamera3_snapshots
         data:
-          filename: '/media/color_extractor/cam_3_{{ now().strftime("%Y%m%d-%H%") }}.jpg'
+          filename: '/media/color_extractor/cam_3_{{ now().strftime("%Y%m%d-%H:%M") }}.jpg'
 
       - service: color_extractor.turn_on
         data_template:
@@ -233,7 +233,7 @@ automation:
         target:
           entity_id: camera.kamera4_snapshots
         data:
-          filename: '/media/color_extractor/cam_4_{{ now().strftime("%Y%m%d-%H%") }}.jpg'
+          filename: '/media/color_extractor/cam_4_{{ now().strftime("%Y%m%d-%H:%M") }}.jpg'
 
       - service: color_extractor.turn_on
         data_template:
@@ -253,7 +253,6 @@ automation:
         target:
           entity_id: camera.kamera1_snapshots
         data:
-#          filename: '/media/color_extractor/cam_1_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
           filename: '/media/color_extractor/cam_1.jpg'
       - delay: '00:00:05'
       - service: color_extractor.turn_on
@@ -277,7 +276,6 @@ automation:
         target:
           entity_id: camera.kamera2_snapshots
         data:
-#          filename: '/media/color_extractor/cam_2_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
           filename: '/media/color_extractor/cam_2.jpg'
       - delay: '00:00:05'
       - service: color_extractor.turn_on
@@ -301,7 +299,6 @@ automation:
         target:
           entity_id: camera.kamera3_snapshots
         data:
-#          filename: '/media/color_extractor/cam_3_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
           filename: '/media/color_extractor/cam_3.jpg'
       - delay: '00:00:05'
       - service: color_extractor.turn_on
@@ -325,7 +322,6 @@ automation:
         target:
           entity_id: camera.kamera4_snapshots
         data:
-#          filename: '/media/color_extractor/cam_4_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
           filename: '/media/color_extractor/cam_4.jpg'
       - delay: '00:00:05'
       - service: color_extractor.turn_on

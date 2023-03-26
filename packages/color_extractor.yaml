@@ -17,19 +17,23 @@ sensor:
       cam_1_r:
         friendly_name: "Cam 1 Röd"
         value_template: >-
-          {{ state_attr("light.cam_1_color", "rgb_color")[0] }}
+          {{ state_attr("light.cam_1_color", "rgb_color")[0] }}z
+        device_class: illuminance
       cam_1_g:
         friendly_name: "Cam 1 Grön"
         value_template:  >-
-          {{ state_attr("light.cam_1_color", "rgb_color")[1] }}
+          {{ state_attr("light.cam_1_color", "rgb_color")[1] }}z
+        device_class: illuminance
       cam_1_b:
         friendly_name: "Cam 1 Blå"
         value_template:  >-
-          {{ state_attr("light.cam_1_color", "rgb_color")[2] }}
+          {{ state_attr("light.cam_1_color", "rgb_color")[2] }}z
+        device_class: illuminance
       cam_1_sum:
         friendly_name: "Cam 1 Summa"
         value_template:  >-
-          {{ state_attr("light.cam_1_color", "rgb_color")[0] * state_attr("light.cam_1_color", "rgb_color")[1] * state_attr("light.cam_1_color", "rgb_color")[2] }}
+          {{ state_attr("light.cam_1_color", "rgb_color")[0] * state_attr("light.cam_1_color", "rgb_color")[1] * state_attr("light.cam_1_color", "rgb_color")[2] }}z
+        device_class: illuminance
 
       cam_2_r:
         friendly_name: "Cam 2 Röd"

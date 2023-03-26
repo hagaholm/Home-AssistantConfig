@@ -15,125 +15,53 @@ automation:
   - alias: "Cam color extractor every hour"
     trigger:
       - platform: time_pattern
-        minutes: 0
+        hour: 0
       - platform: time_pattern
-        minutes: 1
+        hour: 1
       - platform: time_pattern
-        minutes: 2
+        hour: 2
       - platform: time_pattern
-        minutes: 3
+        hour: 3
       - platform: time_pattern
-        minutes: 4
+        hour: 4
       - platform: time_pattern
-        minutes: 5
+        hour: 5
       - platform: time_pattern
-        minutes: 6
+        hour: 6
       - platform: time_pattern
-        minutes: 7
+        hour: 7
       - platform: time_pattern
-        minutes: 8
+        hour: 8
       - platform: time_pattern
-        minutes: 9
+        hour: 9
       - platform: time_pattern
-        minutes: 10
+        hour: 10
       - platform: time_pattern
-        minutes: 11
+        hour: 11
       - platform: time_pattern
-        minutes: 12
+        hour: 12
       - platform: time_pattern
-        minutes: 13
+        hour: 13
       - platform: time_pattern
-        minutes: 14
+        hour: 14
       - platform: time_pattern
-        minutes: 15
+        hour: 15
       - platform: time_pattern
-        minutes: 16
+        hour: 16
       - platform: time_pattern
-        minutes: 17
+        hour: 17
       - platform: time_pattern
-        minutes: 18
+        hour: 18
       - platform: time_pattern
-        minutes: 19
+        hour: 19
       - platform: time_pattern
-        minutes: 20
+        hour: 20
       - platform: time_pattern
-        minutes: 21
+        hour: 21
       - platform: time_pattern
-        minutes: 22
+        hour: 22
       - platform: time_pattern
-        minutes: 23
-      - platform: time_pattern
-        minutes: 24
-      - platform: time_pattern
-        minutes: 25
-      - platform: time_pattern
-        minutes: 26
-      - platform: time_pattern
-        minutes: 27
-      - platform: time_pattern
-        minutes: 28
-      - platform: time_pattern
-        minutes: 29
-      - platform: time_pattern
-        minutes: 30
-      - platform: time_pattern
-        minutes: 31
-      - platform: time_pattern
-        minutes: 32
-      - platform: time_pattern
-        minutes: 33
-      - platform: time_pattern
-        minutes: 34
-      - platform: time_pattern
-        minutes: 35
-      - platform: time_pattern
-        minutes: 36
-      - platform: time_pattern
-        minutes: 37
-      - platform: time_pattern
-        minutes: 38
-      - platform: time_pattern
-        minutes: 39
-      - platform: time_pattern
-        minutes: 40
-      - platform: time_pattern
-        minutes: 41
-      - platform: time_pattern
-        minutes: 42
-      - platform: time_pattern
-        minutes: 43
-      - platform: time_pattern
-        minutes: 44
-      - platform: time_pattern
-        minutes: 45
-      - platform: time_pattern
-        minutes: 46
-      - platform: time_pattern
-        minutes: 47
-      - platform: time_pattern
-        minutes: 48
-      - platform: time_pattern
-        minutes: 49
-      - platform: time_pattern
-        minutes: 50
-      - platform: time_pattern
-        minutes: 51
-      - platform: time_pattern
-        minutes: 52
-      - platform: time_pattern
-        minutes: 53
-      - platform: time_pattern
-        minutes: 54
-      - platform: time_pattern
-        minutes: 55
-      - platform: time_pattern
-        minutes: 56
-      - platform: time_pattern
-        minutes: 57
-      - platform: time_pattern
-        minutes: 58
-      - platform: time_pattern
-        minutes: 59
+        hour: 23
 
     condition:
       condition: and
@@ -155,7 +83,7 @@ automation:
         target:
           entity_id: camera.kamera1_snapshots
         data:
-          filename: '/media/color_extractor/cam_1_{{ now().strftime("%Y%m%d-%H%M") }}.jpg'
+          filename: '/media/color_extractor/cam_1_{{ now().strftime("%Y%m%d-%H%") }}.jpg'
 
       - service: color_extractor.turn_on
         data_template:
@@ -175,7 +103,7 @@ automation:
         target:
           entity_id: camera.kamera2_snapshots
         data:
-          filename: '/media/color_extractor/cam_2_{{ now().strftime("%Y%m%d-%H%M") }}.jpg'
+          filename: '/media/color_extractor/cam_2_{{ now().strftime("%Y%m%d-%H%") }}.jpg'
 
       - service: color_extractor.turn_on
         data_template:
@@ -195,7 +123,7 @@ automation:
         target:
           entity_id: camera.kamera3_snapshots
         data:
-          filename: '/media/color_extractor/cam_3_{{ now().strftime("%Y%m%d-%H%M") }}.jpg'
+          filename: '/media/color_extractor/cam_3_{{ now().strftime("%Y%m%d-%H%") }}.jpg'
 
       - service: color_extractor.turn_on
         data_template:
@@ -215,7 +143,7 @@ automation:
         target:
           entity_id: camera.kamera4_snapshots
         data:
-          filename: '/media/color_extractor/cam_4_{{ now().strftime("%Y%m%d-%H%M") }}.jpg'
+          filename: '/media/color_extractor/cam_4_{{ now().strftime("%Y%m%d-%H%") }}.jpg'
 
       - service: color_extractor.turn_on
         data_template:

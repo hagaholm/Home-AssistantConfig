@@ -29,6 +29,11 @@ sensor:
         value_template:  >-
           {{ state_attr("light.cam_1_color", "rgb_color")[2] }}
         unit_of_measurement: "RGB"
+      cam_1_plus:
+        friendly_name: "Cam 1 Plus"
+        value_template:  >-
+          {{ state_attr("light.cam_1_color", "rgb_color")[0] + state_attr("light.cam_1_color", "rgb_color")[1] + state_attr("light.cam_1_color", "rgb_color")[2] }}
+        unit_of_measurement: "Plus"
       cam_1_sum:
         friendly_name: "Cam 1 Summa"
         value_template:  >-
@@ -50,6 +55,11 @@ sensor:
         value_template:  >-
           {{ state_attr("light.cam_2_color", "rgb_color")[2] }}
         unit_of_measurement: "RGB"
+      cam_2_plus:
+        friendly_name: "Cam 2 Plus"
+        value_template:  >-
+          {{ state_attr("light.cam_2_color", "rgb_color")[0] + state_attr("light.cam_2_color", "rgb_color")[1] + state_attr("light.cam_2_color", "rgb_color")[2] }}
+        unit_of_measurement: "Plus"
       cam_2_sum:
         friendly_name: "Cam 2 Summa"
         value_template:  >-
@@ -71,6 +81,11 @@ sensor:
         value_template:  >-
           {{ state_attr("light.cam_3_color", "rgb_color")[2] }}
         unit_of_measurement: "RGB"
+      cam_3_plus:
+        friendly_name: "Cam 3 Plus"
+        value_template:  >-
+          {{ state_attr("light.cam_3_color", "rgb_color")[0] + state_attr("light.cam_3_color", "rgb_color")[1] + state_attr("light.cam_3_color", "rgb_color")[2] }}
+        unit_of_measurement: "Plus"
       cam_3_sum:
         friendly_name: "Cam 3 Summa"
         value_template:  >-
@@ -92,6 +107,11 @@ sensor:
         value_template:  >-
           {{ state_attr("light.cam_4_color", "rgb_color")[2] }}
         unit_of_measurement: "RGB"
+      cam_4_plus:
+        friendly_name: "Cam 4 Plus"
+        value_template:  >-
+          {{ state_attr("light.cam_4_color", "rgb_color")[0] + state_attr("light.cam_4_color", "rgb_color")[1] + state_attr("light.cam_4_color", "rgb_color")[2] }}
+        unit_of_measurement: "Plus"
       cam_4_sum:
         friendly_name: "Cam 4 Summa"
         value_template:  >-

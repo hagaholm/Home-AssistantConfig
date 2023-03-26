@@ -8,6 +8,17 @@ shell_command:
   # Used by automation Camera 1 Person detected create video
   cp_file: "cp -f {{source_file}} {{dest_file}}"
 
+##############
+### Sensor ###
+##############
+sensor:
+  - platform: template
+    sensors:
+      cam_1_r:
+        friendly_name: "Cam 1 Röd"
+        value_template: >-
+          {{ state_attr("light.cam_1_color", "rgb_color")[0] }}Z
+
 ##################
 ### Automation ###
 ##################

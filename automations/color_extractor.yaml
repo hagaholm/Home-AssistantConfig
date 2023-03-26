@@ -25,15 +25,15 @@
       data:
 #        filename: '/media/color_extractor/cam_2_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
         filename: '/media/color_extractor/cam_2.jpg'
-#    - delay: '00:00:05'
-#    - service: color_extractor.turn_on
-#      data_template:
-#        color_extract_path: "/media/color_extractor/cam_2.jpg"
-#        entity_id: light.cam_2_color
-#        brightness_pct: 100
+    - delay: '00:00:05'
+    - service: color_extractor.turn_on
+      data_template:
+        color_extract_path: "/media/color_extractor/cam_2.jpg"
+        entity_id: light.cam_2_color
+        brightness_pct: 100
 
-#    - service: automation.turn_off
-#      entity_id: automation.cam_2_color_extractor
+    - service: automation.turn_off
+      entity_id: automation.cam_2_color_extractor
       
 - alias: "Cam 3 color extractor"
   trigger:

@@ -20,10 +20,17 @@ sensor:
           {{ state_attr("light.cam_1_color", "rgb_color")[0] }}
       cam_1_g:
         friendly_name: "Cam 1 Grön"
-        value_template: {{ state_attr("light.cam_1_color", "rgb_color")[1] }}
+        value_template:  >-
+          {{ state_attr("light.cam_1_color", "rgb_color")[1] }}
       cam_1_b:
         friendly_name: "Cam 1 Blå"
-        value_template: {{ state_attr("light.cam_1_color", "rgb_color")[2] }}
+        value_template:  >-
+          {{ state_attr("light.cam_1_color", "rgb_color")[2] }}
+      cam_1_sum:
+        friendly_name: "Cam 1 Blå"
+        value_template:  >-
+          {{ state_attr("light.cam_1_color", "rgb_color")[1] * state_attr("light.cam_1_color", "rgb_color")[1] * state_attr("light.cam_1_color", "rgb_color")[2] }}
+
 
 ##################
 ### Automation ###

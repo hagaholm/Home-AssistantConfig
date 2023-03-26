@@ -18,17 +18,17 @@ sensor:
         friendly_name: "Cam 1 Röd"
         value_template: >-
           {{ state_attr("light.cam_1_color", "rgb_color")[0] }}
-        unit_of_measurement: "R"
+        unit_of_measurement: "RGB"
       cam_1_g:
         friendly_name: "Cam 1 Grön"
         value_template:  >-
           {{ state_attr("light.cam_1_color", "rgb_color")[1] }}
-        unit_of_measurement: "G"
+        unit_of_measurement: "RGB"
       cam_1_b:
         friendly_name: "Cam 1 Blå"
         value_template:  >-
           {{ state_attr("light.cam_1_color", "rgb_color")[2] }}
-        unit_of_measurement: "B"
+        unit_of_measurement: "RGB"
       cam_1_sum:
         friendly_name: "Cam 1 Summa"
         value_template:  >-
@@ -39,17 +39,17 @@ sensor:
         friendly_name: "Cam 2 Röd"
         value_template: >-
           {{ state_attr("light.cam_2_color", "rgb_color")[0] }}
-        unit_of_measurement: "R"
+        unit_of_measurement: "RGB"
       cam_2_g:
         friendly_name: "Cam 2 Grön"
         value_template:  >-
           {{ state_attr("light.cam_2_color", "rgb_color")[1] }}
-        unit_of_measurement: "G"
+        unit_of_measurement: "RGB"
       cam_2_b:
         friendly_name: "Cam 2 Blå"
         value_template:  >-
           {{ state_attr("light.cam_2_color", "rgb_color")[2] }}
-        unit_of_measurement: "B"
+        unit_of_measurement: "RGB"
       cam_2_sum:
         friendly_name: "Cam 2 Summa"
         value_template:  >-
@@ -60,17 +60,17 @@ sensor:
         friendly_name: "Cam 3 Röd"
         value_template: >-
           {{ state_attr("light.cam_3_color", "rgb_color")[0] }}
-        unit_of_measurement: "R"
+        unit_of_measurement: "RGB"
       cam_3_g:
         friendly_name: "Cam 3 Grön"
         value_template:  >-
           {{ state_attr("light.cam_3_color", "rgb_color")[1] }}
-        unit_of_measurement: "G"
+        unit_of_measurement: "RGB"
       cam_3_b:
         friendly_name: "Cam 3 Blå"
         value_template:  >-
           {{ state_attr("light.cam_3_color", "rgb_color")[2] }}
-        unit_of_measurement: "B"
+        unit_of_measurement: "RGB"
       cam_3_sum:
         friendly_name: "Cam 3 Summa"
         value_template:  >-
@@ -81,17 +81,17 @@ sensor:
         friendly_name: "Cam 4 Röd"
         value_template: >-
           {{ state_attr("light.cam_4_color", "rgb_color")[0] }}
-        unit_of_measurement: "R"
+        unit_of_measurement: "RGB"
       cam_4_g:
         friendly_name: "Cam 4 Grön"
         value_template:  >-
           {{ state_attr("light.cam_4_color", "rgb_color")[1] }}
-        unit_of_measurement: "G"
+        unit_of_measurement: "RGB"
       cam_4_b:
         friendly_name: "Cam 4 Blå"
         value_template:  >-
           {{ state_attr("light.cam_4_color", "rgb_color")[2] }}
-        unit_of_measurement: "B"
+        unit_of_measurement: "RGB"
       cam_4_sum:
         friendly_name: "Cam 4 Summa"
         value_template:  >-

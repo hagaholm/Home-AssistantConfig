@@ -92,7 +92,7 @@ sensor:
         value_template:  >-
           {{ state_attr("light.cam_4_color", "rgb_color")[2] }}
         unit_of_measurement: "B"
-      cam_1_sum:
+      cam_4_sum:
         friendly_name: "Cam 4 Summa"
         value_template:  >-
           {{ state_attr("light.cam_4_color", "rgb_color")[0] * state_attr("light.cam_4_color", "rgb_color")[1] * state_attr("light.cam_4_color", "rgb_color")[2] }}

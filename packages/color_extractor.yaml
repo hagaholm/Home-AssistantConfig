@@ -34,6 +34,106 @@ automation:
         minutes: 8
       - platform: time_pattern
         minutes: 9
+      - platform: time_pattern
+        minutes: 10
+      - platform: time_pattern
+        minutes: 11
+      - platform: time_pattern
+        minutes: 12
+      - platform: time_pattern
+        minutes: 13
+      - platform: time_pattern
+        minutes: 14
+      - platform: time_pattern
+        minutes: 15
+      - platform: time_pattern
+        minutes: 16
+      - platform: time_pattern
+        minutes: 17
+      - platform: time_pattern
+        minutes: 18
+      - platform: time_pattern
+        minutes: 19
+      - platform: time_pattern
+        minutes: 20
+      - platform: time_pattern
+        minutes: 21
+      - platform: time_pattern
+        minutes: 22
+      - platform: time_pattern
+        minutes: 23
+      - platform: time_pattern
+        minutes: 24
+      - platform: time_pattern
+        minutes: 25
+      - platform: time_pattern
+        minutes: 26
+      - platform: time_pattern
+        minutes: 27
+      - platform: time_pattern
+        minutes: 28
+      - platform: time_pattern
+        minutes: 29
+      - platform: time_pattern
+        minutes: 30
+      - platform: time_pattern
+        minutes: 31
+      - platform: time_pattern
+        minutes: 32
+      - platform: time_pattern
+        minutes: 33
+      - platform: time_pattern
+        minutes: 34
+      - platform: time_pattern
+        minutes: 35
+      - platform: time_pattern
+        minutes: 36
+      - platform: time_pattern
+        minutes: 37
+      - platform: time_pattern
+        minutes: 38
+      - platform: time_pattern
+        minutes: 39
+      - platform: time_pattern
+        minutes: 40
+      - platform: time_pattern
+        minutes: 41
+      - platform: time_pattern
+        minutes: 42
+      - platform: time_pattern
+        minutes: 43
+      - platform: time_pattern
+        minutes: 44
+      - platform: time_pattern
+        minutes: 45
+      - platform: time_pattern
+        minutes: 46
+      - platform: time_pattern
+        minutes: 47
+      - platform: time_pattern
+        minutes: 48
+      - platform: time_pattern
+        minutes: 49
+      - platform: time_pattern
+        minutes: 50
+      - platform: time_pattern
+        minutes: 51
+      - platform: time_pattern
+        minutes: 52
+      - platform: time_pattern
+        minutes: 53
+      - platform: time_pattern
+        minutes: 54
+      - platform: time_pattern
+        minutes: 55
+      - platform: time_pattern
+        minutes: 56
+      - platform: time_pattern
+        minutes: 57
+      - platform: time_pattern
+        minutes: 58
+      - platform: time_pattern
+        minutes: 59
 
     condition:
       condition: and
@@ -62,7 +162,7 @@ automation:
           color_extract_path: "/media/color_extractor/cam_1.jpg"
           entity_id: light.cam_1_color
           brightness_pct: 100
-
+###
       - service: camera.snapshot
         target:
           entity_id: camera.kamera2_snapshots
@@ -82,7 +182,7 @@ automation:
           color_extract_path: "/media/color_extractor/cam_2.jpg"
           entity_id: light.cam_2_color
           brightness_pct: 100
-
+###
       - service: camera.snapshot
         target:
           entity_id: camera.kamera3_snapshots
@@ -102,7 +202,7 @@ automation:
           color_extract_path: "/media/color_extractor/cam_3.jpg"
           entity_id: light.cam_3_color
           brightness_pct: 100
-
+###
       - service: camera.snapshot
         target:
           entity_id: camera.kamera4_snapshots

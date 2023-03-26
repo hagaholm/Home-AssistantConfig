@@ -105,6 +105,16 @@ automation:
   - alias: "Cam color extractor every hour"
     trigger:
       - platform: time_pattern
+        minutes: 10
+      - platform: time_pattern
+        minutes: 20
+      - platform: time_pattern
+        minutes: 30
+      - platform: time_pattern
+        minutes: 40
+      - platform: time_pattern
+        minutes: 50
+      - platform: time_pattern
         hours: 0
       - platform: time_pattern
         hours: 1

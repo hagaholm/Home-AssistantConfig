@@ -21,7 +21,7 @@
   action:
     - service: camera.snapshot
       target:
-        entity_id: camera.Kamera2
+        entity_id: camera.kamera2_snapshots
       data:
 #        filename: '/media/color_extractor/cam_2_{{ now().strftime("%Y%m%d-%H%M%S") }}.jpg'
         filename: '/media/color_extractor/cam_2.jpg'

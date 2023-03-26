@@ -17,7 +17,13 @@ sensor:
       cam_1_r:
         friendly_name: "Cam 1 Röd"
         value_template: >-
-          {{ state_attr("light.cam_1_color", "rgb_color")[0] }}Z
+          {{ state_attr("light.cam_1_color", "rgb_color")[0] }}
+      cam_1_g:
+        friendly_name: "Cam 1 Grön"
+        value_template: {{ state_attr("light.cam_1_color", "rgb_color")[1] }}
+      cam_1_b:
+        friendly_name: "Cam 1 Blå"
+        value_template: {{ state_attr("light.cam_1_color", "rgb_color")[2] }}
 
 ##################
 ### Automation ###

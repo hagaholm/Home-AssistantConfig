@@ -12,6 +12,14 @@
     trigger:
       - platform: template
         value_template: "{{(states('sensor.ljusstyrka') | int) < (states('input_number.kitchen_light_on') | int )}}"
+      - platform: template
+        value_template: "{{((states('sensor.aqara_motion_sensor_1') | int) | int(0)) < (states('input_number.inside_kitchen') | int(0) )}}"
+      - platform: template
+        value_template: "{{((states('sensor.aqara_motion_sensor_2') | int) | int(0)) < (states('input_number.inside_kitchen') | int(0) )}}"
+      - platform: template
+        value_template: "{{((states('sensor.aqara_motion_sensor_3') | int) | int(0)) < (states('input_number.inside_kitchen') | int(0) )}}"
+      - platform: template
+        value_template: "{{((states('sensor.aqara_motion_sensor_4') | int) | int(0)) < (states('input_number.inside_kitchen') | int(0) )}}"
 
     condition:
       condition: and

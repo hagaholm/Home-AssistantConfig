@@ -1,0 +1,364 @@
+#####################
+### Shell command ###
+#####################
+shell_command:
+
+  mv_file: "mv -f {{source_file}} {{dest_file}}"
+
+  # Used by automation Camera 1 Person detected create video
+  cp_file: "cp -f {{source_file}} {{dest_file}}"
+
+##############
+### Sensor ###
+##############
+sensor:
+  - platform: template
+    sensors:
+      cam_1_r:
+        friendly_name: "Cam 1 Röd"
+        value_template: >-
+          {{ state_attr("light.cam_1_color", "rgb_color")[0] }}
+        unit_of_measurement: "RGB"
+      cam_1_g:
+        friendly_name: "Cam 1 Grön"
+        value_template:  >-
+          {{ state_attr("light.cam_1_color", "rgb_color")[1] }}
+        unit_of_measurement: "RGB"
+      cam_1_b:
+        friendly_name: "Cam 1 Blå"
+        value_template:  >-
+          {{ state_attr("light.cam_1_color", "rgb_color")[2] }}
+        unit_of_measurement: "RGB"
+      cam_1_plus:
+        friendly_name: "Cam 1 Plus"
+        value_template:  >-
+          {{ state_attr("light.cam_1_color", "rgb_color")[0] + state_attr("light.cam_1_color", "rgb_color")[1] + state_attr("light.cam_1_color", "rgb_color")[2] }}
+        unit_of_measurement: "Plus"
+      cam_1_sum:
+        friendly_name: "Cam 1 Summa"
+        value_template:  >-
+          {{ state_attr("light.cam_1_color", "rgb_color")[0] * state_attr("light.cam_1_color", "rgb_color")[1] * state_attr("light.cam_1_color", "rgb_color")[2] }}
+        unit_of_measurement: "Sum"
+
+      cam_2_r:
+        friendly_name: "Cam 2 Röd"
+        value_template: >-
+          {{ state_attr("light.cam_2_color", "rgb_color")[0] }}
+        unit_of_measurement: "RGB"
+      cam_2_g:
+        friendly_name: "Cam 2 Grön"
+        value_template:  >-
+          {{ state_attr("light.cam_2_color", "rgb_color")[1] }}
+        unit_of_measurement: "RGB"
+      cam_2_b:
+        friendly_name: "Cam 2 Blå"
+        value_template:  >-
+          {{ state_attr("light.cam_2_color", "rgb_color")[2] }}
+        unit_of_measurement: "RGB"
+      cam_2_plus:
+        friendly_name: "Cam 2 Plus"
+        value_template:  >-
+          {{ state_attr("light.cam_2_color", "rgb_color")[0] + state_attr("light.cam_2_color", "rgb_color")[1] + state_attr("light.cam_2_color", "rgb_color")[2] }}
+        unit_of_measurement: "Plus"
+      cam_2_sum:
+        friendly_name: "Cam 2 Summa"
+        value_template:  >-
+          {{ state_attr("light.cam_2_color", "rgb_color")[0] * state_attr("light.cam_2_color", "rgb_color")[1] * state_attr("light.cam_2_color", "rgb_color")[2] }}
+        unit_of_measurement: "Sum"
+
+      cam_3_r:
+        friendly_name: "Cam 3 Röd"
+        value_template: >-
+          {{ state_attr("light.cam_3_color", "rgb_color")[0] }}
+        unit_of_measurement: "RGB"
+      cam_3_g:
+        friendly_name: "Cam 3 Grön"
+        value_template:  >-
+          {{ state_attr("light.cam_3_color", "rgb_color")[1] }}
+        unit_of_measurement: "RGB"
+      cam_3_b:
+        friendly_name: "Cam 3 Blå"
+        value_template:  >-
+          {{ state_attr("light.cam_3_color", "rgb_color")[2] }}
+        unit_of_measurement: "RGB"
+      cam_3_plus:
+        friendly_name: "Cam 3 Plus"
+        value_template:  >-
+          {{ state_attr("light.cam_3_color", "rgb_color")[0] + state_attr("light.cam_3_color", "rgb_color")[1] + state_attr("light.cam_3_color", "rgb_color")[2] }}
+        unit_of_measurement: "Plus"
+      cam_3_sum:
+        friendly_name: "Cam 3 Summa"
+        value_template:  >-
+          {{ state_attr("light.cam_3_color", "rgb_color")[0] * state_attr("light.cam_3_color", "rgb_color")[1] * state_attr("light.cam_3_color", "rgb_color")[2] }}
+        unit_of_measurement: "Sum"
+
+      cam_4_r:
+        friendly_name: "Cam 4 Röd"
+        value_template: >-
+          {{ state_attr("light.cam_4_color", "rgb_color")[0] }}
+        unit_of_measurement: "RGB"
+      cam_4_g:
+        friendly_name: "Cam 4 Grön"
+        value_template:  >-
+          {{ state_attr("light.cam_4_color", "rgb_color")[1] }}
+        unit_of_measurement: "RGB"
+      cam_4_b:
+        friendly_name: "Cam 4 Blå"
+        value_template:  >-
+          {{ state_attr("light.cam_4_color", "rgb_color")[2] }}
+        unit_of_measurement: "RGB"
+      cam_4_plus:
+        friendly_name: "Cam 4 Plus"
+        value_template:  >-
+          {{ state_attr("light.cam_4_color", "rgb_color")[0] + state_attr("light.cam_4_color", "rgb_color")[1] + state_attr("light.cam_4_color", "rgb_color")[2] }}
+        unit_of_measurement: "Plus"
+      cam_4_sum:
+        friendly_name: "Cam 4 Summa"
+        value_template:  >-
+          {{ state_attr("light.cam_4_color", "rgb_color")[0] * state_attr("light.cam_4_color", "rgb_color")[1] * state_attr("light.cam_4_color", "rgb_color")[2] }}
+        unit_of_measurement: "Sum"
+
+##################
+### Automation ###
+##################
+automation:
+  - alias: "Cam color extractor every hour"
+    trigger:
+      - platform: time_pattern
+        minutes: 10
+      - platform: time_pattern
+        minutes: 20
+      - platform: time_pattern
+        minutes: 30
+      - platform: time_pattern
+        minutes: 40
+      - platform: time_pattern
+        minutes: 50
+      - platform: time_pattern
+        hours: 0
+      - platform: time_pattern
+        hours: 1
+      - platform: time_pattern
+        hours: 2
+      - platform: time_pattern
+        hours: 3
+      - platform: time_pattern
+        hours: 4
+      - platform: time_pattern
+        hours: 5
+      - platform: time_pattern
+        hours: 6
+      - platform: time_pattern
+        hours: 7
+      - platform: time_pattern
+        hours: 8
+      - platform: time_pattern
+        hours: 9
+      - platform: time_pattern
+        hours: 10
+      - platform: time_pattern
+        hours: 11
+      - platform: time_pattern
+        hours: 12
+      - platform: time_pattern
+        hours: 13
+      - platform: time_pattern
+        hours: 14
+      - platform: time_pattern
+        hours: 15
+      - platform: time_pattern
+        hours: 16
+      - platform: time_pattern
+        hours: 17
+      - platform: time_pattern
+        hours: 18
+      - platform: time_pattern
+        hours: 19
+      - platform: time_pattern
+        hours: 20
+      - platform: time_pattern
+        hours: 21
+      - platform: time_pattern
+        hours: 22
+      - platform: time_pattern
+        hours: 23
+
+    condition:
+      condition: and
+      conditions:
+        - condition: numeric_state
+          entity_id: sensor.ljusstyrka
+          above: 0
+
+    action:
+      - service: camera.snapshot
+        target:
+          entity_id: camera.kamera1_snapshots
+        data:
+          filename: '/media/color_extractor/cam_1.jpg'
+
+      - delay: '00:00:01'
+
+      - service: camera.snapshot
+        target:
+          entity_id: camera.kamera1_snapshots
+        data:
+          filename: '/media/color_extractor/cam_1_{{ now().strftime("%Y%m%d-%H:%M") }}.jpg'
+
+      - service: color_extractor.turn_on
+        data_template:
+          color_extract_path: "/media/color_extractor/cam_1.jpg"
+          entity_id: light.cam_1_color
+          brightness_pct: 100
+###
+      - service: camera.snapshot
+        target:
+          entity_id: camera.kamera2_snapshots
+        data:
+          filename: '/media/color_extractor/cam_2.jpg'
+
+      - delay: '00:00:01'
+
+      - service: camera.snapshot
+        target:
+          entity_id: camera.kamera2_snapshots
+        data:
+          filename: '/media/color_extractor/cam_2_{{ now().strftime("%Y%m%d-%H:%M") }}.jpg'
+
+      - service: color_extractor.turn_on
+        data_template:
+          color_extract_path: "/media/color_extractor/cam_2.jpg"
+          entity_id: light.cam_2_color
+          brightness_pct: 100
+###
+      - service: camera.snapshot
+        target:
+          entity_id: camera.kamera3_snapshots
+        data:
+          filename: '/media/color_extractor/cam_3.jpg'
+
+      - delay: '00:00:01'
+
+      - service: camera.snapshot
+        target:
+          entity_id: camera.kamera3_snapshots
+        data:
+          filename: '/media/color_extractor/cam_3_{{ now().strftime("%Y%m%d-%H:%M") }}.jpg'
+
+      - service: color_extractor.turn_on
+        data_template:
+          color_extract_path: "/media/color_extractor/cam_3.jpg"
+          entity_id: light.cam_3_color
+          brightness_pct: 100
+###
+      - service: camera.snapshot
+        target:
+          entity_id: camera.kamera4_snapshots
+        data:
+          filename: '/media/color_extractor/cam_4.jpg'
+
+      - delay: '00:00:01'
+
+      - service: camera.snapshot
+        target:
+          entity_id: camera.kamera4_snapshots
+        data:
+          filename: '/media/color_extractor/cam_4_{{ now().strftime("%Y%m%d-%H:%M") }}.jpg'
+
+      - service: color_extractor.turn_on
+        data_template:
+          color_extract_path: "/media/color_extractor/cam_4.jpg"
+          entity_id: light.cam_4_color
+          brightness_pct: 100
+##################################################################################################
+
+
+  - alias: "Cam 1 color extractor"
+    trigger:
+      - platform: time_pattern
+        seconds: "/2"
+
+    action:
+      - service: camera.snapshot
+        target:
+          entity_id: camera.kamera1_snapshots
+        data:
+          filename: '/media/color_extractor/cam_1.jpg'
+      - delay: '00:00:05'
+      - service: color_extractor.turn_on
+        data_template:
+          color_extract_path: "/media/color_extractor/cam_1.jpg"
+          entity_id: light.cam_1_color
+          brightness_pct: 100
+
+      - service: automation.turn_off
+        entity_id: automation.cam_1_color_extractor
+
+##################################################################################################
+
+  - alias: "Cam 2 color extractor"
+    trigger:
+      - platform: time_pattern
+        seconds: "/2"
+
+    action:
+      - service: camera.snapshot
+        target:
+          entity_id: camera.kamera2_snapshots
+        data:
+          filename: '/media/color_extractor/cam_2.jpg'
+      - delay: '00:00:05'
+      - service: color_extractor.turn_on
+        data_template:
+          color_extract_path: "/media/color_extractor/cam_2.jpg"
+          entity_id: light.cam_2_color
+          brightness_pct: 100
+
+      - service: automation.turn_off
+        entity_id: automation.cam_2_color_extractor
+
+##################################################################################################
+
+  - alias: "Cam 3 color extractor"
+    trigger:
+      - platform: time_pattern
+        seconds: "/2"
+
+    action:
+      - service: camera.snapshot
+        target:
+          entity_id: camera.kamera3_snapshots
+        data:
+          filename: '/media/color_extractor/cam_3.jpg'
+      - delay: '00:00:05'
+      - service: color_extractor.turn_on
+        data_template:
+          color_extract_path: "/media/color_extractor/cam_3.jpg"
+          entity_id: light.cam_3_color
+          brightness_pct: 100
+
+      - service: automation.turn_off
+        entity_id: automation.cam_3_color_extractor
+
+##################################################################################################
+
+  - alias: "Cam 4 color extractor"
+    trigger:
+      - platform: time_pattern
+        seconds: "/2"
+
+    action:
+      - service: camera.snapshot
+        target:
+          entity_id: camera.kamera4_snapshots
+        data:
+          filename: '/media/color_extractor/cam_4.jpg'
+      - delay: '00:00:05'
+      - service: color_extractor.turn_on
+        data_template:
+          color_extract_path: "/media/color_extractor/cam_4.jpg"
+          entity_id: light.cam_4_color
+          brightness_pct: 100
+
+      - service: automation.turn_off
+        entity_id: automation.cam_4_color_extractor

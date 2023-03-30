@@ -1,8 +1,8 @@
-  #######################
-  ### Dagbelysning on ###
-  #######################
-  daylights_on:
-    alias: Dagbelysning on
+  ##########################
+  ### Kvällsbelysning on ###
+  ##########################
+  eveninglights_on:
+    alias: Kvällsbelysning on
     sequence:
       - service: input_select.select_option
         data:
@@ -13,78 +13,74 @@
         data_template:
           entity_id: >
             {% if is_state('input_boolean.christmas_light', 'on') %}
-              script.daylights_christmas_on
+              script.eveninglights_christmas_on
             {% else %}
-              script.daylights_default_on
+              script.eveninglights_default_on
             {% endif %}
 
-  ### ----------------------- ###
-  ### Dagbelysning default on ###
-  ### ----------------------- ###
-  daylights_default_on:
-    alias: Dagbelysning default on
+  ### -------------------------- ###
+  ### Kvällsbelysning default on ###
+  ### -------------------------- ###
+  eveninglights_default_on:
+    alias: Kvällsbelysning default on
     sequence:
 # IKEA
       - service: light.turn_on
         data:
           entity_id: light.kok_stora_fonstret
-          brightness_pct: 50
+          brightness_pct: 25
           transition: 2
 
       - service: light.turn_on
         data:
           entity_id: light.hall_byra
-          brightness_pct: 40
+          brightness_pct: 20
           transition: 2
       - service: light.turn_on
         data:
           entity_id: light.hall_skap
-          brightness_pct: 40
+          brightness_pct: 20
           transition: 2
 
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_fonster
-          brightness_pct: 50
+          brightness_pct: 25
           transition: 2
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_skank
-          brightness_pct: 50
+          brightness_pct: 25
           transition: 2
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_vagn
-          brightness_pct: 50
+          brightness_pct: 25
           transition: 2
 
       - service: light.turn_on
         data:
           entity_id: light.uterum_fonster
-          brightness_pct: 80
+          brightness_pct: 40
           transition: 2
 
-      - service: light.turn_on
+      - service: light.turn_off
         data:
           entity_id: light.andreas_fonster_2
-          brightness_pct: 30
           transition: 2
 
-      - service: light.turn_on
+      - service: light.turn_off
         data:
           entity_id: light.sovrum_fonster
-          brightness_pct: 50
           transition: 2
 
-      - service: light.turn_on
+      - service: light.turn_off
         data:
           entity_id: light.louise_fonster
-          brightness_pct: 80
           transition: 2
-      - service: light.turn_on
+      - service: light.turn_off
         data:
           entity_id: light.louise_golvlampa
-          brightness_pct: 80
           transition: 2
 
 # IKEA Julbelysning
@@ -117,11 +113,11 @@
 #      - service: light.turn_on
 #        entity_id: light.sovrum_sangbord
  
-  ### ------------------- ###
-  ### Dagbelysning Jul on ###
-  ### ------------------- ###
-  daylights_christmas_on:
-    alias: Dagbelysning jul on
+  ### ---------------------- ###
+  ### Kvällsbelysning Jul on ###
+  ### ---------------------- ###
+  eveninglights_christmas_on:
+    alias: Kvällsbelysning jul on
     sequence:
 # IKEA
 
@@ -134,12 +130,12 @@
       - service: light.turn_on
         data:
           entity_id: light.hall_byra
-          brightness_pct: 40
+          brightness_pct: 20
           transition: 2
       - service: light.turn_on
         data:
           entity_id: light.hall_skap
-          brightness_pct: 40
+          brightness_pct: 20
           transition: 2
 
 #      - service: light.turn_on
@@ -150,12 +146,12 @@
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_skank
-          brightness_pct: 50
+          brightness_pct: 25
           transition: 2
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_vagn
-          brightness_pct: 50
+          brightness_pct: 25
           transition: 2
 
 #      - service: light.turn_on
@@ -176,15 +172,13 @@
 #          brightness_pct: 50
 #          transition: 2
 
-      - service: light.turn_on
+      - service: light.turn_off
         data:
           entity_id: light.louise_fonster
-          brightness_pct: 80
           transition: 2
-      - service: light.turn_on
+      - service: light.turn_off
         data:
           entity_id: light.louise_golvlampa
-          brightness_pct: 80
           transition: 2
 
 # IKEA Julbelysning
@@ -204,7 +198,7 @@
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_fonster_ljusstake_2
-          brightness_pct: 100
+          brightness_pct: 50
           transition: 2
       - service: light.turn_on
         entity_id: light.vardagsrum_gran
@@ -212,42 +206,9 @@
       - service: light.turn_on
         entity_id: light.uterum_julstjarnor
 
-      - service: light.turn_on
+      - service: light.turn_off
         entity_id: light.andreas_fonster
 
-      - service: light.turn_on
+      - service: light.turn_off
         entity_id: light.sovrum_sangbord
-
-  #######################
-  ### Dagbelysning on ###
-  #######################
-  daylights_on_morning:
-    alias: Dagbelysning on morgon
-    sequence:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.home_status
-          option: Hemma på
-
-      - service: script.turn_on
-        data_template:
-          entity_id: >
-            {% if is_state('input_boolean.christmas_light', 'on') %}
-              script.daylights_christmas_on
-            {% else %}
-              script.daylights_default_on
-            {% endif %}
-
-  #########################
-  ### Innebelysning off ###
-  #########################
-  inside_lights_off:
-    alias: Innebelysning off
-    sequence:
-# IKEA
-      - service: light.turn_off
-        entity_id: light.dagbelysning
-
-      - service: light.turn_off
-        entity_id: light.dagbelysning_jul
-        
+      

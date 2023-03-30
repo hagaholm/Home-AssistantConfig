@@ -58,6 +58,13 @@ views:
         state_color: true
       - type: entities
         entities:
+          - automation.apple_tv_i_forrad_startad
+          - automation.apple_tv_i_forrad_stoppad
+        title: Garage Zwift
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
           - automation.dagligen_mandag
           - automation.dagligen_onsdag
           - automation.dagligen_fredag
@@ -171,15 +178,9 @@ views:
     cards:
       - type: entities
         entities:
-          - automation.startar_timers_koksvagg
-          - automation.startar_timers_tvattstuga
-          - automation.startar_timers_koksskap
-          - automation.stanger_av_rorelsedetektor_kok_aktiv_om_aktiv_koksvagg
-          - automation.stanger_av_rorelsedetektor_kok_aktiv_om_aktiv_tvattstuga
-          - automation.stanger_av_rorelsedetektor_kok_aktiv_om_aktiv_koksskap
-          - automation.stanger_av_rorelsedetektor_kok_aktiv_for_nattbelysning_koksvagg
-          - automation.stanger_av_rorelsedetektor_kok_aktiv_for_nattbelysning_tvattstuga
-          - automation.stanger_av_rorelsedetektor_kok_aktiv_for_nattbelysning_koksskap
+          - automation.startar_timers_kok
+          - automation.stanger_av_rorelsedetektor_kok_aktiv
+          - automation.stanger_av_rorelsedetektor_kok_aktiv_for_nattbelysning
         title: Rörelsedetektor i kök
         show_header_toggle: true
         state_color: true
@@ -360,5 +361,16 @@ views:
           - automation.sank_ljuset_om_tv_ar_pa_nar_sovrum_tands_pa_morgonen
           - automation.aterstall_ljuset_vid_stang_av_tv_pa_morgonen
         title: Mediaspelare
+        show_header_toggle: true
+        state_color: true
+  - path: bilen
+    title: Bilen
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - automation.bilen_startar
+          - automation.bilen_stannar
+        title: Bilen
         show_header_toggle: true
         state_color: true

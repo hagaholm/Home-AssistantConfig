@@ -34,8 +34,16 @@
     ########################################################
   - alias: Dagbelysning on (<1800, hemma)
     trigger:
-      platform: template
-      value_template: "{{((states('sensor.ljusstyrka') | int) | int(0)) < (states('input_number.day_light_on') | int(0) )}}"
+      - platform: template
+        value_template: "{{((states('sensor.ljusstyrka') | int) | int(0)) < (states('input_number.day_light_on') | int(0) )}}"
+      - platform: template
+        value_template: "{{((states('sensor.aqara_motion_sensor_1') | int) | int(0)) < (states('input_number.inside_daylight') | int(0) )}}"
+      - platform: template
+        value_template: "{{((states('sensor.aqara_motion_sensor_2') | int) | int(0)) < (states('input_number.inside_daylight') | int(0) )}}"
+      - platform: template
+        value_template: "{{((states('sensor.aqara_motion_sensor_3') | int) | int(0)) < (states('input_number.inside_daylight') | int(0) )}}"
+      - platform: template
+        value_template: "{{((states('sensor.aqara_motion_sensor_4') | int) | int(0)) < (states('input_number.inside_daylight') | int(0) )}}"
 
     condition:
       condition: and
@@ -118,7 +126,7 @@
 
     #########################################################
     ### Tänder lampor när fönsterbelysning i sovrum tänds ###
-    ### T: light.sovrum_fonster_e27 to 'on'               ###
+    ### T: light.sovrum_fonster to 'on'                   ###
     ### C: input_select.light_inside == 'Morgonbelysning' ###
     ###    05:00:00 - 09:00:00                            ###
     ### A: input_select.light_inside = Dagbelysning       ###
@@ -126,7 +134,7 @@
   - alias: Dagbelysning on (sovrumsfönster on)
     trigger:
       platform: state
-      entity_id: light.sovrum_fonster_e27
+      entity_id: light.sovrum_fonster
       to: 'on'
 
     condition:
@@ -208,7 +216,7 @@
 
     #######################################################################
     ### Släcker lampor i sovrummet när fönsterbelysning i sovrum släcks ###
-    ### T: light.sovrum_fonster_e27 to 'unavailable'                    ###
+    ### T: light.sovrum_fonster to 'unavailable'                        ###
     ### C: light.sovrum_sangbord == on                                  ###
     ### C: 21:00:00 - 23:00:00                                          ###
     ### A: light.bedroom = off                                          ###
@@ -216,7 +224,7 @@
   - alias: Dagbelysning -> Kvällsbelysning (sovrumsfönster off)
     trigger:
       platform: state
-      entity_id: light.sovrum_fonster_e27
+      entity_id: light.sovrum_fonster
       to: 'unavailable'
 
     condition:

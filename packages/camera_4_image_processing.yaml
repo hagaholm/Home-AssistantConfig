@@ -49,8 +49,8 @@
 #        "name": "cat",
 #        "object_type": "animal",
 #        "confidence": 70.414,
-#        "entity_id": "image_processing.deepstack_camera_2",
-#        "saved_file": "/config/camera/deepstack_photo/deepstack_camera_2_2021-03-03_14-32-44.jpg"
+#        "entity_id": "image_processing.deepstack_camera_4",
+#        "saved_file": "/config/camera/deepstack_photo/deepstack_camera_4_2021-03-03_14-32-44.jpg"
 #    },
 #    "origin": "LOCAL",
 #    "time_fired": "2021-03-03T13:32:44.261103+00:00",
@@ -66,32 +66,32 @@
 ### Input Boolean ###
 #####################
 input_boolean:
-  camera_2_active:
-    name: Camera 2 aktiv
+  camera_4_active:
+    name: Camera 4 aktiv
     initial: off
-  camera_2_person_detected:
-    name: Camera 2 person detekterad
+  camera_4_person_detected:
+    name: Camera 4 person detekterad
     initial: off
-  camera_2_recording_video:
-    name: Camera 2 recording video
+  camera_4_recording_video:
+    name: Camera 4 recording video
     initial: off
 
 ##################
 ### Input Text ###
 ##################
 input_text:
-  camera_2_person_time_fired:
-    name: Camera 2 person time fired
-  camera_2_person_confidence:
-    name: Camera 2 person confidence
+  camera_4_person_time_fired:
+    name: Camera 4 person time fired
+  camera_4_person_confidence:
+    name: Camera 4 person confidence
 
 #############
 ### Timer ###
 #############
 timer:
   # Used for control when mode Away and person detected
-  timer_camera_2_away_person_detected:
-    name: Timer camera 2 away person detected
+  timer_camera_4_away_person_detected:
+    name: Timer camera 4 away person detected
     duration: '00:02:00'
 
 ##############
@@ -100,20 +100,20 @@ timer:
 sensor:
   - platform: template
     sensors:
-      camera_2_person:
+      camera_4_person:
         friendly_name: "Personer"
         value_template: >-
-          {% set summary = (state_attr('image_processing.deepstack_camera_2', 'summary')) %}
+          {% set summary = (state_attr('image_processing.deepstack_camera_4', 'summary')) %}
           {% if summary.person is defined %}
             {{ summary.person }}
           {% else %}
             0
           {% endif %}
 
-      camera_2_animal:
+      camera_4_animal:
         friendly_name: "Djur"
         value_template: >-
-          {% set summary = (state_attr('image_processing.deepstack_camera_2', 'summary')) %}
+          {% set summary = (state_attr('image_processing.deepstack_camera_4', 'summary')) %}
           {% if summary.animal is defined %}
             {{ summary.animal }}
           {% else %}
@@ -132,12 +132,12 @@ image_processing:
     save_timestamped_file: True
     targets:
       - target: person
-        confidence: 60
+        confidence: 50
       - target: animal
         confidence: 50
     source:
-      - entity_id: camera.kamera2_main
-        name: deepstack_camera_2
+      - entity_id: camera.kamera4_main
+        name: deepstack_camera_4
     timeout: 5
 
 ##############
@@ -146,48 +146,48 @@ image_processing:
 camera:
   # Keep latest image of a detected person day
   - platform: local_file
-    name: Camera 2 Latest person
-    file_path: /media/Day/camera_2_latest.jpg
+    name: Camera 4 Latest person
+    file_path: /media/Day/camera_4_latest.jpg
 
   # Keep latest image of a detected person away
   - platform: local_file
-    name: Camera 2 Latest person away
-    file_path: /media/Away/camera_2_latest.jpg
+    name: Camera 4 Latest person away
+    file_path: /media/Away/camera_4_latest.jpg
 
   # Keep latest image of a detected person night
   - platform: local_file
-    name: Camera 2 Latest person night
-    file_path: /media/Night/camera_2_latest.jpg
+    name: Camera 4 Latest person night
+    file_path: /media/Night/camera_4_latest.jpg
 
   # Keep latest image of a detected animal
   - platform: local_file
-    name: Camera 2 Latest animal
-    file_path: /media/animal/camera_2_latest.jpg
+    name: Camera 4 Latest animal
+    file_path: /media/animal/camera_4_latest.jpg
 
   # Keep latest video when away
   - platform: local_file
-    name: Camera 2 Video away
-    file_path: /media/video/Away/camera_2_video_latest.mp4
+    name: Camera 4 Video away
+    file_path: /media/video/Away/camera_4_video_latest.mp4
 
   # Keep latest video when night
   - platform: local_file
-    name: Camera 2 Video night
-    file_path: /media/video/Night/camera_2_video_latest.mp4
+    name: Camera 4 Video night
+    file_path: /media/video/Night/camera_4_video_latest.mp4
 
 #####################
 ### Shell command ###
 #####################
 shell_command:
-  # Used by automation Camera 2 Animal detected
-  # Used by automation Camera 2 Person detected
-  # Used by automation Camera 2 Person detected create video
-  camera_2_mv_deepstack: "mv -f {{source_file}} {{dest_file}}"
+  # Used by automation Camera 4 Animal detected
+  # Used by automation Camera 4 Person detected
+  # Used by automation Camera 4 Person detected create video
+  camera_4_mv_deepstack: "mv -f {{source_file}} {{dest_file}}"
 
-  # Used by automation Camera 2 Person detected create video
-  camera_2_cp_deepstack: "cp -f {{source_file}} {{dest_file}}"
+  # Used by automation Camera 4 Person detected create video
+  camera_4_cp_deepstack: "cp -f {{source_file}} {{dest_file}}"
 
-  # Used by automation Camera 2 Person detected create video
-  camera_2_delete_videos: "rm -f /config/camera/motion_detected/*.mp4"#
+  # Used by automation Camera 4 Person detected create video
+  camera_4_delete_videos: "rm -f /config/camera/motion_detected/*.mp4"#
 
 ##################
 ### Automation ###
@@ -195,11 +195,11 @@ shell_command:
 automation:
   ###############################################
   ### At startup:                             ###
-  ### Turn off: input_boolean.camera_2_active ###
+  ### Turn off: input_boolean.camera_4_active ###
   ### Wait 10 sec                             ###
-  ### Turn on input_boolean.camera_2_active   ###
+  ### Turn on input_boolean.camera_4_active   ###
   ###############################################
-  - alias: Camera 2 startup
+  - alias: Camera 4 startup
     mode: single
 
     trigger:
@@ -209,20 +209,20 @@ automation:
     action:
       - service: input_boolean.turn_off
         data:
-          entity_id: input_boolean.camera_2_active
+          entity_id: input_boolean.camera_4_active
 
       - delay:
           seconds: 10
 
       - service: input_boolean.turn_on
         data:
-          entity_id: input_boolean.camera_2_active
+          entity_id: input_boolean.camera_4_active
 
   ###############################################
   ### At shutdown:                            ###
-  ### Turn off: input_boolean.camera_2_active ###
+  ### Turn off: input_boolean.camera_4_active ###
   ###############################################
-  - alias: Camera 2 shutdown
+  - alias: Camera 4 shutdown
     mode: single
 
     trigger:
@@ -232,42 +232,42 @@ automation:
     action:
       - service: input_boolean.turn_off
         data:
-          entity_id: input_boolean.camera_2_active
+          entity_id: input_boolean.camera_4_active
 
   ###################################################################
   ### Start image processing, scan images for detection of object ###
-  ### If input_boolean.camera_2_active == on                      ###
+  ### If input_boolean.camera_4_active == on                      ###
   ### Dynamic delay between each image processing is used,        ###
   ### then delay value gets from input_number.camera_duration     ###  
   ###################################################################
-  - alias: Camera 2 Image processing
+  - alias: Camera 4 Image processing
     mode: single
     
     trigger:
       - platform: state
-        entity_id: input_boolean.camera_2_active
+        entity_id: input_boolean.camera_4_active
         to: 'on'
     
     action:
       repeat:
         while:
           - condition: state
-            entity_id: input_boolean.camera_2_active
+            entity_id: input_boolean.camera_4_active
             state: 'on'
         sequence:
           # Scan a new image
           - service: image_processing.scan
             data:
-              entity_id: image_processing.deepstack_camera_2
+              entity_id: image_processing.deepstack_camera_4
 
           # Add dynamic delay. input_number.camera_duration is controlled by another automation
           - delay:
               milliseconds: "{{ states('input_number.camera_duration') }}"
 
   ################################
-  ### Camera 2 Animal detected ###
+  ### Camera 4 Animal detected ###
   ################################
-  - alias: Camera 2 Animal detected
+  - alias: Camera 4 Animal detected
     mode: parallel
 
     # Object detected
@@ -275,15 +275,15 @@ automation:
       - platform: event
         event_type: deepstack.object_detected
 
-   # Need to be an animal and no person on the image from camera 2
+   # Need to be an animal and no person on the image from camera 4
     condition:
       condition: and
       conditions:
 
-        # Needs to be image processing from camera 2
+        # Needs to be image processing from camera 4
         - condition: template
           value_template: >
-            {{ trigger.event.data.entity_id == 'image_processing.deepstack_camera_2' }}
+            {{ trigger.event.data.entity_id == 'image_processing.deepstack_camera_4' }}
 
         # Animal on image is needed
         - condition: template
@@ -296,6 +296,17 @@ automation:
             {{ trigger.event.data.object_type != 'person' }}
 
     action:
+      # Get timestamp when animal detected, just for information
+      - service: input_text.set_value
+        entity_id: input_text.camera_4_animal_time_fired
+        data_template:
+          value: '{{ trigger.event.data.saved_file[50:-4] }}'
+      # Get confidence, just for information
+      - service: input_text.set_value
+        entity_id: input_text.camera_4_animal_confidence
+        data_template:
+          value: '{{ trigger.event.data.confidence }}'
+
 
       # Delay 1 sec to be sure the images is saved
       - delay:
@@ -303,18 +314,18 @@ automation:
 
       # Move images to correct /media folder
       - data:
-          source_file: '/config/camera/deepstack_photo/deepstack_camera_2_latest.jpg'
-          dest_file: '/media/animal/camera_2_latest.jpg'
-        service: shell_command.camera_2_mv_deepstack
+          source_file: '/config/camera/deepstack_photo/deepstack_camera_4_latest.jpg'
+          dest_file: '/media/animal/camera_4_latest.jpg'
+        service: shell_command.camera_4_mv_deepstack
       - data:
           source_file: '{{ trigger.event.data.saved_file }}'
           dest_file: '/media/animal/{{ trigger.event.data.saved_file[41:] }}'
-        service: shell_command.camera_2_mv_deepstack
+        service: shell_command.camera_4_mv_deepstack
 
   ################################
-  ### Camera 2 Person detected ###
+  ### Camera 4 Person detected ###
   ################################
-  - alias: Camera 2 Person detected
+  - alias: Camera 4 Person detected
     mode: parallel
     max: 130 
 
@@ -323,15 +334,15 @@ automation:
       - platform: event
         event_type: deepstack.object_detected
 
-   # Need to be a person on the image from camera 2
+   # Need to be a person on the image from camera 4
     condition:
       condition: and
       conditions:
 
-        # Needs to be image processing from camera 2
+        # Needs to be image processing from camera 4
         - condition: template
           value_template: >
-            {{ trigger.event.data.entity_id == 'image_processing.deepstack_camera_2' }}
+            {{ trigger.event.data.entity_id == 'image_processing.deepstack_camera_4' }}
 
         # Person on image is needed
         - condition: template
@@ -341,12 +352,12 @@ automation:
     action:
       # Get timestamp when person detected, just for information
       - service: input_text.set_value
-        entity_id: input_text.camera_2_person_time_fired
+        entity_id: input_text.camera_4_person_time_fired
         data_template:
           value: '{{ trigger.event.data.saved_file[50:-4] }}'
       # Get confidence, just for information
       - service: input_text.set_value
-        entity_id: input_text.camera_2_person_confidence
+        entity_id: input_text.camera_4_person_confidence
         data_template:
           value: '{{ trigger.event.data.confidence }}'
 
@@ -361,13 +372,13 @@ automation:
 
       # Move images
       - data:
-          source_file: '/config/camera/deepstack_photo/deepstack_camera_2_latest.jpg'
-          dest_file: "/media/{{ states('input_select.camera_mode') }}/camera_2_latest.jpg"
-        service: shell_command.camera_2_mv_deepstack
+          source_file: '/config/camera/deepstack_photo/deepstack_camera_4_latest.jpg'
+          dest_file: "/media/{{ states('input_select.camera_mode') }}/camera_4_latest.jpg"
+        service: shell_command.camera_4_mv_deepstack
       - data:
           source_file: '{{ trigger.event.data.saved_file }}'
           dest_file: "/media/{{ states('input_select.camera_mode') }}/{{ trigger.event.data.saved_file[41:] }}"
-        service: shell_command.camera_2_mv_deepstack
+        service: shell_command.camera_4_mv_deepstack
 
       # If Camera mode is Away, then continue
       - condition: state
@@ -376,29 +387,29 @@ automation:
 
       # If timer is idle, then continue
       - condition: state
-        entity_id: timer.timer_camera_2_away_person_detected
+        entity_id: timer.timer_camera_4_away_person_detected
         state: idle
 
       # Cancel timer and reset to max time
       - service: timer.cancel
-        entity_id: timer.timer_camera_2_away_person_detected
+        entity_id: timer.timer_camera_4_away_person_detected
 
       # Start timer and count down
       - service: timer.start
-        entity_id: timer.timer_camera_2_away_person_detected
+        entity_id: timer.timer_camera_4_away_person_detected
 
       # Send notify
       - service: notify.pushbullet
         data:
           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-          message: "Camera 2 Person detekterad away"
+          message: "Camera 4 Person detekterad away"
           data:
             file: "/media/{{ states('input_select.camera_mode') }}/{{ trigger.event.data.saved_file[41:] }}"
 
   #############################################
-  ### Camera 2 Person detected create video ###
+  ### Camera 4 Person detected create video ###
   #############################################
-  - alias: Camera 2 Person detected create video
+  - alias: Camera 4 Person detected create video
     mode: parallel
 
     # Object detected
@@ -406,15 +417,15 @@ automation:
       - platform: event
         event_type: deepstack.object_detected
 
-   # Need to be a person on the image from camera 2
+   # Need to be a person on the image from camera 4
     condition:
       condition: and
       conditions:
       
-        # Needs to be image processing from camera 2
+        # Needs to be image processing from camera 4
         - condition: template
           value_template: >
-            {{ trigger.event.data.entity_id == 'image_processing.deepstack_camera_2' }}
+            {{ trigger.event.data.entity_id == 'image_processing.deepstack_camera_4' }}
 
         # Person on image is needed
         - condition: template
@@ -423,7 +434,7 @@ automation:
 
         # Only start record if no ongoing record
         - condition: state
-          entity_id: input_boolean.camera_2_recording_video
+          entity_id: input_boolean.camera_4_recording_video
           state: 'off'
 
         # Never record if camera mode is Day
@@ -433,17 +444,17 @@ automation:
 
     action:
       # Videos vill be left if camera mode changes to Day when recording, start to delete these files 
-      - service: shell_command.camera_2_delete_videos
+      - service: shell_command.camera_4_delete_videos
 
-      # Turn on: input_boolean.camera_2_recording_video
+      # Turn on: input_boolean.camera_4_recording_video
       - service: input_boolean.turn_on
-        entity_id: input_boolean.camera_2_recording_video
+        entity_id: input_boolean.camera_4_recording_video
 
-      # Save a video with timestamp to '/config/camera/motion_detected/camera_2_YYYYMMDD-HHMMSS.mp4'
+      # Save a video with timestamp to '/config/camera/motion_detected/camera_4_YYYYMMDD-HHMMSS.mp4'
       - service: camera.record
         data:
-          entity_id: camera.kamera2_main
-          filename: "/config/camera/motion_detected/camera_2_{{ states('input_select.camera_mode') }}_{{ trigger.event.data.saved_file[41:-4] }}.mp4"
+          entity_id: camera.kamera4_main
+          filename: "/config/camera/motion_detected/camera_4_{{ states('input_select.camera_mode') }}_{{ trigger.event.data.saved_file[41:-4] }}.mp4"
           lookback: 0
           duration: 60
 
@@ -452,7 +463,7 @@ automation:
           seconds: 70
 
       - service: input_boolean.turn_off
-        entity_id: input_boolean.camera_2_recording_video
+        entity_id: input_boolean.camera_4_recording_video
 
       # Delay 50 sec, need to wait 120 sec until sure nobody get home
       - delay:
@@ -465,14 +476,14 @@ automation:
 
       # Copy video
       - data:
-          source_file: "/config/camera/motion_detected/camera_2_{{ states('input_select.camera_mode') }}_{{ trigger.event.data.saved_file[41:-4] }}.mp4"
-          dest_file: "/media/video/{{ states('input_select.camera_mode') }}/camera_2_video_latest.mp4"
-        service: shell_command.camera_2_cp_deepstack
+          source_file: "/config/camera/motion_detected/camera_4_{{ states('input_select.camera_mode') }}_{{ trigger.event.data.saved_file[41:-4] }}.mp4"
+          dest_file: "/media/video/{{ states('input_select.camera_mode') }}/camera_4_video_latest.mp4"
+        service: shell_command.camera_4_cp_deepstack
 
       # Move video
       - data:
-          source_file: "/config/camera/motion_detected/camera_2_{{ states('input_select.camera_mode') }}_{{ trigger.event.data.saved_file[41:-4] }}.mp4"
-          dest_file: "/media/video/{{ states('input_select.camera_mode') }}/camera_2_{{ trigger.event.data.saved_file[41:-4] }}.mp4"
-        service: shell_command.camera_2_mv_deepstack
+          source_file: "/config/camera/motion_detected/camera_4_{{ states('input_select.camera_mode') }}_{{ trigger.event.data.saved_file[41:-4] }}.mp4"
+          dest_file: "/media/video/{{ states('input_select.camera_mode') }}/camera_4_{{ trigger.event.data.saved_file[41:-4] }}.mp4"
+        service: shell_command.camera_4_mv_deepstack
 
 

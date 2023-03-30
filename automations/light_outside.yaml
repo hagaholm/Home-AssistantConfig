@@ -69,6 +69,7 @@
     #########################################################
     ### Tänder belysning vid Spabad på eftermiddagen      ###
     ### T: sensor.ljusstyrka < 5                          ###
+    ### C: binary_sensor.workday_tomorrow = off           ###
     ### C: 12:00:00 - 21:45:00                            ###
     ### C: light.ight.spabad_vagg = off                   ###
     ### A: script.night_light                             ###
@@ -81,6 +82,9 @@
     condition:
       condition: and
       conditions:
+        - condition: state
+          entity_id: binary_sensor.workday_tomorrow
+          state: 'off'
         - condition: time
           after: '12:00:00'
           before: '21:45:00'

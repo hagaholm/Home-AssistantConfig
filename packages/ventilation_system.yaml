@@ -1,5 +1,5 @@
 ##############
-### sensor ###
+### Sensor ###
 ##############
 sensor:
   - platform: template 
@@ -9,8 +9,104 @@ sensor:
         value_template: "{{ (((states('sensor.Tilluft') | float ) - (states('sensor.Uteluft') | float ))  / ((states('sensor.Franluft') | float ) - (states('sensor.Uteluft') | float )) * 100) | round(1) }}"
         unit_of_measurement: "%"
 
+#      ute_changed:
+#        friendly_name: "Ute ändrad"
+#        icon: mdi:clock-outline
+#        state: >
+#            {% set t = states('sensor.time') %}
+#            {{ relative_time(states.sensor.ute.last_changed) }}
+
+#      ute_updated:
+#        friendly_name: "Ute uppdaterad"
+#        icon: mdi:clock-outline
+#        state: >
+#            {% set t = states('sensor.time') %}
+#            {{ relative_time(states.sensor.ute.last_updated) }}
+
+#      name: "Uteluft ändrat"
+#      icon: mdi:clock-outline
+#      state: >
+#          {% set t = states('sensor.time') %}
+#          {{ relative_time(states.sensor.uteluft.last_changed) }}
+
+#      name: "Uteluft uppdaterad"
+#      icon: mdi:clock-outline
+#      state: >
+#          {% set t = states('sensor.time') %}
+#          {{ relative_time(states.sensor.uteluft.last_updated) }}
+
+#      name: "Tilluft ändrat"
+#      icon: mdi:clock-outline
+#      state: >
+#          {% set t = states('sensor.time') %}
+#          {{ relative_time(states.sensor.tilluft.last_changed) }}
+
+#    sensor:
+#      name: "Tilluft uppdaterad"
+#      icon: mdi:clock-outline
+#      state: >
+#          {% set t = states('sensor.time') %}
+#          {{ relative_time(states.sensor.tilluft.last_updated) }}
+
+#    sensor:
+#      name: "Frånluft ändrat"
+#      icon: mdi:clock-outline
+#      state: >
+#          {% set t = states('sensor.time') %}
+#          {{ relative_time(states.sensor.franluft.last_changed) }}
+
+#    sensor:
+#      name: "Frånluft uppdaterad"
+#      icon: mdi:clock-outline
+#      state: >
+#          {% set t = states('sensor.time') %}
+#          {{ relative_time(states.sensor.franluft.last_updated) }}
+
+#    sensor:
+#      name: "Avluft ändrat"
+#      icon: mdi:clock-outline
+#      state: >
+#          {% set t = states('sensor.time') %}
+#          {{ relative_time(states.sensor.avluft.last_changed) }}
+
+#    sensor:
+#      name: "Avluft uppdaterad"
+#      icon: mdi:clock-outline
+#      state: >
+#          {% set t = states('sensor.time') %}
+#          {{ relative_time(states.sensor.avluft.last_updated) }}
+
+#    sensor:
+#      name: "Badrumsfönster fukt ändrat"
+#      icon: mdi:clock-outline
+#      state: >
+#          {% set t = states('sensor.time') %}
+#          {{ relative_time(states.sensor.fukt_badrumsfonster.last_changed) }}
+
+#    sensor:
+#      name: "Badrumsfönster fukt uppdaterad"
+#      icon: mdi:clock-outline
+#      state: >
+#          {% set t = states('sensor.time') %}
+#          {{ relative_time(states.sensor.fukt_badrumsfonster.last_updated) }}
+
+#    sensor:
+#      name: "Hall temp ändrat"
+#      icon: mdi:clock-outline
+#      state: >
+#          {% set t = states('sensor.time') %}
+#          {{ relative_time(states.sensor.hall_temperature.last_changed) }}
+
+#    sensor:
+#      name: "Hall temp uppdaterad"
+#      icon: mdi:clock-outline
+#      state: >
+#          {% set t = states('sensor.time') %}
+#          {{ relative_time(states.sensor.hall_temperature.last_updated) }}
+
+
 ##############
-### switch ###
+### Switch ###
 ##############
 switch:
   - platform: command_line
@@ -24,13 +120,149 @@ switch:
 # Sätt till Off: 'http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=CHANGE'
 # Sätt till On: 'http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=on&PIO.A=CHANGE'
 
+#############
+### Timer ###
+#############
+timer:
+  # Max timer
+  timer_humidity_bathroom_max_time:
+    name: Timer max tid
+    duration: '01:30:00'
+
+  # Reset everytime humidity is changes in bathroom
+  timer_humidity_bathroom:
+    name: Timer stabil fukt i badrum
+    duration: '00:20:00'
+
+#####################
+### Input Boolean ###
+#####################
+input_boolean:
+  # Used for diagnostic
+  alarm_ventilation:
+    name: Larm ventilation 
+    initial: off
+
+  # Used for diagnostic
+  high_humidity_bathroom_away:
+    name: Hög luftfuktighet ingen hemma 
+    initial: off
+
+  # Used for diagnostic
+  low_temp_franluft:
+    name: Lågtemp frånluft 
+    initial: off
+
+  # Used for diagnostic
+  high_temp_franluft:
+    name: Högtemp frånluft 
+    initial: off
+
+  # Used for diagnostic
+  low_temp_tilluft:
+    name: Lågtemp tilluft 
+    initial: off
+
+  # Used for diagnostic
+  high_temp_tilluft:
+    name: Högtemp tilluft 
+    initial: off
+
+
 ##################
-### autoamtion ###
+### Automation ###
 ##################
 automation:
-    ###############
-    ### NOTIFY ####
-    ###############
+    ##############################################################
+    ### Startar Timer när forcerad fläkt startar               ###
+    ### T: switch.fan_speed == on                              ###
+    ### A: Cancel timer timer.timer_humidity_bathroom_max_time ###
+    ###    Start timer timer.timer_humidity_bathroom_max_time  ###
+    ##############################################################
+  - alias: Startar max timer Badrum
+    trigger:
+      platform: state
+      entity_id: switch.fan_speed
+      to: 'on'
+
+    action:
+      # Cancel timer and reset to max time
+      - service: timer.cancel
+        entity_id: timer.timer_humidity_bathroom_max_time
+
+      # Start timer and count down
+      - service: timer.start
+        entity_id: timer.timer_humidity_bathroom_max_time
+
+    ##########################################################
+    ### Startar Timer när luftfuktighet ändras i badrummet ###
+    ### T: sensor.badrum_humidity                          ###
+    ### C: sensor.fukt_badrumsfonster < 90                 ###
+    ###    sensor.fukt_badrumsfonster > 75                 ###
+    ### A: Cancel timer timer.timer_humidity_bathroom      ###
+    ###    Start timer timer.timer_humidity_bathroom       ###
+    ##########################################################
+  - alias: Restart timer Badrum
+    mode: restart
+
+    trigger:
+      - platform: state
+        entity_id: sensor.badrum_humidity
+
+    condition:
+      condition: and
+      conditions:
+        - condition: numeric_state
+          entity_id: sensor.fukt_badrumsfonster
+          below: 90
+          above: 75
+
+    action:
+      # Cancel timer and reset to max time
+      - service: timer.cancel
+        entity_id: timer.timer_humidity_bathroom
+
+      # Start timer and count down
+      - service: timer.start
+        entity_id: timer.timer_humidity_bathroom
+
+    #############################################################
+    ### Sätter larm för ventilation om något annat larm sätts ###
+    ### T: input_boolean.high_humidity_bathroom_away == on    ###
+    ###    input_boolean.low_temp_franluft == on              ###
+    ###    input_boolean.high_temp_franluft == on             ###
+    ###    input_boolean.low_temp_tilluft == on               ###
+    ###    input_boolean.high_temp_tiluft == on               ###
+    ### C: switch.fan_speed == 'on'                           ###
+    ### A: input_boolean.alarm_ventilation = on               ###
+    #############################################################
+  - alias: Sätt larm för vent 
+    trigger:
+      - platform: state
+        entity_id: input_boolean.high_humidity_bathroom_away
+        to: 'on'
+      - platform: state
+        entity_id: input_boolean.low_temp_franluft
+        to: 'on'
+      - platform: state
+        entity_id: input_boolean.high_temp_franluft
+        to: 'on'
+      - platform: state
+        entity_id: input_boolean.low_temp_tilluft
+        to: 'on'
+      - platform: state
+        entity_id: input_boolean.high_temp_tiluft
+        to: 'on'
+       
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.alarm_ventilation
+
+
+    #######################
+    ### ALARM - NOTIFY ####
+    #######################
     ####################################################
     ### Larm! Hög fukt i badrummet, ingen hemma      ###
     ### T: switch.fan_speed == on                    ###
@@ -42,32 +274,42 @@ automation:
       platform: state
       entity_id: switch.fan_speed
       to: 'on'
+
     condition:
       condition: state
       entity_id: group.track_for_home_devices
       state: 'not_home'
+    
     action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.high_humidity_bathroom_away
       - service: notify.pushbullet
         data:
           message: "Larm! Hög fukt i badrummet {{ states('sensor.fukt_badrumsfonster') }} {{ state_attr('sensor.fukt_badrumsfonster', 'unit_of_measurement') }}, ingen är hemma"
 
     ###########################################
     ### Larm! Låg temp ventilation frånluft ###
-    ### T: sensor.Franluft < 18             ###
+    ### T: sensor.Franluft < 17             ###
     ### A: notify.pushbullet                ###
     ###########################################
   - alias: Låg temp frånluft
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.Franluft
+      below: '17'
+      
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: switch.ventilationsaggregat
           state: 'on'
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.Franluft
-      below: '18'
+
     action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.low_temp_franluft
       - service: notify.pushbullet
         data:
           message: "Larm! Låg temp frånluft ventilation: {{ states('sensor.Franluft') }} {{ state_attr('sensor.Franluft', 'unit_of_measurement') }}"
@@ -78,38 +320,48 @@ automation:
     ### A: notify.pushbullet                ###
     ###########################################
   - alias: Hög temp frånluft
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.Franluft
+      above: '35'
+
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: switch.ventilationsaggregat
           state: 'on'  
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.Franluft
-      above: '35'
+
     action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.high_temp_franluft
       - service: notify.pushbullet
         data:
           message: "Larm! Hög temp frånluft ventilation: {{ states('sensor.Franluft') }} {{ state_attr('sensor.Franluft', 'unit_of_measurement') }}"
 
     ##########################################
     ### Larm! Låg temp ventilation tilluft ###
-    ### T: sensor.Tilluft < 15             ###
+    ### T: sensor.Tilluft < 12             ###
     ### A: notify.pushbullet               ###
     ##########################################
   - alias: Låg temp tilluft
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.Tilluft
+      below: '12'
+
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: switch.ventilationsaggregat
           state: 'on'
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.Tilluft
-      below: '15'
+
     action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.low_temp_tilluft
       - service: notify.pushbullet
         data:
           message: "Larm! Låg temp tilluft ventilation: {{ states('sensor.Tilluft') }} {{ state_attr('sensor.Tilluft', 'unit_of_measurement') }}"
@@ -120,17 +372,22 @@ automation:
     ### A: notify.pushbullet               ###
     ##########################################
   - alias: Hög temp tilluft
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.Tilluft
+      above: '35'
+
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: switch.ventilationsaggregat
           state: 'on'
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.Tilluft
-      above: '35'
+
     action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.high_temp_tilluft
       - service: notify.pushbullet
         data:
           message: "Larm! Hög temp tilluft ventilation: {{ states('sensor.Tilluft') }} {{ state_attr('sensor.Tilluft', 'unit_of_measurement') }}"
@@ -154,10 +411,8 @@ automation:
         - condition: state
           entity_id: switch.fan_speed
           state: 'off'
-
         - condition: template 
           value_template: "{{ (trigger.to_state.state|int - trigger.from_state.state|int) >= 4 }}"
-
         - condition: numeric_state
           entity_id: sensor.ute
           above: -8
@@ -182,13 +437,11 @@ automation:
         - condition: numeric_state
           entity_id: sensor.fukt_badrumsfonster
           above: '70'
-
         - condition: state
           entity_id: switch.fan_speed
           state: 'off'
         - condition: template 
           value_template: "{{ (trigger.to_state.state|int - trigger.from_state.state|int) >= 2 }}"
-
         - condition: numeric_state
           entity_id: sensor.ute
           above: -8
@@ -210,29 +463,6 @@ automation:
       platform: numeric_state
       entity_id: sensor.fukt_badrumsfonster
       below: '69'
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: switch.fan_speed
-          state: 'on'
-    action:
-      - service: homeassistant.turn_off
-        entity_id: switch.fan_speed
-
-    #################################################################################################
-    ### Badrumsfönster stabiliserad fukt                                                          ###
-    ### Fukt värdet har varit still i minst 15 minuter,                                           ###
-    ### men det har kommit in nya ouppdaterade värden under denna tid --> stäng av forcerad fläkt ###
-    ### T: state sensor.fukt_badrumsfonster                                                       ###
-    ### C: no changes last 15 minutes                                                             ###
-    ### C: updated last 15 minutes                                                                ###
-    ### A: switch.fan_speed = off                                                                 ###
-    #################################################################################################
-  - alias: Normal Badrumsfönster stabiliserad fukt
-    trigger:
-      - platform: state
-        entity_id: sensor.fukt_badrumsfonster
 
     condition:
       condition: and
@@ -241,22 +471,47 @@ automation:
           entity_id: switch.fan_speed
           state: 'on'
 
-        # Make a check that needed parts exists, if not using this it will be an error in the next step 
-        - condition: template
-          value_template: "{{ not is_state('sensor.fukt_badrumsfonster', 'None') }}"
-        - condition: template
-          value_template: "{{ state_attr('sensor.fukt_badrumsfonster', 'last_changed') != None }}"
-        - condition: template
-          value_template: "{{ state_attr('sensor.fukt_badrumsfonster', 'last_updated') != None }}"
-
-        - condition: template
-          value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.fukt_badrumsfonster', 'last_changed'))) > 900 }}"
-        - condition: template
-          value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.fukt_badrumsfonster', 'last_updated'))) < 900 }}"
-
     action:
       - service: homeassistant.turn_off
         entity_id: switch.fan_speed
+
+#    #################################################################################################
+#    ### Badrumsfönster stabiliserad fukt                                                          ###
+#    ### Fukt värdet har varit still i minst 15 minuter,                                           ###
+#    ### men det har kommit in nya ouppdaterade värden under denna tid --> stäng av forcerad fläkt ###
+#    ### T: state sensor.fukt_badrumsfonster                                                       ###
+#    ### C: no changes last 15 minutes                                                             ###
+#    ### C: updated last 15 minutes                                                                ###
+#    ### A: switch.fan_speed = off                                                                 ###
+#    #################################################################################################
+#  - alias: Normal Badrumsfönster stabiliserad fukt
+#    trigger:
+#      - platform: state
+#        entity_id: sensor.fukt_badrumsfonster
+#
+#    condition:
+#      condition: and
+#      conditions:
+#        - condition: state
+#          entity_id: switch.fan_speed
+#          state: 'on'
+#
+#        # Make a check that needed parts exists, if not using this it will be an error in the next step 
+#        - condition: template
+#          value_template: "{{ not is_state('sensor.fukt_badrumsfonster', 'None') }}"
+#        - condition: template
+#          value_template: "{{ state_attr('sensor.fukt_badrumsfonster', 'last_changed') != None }}"
+#        - condition: template
+#          value_template: "{{ state_attr('sensor.fukt_badrumsfonster', 'last_updated') != None }}"
+#
+#        - condition: template
+#          value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.fukt_badrumsfonster', 'last_changed'))) > 900 }}"
+#        - condition: template
+#          value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.fukt_badrumsfonster', 'last_updated'))) < 900 }}"
+#
+#    action:
+#      - service: homeassistant.turn_off
+#        entity_id: switch.fan_speed
 
 #last_updated is the last time an entity did send its value to HA
 #last_changed is the last time there was a difference between the previous value and the new.
@@ -301,6 +556,81 @@ automation:
       - service: homeassistant.turn_off
         entity_id: switch.fan_speed
 
+    #####################################################################################
+    ### Sätter ventilation till Normal när luftfuktigheten stabiliserats i 20 minuter ###
+    ### T: timer_humidity_bathroom == timer.finished                                  ###
+    ### C: switch.fan_speed == 'on'                                                   ###
+    ###    sensor.fukt_badrumsfonster < 90                                            ###
+    ###    sensor.fukt_badrumsfonster > 70                                            ###
+    ### A: switch.fan_speed = 'off'                                                   ###
+    #####################################################################################
+  - alias: Normal vid stabiliserad fukt 
+    trigger:
+      # Timer finished after20 minutes
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.timer_humidity_bathroom
+      
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: switch.fan_speed
+          state: 'on'
+        - condition: numeric_state
+          entity_id: sensor.fukt_badrumsfonster
+          below: 90
+          above: 70
+
+    action:
+      - service: homeassistant.turn_off
+        entity_id: switch.fan_speed
+
+    #############################################################################
+    ### Sätter ventilation till Normal efter maxtid uppnåtts efter 90 minuter ###
+    ### T: timer_humidity_bathroom_max_time == timer.finished                 ###
+    ### C: switch.fan_speed == 'on'                                           ###
+    ### A: switch.fan_speed = 'off'                                           ###
+    #############################################################################
+  - alias: Normal efter maxtid 
+    trigger:
+      # Timer finished after 90 minutes
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.timer_humidity_bathroom_max_time
+      
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: switch.fan_speed
+          state: 'on'
+
+    action:
+      - service: homeassistant.turn_off
+        entity_id: switch.fan_speed
+
+    #############################################################
+    ### Reset timer när ventilationen sätts till Normal       ###
+    ### T: switch.fan_speed == 'on                            ###
+    ### A: timer_humidity_bathroom == timer.finished          ###
+    ###    timer_humidity_bathroom_max_time == timer.finished ###
+    #############################################################
+  - alias: Reset timer när vent sätts till Normal 
+    trigger:
+      platform: state
+      entity_id: switch.fan_speed
+      to: 'off'
+      
+    action:
+      # Cancel timer and reset to max time
+      - service: timer.cancel
+        entity_id: timer.timer_humidity_bathroom
+      - service: homeassistant.turn_off
+        entity_id: switch.fan_speed
+
     #######################
     ### Ventilation off ###
     #######################
@@ -313,12 +643,13 @@ automation:
     ### C: sensor.inne_medel > 23                     ###
     ### A: switch.ventilationsaggregat = off          ###
     #####################################################
-  - alias: Ventilation off (Borta, ute >24°C, <60%, Inne > 23°C)
+  - alias: Vent off (Borta, ute >24°C, <60%, Inne > 23°C)
     trigger:
       platform: state
       entity_id: group.track_for_home_devices
       from: 'home'
       to: 'not_home'
+
     condition:
       condition: and
       conditions:
@@ -334,6 +665,7 @@ automation:
         - condition: numeric_state
           entity_id: sensor.inne_medel
           above: '23'
+
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ventilationsaggregat
@@ -368,11 +700,12 @@ automation:
     ### C: sensor.inne_medel > 23                     ###
     ### A: switch.ventilationsaggregat = off          ###
     #####################################################
-  - alias: Ventilation off (Ute >24°C, Borta, <60%, Inne > 23°C)
+  - alias: Vent off (Ute >24°C, Borta, <60%, Inne > 23°C)
     trigger:
       platform: numeric_state
       entity_id: sensor.ute
       above: '24'
+
     condition:
       condition: and
       conditions:
@@ -388,6 +721,7 @@ automation:
         - condition: numeric_state
           entity_id: sensor.inne_medel
           above: '23'
+
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ventilationsaggregat
@@ -422,11 +756,12 @@ automation:
     ### C: sensor.inne_medel > 23                     ###
     ### A: switch.ventilationsaggregat = off          ###
     #####################################################
-  - alias: Ventilation off (<60%, Borta, Ute >24°C, Inne > 23°C)
+  - alias: Vent off (<60%, Borta, Ute >24°C, Inne > 23°C)
     trigger:
       platform: numeric_state
       entity_id: sensor.fukt_badrumsfonster
       below: '60'
+
     condition:
       condition: and
       conditions:
@@ -442,6 +777,7 @@ automation:
         - condition: numeric_state
           entity_id: sensor.inne_medel
           above: '23'
+
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ventilationsaggregat
@@ -476,11 +812,12 @@ automation:
     ### C: sensor.ute > 24                            ###
     ### A: switch.ventilationsaggregat = off          ###
     #####################################################
-  - alias: Ventilation off (Inne >23°C, Borta, <60%, Ute > 24°C)
+  - alias: Vent off (Inne >23°C, Borta, <60%, Ute > 24°C)
     trigger:
       platform: numeric_state
       entity_id: sensor.inne_medel
       above: '23'
+
     condition:
       condition: and
       conditions:
@@ -496,6 +833,7 @@ automation:
         - condition: numeric_state
           entity_id: sensor.ute
           above: '24'
+
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ventilationsaggregat
@@ -530,16 +868,18 @@ automation:
     ### C: switch.ventilationsaggregat == off     ###
     ### A: switch.ventilationsaggregat = on       ###
     #################################################
-  - alias: Ventilation on (Hemma, Off)
+  - alias: Vent on (Hemma, Off)
     trigger:
       platform: state
       entity_id: group.track_for_home_devices
       from: 'not_home'
       to: 'home'
+
     condition:
       condition: state
       entity_id: switch.ventilationsaggregat
       state: 'off'
+
     action:
       - service: homeassistant.turn_on
         entity_id: switch.ventilationsaggregat
@@ -571,15 +911,17 @@ automation:
     ### C: switch.ventilationsaggregat == off ###
     ### A: switch.ventilationsaggregat = on   ###
     #############################################
-  - alias: Ventilation on (Ute <22°C, Off)
+  - alias: Vent on (Ute <22°C, Off)
     trigger:
       platform: numeric_state
       entity_id: sensor.ute
       below: '23'
+
     condition:
       condition: state
       entity_id: switch.ventilationsaggregat
       state: 'off'
+
     action:
       - service: homeassistant.turn_on
         entity_id: switch.ventilationsaggregat
@@ -611,15 +953,17 @@ automation:
     ### C: switch.ventilationsaggregat == off ###
     ### A: switch.ventilationsaggregat = on   ###
     #############################################
-  - alias: Ventilation on (>60%, Off)
+  - alias: Vent on (>60%, Off)
     trigger:
       platform: numeric_state
       entity_id: sensor.fukt_badrumsfonster
       above: '60'
+
     condition:
       condition: state
       entity_id: switch.ventilationsaggregat
       state: 'off'
+
     action:
       - service: homeassistant.turn_on
         entity_id: switch.ventilationsaggregat
@@ -651,15 +995,17 @@ automation:
     ### C: switch.ventilationsaggregat == off ###
     ### A: switch.ventilationsaggregat = on   ###
     #############################################
-  - alias: Ventilation on (Inne <23°C, Off)
+  - alias: Vent on (Inne <23°C, Off)
     trigger:
       platform: numeric_state
       entity_id: sensor.inne_medel
       below: '23'
+
     condition:
       condition: state
       entity_id: switch.ventilationsaggregat
       state: 'off'
+
     action:
       - service: homeassistant.turn_on
         entity_id: switch.ventilationsaggregat

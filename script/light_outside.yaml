@@ -4,7 +4,6 @@
   spa_light_on:
     alias: Spabelysning on
     sequence:
-      - service: script.wait_for_reload_ikea_integration
       - repeat:
           count: 10
           sequence:
@@ -12,11 +11,6 @@
               data:
                 entity_id: light.spabad_vagg
                 brightness_pct: 100
-            - delay: '00:01:00'
-      - service: light.turn_on
-        data:
-          entity_id: light.spabad_vagg
-          brightness_pct: 20
 
   ##############################
   ### Friggebod belysning on ###
@@ -24,9 +18,8 @@
   friggebod_light_on:
     alias: Friggebod belysning on
     sequence:
-      - service: script.wait_for_reload_ikea_integration
-      - service: light.turn_on
-        entity_id: light.friggebod_fonster
+      - service: switch.turn_on
+        entity_id: switch.friggebod_fonster
 
   ########################
   ### Utebelysning off ###
@@ -34,11 +27,9 @@
   outside_light_off:
     alias: Utebelysning off
     sequence:
-      - service: script.wait_for_reload_ikea_integration
-      - service: light.turn_off
+      - service: switch.turn_off
         data:
-          entity_id: light.friggebod_fonster
-          transition: 2
+          entity_id: switch.friggebod_fonster
       - repeat:
           count: 10
           sequence:

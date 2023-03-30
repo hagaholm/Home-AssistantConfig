@@ -4,8 +4,6 @@
   away_lights_on:
     alias: Bortabelysning on
     sequence:
-      - service: script.wait_for_reload_ikea_integration
-
         # Turn off before turn on
       - service: script.turn_on
         data_template:
@@ -64,11 +62,11 @@
           transition: 2
 
       - service: light.turn_off
-        entity_id: light.andreas_fonster_ikea
+        entity_id: light.andreas_fonster_2
 
       - service: light.turn_on
         data:
-          entity_id: light.sovrum_fonster_e27
+          entity_id: light.sovrum_fonster
           brightness_pct: 50
           transition: 2
 
@@ -118,6 +116,7 @@
     sequence:
 
 # IKEA
+
 #      - service: light.turn_on
 #        data:
 #          entity_id: light.kok_stora_fonstret
@@ -150,13 +149,13 @@
 
 #      - service: light.turn_on
 #        data:
-#          entity_id: light.andreas_fonster_ikea
+#          entity_id: light.andreas_fonster_2
 #          brightness_pct: 30
 #          transition: 2
 
 #      - service: light.turn_on
 #        data:
-#          entity_id: light.sovrum_fonster_e27
+#          entity_id: light.sovrum_fonster
 #          brightness_pct: 50
 #          transition: 2
 
@@ -194,7 +193,7 @@
         entity_id: light.uterum_julstjarnor
 
       - service: light.turn_off
-        entity_id: light.andreas_fonster_julstjarna
+        entity_id: light.andreas_fonster
 
       - service: light.turn_on
         entity_id: light.sovrum_sangbord
@@ -206,8 +205,6 @@
   away_lights_off:
     alias: Bortabelysning off
     sequence:
-      - service: script.wait_for_reload_ikea_integration
-
       - service: script.turn_on
         data_template:
           entity_id: >
@@ -244,10 +241,10 @@
         entity_id: light.uterum_fonster
 
       - service: light.turn_off
-        entity_id: light.andreas_fonster_ikea
+        entity_id: light.andreas_fonster_2
 
       - service: light.turn_off
-        entity_id: light.sovrum_fonster_e27
+        entity_id: light.sovrum_fonster
 
       - service: light.turn_off
         entity_id: light.louise_fonster
@@ -289,6 +286,7 @@
     sequence:
 
 # IKEA
+
 #      - service: light.turn_off
 #        entity_id: light.kok_stora_fonstret
 
@@ -308,10 +306,10 @@
 #        entity_id: light.uterum_fonster
 
 #      - service: light.turn_off
-#        entity_id: light.andreas_fonster_ikea
+#        entity_id: light.andreas_fonster_2
 
 #      - service: light.turn_off
-#        entity_id: light.sovrum_fonster_e27
+#        entity_id: light.sovrum_fonster
 
       - service: light.turn_off
         entity_id: light.louise_fonster
@@ -340,7 +338,7 @@
         entity_id: light.uterum_julstjarnor
 
       - service: light.turn_off
-        entity_id: light.andreas_fonster_julstjarna
+        entity_id: light.andreas_fonster
 
       - service: light.turn_off
         entity_id: light.sovrum_sangbord

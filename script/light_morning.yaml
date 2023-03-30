@@ -4,8 +4,6 @@
   morning_lights_on:
     alias: Morgonbelysning on
     sequence:
-      - service: script.wait_for_reload_ikea_integration
-
       - service: script.turn_on
         data_template:
           entity_id: >
@@ -53,10 +51,10 @@
           transition: 2
 
       - service: light.turn_off
-        entity_id: light.andreas_fonster_ikea
+        entity_id: light.andreas_fonster_2
 
       - service: light.turn_off
-        entity_id: light.sovrum_fonster_e27
+        entity_id: light.sovrum_fonster
 
       - service: light.turn_off
         entity_id: light.louise_fonster
@@ -102,6 +100,7 @@
     alias: Morgonjulbelysning on
     sequence:
 # IKEA
+
 #      - service: light.turn_on
 #        data:
 #          entity_id: light.kok_stora_fonstret
@@ -134,13 +133,13 @@
 
 #      - service: light.turn_on
 #        data:
-#          entity_id: light.andreas_fonster_ikea
+#          entity_id: light.andreas_fonster_2
 #          brightness_pct: 30
 #          transition: 2
 
 #      - service: light.turn_on
 #        data:
-#          entity_id: light.sovrum_fonster_e27
+#          entity_id: light.sovrum_fonster
 #          brightness_pct: 50
 #          transition: 2
 
@@ -175,7 +174,7 @@
         entity_id: light.uterum_julstjarnor
 
       - service: light.turn_off
-        entity_id: light.andreas_fonster_julstjarna
+        entity_id: light.andreas_fonster
 
       - service: light.turn_off
         entity_id: light.sovrum_sangbord
@@ -186,8 +185,6 @@
   morning_lights_off:
     alias: Morgonbelysning off
     sequence:
-      - service: script.wait_for_reload_ikea_integration
-
       - service: script.turn_on
         data_template:
           entity_id: >
@@ -220,10 +217,10 @@
         entity_id: light.uterum_fonster
 
 #      - service: light.turn_off
-#        entity_id: light.andreas_fonster_ikea
+#        entity_id: light.andreas_fonster_2
 
 #      - service: light.turn_off
-#        entity_id: light.sovrum_fonster_e27
+#        entity_id: light.sovrum_fonster
 
 #      - service: light.turn_off
 #        entity_id: light.louise_fonster
@@ -261,6 +258,7 @@
     alias: Morgonbelysning jul off
     sequence:
 # IKEA
+
 #      - service: light.turn_off
 #        entity_id: light.kok_stora_fonstret
 
@@ -280,10 +278,10 @@
 #        entity_id: light.uterum_fonster
 
 #      - service: light.turn_off
-#        entity_id: light.andreas_fonster_ikea
+#        entity_id: light.andreas_fonster_2
 
 #      - service: light.turn_off
-#        entity_id: light.sovrum_fonster_e27
+#        entity_id: light.sovrum_fonster
 
 #      - service: light.turn_off
 #        entity_id: light.louise_fonster

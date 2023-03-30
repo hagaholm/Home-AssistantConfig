@@ -1,0 +1,45 @@
+#####################
+### Input boolean ###
+#####################
+input_boolean:
+  zwift:
+    name: Zwift används
+
+##################
+### AUTOMATION ###
+##################
+automation:
+  #################################
+  ### Apple Tv i förråd startad ###
+  #################################
+  - alias: Apple Tv i förråd startad
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: sensor.apple_tv
+        to: 'Online'
+
+    action:
+      - service: homeassistant.turn_off
+        entity_id: switch.garage_elvarme
+      - service: homeassistant.turn_on
+        entity_id: switch.garage_luftavfuktare
+ 
+
+  #################################
+  ### Apple Tv i förråd stoppad ###
+  #################################
+  - alias: Apple Tv i förråd stoppad
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: sensor.apple_tv
+        to: 'Offline'
+
+    action:
+      - delay:
+          seconds: 900
+      - service: homeassistant.turn_off
+        entity_id: switch.garage_luftavfuktare 

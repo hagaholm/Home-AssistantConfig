@@ -12,6 +12,14 @@
     trigger:
       - platform: template
         value_template: "{{(states('sensor.ljusstyrka') | int) < (states('input_number.kitchen_light_on') | int )}}"
+      - platform: template
+        value_template: "{{((states('sensor.aqara_motion_sensor_1') | int) | int(0)) < (states('input_number.inside_kitchen') | int(0) )}}"
+      - platform: template
+        value_template: "{{((states('sensor.aqara_motion_sensor_2') | int) | int(0)) < (states('input_number.inside_kitchen') | int(0) )}}"
+      - platform: template
+        value_template: "{{((states('sensor.aqara_motion_sensor_3') | int) | int(0)) < (states('input_number.inside_kitchen') | int(0) )}}"
+      - platform: template
+        value_template: "{{((states('sensor.aqara_motion_sensor_4') | int) | int(0)) < (states('input_number.inside_kitchen') | int(0) )}}"
 
     condition:
       condition: and
@@ -43,15 +51,6 @@
       - platform: state
         entity_id: input_boolean.rorelsedetektor_kok_aktiv
         to: 'on'
-      - platform: state
-        entity_id: switch.rorelsedetektor_1
-        to: 'on'
-      - platform: state
-        entity_id: switch.rorelsedetektor_2
-        to: 'on'
-      - platform: state
-        entity_id: switch.rorelsedetektor_3
-        to: 'on'
 
     condition:
       condition: and
@@ -81,15 +80,6 @@
     trigger:
       - platform: state
         entity_id: input_boolean.rorelsedetektor_kok_aktiv
-        to: 'on'
-      - platform: state
-        entity_id: switch.rorelsedetektor_1
-        to: 'on'
-      - platform: state
-        entity_id: switch.rorelsedetektor_2
-        to: 'on'
-      - platform: state
-        entity_id: switch.rorelsedetektor_3
         to: 'on'
 
     condition:
@@ -124,15 +114,6 @@
     trigger:
       - platform: state
         entity_id: input_boolean.rorelsedetektor_kok_aktiv
-        to: 'on'
-      - platform: state
-        entity_id: switch.rorelsedetektor_1
-        to: 'on'
-      - platform: state
-        entity_id: switch.rorelsedetektor_2
-        to: 'on'
-      - platform: state
-        entity_id: switch.rorelsedetektor_3
         to: 'on'
 
     condition:
@@ -169,15 +150,6 @@
     trigger:
       - platform: state
         entity_id: input_boolean.rorelsedetektor_kok_aktiv
-        to: 'on'
-      - platform: state
-        entity_id: switch.rorelsedetektor_1
-        to: 'on'
-      - platform: state
-        entity_id: switch.rorelsedetektor_2
-        to: 'on'
-      - platform: state
-        entity_id: switch.rorelsedetektor_3
         to: 'on'
 
     condition:
@@ -217,15 +189,6 @@
     trigger:
       - platform: state
         entity_id: input_boolean.rorelsedetektor_kok_aktiv
-        to: 'on'
-      - platform: state
-        entity_id: switch.rorelsedetektor_1
-        to: 'on'
-      - platform: state
-        entity_id: switch.rorelsedetektor_2
-        to: 'on'
-      - platform: state
-        entity_id: switch.rorelsedetektor_3
         to: 'on'
 
     condition:

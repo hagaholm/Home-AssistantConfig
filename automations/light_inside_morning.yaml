@@ -20,8 +20,8 @@
         - condition: template
           value_template: "{{(states('sensor.ljusstyrka') | int) < (states('input_number.morning_light_on') | int )}}"
         - condition: state
-          entity_id: light.morgonbelysning
-          state: 'off'
+          entity_id: input_select.light_inside
+          state: 'Släckt'
         - condition: time
           after: '05:00:00'
           before: '09:00:00'

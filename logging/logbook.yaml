@@ -15,10 +15,8 @@
       - image_processing
 
     entities:
-#      - switch.rorelsedetektor_1
       - sensor.since_last_boot 
       - sensor.since_last_boot_templated
-      - sensor.ha_uptime
       - automation.startar_timers_1
       - automation.startar_timers_2
       - sensor.synligt_ljus
@@ -66,9 +64,7 @@
 
       - sensor.tradfri_gateway
 
-      - automation.startar_timers_koksskap
-      - automation.startar_timers_koksvagg
-      - automation.startar_timers_tvattstuga
+      - automation.startar_timers_kok
       - automation.camera_1_folder_watcher_activated
       - automation.camera_2_folder_watcher_activated
       - automation.camera_3_folder_watcher_activated
@@ -82,8 +78,6 @@
       - automation.kok_100_sensor_on_0_150
       - automation.kok_100_sensor_on_borta_0_150
       - automation.kok_25_sensor_on_hemma_0_150
-
-      - automation.keep_ikea_tradfri_alive
 
       - automation.mqtt_publish_outside_temperature
 
@@ -114,4 +108,11 @@
       - media_player.googlehome7285
       - sensor.rt_ac86u_c158_external_ip
       - sensor.rt_ac86u_c158_wan_status
+
+      - automation.cpu_temp_below_58_0
+      - automation.cpu_temp_58_0
+      - automation.cpu_temp_58_5
+      - automation.cpu_temp_59_0
+      - automation.cpu_temp_59_5
+      - automation.cpu_temp_above_59_5
       

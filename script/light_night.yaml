@@ -4,8 +4,6 @@
   night_light:
     alias: Nattbelysning
     sequence:
-      - service: script.wait_for_reload_ikea_integration
-
       - service: script.turn_on
         data_template:
           entity_id: >
@@ -58,8 +56,6 @@
   night_light_off:
     alias: Nattbelysning off
     sequence:
-      - service: script.wait_for_reload_ikea_integration
-
       - service: script.turn_on
         data_template:
           entity_id: >

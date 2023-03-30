@@ -1,0 +1,39 @@
+##################
+### AUTOMATION ###
+##################
+automation:
+  #####################
+  ### Bilen startar ###
+  #####################
+  - alias: Bilen startar
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.aku93m_engine
+        to: 'on'
+
+    action:
+      - service: notify.pushbullet
+        data:
+          message: "Bilen startar"
+      - service: automation.turn_off
+        entity_id: automation.bilen_startar
+
+  #####################
+  ### Bilen stannar ###
+  #####################
+  - alias: Bilen stannar
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.aku93m_engine
+        to: 'off'
+
+    action:
+      - service: notify.pushbullet
+        data:
+          message: "Bilen stannar"
+      - service: automation.turn_off
+        entity_id: automation.bilen_stannar

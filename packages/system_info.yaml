@@ -23,11 +23,6 @@ sensor:
 #      - type: network_out
 #        arg: ens32
 
-    ##########
-    # uptime #
-    ##########
-  - platform: uptime
-
     #############
     # CPU Speed #
     #############
@@ -163,6 +158,9 @@ sensor:
       camera3:
         friendly_name: 'Kamera 3'
         value_template: "{{ 'Online' if is_state('device_tracker.kamera3', 'home') else 'Offline' }}"
+      camera4:
+        friendly_name: 'Kamera 4'
+        value_template: "{{ 'Online' if is_state('device_tracker.kamera4', 'home') else 'Offline' }}"
       garmin_fenix_5_plus:
         friendly_name: 'Garmin Fenix 5 Plus'
         value_template: "{{ 'Online' if is_state('device_tracker.GarminFenix5Plus', 'home') else 'Offline' }}"

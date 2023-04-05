@@ -1,7 +1,7 @@
     ############################################################
     ### Tänder lampor på morgonen vid rörelse i köket        ###
     ### T: input_boolean.rorelsedetektor_kok_aktiv == on     ###
-    ### C: sensor.ljusstyrka < input_number.morning_light_on ###
+    ### C: input_boolean.daylight_on == on                   ###
     ###    light.morgonbelysning == off                      ###
     ###    05:00:00 - 09:00:00                               ###
     ### A: input_select.light_inside = Morgonbelysning       ###
@@ -36,7 +36,7 @@
     ############################################################
     ### Tänder lampor när första kommer hem på förmiddagen   ###
     ### T: group.track_for_home_devices to: 'home'           ###
-    ### C: sensor.ljusstyrka < input_number.morning_light_on ###
+    ### C: input_boolean.daylight_on == on                   ###
     ###    05:00:00 - 09:00:00                               ###
     ### A: input_select.light_inside = Morgonbelysning       ###
     ############################################################
@@ -67,7 +67,7 @@
 
     #############################################################
     ### Släcker lampor på förmiddagen när det blir ljust ute  ###
-    ### T: sensor.ljusstyrka > input_number.morning_light_off ###
+    ### T: input_boolean.daylight_on == off                   ###
     ### C: group.track_for_home_devices == 'home'             ###
     ###    05:00:00 - 09:00:00                                ###
     ### A: input_select.light_inside = Släckt                 ###

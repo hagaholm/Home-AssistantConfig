@@ -2,7 +2,7 @@
     ### Tänder nattbelysning övrig tid vid rörelse i köket 0-150 lux när någon är hemma ###
     ### T: input_boolean.rorelsedetektor_kok_aktiv = on                                 ###
     ### C: group.track_for_home_devices == 'home'                                       ###
-    ###    sensor.ljusstyrka 0-150                                                      ###
+    ###    input_boolean.daylight_on == on                                              ###
     ###    12:00:00 - 05:00:00                                                          ###
     ###    light.kok_lilla_fonstret == 'off'                                            ###
     ### A: input_select.light_inside = Nattbelysning                                    ###

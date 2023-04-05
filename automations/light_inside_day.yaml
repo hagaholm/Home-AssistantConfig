@@ -1,7 +1,7 @@
     ########################################################
     ### Tänder lampor kl 09:00 om det är mörkt           ###
     ### T: Time = 09:00:00                               ###
-    ### C: sensor.ljusstyrka < input_number.day_light_on ###
+    ### C: input_boolean.daylight_on == on               ###
     ###    group.track_for_home_devices == 'home'        ###
     ### A: input_select.light_inside = Dagbelysning      ###
     ########################################################
@@ -28,7 +28,7 @@
 
     ########################################################
     ### Tänder lampor när det blir mörkt fram till 22:00 ###
-    ### T: sensor.ljusstyrka < input_number.day_light_on ###
+    ### T: input_boolean.daylight_on == on               ###
     ### C: group.track_for_home_devices == 'home'        ###
     ###    09:00:00 - 22:00:00                           ###
     ### A: input_select.light_inside = Dagbelysning      ###
@@ -151,7 +151,7 @@
 
     ##########################################################
     ### Släcker lampor om det blir för ljust ute övrig tid ###
-    ### T: sensor.ljusstyrka > input_number.day_light_off  ###
+    ### T: input_boolean.daylight_on == off                ###
     ### C: group.track_for_home_devices = 'home'           ###
     ###    09:00:00 - 05:00:00                             ###
     ### A: input_select.light_inside = Släckt              ###

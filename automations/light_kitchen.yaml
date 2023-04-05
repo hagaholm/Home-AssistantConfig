@@ -10,8 +10,9 @@
     mode: single
 
     trigger:
-      - platform: template
-        value_template: "{{(states('sensor.ljusstyrka') | int) < (states('input_number.kitchen_light_on') | int )}}"
+      - platform: state
+        entity_id: input_boolean.kitchen_light_on
+        to: "on"
 
     condition:
       condition: and
@@ -47,8 +48,9 @@
     condition:
       condition: and
       conditions:
-        - condition: template
-          value_template: "{{(states('sensor.ljusstyrka') | int) < (states('input_number.kitchen_light_on') | int )}}"
+        - condition: state
+          entity_id: input_boolean.kitchen_light_on
+          state: 'on'
         - condition: time
           after: '05:00:00'
           before: '12:00:00'
@@ -77,11 +79,9 @@
     condition:
       condition: and
       conditions:
-        - condition: numeric_state
-          entity_id: sensor.ljusstyrka
-          above: 150
-        - condition: template
-          value_template: "{{(states('sensor.ljusstyrka') | int) < (states('input_number.kitchen_light_on') | int )}}"
+        - condition: state
+          entity_id: input_boolean.kitchen_light_on
+          state: 'on'
         - condition: time
           after: '12:00:00'
           before: '05:00:00'
@@ -111,9 +111,9 @@
     condition:
       condition: and
       conditions:
-        - condition: numeric_state
-          entity_id: sensor.ljusstyrka
-          below: 150
+        - condition: state
+          entity_id: input_boolean.kitchen_light_on
+          state: 'on'
         - condition: time
           after: '12:00:00'
           before: '05:00:00'
@@ -150,9 +150,9 @@
         - condition: state
           entity_id: group.track_for_home_devices
           state: 'not_home'
-        - condition: numeric_state
-          entity_id: sensor.ljusstyrka
-          below: 150
+        - condition: state
+          entity_id: input_boolean.kitchen_light_on
+          state: 'on'
         - condition: time
           after: '12:00:00'
           before: '05:00:00'
@@ -189,9 +189,9 @@
         - condition: state
           entity_id: group.track_for_home_devices
           state: 'home'
-        - condition: numeric_state
-          entity_id: sensor.ljusstyrka
-          below: 150
+        - condition: state
+          entity_id: input_boolean.kitchen_light_on
+          state: 'on'
         - condition: time
           after: '12:00:00'
           before: '05:00:00'
@@ -252,8 +252,9 @@
     mode: single
 
     trigger:
-      platform: template
-      value_template: "{{(states('sensor.ljusstyrka') | int) > (states('input_number.kitchen_light_off') | int )}}"
+      - platform: state
+        entity_id: input_boolean.kitchen_light_on
+        to: "off"
 
     condition:
       condition: state

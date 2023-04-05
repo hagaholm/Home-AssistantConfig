@@ -51,9 +51,9 @@
     condition:
       condition: and
       conditions:
-        - condition: numeric_state
-          entity_id: sensor.ljusstyrka
-          below: 200
+        - condition: state
+          entity_id: input_boolean.daylight_on
+          state: 'on'
         - condition: state
           entity_id: group.track_for_home_devices
           state: 'not_home'
@@ -95,9 +95,9 @@
     ############################################################
   - alias: Bortabelysning off (>250, borta, morgon)
     trigger:
-      platform: numeric_state
-      entity_id: sensor.ljusstyrka
-      above: 250
+      - platform: state
+        entity_id: input_boolean.daylight_on
+        to: "off"
 
     condition:
       condition: and
@@ -140,9 +140,9 @@
     condition:
       condition: and
       conditions:
-        - condition: numeric_state
-          entity_id: sensor.ljusstyrka
-          below: 200
+        - condition: state
+          entity_id: input_boolean.daylight_on
+          state: 'on'
         - condition: time
           after: '12:00:00'
           before: '22:30:00' 
@@ -162,9 +162,9 @@
     ###########################################################
   - alias: Bortabelysning on (<200, borta)
     trigger:
-      platform: numeric_state
-      entity_id: sensor.ljusstyrka
-      below: 200
+      - platform: state
+        entity_id: input_boolean.daylight_on
+        to: "on"
 
     condition:
       condition: and
@@ -197,9 +197,9 @@
     condition:
       condition: and
       conditions:
-        - condition: numeric_state
-          entity_id: sensor.ljusstyrka
-          below: 200
+        - condition: state
+          entity_id: input_boolean.daylight_on
+          state: 'on'
         - condition: state
           entity_id: group.track_for_home_devices
           state: 'not_home'

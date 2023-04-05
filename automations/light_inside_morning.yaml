@@ -17,8 +17,9 @@
     condition:
       condition: and
       conditions:
-        - condition: template
-          value_template: "{{(states('sensor.ljusstyrka') | int) < (states('input_number.morning_light_on') | int )}}"
+        - condition: state
+          entity_id: input_boolean.morning_light_on
+          state: 'on'
         - condition: state
           entity_id: input_select.light_inside
           state: 'Släckt'
@@ -51,8 +52,9 @@
     condition:
       condition: and
       conditions:
-        - condition: template
-          value_template: "{{(states('sensor.ljusstyrka') | int) < (states('input_number.morning_light_on') | int )}}"
+        - condition: state
+          entity_id: input_boolean.morning_light_on
+          state: 'on'
         - condition: time
           after: '05:00:00'
           before: '09:00:00'
@@ -74,8 +76,9 @@
     mode: single
 
     trigger:
-      platform: template
-      value_template: "{{(states('sensor.ljusstyrka') | int) > (states('input_number.morning_light_off') | int )}}"
+      - platform: state
+        entity_id: input_boolean.morning_light_on
+        to: "off"
 
     condition:
       condition: and

@@ -8,50 +8,50 @@ input_number:
   #############################
   inside_kitchen_light_on:
     name: Inside kitchen light On
-    initial: 50
-    max: 100
-    min: 10
-    step: 5
+    initial: 20
+    max: 50
+    min: 15
+    step: 1
     mode: box
 
   inside_kitchen_light_off:
     name: Inside kitchen light Off
-    initial: 100
+    initial: 25
     max: 150
-    min: 50
-    step: 5
+    min: 15
+    step: 1
     mode: box
 
   inside_morning_light_on:
     name: Inside morning light On
-    initial: 20
-    max: 50
-    min: 10
-    step: 5
+    initial: 10
+    max: 25
+    min: 5
+    step: 1
     mode: box
 
   inside_morning_light_off:
     name: Inside morning light Off
-    initial: 40
-    max: 80
-    min: 20
-    step: 5
+    initial: 15
+    max: 30
+    min: 10
+    step: 1
     mode: box
     
   inside_daylight_on:
     name: Inside daylight On
-    initial: 20
-    max: 50
-    min: 10
-    step: 5
+    initial: 10
+    max: 25
+    min: 5
+    step: 1
     mode: box
 
   inside_daylight_off:
     name: Inside daylight Off
-    initial: 40
-    max: 80
-    min: 20
-    step: 5
+    initial: 15
+    max: 30
+    min: 10
+    step: 1
     mode: box
 
   ##############################
@@ -134,11 +134,7 @@ automation:
   - alias: Kitchen light on - inside
     trigger:
       - platform: template
-        value_template: "{{((states('sensor.aqara_motion_sensor_1') | int) | int(0)) < (states('input_number.inside_kitchen_light_on') | int(0) )}}"
-      - platform: template
-        value_template: "{{((states('sensor.aqara_motion_sensor_2') | int) | int(0)) < (states('input_number.inside_kitchen_light_on') | int(0) )}}"
-      - platform: template
-        value_template: "{{((states('sensor.aqara_motion_sensor_3') | int) | int(0)) < (states('input_number.inside_kitchen_light_on') | int(0) )}}"
+        value_template: "{{((states('sensor.lightlevel_27') | int) | int(0)) < (states('input_number.inside_kitchen_light_on') | int(0) )}}"
 
     condition:
       condition: and
@@ -174,11 +170,7 @@ automation:
   - alias: Morning light on - inside
     trigger:
       - platform: template
-        value_template: "{{((states('sensor.aqara_motion_sensor_1') | int) | int(0)) < (states('input_number.inside_morning_light_on') | int(0) )}}"
-      - platform: template
-        value_template: "{{((states('sensor.aqara_motion_sensor_2') | int) | int(0)) < (states('input_number.inside_morning_light_on') | int(0) )}}"
-      - platform: template
-        value_template: "{{((states('sensor.aqara_motion_sensor_3') | int) | int(0)) < (states('input_number.inside_morning_light_on') | int(0) )}}"
+        value_template: "{{((states('sensor.lightlevel_27') | int) | int(0)) < (states('input_number.inside_morning_light_on') | int(0) )}}"
 
     condition:
       condition: and
@@ -214,11 +206,7 @@ automation:
   - alias: Daylight on - inside
     trigger:
       - platform: template
-        value_template: "{{((states('sensor.aqara_motion_sensor_1') | int) | int(0)) < (states('input_number.inside_daylight_on') | int(0) )}}"
-      - platform: template
-        value_template: "{{((states('sensor.aqara_motion_sensor_2') | int) | int(0)) < (states('input_number.inside_daylight_on') | int(0) )}}"
-      - platform: template
-        value_template: "{{((states('sensor.aqara_motion_sensor_3') | int) | int(0)) < (states('input_number.inside_daylight_on') | int(0) )}}"
+        value_template: "{{((states('sensor.lightlevel_27') | int) | int(0)) < (states('input_number.inside_daylight_on') | int(0) )}}"
 
     condition:
       condition: and
@@ -254,11 +242,7 @@ automation:
   - alias: Kitchen light off - inside
     trigger:
       - platform: template
-        value_template: "{{((states('sensor.aqara_motion_sensor_1') | int) | int(0)) > (states('input_number.inside_kitchen_light_off') | int(0) )}}"
-      - platform: template
-        value_template: "{{((states('sensor.aqara_motion_sensor_2') | int) | int(0)) > (states('input_number.inside_kitchen_light_off') | int(0) )}}"
-      - platform: template
-        value_template: "{{((states('sensor.aqara_motion_sensor_3') | int) | int(0)) > (states('input_number.inside_kitchen_light_off') | int(0) )}}"
+        value_template: "{{((states('sensor.lightlevel_27') | int) | int(0)) > (states('input_number.inside_kitchen_light_off') | int(0) )}}"
 
     condition:
       condition: and
@@ -294,11 +278,7 @@ automation:
   - alias: Morning light off - inside
     trigger:
       - platform: template
-        value_template: "{{((states('sensor.aqara_motion_sensor_1') | int) | int(0)) > (states('input_number.inside_morning_light_off') | int(0) )}}"
-      - platform: template
-        value_template: "{{((states('sensor.aqara_motion_sensor_2') | int) | int(0)) > (states('input_number.inside_morning_light_off') | int(0) )}}"
-      - platform: template
-        value_template: "{{((states('sensor.aqara_motion_sensor_3') | int) | int(0)) > (states('input_number.inside_morning_light_off') | int(0) )}}"
+        value_template: "{{((states('sensor.lightlevel_27') | int) | int(0)) > (states('input_number.inside_morning_light_off') | int(0) )}}"
 
     condition:
       condition: and
@@ -334,11 +314,7 @@ automation:
   - alias: Daylight off - inside
     trigger:
       - platform: template
-        value_template: "{{((states('sensor.aqara_motion_sensor_1') | int) | int(0)) > (states('input_number.inside_daylight_off') | int(0) )}}"
-      - platform: template
-        value_template: "{{((states('sensor.aqara_motion_sensor_2') | int) | int(0)) > (states('input_number.inside_daylight_off') | int(0) )}}"
-      - platform: template
-        value_template: "{{((states('sensor.aqara_motion_sensor_3') | int) | int(0)) > (states('input_number.inside_daylight_off') | int(0) )}}"
+        value_template: "{{((states('sensor.lightlevel_27') | int) | int(0)) > (states('input_number.inside_daylight_off') | int(0) )}}"
 
     condition:
       condition: and

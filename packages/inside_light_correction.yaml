@@ -24,23 +24,23 @@ input_number:
 
   inside_morning_light_on:
     name: Inside morning light On
-    initial: 5
+    initial: 4
     max: 20
-    min: 3
+    min: 2
     step: 1
     mode: box
 
   inside_morning_light_off:
     name: Inside morning light Off
-    initial: 8
+    initial: 5
     max: 20
-    min: 5
+    min: 4
     step: 1
     mode: box
     
   inside_daylight_on:
     name: Inside daylight On
-    initial: 5
+    initial: 6
     max: 20
     min: 3
     step: 1
@@ -48,9 +48,25 @@ input_number:
 
   inside_daylight_off:
     name: Inside daylight Off
-    initial: 8
+    initial: 9
     max: 20
     min: 5
+    step: 1
+    mode: box
+
+  inside_awaylight_on:
+    name: Inside awaylight On
+    initial: 3
+    max: 20
+    min: 1
+    step: 1
+    mode: box
+
+  inside_awaylight_off:
+    name: Inside awaylight Off
+    initial: 5
+    max: 20
+    min: 3
     step: 1
     mode: box
 
@@ -105,6 +121,21 @@ input_number:
     step: 500
     mode: box
 
+  awaylight_on:
+    name: On (200)
+    initial: 200
+    max: 500
+    min: 100
+    step: 50
+    mode: box
+
+  awaylight_off:
+    name: Off (250)
+    initial: 250
+    max: 500
+    min: 100
+    step: 50
+    mode: box
 #####################
 ### Input Boolean ###
 #####################
@@ -123,6 +154,10 @@ input_boolean:
 
   daylight_on:
     name: Dagbelysning on
+    initial: off
+
+  awaylight_on:
+    name: Bortabelysning on
     initial: off
 
 ##################
@@ -238,6 +273,42 @@ automation:
         data:
           entity_id: input_boolean.daylight_on
 
+  #############################
+  - alias: Awaylight on - inside
+    trigger:
+      - platform: template
+        value_template: "{{((states('sensor.lightlevel_27') | int) | int(0)) < (states('input_number.inside_awaylight_on') | int(0) )}}"
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id:  input_boolean.awaylight_on
+          state: 'off'
+
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.awaylight_on
+
+  ##############################
+  - alias: Awaylight on - outside
+    trigger:
+      - platform: template
+        value_template: "{{((states('sensor.ljusstyrka') | int) | int(0)) < (states('input_number.awaylight_on') | int(0) )}}"
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id:  input_boolean.awaylight_on
+          state: 'off'
+
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.awaylight_on
+
   ##################################
   - alias: Kitchen light off - inside
     trigger:
@@ -345,6 +416,42 @@ automation:
       - service: input_boolean.turn_off
         data:
           entity_id: input_boolean.daylight_on
+
+  #############################
+  - alias: Awaylight off - inside
+    trigger:
+      - platform: template
+        value_template: "{{((states('sensor.lightlevel_27') | int) | int(0)) > (states('input_number.inside_awaylight_off') | int(0) )}}"
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id:  input_boolean.awaylight_on
+          state: 'on'
+
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.awaylight_on
+
+  ##############################
+  - alias: Awaylight off - outside
+    trigger:
+      - platform: template
+        value_template: "{{((states('sensor.ljusstyrka') | int) | int(0)) > (states('input_number.awaylight_off') | int(0) )}}"
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id:  input_boolean.awaylight_on
+          state: 'on'
+
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.awaylight_on
 
 
   ###############################

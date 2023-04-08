@@ -1,13 +1,11 @@
-    #######################################################################################
-    ### Tänder nattbelysning övrig tid vid rörelse i köket 0-150 lux när någon är hemma ###
-    ### T: input_boolean.rorelsedetektor_kok_aktiv = on                                 ###
-    ### C: group.track_for_home_devices == 'home'                                       ###
-    ###    input_boolean.daylight_on == on                                              ###
-    ###    12:00:00 - 05:00:00                                                          ###
-    ###    light.kok_lilla_fonstret == 'off'                                            ###
-    ### A: input_select.light_inside = Nattbelysning                                    ###
-    #######################################################################################
-  - alias: Nattbelysning (sensor on, Hemma, 0-150)
+    #############################################################################
+    ### Tänder nattbelysning vid rörelse i köket vid hemma av och dagsljus på ###
+    ### T: input_boolean.rorelsedetektor_kok_aktiv = on                       ###
+    ### C: input_select.home_status == 'Hemma av'                             ###
+    ###    input_boolean.daylight_on == on                                    ###
+    ### A: input_select.light_inside = Nattbelysning                          ###
+    #############################################################################
+  - alias: Nattbelysning on
     trigger:
       platform: state
       entity_id: input_boolean.rorelsedetektor_kok_aktiv
@@ -17,17 +15,11 @@
       condition: and
       conditions:
         - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'home'
+          entity_id: input_select.home_status
+          state: 'Hemma av'
         - condition: state
           entity_id: input_boolean.daylight_on
           state: 'on'
-        - condition: time
-          after: '12:00:00'
-          before: '05:00:00'
-        - condition: state
-          entity_id: light.kok_lilla_fonstret
-          state: 'off'
 
     action:
       - service: input_select.select_option
@@ -35,14 +27,13 @@
           entity_id: input_select.light_inside
           option: Nattbelysning
 
-    ##############################################################
-    ### Släcker nattbelysning när ingen varit i köket på 9 min ###
-    ### T: input_boolean.rorelsedetektor_kok_aktiv == off      ###
-    ### C: light.kok_lilla_fonstret == off                     ###
-    ### C: light.hall_byra == on                               ###
-    ### A: input_select.light_inside = Släckt                  ###
-    ##############################################################
-  - alias: Nattbelysning off (sensor off)
+    #########################################################
+    ### Släcker nattbelysning 30 s efter sista aktivering ###
+    ### T: input_boolean.rorelsedetektor_kok_aktiv == off ###
+    ### C: input_select.home_status == 'Hemma av'         ###
+    ### A: input_select.light_inside = Släckt             ###
+    #########################################################
+  - alias: Nattbelysning off
     trigger:
       platform: state
       entity_id: input_boolean.rorelsedetektor_kok_aktiv
@@ -52,11 +43,8 @@
       condition: and
       conditions:
         - condition: state
-          entity_id: light.kok_lilla_fonstret
-          state: 'off' 
-        - condition: state
-          entity_id: light.hall_byra
-          state: 'on' 
+          entity_id: input_select.home_status
+          state: 'Hemma av'
 
     action:
       - service: input_select.select_option

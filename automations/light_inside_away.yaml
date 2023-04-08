@@ -1,62 +1,24 @@
-    ########################
-    ########################
-    ### Morgon/Förmiddag ###
-    ########################
-    ########################
-
-    ##################################################################
-    ### Tänder lampor när sista åker hemifrån                      ###
-    ### T: group.track_for_home_devices to 'not_home' for 1 minute ###
-    ### C: input_boolean.daylight_on == on                         ###
-    ###    07:00:00 - 10:45:00                                     ###
-    ### A: input_select.light_inside = Bortabelysning              ###
-    ##################################################################
-  - alias: Bortabelysning on (-> borta, <200, morgon)
-    trigger:
-      platform: state
-      entity_id: group.track_for_home_devices
-      from: 'home'
-      to: 'not_home'
-      for:
-        minutes: 1
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_boolean.daylight_on
-          state: 'on'
-        - condition: time
-          after: '07:00:00'
-          before: '10:45:00' 
-
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_inside
-          option: Bortabelysning
-
     #################################################################
-    ### Tänder lampor när ingen är hemma kl 07.00 om det är mörkt ###
-    ### T: time = '07:00:00'                                      ###
-    ### C: input_boolean.daylight_on == on                        ###
-    ###    group.track_for_home_devices to 'not_home'             ###
+    ### Tänder lampor när ingen är hemma kl 08.00 om det är mörkt ###
+    ### T: time = '08:00:00'                                      ###
+    ### C: input_boolean.awaylight_on == on                       ###
+    ###    input_select.home_status == 'Borta'                    ###
     ### A: input_select.light_inside = Bortabelysning             ###
     #################################################################
-  - alias: Bortabelysning on (=07:00:00, <200, borta)
+  - alias: Bortabelysning on (morgon)
     trigger:
       platform: time
-      at: '07:00:00'
+      at: '08:00:00'
 
     condition:
       condition: and
       conditions:
         - condition: state
-          entity_id: input_boolean.daylight_on
+          entity_id: input_boolean.awaylight_on
           state: 'on'
         - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'not_home'
+          entity_id: input_select.home_status
+          state: 'Borta'
 
     action:
       - service: input_select.select_option
@@ -64,88 +26,30 @@
           entity_id: input_select.light_inside
           option: Bortabelysning
 
-    #####################################################
-    ### Släcker lampor kl 11:00 om ingen är hemma     ###
-    ### T: time > '11:00:00'                          ###
-    ### C: group.track_for_home_devices to 'not_home' ###
-    ### A: input_select.light_inside = Släckt         ###
-    #####################################################
-  - alias: Bortabelysning off (>11:00:00, borta)
-    trigger:
-      platform: time
-      at: '11:00:00'
-
-    condition:
-      condition: state
-      entity_id: group.track_for_home_devices
-      state: 'not_home'
-
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_inside
-          option: Släckt
-
-    ############################################################
-    ### Släcker lampor på förmiddagen när det blir ljust ute ###
-    ### T: input_boolean.daylight_on == off                  ###
-    ### C: group.track_for_home_devices == 'not_home'        ###
-    ###    07:00:00 - 11:00:00                               ###
-    ### A: input_select.light_inside = Släckt                ###
-    ############################################################
-  - alias: Bortabelysning off (>250, borta, morgon)
+    ###########################################################
+    ### Tänder lampor när sista åker hemifrån               ###
+    ### T: input_select.home_status to 'Borta' for 1 minute ###
+    ### C: input_boolean.awaylight_on == on                 ###
+    ###    07:00:00 - 22:00:00                              ###
+    ### A: input_select.light_inside = Bortabelysning       ###
+    ###########################################################
+  - alias: Bortabelysning on (borta)
     trigger:
       - platform: state
-        entity_id: input_boolean.daylight_on
-        to: "off"
+        entity_id: input_select.home_status
+        to: 'Borta'
+        for:
+          minutes: 1
 
     condition:
       condition: and
       conditions:
         - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'not_home'
-        - condition: time
-          after: '07:00:00'
-          before: '11:00:00'
-
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_inside
-          option: Släckt
-
-    ###################
-    ###################
-    ### Eftermiddag ###
-    ###################
-    ###################
-
-    ##################################################################
-    ### Tänder lampor när sista åker hemifrån                      ###
-    ### T: group.track_for_home_devices to 'not_home' for 1 minute ###
-    ### C: input_boolean.daylight_on == on                         ###
-    ###    12:00:00 - 22:30:00                                     ###
-    ### A: input_select.light_inside = Bortabelysning              ###
-    ##################################################################
-  - alias: Bortabelysning on (-> borta, <200)
-    trigger:
-      platform: state
-      entity_id: group.track_for_home_devices
-      from: 'home'
-      to: 'not_home'
-      for:
-        minutes: 1
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_boolean.daylight_on
+          entity_id: input_boolean.awaylight_on
           state: 'on'
         - condition: time
-          after: '12:00:00'
-          before: '22:30:00' 
+          after: '07:00:00'
+          before: '22:00:00' 
 
     action:
       - service: input_select.select_option
@@ -156,25 +60,25 @@
     ###########################################################
     ### Tänder lampor när ingen är hemma och det blir mörkt ###
     ### T: input_boolean.daylight_on == on                  ###
-    ### C: group.track_for_home_devices to 'not_home'       ###
-    ###    12:00:00 - 22:30:00                              ###
+    ### C: input_select.home_status to 'Borta'              ###
+    ###    08:00:00 - 22:00:00                              ###
     ### A: input_select.light_inside = Bortabelysning       ###
     ###########################################################
-  - alias: Bortabelysning on (<200, borta)
+  - alias: Bortabelysning on (mörkt)
     trigger:
       - platform: state
-        entity_id: input_boolean.daylight_on
+        entity_id: input_boolean.awaylight_on
         to: "on"
 
     condition:
       condition: and
       conditions:
         - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'not_home'
+          entity_id: input_select.home_status
+          state: 'Borta'
         - condition: time
-          after: '12:00:00'
-          before: '22:30:00'      
+          after: '08:00:00'
+          before: '22:00:00'      
 
     action:
       - service: input_select.select_option
@@ -182,49 +86,52 @@
           entity_id: input_select.light_inside
           option: Bortabelysning
 
-    #################################################################
-    ### Tänder lampor när ingen är hemma kl 12.00 om det är mörkt ###
-    ### T: time = '12:00:00'                                      ###
-    ### C: group.track_for_home_devices to 'not_home'             ###
-    ###    input_boolean.daylight_on == on                        ###
-    ### A: input_select.light_inside = Bortabelysning             ###
-    #################################################################
-  - alias: Bortabelysning on (=12:00:00, <200, borta)
+
+
+    ##############################################
+    ### Släcker lampor när det blir ljust ute  ###
+    ### T: input_boolean.daylight_on == off    ###
+    ### C: input_select.home_status == 'Borta' ###
+    ###    08:00:00 - 22:00:00                 ###
+    ### A: input_select.light_inside = Släckt  ###
+    ##############################################
+  - alias: Bortabelysning off (ljust)
     trigger:
-      platform: time
-      at: '12:00:00'
+      - platform: state
+        entity_id: input_boolean.awaylight_on
+        to: "off"
 
     condition:
       condition: and
       conditions:
         - condition: state
-          entity_id: input_boolean.daylight_on
-          state: 'on'
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'not_home'
+          entity_id: input_select.home_status
+          state: 'Borta'
+        - condition: time
+          after: '08:00:00'
+          before: '22:00:00'
 
     action:
       - service: input_select.select_option
         data:
           entity_id: input_select.light_inside
-          option: Bortabelysning
+          option: Släckt
 
-    #####################################################
-    ### Släcker lampor kl 23:00 om ingen är hemma     ###
-    ### T: time > '23:00:00'                          ###
-    ### C: group.track_for_home_devices to 'not_home' ###
-    ### A: input_select.light_inside = Släckt         ###
-    #####################################################
-  - alias: Bortabelysning off (>23:00:00, borta)
+    #################################################
+    ### Släcker lampor kl 22:30 om ingen är hemma ###
+    ### T: time > '22:30:00'                      ###
+    ### C: input_select.home_status to 'Borta'    ###
+    ### A: input_select.light_inside = Släckt     ###
+    #################################################
+  - alias: Bortabelysning off (kväll)
     trigger:
       platform: time
-      at: '23:00:00'
+      at: '22:30:00'
 
     condition:
       condition: state
-      entity_id: group.track_for_home_devices
-      state: 'not_home'
+      entity_id: input_select.home_status
+      state: 'Borta'
 
     action:
       - service: input_select.select_option

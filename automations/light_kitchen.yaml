@@ -1,43 +1,11 @@
-    #######################################################################
-    ### Tänder lampor 100% när lux kommer under 2500                    ###
-    ### För att förhindra att det inte tänds när någon redan är i köket ###
-    ### T: input_boolean.kitchen_light_on == on                         ###
-    ### C: 12:00:00 - 22:00:00                                          ###
-    ### C: group.track_for_home_devices == 'home'                       ###
-    ### A: input_select.light_kitchen = 100%                            ###
-    #######################################################################
-  - alias: Kök 100% (<2500)
-    mode: single
-
-    trigger:
-      - platform: state
-        entity_id: input_boolean.kitchen_light_on
-        to: "on"
-
-    condition:
-      condition: and
-      conditions:
-        - condition: time
-          after: '12:00:00'
-          before: '22:00:00'
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'home'
-
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_kitchen
-          option: 100%
-
-    #####################################################################
-    ### Tänder lampor 100% på morgonen vid rörelse i köket < 2500 lux ###
-    ### T: input_boolean.rorelsedetektor_kok_aktiv == on              ###
-    ### C: input_boolean.kitchen_light_on == on                       ###
-    ###    05:00:00 - 12:00:00                                        ###
-    ### A: input_select.light_kitchen = 100%                          ###
-    #####################################################################
-  - alias: Kök 100% morgon (sensor on, <2500)
+    ########################################################
+    ### Tänder lampor 100% vid rörelse i köket           ###
+    ### T: input_boolean.rorelsedetektor_kok_aktiv == on ###
+    ### C: input_boolean.kitchen_light_on == on          ###
+    ###    input_select.home_status == 'Hemma på'        ###
+    ### A: input_select.light_kitchen = 100%             ###
+    ########################################################
+  - alias: Kök 100% (hemma på)
     mode: queued
 
     trigger:
@@ -51,9 +19,9 @@
         - condition: state
           entity_id: input_boolean.kitchen_light_on
           state: 'on'
-        - condition: time
-          after: '05:00:00'
-          before: '12:00:00'
+        - condition: state
+          entity_id: input_select.home_status
+          state: 'Hemma på'
 
     action:
       - service: input_select.select_option
@@ -61,14 +29,14 @@
           entity_id: input_select.light_kitchen
           option: 100%
 
-    #####################################################################
-    ### Tänder lampor 100% vid rörelse i köket 150-2500 lux övrig tid ###
-    ### T: input_boolean.rorelsedetektor_kok_aktiv == on              ###
-    ### C: input_boolean.kitchen_light_on == on                       ###
-    ###    12:00:00 - 05:00:00                                        ###
-    ### A: input_select.light_kitchen = 100%                          ###
-    #####################################################################
-  - alias: Kök 100% (sensor on, 150-2500)
+    ########################################################
+    ### Tänder lampor 100% vid rörelse i köket           ###
+    ### T: input_boolean.rorelsedetektor_kok_aktiv == on ###
+    ### C: input_boolean.kitchen_light_on == on          ###
+    ###    input_select.home_status == 'Borta'           ###
+    ### A: input_select.light_kitchen = 100%             ###
+    ########################################################
+  - alias: Kök 100% (borta)
     mode: queued
 
     trigger:
@@ -82,9 +50,9 @@
         - condition: state
           entity_id: input_boolean.kitchen_light_on
           state: 'on'
-        - condition: time
-          after: '12:00:00'
-          before: '05:00:00'
+        - condition: state
+          entity_id: input_select.home_status
+          state: 'Borta'
 
     action:
       - service: input_select.select_option
@@ -92,15 +60,14 @@
           entity_id: input_select.light_kitchen
           option: 100%
 
-    ##################################################################
-    ### Tänder lampor 100% övrig tid vid rörelse i köket 0-150 lux ###
-    ### T: input_boolean.rorelsedetektor_kok_aktiv == on           ###
-    ### C: input_boolean.kitchen_light_on == on                    ###
-    ###    12:00:00 - 05:00:00                                     ###
-    ###    light.kok_lilla_fonstret == 'on'                        ###
-    ### A: input_select.light_kitchen = 100%                       ###
-    ##################################################################
-  - alias: Kök 100% (sensor on, 0-150)
+    ########################################################
+    ### Tänder lampor 25% vid rörelse i köket            ###
+    ### T: input_boolean.rorelsedetektor_kok_aktiv == on ###
+    ### C: input_boolean.kitchen_light_on == on          ###
+    ###    input_select.home_status == 'Hemma av'        ###
+    ### A: input_select.light_kitchen = 25%              ###
+    ########################################################
+  - alias: Kök 25% (hemma av)
     mode: queued
 
     trigger:
@@ -114,90 +81,9 @@
         - condition: state
           entity_id: input_boolean.kitchen_light_on
           state: 'on'
-        - condition: time
-          after: '12:00:00'
-          before: '05:00:00'
         - condition: state
-          entity_id: light.kok_lilla_fonstret
-          state: 'on'
-
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_kitchen
-          option: 100%
-
-    #####################################################################################
-    ### Tänder lampor 100% övrig tid vid rörelse i köket 0-150 lux när ingen är hemma ###
-    ### T: input_boolean.rorelsedetektor_kok_aktiv == on                              ###
-    ### C: group.track_for_home_devices == 'not_home'                                 ###
-    ###    input_boolean.kitchen_light_on == on                                       ###
-    ###    12:00:00 - 05:00:00                                                        ###
-    ###    light.kok_lilla_fonstret == 'off'                                          ###
-    ### A: input_select.light_kitchen = 100%                                          ###
-    #####################################################################################
-  - alias: Kök 100% (sensor on, Borta, 0-150)
-    mode: queued
-
-    trigger:
-      - platform: state
-        entity_id: input_boolean.rorelsedetektor_kok_aktiv
-        to: 'on'
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'not_home'
-        - condition: state
-          entity_id: input_boolean.kitchen_light_on
-          state: 'on'
-        - condition: time
-          after: '12:00:00'
-          before: '05:00:00'
-        - condition: state
-          entity_id: light.kok_lilla_fonstret
-          state: 'off'
-
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_kitchen
-          option: 100%
-
-    ####################################################################################
-    ### Tänder lampor 25% övrig tid vid rörelse i köket 0-150 lux när någon är hemma ###
-    ### T: input_boolean.rorelsedetektor_kok_aktiv == on                             ###
-    ### C: group.track_for_home_devices == 'home'                                    ###
-    ###    sensor.ljusstyrka 0-150                                                   ###
-    ###    12:00:00 - 05:00:00                                                       ###
-    ###    light.kok_lilla_fonstret == 'off'                                         ###
-    ### A: input_select.light_kitchen = 25%                                          ###
-    ####################################################################################
-  - alias: Kök 25% (sensor on, Hemma, 0-150)
-    mode: queued
-
-    trigger:
-      - platform: state
-        entity_id: input_boolean.rorelsedetektor_kok_aktiv
-        to: 'on'
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'home'
-        - condition: state
-          entity_id: input_boolean.kitchen_light_on
-          state: 'on'
-        - condition: time
-          after: '12:00:00'
-          before: '05:00:00'
-        - condition: state
-          entity_id: light.kok_lilla_fonstret
-          state: 'off'
+          entity_id: input_select.home_status
+          state: 'Hemma av'
 
     action:
       - service: input_select.select_option
@@ -210,7 +96,7 @@
     ### T: input_boolean.rorelsedetektor_kok_aktiv == off ###
     ### A: input_select.light_kitchen = Släckt            ###
     #########################################################
-  - alias: Kök off (sensor off)
+  - alias: Kök off (ingen rörelse)
     mode: single
 
     trigger:
@@ -224,19 +110,18 @@
           entity_id: input_select.light_kitchen
           option: Släckt
 
-    ##########################################################
-    ### Släcker lampor när sista åker hemifrån             ###
-    ### T: group.track_for_home_devices to: 'not_home'     ###
-    ### A: input_boolean.rorelsedetektor_kok_aktiv = off   ###
-    ##########################################################
-  - alias: Kök off (-> borta)
+    ########################################################
+    ### Släcker lampor när sista åker hemifrån           ###
+    ### T: input_select.home_status to: 'Borta'          ###
+    ### A: input_boolean.rorelsedetektor_kok_aktiv = off ###
+    ########################################################
+  - alias: Kök off (borta)
     mode: single
 
     trigger:
-      platform: state
-      entity_id: group.track_for_home_devices
-      from: 'home'
-      to: 'not_home'
+      - platform: state
+        entity_id: input_select.home_status
+        to: 'Borta'
 
     action:
       - service: homeassistant.turn_off
@@ -248,7 +133,7 @@
     ### C: group.track_for_home_devices == 'home'              ###
     ### A: input_boolean.rorelsedetektor_kok_aktiv = off       ###
     ##############################################################
-  - alias: Kök off (>3000)
+  - alias: Kök off (ljust)
     mode: single
 
     trigger:

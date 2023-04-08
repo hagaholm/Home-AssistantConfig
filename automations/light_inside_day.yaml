@@ -1,39 +1,11 @@
     ########################################################
-    ### Tänder lampor kl 09:00 om det är mörkt           ###
-    ### T: Time = 09:00:00                               ###
-    ### C: input_boolean.daylight_on == on               ###
-    ###    group.track_for_home_devices == 'home'        ###
-    ### A: input_select.light_inside = Dagbelysning      ###
-    ########################################################
-  - alias: Dagbelysning on (=09:00:00, <1800, hemma)
-    trigger:
-      platform: time
-      at: '09:00:00'
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_boolean.daylight_on
-          state: 'on'
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'home'
-
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_inside
-          option: Dagbelysning
-
-    ########################################################
     ### Tänder lampor när det blir mörkt fram till 22:00 ###
     ### T: input_boolean.daylight_on == on               ###
-    ### C: group.track_for_home_devices == 'home'        ###
+    ### C: input_select.home_status == 'Hemma på'        ###
     ###    09:00:00 - 22:00:00                           ###
     ### A: input_select.light_inside = Dagbelysning      ###
     ########################################################
-  - alias: Dagbelysning on (<1800, hemma)
+  - alias: Dagbelysning on (mörkt)
     trigger:
       - platform: state
         entity_id: input_boolean.daylight_on
@@ -42,9 +14,9 @@
     condition:
       condition: and
       conditions:
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'home'
+        - platform: state
+          entity_id: input_select.home_status
+          to: 'Hemma på'
         - condition: time
           after: '09:00:00'
           before: '22:00:00'
@@ -55,54 +27,18 @@
           entity_id: input_select.light_inside
           option: Dagbelysning
 
-    ########################################################
-    ### Tänder lampor vid rörelse i köket övrigt tid     ###
-    ### Används för att snabba på upptändning när första ###
-    ### kommer hem innan status ändrats till 'hemma'     ###
-    ### T: input_boolean.rorelsedetektor_kok_aktiv == on ###
-    ### C: group.track_for_home_devices == 'not_home'    ###
-    ###    sensor.ljusstyrka < input_number.day_light_on ###
-    ###    09:00:00 - 05:00:00                           ###
-    ### A: input_select.light_inside = Dagbelysning      ###
-    ########################################################
-  - alias: Dagbelysning on (sensor on, borta, <1800)
+    ###################################################
+    ### Tänder lampor när 'hemma på'                ###
+    ### T: input_select.home_status to 'Hemma på'   ###
+    ### C: input_boolean.day_light_on == on         ###
+    ###    09:00:00 - 05:00:00                      ###
+    ### A: input_select.light_inside = Dagbelysning ###
+    ###################################################
+  - alias: Dagbelysning on (hemma på)
     trigger:
-      platform: state
-      entity_id: input_boolean.rorelsedetektor_kok_aktiv
-      to: 'on'
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'not_home'
-        - condition: state
-          entity_id: input_boolean.daylight_on
-          state: 'on'
-        - condition: time
-          after: '09:00:00'
-          before: '05:00:00'
-
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_inside
-          option: Dagbelysning
-
-    ########################################################
-    ### Tänder lampor när första kommer hem övrig tid    ###
-    ### T: group.track_for_home_devices to 'home'        ###
-    ### C: sensor.ljusstyrka < input_number.day_light_on ###
-    ###    09:00:00 - 05:00:00                           ###
-    ### A: input_select.light_inside = Dagbelysning      ###
-    ########################################################
-  - alias: Dagbelysning on (-> hemma, <1800)
-    trigger:
-      platform: state
-      entity_id: group.track_for_home_devices
-      from: 'not_home'
-      to: 'home'
+      - platform: state
+        entity_id: input_select.home_status
+        to: 'Hemma på'
 
     condition:
       condition: and
@@ -149,15 +85,15 @@
           entity_id: input_select.light_inside
           option: Dagbelysning
 
-    ##########################################################
-    ### Släcker lampor om det blir för ljust ute övrig tid ###
-    ### T: input_boolean.daylight_on == off                ###
-    ### C: group.track_for_home_devices = 'home'           ###
-    ###    09:00:00 - 05:00:00                             ###
-    ### A: input_select.light_inside = Släckt              ###
-    ###    input_select.light_inside = Fönsterbelysning    ###
-    ##########################################################
-  - alias: Dagbelysning off (>2500, hemma)
+    #######################################################
+    ### Släcker lampor om det blir för ljust ute        ###
+    ### T: input_boolean.daylight_on == off             ###
+    ### C: input_select.home_status == 'Hemma på'       ###
+    ###    09:00:00 - 05:00:00                          ###
+    ### A: input_select.light_inside = Släckt           ###
+    ###    input_select.light_inside = Fönsterbelysning ###
+    #######################################################
+  - alias: Dagbelysning off (ljust)
     trigger:
       - platform: state
         entity_id: input_boolean.daylight_on
@@ -167,8 +103,8 @@
       condition: and
       conditions:
         - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'home'
+          entity_id: input_select.home_status
+          state: 'Hemma på'
         - condition: time
           after: '09:00:00'
           before: '05:00:00'
@@ -187,18 +123,17 @@
             data:
               option: Släckt
 
-    ########################################################
-    ### Släcker lampor när sista åker hemifrån övrig tid ###
-    ### T: group.track_for_home_devices to 'not_home'    ###
-    ### C: 09:00:00 - 05:00:00                           ###
-    ### A: input_select.light_inside = Släckt            ###
-    ########################################################
-  - alias: Dagbelysning off (-> borta)
+    ##############################################
+    ### Släcker lampor när sista åker hemifrån ###
+    ### T: input_select.home_status to 'Borta' ###
+    ### C: 09:00:00 - 05:00:00                 ###
+    ### A: input_select.light_inside = Släckt  ###
+    ##############################################
+  - alias: Dagbelysning off (borta)
     trigger:
-      platform: state
-      entity_id: group.track_for_home_devices
-      from: 'home'
-      to: 'not_home'
+      - platform: state
+        entity_id: input_select.home_status
+        to: 'Borta'
 
     condition:
       condition: time

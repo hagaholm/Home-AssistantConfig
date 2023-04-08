@@ -186,72 +186,49 @@ views:
         state_color: true
       - type: entities
         entities:
-          - automation.tand_kok_100
-          - automation.tand_kok_25
-          - automation.slack_kok
-          - automation.kok_100_morgon_sensor_on_2500
-          - automation.kok_100_sensor_on_0_150
-          - automation.kok_100_sensor_on_150_2500
-          - automation.kok_100_sensor_on_borta_0_150
-          - automation.kok_25_sensor_on_hemma_0_150
+          - automation.kok_100_borta
+          - automation.kok_100_hemma_av
+          - automation.kok_100_hemma_pa
+          - automation.kok_off_ingen_rorelse
           - automation.kok_off_borta
-          - automation.kok_off_sensor_off
-          - automation.kok_off_3000
+          - automation.kok_off_ljust
           - automation.kok_rorelsedetektor_reset
         title: Köksbelysning
         show_header_toggle: true
         state_color: true
       - type: entities
         entities:
-          - automation.kok_100_2500
-        title: Köksbelysning off
-        show_header_toggle: true
-        state_color: true
-      - type: entities
-        entities:
-          - automation.morgonbelysning_on_sensor_on_1800
-          - automation.morgonbelysning_on_hemma_1800
-          - automation.morgonbelysning_off_2500_hemma
-          - automation.morgonbelysning_off_borta
+          - automation.morgonbelysning_on
+          - automation.morgonbelysning_off
         title: Morgonbelysning
         show_header_toggle: true
         state_color: true
       - type: entities
         entities:
-          - automation.dagbelysning_on_09_00_00_1800_hemma
-          - automation.dagbelysning_on_1800_hemma
-          - automation.dagbelysning_on_sensor_on_borta_1800
-          - automation.dagbelysning_on_hemma_1800
+          - automation.dagbelysning_on_morkt
+          - automation.dagbelysning_on_hemma_pa
           - automation.dagbelysning_on_sovrumsfonster_on
-          - automation.dagbelysning_off_2500_hemma
+          - automation.dagbelysning_off_ljust
           - automation.dagbelysning_off_borta
-          - automation.bedroom_off_sovrumsfonster_off
+          - automation.dagbelysning_kvallsbelysning_sovrumsfonster_off
         title: Dagbelysning
         show_header_toggle: true
         state_color: true
       - type: entities
         entities:
-          - automation.nattbelysning_sensor_on_hemma_0_150
-          - automation.nattbelysning_off_sensor_off
+          - automation.nattbelysning_on
+          - automation.nattbelysning_off
         title: Nattbelysning
         show_header_toggle: true
         state_color: true
       - type: entities
         entities:
-          - automation.bortabelysning_on_07_00_00_200_borta
-          - automation.bortabelysning_on_borta_200_morgon
-          - automation.bortabelysning_off_11_00_00_borta
-          - automation.bortabelysning_off_250_borta_morgon
-        title: Bortabelysning morgon
-        show_header_toggle: true
-        state_color: true
-      - type: entities
-        entities:
-          - automation.bortabelysning_on_12_00_00_200_borta
-          - automation.bortabelysning_on_200_borta
-          - automation.bortabelysning_on_borta_200
-          - automation.bortabelysning_off_23_00_00_borta
-        title: Bortabelysning kväll
+          - automation.bortabelysning_on_borta
+          - automation.bortabelysning_on_morgon
+          - automation.bortabelysning_on_morkt
+          - automation.bortabelysning_off_kvall
+          - automation.bortabelysning_off_ljust
+        title: Bortabelysning
         show_header_toggle: true
         state_color: true
       - type: entities

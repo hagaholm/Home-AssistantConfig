@@ -187,10 +187,10 @@ views:
       - type: entities
         entities:
           - automation.kok_100_borta
-          - automation.kok_100_hemma_av
           - automation.kok_100_hemma_pa
-          - automation.kok_off_ingen_rorelse
+          - automation.kok_25_hemma_av
           - automation.kok_off_borta
+          - automation.kok_off_ingen_rorelse
           - automation.kok_off_ljust
           - automation.kok_rorelsedetektor_reset
         title: Köksbelysning
@@ -205,11 +205,11 @@ views:
         state_color: true
       - type: entities
         entities:
-          - automation.dagbelysning_on_morkt
           - automation.dagbelysning_on_hemma_pa
+          - automation.dagbelysning_on_morkt
           - automation.dagbelysning_on_sovrumsfonster_on
-          - automation.dagbelysning_off_ljust
           - automation.dagbelysning_off_borta
+          - automation.dagbelysning_off_ljust
           - automation.dagbelysning_kvallsbelysning_sovrumsfonster_off
         title: Dagbelysning
         show_header_toggle: true

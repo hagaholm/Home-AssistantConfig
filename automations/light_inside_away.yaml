@@ -30,7 +30,7 @@
     ### Tänder lampor när sista åker hemifrån               ###
     ### T: input_select.home_status to 'Borta' for 1 minute ###
     ### C: input_boolean.awaylight_on == on                 ###
-    ###    07:00:00 - 22:00:00                              ###
+    ###    08:00:00 - 22:00:00                              ###
     ### A: input_select.light_inside = Bortabelysning       ###
     ###########################################################
   - alias: Bortabelysning on (borta)
@@ -48,7 +48,7 @@
           entity_id: input_boolean.awaylight_on
           state: 'on'
         - condition: time
-          after: '07:00:00'
+          after: '08:00:00'
           before: '22:00:00' 
 
     action:

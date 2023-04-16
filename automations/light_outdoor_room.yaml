@@ -3,7 +3,7 @@
     ### T: group.track_for_home_devices == home        ###
     ### C: 12:00:00 - 21:45:00                         ###
     ###    sensor.ljusstyrka < 150                     ###
-    ###    sensor.uterum > 18                          ###
+    ###    sensor.uterum_temperature > 18              ###
     ### A: input_select.light_uterum = Tänt            ###
     ######################################################
   - alias: Uterums belysning on (home)
@@ -23,7 +23,7 @@
           entity_id: sensor.ljusstyrka
           below: 150
         - condition: numeric_state
-          entity_id: sensor.uterum
+          entity_id: sensor.uterum_temperature
           above: 18
 
     action:
@@ -43,7 +43,7 @@
   - alias: Uterums belysning on (>18)
     trigger:
       platform: numeric_state
-      entity_id: sensor.uterum
+      entity_id: sensor.uterum_temperature
       above: 18
 
     condition:
@@ -143,13 +143,13 @@
 
     ########################################################
     ### Släcker uterums belysning när det blir för kallt ###
-    ### T: sensor.uterum < 17                            ###
+    ### T: sensor.uterum_temperature < 17                ###
     ### A: input_select.light_uterum = Släckt            ###
     ########################################################
   - alias: Uterums belysning off (<17)
     trigger:
       platform: numeric_state
-      entity_id: sensor.uterum
+      entity_id: sensor.uterum_temperature
       below: 17
 
     action:

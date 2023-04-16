@@ -219,7 +219,7 @@ views:
         state_color: true
       - type: entities
         entities:
-          - sensor.uterum
+          - sensor.uterum_temperature
           - sensor.hall_temperature
           - sensor.vardagsrum_temperature
           - sensor.sovrum
@@ -616,7 +616,7 @@ views:
         state_color: true
       - type: entities
         entities:
-          - sensor.uterum
+          - sensor.uterum_temperature
           - entity: light.uterum_fonster
             name: Fönster
           - entity: light.uterum_led

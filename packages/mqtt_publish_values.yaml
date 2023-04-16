@@ -11,7 +11,7 @@ automation:
 
     trigger:
       - platform: state
-        entity_id: sensor.ute
+        entity_id: sensor.ute_friggebod_temperature
     
     action:
       - service: mqtt.publish

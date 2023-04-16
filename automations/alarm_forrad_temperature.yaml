@@ -1,7 +1,7 @@
     ######################################################
     ### Varnar för hög temp i Förråd                   ###
     ### T: sensor.forrad_temperature > 11              ###
-    ### C: sensor.ute < 5                              ###
+    ### C: sensor.ute_friggebod_temperature < 5        ###
     ### A: notify.pushbullet "LARM! Hög temp i Förråd" ###
     ######################################################
   - alias: Förråd larm hög temp
@@ -19,7 +19,7 @@
       condition: and
       conditions:
         - condition: numeric_state
-          entity_id: sensor.ute
+          entity_id: sensor.ute_friggebod_temperature
           below: '5'
     action:
       - service: notify.pushbullet
@@ -29,7 +29,7 @@
     ######################################################
     ### Varnar för låg temp i Förråd                   ###
     ### T: sensor.forrad_temperature < 4               ###
-    ### C: sensor.ute < 5                              ###
+    ### C: sensor.ute_friggebod_temperature < 5        ###
     ### A: notify.pushbullet "LARM! Låg temp i Förråd" ###
     ######################################################
   - alias: Förråd larm låg temp
@@ -53,7 +53,7 @@
       condition: and
       conditions:
         - condition: numeric_state
-          entity_id: sensor.ute
+          entity_id: sensor.ute_friggebod_temperature
           below: '5'
     action:
       - service: notify.pushbullet

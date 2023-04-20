@@ -7,7 +7,7 @@ views:
       - type: tile
         entity: switch.ventilationsaggregat
       - type: tile
-        entity: switch.fan_speed
+        entity: switch.shelly1_c45bbe77099d
         name: Forcerad fläkt
       - type: tile
         entity: input_boolean.alarm_ventilation
@@ -42,7 +42,7 @@ views:
         entities:
           - entity: switch.ventilationsaggregat
             name: På/Av
-          - entity: switch.fan_speed
+          - entity: switch.shelly1_c45bbe77099d
             name: Max
         hours_to_show: 24
         refresh_interval: 0

@@ -192,7 +192,7 @@ views:
         state_color: true
       - type: entities
         entities:
-          - switch.fan_speed
+          - switch.shelly1_c45bbe77099d
         title: Övrigt
         show_header_toggle: false
         state_color: true
@@ -268,7 +268,7 @@ views:
           - sensor.tilluft
           - sensor.franluft
           - sensor.avluft
-          - switch.fan_speed
+          - switch.shelly1_c45bbe77099d
           - switch.ventilationsaggregat
         title: Värmepump/Ventilation
         show_header_toggle: false
@@ -572,7 +572,7 @@ views:
           - entity: sensor.badrum_temperature
           - sensor.badrum_humidity
           - sensor.fukt_badrumsfonster
-          - switch.fan_speed
+          - switch.shelly1_c45bbe77099d
         title: Badrum
         show_header_toggle: true
         state_color: true
@@ -699,7 +699,7 @@ views:
           - sensor.tilluft
           - sensor.franluft
           - sensor.avluft
-          - switch.fan_speed
+          - switch.shelly1_c45bbe77099d
           - switch.ventilationsaggregat
         title: Ventilation
         show_header_toggle: true
@@ -837,7 +837,7 @@ views:
         entities:
           - sensor.badrum_humidity
           - sensor.fukt_badrumsfonster
-          - switch.fan_speed
+          - switch.shelly1_c45bbe77099d
           - switch.ventilationsaggregat
         title: Ventilation badrum
         show_header_toggle: false

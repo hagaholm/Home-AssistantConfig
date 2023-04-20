@@ -175,14 +175,14 @@ input_boolean:
 automation:
     ##############################################################
     ### Startar Timer när forcerad fläkt startar               ###
-    ### T: switch.fan_speed == on                              ###
+    ### T: switch.shelly1_c45bbe77099d == on                   ###
     ### A: Cancel timer timer.timer_humidity_bathroom_max_time ###
     ###    Start timer timer.timer_humidity_bathroom_max_time  ###
     ##############################################################
   - alias: Startar max timer Badrum
     trigger:
       platform: state
-      entity_id: switch.fan_speed
+      entity_id: switch.shelly1_c45bbe77099d
       to: 'on'
 
     action:
@@ -233,7 +233,7 @@ automation:
     ###    input_boolean.high_temp_franluft == on             ###
     ###    input_boolean.low_temp_tilluft == on               ###
     ###    input_boolean.high_temp_tiluft == on               ###
-    ### C: switch.fan_speed == 'on'                           ###
+    ### C: switch.shelly1_c45bbe77099d == 'on'                ###
     ### A: input_boolean.alarm_ventilation = on               ###
     #############################################################
   - alias: Sätt larm för vent 
@@ -265,14 +265,14 @@ automation:
     #######################
     ####################################################
     ### Larm! Hög fukt i badrummet, ingen hemma      ###
-    ### T: switch.fan_speed == on                    ###
+    ### T: switch.shelly1_c45bbe77099d == on         ###
     ### C: group.track_for_home_devices = 'not_home' ###
     ### A: notify                                    ###
     ####################################################
   - alias: Badrumsfönster hög fukt larm
     trigger:
       platform: state
-      entity_id: switch.fan_speed
+      entity_id: switch.shelly1_c45bbe77099d
       to: 'on'
 
     condition:
@@ -395,11 +395,11 @@ automation:
     ################
     ### Hög fukt ###
     ################
-    ################################
-    ### Snabbt ökande fukt       ###
-    ### T: new - old >= 4        ###
-    ### A: switch.fan_speed = on ###
-    ################################
+    ###########################################
+    ### Snabbt ökande fukt                  ###
+    ### T: new - old >= 4                   ###
+    ### A: switch.shelly1_c45bbe77099d = on ###
+    ###########################################
   - alias: Forcerad Snabbt ökande fukt
     trigger:
       - platform: state
@@ -409,7 +409,7 @@ automation:
       condition: and
       conditions:
         - condition: state
-          entity_id: switch.fan_speed
+          entity_id: switch.shelly1_c45bbe77099d
           state: 'off'
         - condition: template 
           value_template: "{{ (trigger.to_state.state|int - trigger.from_state.state|int) >= 4 }}"
@@ -419,13 +419,13 @@ automation:
 
     action:
       - service: homeassistant.turn_on
-        entity_id: switch.fan_speed
+        entity_id: switch.shelly1_c45bbe77099d
 
-    ##########################################
-    ### Hög fukt badrumsfönster            ###
-    ### T: sensor.fukt_badrumsfonster > 70 ###
-    ### A: switch.fan_speed = on           ###
-    ##########################################
+    ###########################################
+    ### Hög fukt badrumsfönster             ###
+    ### T: sensor.fukt_badrumsfonster > 70  ###
+    ### A: switch.shelly1_c45bbe77099d = on ###
+    ###########################################
   - alias: Forcerad Badrumsfönster hög fukt
     trigger:
       - platform: state
@@ -438,7 +438,7 @@ automation:
           entity_id: sensor.fukt_badrumsfonster
           above: '70'
         - condition: state
-          entity_id: switch.fan_speed
+          entity_id: switch.shelly1_c45bbe77099d
           state: 'off'
         - condition: template 
           value_template: "{{ (trigger.to_state.state|int - trigger.from_state.state|int) >= 2 }}"
@@ -448,16 +448,16 @@ automation:
 
     action:
       - service: homeassistant.turn_on
-        entity_id: switch.fan_speed
+        entity_id: switch.shelly1_c45bbe77099d
 
     ################
     ### Låg fukt ###
     ################
-    ##########################################
-    ### Låg fukt badrumsfönster            ###
-    ### T: sensor.fukt_badrumsfonster < 69 ###
-    ### A: switch.fan_speed = off          ###
-    ##########################################
+    ############################################
+    ### Låg fukt badrumsfönster              ###
+    ### T: sensor.fukt_badrumsfonster < 69   ###
+    ### A: switch.shelly1_c45bbe77099d = off ###
+    ############################################
   - alias: Normal Badrumsfönster låg fukt
     trigger:
       platform: numeric_state
@@ -468,12 +468,12 @@ automation:
       condition: and
       conditions:
         - condition: state
-          entity_id: switch.fan_speed
+          entity_id: switch.shelly1_c45bbe77099d
           state: 'on'
 
     action:
       - service: homeassistant.turn_off
-        entity_id: switch.fan_speed
+        entity_id: switch.shelly1_c45bbe77099d
 
 #    #################################################################################################
 #    ### Badrumsfönster stabiliserad fukt                                                          ###
@@ -482,7 +482,7 @@ automation:
 #    ### T: state sensor.fukt_badrumsfonster                                                       ###
 #    ### C: no changes last 15 minutes                                                             ###
 #    ### C: updated last 15 minutes                                                                ###
-#    ### A: switch.fan_speed = off                                                                 ###
+#    ### A: switch.shelly1_c45bbe77099d = off                                                      ###
 #    #################################################################################################
 #  - alias: Normal Badrumsfönster stabiliserad fukt
 #    trigger:
@@ -493,7 +493,7 @@ automation:
 #      condition: and
 #      conditions:
 #        - condition: state
-#          entity_id: switch.fan_speed
+#          entity_id: switch.shelly1_c45bbe77099d
 #          state: 'on'
 #
 #        # Make a check that needed parts exists, if not using this it will be an error in the next step 
@@ -511,7 +511,7 @@ automation:
 #
 #    action:
 #      - service: homeassistant.turn_off
-#        entity_id: switch.fan_speed
+#        entity_id: switch.shelly1_c45bbe77099d
 
 #last_updated is the last time an entity did send its value to HA
 #last_changed is the last time there was a difference between the previous value and the new.
@@ -522,7 +522,7 @@ automation:
     ### T: every 5 minutes                                                                        ###
     ### C: mindre än 8% skillnad mellan badrum och hall                                           ###
     ### C: sensorer uppdaterade de senaste 10 minuterna                                           ###
-    ### A: switch.fan_speed = off                                                                 ###
+    ### A: switch.shelly1_c45bbe77099d = off                                                      ###
     #################################################################################################
   - alias: Normal Hög fukt i huset
     trigger:
@@ -533,7 +533,7 @@ automation:
       condition: and
       conditions:
         - condition: state
-          entity_id: switch.fan_speed
+          entity_id: switch.shelly1_c45bbe77099d
           state: 'on'
 
         # Make a check that needed parts exists, if not using this it will be an error in the next step 
@@ -554,15 +554,15 @@ automation:
           value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.hall_humidity', 'last_updated'))) < 600 }}"
     action:
       - service: homeassistant.turn_off
-        entity_id: switch.fan_speed
+        entity_id: switch.shelly1_c45bbe77099d
 
     #####################################################################################
     ### Sätter ventilation till Normal när luftfuktigheten stabiliserats i 20 minuter ###
     ### T: timer_humidity_bathroom == timer.finished                                  ###
-    ### C: switch.fan_speed == 'on'                                                   ###
+    ### C: switch.shelly1_c45bbe77099d == 'on'                                        ###
     ###    sensor.fukt_badrumsfonster < 90                                            ###
     ###    sensor.fukt_badrumsfonster > 70                                            ###
-    ### A: switch.fan_speed = 'off'                                                   ###
+    ### A: switch.shelly1_c45bbe77099d = 'off'                                        ###
     #####################################################################################
   - alias: Normal vid stabiliserad fukt 
     trigger:
@@ -576,7 +576,7 @@ automation:
       condition: and
       conditions:
         - condition: state
-          entity_id: switch.fan_speed
+          entity_id: switch.shelly1_c45bbe77099d
           state: 'on'
         - condition: numeric_state
           entity_id: sensor.fukt_badrumsfonster
@@ -585,13 +585,13 @@ automation:
 
     action:
       - service: homeassistant.turn_off
-        entity_id: switch.fan_speed
+        entity_id: switch.shelly1_c45bbe77099d
 
     #############################################################################
     ### Sätter ventilation till Normal efter maxtid uppnåtts efter 90 minuter ###
     ### T: timer_humidity_bathroom_max_time == timer.finished                 ###
-    ### C: switch.fan_speed == 'on'                                           ###
-    ### A: switch.fan_speed = 'off'                                           ###
+    ### C: switch.shelly1_c45bbe77099d == 'on'                                ###
+    ### A: switch.shelly1_c45bbe77099d = 'off'                                ###
     #############################################################################
   - alias: Normal efter maxtid 
     trigger:
@@ -605,23 +605,23 @@ automation:
       condition: and
       conditions:
         - condition: state
-          entity_id: switch.fan_speed
+          entity_id: switch.shelly1_c45bbe77099d
           state: 'on'
 
     action:
       - service: homeassistant.turn_off
-        entity_id: switch.fan_speed
+        entity_id: switch.shelly1_c45bbe77099d
 
     #############################################################
     ### Reset timer när ventilationen sätts till Normal       ###
-    ### T: switch.fan_speed == 'on                            ###
+    ### T: switch.shelly1_c45bbe77099d == 'on                 ###
     ### A: timer_humidity_bathroom == timer.finished          ###
     ###    timer_humidity_bathroom_max_time == timer.finished ###
     #############################################################
   - alias: Reset timer när vent sätts till Normal 
     trigger:
       platform: state
-      entity_id: switch.fan_speed
+      entity_id: switch.shelly1_c45bbe77099d
       to: 'off'
       
     action:
@@ -629,7 +629,7 @@ automation:
       - service: timer.cancel
         entity_id: timer.timer_humidity_bathroom
       - service: homeassistant.turn_off
-        entity_id: switch.fan_speed
+        entity_id: switch.shelly1_c45bbe77099d
 
     #######################
     ### Ventilation off ###

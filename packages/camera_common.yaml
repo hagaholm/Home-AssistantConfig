@@ -348,16 +348,16 @@ script:
 #####################
 shell_command:
   # Delete 14 days old images from folders:
-  remove_old_images_in_camera_deepstack_photo: 'find /config/camera/deepstack_photo -mtime +14 -type f -delete' 
-  remove_old_images_in_camera_motion_detected: 'find /config/camera/motion_detected -mtime +14 -type f -delete' 
-  remove_old_images_in_media_animal: 'find /media/animal -mtime +14 -type f -delete' 
-  remove_old_images_in_media_away: 'find /media/Away -mtime +14 -type f -delete' 
-  remove_old_images_in_media_day: 'find /media/Day -mtime +14 -type f -delete' 
-  remove_old_images_in_media_night: 'find /media/Night -mtime +14 -type f -delete' 
+  remove_old_images_in_camera_deepstack_photo: 'find /config/camera/deepstack_photo -mtime +10 -type f -delete' 
+  remove_old_images_in_camera_motion_detected: 'find /config/camera/motion_detected -mtime +10 -type f -delete' 
+  remove_old_images_in_media_animal: 'find /media/animal -mtime +10 -type f -delete' 
+  remove_old_images_in_media_away: 'find /media/Away -mtime +10 -type f -delete' 
+  remove_old_images_in_media_day: 'find /media/Day -mtime +5 -type f -delete' 
+  remove_old_images_in_media_night: 'find /media/Night -mtime +10 -type f -delete' 
 
   # Delete 14 days old videos from folders:
-  remove_old_videos_in_media_video_away: 'find /media/video/Away -mtime +14 -type f -delete' 
-  remove_old_videos_in_media_video_night: 'find /media/video/Night -mtime +14 -type f -delete' 
+  remove_old_videos_in_media_video_away: 'find /media/video/Away -mtime +10 -type f -delete' 
+  remove_old_videos_in_media_video_night: 'find /media/video/Night -mtime +10 -type f -delete' 
 
   # Used by script delete_camera_files
   delete_camera_files_1: 'rm -f /config/camera/deepstack_photo/*'

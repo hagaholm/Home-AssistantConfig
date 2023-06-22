@@ -201,7 +201,7 @@ automation:
   - alias: Morning light on - inside
     trigger:
       - platform: template
-        value_template: "{{((states('sensor.lightlevel_27') | int) | int(0)) < (states('input_number.inside_morning_light_on') | int(0) )}}"
+        value_template: "{{((states('sensor.lightlevel_28') | int) | int(0)) < (states('input_number.inside_morning_light_on') | int(0) )}}"
 
     condition:
       condition: and
@@ -237,7 +237,7 @@ automation:
   - alias: Daylight on - inside
     trigger:
       - platform: template
-        value_template: "{{((states('sensor.lightlevel_27') | int) | int(0)) < (states('input_number.inside_daylight_on') | int(0) )}}"
+        value_template: "{{((states('sensor.lightlevel_28') | int) | int(0)) < (states('input_number.inside_daylight_on') | int(0) )}}"
 
     condition:
       condition: and
@@ -273,7 +273,7 @@ automation:
   - alias: Awaylight on - inside
     trigger:
       - platform: template
-        value_template: "{{((states('sensor.lightlevel_27') | int) | int(0)) < (states('input_number.inside_awaylight_on') | int(0) )}}"
+        value_template: "{{((states('sensor.lightlevel_28') | int) | int(0)) < (states('input_number.inside_awaylight_on') | int(0) )}}"
 
     condition:
       condition: and
@@ -345,7 +345,7 @@ automation:
   - alias: Morning light off - inside
     trigger:
       - platform: template
-        value_template: "{{((states('sensor.lightlevel_27') | int) | int(0)) > (states('input_number.inside_morning_light_off') | int(0) )}}"
+        value_template: "{{((states('sensor.lightlevel_28') | int) | int(0)) > (states('input_number.inside_morning_light_off') | int(0) )}}"
 
     condition:
       condition: and
@@ -381,7 +381,7 @@ automation:
   - alias: Daylight off - inside
     trigger:
       - platform: template
-        value_template: "{{((states('sensor.lightlevel_27') | int) | int(0)) > (states('input_number.inside_daylight_off') | int(0) )}}"
+        value_template: "{{((states('sensor.lightlevel_28') | int) | int(0)) > (states('input_number.inside_daylight_off') | int(0) )}}"
 
     condition:
       condition: and
@@ -417,7 +417,7 @@ automation:
   - alias: Awaylight off - inside
     trigger:
       - platform: template
-        value_template: "{{((states('sensor.lightlevel_27') | int) | int(0)) > (states('input_number.inside_awaylight_off') | int(0) )}}"
+        value_template: "{{((states('sensor.lightlevel_28') | int) | int(0)) > (states('input_number.inside_awaylight_off') | int(0) )}}"
 
     condition:
       condition: and

@@ -7,15 +7,15 @@ command_line:
     ######################
     # https://home-assistant.io/components/sensor.command_line/
   - sensor:
-    name: Current HA Version
-    command: python3 -c "import requests; print(requests.get('https://pypi.python.org/pypi/homeassistant/json').json()['info']['version'])"
+        name: Current HA Version
+        command: python3 -c "import requests; print(requests.get('https://pypi.python.org/pypi/homeassistant/json').json()['info']['version'])"
 
     ########################
     # HA Installed version #
     ########################
   - sensor:
-    name: Installed version
-    command: "head -5 /config/.HA_VERSION"
+        name: Installed version
+        command: "head -5 /config/.HA_VERSION"
 
     ##########
     # Sensor #

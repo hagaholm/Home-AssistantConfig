@@ -59,31 +59,31 @@ command_line:
   - sensor:
       name: Deepstack photo files
       command: "ls -l /config/camera/deepstack_photo | wc -l"
-      value_template: "{{ value | round(1) }}"
+      value_template: "{{ value | round(0) }}"
   - sensor:
       name: Motion detected photo files
       command: "ls -l /config/camera/motion_detected | wc -l"
-      value_template: "{{ value | round(1) }}"
+      value_template: "{{ value | round(0) }}"
   - sensor:
       name: Camera animal files
       command: "ls -l /media/animal | wc -l"
-      value_template: "{{ value | round(1) }}"
+      value_template: "{{ value | round(0) }}"
   - sensor:
       name: Camera day files
       command: "ls -l /media/Day | wc -l"
-      value_template: "{{ value | round(1) }}"
+      value_template: "{{ value | round(0) }}"
   - sensor:
       name: Camera night files
       command: "ls -l /media/Night | wc -l"
-      value_template: "{{ value | round(1) }}"
+      value_template: "{{ value | round(0) }}"
   - sensor:
       name: Camera away files
       command: "ls -l /media/Away | wc -l"
-      value_template: "{{ value | round(1) }}"
+      value_template: "{{ value | round(0) }}"
   - sensor:
       name: Camera video files
       command: "ls -l /media/video | wc -l"
-      value_template: "{{ value | round(1) }}"
+      value_template: "{{ value | round(0) }}"
 
 ####################################################
 #                                                  #

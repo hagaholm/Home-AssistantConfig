@@ -49,6 +49,18 @@ stream:
 #    password: !secret Camera_Password
 #    scan_interval: 5
 
+
+####################################################
+#                                                  #
+#                       SENSOR                     #
+#                                                  #
+####################################################
+sensor:
+  - platform: folder
+    folder: /camera
+  - platform: folder
+    folder: /media
+
 ####################################################
 #                                                  #
 #                    INPUT_SELECT                  #

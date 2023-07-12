@@ -52,12 +52,19 @@ stream:
 
 ####################################################
 #                                                  #
-#                       SENSOR                     #
+#                    COMMAND_LINES                 #
 #                                                  #
 ####################################################
-sensor:
-  - platform: folder
-    folder: /media
+command_line:
+  - sensor:
+      name: Media files
+      command: "ls -l /media | wc -l"
+      value_template: "{{ value | round(1) }}"
+
+  - sensor:
+      name: Camera files
+      command: "ls -l /config/camera | wc -l"
+      value_template: "{{ value | round(1) }}"
 
 ####################################################
 #                                                  #

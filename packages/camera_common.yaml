@@ -66,23 +66,27 @@ command_line:
       value_template: "{{ value | round(0) }}"
   - sensor:
       name: Camera animal files
-      command: "ls -l /media/animal | wc -l"
+      command: "ls -l /media/0/animal | wc -l"
       value_template: "{{ value | round(0) }}"
   - sensor:
       name: Camera day files
-      command: "ls -l /media/Day | wc -l"
+      command: "ls -l /media/0/Day | wc -l"
       value_template: "{{ value | round(0) }}"
   - sensor:
       name: Camera night files
-      command: "ls -l /media/Night | wc -l"
+      command: "ls -l /media/0/Night | wc -l"
       value_template: "{{ value | round(0) }}"
   - sensor:
       name: Camera away files
-      command: "ls -l /media/Away | wc -l"
+      command: "ls -l /media/0/Away | wc -l"
       value_template: "{{ value | round(0) }}"
   - sensor:
-      name: Camera video files
-      command: "ls -l /media/video | wc -l"
+      name: Camera video away files
+      command: "ls -l /media/0/video_Away | wc -l"
+      value_template: "{{ value | round(0) }}"
+  - sensor:
+      name: Camera video night files
+      command: "ls -l /media/0/video_Night | wc -l"
       value_template: "{{ value | round(0) }}"
 
 ####################################################
@@ -177,20 +181,72 @@ automation:
   #########################
   ### Delete old images ###
   #########################
-  - alias: Camera delete 10 days old images
+  - alias: Camera move images
     trigger:
       - platform: time
-        at: "00:01:00" # HH:MM:SS
+        at: "00:00:01" # HH:MM:SS
 
     action:
-      - service: shell_command.delete_10_days_old_images_in_camera_deepstack_photo
-      - service: shell_command.delete_10_days_old_images_in_camera_motion_detected
-      - service: shell_command.delete_10_days_old_images_in_media_animal
-      - service: shell_command.delete_10_days_old_images_in_media_away
-      - service: shell_command.delete_10_days_old_images_in_media_day
-      - service: shell_command.delete_10_days_old_images_in_media_night
-      - service: shell_command.delete_10_days_old_videos_in_media_video_away
-      - service: shell_command.delete_10_days_old_videos_in_media_video_night
+      - service: shell_command.move_camera_files_9a
+      - service: shell_command.move_camera_files_9b
+      - service: shell_command.move_camera_files_9c
+      - service: shell_command.move_camera_files_9d
+      - service: shell_command.move_camera_files_9e
+      - service: shell_command.move_camera_files_9f
+      - service: shell_command.move_camera_files_8a
+      - service: shell_command.move_camera_files_8b
+      - service: shell_command.move_camera_files_8c
+      - service: shell_command.move_camera_files_8d
+      - service: shell_command.move_camera_files_8e
+      - service: shell_command.move_camera_files_8f
+      - service: shell_command.move_camera_files_7a
+      - service: shell_command.move_camera_files_7b
+      - service: shell_command.move_camera_files_7c
+      - service: shell_command.move_camera_files_7d
+      - service: shell_command.move_camera_files_7e
+      - service: shell_command.move_camera_files_7f
+      - service: shell_command.move_camera_files_6a
+      - service: shell_command.move_camera_files_6b
+      - service: shell_command.move_camera_files_6c
+      - service: shell_command.move_camera_files_6d
+      - service: shell_command.move_camera_files_6e
+      - service: shell_command.move_camera_files_6f
+      - service: shell_command.move_camera_files_5a
+      - service: shell_command.move_camera_files_5b
+      - service: shell_command.move_camera_files_5c
+      - service: shell_command.move_camera_files_5d
+      - service: shell_command.move_camera_files_5e
+      - service: shell_command.move_camera_files_5f
+      - service: shell_command.move_camera_files_4a
+      - service: shell_command.move_camera_files_4b
+      - service: shell_command.move_camera_files_4c
+      - service: shell_command.move_camera_files_4d
+      - service: shell_command.move_camera_files_4e
+      - service: shell_command.move_camera_files_4f
+      - service: shell_command.move_camera_files_3a
+      - service: shell_command.move_camera_files_3b
+      - service: shell_command.move_camera_files_3c
+      - service: shell_command.move_camera_files_3d
+      - service: shell_command.move_camera_files_3e
+      - service: shell_command.move_camera_files_3f
+      - service: shell_command.move_camera_files_2a
+      - service: shell_command.move_camera_files_2b
+      - service: shell_command.move_camera_files_2c
+      - service: shell_command.move_camera_files_2d
+      - service: shell_command.move_camera_files_2e
+      - service: shell_command.move_camera_files_2f
+      - service: shell_command.move_camera_files_1a
+      - service: shell_command.move_camera_files_1b
+      - service: shell_command.move_camera_files_1c
+      - service: shell_command.move_camera_files_1d
+      - service: shell_command.move_camera_files_1e
+      - service: shell_command.move_camera_files_1f
+      - service: shell_command.move_camera_files_0a
+      - service: shell_command.move_camera_files_0b
+      - service: shell_command.move_camera_files_0c
+      - service: shell_command.move_camera_files_0d
+      - service: shell_command.move_camera_files_0e
+      - service: shell_command.move_camera_files_0f
 
   #######################################
   ### Camera Motion Set duration time ###
@@ -428,5 +484,65 @@ shell_command:
   delete_camera_files_7: 'rm -f /media/video/Away/*'
   delete_camera_files_8: 'rm -f /media/video/Night/*'
 
-
+  # Used by script move_camera_files
+  move_camera_files_9a: 'rm -f /media/9/animal/*'
+  move_camera_files_9b: 'rm -f /media/9/Away/*'
+  move_camera_files_9c: 'rm -f /media/9/Day/*'
+  move_camera_files_9d: 'rm -f /media/9/Night/*'
+  move_camera_files_9e: 'rm -f /media/9/video_Away/*'
+  move_camera_files_9f: 'rm -f /media/9/video_Night/*'
+  move_camera_files_8a: 'mv -f /media/8/animal/* /media/9/animal/'
+  move_camera_files_8b: 'rm -f /media/8/Away/* /media/9/Away/'
+  move_camera_files_8c: 'rm -f /media/8/Day/* /media/9/Day/'
+  move_camera_files_8d: 'rm -f /media/8/Night/* /media/9/Night/'
+  move_camera_files_8e: 'rm -f /media/8/video_Away/* /media/9/video_Away/'
+  move_camera_files_8f: 'rm -f /media/8/video_Night/* /media/9/video_Night/'
+  move_camera_files_7a: 'mv -f /media/7/animal/* /media/8/animal/'
+  move_camera_files_7b: 'rm -f /media/7/Away/* /media/8/Away/'
+  move_camera_files_7c: 'rm -f /media/7/Day/* /media/8/Day/'
+  move_camera_files_7d: 'rm -f /media/7/Night/* /media/8/Night/'
+  move_camera_files_7e: 'rm -f /media/7/video_Away/* /media/8/video_Away/'
+  move_camera_files_7f: 'rm -f /media/7/video_Night/* /media/8/video_Night/'
+  move_camera_files_6a: 'mv -f /media/6/animal/* /media/7/animal/'
+  move_camera_files_6b: 'rm -f /media/6/Away/* /media/7/Away/'
+  move_camera_files_6c: 'rm -f /media/6/Day/* /media/7/Day/'
+  move_camera_files_6d: 'rm -f /media/6/Night/* /media/7/Night/'
+  move_camera_files_6e: 'rm -f /media/6/video_Away/* /media/7/video_Away/'
+  move_camera_files_6f: 'rm -f /media/6/video_Night/* /media/7/video_Night/'
+  move_camera_files_5a: 'mv -f /media/5/animal/* /media/6/animal/'
+  move_camera_files_5b: 'rm -f /media/5/Away/* /media/6/Away/'
+  move_camera_files_5c: 'rm -f /media/5/Day/* /media/6/Day/'
+  move_camera_files_5d: 'rm -f /media/5/Night/* /media/6/Night/'
+  move_camera_files_5e: 'rm -f /media/5/video_Away/* /media/6/video_Away/'
+  move_camera_files_5f: 'rm -f /media/5/video_Night/* /media/6/video_Night/'
+  move_camera_files_4a: 'mv -f /media/4/animal/* /media/5/animal/'
+  move_camera_files_4b: 'rm -f /media/4/Away/* /media/5/Away/'
+  move_camera_files_4c: 'rm -f /media/4/Day/* /media/5/Day/'
+  move_camera_files_4d: 'rm -f /media/4/Night/* /media/5/Night/'
+  move_camera_files_4e: 'rm -f /media/4/video_Away/* /media/5/video_Away/'
+  move_camera_files_4f: 'rm -f /media/4/video_Night/* /media/5/video_Night/'
+  move_camera_files_3a: 'mv -f /media/3/animal/* /media/4/animal/'
+  move_camera_files_3b: 'rm -f /media/3/Away/* /media/4/Away/'
+  move_camera_files_3c: 'rm -f /media/3/Day/* /media/4/Day/'
+  move_camera_files_3d: 'rm -f /media/3/Night/* /media/4/Night/'
+  move_camera_files_3e: 'rm -f /media/3/video_Away/* /media/4/video_Away/'
+  move_camera_files_3f: 'rm -f /media/3/video_Night/* /media/4/video_Night/'
+  move_camera_files_2a: 'mv -f /media/2/animal/* /media/3/animal/'
+  move_camera_files_2b: 'rm -f /media/2/Away/* /media/3/Away/'
+  move_camera_files_2c: 'rm -f /media/2/Day/* /media/3/Day/'
+  move_camera_files_2d: 'rm -f /media/2/Night/* /media/3/Night/'
+  move_camera_files_2e: 'rm -f /media/2/video_Away/* /media/3/video_Away/'
+  move_camera_files_2f: 'rm -f /media/2/video_Night/* /media/3/video_Night/'
+  move_camera_files_1a: 'mv -f /media/1/animal/* /media/2/animal/'
+  move_camera_files_1b: 'rm -f /media/1/Away/* /media/2/Away/'
+  move_camera_files_1c: 'rm -f /media/1/Day/* /media/2/Day/'
+  move_camera_files_1d: 'rm -f /media/1/Night/* /media/2/Night/'
+  move_camera_files_1e: 'rm -f /media/1/video_Away/* /media/2/video_Away/'
+  move_camera_files_1f: 'rm -f /media/1/video_Night/* /media/2/video_Night/'
+  move_camera_files_0a: 'mv -f /media/0/animal/* /media/1/animal/'
+  move_camera_files_0b: 'rm -f /media/0/Away/* /media/1/away/'
+  move_camera_files_0c: 'rm -f /media/0/Day/* /media/1/Day/'
+  move_camera_files_0d: 'rm -f /media/0/Night/* /media/1/Night/'
+  move_camera_files_0e: 'rm -f /media/0/video_Away/* /media/1/video_Away/'
+  move_camera_files_0f: 'rm -f /media/0/video_Night/* /media/1/video_Night/'
 

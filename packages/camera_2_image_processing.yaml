@@ -1,32 +1,33 @@
 # Folder structure
 # /config/camera/deepstack_photo
 # Image is created here by deepstack if person is detected
-# All files are moved to /media/xxx folder
+# All files are moved to /media/0/xxx folder
 
 # Folder
 # /config/camera/motion_detected
 # When person detected and no one is home, then create video to this folder
 # If home before 2 minutes, then all files in the foder is deleted
 # After 2 minutes:
-# If still away/night after 2 minutes, all files are moved into /media/video
+# If still away after 2 minutes, all files are moved into /media/0/video_Away
+# If still night after 2 minutes, all files are moved into /media/0/video_Night
 
 # Folder
-# /media/Day
+# /media/0/Day
 # Only images captured when camera mode "Day"
 
-# /media/Away
+# /media/0/Away
 # Only images captured when camera mode "Away"
 
-# /media/Night
+# /media/0/Night
 # Only images captured when camera mode "Night"
 
-# /media/animal
+# /media/0/animal
 # Only images captured when an animal is detected
 
-# /media/video/Away
+# /media/0/video_Away
 # Only videos captured when camera mode "Away"
 
-# /media/video/Night
+# /media/0/video_Night
 # Only videos captured when camera mode "Night"
 
 #deepstack.object_detected
@@ -147,32 +148,32 @@ camera:
   # Keep latest image of a detected person day
   - platform: local_file
     name: Camera 2 Latest person
-    file_path: /media/Day/camera_2_latest.jpg
+    file_path: /media/0/Day/camera_2_latest.jpg
 
   # Keep latest image of a detected person away
   - platform: local_file
     name: Camera 2 Latest person away
-    file_path: /media/Away/camera_2_latest.jpg
+    file_path: /media/0/Away/camera_2_latest.jpg
 
   # Keep latest image of a detected person night
   - platform: local_file
     name: Camera 2 Latest person night
-    file_path: /media/Night/camera_2_latest.jpg
+    file_path: /media/0/Night/camera_2_latest.jpg
 
   # Keep latest image of a detected animal
   - platform: local_file
     name: Camera 2 Latest animal
-    file_path: /media/animal/camera_2_latest.jpg
+    file_path: /media/0/animal/camera_2_latest.jpg
 
   # Keep latest video when away
   - platform: local_file
     name: Camera 2 Video away
-    file_path: /media/video/Away/camera_2_video_latest.mp4
+    file_path: /media/0/video_Away/camera_2_video_latest.mp4
 
   # Keep latest video when night
   - platform: local_file
     name: Camera 2 Video night
-    file_path: /media/video/Night/camera_2_video_latest.mp4
+    file_path: /media/0/video_Night/camera_2_video_latest.mp4
 
 #####################
 ### Shell command ###
@@ -304,11 +305,11 @@ automation:
       # Move images to correct /media folder
       - data:
           source_file: '/config/camera/deepstack_photo/deepstack_camera_2_latest.jpg'
-          dest_file: '/media/animal/camera_2_latest.jpg'
+          dest_file: '/media/0/animal/camera_2_latest.jpg'
         service: shell_command.camera_2_mv_deepstack
       - data:
           source_file: '{{ trigger.event.data.saved_file }}'
-          dest_file: '/media/animal/{{ trigger.event.data.saved_file[41:] }}'
+          dest_file: '/media/0/animal/{{ trigger.event.data.saved_file[41:] }}'
         service: shell_command.camera_2_mv_deepstack
 
   ################################
@@ -362,11 +363,11 @@ automation:
       # Move images
       - data:
           source_file: '/config/camera/deepstack_photo/deepstack_camera_2_latest.jpg'
-          dest_file: "/media/{{ states('input_select.camera_mode') }}/camera_2_latest.jpg"
+          dest_file: "/media/0/{{ states('input_select.camera_mode') }}/camera_2_latest.jpg"
         service: shell_command.camera_2_mv_deepstack
       - data:
           source_file: '{{ trigger.event.data.saved_file }}'
-          dest_file: "/media/{{ states('input_select.camera_mode') }}/{{ trigger.event.data.saved_file[41:] }}"
+          dest_file: "/media/0/{{ states('input_select.camera_mode') }}/{{ trigger.event.data.saved_file[41:] }}"
         service: shell_command.camera_2_mv_deepstack
 
       # If Camera mode is Away, then continue
@@ -393,7 +394,7 @@ automation:
           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           message: "Camera 2 Person detekterad away"
           data:
-            file: "/media/{{ states('input_select.camera_mode') }}/{{ trigger.event.data.saved_file[41:] }}"
+            file: "/media/0/{{ states('input_select.camera_mode') }}/{{ trigger.event.data.saved_file[41:] }}"
 
   #############################################
   ### Camera 2 Person detected create video ###
@@ -466,13 +467,13 @@ automation:
       # Copy video
       - data:
           source_file: "/config/camera/motion_detected/camera_2_{{ states('input_select.camera_mode') }}_{{ trigger.event.data.saved_file[41:-4] }}.mp4"
-          dest_file: "/media/video/{{ states('input_select.camera_mode') }}/camera_2_video_latest.mp4"
+          dest_file: "/media/0/video_{{ states('input_select.camera_mode') }}/camera_2_video_latest.mp4"
         service: shell_command.camera_2_cp_deepstack
 
       # Move video
       - data:
           source_file: "/config/camera/motion_detected/camera_2_{{ states('input_select.camera_mode') }}_{{ trigger.event.data.saved_file[41:-4] }}.mp4"
-          dest_file: "/media/video/{{ states('input_select.camera_mode') }}/camera_2_{{ trigger.event.data.saved_file[41:-4] }}.mp4"
+          dest_file: "/media/0/video_{{ states('input_select.camera_mode') }}/camera_2_{{ trigger.event.data.saved_file[41:-4] }}.mp4"
         service: shell_command.camera_2_mv_deepstack
 
 

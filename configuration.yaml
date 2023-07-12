@@ -743,19 +743,6 @@ mqtt:
 # https://github.com/bramstroker/homeassistant-powercalc
 powercalc:
 
-
-############
-# Template #
-############
-  template:
-  - sensor:
-    - name: "Ljusstyrka kök"
-      unit_of_measurement: "lx"
-    - name: "Ljusstyrka vardagsrum"
-      unit_of_measurement: "lx"
-      
-
-
 ####################################################
 #                                                  #
 #            END OF CONFIGURATION FILE             #

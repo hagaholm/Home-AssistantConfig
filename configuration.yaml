@@ -753,58 +753,58 @@ powercalc:
 ##########
 command_line:
   - sensor:
-    name: På vinden
-    command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.9C97DA050000/temperature').text; print(str[12:])"
-    value_template: '{{ value | round(1) | int(85) }}'
-    unit_of_measurement: "°C"
+        name: På vinden
+        command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.9C97DA050000/temperature').text; print(str[12:])"
+        value_template: '{{ value | round(1) | int(85) }}'
+        unit_of_measurement: "°C"
   - sensor:
-    name: Ute
-    command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.DB5AFE050000/temperature').text; print(str[12:])"
-    unit_of_measurement: "°C"
-    value_template: '{{ value | round(1) | int(85) }}'
+        name: Ute
+        command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.DB5AFE050000/temperature').text; print(str[12:])"
+        unit_of_measurement: "°C"
+        value_template: '{{ value | round(1) | int(85) }}'
   - sensor:
-    name: Uterum
-    command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.8378FD050000/temperature').text; print(str[12:])"
-    unit_of_measurement: "°C"
-    value_template: '{{ value | round(1) | int(85) }}'
+        name: Uterum
+        command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.8378FD050000/temperature').text; print(str[12:])"
+        unit_of_measurement: "°C"
+        value_template: '{{ value | round(1) | int(85) }}'
   - sensor:
-    name: Sovrum
-    command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.AEA6FF050000/temperature').text; print(str[12:])"
-    unit_of_measurement: "°C"
-    value_template: '{{ value | round(1) | int(85) }}'
+        name: Sovrum
+        command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.AEA6FF050000/temperature').text; print(str[12:])"
+        unit_of_measurement: "°C"
+        value_template: '{{ value | round(1) | int(85) }}'
   - sensor:
-    name: Uteluft
-    command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.C517FF050000/temperature').text; print(str[12:])"
-    unit_of_measurement: "°C"
-    value_template: '{{ value | round(1) | int(85) }}'
+        name: Uteluft
+        command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.C517FF050000/temperature').text; print(str[12:])"
+        unit_of_measurement: "°C"
+        value_template: '{{ value | round(1) | int(85) }}'
   - sensor:
-    name: Avluft
-    command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.B47DFF050000/temperature').text; print(str[12:])"
-    unit_of_measurement: "°C"
-    value_template: '{{ value | round(1) | int(85) }}'
+        name: Avluft
+        command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.B47DFF050000/temperature').text; print(str[12:])"
+        unit_of_measurement: "°C"
+        value_template: '{{ value | round(1) | int(85) }}'
   - sensor:
-    name: Tilluft
-    command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.93F7FC050000/temperature').text; print(str[12:])"
-    unit_of_measurement: "°C"
-    value_template: '{{ value | round(1) | int(85) }}'
+        name: Tilluft
+        command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.93F7FC050000/temperature').text; print(str[12:])"
+        unit_of_measurement: "°C"
+        value_template: '{{ value | round(1) | int(85) }}'
   - sensor:
-    name: Franluft
-    command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.E485D9050000/temperature').text; print(str[12:])"
-    unit_of_measurement: "°C"
-    value_template: '{{ value | round(1) | int(85) }}'
+        name: Franluft
+        command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.E485D9050000/temperature').text; print(str[12:])"
+        unit_of_measurement: "°C"
+        value_template: '{{ value | round(1) | int(85) }}'
     
   - sensor:
-    name: Forcerad
-    command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/12.A84D7D000000/PIO.A').text; print(str[6:])"
-    unit_of_measurement: ""
-    value_template: '{{ value | round(1) | int(85) }}'
+        name: Forcerad
+        command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/12.A84D7D000000/PIO.A').text; print(str[6:])"
+        unit_of_measurement: ""
+        value_template: '{{ value | round(1) | int(85) }}'
 
   - sensor:
-    name: CPU Temperature
-    command: "cat /sys/class/thermal/thermal_zone2/temp" # For raspberry use zone0
-    # If errors occur, remove degree symbol below
-    unit_of_measurement: "°C"
-    value_template: '{{ value | multiply(0.001) | round(1) | int(85) }}'
+        name: CPU Temperature
+        command: "cat /sys/class/thermal/thermal_zone2/temp" # For raspberry use zone0
+        # If errors occur, remove degree symbol below
+        unit_of_measurement: "°C"
+        value_template: '{{ value | multiply(0.001) | round(1) | int(85) }}'
 
 ####################################################
 #                                                  #

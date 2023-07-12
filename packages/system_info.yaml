@@ -1,3 +1,49 @@
+################
+# Command Line #
+################
+command_line:
+    ######################
+    # HA Current version #
+    ######################
+    # https://home-assistant.io/components/sensor.command_line/
+  - sensor:
+    name: Current HA Version
+    command: python3 -c "import requests; print(requests.get('https://pypi.python.org/pypi/homeassistant/json').json()['info']['version'])"
+
+    ########################
+    # HA Installed version #
+    ########################
+  - sensor:
+    name: Installed version
+    command: "head -5 /config/.HA_VERSION"
+
+    ##########
+    # Sensor #
+    ##########
+#  - sensor:
+#    name: Raspberry Pi B+ (1-Wire) Temperature
+#    command: ssh pi@192.168.1.12 "cat /sys/class/thermal/thermal_zone0/temp"
+#    unit_of_measurement: "°C"
+#    value_template: '{{ value | multiply(0.001) | round(1) }}'
+
+##  - sensor:
+##    name: Raspberry Pi 3B 1 Temperature
+##    command: ssh pi@192.168.1.10 "cat /sys/class/thermal/thermal_zone0/temp"
+##    unit_of_measurement: "°C"
+##    value_template: '{{ value | multiply(0.001) | round(1) }}'
+
+##  - sensor:
+##    name: Raspberry Pi 3B 2 Temperature
+##    command: ssh pi@192.168.1.14 "cat /sys/class/thermal/thermal_zone0/temp"
+##    unit_of_measurement: "°C"
+##    value_template: '{{ value | multiply(0.001) | round(1) }}'
+
+#  - sensor:
+#    name: Raspberry Pi 3B Plus Temperature
+#    command: ssh pi@192.168.1.15 "cat /sys/class/thermal/thermal_zone0/temp"
+#    unit_of_measurement: "°C"
+#    value_template: '{{ value | multiply(0.001) | round(1) }}'
+
 ##########
 # Sensor #
 ##########
@@ -35,48 +81,6 @@ sensor:
     #################
     # https://www.home-assistant.io/components/websocket_api/
   - platform: websocket_api
-
-    ######################
-    # HA Current version #
-    ######################
-    # https://home-assistant.io/components/sensor.command_line/
-  - platform: command_line
-    command: python3 -c "import requests; print(requests.get('https://pypi.python.org/pypi/homeassistant/json').json()['info']['version'])"
-    name: Current HA Version
-
-    ########################
-    # HA Installed version #
-    ########################
-  - platform: command_line
-    name: Installed version
-    command: "head -5 /config/.HA_VERSION"
-
-    ##########
-    # Sensor #
-    ##########
-#  - platform: command_line
-#    name: Raspberry Pi B+ (1-Wire) Temperature
-#    command: ssh pi@192.168.1.12 "cat /sys/class/thermal/thermal_zone0/temp"
-#    unit_of_measurement: "°C"
-#    value_template: '{{ value | multiply(0.001) | round(1) }}'
-
-##  - platform: command_line
-##    name: Raspberry Pi 3B 1 Temperature
-##    command: ssh pi@192.168.1.10 "cat /sys/class/thermal/thermal_zone0/temp"
-##    unit_of_measurement: "°C"
-##    value_template: '{{ value | multiply(0.001) | round(1) }}'
-
-##  - platform: command_line
-##    name: Raspberry Pi 3B 2 Temperature
-##    command: ssh pi@192.168.1.14 "cat /sys/class/thermal/thermal_zone0/temp"
-##    unit_of_measurement: "°C"
-##    value_template: '{{ value | multiply(0.001) | round(1) }}'
-
-#  - platform: command_line
-#    name: Raspberry Pi 3B Plus Temperature
-#    command: ssh pi@192.168.1.15 "cat /sys/class/thermal/thermal_zone0/temp"
-#    unit_of_measurement: "°C"
-#    value_template: '{{ value | multiply(0.001) | round(1) }}'
 
     ################################
     # Internet performance metrics #

@@ -57,13 +57,32 @@ stream:
 ####################################################
 command_line:
   - sensor:
-      name: Media files
-      command: "ls -l /media | wc -l"
+      name: Deepstack photo files
+      command: "ls -l /config/camera/deepstack_photo | wc -l"
       value_template: "{{ value | round(1) }}"
-
   - sensor:
-      name: Camera files
-      command: "ls -l /config/camera | wc -l"
+      name: Motion detected photo files
+      command: "ls -l /config/camera/motion_detected | wc -l"
+      value_template: "{{ value | round(1) }}"
+  - sensor:
+      name: Camera animal files
+      command: "ls -l /config/camera/animal | wc -l"
+      value_template: "{{ value | round(1) }}"
+  - sensor:
+      name: Camera day files
+      command: "ls -l /config/camera/Day | wc -l"
+      value_template: "{{ value | round(1) }}"
+  - sensor:
+      name: Camera night files
+      command: "ls -l /config/camera/Night | wc -l"
+      value_template: "{{ value | round(1) }}"
+  - sensor:
+      name: Camera away files
+      command: "ls -l /config/camera/Away | wc -l"
+      value_template: "{{ value | round(1) }}"
+  - sensor:
+      name: Camera video files
+      command: "ls -l /config/camera/video | wc -l"
       value_template: "{{ value | round(1) }}"
 
 ####################################################

@@ -66,23 +66,23 @@ command_line:
       value_template: "{{ value | round(1) }}"
   - sensor:
       name: Camera animal files
-      command: "ls -l /config/camera/animal | wc -l"
+      command: "ls -l /media/animal | wc -l"
       value_template: "{{ value | round(1) }}"
   - sensor:
       name: Camera day files
-      command: "ls -l /config/camera/Day | wc -l"
+      command: "ls -l /media/Day | wc -l"
       value_template: "{{ value | round(1) }}"
   - sensor:
       name: Camera night files
-      command: "ls -l /config/camera/Night | wc -l"
+      command: "ls -l /media/Night | wc -l"
       value_template: "{{ value | round(1) }}"
   - sensor:
       name: Camera away files
-      command: "ls -l /config/camera/Away | wc -l"
+      command: "ls -l /media/Away | wc -l"
       value_template: "{{ value | round(1) }}"
   - sensor:
       name: Camera video files
-      command: "ls -l /config/camera/video | wc -l"
+      command: "ls -l /media/video | wc -l"
       value_template: "{{ value | round(1) }}"
 
 ####################################################

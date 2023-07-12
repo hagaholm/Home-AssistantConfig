@@ -63,31 +63,31 @@ command_line:
   - sensor:
       name: Motion detected photo files
       command: "ls -l /config/camera/motion_detected | wc -l"
-      value_template: "{{ value -1 | round(0) }}"
+      value_template: "{{ value | round(0) }}"
   - sensor:
       name: Camera animal files
       command: "ls -l /media/0/animal | wc -l"
-      value_template: "{{ value -1 | round(0) }}"
+      value_template: "{{ value | round(0) }}"
   - sensor:
       name: Camera day files
       command: "ls -l /media/0/Day | wc -l"
-      value_template: "{{ value -1 | round(0) }}"
+      value_template: "{{ value | round(0) }}"
   - sensor:
       name: Camera night files
       command: "ls -l /media/0/Night | wc -l"
-      value_template: "{{ value -1 | round(0) }}"
+      value_template: "{{ value | round(0) }}"
   - sensor:
       name: Camera away files
       command: "ls -l /media/0/Away | wc -l"
-      value_template: "{{ value -1 | round(0) }}"
+      value_template: "{{ value | round(0) }}"
   - sensor:
       name: Camera video away files
       command: "ls -l /media/0/video_Away | wc -l"
-      value_template: "{{ value -1 | round(0) }}"
+      value_template: "{{ value | round(0) }}"
   - sensor:
       name: Camera video night files
       command: "ls -l /media/0/video_Night | wc -l"
-      value_template: "{{ value -1 | round(0) }}"
+      value_template: "{{ value | round(0) }}"
 
 ####################################################
 #                                                  #

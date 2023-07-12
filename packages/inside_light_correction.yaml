@@ -166,6 +166,8 @@ automation:
     trigger:
       - platform: template
         value_template: "{{((states('sensor.lightlevel_28') | int) | int(0)) < (states('input_number.inside_kitchen_light_on') | int(0) )}}"
+      - platform: template
+        value_template: "{{((states('sensor.lightlevel_30') | int) | int(0)) < (states('input_number.inside_kitchen_light_on') | int(0) )}}"
 
     condition:
       condition: and
@@ -202,6 +204,8 @@ automation:
     trigger:
       - platform: template
         value_template: "{{((states('sensor.lightlevel_27') | int) | int(0)) < (states('input_number.inside_morning_light_on') | int(0) )}}"
+      - platform: template
+        value_template: "{{((states('sensor.lightlevel_29') | int) | int(0)) < (states('input_number.inside_morning_light_on') | int(0) )}}"
 
     condition:
       condition: and
@@ -238,7 +242,9 @@ automation:
     trigger:
       - platform: template
         value_template: "{{((states('sensor.lightlevel_27') | int) | int(0)) < (states('input_number.inside_daylight_on') | int(0) )}}"
-
+      - platform: template
+        value_template: "{{((states('sensor.lightlevel_29') | int) | int(0)) < (states('input_number.inside_daylight_on') | int(0) )}}"
+    
     condition:
       condition: and
       conditions:
@@ -274,6 +280,8 @@ automation:
     trigger:
       - platform: template
         value_template: "{{((states('sensor.lightlevel_27') | int) | int(0)) < (states('input_number.inside_awaylight_on') | int(0) )}}"
+      - platform: template
+        value_template: "{{((states('sensor.lightlevel_29') | int) | int(0)) < (states('input_number.inside_awaylight_on') | int(0) )}}"
 
     condition:
       condition: and
@@ -310,6 +318,8 @@ automation:
     trigger:
       - platform: template
         value_template: "{{((states('sensor.lightlevel_28') | int) | int(0)) > (states('input_number.inside_kitchen_light_off') | int(0) )}}"
+      - platform: template
+        value_template: "{{((states('sensor.lightlevel_30') | int) | int(0)) > (states('input_number.inside_kitchen_light_off') | int(0) )}}"
 
     condition:
       condition: and
@@ -346,6 +356,8 @@ automation:
     trigger:
       - platform: template
         value_template: "{{((states('sensor.lightlevel_27') | int) | int(0)) > (states('input_number.inside_morning_light_off') | int(0) )}}"
+      - platform: template
+        value_template: "{{((states('sensor.lightlevel_29') | int) | int(0)) > (states('input_number.inside_morning_light_off') | int(0) )}}"
 
     condition:
       condition: and
@@ -382,6 +394,8 @@ automation:
     trigger:
       - platform: template
         value_template: "{{((states('sensor.lightlevel_27') | int) | int(0)) > (states('input_number.inside_daylight_off') | int(0) )}}"
+      - platform: template
+        value_template: "{{((states('sensor.lightlevel_29') | int) | int(0)) > (states('input_number.inside_daylight_off') | int(0) )}}"
 
     condition:
       condition: and
@@ -418,6 +432,8 @@ automation:
     trigger:
       - platform: template
         value_template: "{{((states('sensor.lightlevel_27') | int) | int(0)) > (states('input_number.inside_awaylight_off') | int(0) )}}"
+      - platform: template
+        value_template: "{{((states('sensor.lightlevel_29') | int) | int(0)) > (states('input_number.inside_awaylight_off') | int(0) )}}"
 
     condition:
       condition: and

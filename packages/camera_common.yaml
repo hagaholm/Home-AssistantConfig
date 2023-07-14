@@ -267,6 +267,10 @@ automation:
         - condition: template
           value_template: >
             {{ trigger.event.data.object_type == 'person' }}
+        # If not Day, then continue
+        - condition: template
+          value_template: >
+            {{ not is_state('input_select.camera_mode', 'Day') }}
 
     action:
       - service: input_number.set_value

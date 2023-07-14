@@ -289,7 +289,7 @@ automation:
     trigger:
       - platform: state
         entity_id: input_select.camera_mode
-        to: 'Day på'
+        to: 'Day'
            
     action:
       - service: input_number.set_value

@@ -297,6 +297,21 @@ automation:
           entity_id: input_number.camera_duration
           value: 1500
 
+  - alias: Camera Motion Away Night duration time
+    trigger:
+      - platform: state
+        entity_id: input_select.camera_mode
+        to: 'Away'
+      - platform: state
+        entity_id: input_select.camera_mode
+        to: 'Night'
+           
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.camera_duration
+          value: 500
+
   - alias: Camera Motion Reset duration time
     trigger:
       # Timer finished after 30 sec

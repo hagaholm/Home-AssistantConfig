@@ -115,7 +115,7 @@ input_number:
     name: Kamera väntetid mellan bild analys
     initial: 500
     min: 0
-    max: 1000
+    max: 1500
     step: 100
 
 ####################################################
@@ -295,7 +295,7 @@ automation:
       - service: input_number.set_value
         data_template:
           entity_id: input_number.camera_duration
-          value: 1000
+          value: 1500
 
   - alias: Camera Motion Reset duration time
     trigger:

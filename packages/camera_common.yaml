@@ -285,6 +285,18 @@ automation:
   #########################################
   ### Camera Motion Reset duration time ###
   #########################################
+  - alias: Camera Motion Day duration time
+    trigger:
+      - platform: state
+        entity_id: input_select.camera_mode
+        to: 'Day på'
+           
+    action:
+      - service: input_number.set_value
+        data_template:
+          entity_id: input_number.camera_duration
+          value: 1000
+
   - alias: Camera Motion Reset duration time
     trigger:
       # Timer finished after 30 sec
@@ -292,13 +304,20 @@ automation:
         event_type: timer.finished
         event_data:
           entity_id: timer.timer_camera_motion_detected
+          
+    condition:
+      condition: and
+      conditions:
+        # If not Day, then continue
+        - condition: template
+          value_template: >
+            {{ not is_state('input_select.camera_mode', 'Day') }}
  
     action:
       - service: input_number.set_value
         data_template:
           entity_id: input_number.camera_duration
           value: 500
-
 
   - alias: Cpu temp below 58.0
     trigger:
@@ -312,6 +331,10 @@ automation:
         - condition: numeric_state
           entity_id: input_number.camera_duration
           above: '0'
+        # If not Day, then continue
+        - condition: template
+          value_template: >
+            {{ not is_state('input_select.camera_mode', 'Day') }}
 
     action:
       - service: input_number.set_value
@@ -332,6 +355,10 @@ automation:
         - condition: numeric_state
           entity_id: input_number.camera_duration
           above: '0'
+        # If not Day, then continue
+        - condition: template
+          value_template: >
+            {{ not is_state('input_select.camera_mode', 'Day') }}
 
     action:
       - service: input_number.set_value
@@ -352,6 +379,10 @@ automation:
         - condition: numeric_state
           entity_id: input_number.camera_duration
           above: '0'
+        # If not Day, then continue
+        - condition: template
+          value_template: >
+            {{ not is_state('input_select.camera_mode', 'Day') }}
 
     action:
       - service: input_number.set_value
@@ -372,6 +403,10 @@ automation:
         - condition: numeric_state
           entity_id: input_number.camera_duration
           above: '0'
+        # If not Day, then continue
+        - condition: template
+          value_template: >
+            {{ not is_state('input_select.camera_mode', 'Day') }}
 
     action:
       - service: input_number.set_value
@@ -392,6 +427,10 @@ automation:
         - condition: numeric_state
           entity_id: input_number.camera_duration
           above: '0'
+        # If not Day, then continue
+        - condition: template
+          value_template: >
+            {{ not is_state('input_select.camera_mode', 'Day') }}
 
     action:
       - service: input_number.set_value
@@ -411,6 +450,10 @@ automation:
         - condition: numeric_state
           entity_id: input_number.camera_duration
           above: '0'
+        # If not Day, then continue
+        - condition: template
+          value_template: >
+            {{ not is_state('input_select.camera_mode', 'Day') }}
 
     action:
       - service: input_number.set_value

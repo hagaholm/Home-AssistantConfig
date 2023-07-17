@@ -510,17 +510,17 @@ script:
 #####################
 shell_command:
   # Delete 10 days old images from folders:
-  delete_images_older_then_10_days_in_media: 'find /media -name "*.jpg" -mtime +10 -type f -delete' 
+  delete_images_older_then_10_days_in_media: 'find /media -name "*.jpg" -mtime +9 -type f -delete' 
 
   # Delete 10 days old videos from folders:
 
   # Delete 5 days old images from folders:
-  delete_images_older_then_5_days_in_media: 'find /media -name "*.jpg" -mtime +5 -type f -delete' 
+  delete_images_older_then_5_days_in_media: 'find /media -name "*.jpg" -mtime +4 -type f -delete' 
 
   # Delete 5 days old videos from folders:
 
   # Delete 2 days old images from folders:
-  delete_images_older_then_2_days_in_media: 'find /media -name "*.jpg" -mtime +2 -type f -delete' 
+  delete_images_older_then_2_days_in_media: 'find /media -name "*.jpg" -mtime +1 -type f -delete' 
 
   # Delete 2 days old videos from folders:
 

@@ -58,35 +58,35 @@ stream:
 command_line:
   - sensor:
       name: Deepstack photo files
-      command: "ls -l /config/camera/deepstack_photo | wc -l"
+      command: "find /config/camera/deepstack_photo -type f | wc -l"
       value_template: "{{ value | round(0) }}"
   - sensor:
       name: Motion detected photo files
-      command: "ls -l /config/camera/motion_detected | wc -l"
+      command: "find /config/camera/motion_detected -type f | wc -l"
       value_template: "{{ value | round(0) }}"
   - sensor:
       name: Camera animal files
-      command: "ls -l /media/0/animal | wc -l"
+      command: "find /media/0/animal -type f | wc -l"
       value_template: "{{ value | round(0) }}"
   - sensor:
       name: Camera day files
-      command: "ls -l /media/0/Day | wc -l"
+      command: "find /media/0/Day -type f | wc -l"
       value_template: "{{ value | round(0) }}"
   - sensor:
       name: Camera night files
-      command: "ls -l /media/0/Night | wc -l"
+      command: "find /media/0/Night -type f | wc -l"
       value_template: "{{ value | round(0) }}"
   - sensor:
       name: Camera away files
-      command: "ls -l /media/0/Away | wc -l"
+      command: "find /media/0/Away -type f | wc -l"
       value_template: "{{ value | round(0) }}"
   - sensor:
       name: Camera video away files
-      command: "ls -l /media/0/video_Away | wc -l"
+      command: "find /media/0/video_Away -type f | wc -l"
       value_template: "{{ value | round(0) }}"
   - sensor:
       name: Camera video night files
-      command: "ls -l /media/0/video_Night | wc -l"
+      command: "find /media/0/video_Night -type f | wc -l"
       value_template: "{{ value | round(0) }}"
 
   - sensor:

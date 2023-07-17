@@ -530,10 +530,10 @@ script:
     sequence:
       - service: shell_command.delete_all_images_in_media
 
-  # Delete 10 days old files, Used by user
-  delete_10_days_old_camera_files:
+  # Delete 8 days old files, Used by user
+  delete_8_days_old_camera_files:
     sequence:
-      - service: shell_command.delete_images_older_then_10_days_in_media
+      - service: shell_command.delete_images_older_then_8_days_in_media
 
   # Delete 5 days old files, Used by user
   delete_5_days_old_camera_files:
@@ -550,10 +550,10 @@ script:
 ### Shell command ###
 #####################
 shell_command:
-  # Delete 10 days old images from folders:
-  delete_images_older_then_10_days_in_media: 'find /media -name "*.jpg" -mtime +9 -type f -delete' 
+  # Delete 8 days old images from folders:
+  delete_images_older_then_8_days_in_media: 'find /media -name "*.jpg" -mtime +7 -type f -delete' 
 
-  # Delete 10 days old videos from folders:
+  # Delete 8 days old videos from folders:
 
   # Delete 5 days old images from folders:
   delete_images_older_then_5_days_in_media: 'find /media -name "*.jpg" -mtime +4 -type f -delete' 

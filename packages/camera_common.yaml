@@ -89,6 +89,47 @@ command_line:
       command: "ls -l /media/0/video_Night | wc -l"
       value_template: "{{ value | round(0) }}"
 
+  - sensor:
+      name: Day 0
+      command: "find /media/0 -type f | wc -l"
+      value_template: "{{ value | round(0) }}"
+  - sensor:
+      name: Day 1
+      command: "find /media/1 -type f | wc -l"
+      value_template: "{{ value | round(0) }}"
+  - sensor:
+      name: Day 2
+      command: "find /media/2 -type f | wc -l"
+      value_template: "{{ value | round(0) }}"
+  - sensor:
+      name: Day 3
+      command: "find /media/3 -type f | wc -l"
+      value_template: "{{ value | round(0) }}"
+  - sensor:
+      name: Day 4
+      command: "find /media/4 -type f | wc -l"
+      value_template: "{{ value | round(0) }}"
+  - sensor:
+      name: Day 5
+      command: "find /media/5 -type f | wc -l"
+      value_template: "{{ value | round(0) }}"
+  - sensor:
+      name: Day 6
+      command: "find /media/6 -type f | wc -l"
+      value_template: "{{ value | round(0) }}"
+  - sensor:
+      name: Day 7
+      command: "find /media/7 -type f | wc -l"
+      value_template: "{{ value | round(0) }}"
+  - sensor:
+      name: Day 8
+      command: "find /media/8 -type f | wc -l"
+      value_template: "{{ value | round(0) }}"
+  - sensor:
+      name: Day 9
+      command: "find /media/9 -type f | wc -l"
+      value_template: "{{ value | round(0) }}"
+
 ####################################################
 #                                                  #
 #                    INPUT_SELECT                  #

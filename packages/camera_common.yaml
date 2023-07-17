@@ -533,7 +533,7 @@ shell_command:
   delete_5_days_old_images_in_media_day: 'find /media/Day -mtime +5 -type f -delete' 
   delete_5_days_old_images_in_media_night: 'find /media/Night -mtime +5 -type f -delete' 
 
-  delete_images_older_then_3_days_in_media: 'find /media -name '*.jpg' -mtime +3 -type f -delete' 
+  delete_images_older_then_3_days_in_media: 'find /media -name "*.jpg" -mtime +3 -type f -delete' 
 
 
   # Delete 5 days old videos from folders:

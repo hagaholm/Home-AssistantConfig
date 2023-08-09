@@ -223,12 +223,12 @@ views:
       - type: entities
         entities:
           - sensor.uterum
-          - sensor.hall_temperature
-          - sensor.vardagsrum_temperature
+          - sensor.lumi_lumi_weather_temperature_2
+          - sensor.lumi_lumi_weather_temperature_4
           - sensor.sovrum
           - sensor.louise_rum_temperature
           - sensor.andreas_rum_temperature
-          - sensor.badrum_temperature
+          - sensor.lumi_lumi_weather_temperature
           - sensor.tvattstuga_temperature
         title: Inomhus temperatur
         show_header_toggle: false
@@ -525,8 +525,8 @@ views:
         state_color: true
       - type: entities
         entities:
-          - sensor.hall_temperature
           - sensor.lumi_lumi_weather_temperature_2
+          - sensor.lumi_lumi_weather_humidity_2
           - sensor.aqara_motion_sensor_2
           - entity: light.hall_byra
             name: Byrå
@@ -547,7 +547,7 @@ views:
         state_color: true
       - type: entities
         entities:
-          - sensor.vardagsrum_temperature
+          - sensor.lumi_lumi_weather_temperature_4
           - sensor.aqara_motion_sensor_3
           - entity: light.vardagsrum_fonster
             name: Fönster

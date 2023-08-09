@@ -95,14 +95,14 @@ sensor:
 #      icon: mdi:clock-outline
 #      state: >
 #          {% set t = states('sensor.time') %}
-#          {{ relative_time(states.sensor.hall_temperature.last_changed) }}
+#          {{ relative_time(states.sensor.lumi_lumi_weather_temperature_2.last_changed) }}
 
 #    sensor:
 #      name: "Hall temp uppdaterad"
 #      icon: mdi:clock-outline
 #      state: >
 #          {% set t = states('sensor.time') %}
-#          {{ relative_time(states.sensor.hall_temperature.last_updated) }}
+#          {{ relative_time(states.ssensor.lumi_lumi_weather_temperature_2.last_updated) }}
 
 
 ##############

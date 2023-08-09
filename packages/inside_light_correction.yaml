@@ -165,7 +165,7 @@ automation:
   - alias: Kitchen light on - inside
     trigger:
       - platform: template
-        value_template: "{{((states('sensor.lightlevel_28') | int) | int(0)) < (states('input_number.inside_kitchen_light_on') | int(0) )}}"
+        value_template: "{{((states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2') | int) | int(0)) < (states('input_number.inside_kitchen_light_on') | int(0) )}}"
       - platform: template
         value_template: "{{((states('sensor.lightlevel_30') | int) | int(0)) < (states('input_number.inside_kitchen_light_on') | int(0) )}}"
 
@@ -203,7 +203,7 @@ automation:
   - alias: Morning light on - inside
     trigger:
       - platform: template
-        value_template: "{{((states('sensor.lightlevel_27') | int) | int(0)) < (states('input_number.inside_morning_light_on') | int(0) )}}"
+        value_template: "{{((states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance') | int) | int(0)) < (states('input_number.inside_morning_light_on') | int(0) )}}"
       - platform: template
         value_template: "{{((states('sensor.lightlevel_29') | int) | int(0)) < (states('input_number.inside_morning_light_on') | int(0) )}}"
 
@@ -241,7 +241,7 @@ automation:
   - alias: Daylight on - inside
     trigger:
       - platform: template
-        value_template: "{{((states('sensor.lightlevel_27') | int) | int(0)) < (states('input_number.inside_daylight_on') | int(0) )}}"
+        value_template: "{{((states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance') | int) | int(0)) < (states('input_number.inside_daylight_on') | int(0) )}}"
       - platform: template
         value_template: "{{((states('sensor.lightlevel_29') | int) | int(0)) < (states('input_number.inside_daylight_on') | int(0) )}}"
     
@@ -279,7 +279,7 @@ automation:
   - alias: Awaylight on - inside
     trigger:
       - platform: template
-        value_template: "{{((states('sensor.lightlevel_27') | int) | int(0)) < (states('input_number.inside_awaylight_on') | int(0) )}}"
+        value_template: "{{((states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance') | int) | int(0)) < (states('input_number.inside_awaylight_on') | int(0) )}}"
       - platform: template
         value_template: "{{((states('sensor.lightlevel_29') | int) | int(0)) < (states('input_number.inside_awaylight_on') | int(0) )}}"
 
@@ -317,7 +317,7 @@ automation:
   - alias: Kitchen light off - inside
     trigger:
       - platform: template
-        value_template: "{{((states('sensor.lightlevel_28') | int) | int(0)) > (states('input_number.inside_kitchen_light_off') | int(0) )}}"
+        value_template: "{{((states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2') | int) | int(0)) > (states('input_number.inside_kitchen_light_off') | int(0) )}}"
       - platform: template
         value_template: "{{((states('sensor.lightlevel_30') | int) | int(0)) > (states('input_number.inside_kitchen_light_off') | int(0) )}}"
 
@@ -355,7 +355,7 @@ automation:
   - alias: Morning light off - inside
     trigger:
       - platform: template
-        value_template: "{{((states('sensor.lightlevel_27') | int) | int(0)) > (states('input_number.inside_morning_light_off') | int(0) )}}"
+        value_template: "{{((states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance') | int) | int(0)) > (states('input_number.inside_morning_light_off') | int(0) )}}"
       - platform: template
         value_template: "{{((states('sensor.lightlevel_29') | int) | int(0)) > (states('input_number.inside_morning_light_off') | int(0) )}}"
 
@@ -393,7 +393,7 @@ automation:
   - alias: Daylight off - inside
     trigger:
       - platform: template
-        value_template: "{{((states('sensor.lightlevel_27') | int) | int(0)) > (states('input_number.inside_daylight_off') | int(0) )}}"
+        value_template: "{{((states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance') | int) | int(0)) > (states('input_number.inside_daylight_off') | int(0) )}}"
       - platform: template
         value_template: "{{((states('sensor.lightlevel_29') | int) | int(0)) > (states('input_number.inside_daylight_off') | int(0) )}}"
 
@@ -431,7 +431,7 @@ automation:
   - alias: Awaylight off - inside
     trigger:
       - platform: template
-        value_template: "{{((states('sensor.lightlevel_27') | int) | int(0)) > (states('input_number.inside_awaylight_off') | int(0) )}}"
+        value_template: "{{((states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance') | int) | int(0)) > (states('input_number.inside_awaylight_off') | int(0) )}}"
       - platform: template
         value_template: "{{((states('sensor.lightlevel_29') | int) | int(0)) > (states('input_number.inside_awaylight_off') | int(0) )}}"
 

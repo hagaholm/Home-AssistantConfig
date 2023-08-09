@@ -22,9 +22,9 @@ views:
         title: FTX aggregat
       - type: entities
         entities:
-          - entity: sensor.badrum_humidity
+          - entity: sensor.lumi_lumi_weather_humidity
           - entity: sensor.fukt_badrumsfonster
-          - entity: sensor.hall_humidity
+          - entity: sensor.lumi_lumi_weather_temperature_2
           - entity: sensor.ute_friggebod_humidity
         state_color: true
         title: Luftfuktighet
@@ -61,9 +61,9 @@ views:
         hours_to_show: 12
       - type: history-graph
         entities:
-          - entity: sensor.badrum_humidity
+          - entity: sensor.lumi_lumi_weather_humidity
           - entity: sensor.fukt_badrumsfonster
-          - entity: sensor.hall_humidity
+          - entity: sensor.lumi_lumi_weather_temperature_2
         hours_to_show: 12
       - type: gauge
         entity: sensor.fukt_badrumsfonster

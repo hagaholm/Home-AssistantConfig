@@ -66,16 +66,16 @@ sensor:
       badrum_temp_lastupdated:
         friendly_name: Badrum temp senast uppdaterad
         value_template: >-
-          {% if state_attr('sensor.badrum_temperature', 'last_updated') == None %} 
+          {% if state_attr('sensor.lumi_lumi_weather_temperature', 'last_updated') == None %} 
             0 
           {% else %} 
-            {{ states.sensor.badrum_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
+            {{ states.sensor.lumi_lumi_weather_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
           {% endif %}
         device_class: timestamp
         icon_template: >-
-          {% if state_attr('sensor.badrum_temperature', 'last_updated') == None %} 
+          {% if state_attr('sensor.lumi_lumi_weather_temperature', 'last_updated') == None %} 
             mdi:progress-check
-          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.badrum_temperature.last_updated) > 100) %}
+          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.lumi_lumi_weather_temperature.last_updated) > 100) %}
             mdi:progress-alert
           {% else %}
             mdi:progress-check
@@ -84,16 +84,16 @@ sensor:
       badrum_fukt_lastupdated:
         friendly_name: Badrum fukt senast uppdaterad
         value_template: >-
-          {% if state_attr('sensor.badrum_humidity', 'last_updated') == None %} 
+          {% if state_attr('sensor.lumi_lumi_weather_humidity', 'last_updated') == None %} 
             0 
           {% else %} 
-            {{ states.sensor.badrum_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
+            {{ states.sensor.lumi_lumi_weather_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
           {% endif %}
         device_class: timestamp
         icon_template: >-
-          {% if state_attr('sensor.badrum_humidity', 'last_updated') == None %} 
+          {% if state_attr('sensor.lumi_lumi_weather_humidity', 'last_updated') == None %} 
             mdi:progress-check
-          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.badrum_humidity.last_updated) > 100) %}
+          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.lumi_lumi_weather_humidity.last_updated) > 100) %}
             mdi:progress-alert
           {% else %}
             mdi:progress-check
@@ -192,16 +192,16 @@ sensor:
       hall_fukt_lastupdated:
         friendly_name: Hall fukt senast uppdaterad
         value_template: >-
-          {% if state_attr('sensor.hall_humidity', 'last_updated') == None %} 
+          {% if state_attr('sensor.lumi_lumi_weather_humidity_2', 'last_updated') == None %} 
             0 
           {% else %} 
-            {{ states.sensor.hall_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
+            {{ states.sensor.lumi_lumi_weather_humidity_2.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
           {% endif %}
         device_class: timestamp
         icon_template: >-
-          {% if state_attr('sensor.hall_humidity', 'last_updated') == None %} 
+          {% if state_attr('sensor.lumi_lumi_weather_humidity_2', 'last_updated') == None %} 
             mdi:progress-check
-          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.hall_humidity.last_updated) > 100) %}
+          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.lumi_lumi_weather_humidity_2.last_updated) > 100) %}
             mdi:progress-alert
           {% else %}
             mdi:progress-check
@@ -510,17 +510,17 @@ automation:
           conditions:
             - condition: template
               value_template: >
-                {% if state_attr('sensor.badrum_temperature', 'last_updated') == None %} 
+                {% if state_attr('sensor.lumi_lumi_weather_temperature', 'last_updated') == None %} 
                   0
                 {% else %} 
-                  {{ (as_timestamp(now())-as_timestamp(states.sensor.badrum_temperature.last_updated)) > 7200 }}
+                  {{ (as_timestamp(now())-as_timestamp(states.sensor.lumi_lumi_weather_temperature.last_updated)) > 7200 }}
                 {% endif %}
             - condition: template
               value_template: > 
-                {% if state_attr('sensor.badrum_humidity', 'last_updated') == None %} 
+                {% if state_attr('sensor.lumi_lumi_weather_humidity', 'last_updated') == None %} 
                   0
                 {% else %} 
-                  {{ (as_timestamp(now())-as_timestamp(states.sensor.badrum_humidity.last_updated)) > 7200 }}
+                  {{ (as_timestamp(now())-as_timestamp(states.sensor.lumi_lumi_weather_humidity.last_updated)) > 7200 }}
                 {% endif %}
 
     action:
@@ -632,17 +632,17 @@ automation:
           conditions:
             - condition: template
               value_template: >
-                {% if state_attr('sensor.hall_temperature', 'last_updated') == None %} 
+                {% if state_attr('sensor.lumi_lumi_weather_temperature_2', 'last_updated') == None %} 
                   0
                 {% else %} 
-                  {{ (as_timestamp(now())-as_timestamp(states.sensor.hall_temperature.last_updated)) > 7200 }}
+                  {{ (as_timestamp(now())-as_timestamp(states.sensor.lumi_lumi_weather_temperature_2.last_updated)) > 7200 }}
                 {% endif %}
             - condition: template
               value_template: > 
-                {% if state_attr('sensor.hall_humidity', 'last_updated') == None %} 
+                {% if state_attr('sensor.lumi_lumi_weather_humidity_2', 'last_updated') == None %} 
                   0
                 {% else %} 
-                  {{ (as_timestamp(now())-as_timestamp(states.sensor.hall_humidity.last_updated)) > 7200 }}
+                  {{ (as_timestamp(now())-as_timestamp(states.sensor.lumi_lumi_weather_humidity_2.last_updated)) > 7200 }}
                 {% endif %}
 
     action:

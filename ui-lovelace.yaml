@@ -206,7 +206,7 @@ views:
           - sensor.ute
           - sensor.ute_friggebod_humidity
           - sensor.ljusstyrka
-          - sensor.hall_lufttryck
+          - sensor.lumi_lumi_weather_pressure_2
         title: Utomhus
         show_header_toggle: false
         state_color: true
@@ -235,10 +235,10 @@ views:
         state_color: true
       - type: entities
         entities:
-          - sensor.hall_humidity
+          - sensor.lumi_lumi_weather_humidity_2
           - sensor.louise_rum_humidity
           - sensor.tvattstuga_humidity
-          - sensor.badrum_humidity
+          - sensor.lumi_lumi_weather_humidity
           - sensor.fukt_badrumsfonster
         title: Inomhus luftfuktighet
         show_header_toggle: false
@@ -526,7 +526,7 @@ views:
       - type: entities
         entities:
           - sensor.hall_temperature
-          - sensor.hall_humidity
+          - sensor.lumi_lumi_weather_temperature_2
           - sensor.aqara_motion_sensor_2
           - entity: light.hall_byra
             name: Byrå
@@ -571,8 +571,8 @@ views:
         state_color: true
       - type: entities
         entities:
-          - entity: sensor.badrum_temperature
-          - sensor.badrum_humidity
+          - entity: sensor.lumi_lumi_weather_temperature
+          - sensor.lumi_lumi_weather_humidity
           - sensor.fukt_badrumsfonster
           - switch.shelly1_c45bbe77099d
         title: Badrum
@@ -673,7 +673,7 @@ views:
           - sensor.ute
           - sensor.ute_friggebod_humidity
           - sensor.ljusstyrka
-          - sensor.hall_lufttryck
+          - sensor.lumi_lumi_weather_pressure_2
           - light.huvudentre
           - light.tvattstugan_fasad
           - light.forrad_fasad
@@ -818,7 +818,7 @@ views:
         state_color: true
       - type: entities
         entities:
-          - sensor.badrum_humidity
+          - sensor.lumi_lumi_weather_humidity
           - sensor.fukt_badrumsfonster
           - switch.shelly1_c45bbe77099d
           - switch.ventilationsaggregat

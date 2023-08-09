@@ -565,7 +565,6 @@ views:
             name: Subbas
           - entity: switch.vardagsrum_extra_subbas
             name: Extra subbas
-#          - binary_sensor.tradfri_motion_sensor_3
           - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_3
         title: Vardagsrum
         show_header_toggle: true
@@ -620,7 +619,6 @@ views:
             name: Led
           - entity: light.uterum_fotogenlampa
             name: Fotogenlampa
-          - binary_sensor.tradfri_motion_sensor_5
         title: Uterum
         show_header_toggle: true
         state_color: true
@@ -684,8 +682,6 @@ views:
           - switch.tradgard
           - switch.ringklocka_tvattstuga
           - switch.ringklocka_hall
-          - binary_sensor.tradfri_motion_sensor_2
-          - binary_sensor.tradfri_motion_sensor_4
         title: Ute
         show_header_toggle: true
         state_color: true
@@ -782,11 +778,6 @@ views:
           - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2
           - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_3
           - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_4
-#          - binary_sensor.tradfri_motion_sensor_1
-#          - binary_sensor.tradfri_motion_sensor_2
-#          - binary_sensor.tradfri_motion_sensor_3
-#          - binary_sensor.tradfri_motion_sensor_4
-#          - binary_sensor.tradfri_motion_sensor_5
         title: Rörelsedetektorer inne
         show_header_toggle: false
         state_color: true
@@ -822,11 +813,6 @@ views:
           - sensor.aqara_motion_sensor_2_lastupdated
           - sensor.aqara_motion_sensor_3_lastupdated
           - sensor.aqara_motion_sensor_4_lastupdated
-          - sensor.tradfri_motion_sensor_1_lastupdated
-          - sensor.tradfri_motion_sensor_2_lastupdated
-          - sensor.tradfri_motion_sensor_3_lastupdated
-          - sensor.tradfri_motion_sensor_4_lastupdated
-          - sensor.tradfri_motion_sensor_5_lastupdated
         title: Rörelsesensor senast
         show_header_toggle: false
         state_color: true
@@ -845,11 +831,6 @@ views:
           - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2
           - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_3
           - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_4
-          - binary_sensor.tradfri_motion_sensor_1
-          - binary_sensor.tradfri_motion_sensor_2
-          - binary_sensor.tradfri_motion_sensor_3
-          - binary_sensor.tradfri_motion_sensor_4
-          - binary_sensor.tradfri_motion_sensor_5
           - sensor.aqara_motion_sensor_1
           - sensor.aqara_motion_sensor_2
           - sensor.aqara_motion_sensor_3

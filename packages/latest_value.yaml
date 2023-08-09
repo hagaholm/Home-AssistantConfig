@@ -4,25 +4,25 @@ sensor:
       aqara_motion_sensor_1_lastupdated:
         friendly_name: Aqara Motion Sensor 1 senast uppdaterad
         value_template: >-
-          {{ states.binary_sensor.aqara_motion_sensor_1.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+          {{ states.binary_sensor.lumi_lumi_sensor_motion_aq2_motion.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
         device_class: timestamp
 
       aqara_motion_sensor_2_lastupdated:
         friendly_name: Aqara Motion Sensor 2 senast uppdaterad
         value_template: >-
-          {{ states.binary_sensor.aqara_motion_sensor_2.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+          {{ states.binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
         device_class: timestamp
 
       aqara_motion_sensor_3_lastupdated:
         friendly_name: Aqara Motion Sensor 3 senast uppdaterad
         value_template: >-
-          {{ states.binary_sensor.aqara_motion_sensor_3.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+          {{ states.binary_sensor.lumi_lumi_sensor_motion_aq2_motion_3.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
         device_class: timestamp
 
       aqara_motion_sensor_4_lastupdated:
         friendly_name: Aqara Motion Sensor 4 senast uppdaterad
         value_template: >-
-          {{ states.binary_sensor.aqara_motion_sensor_4.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
+          {{ states.binary_sensor.lumi_lumi_sensor_motion_aq2_motion_4.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}Z
         device_class: timestamp
 
       tradfri_motion_sensor_1_lastupdated:

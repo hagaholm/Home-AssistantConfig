@@ -36,24 +36,24 @@
           entity_id: input_select.home_status
           option: Hemma på
 
-    ######################################################
-    ### Aktivera Hemma på mode vid rörelse             ###
-    ### T: binary_sensor.aqara_motion_sensor_1 to 'on' ###
-    ###    binary_sensor.aqara_motion_sensor_4 to 'on' ###
-    ###    switch.rorelsedetektor_1 to 'on'            ###
-    ###    switch.rorelsedetektor_2 to 'on'            ###
-    ### C: group.track_for_home_devices = on           ###
-    ###    time before: '21:00:00'                     ###
-    ###    time after: '05:00:00'                      ###
-    ### A: input_select.home_status = Hemma på         ###
-    ######################################################
+    #####################################################################
+    ### Aktivera Hemma på mode vid rörelse                            ###
+    ### T: binary_sensor.lumi_lumi_sensor_motion_aq2_motion to 'on'   ###
+    ###    binary_sensor.lumi_lumi_sensor_motion_aq2_motion_4 to 'on' ###
+    ###    switch.rorelsedetektor_1 to 'on'                           ###
+    ###    switch.rorelsedetektor_2 to 'on'                           ###
+    ### C: group.track_for_home_devices = on                          ###
+    ###    time before: '21:00:00'                                    ###
+    ###    time after: '05:00:00'                                     ###
+    ### A: input_select.home_status = Hemma på                        ###
+    #####################################################################
   - alias: Aktivera Hemma på mode vid rörelse
     trigger:
       - platform: state
-        entity_id: binary_sensor.aqara_motion_sensor_1 # Kök köksskåp
+        entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_motion # Kök köksskåp
         to: 'on'
       - platform: state
-        entity_id: binary_sensor.aqara_motion_sensor_4 # Kök fönsterbänk
+        entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_motion_4 # Kök fönsterbänk
         to: 'on'
       - platform: state
         entity_id: switch.rorelsedetektor_1 # Köksvägg

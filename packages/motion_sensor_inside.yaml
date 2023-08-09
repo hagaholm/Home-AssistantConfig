@@ -10,22 +10,23 @@ timer:
     duration: '00:05:00'
 
 automation:
-    ##########################################################
-    ### Startar båda timers vid rörelse i kök              ###
-    ### T: binary_sensor.aqara_motion_sensor_1             ###
-    ### A: input_boolean.rorelsedetektor_kok_aktiv = on    ###
-    ###    timer.timer_rorelsedetektor_kok_short = cancel  ###
-    ###    timer.timer_rorelsedetektor_kok_medium = cancel ###
-    ###    timer.timer_rorelsedetektor_kok_short = start   ###
-    ###    timer.timer_rorelsedetektor_kok_medium = start  ###
-    ##########################################################
+    #############################################################
+    ### Startar båda timers vid rörelse i kök                 ###
+    ### T: binary_sensor.lumi_lumi_sensor_motion_aq2_motion   ###
+    ###    binary_sensor.lumi_lumi_sensor_motion_aq2_motion_4 ###
+    ### A: input_boolean.rorelsedetektor_kok_aktiv = on       ###
+    ###    timer.timer_rorelsedetektor_kok_short = cancel     ###
+    ###    timer.timer_rorelsedetektor_kok_medium = cancel    ###
+    ###    timer.timer_rorelsedetektor_kok_short = start      ###
+    ###    timer.timer_rorelsedetektor_kok_medium = start     ###
+    #############################################################
   - alias: Startar timers kök
     trigger:
       - platform: state
-        entity_id: binary_sensor.aqara_motion_sensor_1 # Köksskåp
+        entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_motion # Köksskåp
         to: 'on'
       - platform: state
-        entity_id: binary_sensor.aqara_motion_sensor_4 # Kök fönsterbänk
+        entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_motion_4 # Kök fönsterbänk
         to: 'on'
     action:
       # Aktiverar rorelsedetektor_kok_aktiv

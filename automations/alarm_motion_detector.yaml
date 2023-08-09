@@ -1,18 +1,18 @@
     ##################################################################################################
     ### Skickar notification vid rörelse i hallen innan rörelse i kök/tvättstuga om ingen är hemma ###
-    ### T: binary_sensor.aqara_motion_sensor_2 == on                                               ###
+    ### T: binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2 == on                                ###
     ### C: group.track_for_home_devices == not_home                                                ###
     ###    switch.rorelsedetektor_1 == off                                                         ###
     ###    switch.rorelsedetektor_2 == off                                                         ###
-    ###    binary_sensor.aqara_motion_sensor_1 == off                                              ###
-    ###    binary_sensor.aqara_motion_sensor_4 == off                                              ###
+    ###    binary_sensor.lumi_lumi_sensor_motion_aq2_motion == off                                 ###
+    ###    binary_sensor.lumi_lumi_sensor_motion_aq2_motion_4 == off                               ###
     ###    vacuum.xiaomi_vacuum_cleaner == idle                                                    ###
     ### A: notify                                                                                  ###
     ##################################################################################################
   - alias: Larm rörelse i hallen
     trigger:
       platform: state
-      entity_id: binary_sensor.aqara_motion_sensor_2 # Hall
+      entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2 # Hall
       to: 'on'
     condition:
       condition: and
@@ -27,10 +27,10 @@
           entity_id: switch.rorelsedetektor_2 # Tvättstuga
           state: 'off'
         - condition: state
-          entity_id: binary_sensor.aqara_motion_sensor_1 # Kök köksskåp
+          entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_motion # Kök köksskåp
           state: 'off'
         - condition: state
-          entity_id: binary_sensor.aqara_motion_sensor_4 # Kök fönsterbänk
+          entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_motion_4 # Kök fönsterbänk
           state: 'off'
         - condition: state
           entity_id: vacuum.xiaomi_vacuum_cleaner
@@ -42,18 +42,18 @@
 
     ######################################################################################################
     ### Skickar notification vid rörelse i Louise rum innan rörelse i kök/tvättstuga om ingen är hemma ###
-    ### T: binary_sensor.aqara_motion_sensor_4 == on                                                   ###
+    ### T: binary_sensor.lumi_lumi_sensor_motion_aq2_motion_4 == on                                    ###
     ### C: group.track_for_home_devices == not_home                                                    ###
     ###    switch.rorelsedetektor_1 == off                                                             ###
     ###    switch.rorelsedetektor_2 == off                                                             ###
-    ###    binary_sensor.aqara_motion_sensor_1 == off                                                  ###
+    ###    binary_sensor.lumi_lumi_sensor_motion_aq2_motion == off                                     ###
     ###    vacuum.xiaomi_vacuum_cleaner == idle                                                        ###
     ### A: notify                                                                                      ###
     ######################################################################################################
 #  - alias: Larm rörelse i Louise rum
 #    trigger:
 #      platform: state
-#      entity_id: binary_sensor.aqara_motion_sensor_4 # Louise rum
+#      entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_motion_4 # Louise rum
 #      to: 'on'
 #    condition:
 #      condition: and
@@ -68,7 +68,7 @@
 #          entity_id: switch.rorelsedetektor_2 # Tvättstuga
 #          state: 'off'
 #        - condition: state
-#          entity_id: binary_sensor.aqara_motion_sensor_1 # Kök
+#          entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_motion # Kök
 #          state: 'off'
 #        - condition: state
 #          entity_id: vacuum.xiaomi_vacuum_cleaner

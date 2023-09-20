@@ -60,6 +60,37 @@
           entity_id: input_select.light_kitchen
           option: 100%
 
+    ##################################################################
+    ### Tänder lampor 100% när det blir mörkt och någon är i köket ###
+    ### T: input_boolean.kitchen_light_on == on                    ###
+    ### C: input_boolean.rorelsedetektor_kok_aktiv == on           ###
+    ###    input_select.home_status == 'Hemma på'                  ###
+    ### A: input_select.light_kitchen = 100%                       ###
+    ##################################################################
+  - alias: Kök 100% (mörkt)
+    mode: queued
+
+    trigger:
+      - platform: state
+        entity_id: input_boolean.kitchen_light_on
+        to: 'on'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.rorelsedetektor_kok_aktiv
+          state: 'on'
+        - condition: state
+          entity_id: input_select.home_status
+          state: 'Hemma på'
+
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_kitchen
+          option: 100%
+
     ########################################################
     ### Tänder lampor 25% vid rörelse i köket            ###
     ### T: input_boolean.rorelsedetektor_kok_aktiv == on ###

@@ -3,7 +3,7 @@ views:
   - badges: []
     cards:
       - cards:
-          - entity: sensor.ute
+          - entity: sensor.ute_friggebod_temperature
             graph: line
             name: Ute
             type: sensor
@@ -203,7 +203,7 @@ views:
     cards:
       - type: entities
         entities:
-          - sensor.ute
+          - sensor.ute_friggebod_temperature
           - sensor.ute_friggebod_humidity
           - sensor.ljusstyrka
           - sensor.lumi_lumi_weather_pressure_2
@@ -674,7 +674,7 @@ views:
         state_color: true
       - type: entities
         entities:
-          - sensor.ute
+          - sensor.ute_friggebod_temperature
           - sensor.ute_friggebod_humidity
           - sensor.ljusstyrka
           - sensor.lumi_lumi_weather_pressure_2

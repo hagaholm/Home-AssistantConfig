@@ -10,7 +10,7 @@
     condition: and
     conditions:
       - condition: numeric_state
-        entity_id: sensor.ute
+        entity_id: sensor.ute_friggebod_temperature
         below: 4
 
   trigger:
@@ -45,7 +45,7 @@
     condition: and
     conditions:
       - condition: numeric_state
-        entity_id: sensor.ute
+        entity_id: sensor.ute_friggebod_temperature
         below: 7
 
   trigger:

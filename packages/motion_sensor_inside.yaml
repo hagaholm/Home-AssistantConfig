@@ -1,4 +1,9 @@
 timer:
+  # Timers för reset, eftersom närvarosensor inte gör reset ifall någon är i köket
+  timer_rorelsedetektor_kok_reset:
+    name: Rörelsedetektor kök timer reset
+    duration: '00:00:30'
+
   # Timers för släck nattbelysning
   timer_rorelsedetektor_kok_short:
     name: Rörelsedetektor kök timer
@@ -10,6 +15,48 @@ timer:
     duration: '00:06:00'
 
 automation:
+    ###################################################################
+    ### Stänger av rorelsedetektor_kok_aktiv                        ###
+    ### T: binary_sensor.lumi_lumi_sensor_motion_aq2_motion == on   ###
+    ###    binary_sensor.lumi_lumi_sensor_motion_aq2_motion_4 == on ###
+    ###    timer.timer_rorelsedetektor_kok_reset == finished        ###
+    ### C: input_boolean.rorelsedetektor_kok_aktiv == on            ###
+    ### A: timer.timer_rorelsedetektor_kok_short = cancel           ###
+    ###    timer.timer_rorelsedetektor_kok_medium = cancel          ###
+    ###    timer.timer_rorelsedetektor_kok_short = start            ###
+    ###    timer.timer_rorelsedetektor_kok_medium = start           ###
+    ###################################################################
+  - alias: Reset av rörelsedetektor kök
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_motion # Köksskåp
+        to: 'on'
+      - platform: state
+        entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_motion_4 # Kök kylskåp
+        to: 'on'
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.timer_rorelsedetektor_kok_reset
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id:  input_boolean.rorelsedetektor_kok_aktiv
+          state: 'on'
+    action:
+      # Cancel timers, återställer till maxtid
+      - service: timer.cancel
+        entity_id: timer.timer_rorelsedetektor_kok_short
+      - service: timer.cancel
+        entity_id: timer.timer_rorelsedetektor_kok_medium
+
+      # Start timers, börjar räkna ner tiden
+      - service: timer.start
+        entity_id: timer.timer_rorelsedetektor_kok_short
+      - service: timer.start
+        entity_id: timer.timer_rorelsedetektor_kok_medium
+
     #############################################################
     ### Startar båda timers vid rörelse i kök                 ###
     ### T: binary_sensor.lumi_lumi_sensor_motion_aq2_motion   ###

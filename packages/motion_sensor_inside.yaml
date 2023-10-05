@@ -93,6 +93,10 @@ automation:
       - service: timer.start
         entity_id: timer.timer_rorelsedetektor_kok_medium
 
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.rorelsedetektor_kok_aktiv
+
     #############################################################
     ### Vid timer rorelsedetektor_kok_aktiv finished          ###
     ### T: timer.timer_rorelsedetektor_kok_medium == finished ###

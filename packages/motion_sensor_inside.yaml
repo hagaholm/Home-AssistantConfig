@@ -58,9 +58,43 @@ automation:
         entity_id: timer.timer_rorelsedetektor_kok_medium
 
 
+    ################################################################
+    ### Vid timer rorelstimer_rorelsedetektor_kok_reset finished ###
+    ### T: timer.timer_rorelsedetektor_kok_medium == finished    ###
+    ### C: input_boolean.rorelsedetektor_kok_aktiv == on         ###
+    ### A: input_boolean.rorelsedetektor_kok_aktiv = off         ###
+    ################################################################
+  - alias: Stänger av rörelsedetektor kök reset
+    trigger:
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.timer_rorelsedetektor_kok_reset
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id:  input_boolean.rorelsedetektor_kok_aktiv
+          state: 'on'
+    action:
+      # Cancel timers, återställer till maxtid
+      - service: timer.cancel
+        entity_id: timer.timer_rorelsedetektor_kok_reset
+      - service: timer.cancel
+        entity_id: timer.timer_rorelsedetektor_kok_short
+      - service: timer.cancel
+        entity_id: timer.timer_rorelsedetektor_kok_medium
+
+      # Start timers, börjar räkna ner tiden
+      - service: timer.start
+        entity_id: timer.timer_rorelsedetektor_kok_reset
+      - service: timer.start
+        entity_id: timer.timer_rorelsedetektor_kok_short
+      - service: timer.start
+        entity_id: timer.timer_rorelsedetektor_kok_medium
 
     #############################################################
-    ### Stänger av rorelsedetektor_kok_aktiv                  ###
+    ### Vid timer rorelsedetektor_kok_aktiv finished          ###
     ### T: timer.timer_rorelsedetektor_kok_medium == finished ###
     ### C: input_boolean.rorelsedetektor_kok_aktiv == on      ###
     ### A: input_boolean.rorelsedetektor_kok_aktiv = off      ###
@@ -82,12 +116,12 @@ automation:
         data:
           entity_id: input_boolean.rorelsedetektor_kok_aktiv
 
-    ##############################################################
-    ### Stänger av rorelsedetektor_kok_aktiv för nattbelysning ###
-    ### T: timer.timer_rorelsedetektor_kok_short == finished   ###
-    ### C: input_select.light_inside == 'Nattbelysning'        ###
-    ### A: input_boolean.rorelsedetektor_kok_aktiv = off       ###
-    ##############################################################
+    ######################################################################
+    ### Vid timer rorelsedetektor_kok_aktiv för nattbelysning finished ###
+    ### T: timer.timer_rorelsedetektor_kok_short == finished           ###
+    ### C: input_select.light_inside == 'Nattbelysning'                ###
+    ### A: input_boolean.rorelsedetektor_kok_aktiv = off               ###
+    ######################################################################
   - alias: Stänger av rörelsedetektor kök aktiv för nattbelysning
     trigger:
       - platform: event

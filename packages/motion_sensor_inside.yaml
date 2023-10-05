@@ -74,8 +74,11 @@ automation:
       condition: and
       conditions:
         - condition: state
-          entity_id:  input_boolean.rorelsedetektor_kok_aktiv
+          entity_id:  binary_sensor.lumi_lumi_sensor_motion_aq2_motion
           state: 'on'
+        - condition: state
+          entity_id:  binary_sensor.lumi_lumi_sensor_motion_aq2_motion_4
+          state: 'on' 
     action:
       # Cancel timers, återställer till maxtid
       - service: timer.cancel
@@ -92,10 +95,6 @@ automation:
         entity_id: timer.timer_rorelsedetektor_kok_short
       - service: timer.start
         entity_id: timer.timer_rorelsedetektor_kok_medium
-
-      - service: input_boolean.turn_off
-        data:
-          entity_id: input_boolean.rorelsedetektor_kok_aktiv
 
     #############################################################
     ### Vid timer rorelsedetektor_kok_aktiv finished          ###

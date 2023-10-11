@@ -33,8 +33,9 @@
     ### Släcker lampor på förmiddagen när det blir ljust ute eller ingen längre är hemma ###
     ### T: input_boolean.daylight_on == off                                              ###
     ### T: input_select.home_status == Borta                                             ###
+    ### C: 05:00:00 - 09:00:00                                                           ###
     ### C: input_select.light_inside == 'Morgonbelysning'                                ###
-    ###    05:00:00 - 09:00:00                                                           ###
+    ### C: input_select.light_inside == 'Dagbelysning'                                   ###
     ### A: input_select.light_inside = Släckt                                            ###
     ########################################################################################
   - alias: Morgonbelysning off
@@ -52,12 +53,17 @@
     condition:
       condition: and
       conditions:
-        - condition: state
-          entity_id: input_select.light_inside
-          state: 'Morgonbelysning'
         - condition: time
           after: '05:00:00'
           before: '09:00:00'
+        - condition: or
+          conditions:
+          - condition: state
+            entity_id: input_select.light_inside
+            state: 'Morgonbelysning'
+          - condition: state
+            entity_id: input_select.light_inside
+            state: 'Dagbelysning'
 
     action:
       - service: input_select.select_option

@@ -228,6 +228,8 @@ automation:
         at: "00:00:01" # HH:MM:SS
 
     action:
+      - service: shell_command.delete_camera_files_1
+      - service: shell_command.delete_camera_files_2
       - service: shell_command.move_camera_files_9a
       - service: shell_command.move_camera_files_9b
       - service: shell_command.move_camera_files_9c
@@ -529,22 +531,25 @@ script:
   delete_camera_files:
     sequence:
       - service: shell_command.delete_all_images_in_media
+      - service: shell_command.delete_all_images_in_deepstack_photo
 
   # Delete 8 days old files, Used by user
   delete_8_days_old_camera_files:
     sequence:
       - service: shell_command.delete_images_older_then_8_days_in_media
+      - service: shell_command.delete_all_images_in_deepstack_photo
 
   # Delete 5 days old files, Used by user
   delete_5_days_old_camera_files:
     sequence:
       - service: shell_command.delete_images_older_then_5_days_in_media
+      - service: shell_command.delete_all_images_in_deepstack_photo
 
   # Delete 2 days old files, Used by user
   delete_2_days_old_camera_files:
     sequence:
       - service: shell_command.delete_images_older_then_2_days_in_media
-
+      - service: shell_command.delete_all_images_in_deepstack_photo
 
 #####################
 ### Shell command ###
@@ -567,21 +572,11 @@ shell_command:
 
   # Delete all images from folders:
   delete_all_images_in_media: 'find /media -name "*.jpg" -type f -delete' 
-
-  # Delete all videos from folders:
-
-
-  # Used by script delete_camera_files
-  delete_camera_files_1: 'rm -f /config/camera/deepstack_photo/*'
-  delete_camera_files_2: 'rm -f /config/camera/motion_detected/*'
-  delete_camera_files_3: 'rm -f /media/animal/*'
-  delete_camera_files_4: 'rm -f /media/Away/*'
-  delete_camera_files_5: 'rm -f /media/Day/*'
-  delete_camera_files_6: 'rm -f /media/Night/*'
-  delete_camera_files_7: 'rm -f /media/video/Away/*'
-  delete_camera_files_8: 'rm -f /media/video/Night/*'
+  delete_all_images_in_deepstack_photo: 'find /config/camera/deepstack_photo -name "*.jpg" -type f -delete' 
 
   # Used by script move_camera_files
+  delete_camera_files_1: 'rm -f /config/camera/deepstack_photo/*'
+  delete_camera_files_2: 'rm -f /config/camera/motion_detected/*'
   move_camera_files_9a: 'rm -f /media/9/animal/*'
   move_camera_files_9b: 'rm -f /media/9/Away/*'
   move_camera_files_9c: 'rm -f /media/9/Day/*'

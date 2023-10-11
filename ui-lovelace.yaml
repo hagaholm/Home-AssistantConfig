@@ -224,7 +224,7 @@ views:
         entities:
           - sensor.uterum
           - sensor.lumi_lumi_weather_temperature_2
-          - sensor.lumi_lumi_weather_temperature_4
+          - sensor.lumi_lumi_weather_temperature
           - sensor.sovrum
           - sensor.louise_rum_temperature
           - sensor.andreas_rum_temperature
@@ -552,7 +552,7 @@ views:
         state_color: true
       - type: entities
         entities:
-          - sensor.lumi_lumi_weather_temperature_4
+          - sensor.lumi_lumi_weather_temperature
           - sensor.aqara_motion_sensor_3
           - entity: light.vardagsrum_fonster
             name: Fönster

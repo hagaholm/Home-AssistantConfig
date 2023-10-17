@@ -1,14 +1,14 @@
 ﻿    ######################################################
     ### Varnar för hög temp i Uterum                   ###
-    ### T: sensor.uterum > 35                          ###
+    ### T: sensor.lumi_lumi_weather_temperature_3 > 35 ###
     ### A: notify.pushbullet "LARM! Hög temp i Uterum" ###
     ######################################################
   - alias: Uterum larm hög temp
     trigger:
       platform: numeric_state
-      entity_id: sensor.uterum
+      entity_id: sensor.lumi_lumi_weather_temperature_3
       above: '35'
     action:
       - service: notify.pushbullet
         data:
-          message: "LARM! Hög temp i Uterum: {{ states('sensor.uterum') }} {{ state_attr('sensor.uterum', 'unit_of_measurement') }}"
+          message: "LARM! Hög temp i Uterum: {{ states('sensor.lumi_lumi_weather_temperature_3') }} {{ state_attr('sensor.lumi_lumi_weather_temperature_3', 'unit_of_measurement') }}"

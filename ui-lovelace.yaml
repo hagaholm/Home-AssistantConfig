@@ -11,7 +11,7 @@ views:
             graph: line
             name: Inne
             type: sensor
-          - entity: sensor.uterum
+          - entity: sensor.lumi_lumi_weather_temperature_3
             graph: line
             name: Uterum
             type: sensor
@@ -222,7 +222,7 @@ views:
         state_color: true
       - type: entities
         entities:
-          - sensor.uterum
+          - sensor.lumi_lumi_weather_temperature_3
           - sensor.lumi_lumi_weather_temperature_2
           - sensor.lumi_lumi_weather_temperature
           - sensor.sovrum
@@ -617,7 +617,7 @@ views:
         state_color: true
       - type: entities
         entities:
-          - sensor.uterum
+          - sensor.lumi_lumi_weather_temperature_3
           - entity: light.uterum_fonster
             name: Fönster
           - entity: light.uterum_led

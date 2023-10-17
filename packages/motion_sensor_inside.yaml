@@ -17,7 +17,7 @@ timer:
 automation:
     #############################################################
     ### Startar alla timers vid rörelse i kök                 ###
-    ### T: binary_sensor.lumi_lumi_sensor_motion_aq2_motion_1 ###
+    ### T: binary_sensor.lumi_lumi_sensor_motion_aq2_motion   ###
     ###    binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2 ###
     ### A: input_boolean.rorelsedetektor_kok_aktiv = on       ###
     ###    timer.timer_rorelsedetektor_kok_reset = cancel     ###
@@ -30,7 +30,7 @@ automation:
   - alias: Startar timers kök
     trigger:
       - platform: state
-        entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_motion_1 # Köksskåp
+        entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_motion # Köksskåp
         to: 'on'
       - platform: state
         entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2 # Kök kylskåp
@@ -74,7 +74,7 @@ automation:
       condition: and
       conditions:
         - condition: state
-          entity_id:  binary_sensor.lumi_lumi_sensor_motion_aq2_motion_1
+          entity_id:  binary_sensor.lumi_lumi_sensor_motion_aq2_motion
           state: 'on'
         - condition: state
           entity_id:  binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2

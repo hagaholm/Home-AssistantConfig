@@ -38,7 +38,7 @@
 
     #####################################################################
     ### Aktivera Hemma på mode vid rörelse                            ###
-    ### T: binary_sensor.lumi_lumi_sensor_motion_aq2_motion_1 to 'on' ###
+    ### T: binary_sensor.lumi_lumi_sensor_motion_aq2_motion to 'on'   ###
     ###    binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2 to 'on' ###
     ### C: group.track_for_home_devices = on                          ###
     ###    time before: '21:00:00'                                    ###
@@ -48,7 +48,7 @@
   - alias: Aktivera Hemma på mode vid rörelse
     trigger:
       - platform: state
-        entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_motion_1 # Kök köksskåp
+        entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_motion # Kök köksskåp
         to: 'on'
       - platform: state
         entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2 # Kök fönsterbänk

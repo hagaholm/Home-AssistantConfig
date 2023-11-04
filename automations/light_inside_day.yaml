@@ -1,3 +1,30 @@
+    #####################################################
+    ### Tänder lampor kl 09.00 om det är mörkt        ###
+    ### T: time = '09:00:00'                          ###
+    ### C: input_boolean.daylight_on == on            ###
+    ###    input_select.home_status == 'Hemma på'     ###
+    ### A: input_select.light_inside = Bortabelysning ###
+    #####################################################
+  - alias: Dagbelysning on (morgon)
+    trigger:
+      platform: time
+      at: '09:00:00'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.daylight_on
+          to: "on"
+        - condition: state
+          entity_id: input_select.home_status
+          state: 'Hemma på'
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_inside
+          option: Dagbelysning
+
     ########################################################
     ### Tänder lampor när det blir mörkt fram till 22:00 ###
     ### T: input_boolean.daylight_on == on               ###

@@ -19,6 +19,7 @@
         - condition: state
           entity_id: input_select.home_status
           state: 'Hemma på'
+
     action:
       - service: input_select.select_option
         data:

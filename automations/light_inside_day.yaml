@@ -15,7 +15,7 @@
       conditions:
         - condition: state
           entity_id: input_boolean.daylight_on
-          to: "on"
+          state: "on"
         - condition: state
           entity_id: input_select.home_status
           state: 'Hemma på'

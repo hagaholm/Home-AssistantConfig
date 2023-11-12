@@ -1,6 +1,7 @@
   ########################################
   ### Starta elvärme garage            ###
   ### T: sensor.forrad_temperature < 5 ###
+  ### T: sensor.garage_temperature < 5 ###
   ### A: switch.garage_elvarme = on    ###
   ########################################
 - alias: Starta elvärme 5 grader
@@ -23,6 +24,22 @@
       entity_id: sensor.forrad_temperature
       below: '1'
 
+    - platform: numeric_state
+      entity_id: sensor.garage_temperature
+      below: '5'
+    - platform: numeric_state
+      entity_id: sensor.garage_temperature
+      below: '4'
+    - platform: numeric_state
+      entity_id: sensor.garage_temperature
+      below: '3'
+    - platform: numeric_state
+      entity_id: sensor.garage_temperature
+      below: '2'
+    - platform: numeric_state
+      entity_id: sensor.garage_temperature
+      below: '1'
+      
   condition:
     condition: and
     conditions:
@@ -37,6 +54,7 @@
   ########################################
   ### Starta elvärme garage            ###
   ### T: sensor.forrad_temperature < 8 ###
+  ### T: sensor.garage_temperature < 8 ###
   ### A: switch.garage_elvarme = on    ###
   ########################################
 - alias: Starta elvärme 8 grader
@@ -66,6 +84,31 @@
       below: '2'
     - platform: numeric_state
       entity_id: sensor.forrad_temperature
+      below: '1'
+
+    - platform: numeric_state
+      entity_id: sensor.garage_temperature
+      below: '8'
+    - platform: numeric_state
+      entity_id: sensor.garage_temperature
+      below: '7'
+    - platform: numeric_state
+      entity_id: sensor.garage_temperature
+      below: '6'
+    - platform: numeric_state
+      entity_id: sensor.garage_temperature
+      below: '5'
+    - platform: numeric_state
+      entity_id: sensor.garage_temperature
+      below: '4'
+    - platform: numeric_state
+      entity_id: sensor.garage_temperature
+      below: '3'
+    - platform: numeric_state
+      entity_id: sensor.garage_temperature
+      below: '2'
+    - platform: numeric_state
+      entity_id: sensor.garage_temperature
       below: '1'
 
   condition:
@@ -116,6 +159,7 @@
     - platform: numeric_state
       entity_id: sensor.forrad_temperature
       above: '15'
+
     - platform: numeric_state
       entity_id: sensor.garage_temperature
       above: '7'
@@ -176,6 +220,7 @@
     - platform: numeric_state
       entity_id: sensor.forrad_temperature
       above: '15'
+
     - platform: numeric_state
       entity_id: sensor.garage_temperature
       above: '10'

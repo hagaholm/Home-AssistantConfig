@@ -126,7 +126,7 @@
   - alias: Ingen kontakt med garage avfuktare
     trigger:
       platform: state
-      entity_id: switch.garage_vfukatare
+      entity_id: switch.garage_avfukatare
       to: 'unavailable'
     action:
       - service: notify.pushbullet

@@ -1,10 +1,10 @@
-  ###########################################
-  ### Starta luftavfuktare                ###
-  ### T: sensor.garage_humidity > 66      ###
-  ### C: sensor.garage_temperature > 10   ###
-  ### A: switch.garage_luftavfuktare = on ###
-  ###########################################
-- alias: Starta luftavfuktare
+  #########################################
+  ### Starta avfuktare                  ###
+  ### T: sensor.garage_humidity > 66    ###
+  ### C: sensor.garage_temperature > 10 ###
+  ### A: switch.garage_avfuktare = on   ###
+  #########################################
+- alias: Starta avfuktare
   trigger:
     platform: numeric_state
     entity_id: sensor.garage_humidity
@@ -13,21 +13,21 @@
     condition: and
     conditions:
       - condition: state
-        entity_id: switch.garage_luftavfuktare
+        entity_id: switch.garage_avfuktare
         state: 'off'
       - condition: numeric_state
         entity_id: sensor.garage_temperature
         above: 10
   action:
     - service: homeassistant.turn_on
-      entity_id: switch.garage_luftavfuktare
+      entity_id: switch.garage_avfuktare
 
-  ############################################
-  ### Stoppa luftavfuktare                 ###
-  ### T: sensor.garage_humidity < 64       ###
-  ### A: switch.garage_luftavfuktare = off ###
-  ############################################
-- alias: Stoppa luftavfuktare
+  ########################################
+  ### Stoppa avfuktare                 ###
+  ### T: sensor.garage_humidity < 64   ###
+  ### A: switch.garage_avfuktare = off ###
+  ########################################
+- alias: Stoppa avfuktare
   trigger:
     platform: numeric_state
     entity_id: sensor.garage_humidity
@@ -36,8 +36,8 @@
     condition: and
     conditions:
       - condition: state
-        entity_id: switch.garage_luftavfuktare
+        entity_id: switch.garage_avfuktare
         state: 'on'
   action:
     - service: homeassistant.turn_off
-      entity_id: switch.garage_luftavfuktare
+      entity_id: switch.garage_avfuktare

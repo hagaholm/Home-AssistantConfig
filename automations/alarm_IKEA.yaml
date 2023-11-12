@@ -118,15 +118,15 @@
         data:
           message: 'Ingen kontakt med friggebod brytare vid stora fönstret'
 
-    #####################################################
-    ### Ingen kontakt med garage avfuktare            ###
-    ### T: switch.garage_luftavfuktare == unavailable ###
-    ### A: notify.pushbullet                          ###
-    #####################################################
+    #################################################
+    ### Ingen kontakt med garage avfuktare        ###
+    ### T: switch.garage_avfuktare == unavailable ###
+    ### A: notify.pushbullet                      ###
+    #################################################
   - alias: Ingen kontakt med garage avfuktare
     trigger:
       platform: state
-      entity_id: switch.garage_luftavfuktare
+      entity_id: switch.garage_vfukatare
       to: 'unavailable'
     action:
       - service: notify.pushbullet
@@ -271,15 +271,15 @@
         data:
           message: 'Kontakt med friggebod brytare vid stora fönstret'
 
-    #####################################################
-    ### Kontakt med garage avfuktare                  ###
-    ### T: switch.garage_luftavfuktare != unavailable ###
-    ### A: notify.pushbullet                          ###
-    #####################################################
+    #################################################
+    ### Kontakt med garage avfuktare              ###
+    ### T: switch.garage_avfuktare != unavailable ###
+    ### A: notify.pushbullet                      ###
+    #################################################
   - alias: Kontakt med garage avfuktare
     trigger:
       platform: state
-      entity_id: switch.garage_luftavfuktare
+      entity_id: switch.garage_avfuktare
       from: 'unavailable'
     action:
       - service: notify.pushbullet

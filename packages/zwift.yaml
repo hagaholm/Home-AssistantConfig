@@ -24,7 +24,7 @@ automation:
       - service: homeassistant.turn_off
         entity_id: switch.garage_elvarme
       - service: homeassistant.turn_on
-        entity_id: switch.garage_luftavfuktare
+        entity_id: switch.garage_avfuktare
  
 
   #################################
@@ -42,4 +42,4 @@ automation:
       - delay:
           seconds: 900
       - service: homeassistant.turn_off
-        entity_id: switch.garage_luftavfuktare 
+        entity_id: switch.garage_avfuktare 

@@ -58,6 +58,13 @@ views:
         state_color: true
       - type: entities
         entities:
+          - automation.starta_elvarme_hogfukt
+          - automation.stoppa_elvarme_lagfukt
+        title: Friggebod elvärme högfukt
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
           - automation.apple_tv_i_forrad_startad
           - automation.apple_tv_i_forrad_stoppad
         title: Garage Zwift

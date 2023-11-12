@@ -1,0 +1,65 @@
+  ############################################
+  ### Starta elvärme friggebod högfukt     ###
+  ### T: sensor.friggebod_humidity > 58    ###
+  ### C: sensor.friggebod_temperature < 15 ###
+  ### A: switch.friggebod_elvarme = on     ###
+  ############################################
+- alias: Starta elvärme friggebod högfukt
+  mode: queued
+
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.friggebod_humidity
+      above: '58'
+    - platform: numeric_state
+      entity_id: sensor.friggebod_humidity
+      above: '59'
+    - platform: numeric_state
+      entity_id: sensor.friggebod_humidity
+      above: '60'
+    - platform: numeric_state
+      entity_id: sensor.friggebod_humidity
+      above: '61'
+    - platform: numeric_state
+      entity_id: sensor.friggebod_humidity
+      above: '62'
+      
+  condition:
+    condition: and
+    conditions:
+      - condition: numeric_state
+        entity_id: sensor.friggebod_temperature
+        below: 15
+
+  action:
+    - service: homeassistant.turn_on
+      entity_id: switch.friggebod_elvarme
+
+  #########################################
+  ### Stoppa elvärme friggebod lågfukt  ###
+  ### T: sensor.friggebod_humidity < 56 ###
+  ### A: switch.friggebod_elvarme = off ###
+  #########################################
+- alias: Stoppa elvärme friggebod lågfukt
+  mode: queued
+
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.friggebod_humidity
+      below: '56'
+    - platform: numeric_state
+      entity_id: sensor.friggebod_humidity
+      below: '55'
+    - platform: numeric_state
+      entity_id: sensor.friggebod_humidity
+      below: '54'
+    - platform: numeric_state
+      entity_id: sensor.friggebod_humidity
+      below: '53'
+    - platform: numeric_state
+      entity_id: sensor.friggebod_humidity
+      below: '52'
+      
+  action:
+    - service: homeassistant.turn_off
+      entity_id: switch.friggebod_elvarme

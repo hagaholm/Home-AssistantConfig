@@ -58,17 +58,30 @@
 #    sensor.Värmepump:
 #      hidden: true
 
+    sensor.lumi_lumi_weather_temperature:
+      friendly_name: Vardagsrum
+    sensor.lumi_lumi_weather_humidity:
+      friendly_name: Vardagsrum
+      icon: mdi:water-percent
+
+    sensor.lumi_lumi_weather_temperature_2:
+      friendly_name: Hall
+    sensor.lumi_lumi_weather_humidity_2:
+      friendly_name: Hall
+      icon: mdi:water-percent
     sensor.lumi_lumi_weather_pressure_2:
       friendly_name: Lufttryck
+
+    sensor.lumi_lumi_weather_temperature_3:
+      friendly_name: Uterum
+    sensor.lumi_lumi_weather_humidity_3:
+      friendly_name: Uterum
+      icon: mdi:water-percent
+      
     sensor.ljusstyrka:
       friendly_name: Ute
     sensor.ute_friggebod_humidity:
       friendly_name: Ute
-      icon: mdi:water-percent
-    sensor.lumi_lumi_weather_temperature:
-      friendly_name: Badrum
-    sensor.lumi_lumi_weather_humidity:
-      friendly_name: Badrum
       icon: mdi:water-percent
     sensor.garage_humidity:
       friendly_name: Garage
@@ -94,11 +107,7 @@
     sensor.fukt_badrumsfonster:
       friendly_name: Badrumsfönster
       icon: mdi:water-percent
-    sensor.lumi_lumi_weather_humidity_2:
-      friendly_name: Hall
-      icon: mdi:water-percent
-    sensor.lumi_lumi_weather_temperature_2:
-      friendly_name: Hall
+
     sensor.ute_friggebod_temperature:
       friendly_name: Ute friggebod
     sensor.inne_medel:
@@ -123,15 +132,9 @@
       icon: mdi:water-percent
     sensor.tvattstuga_temperature:
       friendly_name: Tvättstuga
-    sensor.lumi_lumi_weather_temperature:
-      friendly_name: Vardagsrum
     sensor.varmepump_temperature:
       friendly_name: Värmepump
-    sensor.lumi_lumi_weather_humidity_3:
-      friendly_name: Uterum
-      icon: mdi:water-percent
-    sensor.lumi_lumi_weather_temperature_3:
-      friendly_name: Uterum
+
 
 
     sensor.mickes_laptop:

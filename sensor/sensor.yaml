@@ -211,3 +211,24 @@
 #    state_characteristic: mean
 #    max_age:
 #      hours: 24
+
+  - platform: statistics
+    name: "Förråd medeltemperatur"
+    entity_id: sensor.forrad_temperature
+    state_characteristic: mean
+    max_age:
+      hours: 24
+
+  - platform: statistics
+    name: "Ute medeltemperatur"
+    entity_id: sensor.ute_friggebod_temperature
+    state_characteristic: mean
+    max_age:
+      hours: 24
+
+  - platform: statistics
+    name: "Värmepump medeltemperatur"
+    entity_id: sensor.varmepump_temperature
+    state_characteristic: mean
+    max_age:
+      hours: 24

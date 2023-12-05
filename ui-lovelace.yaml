@@ -221,24 +221,25 @@ views:
         state_color: true
       - type: entities
         entities:
-          - sensor.lumi_lumi_weather_temperature_3
-          - sensor.lumi_lumi_weather_temperature_2
           - sensor.lumi_lumi_weather_temperature
+          - sensor.lumi_lumi_weather_temperature_1
+          - sensor.lumi_lumi_weather_temperature_2
+          - sensor.lumi_lumi_weather_temperature_3
           - sensor.sovrum
           - sensor.louise_rum_temperature
           - sensor.andreas_rum_temperature
-          - sensor.lumi_lumi_weather_temperature
           - sensor.tvattstuga_temperature
         title: Inomhus temperatur
         show_header_toggle: false
         state_color: true
       - type: entities
         entities:
-          - sensor.lumi_lumi_weather_humidity_3
+          - sensor.lumi_lumi_weather_humidity
+          - sensor.lumi_lumi_weather_humidity_1
           - sensor.lumi_lumi_weather_humidity_2
+          - sensor.lumi_lumi_weather_humidity_3
           - sensor.louise_rum_humidity
           - sensor.tvattstuga_humidity
-          - sensor.lumi_lumi_weather_humidity
           - sensor.fukt_badrumsfonster
         title: Inomhus luftfuktighet
         show_header_toggle: false

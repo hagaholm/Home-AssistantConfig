@@ -180,8 +180,8 @@
 # (21,6 - -1,0) / (17,2 - -1,0) = 1,241758241758242
   - platform: mold_indicator
     name: Fukt badrumsfönster
-    indoor_temp_sensor: sensor.lumi_lumi_weather_temperature
-    indoor_humidity_sensor: sensor.lumi_lumi_weather_humidity
+    indoor_temp_sensor: sensor.lumi_lumi_weather_temperature_2
+    indoor_humidity_sensor: sensor.lumi_lumi_weather_humidity_2
     outdoor_temp_sensor: sensor.ute_friggebod_temperature
     calibration_factor: 1.25
 
@@ -192,7 +192,7 @@
     name: Inne medel
     type: mean
     entity_ids:
-      - sensor.lumi_lumi_weather_temperature_2
+      - sensor.lumi_lumi_weather_temperature_4
       - sensor.lumi_lumi_weather_temperature
       - sensor.sovrum
       - sensor.louise_rum_temperature

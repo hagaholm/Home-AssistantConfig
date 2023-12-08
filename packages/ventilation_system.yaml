@@ -539,18 +539,18 @@ automation:
         - condition: template
           value_template: "{{ not is_state('sensor.lumi_lumi_weather_humidity', 'None') }}"
         - condition: template
-          value_template: "{{ not is_state('sensor.lumi_lumi_weather_humidity_2', 'None') }}"
+          value_template: "{{ not is_state('sensor.lumi_lumi_weather_humidity_4', 'None') }}"
         - condition: template
           value_template: "{{ state_attr('sensor.lumi_lumi_weather_humidity', 'last_updated') != None }}"
         - condition: template
-          value_template: "{{ state_attr('sensor.lumi_lumi_weather_humidity_2', 'last_updated') != None }}"
+          value_template: "{{ state_attr('sensor.lumi_lumi_weather_humidity_4', 'last_updated') != None }}"
 
         - condition: template
-          value_template: "{{ (states('sensor.lumi_lumi_weather_humidity')|int - 8) <= (states('sensor.lumi_lumi_weather_humidity_2')|int) }}"
+          value_template: "{{ (states('sensor.lumi_lumi_weather_humidity')|int - 8) <= (states('sensor.lumi_lumi_weather_humidity_4')|int) }}"
         - condition: template
           value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.lumi_lumi_weather_humidity', 'last_updated'))) < 600 }}"
         - condition: template
-          value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.lumi_lumi_weather_humidity_2', 'last_updated'))) < 600 }}"
+          value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.lumi_lumi_weather_humidity_4', 'last_updated'))) < 600 }}"
     action:
       - service: homeassistant.turn_off
         entity_id: switch.shelly1_c45bbe77099d

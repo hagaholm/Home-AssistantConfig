@@ -4,7 +4,7 @@
     ### C: group.track_for_home_devices == not_home                                                ###
     ###    switch.rorelsedetektor_1 == off                                                         ###
     ###    switch.rorelsedetektor_2 == off                                                         ###
-    ###    binary_sensor.lumi_lumi_sensor_motion_aq2_motion == off                                 ###
+    ###    binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse == off                                ###
     ###    binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2 == off                               ###
     ###    vacuum.xiaomi_vacuum_cleaner == idle                                                    ###
     ### A: notify                                                                                  ###
@@ -27,7 +27,7 @@
           entity_id: switch.rorelsedetektor_2 # Tvättstuga
           state: 'off'
         - condition: state
-          entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_motion # Kök köksskåp
+          entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse # Kök köksskåp
           state: 'off'
         - condition: state
           entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2 # Kök kylskåp
@@ -44,7 +44,7 @@
     ### Skickar notification vid rörelse i Louise rum innan rörelse i kök/tvättstuga om ingen är hemma ###
     ### T: binary_sensor.lumi_lumi_sensor_motion_aq2_motion_5 == on                                    ###
     ### C: group.track_for_home_devices == not_home                                                    ###
-    ###    binary_sensor.lumi_lumi_sensor_motion_aq2_motion == off                                     ###
+    ###    binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse == off                                     ###
     ###    binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2 == off                                   ###
     ###    binary_sensor.lumi_lumi_sensor_motion_aq2_motion_3 == off                                   ###
     ###    vacuum.xiaomi_vacuum_cleaner == idle                                                        ###
@@ -62,7 +62,7 @@
 #          entity_id: group.track_for_home_devices
 #          state: 'not_home'
 #        - condition: state
-#          entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_motion # Kök
+#          entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse # Kök
 #          state: 'off'
 #        - condition: state
 #          entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2 # Kök

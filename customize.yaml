@@ -3,7 +3,7 @@
     switch.shelly1_c45bbe77099d:
       friendly_name: Fläkt Normal / Forcerad
 
-    # Aqara
+    # Aqara Rörelsedetektor
     binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse:
       friendly_name: Rörelsedetektor köksskåp
     binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2:
@@ -19,16 +19,12 @@
 #    switch.rorelsedetektor_2:
 #      friendly_name: Rörelsedetektor tvättstuga
 
-    # Aqara
-    sensor.aqara_motion_sensor_1:
+    # Aqara Ljussensor
+    sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2:
       friendly_name: Lux kök
-    sensor.aqara_motion_sensor_2:
-      friendly_name: Lux hall
-    sensor.aqara_motion_sensor_3:
+    sensor.xiaomi_lumi_sen_ill_mgl01_illuminance:
       friendly_name: Lux vardagsrum
-    sensor.aqara_motion_sensor_4:
-      friendly_name: Lux kök kylskåp
-
+ 
 #    sensor.Badrum:
 #      hidden: true
 #    sensor.Friggebod:

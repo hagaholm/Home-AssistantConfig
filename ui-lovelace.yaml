@@ -592,10 +592,8 @@ views:
         entities:
           - sensor.louise_rum_temperature
           - sensor.louise_rum_humidity
-#          - sensor.aqara_motion_sensor_4
           - light.louise_fonster
           - light.louise_golvlampa
-#          - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_5
         title: Louise rum
         show_header_toggle: true
         state_color: true
@@ -813,15 +811,6 @@ views:
         state_color: true
       - type: entities
         entities:
-          - sensor.aqara_motion_sensor_1_lastupdated
-          - sensor.aqara_motion_sensor_2_lastupdated
-          - sensor.aqara_motion_sensor_3_lastupdated
-          - sensor.aqara_motion_sensor_4_lastupdated
-        title: Rörelsesensor senast
-        show_header_toggle: false
-        state_color: true
-      - type: entities
-        entities:
           - sensor.lumi_lumi_weather_humidity
           - sensor.fukt_badrumsfonster
           - switch.shelly1_c45bbe77099d
@@ -835,10 +824,6 @@ views:
           - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2
           - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_3
           - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_4
-          - sensor.aqara_motion_sensor_1
-          - sensor.aqara_motion_sensor_2
-          - sensor.aqara_motion_sensor_3
-          - sensor.aqara_motion_sensor_4
         title: Rörelsedetektorer
         show_header_toggle: false
         state_color: true

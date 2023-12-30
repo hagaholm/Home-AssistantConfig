@@ -66,14 +66,15 @@
 
 #############################################################
 
-    #########################################################
-    ### Tänder belysning vid Spabad på eftermiddagen      ###
-    ### T: sensor.ljusstyrka < 5                          ###
-    ### C: binary_sensor.workday_tomorrow = off           ###
-    ### C: 12:00:00 - 21:45:00                            ###
-    ### C: light.ight.spabad_vagg = off                   ###
-    ### A: script.night_light                             ###
-    #########################################################
+    ####################################################
+    ### Tänder belysning vid Spabad på eftermiddagen ###
+    ### T: sensor.ljusstyrka < 5                     ###
+    ### C: binary_sensor.workday_tomorrow = off      ###
+    ### C: 12:00:00 - 21:45:00                       ###
+    ### C: light.spabad_vanster = off                ###
+    ### C: light.spabad_hoger = off                  ###
+    ### A: script.night_light                        ###
+    ####################################################
   - alias: Spabelysning on (<5)
     trigger:
       platform: numeric_state
@@ -89,7 +90,10 @@
           after: '12:00:00'
           before: '21:45:00'
         - condition: state
-          entity_id: light.spabad_vagg
+          entity_id: light.spabad_vanster
+          state: 'off'
+        - condition: state
+          entity_id: light.spabad_hoger
           state: 'off'
     action:
       - service: script.spa_light_on

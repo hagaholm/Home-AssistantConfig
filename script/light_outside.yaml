@@ -4,13 +4,14 @@
   spa_light_on:
     alias: Spabelysning on
     sequence:
-      - repeat:
-          count: 10
-          sequence:
-            - service: light.turn_on
-              data:
-                entity_id: light.spabad_vagg
-                brightness_pct: 100
+      - service: light.turn_on
+        data:
+          entity_id: light.spabad_vanster
+          brightness_pct: 40
+      - service: light.turn_on
+        data:
+          entity_id: light.spabad_hoger
+          brightness_pct: 40
 
   ##############################
   ### Friggebod belysning on ###
@@ -30,10 +31,15 @@
       - service: switch.turn_off
         data:
           entity_id: switch.friggebod_fonster
+      - service: light.turn_off
+        data:
+          entity_id: switch.spabad_vanster
+      - service: light.turn_off
+        data:
+          entity_id: switch.spabad_hoger
+  
       - repeat:
-          count: 10
-          sequence:
-            - service: light.turn_off
-              entity_id: light.spabad_vagg
-            - service: light.turn_off
-              entity_id: light.friggebod_ute
+        count: 10
+        sequence:
+          - service: light.turn_off
+            entity_id: light.friggebod_ute

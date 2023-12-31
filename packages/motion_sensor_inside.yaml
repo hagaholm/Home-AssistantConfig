@@ -19,6 +19,7 @@ automation:
     ### Startar alla timers vid rörelse i kök                 ###
     ### T: binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse  ###
     ###    binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2 ###
+    ###    binary_sensor.motion_sensor                        ###
     ### A: input_boolean.rorelsedetektor_kok_aktiv = on       ###
     ###    timer.timer_rorelsedetektor_kok_reset = cancel     ###
     ###    timer.timer_rorelsedetektor_kok_short = cancel     ###
@@ -35,6 +36,10 @@ automation:
       - platform: state
         entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2 # Kök kylskåp
         to: 'on'
+      - platform: state
+        entity_id: binary_sensor.motion_sensor # Kök IKEA
+        to: 'on'
+
     action:
       # Aktiverar rorelsedetektor_kok_aktiv
       - service: input_boolean.turn_on
@@ -58,12 +63,14 @@ automation:
         entity_id: timer.timer_rorelsedetektor_kok_medium
 
 
-    ################################################################
-    ### Vid timer rorelstimer_rorelsedetektor_kok_reset finished ###
-    ### T: timer.timer_rorelsedetektor_kok_medium == finished    ###
-    ### C: input_boolean.rorelsedetektor_kok_aktiv == on         ###
-    ### A: input_boolean.rorelsedetektor_kok_aktiv = off         ###
-    ################################################################
+    ##################################################################
+    ### Vid timer rorelstimer_rorelsedetektor_kok_reset finished   ###
+    ### T: timer.timer_rorelsedetektor_kok_medium == finished      ###
+    ### C: binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse == on ###
+    ### C: binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2      ###
+    ### C: binary_sensor.motion_sensor                             ###
+    ### A: input_boolean.rorelsedetektor_kok_aktiv = off           ###
+    ##################################################################
   - alias: Stänger av rörelsedetektor kök reset
     trigger:
       - platform: event
@@ -78,6 +85,9 @@ automation:
           state: 'on'
         - condition: state
           entity_id:  binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2
+          state: 'on' 
+        - condition: state
+          entity_id:  binary_sensor.motion_sensor
           state: 'on' 
     action:
       # Cancel timers, återställer till maxtid

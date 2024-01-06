@@ -595,6 +595,9 @@ views:
           - sensor.louise_rum_humidity
           - light.louise_fonster
           - light.louise_golvlampa
+          - input_boolean.rorelsedetektor_louise_rum_aktiv
+          - timer.timer_rorelsedetektor_louise_rum
+          - binary_sensor.motion_sensor
         title: Louise rum
         show_header_toggle: false
         state_color: true

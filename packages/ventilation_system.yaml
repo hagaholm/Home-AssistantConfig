@@ -413,7 +413,7 @@ automation:
         - condition: template 
           value_template: "{{ (trigger.to_state.state|int - trigger.from_state.state|int) >= 4 }}"
         - condition: numeric_state
-          entity_id: sensor.ute_friggebod_temperature
+          entity_id: sensor.ute
           above: -8
 
     action:
@@ -442,7 +442,7 @@ automation:
         - condition: template 
           value_template: "{{ (trigger.to_state.state|int - trigger.from_state.state|int) >= 2 }}"
         - condition: numeric_state
-          entity_id: sensor.ute_friggebod_temperature
+          entity_id: sensor.ute
           above: -8
 
     action:
@@ -637,7 +637,7 @@ automation:
     ### Ventilation off                               ###
     ### T: group.track_for_home_devices == 'not_home' ###
     ### C: switch.ventilationsaggregat == on          ###
-    ### C: sensor.ute_friggebod_temperature > 24      ###
+    ### C: sensor.ute > 24                            ###
     ### C: sensor.fukt_badrumsfonster < 60            ###
     ### C: sensor.inne_medel > 23                     ###
     ### A: switch.ventilationsaggregat = off          ###
@@ -656,7 +656,7 @@ automation:
           entity_id: switch.ventilationsaggregat
           state: 'on'
         - condition: numeric_state
-          entity_id: sensor.ute_friggebod_temperature
+          entity_id: sensor.ute
           above: '24'
         - condition: numeric_state
           entity_id: sensor.fukt_badrumsfonster
@@ -692,7 +692,7 @@ automation:
 
     #####################################################
     ### Ventilation off                               ###
-    ### T: sensor.ute_friggebod_temperature > 24      ###
+    ### T: sensor.ute > 24                            ###
     ### C: switch.ventilationsaggregat == on          ###
     ### C: group.track_for_home_devices == 'not_home' ###
     ### C: sensor.fukt_badrumsfonster < 60            ###
@@ -702,7 +702,7 @@ automation:
   - alias: Vent off (Ute >24°C, Borta, <60%, Inne > 23°C)
     trigger:
       platform: numeric_state
-      entity_id: sensor.ute_friggebod_temperature
+      entity_id: sensor.ute
       above: '24'
 
     condition:
@@ -751,7 +751,7 @@ automation:
     ### T: sensor.fukt_badrumsfonster < 60            ###
     ### C: switch.ventilationsaggregat == on          ###
     ### C: group.track_for_home_devices == 'not_home' ###
-    ### C: sensor.ute_friggebod_temperature > 24      ###
+    ### C: sensor.ute > 24                            ###
     ### C: sensor.inne_medel > 23                     ###
     ### A: switch.ventilationsaggregat = off          ###
     #####################################################
@@ -771,7 +771,7 @@ automation:
           entity_id: group.track_for_home_devices
           state: 'not_home'
         - condition: numeric_state
-          entity_id: sensor.ute_friggebod_temperature
+          entity_id: sensor.ute
           above: '24'
         - condition: numeric_state
           entity_id: sensor.inne_medel
@@ -808,7 +808,7 @@ automation:
     ### C: switch.ventilationsaggregat == on          ###
     ### C: group.track_for_home_devices == 'not_home' ###
     ### C: sensor.fukt_badrumsfonster < 60            ###
-    ### C: sensor.ute_friggebod_temperature > 24      ###
+    ### C: sensor.ute > 24                            ###
     ### A: switch.ventilationsaggregat = off          ###
     #####################################################
   - alias: Vent off (Inne >23°C, Borta, <60%, Ute > 24°C)
@@ -830,7 +830,7 @@ automation:
           entity_id: sensor.fukt_badrumsfonster
           below: '60'
         - condition: numeric_state
-          entity_id: sensor.ute_friggebod_temperature
+          entity_id: sensor.ute
           above: '24'
 
     action:
@@ -906,14 +906,14 @@ automation:
 
     ################################################
     ### Ventilation on                           ###
-    ### T: sensor.ute_friggebod_temperature < 22 ###
+    ### T: sensor.ute < 22                       ###
     ### C: switch.ventilationsaggregat == off    ###
     ### A: switch.ventilationsaggregat = on      ###
     ################################################
   - alias: Vent on (Ute <22°C, Off)
     trigger:
       platform: numeric_state
-      entity_id: sensor.ute_friggebod_temperature
+      entity_id: sensor.ute
       below: '23'
 
     condition:

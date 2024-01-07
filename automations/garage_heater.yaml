@@ -56,7 +56,7 @@
     condition: and
     conditions:
       - condition: numeric_state
-        entity_id: sensor.ute_friggebod_temperature
+        entity_id: sensor.ute
         below: 6
 
   action:
@@ -151,7 +151,7 @@
     condition: and
     conditions:
       - condition: numeric_state
-        entity_id: sensor.ute_friggebod_temperature
+        entity_id: sensor.ute
         below: 10
 
   action:

@@ -786,6 +786,17 @@ mqtt:
     # state_topic: "hassbian/tsl2591/full_spectrum"
     # unit_of_measurement: ""
 
+    - state_topic: "hassbian/1wire/vinden"
+      name: På vinden
+      unit_of_measurement: "°C"
+#  - platform: command_line
+#    command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.9C97DA050000/temperature').text; print(str[12:])"
+#    name: På vinden
+#    value_template: '{{ value | round(1) | int(85) }}'
+#    unit_of_measurement: "°C"
+
+
+
 ####################################################
 #                                                  #
 #                  VOLVO ON CALL                   #

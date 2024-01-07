@@ -115,11 +115,11 @@
 #######################
 # command_line 1-Wire #
 #######################
-  - platform: command_line
-    command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.9C97DA050000/temperature').text; print(str[12:])"
-    name: På vinden
-    value_template: '{{ value | round(1) | int(85) }}'
-    unit_of_measurement: "°C"
+#  - platform: command_line
+#    command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.9C97DA050000/temperature').text; print(str[12:])"
+#    name: På vinden
+#    value_template: '{{ value | round(1) | int(85) }}'
+#    unit_of_measurement: "°C"
   - platform: command_line
     command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.DB5AFE050000/temperature').text; print(str[12:])"
     name: Ute

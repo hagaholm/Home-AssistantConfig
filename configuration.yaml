@@ -816,11 +816,11 @@ mqtt:
 # 1-Wire #
 ##########
 command_line:
-  - sensor:
-        name: På vinden
-        command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.9C97DA050000/temperature').text; print(str[12:])"
-        value_template: '{{ value | round(1) | int(85) }}'
-        unit_of_measurement: "°C"
+#  - sensor:
+#        name: På vinden
+#        command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.9C97DA050000/temperature').text; print(str[12:])"
+#        value_template: '{{ value | round(1) | int(85) }}'
+#        unit_of_measurement: "°C"
   - sensor:
         name: Ute
         command: python3 -c "import requests; str = requests.get('http://192.168.1.12:3001/text/28.DB5AFE050000/temperature').text; print(str[12:])"

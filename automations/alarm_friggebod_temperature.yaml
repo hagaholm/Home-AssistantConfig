@@ -1,7 +1,7 @@
     #########################################################
     ### Varnar för hög temp i Friggebod                   ###
     ### T: sensor.friggebod_temperature > 23              ###
-    ### C: sensor.ute_friggebod_temperature < 15          ###
+    ### C: sensor.ute < 15                                ###
     ### A: notify.pushbullet "LARM! Hög temp i Friggebod" ###
     #########################################################
   - alias: Friggebod larm hög temp
@@ -13,7 +13,7 @@
       condition: and
       conditions:
         - condition: numeric_state
-          entity_id: sensor.ute_friggebod_temperature
+          entity_id: sensor.ute
           below: '15'
     action:
       - service: notify.pushbullet
@@ -23,7 +23,7 @@
     #########################################################
     ### Varnar för låg temp i Friggebod                   ###
     ### T: sensor.friggebod_temperature < 19              ###
-    ### C: sensor.ute_friggebod_temperature < 15          ###
+    ### C: sensor.ute < 15                                ###
     ### A: notify.pushbullet "LARM! Låg temp i Friggebod" ###
     #########################################################
   - alias: Friggebod larm låg temp
@@ -35,7 +35,7 @@
       condition: and
       conditions:
         - condition: numeric_state
-          entity_id: sensor.ute_friggebod_temperature
+          entity_id: sensor.ute
           below: '15'
     action:
       - service: notify.pushbullet

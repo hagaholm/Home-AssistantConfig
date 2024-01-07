@@ -182,7 +182,7 @@
     name: Fukt badrumsfönster
     indoor_temp_sensor: sensor.lumi_lumi_weather_temperature
     indoor_humidity_sensor: sensor.lumi_lumi_weather_humidity
-    outdoor_temp_sensor: sensor.ute_friggebod_temperature
+    outdoor_temp_sensor: sensor.ute
     calibration_factor: 1.25
 
 ##################
@@ -221,7 +221,7 @@
 
   - platform: statistics
     name: "Ute medeltemperatur"
-    entity_id: sensor.ute_friggebod_temperature
+    entity_id: sensor.ute
     state_characteristic: mean
     max_age:
       hours: 24

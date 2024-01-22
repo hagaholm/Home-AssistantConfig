@@ -31,12 +31,12 @@
       - service: switch.turn_off
         data:
           entity_id: switch.friggebod_fonster
-      - service: light.turn_off
-        data:
-          entity_id: light.spabad_vanster
-      - service: light.turn_off
-        data:
-          entity_id: light.spabad_hoger
+#      - service: light.turn_off
+#        data:
+#          entity_id: light.spabad_vanster
+#      - service: light.turn_off
+#        data:
+#          entity_id: light.spabad_hoger
   
       - repeat:
         count: 10

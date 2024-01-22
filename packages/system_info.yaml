@@ -52,18 +52,18 @@ sensor:
     # HA server metrics #
     #####################
     # https://home-assistant.io/components/sensor.systemmonitor/
-  - platform: systemmonitor
-    resources:
-      - type: memory_free
-      - type: memory_use_percent
-      - type: processor_use
-      - type: last_boot
-      - type: disk_use_percent
-        arg: /home
-      - type: swap_use_percent
-      - type: load_1m
-      - type: load_5m
-      - type: load_15m
+#  - platform: systemmonitor
+#    resources:
+#      - type: memory_free
+#      - type: memory_use_percent
+#      - type: processor_use
+#      - type: last_boot
+#      - type: disk_use_percent
+#        arg: /home
+#      - type: swap_use_percent
+#      - type: load_1m
+#      - type: load_5m
+#      - type: load_15m
 #      - type: network_in
 #        arg: ens32
 #      - type: network_out

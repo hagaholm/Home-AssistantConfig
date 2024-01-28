@@ -1,4 +1,4 @@
-﻿  #################### 
+  #################### 
   ### Fläkt normal ### 
   #################### 
   fan_normal: 
@@ -6,6 +6,9 @@
     sequence: 
       - service: homeassistant.turn_off 
         entity_id: switch.shelly1_c45bbe77099d 
+      - service: notify.mobile_app
+        data:
+          message: "Fläkt normal"
  
   ###################### 
   ### Fläkt forcerad ### 
@@ -15,3 +18,6 @@
     sequence: 
       - service: homeassistant.turn_on 
         entity_id: switch.shelly1_c45bbe77099d 
+      - service: notify.mobile_app
+        data:
+          message: "Fläkt forcerad"

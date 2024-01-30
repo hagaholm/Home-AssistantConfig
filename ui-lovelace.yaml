@@ -525,6 +525,7 @@ views:
           - timer.timer_rorelsedetektor_kok_medium
           - binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse
           - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2
+          - binary_sensor.motion_sensor # Köksgolv
         title: Kök
         show_header_toggle: false
         state_color: true
@@ -595,9 +596,6 @@ views:
           - sensor.louise_rum_humidity
           - light.louise_fonster
           - light.louise_golvlampa
-          - input_boolean.rorelsedetektor_louise_rum_aktiv
-          - timer.timer_rorelsedetektor_louise_rum
-          - binary_sensor.motion_sensor
         title: Louise rum
         show_header_toggle: false
         state_color: true
@@ -785,6 +783,7 @@ views:
           - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2
           - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_3
           - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_4
+          - binary_sensor.motion_sensor # Köksgolv
         title: Rörelsedetektorer inne
         show_header_toggle: false
         state_color: true
@@ -829,6 +828,7 @@ views:
           - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2
           - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_3
           - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_4
+          - binary_sensor.motion_sensor # Köksgolv
         title: Rörelsedetektorer
         show_header_toggle: false
         state_color: true

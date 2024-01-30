@@ -6,6 +6,7 @@
     ###    switch.rorelsedetektor_2 == off                                                         ###
     ###    binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse == off                                ###
     ###    binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2 == off                               ###
+    ###    binary_sensor.motion_sensor == off                                                      ###
     ###    vacuum.xiaomi_vacuum_cleaner == idle                                                    ###
     ### A: notify                                                                                  ###
     ##################################################################################################
@@ -31,6 +32,9 @@
           state: 'off'
         - condition: state
           entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2 # Kök kylskåp
+          state: 'off'
+        - condition: state
+          entity_id: binary_sensor.motion_sensor # Köksgolv IKEA
           state: 'off'
         - condition: state
           entity_id: vacuum.xiaomi_vacuum_cleaner

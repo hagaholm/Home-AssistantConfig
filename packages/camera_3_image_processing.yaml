@@ -201,6 +201,7 @@ automation:
   ### Turn on input_boolean.camera_3_active   ###
   ###############################################
   - alias: Camera 3 startup
+    id: '6809326802827'
     mode: single
 
     trigger:
@@ -224,6 +225,7 @@ automation:
   ### Turn off: input_boolean.camera_3_active ###
   ###############################################
   - alias: Camera 3 shutdown
+    id: '7094113315051'
     mode: single
 
     trigger:
@@ -242,6 +244,7 @@ automation:
   ### then delay value gets from input_number.camera_duration     ###  
   ###################################################################
   - alias: Camera 3 Image processing
+    id: '2947456156079'
     mode: single
     
     trigger:
@@ -269,6 +272,7 @@ automation:
   ### Camera 3 Animal detected ###
   ################################
   - alias: Camera 3 Animal detected
+    id: '2431200246630'
     mode: parallel
 
     # Object detected
@@ -327,6 +331,7 @@ automation:
   ### Camera 3 Person detected ###
   ################################
   - alias: Camera 3 Person detected
+    id: '6861063516011'
     mode: parallel
     max: 130 
 
@@ -410,8 +415,8 @@ automation:
   #############################################
   ### Camera 3 Person detected create video ###
   #############################################
-  - id: '8432491338522'
-    alias: Camera 3 Person detected create video
+  - alias: Camera 3 Person detected create video
+    id: '3623900769967'
     mode: parallel
 
     # Object detected
@@ -487,5 +492,3 @@ automation:
           source_file: "/config/camera/motion_detected/camera_3_{{ states('input_select.camera_mode') }}_{{ trigger.event.data.saved_file[41:-4] }}.mp4"
           dest_file: "/media/0/video_{{ states('input_select.camera_mode') }}/camera_3_{{ trigger.event.data.saved_file[41:-4] }}.mp4"
         service: shell_command.camera_3_mv_deepstack
-
-

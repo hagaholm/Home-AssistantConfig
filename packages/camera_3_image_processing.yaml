@@ -73,9 +73,6 @@ input_boolean:
   camera_3_person_detected:
     name: Camera 3 person detekterad
     initial: off
-  camera_3_recording_video:
-    name: Camera 3 recording video
-    initial: off
 
 ##################
 ### Input Text ###
@@ -417,7 +414,7 @@ automation:
   #############################################
   - alias: Camera 3 Person detected create video
     id: '3623900769967'
-    mode: parallel
+    mode: single
 
     # Object detected
     trigger:
@@ -439,11 +436,6 @@ automation:
           value_template: >
             {{ trigger.event.data.object_type == 'person' }}
 
-        # Only start record if no ongoing record
-        - condition: state
-          entity_id: input_boolean.camera_3_recording_video
-          state: 'off'
-
         # Never record if camera mode is Day
         - condition: template
           value_template: >
@@ -453,10 +445,6 @@ automation:
       # Videos vill be left if camera mode changes to Day when recording, start to delete these files 
       - service: shell_command.camera_3_delete_videos
 
-      # Turn on: input_boolean.camera_3_recording_video
-      - service: input_boolean.turn_on
-        entity_id: input_boolean.camera_3_recording_video
-
       # Save a video with timestamp to '/config/camera/motion_detected/camera_3_YYYYMMDD-HHMMSS.mp4'
       - service: camera.record
         data:
@@ -465,16 +453,9 @@ automation:
           lookback: 0
           duration: 60
 
-      # Delay 70 sec to be sure the video is stopped and saved
+      # Delay 65 sec to be sure the video is stopped and saved
       - delay:
-          seconds: 70
-
-      - service: input_boolean.turn_off
-        entity_id: input_boolean.camera_3_recording_video
-
-      # Delay 50 sec, need to wait 120 sec until sure nobody get home
-      - delay:
-          seconds: 50
+          seconds: 65
 
       # If not Day, then continue
       - condition: template

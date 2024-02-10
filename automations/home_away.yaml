@@ -4,6 +4,8 @@
     ### A: input_select.home_status = Borta           ###
     #####################################################
   - alias: Aktivera borta mode
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: state
         entity_id: group.track_for_home_devices
@@ -11,6 +13,7 @@
       - platform: state
         entity_id: group.persons
         to: 'not_home'
+
     action:
       - service: input_select.select_option
         data:
@@ -23,6 +26,8 @@
     ### A: input_select.home_status = Hemma på    ###
     #################################################
   - alias: Aktivera Hemma på mode
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: state
         entity_id: group.track_for_home_devices
@@ -30,6 +35,7 @@
       - platform: state
         entity_id: group.persons
         to: 'home'
+
     action:
       - service: input_select.select_option
         data:
@@ -47,6 +53,8 @@
     ### A: input_select.home_status = Hemma på                        ###
     #####################################################################
   - alias: Aktivera Hemma på mode vid rörelse
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: state
         entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse # Kök köksskåp
@@ -57,6 +65,7 @@
       - platform: state
         entity_id: binary_sensor.motion_sensor # Köksgolv IKEA
         to: 'on'
+
     condition:
       condition: and
       conditions:
@@ -70,6 +79,7 @@
         - condition: state
           entity_id: input_select.home_status
           state: 'Hemma av'
+
     action:
       - service: input_select.select_option
         data:
@@ -86,10 +96,13 @@
     ###    switch.vardagsrum_extra_subbas               ###
     #######################################################
   - alias: Mediaspelare off (-> borta)
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: group.track_for_home_devices
       to: 'not_home'
+
     action:
       - service: remote.turn_off
         entity_id: remote.harmony_hub

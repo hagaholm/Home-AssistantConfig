@@ -163,6 +163,8 @@ input_boolean:
 automation:
   ##################################
   - alias: Kitchen light on - inside
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: template
         value_template: "{{((states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2') | int) | int(0)) < (states('input_number.inside_kitchen_light_on') | int(0) )}}"
@@ -183,6 +185,8 @@ automation:
 
   ###################################
   - alias: Kitchen light on - outside
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: template
         value_template: "{{((states('sensor.ljusstyrka') | int) | int(0)) < (states('input_number.kitchen_light_on') | int(0) )}}"
@@ -201,6 +205,8 @@ automation:
 
   ##################################
   - alias: Morning light on - inside
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: template
         value_template: "{{((states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance') | int) | int(0)) < (states('input_number.inside_morning_light_on') | int(0) )}}"
@@ -221,6 +227,8 @@ automation:
 
   ###################################
   - alias: Morning light on - outside
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: template
         value_template: "{{((states('sensor.ljusstyrka') | int) | int(0)) < (states('input_number.morning_light_on') | int(0) )}}"
@@ -239,6 +247,8 @@ automation:
 
   #############################
   - alias: Daylight on - inside
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: template
         value_template: "{{((states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance') | int) | int(0)) < (states('input_number.inside_daylight_on') | int(0) )}}"
@@ -259,6 +269,8 @@ automation:
 
   ##############################
   - alias: Daylight on - outside
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: template
         value_template: "{{((states('sensor.ljusstyrka') | int) | int(0)) < (states('input_number.daylight_on') | int(0) )}}"
@@ -277,6 +289,8 @@ automation:
 
   #############################
   - alias: Awaylight on - inside
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: template
         value_template: "{{((states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance') | int) | int(0)) < (states('input_number.inside_awaylight_on') | int(0) )}}"
@@ -297,6 +311,8 @@ automation:
 
   ##############################
   - alias: Awaylight on - outside
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: template
         value_template: "{{((states('sensor.ljusstyrka') | int) | int(0)) < (states('input_number.awaylight_on') | int(0) )}}"
@@ -315,6 +331,8 @@ automation:
 
   ##################################
   - alias: Kitchen light off - inside
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: template
         value_template: "{{((states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2') | int) | int(0)) > (states('input_number.inside_kitchen_light_off') | int(0) )}}"
@@ -335,6 +353,8 @@ automation:
 
   ###################################
   - alias: Kitchen light off - outside
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: template
         value_template: "{{((states('sensor.ljusstyrka') | int) | int(0)) > (states('input_number.kitchen_light_off') | int(0) )}}"
@@ -353,6 +373,8 @@ automation:
 
   ##################################
   - alias: Morning light off - inside
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: template
         value_template: "{{((states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance') | int) | int(0)) > (states('input_number.inside_morning_light_off') | int(0) )}}"
@@ -373,6 +395,8 @@ automation:
 
   ###################################
   - alias: Morning light off - outside
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: template
         value_template: "{{((states('sensor.ljusstyrka') | int) | int(0)) > (states('input_number.morning_light_off') | int(0) )}}"
@@ -391,6 +415,8 @@ automation:
 
   #############################
   - alias: Daylight off - inside
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: template
         value_template: "{{((states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance') | int) | int(0)) > (states('input_number.inside_daylight_off') | int(0) )}}"
@@ -411,6 +437,8 @@ automation:
 
   ##############################
   - alias: Daylight off - outside
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: template
         value_template: "{{((states('sensor.ljusstyrka') | int) | int(0)) > (states('input_number.daylight_off') | int(0) )}}"
@@ -429,6 +457,8 @@ automation:
 
   #############################
   - alias: Awaylight off - inside
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: template
         value_template: "{{((states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance') | int) | int(0)) > (states('input_number.inside_awaylight_off') | int(0) )}}"
@@ -449,6 +479,8 @@ automation:
 
   ##############################
   - alias: Awaylight off - outside
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: template
         value_template: "{{((states('sensor.ljusstyrka') | int) | int(0)) > (states('input_number.awaylight_off') | int(0) )}}"
@@ -468,6 +500,7 @@ automation:
 
   ###############################
   - alias: Switch to snow outside
+    id: ABCDEFGHIJKLM 
     mode: single
 
     trigger:
@@ -505,6 +538,7 @@ automation:
 
   ##################################
   - alias: Switch to no snow outside
+    id: ABCDEFGHIJKLM 
     mode: single
 
     trigger:

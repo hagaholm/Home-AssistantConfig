@@ -444,6 +444,8 @@ input_boolean:
 #########################################################
 automation:
   - alias: Avläsning saknas, frys
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: time_pattern
         minutes: "/5"
@@ -470,6 +472,8 @@ automation:
 #          message: 'Frys - ingen avläsning på 2 timmar'
 #########################################################
   - alias: Avläsning saknas, kyl
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: time_pattern
         minutes: "/5"
@@ -496,6 +500,8 @@ automation:
 #          message: 'Kyl - ingen avläsning på 2 timmar'
 #########################################################
   - alias: Avläsning saknas, badrum
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: time_pattern
         minutes: "/5"
@@ -531,6 +537,8 @@ automation:
 #          message: 'Badrum - ingen avläsning på 2 timmar'
 #########################################################
   - alias: Avläsning saknas, tvättstuga
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: time_pattern
         minutes: "/5"
@@ -566,6 +574,8 @@ automation:
 #          message: 'Badrum - ingen avläsning på 2 timmar'
 #########################################################
   - alias: Avläsning saknas, värmepump
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: time_pattern
         minutes: "/5"
@@ -592,6 +602,8 @@ automation:
 #          message: 'Värmepump - ingen avläsning på 2 timmar'
 #########################################################
   - alias: Avläsning saknas, vardagsrum
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: time_pattern
         minutes: "/5"
@@ -618,6 +630,8 @@ automation:
 #          message: 'Vardagsrum - ingen avläsning på 2 timmar'
 #########################################################
   - alias: Avläsning saknas, hall
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: time_pattern
         minutes: "/5"
@@ -653,6 +667,8 @@ automation:
 #          message: 'Hall - ingen avläsning på 2 timmar'
 #########################################################
   - alias: Avläsning saknas, garage
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: time_pattern
         minutes: "/5"
@@ -688,6 +704,8 @@ automation:
 #          message: 'Garage - ingen avläsning på 2 timmar'
 #########################################################
   - alias: Avläsning saknas, förråd
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: time_pattern
         minutes: "/5"
@@ -714,6 +732,8 @@ automation:
 #          message: 'Förråd - ingen avläsning på 2 timmar'
 #########################################################
   - alias: Avläsning saknas, friggebod
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: time_pattern
         minutes: "/5"
@@ -749,6 +769,8 @@ automation:
 #          message: 'Friggebod - ingen avläsning på 2 timmar'
 #########################################################
   - alias: Avläsning saknas, ute friggebod
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: time_pattern
         minutes: "/5"

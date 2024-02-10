@@ -7,9 +7,12 @@
 ### A: homeassistant.restart                ###
 ###############################################
   - alias: Restart HA
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: time
       at: "04:00:00"
+
     condition:
       condition: and
       conditions:
@@ -28,5 +31,6 @@
           - fri
           - sat
           - sun
+
     action:
       - service: homeassistant.restart

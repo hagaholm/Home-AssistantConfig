@@ -7,6 +7,8 @@
     ### A: input_select.light_uterum = Tänt            ###
     ######################################################
   - alias: Uterums belysning on (home)
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: group.track_for_home_devices
@@ -41,6 +43,8 @@
     ### A: input_select.light_uterum = Tänt            ###
     ######################################################
   - alias: Uterums belysning on (>18)
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.lumi_lumi_weather_temperature_3
@@ -74,6 +78,8 @@
     ### A: input_select.light_uterum = Tänt            ###
     ######################################################
   - alias: Uterums belysning on (<150)
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
@@ -105,6 +111,8 @@
     ### A: input_select.light_uterum = Släckt                              ###
     ##########################################################################
   - alias: Uterums belysning off (All off, hemma)
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: light.kok_lilla_fonstret
@@ -129,6 +137,8 @@
     ### A: input_select.light_uterum = Släckt                   ###
     ###############################################################
   - alias: Uterums belysning off (Borta)
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: group.track_for_home_devices
@@ -147,6 +157,8 @@
     ### A: input_select.light_uterum = Släckt            ###
     ########################################################
   - alias: Uterums belysning off (<17)
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.lumi_lumi_weather_temperature_3

@@ -4,10 +4,13 @@
     ### A: notify.pushbullet           ###
     ######################################
   - alias: Hög temp Raspberry
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.cpu_temperature
       above: '70'
+
     action:
       - service: notify.pushbullet
         data:
@@ -19,10 +22,13 @@
     ### A: notify.pushbullet                          ###
     #####################################################
   - alias: Raspberry Pi B+ (1-Wire) - Offline
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: device_tracker.raspberry_pi_b_plus
       to: 'not_home'
+
     action:
       - service: notify.pushbullet
         data:
@@ -34,10 +40,13 @@
     ### A: notify.pushbullet                          ###
     #####################################################
   - alias: Raspberry Pi 3B (Hagaholm) Offline
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: device_tracker.raspberry_pi_3b_1
       to: 'not_home'
+
     action:
       - service: notify.pushbullet
         data:
@@ -49,10 +58,13 @@
     ### A: notify.pushbullet                          ###
     #####################################################
   - alias: Raspberry Pi 3B (Lux) Offline
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: device_tracker.raspberry_pi_3b_2
       to: 'not_home'
+
     action:
       - service: notify.pushbullet
         data:
@@ -64,10 +76,13 @@
     ### A: notify.pushbullet                          ###
     #####################################################
   - alias: Raspberry Pi 3B+ Offline
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: device_tracker.raspberry_pi_3b_plus
       to: 'not_home'
+
     action:
       - service: notify.pushbullet
         data:
@@ -79,10 +94,13 @@
     ### A: notify.pushbullet                          ###
     #####################################################
   - alias: Raspberry Pi 4B (Hassbian) Offline
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: device_tracker.raspberry_pi_4b
       to: 'not_home'
+
     action:
       - service: notify.pushbullet
         data:

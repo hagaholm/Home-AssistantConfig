@@ -9,10 +9,13 @@
     ### A: script.friggebod_fasadbelysning_on                           ###
     #######################################################################
   - alias: Friggebod fasadbelysning on (sensor on, <40)
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: input_boolean.rorelsedetektor_kok_aktiv
       to: 'on'
+
     condition:
       condition: and
       conditions:
@@ -25,6 +28,7 @@
         - condition: time
           after: '05:00:00'
           before: '12:00:00'
+
     action:
       - service: script.friggebod_fasadbelysning_on
 
@@ -38,10 +42,13 @@
     ### A: script.friggebod_fasadbelysning_on              ###
     ##########################################################
   - alias: Friggebod fasadbelysning on (home, <40) 
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
       below: 40
+
     condition:
       condition: and
       conditions:
@@ -57,6 +64,7 @@
         - condition: state
           entity_id: light.friggebod_fasad
           state: 'off'
+
     action:
       - service: script.friggebod_fasadbelysning_on
 
@@ -69,10 +77,13 @@
     ### A: script.friggebod_fasadbelysning_on                                 ###
     #############################################################################
   - alias: Friggebod fasadbelysning on (away, <40)
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
       below: 40
+
     condition:
       condition: and
       conditions:
@@ -85,6 +96,7 @@
         - condition: state
           entity_id: light.friggebod_fasad
           state: 'off'
+
     action:
       - service: script.friggebod_fasadbelysning_on
 
@@ -95,14 +107,18 @@
     ### A: light.friggebod_fasad = off                      ###
     ###########################################################
   - alias: Friggebod fasadbelysning off (>60)
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
       above: 60
+
     condition:
       condition: state
       entity_id: light.friggebod_fasad
       state: 'on'
+
     action:
       - service: script.friggebod_fasadbelysning_off
 
@@ -115,10 +131,13 @@
     ### A: light.friggebod_fasad = off                       ###
     ############################################################
   - alias: Friggebod fasadbelysning off
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: light.kok_lilla_fonstret
       to: 'off'
+
     condition:
       condition: and
       conditions:
@@ -131,6 +150,7 @@
         - condition: state
           entity_id: light.friggebod_fasad
           state: 'on'
+
     action:
       - service: script.friggebod_fasadbelysning_off
 
@@ -148,16 +168,20 @@
     ### A: light.forrad_fasad = on                      ###
     #######################################################
   - alias: Förråd fasadbelysning on (<40)
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
       below: 40
+
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: light.forrad_fasad
           state: 'off'
+
     action:
       - service: script.forrad_fasadbelysning_on
 
@@ -168,14 +192,18 @@
     ### A: light.forrad_fasad = off                      ###
     ########################################################
   - alias: Förråd fasadbelysning off (>60)
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
       above: 60
+
     condition:
       condition: state
       entity_id: light.forrad_fasad
       state: 'on'
+
     action:
       - service: script.forrad_fasadbelysning_off
 
@@ -193,16 +221,20 @@
     ### A: light.tvattstugan_fasad = on                     ###
     ###########################################################
   - alias: Tvättstuga fasadbelysning on (<40)
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
       below: 40
+
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: light.tvattstugan_fasad
           state: 'off'
+
     action:
       - service: script.tvattstuga_fasadbelysning_on
 
@@ -213,14 +245,18 @@
     ### A: light.tvattstugan_fasad = off                     ###
     ############################################################
   - alias: Tvättstuga fasadbelysning off (>60)
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
       above: 60
+
     condition:
       condition: state
       entity_id: light.tvattstugan_fasad
       state: 'on'
+
     action:
       - service: script.tvattstuga_fasadbelysning_off
 
@@ -238,16 +274,20 @@
     ### A: light.huvudentre = on                       ###
     ######################################################
   - alias: Huvudentre belysning on (<40)
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
       below: 40
+
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: light.huvudentre
           state: 'off'
+
     action:
       - service: script.huvudentre_belysning_on
 
@@ -258,13 +298,17 @@
     ### A: light.huvudentre = off                       ###
     #######################################################
   - alias: Huvudentre belysning off (>60)
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
       above: 60
+
     condition:
       condition: state
       entity_id: light.huvudentre
       state: 'on'
+
     action:
       - service: script.huvudentre_belysning_off

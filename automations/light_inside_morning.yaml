@@ -6,6 +6,7 @@
     ### A: input_select.light_inside = Morgonbelysning                 ###
     ######################################################################
   - alias: Morgonbelysning on
+    id: ABCDEFGHIJKLM 
     mode: queued
 
     trigger:
@@ -39,6 +40,7 @@
     ### A: input_select.light_inside = Släckt                                            ###
     ########################################################################################
   - alias: Morgonbelysning off
+    id: ABCDEFGHIJKLM 
     mode: single
 
     trigger:

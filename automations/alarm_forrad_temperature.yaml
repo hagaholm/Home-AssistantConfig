@@ -5,6 +5,8 @@
     ### A: notify.pushbullet "LARM! Hög temp i Förråd" ###
     ######################################################
   - alias: Förråd larm hög temp
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: numeric_state
         entity_id: sensor.forrad_temperature
@@ -15,12 +17,14 @@
       - platform: numeric_state
         entity_id: sensor.forrad_temperature
         above: '13'
+
     condition:
       condition: and
       conditions:
         - condition: numeric_state
           entity_id: sensor.ute
           below: '5'
+
     action:
       - service: notify.pushbullet
         data:
@@ -33,6 +37,8 @@
     ### A: notify.pushbullet "LARM! Låg temp i Förråd" ###
     ######################################################
   - alias: Förråd larm låg temp
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: numeric_state
         entity_id: sensor.forrad_temperature
@@ -49,12 +55,14 @@
       - platform: numeric_state
         entity_id: sensor.forrad_temperature
         below: '0'
+
     condition:
       condition: and
       conditions:
         - condition: numeric_state
           entity_id: sensor.ute
           below: '5'
+
     action:
       - service: notify.pushbullet
         data:

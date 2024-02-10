@@ -5,16 +5,20 @@
     ### A: notify.pushbullet "LARM! Hög temp i Friggebod" ###
     #########################################################
   - alias: Friggebod larm hög temp
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.friggebod_temperature
       above: '23'
+
     condition:
       condition: and
       conditions:
         - condition: numeric_state
           entity_id: sensor.ute
           below: '15'
+
     action:
       - service: notify.pushbullet
         data:
@@ -27,16 +31,20 @@
     ### A: notify.pushbullet "LARM! Låg temp i Friggebod" ###
     #########################################################
   - alias: Friggebod larm låg temp
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.friggebod_temperature
       below: '19'
+
     condition:
       condition: and
       conditions:
         - condition: numeric_state
           entity_id: sensor.ute
           below: '15'
+
     action:
       - service: notify.pushbullet
         data:
@@ -48,10 +56,13 @@
     ### A: notify.pushbullet "LARM! Frysvakt Friggebod" ###
     #######################################################
   - alias: Friggebod frysvakt
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.friggebod_temperature
       below: '3'
+
     action:
       - service: notify.pushbullet
         data:

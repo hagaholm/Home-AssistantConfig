@@ -201,6 +201,7 @@ automation:
   ### Turn on input_boolean.camera_2_active   ###
   ###############################################
   - alias: Camera 2 startup
+    id: ABCDEFGHIJKLM 
     mode: single
 
     trigger:
@@ -224,6 +225,7 @@ automation:
   ### Turn off: input_boolean.camera_2_active ###
   ###############################################
   - alias: Camera 2 shutdown
+    id: ABCDEFGHIJKLM 
     mode: single
 
     trigger:
@@ -242,6 +244,7 @@ automation:
   ### then delay value gets from input_number.camera_duration     ###  
   ###################################################################
   - alias: Camera 2 Image processing
+    id: ABCDEFGHIJKLM 
     mode: single
     
     trigger:
@@ -269,6 +272,7 @@ automation:
   ### Camera 2 Animal detected ###
   ################################
   - alias: Camera 2 Animal detected
+    id: ABCDEFGHIJKLM 
     mode: parallel
 
     # Object detected
@@ -316,6 +320,7 @@ automation:
   ### Camera 2 Person detected ###
   ################################
   - alias: Camera 2 Person detected
+    id: ABCDEFGHIJKLM 
     mode: parallel
     max: 130 
 
@@ -400,6 +405,7 @@ automation:
   ### Camera 2 Person detected create video ###
   #############################################
   - alias: Camera 2 Person detected create video
+    id: ABCDEFGHIJKLM 
     mode: parallel
 
     # Object detected
@@ -475,5 +481,3 @@ automation:
           source_file: "/config/camera/motion_detected/camera_2_{{ states('input_select.camera_mode') }}_{{ trigger.event.data.saved_file[41:-4] }}.mp4"
           dest_file: "/media/0/video_{{ states('input_select.camera_mode') }}/camera_2_{{ trigger.event.data.saved_file[41:-4] }}.mp4"
         service: shell_command.camera_2_mv_deepstack
-
-

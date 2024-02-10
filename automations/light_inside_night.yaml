@@ -6,6 +6,8 @@
     ### A: input_select.light_inside = Nattbelysning                          ###
     #############################################################################
   - alias: Nattbelysning on
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: input_boolean.rorelsedetektor_kok_aktiv
@@ -34,6 +36,8 @@
     ### A: input_select.light_inside = Släckt             ###
     #########################################################
   - alias: Nattbelysning off
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: input_boolean.rorelsedetektor_kok_aktiv

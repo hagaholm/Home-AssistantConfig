@@ -6,10 +6,13 @@
     ### A: light.friggebod_ute = on                          ###
     ############################################################
   - alias: Friggebod ute on (sensor on, <500)
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: input_boolean.rorelsedetektor_kok_aktiv
       to: 'on'
+
     condition:
       condition: and
       conditions:
@@ -22,6 +25,7 @@
         - condition: time
           after: '05:00:00'
           before: '12:00:00'
+
     action:
       - service: light.turn_on
         entity_id: light.friggebod_ute
@@ -33,14 +37,18 @@
     ### A: light.friggebod_ute = on           ###
     #############################################
   - alias: Friggebod ute on (<500)
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
       below: 500
+
     condition:
       condition: time
       after: '12:00:00'
       before: '21:45:00' 
+
     action:
       - service: light.turn_on
         entity_id: light.friggebod_ute
@@ -52,14 +60,18 @@
     ### A: light.friggebod_ute = off             ###
     ################################################
   - alias: Friggebod ute off (>600)
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
       above: 600
+
     condition:
       condition: state
       entity_id: light.friggebod_ute
       state: 'on'
+
     action:
       - service: light.turn_off
         entity_id: light.friggebod_ute
@@ -76,10 +88,13 @@
     ### A: script.night_light                        ###
     ####################################################
   - alias: Spabelysning on (<5)
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
       below: 5
+
     condition:
       condition: and
       conditions:
@@ -95,6 +110,7 @@
         - condition: state
           entity_id: light.spabad_hoger
           state: 'off'
+
     action:
       - service: script.spa_light_on
 
@@ -107,14 +123,18 @@
     ### A: script.friggebod_light_on                  ###
     #####################################################
   - alias: Friggebod belysning on (<1)
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
       below: 1
+
     condition:
       condition: time
       after: '12:00:00'
       before: '21:45:00' 
+
     action:
       - service: script.friggebod_light_on
 
@@ -126,13 +146,17 @@
     ###    Service: script.uterum_window_light_off         ###
     ##########################################################
   - alias: Utebelysning off (>22:00:00, borta)
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: time
       at: '22:00:00'
+
     condition:
       condition: state
       entity_id: group.track_for_home_devices
       state: 'not_home'
+
     action:
       - service: script.outside_light_off
 
@@ -144,9 +168,12 @@
     ### A: service: script.outside_light_off                      ###
     #################################################################
   - alias: Utebelysning off (>22:00:00, hemma, vardag)
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: time
       at: '22:00:00'
+
     condition:
       condition: and
       conditions:
@@ -156,6 +183,7 @@
         - condition: state
           entity_id: binary_sensor.workday_tomorrow
           state: 'on'
+
     action:
       - service: script.outside_light_off
 
@@ -168,10 +196,13 @@
     ###    Service: script.uterum_window_light_off             ###
     ##############################################################
   - alias: Utebelysning off (All off, hemma, helg)
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: switch.kok_lilla_fonstret
       to: 'off'
+
     condition:
       condition: and
       conditions:
@@ -181,5 +212,6 @@
         - condition: state
           entity_id: binary_sensor.workday_tomorrow
           state: 'off'
+
     action:
       - service: script.outside_light_off

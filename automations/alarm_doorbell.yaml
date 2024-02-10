@@ -6,16 +6,20 @@
 ###    notify.pushbullet                    ###
 ###############################################
   - alias: Ringklocka tvättstuga dag
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: switch.ringklocka_tvattstuga
       to: 'on'
+
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: input_select.home_status
           state: 'Hemma på'
+
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ringklocka_tvattstuga
@@ -38,16 +42,20 @@
 ###    notify.pushbullet                    ###
 ###############################################
   - alias: Ringklocka tvättstuga natt
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: switch.ringklocka_tvattstuga
       to: 'on'
+
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: input_select.home_status
           state: 'Hemma av'
+
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ringklocka_tvattstuga
@@ -70,16 +78,20 @@
 ###    notify.pushbullet                  ###
 #############################################
   - alias: Ringklocka tvättstuga borta
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: switch.ringklocka_tvattstuga
       to: 'on'
+
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: input_select.home_status
           state: 'borta'
+
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ringklocka_tvattstuga
@@ -102,16 +114,20 @@
 ###    notify.pushbullet                    ###
 ###############################################
   - alias: Ringklocka hall dag
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: switch.ringklocka_hall
       to: 'on'
+
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: input_select.home_status
           state: 'Hemma på'
+
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ringklocka_hall
@@ -134,16 +150,20 @@
 ###    notify.pushbullet                    ###
 ###############################################
   - alias: Ringklocka hall natt
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: switch.ringklocka_hall
       to: 'on'
+
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: input_select.home_status
           state: 'Hemma av'
+
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ringklocka_hall
@@ -166,16 +186,20 @@
 ###    notify.pushbullet                 ###
 ############################################
   - alias: Ringklocka hall borta
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: switch.ringklocka_hall
       to: 'on'
+
     condition:
       condition: and
       conditions:
         - condition: state
           entity_id: input_select.home_status
           state: 'borta'
+
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ringklocka_hall
@@ -194,6 +218,7 @@
   ### Blinka med lyset när ringklocka ringer ###
   ##############################################
   - alias: Blinka med lyset när ringklocka ringer
+    id: ABCDEFGHIJKLM 
     mode: single
 
     trigger:
@@ -241,6 +266,8 @@
 ###    script.away_lights_on                      ###
 #####################################################
   - alias: Ringklocka tänd allt lyse 1
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: state
         entity_id: switch.ringklocka_tvattstuga
@@ -248,6 +275,7 @@
       - platform: state
         entity_id: switch.ringklocka_hall
         to: 'on'
+
     condition:
       condition: and
       conditions:
@@ -257,6 +285,7 @@
         - condition: state
           entity_id: light.kok_lilla_fonstret
           state: 'on'
+
     action:
       - service: script.kitchen_light_100
       - service: script.cleaning_lights_on
@@ -278,6 +307,8 @@
 ###    script.goodnight_all                       ###
 #####################################################
   - alias: Ringklocka tänd allt lyse 2
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: state
         entity_id: switch.ringklocka_tvattstuga
@@ -285,6 +316,7 @@
       - platform: state
         entity_id: switch.ringklocka_hall
         to: 'on'
+
     condition:
       condition: and
       conditions:
@@ -294,6 +326,7 @@
         - condition: state
           entity_id: light.kok_lilla_fonstret
           state: 'off'
+
     action:
       - service: script.kitchen_light_100
       - service: script.cleaning_lights_on
@@ -307,10 +340,13 @@
     ### A: switch.ringklocka = off                    ###
     #####################################################
   - alias: Ringklocka off (-> borta)
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: group.track_for_home_devices
       to: 'not_home'
+
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ringklocka
@@ -321,10 +357,13 @@
     ### A: switch.ringklocka = on                 ###
     #################################################
   - alias: Ringklocka on (-> hemma)
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: group.track_for_home_devices
       to: 'home'
+
     action:
       - service: homeassistant.turn_on
         entity_id: switch.ringklocka

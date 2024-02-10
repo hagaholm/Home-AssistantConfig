@@ -29,6 +29,8 @@ automation:
     ###    timer.timer_rorelsedetektor_kok_medium = start     ###
     #############################################################
   - alias: Startar timers kök
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: state
         entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse # Köksskåp
@@ -70,6 +72,8 @@ automation:
     ### A: input_boolean.rorelsedetektor_kok_aktiv = off            ###
     ###################################################################
   - alias: Stänger av rörelsedetektor kök reset
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: event
         event_type: timer.finished
@@ -111,6 +115,8 @@ automation:
     ### A: input_boolean.rorelsedetektor_kok_aktiv = off      ###
     #############################################################
   - alias: Stänger av rörelsedetektor kök aktiv
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: event
         event_type: timer.finished
@@ -134,6 +140,8 @@ automation:
     ### A: input_boolean.rorelsedetektor_kok_aktiv = off               ###
     ######################################################################
   - alias: Stänger av rörelsedetektor kök aktiv för nattbelysning
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: event
         event_type: timer.finished

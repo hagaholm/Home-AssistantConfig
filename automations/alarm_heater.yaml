@@ -4,10 +4,13 @@
     ### A: notify.pushbullet                 ###
     ############################################
   - alias: Låg temp ackumulatortank
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.varmepump_temperature
       below: '20'
+
     action:
       - service: notify.pushbullet
         data:
@@ -19,10 +22,13 @@
     ### A: notify.pushbullet                 ###
     ############################################
   - alias: Hög temp ackumulatortank
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.varmepump_temperature
       above: '52'
+
     action:
       - service: notify.pushbullet
         data:

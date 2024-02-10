@@ -4,10 +4,13 @@
     ### A: notify.pushbullet "LARM! Hög temp i Uterum" ###
     ######################################################
   - alias: Uterum larm hög temp
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.lumi_lumi_weather_temperature_3
       above: '35'
+
     action:
       - service: notify.pushbullet
         data:

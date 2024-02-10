@@ -245,9 +245,12 @@ automation:
     ### A: notify.pushbullet     ###
     ################################
   - alias: 'Hassbian startad'
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: homeassistant
       event: start
+
     action:
       - service: notify.pushbullet
         data:
@@ -260,9 +263,12 @@ automation:
     ### A: notify.pushbullet        ###
     ###################################
   - alias: 'Hassbian stoppad'
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: homeassistant
       event: shutdown
+
     action:
       - service: notify.pushbullet
         data:
@@ -275,11 +281,14 @@ automation:
     ### A: notify.pushbullet    ###
     ###############################
   - alias: Hassbian uppdatering
+    id: ABCDEFGHIJKLM 
+
     trigger:
       - platform: state
         entity_id: binary_sensor.updater
         from: 'off'
         to: 'on'
+
     action:
       - service: notify.pushbullet
         data: 
@@ -292,9 +301,12 @@ automation:
     ### A: notify.pushbullet         ###
     ####################################
   - alias: Ny enhet hittad
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: event
       event_type: device_tracker_new_device
+
     action:
       - service: notify.pushbullet
         data:

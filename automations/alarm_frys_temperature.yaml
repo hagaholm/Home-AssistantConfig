@@ -4,6 +4,8 @@
     ### A: notify.pushbullet "LARM! Varning hög temp i frysen" ###
     ##############################################################
   - alias: Larm! Varning hög temp i frys
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.frys_temperature
@@ -27,6 +29,8 @@
     ### A: notify.pushbullet "LARM! Hög temp i frysen" ###
     ######################################################
   - alias: Larm! Hög temp i frys
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.frys_temperature
@@ -46,6 +50,8 @@
     ### A: notify.pushbullet "LARM! Låg temp i Frys" ###"
     ####################################################
   - alias: Larm! Låg temp i frys
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.frys_temperature

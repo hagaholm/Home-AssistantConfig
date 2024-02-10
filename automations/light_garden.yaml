@@ -9,6 +9,8 @@
     ### A: input_select.light_garden = Tänt                       ###
     #################################################################
   - alias: Trädgårdsbelysning on (sensor on, <40)
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: input_boolean.rorelsedetektor_kok_aktiv
@@ -43,6 +45,8 @@
     ### A: input_select.light_garden = Tänt          ###
     ####################################################
   - alias: Trädgårdsbelysning on (home, <40) 
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
@@ -79,6 +83,8 @@
     ### A: input_select.light_garden = Tänt                             ###
     #######################################################################
   - alias: Trädgårdsbelysning on (away, <40)
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
@@ -110,6 +116,8 @@
     ### A: input_select.light_garden = Släckt         ###
     #####################################################
   - alias: Trädgårdsbelysning off (>60)
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
@@ -135,6 +143,8 @@
     ### A: input_select.light_garden = Släckt          ###
     ######################################################
   - alias: Trädgårdsbelysning off
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: light.kok_lilla_fonstret

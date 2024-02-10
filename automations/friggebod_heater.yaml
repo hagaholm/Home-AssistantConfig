@@ -5,6 +5,7 @@
   ### A: switch.friggebod_elvarme = on     ###
   ############################################
 - alias: Starta elvärme friggebod högfukt
+  id: ABCDEFGHIJKLM 
   mode: queued
 
   trigger:
@@ -41,6 +42,7 @@
   ### A: switch.friggebod_elvarme = off ###
   #########################################
 - alias: Stoppa elvärme friggebod lågfukt
+  id: ABCDEFGHIJKLM 
   mode: queued
 
   trigger:

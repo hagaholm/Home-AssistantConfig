@@ -4,10 +4,13 @@
     ### A: notify.pushbullet "LARM! Hög temp i kylen" ###
     #####################################################
   - alias: Larm! Hög temp i kyl
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.kyl_temperature
       above: '10'
+
     action:
       - service: notify.pushbullet
         data:
@@ -19,10 +22,13 @@
     ### A: notify.pushbullet "LARM! Låg temp i kylen" ###
     #####################################################
   - alias: Larm! Låg temp i kyl
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: numeric_state
       entity_id: sensor.kyl_temperature
       below: '3'
+
     action:
       - service: notify.pushbullet
         data:

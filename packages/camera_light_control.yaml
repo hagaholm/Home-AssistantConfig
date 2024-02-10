@@ -48,6 +48,7 @@ automation:
   ### Light Friggebod on if Person detected and light off ###
   ###########################################################
   - alias: Light Friggebod on if Person detected and light off
+    id: ABCDEFGHIJKLM 
     mode: single
 
     trigger:
@@ -77,6 +78,7 @@ automation:
   ### Light Friggebod off if Person detected and light off ###
   ############################################################
   - alias: Light Friggebod off if Person detected and light off
+    id: ABCDEFGHIJKLM 
     mode: single
 
     trigger:
@@ -107,6 +109,7 @@ automation:
   ### Camera 2 max light on ###
   #############################
   - alias: Camera 2 max light on
+    id: ABCDEFGHIJKLM 
     mode: single
 
     trigger:
@@ -136,6 +139,7 @@ automation:
   ### Camera 2 max light off ###
   ##############################
   - alias: Camera 2 max light off
+    id: ABCDEFGHIJKLM 
     mode: single
 
     trigger:
@@ -152,6 +156,7 @@ automation:
   ### Camera 2 entre switch max light to normal ###
   #################################################
   - alias: Camera 2 entre switch max light to normal
+    id: ABCDEFGHIJKLM 
     mode: single
 
     trigger:
@@ -176,6 +181,7 @@ automation:
   ### Camera 4 Light control on ###
   #################################
   - alias: Camera 4 Light control on
+    id: ABCDEFGHIJKLM 
     mode: parallel
 
     # Object detected
@@ -224,6 +230,8 @@ automation:
   ### Camera 4 Light control off ###
   ##################################
   - alias: Camera 4 Light control off
+    id: ABCDEFGHIJKLM 
+
     trigger:
       # Timer finished after 45 sec
       - platform: event
@@ -247,6 +255,7 @@ automation:
   ### Camera 3 Light control on ###
   #################################
   - alias: Camera 3 Light control on
+    id: ABCDEFGHIJKLM 
     mode: parallel
 
     # Object detected
@@ -295,6 +304,8 @@ automation:
   ### Camera 3 Light control off ###
   ##################################
   - alias: Camera 3 Light control off
+    id: ABCDEFGHIJKLM 
+
     trigger:
       # Timer finished after 45 sec
       - platform: event
@@ -318,6 +329,7 @@ automation:
   ### Camera 2 Light control on ###
   #################################
   - alias: Camera 2 Light control on
+    id: ABCDEFGHIJKLM 
     mode: single
 
     # Object detected
@@ -358,6 +370,8 @@ automation:
   ### Camera 2 Light control off ###
   ##################################
   - alias: Camera 2 Light control off
+    id: ABCDEFGHIJKLM 
+
     trigger:
       # Timer finished after 45 sec
       - platform: event
@@ -381,6 +395,7 @@ automation:
   ### Camera Light control on ###
   ###############################
   - alias: Camera Light control on
+    id: ABCDEFGHIJKLM 
     mode: restart
 
     trigger:
@@ -410,6 +425,7 @@ automation:
   ### Camera Light control off 4 ###
   ##################################
   - alias: Camera Light control off 4
+    id: ABCDEFGHIJKLM 
     mode: restart
 
     trigger:
@@ -439,6 +455,7 @@ automation:
   ### Camera Light control off 3 ###
   ##################################
   - alias: Camera Light control off 3
+    id: ABCDEFGHIJKLM 
     mode: restart
 
     trigger:
@@ -468,6 +485,7 @@ automation:
   ### Camera Light control off 2 ###
   ##################################
   - alias: Camera Light control off 2
+    id: ABCDEFGHIJKLM 
     mode: restart
 
     trigger:
@@ -497,6 +515,7 @@ automation:
   ### Max light huvudentre if person detected ###
   ###############################################
   - alias: Max light huvudentre if person detected
+    id: ABCDEFGHIJKLM 
     mode: single
 
     trigger:
@@ -518,6 +537,7 @@ automation:
   ### Max light tvättstuga fasad if person detected ###
   #####################################################
   - alias: Max light tvättstuga fasad if person detected
+    id: ABCDEFGHIJKLM 
     mode: single
 
     trigger:
@@ -539,6 +559,7 @@ automation:
   ### Max light friggebod fasad if person detected ###
   ####################################################
   - alias: Max light friggebod fasad if person detected
+    id: ABCDEFGHIJKLM 
     mode: single
 
     trigger:
@@ -560,6 +581,7 @@ automation:
   ### Max light förråd fasad if person detected ###
   #################################################
   - alias: Max light förråd fasad if person detected
+    id: ABCDEFGHIJKLM 
     mode: single
 
     trigger:
@@ -581,6 +603,7 @@ automation:
   ### Reset light huvudentre when switch from home on ###
   #######################################################
   - alias: Reset light huvudentre when switch from home on
+    id: ABCDEFGHIJKLM 
     mode: restart
 
     trigger:
@@ -605,6 +628,7 @@ automation:
   ### Reset light tvättstuga fasad if no person detected ###
   ##########################################################
   - alias: Reset light tvättstuga fasad if person no detected
+    id: ABCDEFGHIJKLM 
     mode: restart
 
     trigger:
@@ -626,6 +650,7 @@ automation:
   ### Reset light friggebod fasad if no person detected ###
   #########################################################
   - alias: Reset light friggebod fasad if person no detected
+    id: ABCDEFGHIJKLM 
     mode: restart
 
     trigger:
@@ -647,6 +672,7 @@ automation:
   ### Reset light förråd fasad if no person detected ###
   ######################################################
   - alias: Reset light förråd fasad if person no detected
+    id: ABCDEFGHIJKLM 
     mode: restart
 
     trigger:
@@ -668,6 +694,7 @@ automation:
   ### Flash light if person detected ###
   ######################################
   - alias: Flash light if person detected
+    id: ABCDEFGHIJKLM 
     mode: single
 
     trigger:

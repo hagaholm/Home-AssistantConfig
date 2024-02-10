@@ -4,10 +4,13 @@
     ### A: notify.pushbullet                    ###
     ###############################################
   - alias: Ingen kontakt med förråd fasadbelysning
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: light.forrad_fasad
       to: 'unavailable'
+
     action:
       - service: notify.pushbullet
         data:
@@ -19,10 +22,13 @@
     ### A: notify.pushbullet                       ###
     ##################################################
   - alias: Ingen kontakt med friggebod fasadbelysning
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: light.friggebod_fasad
       to: 'unavailable'
+
     action:
       - service: notify.pushbullet
         data:
@@ -34,10 +40,13 @@
     ### A: notify.pushbullet                     ###
     ################################################
   - alias: Ingen kontakt med vardagsrum skänk
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: light.vardagsrum_skank
       to: 'unavailable'
+
     action:
       - service: notify.pushbullet
         data:
@@ -49,10 +58,13 @@
     ### A: notify.pushbullet                    ###
     ###############################################
   - alias: Ingen kontakt med vardagsrum vagn
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: light.vardagsrum_vagn
       to: 'unavailable'
+
     action:
       - service: notify.pushbullet
         data:
@@ -64,10 +76,13 @@
     ### A: notify.pushbullet                        ###
     ###################################################
   - alias: Ingen kontakt med tvättstuga fasadbelysning
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: light.tvattstugan_fasad
       to: 'unavailable'
+
     action:
       - service: notify.pushbullet
         data:
@@ -79,10 +94,13 @@
     ### A: notify.pushbullet                   ###
     ##############################################
   - alias: Ingen kontakt med uterum fönster 
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: light.uterum_fonster
       to: 'unavailable'
+
     action:
       - service: notify.pushbullet
         data:
@@ -94,10 +112,13 @@
     ### A: notify.pushbullet                        ###
     ###################################################
   - alias: Ingen kontakt med fotogenlampa i uterum
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: light.uterum_fotogenlampa
       to: 'unavailable'
+
     action:
       - service: notify.pushbullet
         data:
@@ -109,10 +130,13 @@
     ### A: notify.pushbullet                                   ###
     ##############################################################
   - alias: Ingen kontakt med friggebod brytare vid stora fönstret
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: switch.friggebod_fonster
       to: 'unavailable'
+
     action:
       - service: notify.pushbullet
         data:
@@ -124,10 +148,13 @@
     ### A: notify.pushbullet                      ###
     #################################################
   - alias: Ingen kontakt med garage avfuktare
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: switch.garage_avfukatare
       to: 'unavailable'
+
     action:
       - service: notify.pushbullet
         data:
@@ -139,14 +166,18 @@
     ### A: notify.pushbullet                    ###
     ###############################################
   - alias: Ingen kontakt med garage elvärme
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: switch.garage_elvarme
       to: 'unavailable'
+
     action:
       - service: notify.pushbullet
         data:
           message: 'Ingen kontakt med garage elvärme'
+
 ##################################################################
 ##################################################################
 ##################################################################
@@ -157,10 +188,13 @@
     ### A: notify.pushbullet                 ###
     ############################################
   - alias: Kontakt med förråd fasadbelysning
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: light.forrad_fasad
       from: 'unavailable'
+
     action:
       - service: notify.pushbullet
         data:
@@ -172,10 +206,13 @@
     ### A: notify.pushbullet                    ###
     ###############################################
   - alias: Kontakt med friggebod fasadbelysning
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: light.friggebod_fasad
       from: 'unavailable'
+
     action:
       - service: notify.pushbullet
         data:
@@ -187,10 +224,13 @@
     ### A: notify.pushbullet                      ###
     #################################################
   - alias: Kontakt med tvättstuga fasadbelysning
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: light.tvattstugan_fasad
       from: 'unavailable'
+
     action:
       - service: notify.pushbullet
         data:
@@ -202,10 +242,13 @@
     ### A: notify.pushbullet                     ###
     ################################################
   - alias: Kontakt med vardagsrum skänk
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: light.vardagsrum_skank
       from: 'unavailable'
+
     action:
       - service: notify.pushbullet
         data:
@@ -217,10 +260,13 @@
     ### A: notify.pushbullet                    ###
     ###############################################
   - alias: Kontakt med vardagsrum vagn
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: light.vardagsrum_vagn
       from: 'unavailable'
+
     action:
       - service: notify.pushbullet
         data:
@@ -232,10 +278,13 @@
     ### A: notify.pushbullet                   ###
     ##############################################
   - alias: Kontakt med uterum fönster 
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: light.uterum_fonster
       from: 'unavailable'
+
     action:
       - service: notify.pushbullet
         data:
@@ -247,10 +296,13 @@
     ### A: notify.pushbullet                        ###
     ###################################################
   - alias: Kontakt med fotogenlampa i uterum
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: light.uterum_fotogenlampa
       from: 'unavailable'
+
     action:
       - service: notify.pushbullet
         data:
@@ -262,10 +314,13 @@
     ### A: notify.pushbullet                             ###
     ########################################################
   - alias: Kontakt med friggebod brytare vid stora fönstret
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: switch.friggebod_fonster
       from: 'unavailable'
+
     action:
       - service: notify.pushbullet
         data:
@@ -277,10 +332,13 @@
     ### A: notify.pushbullet                      ###
     #################################################
   - alias: Kontakt med garage avfuktare
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: switch.garage_avfuktare
       from: 'unavailable'
+
     action:
       - service: notify.pushbullet
         data:
@@ -292,10 +350,13 @@
     ### A: notify.pushbullet                    ###
     ###############################################
   - alias: Kontakt med garage elvärme
+    id: ABCDEFGHIJKLM 
+
     trigger:
       platform: state
       entity_id: switch.garage_elvarme
       from: 'unavailable'
+
     action:
       - service: notify.pushbullet
         data:

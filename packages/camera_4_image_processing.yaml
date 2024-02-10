@@ -201,7 +201,7 @@ automation:
   ### Turn on input_boolean.camera_4_active   ###
   ###############################################
   - alias: Camera 4 startup
-    id: 'ABCDEFGHIJKLM' 
+    id: '9556319091585' 
     mode: single
 
     trigger:
@@ -225,7 +225,7 @@ automation:
   ### Turn off: input_boolean.camera_4_active ###
   ###############################################
   - alias: Camera 4 shutdown
-    id: 'ABCDEFGHIJKLM' 
+    id: '5924169930028' 
     mode: single
 
     trigger:
@@ -244,7 +244,7 @@ automation:
   ### then delay value gets from input_number.camera_duration     ###  
   ###################################################################
   - alias: Camera 4 Image processing
-    id: 'ABCDEFGHIJKLM' 
+    id: '0099648445436' 
     mode: single
     
     trigger:
@@ -272,7 +272,7 @@ automation:
   ### Camera 4 Animal detected ###
   ################################
   - alias: Camera 4 Animal detected
-    id: 'ABCDEFGHIJKLM' 
+    id: '1416857463557' 
     mode: parallel
 
     # Object detected
@@ -331,7 +331,7 @@ automation:
   ### Camera 4 Person detected ###
   ################################
   - alias: Camera 4 Person detected
-    id: 'ABCDEFGHIJKLM' 
+    id: '8116100082399' 
     mode: parallel
     max: 130 
 
@@ -416,7 +416,7 @@ automation:
   ### Camera 4 Person detected create video ###
   #############################################
   - alias: Camera 4 Person detected create video
-    id: 'ABCDEFGHIJKLM' 
+    id: '9999129171350' 
     mode: parallel
 
     # Object detected

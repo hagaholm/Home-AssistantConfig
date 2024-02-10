@@ -6,7 +6,7 @@
     ### A: light.friggebod_ute = on                          ###
     ############################################################
   - alias: Friggebod ute on (sensor on, <500)
-    id: 'ABCDEFGHIJKLM' 
+    id: '9369632281021' 
 
     trigger:
       platform: state
@@ -37,7 +37,7 @@
     ### A: light.friggebod_ute = on           ###
     #############################################
   - alias: Friggebod ute on (<500)
-    id: 'ABCDEFGHIJKLM' 
+    id: '2246049822272' 
 
     trigger:
       platform: numeric_state
@@ -60,7 +60,7 @@
     ### A: light.friggebod_ute = off             ###
     ################################################
   - alias: Friggebod ute off (>600)
-    id: 'ABCDEFGHIJKLM' 
+    id: '6395264032481' 
 
     trigger:
       platform: numeric_state
@@ -88,7 +88,7 @@
     ### A: script.night_light                        ###
     ####################################################
   - alias: Spabelysning on (<5)
-    id: 'ABCDEFGHIJKLM' 
+    id: '8301399257818' 
 
     trigger:
       platform: numeric_state
@@ -123,7 +123,7 @@
     ### A: script.friggebod_light_on                  ###
     #####################################################
   - alias: Friggebod belysning on (<1)
-    id: 'ABCDEFGHIJKLM' 
+    id: '5915819999254' 
 
     trigger:
       platform: numeric_state
@@ -146,7 +146,7 @@
     ###    Service: script.uterum_window_light_off         ###
     ##########################################################
   - alias: Utebelysning off (>22:00:00, borta)
-    id: 'ABCDEFGHIJKLM' 
+    id: '2732476617933' 
 
     trigger:
       platform: time
@@ -168,7 +168,7 @@
     ### A: service: script.outside_light_off                      ###
     #################################################################
   - alias: Utebelysning off (>22:00:00, hemma, vardag)
-    id: 'ABCDEFGHIJKLM' 
+    id: '1560936705769' 
 
     trigger:
       platform: time
@@ -196,7 +196,7 @@
     ###    Service: script.uterum_window_light_off             ###
     ##############################################################
   - alias: Utebelysning off (All off, hemma, helg)
-    id: 'ABCDEFGHIJKLM' 
+    id: '5134859503467' 
 
     trigger:
       platform: state

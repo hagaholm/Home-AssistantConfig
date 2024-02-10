@@ -9,7 +9,7 @@
     ### A: input_select.light_garden = Tänt                       ###
     #################################################################
   - alias: Trädgårdsbelysning on (sensor on, <40)
-    id: 'ABCDEFGHIJKLM' 
+    id: '3424915007859' 
 
     trigger:
       platform: state
@@ -45,7 +45,7 @@
     ### A: input_select.light_garden = Tänt          ###
     ####################################################
   - alias: Trädgårdsbelysning on (home, <40) 
-    id: 'ABCDEFGHIJKLM' 
+    id: '2659740649379' 
 
     trigger:
       platform: numeric_state
@@ -83,7 +83,7 @@
     ### A: input_select.light_garden = Tänt                             ###
     #######################################################################
   - alias: Trädgårdsbelysning on (away, <40)
-    id: 'ABCDEFGHIJKLM' 
+    id: '7481459097506' 
 
     trigger:
       platform: numeric_state
@@ -116,7 +116,7 @@
     ### A: input_select.light_garden = Släckt         ###
     #####################################################
   - alias: Trädgårdsbelysning off (>60)
-    id: 'ABCDEFGHIJKLM' 
+    id: '1417486230078' 
 
     trigger:
       platform: numeric_state
@@ -143,7 +143,7 @@
     ### A: input_select.light_garden = Släckt          ###
     ######################################################
   - alias: Trädgårdsbelysning off
-    id: 'ABCDEFGHIJKLM' 
+    id: '6466592087797' 
 
     trigger:
       platform: state

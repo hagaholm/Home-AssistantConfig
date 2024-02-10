@@ -6,7 +6,7 @@
 ###    notify.pushbullet                    ###
 ###############################################
   - alias: Ringklocka tvättstuga dag
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: state
@@ -42,7 +42,7 @@
 ###    notify.pushbullet                    ###
 ###############################################
   - alias: Ringklocka tvättstuga natt
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: state
@@ -78,7 +78,7 @@
 ###    notify.pushbullet                  ###
 #############################################
   - alias: Ringklocka tvättstuga borta
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: state
@@ -114,7 +114,7 @@
 ###    notify.pushbullet                    ###
 ###############################################
   - alias: Ringklocka hall dag
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: state
@@ -150,7 +150,7 @@
 ###    notify.pushbullet                    ###
 ###############################################
   - alias: Ringklocka hall natt
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: state
@@ -186,7 +186,7 @@
 ###    notify.pushbullet                 ###
 ############################################
   - alias: Ringklocka hall borta
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: state
@@ -218,7 +218,7 @@
   ### Blinka med lyset när ringklocka ringer ###
   ##############################################
   - alias: Blinka med lyset när ringklocka ringer
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
     mode: single
 
     trigger:
@@ -266,7 +266,7 @@
 ###    script.away_lights_on                      ###
 #####################################################
   - alias: Ringklocka tänd allt lyse 1
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       - platform: state
@@ -307,7 +307,7 @@
 ###    script.goodnight_all                       ###
 #####################################################
   - alias: Ringklocka tänd allt lyse 2
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       - platform: state
@@ -340,7 +340,7 @@
     ### A: switch.ringklocka = off                    ###
     #####################################################
   - alias: Ringklocka off (-> borta)
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: state
@@ -357,7 +357,7 @@
     ### A: switch.ringklocka = on                 ###
     #################################################
   - alias: Ringklocka on (-> hemma)
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: state

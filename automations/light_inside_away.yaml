@@ -6,7 +6,7 @@
     ### A: input_select.light_inside = Bortabelysning             ###
     #################################################################
   - alias: Bortabelysning on (morgon)
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: time
@@ -36,7 +36,7 @@
     ### A: input_select.light_inside = Bortabelysning       ###
     ###########################################################
   - alias: Bortabelysning on (borta)
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       - platform: state
@@ -69,7 +69,7 @@
     ### A: input_select.light_inside = Bortabelysning       ###
     ###########################################################
   - alias: Bortabelysning on (mörkt)
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       - platform: state
@@ -102,7 +102,7 @@
     ### A: input_select.light_inside = Släckt  ###
     ##############################################
   - alias: Bortabelysning off (ljust)
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       - platform: state
@@ -132,7 +132,7 @@
     ### A: input_select.light_inside = Släckt     ###
     #################################################
   - alias: Bortabelysning off (kväll)
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: time

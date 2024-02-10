@@ -6,7 +6,7 @@
     ### A: input_select.light_kitchen = 100%             ###
     ########################################################
   - alias: Kök 100% (hemma på)
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
     mode: queued
 
     trigger:
@@ -38,7 +38,7 @@
     ### A: input_select.light_kitchen = 100%             ###
     ########################################################
   - alias: Kök 100% (borta)
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
     mode: queued
 
     trigger:
@@ -70,7 +70,7 @@
     ### A: input_select.light_kitchen = 100%                       ###
     ##################################################################
   - alias: Kök 100% (mörkt)
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
     mode: queued
 
     trigger:
@@ -102,7 +102,7 @@
     ### A: input_select.light_kitchen = 25%              ###
     ########################################################
   - alias: Kök 25% (hemma av)
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
     mode: queued
 
     trigger:
@@ -132,7 +132,7 @@
     ### A: input_select.light_kitchen = Släckt            ###
     #########################################################
   - alias: Kök off (ingen rörelse)
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
     mode: single
 
     trigger:
@@ -152,7 +152,7 @@
     ### A: input_boolean.rorelsedetektor_kok_aktiv = off ###
     ########################################################
   - alias: Kök off (borta)
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
     mode: single
 
     trigger:
@@ -171,7 +171,7 @@
     ### A: input_boolean.rorelsedetektor_kok_aktiv = off       ###
     ##############################################################
   - alias: Kök off (ljust)
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
     mode: single
 
     trigger:
@@ -196,7 +196,7 @@
     ### A: input_boolean.rorelsedetektor_kok_aktiv = off                  ###
     #########################################################################
   - alias: Kök Rörelsedetektor reset
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
     mode: single
 
     trigger:

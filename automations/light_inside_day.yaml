@@ -6,7 +6,7 @@
     ### A: input_select.light_inside = Bortabelysning ###
     #####################################################
   - alias: Dagbelysning on (morgon)
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: time
@@ -36,7 +36,7 @@
     ### A: input_select.light_inside = Dagbelysning      ###
     ########################################################
   - alias: Dagbelysning on (mörkt)
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       - platform: state
@@ -67,7 +67,7 @@
     ### A: input_select.light_inside = Dagbelysning ###
     ###################################################
   - alias: Dagbelysning on (hemma på)
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       - platform: state
@@ -98,7 +98,7 @@
     ### A: input_select.light_inside = Dagbelysning       ###
     #########################################################
   - alias: Dagbelysning on (sovrumsfönster on)
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: state
@@ -130,7 +130,7 @@
     ###    input_select.light_inside = Fönsterbelysning ###
     #######################################################
   - alias: Dagbelysning off (ljust)
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       - platform: state
@@ -168,7 +168,7 @@
     ### A: input_select.light_inside = Släckt  ###
     ##############################################
   - alias: Dagbelysning off (borta)
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       - platform: state
@@ -194,7 +194,7 @@
     ### A: light.bedroom = off                                          ###
     #######################################################################
   - alias: Dagbelysning -> Kvällsbelysning (sovrumsfönster off)
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: state

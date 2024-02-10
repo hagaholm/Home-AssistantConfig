@@ -5,7 +5,7 @@
   ### A: switch.garage_avfuktare = on   ###
   #########################################
 - alias: Starta avfuktare
-  id: ABCDEFGHIJKLM 
+  id: 'ABCDEFGHIJKLM' 
 
   trigger:
     platform: numeric_state
@@ -32,7 +32,7 @@
   ### A: switch.garage_avfuktare = off ###
   ########################################
 - alias: Stoppa avfuktare
-  id: ABCDEFGHIJKLM 
+  id: 'ABCDEFGHIJKLM' 
 
   trigger:
     platform: numeric_state

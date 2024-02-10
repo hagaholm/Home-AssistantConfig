@@ -31,6 +31,23 @@
       - service: switch.turn_off
         data:
           entity_id: switch.friggebod_fonster
+      - repeat:
+          count: 10
+          sequence:
+            - service: light.turn_off
+              entity_id: light.spabad_vagg
+            - service: light.turn_off
+              entity_id: light.friggebod_ute
+
+  ########################
+  ### Utebelysning off ###
+  ########################
+  outside_light_off:
+    alias: Utebelysning off
+    sequence:
+      - service: switch.turn_off
+        data:
+          entity_id: switch.friggebod_fonster
 #      - service: light.turn_off
 #        data:
 #          entity_id: light.spabad_vanster
@@ -39,7 +56,7 @@
 #          entity_id: light.spabad_hoger
   
       - repeat:
-        count: 10
-        sequence:
-          - service: light.turn_off
-            entity_id: light.friggebod_ute
+          count: 10
+          sequence:
+            - service: light.turn_off
+              entity_id: light.friggebod_ute

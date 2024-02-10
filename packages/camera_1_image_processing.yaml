@@ -201,7 +201,7 @@ automation:
   ### Turn on input_boolean.camera_1_active   ###
   ###############################################
   - alias: Camera 1 startup
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
     mode: single
 
     trigger:
@@ -231,7 +231,7 @@ automation:
   ### Turn off: input_boolean.camera_1_active ###
   ###############################################
   - alias: Camera 1 shutdown
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
     mode: single
 
     trigger:
@@ -253,7 +253,7 @@ automation:
   ### then delay value gets from input_number.camera_duration     ###  
   ###################################################################
   - alias: Camera 1 Image processing
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
     mode: single
     
     trigger:
@@ -281,7 +281,7 @@ automation:
   ### Camera 1 Animal detected ###
   ################################
   - alias: Camera 1 Animal detected
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
     mode: parallel
 
     # Object detected
@@ -329,7 +329,7 @@ automation:
   ### Camera 1 Person detected ###
   ################################
   - alias: Camera 1 Person detected
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
     mode: parallel
     max: 130 
 
@@ -414,7 +414,7 @@ automation:
   ### Camera 1 Person detected create video ###
   #############################################
   - alias: Camera 1 Person detected create video
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
     mode: parallel
 
     # Object detected

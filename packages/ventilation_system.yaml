@@ -179,7 +179,7 @@ automation:
     ###    Start timer timer.timer_humidity_bathroom_max_time  ###
     ##############################################################
   - alias: Startar max timer Badrum
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: state
@@ -204,7 +204,7 @@ automation:
     ###    Start timer timer.timer_humidity_bathroom       ###
     ##########################################################
   - alias: Restart timer Badrum
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
     mode: restart
 
     trigger:
@@ -239,7 +239,7 @@ automation:
     ### A: input_boolean.alarm_ventilation = on               ###
     #############################################################
   - alias: Sätt larm för vent 
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       - platform: state
@@ -274,7 +274,7 @@ automation:
     ### A: notify                                    ###
     ####################################################
   - alias: Badrumsfönster hög fukt larm
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: state
@@ -300,7 +300,7 @@ automation:
     ### A: notify.pushbullet                ###
     ###########################################
   - alias: Låg temp frånluft
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: numeric_state
@@ -328,7 +328,7 @@ automation:
     ### A: notify.pushbullet                ###
     ###########################################
   - alias: Hög temp frånluft
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: numeric_state
@@ -356,7 +356,7 @@ automation:
     ### A: notify.pushbullet               ###
     ##########################################
   - alias: Låg temp tilluft
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: numeric_state
@@ -384,7 +384,7 @@ automation:
     ### A: notify.pushbullet               ###
     ##########################################
   - alias: Hög temp tilluft
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: numeric_state
@@ -415,7 +415,7 @@ automation:
     ### A: switch.shelly1_c45bbe77099d = on ###
     ###########################################
   - alias: Forcerad Snabbt ökande fukt
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       - platform: state
@@ -443,7 +443,7 @@ automation:
     ### A: switch.shelly1_c45bbe77099d = on ###
     ###########################################
   - alias: Forcerad Badrumsfönster hög fukt
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       - platform: state
@@ -477,7 +477,7 @@ automation:
     ### A: switch.shelly1_c45bbe77099d = off ###
     ############################################
   - alias: Normal Badrumsfönster låg fukt
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: numeric_state
@@ -545,7 +545,7 @@ automation:
     ### A: switch.shelly1_c45bbe77099d = off                                                      ###
     #################################################################################################
   - alias: Normal Hög fukt i huset
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       - platform: time_pattern
@@ -587,7 +587,7 @@ automation:
     ### A: switch.shelly1_c45bbe77099d = 'off'                                        ###
     #####################################################################################
   - alias: Normal vid stabiliserad fukt 
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       # Timer finished after20 minutes
@@ -618,7 +618,7 @@ automation:
     ### A: switch.shelly1_c45bbe77099d = 'off'                                ###
     #############################################################################
   - alias: Normal efter maxtid 
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       # Timer finished after 90 minutes
@@ -645,7 +645,7 @@ automation:
     ###    timer_humidity_bathroom_max_time == timer.finished ###
     #############################################################
   - alias: Reset timer när vent sätts till Normal 
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: state
@@ -672,7 +672,7 @@ automation:
     ### A: switch.ventilationsaggregat = off          ###
     #####################################################
   - alias: Vent off (Borta, ute >24°C, <60%, Inne > 23°C)
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: state
@@ -731,7 +731,7 @@ automation:
     ### A: switch.ventilationsaggregat = off          ###
     #####################################################
   - alias: Vent off (Ute >24°C, Borta, <60%, Inne > 23°C)
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: numeric_state
@@ -789,7 +789,7 @@ automation:
     ### A: switch.ventilationsaggregat = off          ###
     #####################################################
   - alias: Vent off (<60%, Borta, Ute >24°C, Inne > 23°C)
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: numeric_state
@@ -847,7 +847,7 @@ automation:
     ### A: switch.ventilationsaggregat = off          ###
     #####################################################
   - alias: Vent off (Inne >23°C, Borta, <60%, Ute > 24°C)
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: numeric_state
@@ -905,7 +905,7 @@ automation:
     ### A: switch.ventilationsaggregat = on       ###
     #################################################
   - alias: Vent on (Hemma, Off)
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: state
@@ -950,7 +950,7 @@ automation:
     ### A: switch.ventilationsaggregat = on      ###
     ################################################
   - alias: Vent on (Ute <22°C, Off)
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: numeric_state
@@ -994,7 +994,7 @@ automation:
     ### A: switch.ventilationsaggregat = on   ###
     #############################################
   - alias: Vent on (>60%, Off)
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: numeric_state
@@ -1038,7 +1038,7 @@ automation:
     ### A: switch.ventilationsaggregat = on   ###
     #############################################
   - alias: Vent on (Inne <23°C, Off)
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: numeric_state

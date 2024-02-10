@@ -29,7 +29,7 @@ automation:
     ###    timer.timer_rorelsedetektor_kok_medium = start     ###
     #############################################################
   - alias: Startar timers kök
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       - platform: state
@@ -72,7 +72,7 @@ automation:
     ### A: input_boolean.rorelsedetektor_kok_aktiv = off            ###
     ###################################################################
   - alias: Stänger av rörelsedetektor kök reset
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       - platform: event
@@ -115,7 +115,7 @@ automation:
     ### A: input_boolean.rorelsedetektor_kok_aktiv = off      ###
     #############################################################
   - alias: Stänger av rörelsedetektor kök aktiv
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       - platform: event
@@ -140,7 +140,7 @@ automation:
     ### A: input_boolean.rorelsedetektor_kok_aktiv = off               ###
     ######################################################################
   - alias: Stänger av rörelsedetektor kök aktiv för nattbelysning
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       - platform: event

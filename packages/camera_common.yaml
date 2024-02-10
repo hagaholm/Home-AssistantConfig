@@ -178,7 +178,7 @@ automation:
   ### Activate camera mode Away ###
   #################################
   - alias: Camera mode Away
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       - platform: state
@@ -195,7 +195,7 @@ automation:
   ### Activate camera mode Day ###
   ################################
   - alias: Camera mode Day
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       - platform: state
@@ -212,7 +212,7 @@ automation:
   ### Activate camera mode Night ###
   ##################################
   - alias: Camera mode Night
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: state
@@ -229,7 +229,7 @@ automation:
   ### Delete old images ###
   #########################
   - alias: Camera move images
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       - platform: time
@@ -303,7 +303,7 @@ automation:
   ### Camera Motion Set duration time ###
   #######################################
   - alias: Camera Motion Set duration time
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
     mode: restart
 
     trigger:
@@ -342,7 +342,7 @@ automation:
   ### Camera Motion Reset duration time ###
   #########################################
   - alias: Camera Motion Day duration time
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       - platform: state
@@ -356,7 +356,7 @@ automation:
           value: 1500
 
   - alias: Camera Motion Away Night duration time
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       - platform: state
@@ -373,7 +373,7 @@ automation:
           value: 500
 
   - alias: Camera Motion Reset duration time
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       # Timer finished after 30 sec
@@ -397,7 +397,7 @@ automation:
           value: 500
 
   - alias: Cpu temp below 58.0
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: numeric_state
@@ -422,7 +422,7 @@ automation:
           value: 500
 
   - alias: Cpu temp 58.0
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: numeric_state
@@ -448,7 +448,7 @@ automation:
           value: 600
 
   - alias: Cpu temp 58.5
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: numeric_state
@@ -474,7 +474,7 @@ automation:
           value: 700
 
   - alias: Cpu temp 59.0
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: numeric_state
@@ -500,7 +500,7 @@ automation:
           value: 800
 
   - alias: Cpu temp 59.5
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: numeric_state
@@ -526,7 +526,7 @@ automation:
           value: 900
 
   - alias: Cpu temp above 59.5
-    id: ABCDEFGHIJKLM 
+    id: 'ABCDEFGHIJKLM' 
 
     trigger:
       platform: numeric_state

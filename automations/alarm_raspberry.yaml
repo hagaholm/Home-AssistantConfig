@@ -1,14 +1,14 @@
-    ####################################################
-    ### Hög temp Raspberry                           ###
-    ### T: system_monitor_processor_temperature > 70 ###
-    ### A: notify.pushbullet                         ###
-    ####################################################
+    ###########################################################
+    ### Hög temp Raspberry                                  ###
+    ### T: sensor.system_monitor_processor_temperature > 70 ###
+    ### A: notify.pushbullet                                ###
+    ###########################################################
   - alias: Hög temp Raspberry
     id: '5633269798813' 
 
     trigger:
       platform: numeric_state
-      entity_id: system_monitor_processor_temperature
+      entity_id: sensor.system_monitor_processor_temperature
       above: '70'
 
     action:

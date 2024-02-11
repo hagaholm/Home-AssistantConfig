@@ -13,3 +13,14 @@
 
     # 2022-01-04 18:35:18 ERROR (MainThread) [homeassistant.components.media_player] Error while setting up yamaha platform for media_player
     homeassistant.components.media_player: fatal
+
+    # 2024-02-11
+# 2024-02-11 16:59:02.175 ERROR (MainThread) [homeassistant.components.sensor] Error while setting up command_line platform for sensor
+#     Traceback (most recent call last):
+#   File "/usr/src/homeassistant/homeassistant/helpers/entity_platform.py", line 360, in _async_setup_platform
+#     await asyncio.shield(task)
+#   File "/usr/src/homeassistant/homeassistant/components/command_line/sensor.py", line 66, in async_setup_platform
+#     name: str = sensor_config[CONF_NAME]
+#                 ~~~~~~~~~~~~~^^^^^^^^^^^
+# TypeError: 'NoneType' object is not subscriptable
+    homeassistant.components.command_line: fatal

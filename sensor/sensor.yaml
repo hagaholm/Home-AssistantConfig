@@ -165,12 +165,12 @@
 ################
 # command_line #
 ################
-  - platform: command_line
-    name: CPU Temperature
-    command: "cat /sys/class/thermal/thermal_zone2/temp" # For raspberry use zone0
-    # If errors occur, remove degree symbol below
-    unit_of_measurement: "°C"
-    value_template: '{{ value | multiply(0.001) | round(1) | int(85) }}'
+#  - platform: command_line
+#    name: CPU Temperature
+#    command: "cat /sys/class/thermal/thermal_zone2/temp" # For raspberry use zone0
+#    # If errors occur, remove degree symbol below
+#    unit_of_measurement: "°C"
+#    value_template: '{{ value | multiply(0.001) | round(1) | int(85) }}'
 
 ##################
 # mold_indicator #

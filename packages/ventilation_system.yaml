@@ -9,111 +9,14 @@ sensor:
         value_template: "{{ (((states('sensor.Tilluft') | float ) - (states('sensor.Uteluft') | float ))  / ((states('sensor.Franluft') | float ) - (states('sensor.Uteluft') | float )) * 100) | round(1) }}"
         unit_of_measurement: "%"
 
-#      ute_changed:
-#        friendly_name: "Ute ändrad"
-#        icon: mdi:clock-outline
-#        state: >
-#            {% set t = states('sensor.time') %}
-#            {{ relative_time(states.sensor.ute.last_changed) }}
-
-#      ute_updated:
-#        friendly_name: "Ute uppdaterad"
-#        icon: mdi:clock-outline
-#        state: >
-#            {% set t = states('sensor.time') %}
-#            {{ relative_time(states.sensor.ute.last_updated) }}
-
-#      name: "Uteluft ändrat"
-#      icon: mdi:clock-outline
-#      state: >
-#          {% set t = states('sensor.time') %}
-#          {{ relative_time(states.sensor.uteluft.last_changed) }}
-
-#      name: "Uteluft uppdaterad"
-#      icon: mdi:clock-outline
-#      state: >
-#          {% set t = states('sensor.time') %}
-#          {{ relative_time(states.sensor.uteluft.last_updated) }}
-
-#      name: "Tilluft ändrat"
-#      icon: mdi:clock-outline
-#      state: >
-#          {% set t = states('sensor.time') %}
-#          {{ relative_time(states.sensor.tilluft.last_changed) }}
-
-#    sensor:
-#      name: "Tilluft uppdaterad"
-#      icon: mdi:clock-outline
-#      state: >
-#          {% set t = states('sensor.time') %}
-#          {{ relative_time(states.sensor.tilluft.last_updated) }}
-
-#    sensor:
-#      name: "Frånluft ändrat"
-#      icon: mdi:clock-outline
-#      state: >
-#          {% set t = states('sensor.time') %}
-#          {{ relative_time(states.sensor.franluft.last_changed) }}
-
-#    sensor:
-#      name: "Frånluft uppdaterad"
-#      icon: mdi:clock-outline
-#      state: >
-#          {% set t = states('sensor.time') %}
-#          {{ relative_time(states.sensor.franluft.last_updated) }}
-
-#    sensor:
-#      name: "Avluft ändrat"
-#      icon: mdi:clock-outline
-#      state: >
-#          {% set t = states('sensor.time') %}
-#          {{ relative_time(states.sensor.avluft.last_changed) }}
-
-#    sensor:
-#      name: "Avluft uppdaterad"
-#      icon: mdi:clock-outline
-#      state: >
-#          {% set t = states('sensor.time') %}
-#          {{ relative_time(states.sensor.avluft.last_updated) }}
-
-#    sensor:
-#      name: "Badrumsfönster fukt ändrat"
-#      icon: mdi:clock-outline
-#      state: >
-#          {% set t = states('sensor.time') %}
-#          {{ relative_time(states.sensor.fukt_badrumsfonster.last_changed) }}
-
-#    sensor:
-#      name: "Badrumsfönster fukt uppdaterad"
-#      icon: mdi:clock-outline
-#      state: >
-#          {% set t = states('sensor.time') %}
-#          {{ relative_time(states.sensor.fukt_badrumsfonster.last_updated) }}
-
-#    sensor:
-#      name: "Hall temp ändrat"
-#      icon: mdi:clock-outline
-#      state: >
-#          {% set t = states('sensor.time') %}
-#          {{ relative_time(states.sensor.lumi_lumi_weather_temperature_2.last_changed) }}
-
-#    sensor:
-#      name: "Hall temp uppdaterad"
-#      icon: mdi:clock-outline
-#      state: >
-#          {% set t = states('sensor.time') %}
-#          {{ relative_time(states.ssensor.lumi_lumi_weather_temperature_2.last_updated) }}
-
-
 ##############
 ### Switch ###
 ##############
-command_line:
-  - switch:
-      name: Fläkt Normal / Forcerad
-      command_on: python3 -c "import requests; requests.get('http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=on&PIO.A=CHANGE');"
-      command_off: python3 -c "import requests; requests.get('http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=CHANGE');"
-
+#command_line:
+#  - switch:
+#      name: Fläkt Normal / Forcerad
+#      command_on: python3 -c "import requests; requests.get('http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=on&PIO.A=CHANGE');"
+#      command_off: python3 -c "import requests; requests.get('http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=CHANGE');"
 
 # Hämta aktuell status: 'http://192.168.1.12:3001/text/12.A84D7D000000/PIO.A' 
 # Sätt till Off: 'http://192.168.1.12:3001/uncached/12.A84D7D000000/?PIO.A=CHANGE'
@@ -166,7 +69,6 @@ input_boolean:
   high_temp_tilluft:
     name: Högtemp tilluft 
     initial: off
-
 
 ##################
 ### Automation ###
@@ -640,7 +542,7 @@ automation:
 
     #############################################################
     ### Reset timer när ventilationen sätts till Normal       ###
-    ### T: switch.shelly1_c45bbe77099d == 'on                 ###
+    ### T: switch.shelly1_c45bbe77099d == 'off'               ###
     ### A: timer_humidity_bathroom == timer.finished          ###
     ###    timer_humidity_bathroom_max_time == timer.finished ###
     #############################################################
@@ -656,9 +558,9 @@ automation:
       # Cancel timer and reset to max time
       - service: timer.cancel
         entity_id: timer.timer_humidity_bathroom
-      - service: homeassistant.turn_off
-        entity_id: switch.shelly1_c45bbe77099d
-
+      - service: timer.cancel
+        entity_id: timer.timer_humidity_bathroom_max_time
+        
     #######################
     ### Ventilation off ###
     #######################

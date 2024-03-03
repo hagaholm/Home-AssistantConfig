@@ -1,7 +1,21 @@
   # Add an entry for each entity that you want to overwrite.
 
     switch.shelly1_c45bbe77099d:
-      friendly_name: Fläkt Normal / Forcerad
+      friendly_name: Ventilationsaggregat Normal / Forcerad
+      icon: mdi:fan
+    switch.ventilationsaggregat
+      friendly_name: Ventilationsaggregat On / Off
+      icon: mdi:power
+    
+    switch.friggebod_elvarme
+      friendly_name: Friggebod elvärme
+      icon: mdi:radiator
+      
+    switch.garage_elvarme
+      friendly_name: Förråd elvärme
+      icon: mdi:radiator
+
+
 
     # Aqara Rörelsedetektor
     binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse:
@@ -61,18 +75,22 @@
 
     sensor.lumi_lumi_weather_temperature:
       friendly_name: Badrum
+      icon: mdi:thermometer
+
     sensor.lumi_lumi_weather_humidity:
       friendly_name: Badrum
       icon: mdi:water-percent
 
     sensor.lumi_lumi_weather_temperature_2:
       friendly_name: Hall
+      icon: mdi:thermometer
     sensor.lumi_lumi_weather_humidity_2:
       friendly_name: Hall
       icon: mdi:water-percent
 
     sensor.lumi_lumi_weather_temperature_3:
       friendly_name: Uterum
+      icon: mdi:thermometer
     sensor.lumi_lumi_weather_humidity_3:
       friendly_name: Uterum
       icon: mdi:water-percent
@@ -81,6 +99,7 @@
 
     sensor.lumi_lumi_weather_temperature_4:
       friendly_name: Vardagsrum
+      icon: mdi:thermometer
     sensor.lumi_lumi_weather_humidity_4:
       friendly_name: Vardagsrum
       icon: mdi:water-percent
@@ -95,28 +114,35 @@
       icon: mdi:water-percent
     sensor.garage_temperature:
       friendly_name: Garage
+      icon: mdi:thermometer
     sensor.forrad_temperature:
       friendly_name: Förråd
+      icon: mdi:thermometer
     sensor.franluft:
       friendly_name: Frånluft
+      icon: mdi:thermometer
     sensor.friggebod_humidity:
       friendly_name: Friggebod
       icon: mdi:water-percent
     sensor.friggebod_temperature:
       friendly_name: Friggebod
+      icon: mdi:thermometer
     sensor.husvagn_temperature:
       friendly_name: Husvagn
+      icon: mdi:thermometer
     sensor.husvagn_humidity:
       friendly_name: Husvagn
       icon: mdi:water-percent
     sensor.frys_temperature:
       friendly_name: Frys
+      icon: mdi:thermometer
     sensor.fukt_badrumsfonster:
       friendly_name: Badrumsfönster
       icon: mdi:water-percent
 
     sensor.ute_friggebod_temperature:
       friendly_name: Ute friggebod
+      icon: mdi:thermometer
     sensor.inne_medel:
       friendly_name: Inne
       icon: mdi:thermometer
@@ -125,22 +151,28 @@
       icon: mdi:water-percent
     sensor.inne_grannen_temperature:
       friendly_name: Inne grannen
+      icon: mdi:thermometer
     sensor.kyl_temperature:
       friendly_name: Kyl
+      icon: mdi:thermometer
     sensor.louise_rum_humidity:
       friendly_name: Louise rum
       icon: mdi:water-percent
     sensor.louise_rum_temperature:
       friendly_name: Louise rum
+      icon: mdi:thermometer
     sensor.andreas_rum_temperature:
       friendly_name: Andreas rum
+      icon: mdi:thermometer
     sensor.tvattstuga_humidity:
       friendly_name: Tvättstuga
       icon: mdi:water-percent
     sensor.tvattstuga_temperature:
       friendly_name: Tvättstuga
+      icon: mdi:thermometer
     sensor.varmepump_temperature:
       friendly_name: Värmepump
+      icon: mdi:thermometer
 
 
 

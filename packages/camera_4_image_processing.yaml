@@ -262,8 +262,7 @@ automation:
 
       # Restart automation
       - service: automation.turn_on
-        target:
-          entity_id: automation.camera_4_image_processing
+        entity_id: automation.camera_4_image_processing
 
   ################################
   ### Camera 4 Animal detected ###

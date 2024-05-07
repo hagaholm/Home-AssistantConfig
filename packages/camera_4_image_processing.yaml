@@ -245,7 +245,7 @@ automation:
   ###################################################################################
   - alias: Camera 4 Image processing
     id: '0099648445436' 
-    mode: single
+    mode: queued
     
     trigger:
       - platform: state

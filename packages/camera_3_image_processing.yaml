@@ -242,7 +242,7 @@ automation:
   ###################################################################################
   - alias: Camera 3 Image processing
     id: '2947456156079'
-    mode: single
+    mode: queued
     
     trigger:
       - platform: state

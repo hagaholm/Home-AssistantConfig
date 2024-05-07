@@ -263,11 +263,12 @@ automation:
     
     action:
       # Add dynamic delay. input_number.camera_duration is controlled by another automation
-      - delay: milliseconds: "{{ states('input_number.camera_duration') }}"
+      - delay: 
+          milliseconds: "{{ states('input_number.camera_duration') }}"
 
       # Scan a new image
       - service: image_processing.scan
-        data: entity_id: image_processing.deepstack_camera_1
+        entity_id: image_processing.deepstack_camera_1
 
       # Restart automation
       - service: automation.turn_on

@@ -237,12 +237,12 @@ automation:
         data:
           entity_id: input_boolean.camera_2_active
 
-  ###################################################################
-  ### Start image processing, scan images for detection of object ###
-  ### If input_boolean.camera_2_active == on                      ###
-  ### Dynamic delay between each image processing is used,        ###
-  ### then delay value gets from input_number.camera_duration     ###  
-  ###################################################################
+  ###################################################################################
+  ### Start image processing, scan images for detection of object                 ###
+  ### If input_boolean.camera_2_active == on                                      ###
+  ### Get dynamic delay from input_number.camera_duration before image processing ###
+  ### Restart the automation when done                                            ###
+  ###################################################################################
   - alias: Camera 2 Image processing
     id: '2123182477247' 
     mode: single
@@ -253,20 +253,17 @@ automation:
         to: 'on'
     
     action:
-      repeat:
-        while:
-          - condition: state
-            entity_id: input_boolean.camera_2_active
-            state: 'on'
-        sequence:
-          # Scan a new image
-          - service: image_processing.scan
-            data:
-              entity_id: image_processing.deepstack_camera_2
+      # Add dynamic delay. input_number.camera_duration is controlled by another automation
+      - delay: milliseconds: "{{ states('input_number.camera_duration') }}"
 
-          # Add dynamic delay. input_number.camera_duration is controlled by another automation
-          - delay:
-              milliseconds: "{{ states('input_number.camera_duration') }}"
+      # Scan a new image
+      - service: image_processing.scan
+        data: entity_id: image_processing.deepstack_camera_2
+
+      # Restart automation
+      - service: automation.turn_on
+        target:
+          entity_id: automation.camera_2_image_processing
 
   ################################
   ### Camera 2 Animal detected ###

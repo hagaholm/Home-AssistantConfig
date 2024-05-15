@@ -254,12 +254,11 @@ automation:
   ###################################################################################
   - alias: Camera 1 Image processing
     id: '5331396906234' 
-    mode: queued
+    mode: single
     
     trigger:
-      - platform: state
-        entity_id: input_boolean.camera_1_active
-        to: 'on'
+      - platform: time_pattern
+        seconds: /1
     
     action:
       # Add dynamic delay. input_number.camera_duration is controlled by another automation
@@ -270,9 +269,6 @@ automation:
       - service: image_processing.scan
         entity_id: image_processing.deepstack_camera_1
 
-      # Restart automation
-      - service: automation.turn_on
-        entity_id: automation.camera_1_image_processing
 
   ################################
   ### Camera 1 Animal detected ###

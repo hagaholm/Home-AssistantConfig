@@ -154,9 +154,9 @@ input_number:
   # Used for control the delay time between image processing
   camera_duration:
     name: Kamera väntetid mellan bild analys
-    initial: 1500
+    initial: 800
     min: 0
-    max: 1500
+    max: 800
     step: 100
 
 ####################################################
@@ -353,7 +353,7 @@ automation:
       - service: input_number.set_value
         data_template:
           entity_id: input_number.camera_duration
-          value: 1500
+          value: 800
 
   - alias: Camera Motion Away Night duration time
     id: '3419168905037' 
@@ -370,7 +370,7 @@ automation:
       - service: input_number.set_value
         data_template:
           entity_id: input_number.camera_duration
-          value: 500
+          value: 0
 
   - alias: Camera Motion Reset duration time
     id: '5163139015885' 
@@ -394,7 +394,7 @@ automation:
       - service: input_number.set_value
         data_template:
           entity_id: input_number.camera_duration
-          value: 500
+          value: 0
 
   - alias: Cpu temp below 58.0
     id: '4113289240767' 
@@ -419,7 +419,7 @@ automation:
       - service: input_number.set_value
         data_template:
           entity_id: input_number.camera_duration
-          value: 500
+          value: 0
 
   - alias: Cpu temp 58.0
     id: '5368470951111' 
@@ -445,7 +445,7 @@ automation:
       - service: input_number.set_value
         data_template:
           entity_id: input_number.camera_duration
-          value: 600
+          value: 100
 
   - alias: Cpu temp 58.5
     id: '8193714345779' 
@@ -471,7 +471,7 @@ automation:
       - service: input_number.set_value
         data_template:
           entity_id: input_number.camera_duration
-          value: 700
+          value: 200
 
   - alias: Cpu temp 59.0
     id: '3555237535235' 
@@ -497,7 +497,7 @@ automation:
       - service: input_number.set_value
         data_template:
           entity_id: input_number.camera_duration
-          value: 800
+          value: 300
 
   - alias: Cpu temp 59.5
     id: '0950754600955' 
@@ -523,7 +523,7 @@ automation:
       - service: input_number.set_value
         data_template:
           entity_id: input_number.camera_duration
-          value: 900
+          value: 400
 
   - alias: Cpu temp above 59.5
     id: '1399937522999' 
@@ -548,7 +548,7 @@ automation:
       - service: input_number.set_value
         data_template:
           entity_id: input_number.camera_duration
-          value: 1000
+          value: 5000
 
 ##############
 ### Script ###

@@ -319,6 +319,12 @@ automation:
           dest_file: '/media/0/animal/{{ trigger.event.data.saved_file[41:] }}'
         service: shell_command.camera_4_mv_deepstack
 
+      # Send notify
+      - service: notify.pushbullet
+        data:
+          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+          message: "Camera 4 Djur detekterad"
+
   ################################
   ### Camera 4 Person detected ###
   ################################

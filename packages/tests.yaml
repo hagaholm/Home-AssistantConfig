@@ -5,7 +5,7 @@ script:
   # Test of sending message to mobile app
   test_notify_to_mobile_app_sm_a52b:
     sequence:
-      - service: notify.notify.mobile_app_SM-A52B
+      - service: notify.mobile_app_Micke
         data:
           title: "Test of notify. {{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           message: "Here is the message..."

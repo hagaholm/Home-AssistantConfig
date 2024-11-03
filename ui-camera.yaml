@@ -1,0 +1,322 @@
+title: Home
+views:
+  - path: kamera-gemensamt
+    title: Kamera gemensamt
+    badges: []
+    cards:
+      - entities:
+          - entity: automation.flash_light_if_person_detected
+        title: Ljus kontroll off
+        type: entities
+        state_color: true
+      - type: entities
+        entities:
+          - entity: sensor.deepstack_photo_files
+          - entity: sensor.motion_detected_photo_files
+          - entity: sensor.camera_animal_files
+          - entity: sensor.camera_day_files
+          - entity: sensor.camera_night_files
+          - entity: sensor.camera_away_files
+          - entity: sensor.camera_video_away_files
+          - entity: sensor.camera_video_night_files
+      - type: entities
+        entities:
+          - entity: sensor.day_0
+          - entity: sensor.day_1
+          - entity: sensor.day_2
+          - entity: sensor.day_3
+          - entity: sensor.day_4
+          - entity: sensor.day_5
+          - entity: sensor.day_6
+          - entity: sensor.day_7
+          - entity: sensor.day_8
+          - entity: sensor.day_9
+      - type: gauge
+        severity:
+          green: 0
+          yellow: 55
+          red: 60
+        needle: true
+        entity: sensor.processor_use
+        min: 0
+        max: 100
+      - type: gauge
+        severity:
+          green: 50
+          yellow: 58
+          red: 59
+        needle: true
+        entity: sensor.cpu_temperature
+        min: 55
+        max: 65
+      - type: gauge
+        severity:
+          green: 200
+          yellow: 300
+          red: 500
+        needle: true
+        entity: input_number.camera_duration
+        min: 0
+        max: 500
+      - type: grid
+        square: false
+        columns: 1
+        cards:
+          - type: picture-entity
+            entity: camera.kamera1_snapshots
+          - type: picture-entity
+            entity: camera.kamera2_snapshots
+          - type: picture-entity
+            entity: camera.kamera3_snapshots
+          - type: picture-entity
+            entity: camera.kamera4_snapshots
+      - entity: script.delete_camera_files
+        type: entity
+        name: Delete all camera files
+      - entity: script.delete_2_days_old_camera_files
+        type: entity
+        name: Delete more then 2 days old camera files
+      - entity: script.delete_5_days_old_camera_files
+        type: entity
+        name: Delete more then 5 days old camera files
+      - entity: script.delete_8_days_old_camera_files
+        type: entity
+        name: Delete more then 8 days old camera files
+      - entities:
+          - entity: automation.camera_mode_away
+          - entity: automation.camera_mode_day
+          - entity: automation.camera_mode_night
+          - entity: automation.camera_move_images
+          - entity: input_select.camera_mode
+        title: Gemensamma delar
+        type: entities
+        state_color: true
+      - entities:
+          - entity: automation.max_light_huvudentre_if_person_detected
+          - entity: automation.max_light_tvattstuga_fasad_if_person_detected
+          - entity: automation.max_light_friggebod_fasad_if_person_detected
+          - entity: automation.max_light_forrad_fasad_if_person_detected
+          - entity: automation.reset_light_huvudentre_when_switch_from_home_on
+          - entity: automation.reset_light_tvattstuga_fasad_if_person_no_detected
+          - entity: automation.reset_light_friggebod_fasad_if_person_no_detected
+          - entity: automation.reset_light_forrad_fasad_if_person_no_detected
+          - entity: automation.camera_3_light_control_on
+          - entity: automation.camera_3_light_control_off
+          - entity: automation.camera_2_light_control_on
+          - entity: automation.camera_2_light_control_off
+          - entity: automation.camera_light_control_on
+          - entity: automation.camera_light_control_off_3
+          - entity: automation.camera_light_control_off_2
+          - entity: automation.camera_2_max_light_on
+          - entity: automation.camera_2_max_light_off
+          - entity: automation.light_friggebod_on_if_person_detected_and_light_off
+          - entity: automation.light_friggebod_off_if_person_detected_and_light_off
+        title: Ljus kontroll
+        type: entities
+        state_color: true
+      - entities:
+          - entity: automation.camera_motion_set_duration_time
+          - entity: automation.camera_motion_reset_duration_time
+          - entity: timer.timer_camera_motion_detected
+          - entity: input_number.camera_duration
+        title: Dynamisk tid mellan bild analys
+        type: entities
+        state_color: true
+      - entities:
+          - entity: input_boolean.camera_3_light_control
+          - entity: input_boolean.camera_2_light_control
+          - entity: input_boolean.camera_light_control
+          - entity: input_boolean.camera_2_max_light
+          - entity: timer.timer_camera_3_light_control
+          - entity: timer.timer_camera_2_light_control
+        title: Ljus kontroll del 2
+        type: entities
+        state_color: true
+  - title: Kamera entré
+    path: kamera-2
+    badges: []
+    cards:
+      - entities:
+          - entity: input_boolean.camera_2_active
+            name: Aktiv
+          - entity: input_select.camera_mode
+            name: Mode
+          - entity: image_processing.deepstack_camera_2
+            name: Deepstack
+          - entity: sensor.camera_2_person
+          - entity: sensor.camera_2_animal
+          - entity: input_boolean.camera_2_recording_video
+            name: Rec video
+        title: Status Kamera
+        type: glance
+        state_color: true
+      - entity: camera.camera_2_latest_person
+        show_name: true
+        show_state: false
+        type: picture-entity
+      - type: picture-entity
+        entity: camera.camera_2_latest_person_away
+      - type: picture-entity
+        entity: camera.camera_2_latest_person_night
+      - type: picture-entity
+        entity: camera.camera_2_latest_animal
+      - type: entities
+        entities:
+          - entity: automation.camera_2_startup
+          - entity: automation.camera_2_shutdown
+          - entity: automation.camera_2_image_processing
+          - entity: automation.camera_2_person_detected
+          - entity: automation.camera_2_person_detected_create_video
+          - entity: automation.camera_2_animal_detected
+        state_color: true
+        show_header_toggle: true
+        title: Automationer
+      - type: entity
+        entity: input_text.camera_2_person_confidence
+      - type: entity
+        entity: input_text.camera_2_person_time_fired
+      - type: entities
+        entities:
+          - entity: timer.timer_camera_2_away_person_detected
+  - title: Kamera uppfart
+    path: kamera-3
+    badges: []
+    cards:
+      - entities:
+          - entity: input_boolean.camera_3_active
+            name: Aktiv
+          - entity: input_select.camera_mode
+            name: Mode
+          - entity: image_processing.deepstack_camera_3
+            name: Deepstack
+          - entity: sensor.camera_3_person
+          - entity: sensor.camera_3_animal
+          - entity: input_boolean.camera_3_recording_video
+            name: Rec video
+        title: Status Kamera
+        type: glance
+        state_color: true
+        show_state: true
+        show_name: true
+        show_icon: true
+      - entity: camera.camera_3_latest_person
+        show_name: true
+        show_state: false
+        type: picture-entity
+      - type: picture-entity
+        entity: camera.camera_3_latest_person_away
+      - type: picture-entity
+        entity: camera.camera_3_latest_person_night
+      - type: picture-entity
+        entity: camera.camera_3_latest_animal
+      - type: entities
+        entities:
+          - entity: automation.camera_3_startup
+          - entity: automation.camera_3_shutdown
+          - entity: automation.camera_3_image_processing
+          - entity: automation.camera_3_person_detected
+          - entity: automation.camera_3_person_detected_create_video
+          - entity: automation.camera_3_animal_detected
+        state_color: true
+        title: Automationer
+      - type: entity
+        entity: input_text.camera_3_person_confidence
+      - type: entity
+        entity: input_text.camera_3_person_time_fired
+      - type: entities
+        entities:
+          - entity: timer.timer_camera_3_away_person_detected
+      - type: picture-entity
+        entity: camera.kamera3_main
+  - title: Kamera friggebod
+    path: kamera-4
+    badges: []
+    cards:
+      - entities:
+          - entity: input_boolean.camera_4_active
+            name: Aktiv
+          - entity: input_select.camera_mode
+            name: Mode
+          - entity: image_processing.deepstack_camera_4
+            name: Deepstack
+          - entity: sensor.camera_4_person
+          - entity: sensor.camera_4_animal
+          - entity: input_boolean.camera_4_recording_video
+            name: Rec video
+        title: Status Kamera
+        type: glance
+        state_color: true
+        show_state: true
+        show_name: true
+        show_icon: true
+      - entity: camera.camera_4_latest_person
+        show_name: true
+        show_state: false
+        type: picture-entity
+      - type: picture-entity
+        entity: camera.camera_4_latest_person_away
+      - type: picture-entity
+        entity: camera.camera_4_latest_person_night
+      - type: picture-entity
+        entity: camera.camera_4_latest_animal
+      - type: entities
+        entities:
+          - entity: automation.camera_4_startup
+          - entity: automation.camera_4_shutdown
+          - entity: automation.camera_4_image_processing
+          - entity: automation.camera_4_person_detected
+          - entity: automation.camera_4_person_detected_create_video
+          - entity: automation.camera_4_animal_detected
+        state_color: true
+        title: Automationer
+      - type: entity
+        entity: input_text.camera_4_person_confidence
+      - type: entity
+        entity: input_text.camera_4_person_time_fired
+      - type: entities
+        entities:
+          - entity: timer.timer_camera_4_away_person_detected
+      - type: picture-entity
+        entity: camera.kamera4_main
+  - title: Kamera uteplats
+    path: kamera-1
+    badges: []
+    cards:
+      - entities:
+          - entity: input_boolean.camera_1_active
+            name: Aktiv
+          - entity: input_select.camera_mode
+            name: Mode
+          - entity: image_processing.deepstack_camera_1
+            name: Deepstack
+          - entity: sensor.camera_1_person
+          - entity: sensor.camera_1_animal
+          - entity: input_boolean.camera_1_recording_video
+            name: Rec video
+        title: Status Kamera
+        type: glance
+        state_color: true
+      - type: picture-entity
+        entity: camera.camera_1_latest_person_away
+      - type: picture-entity
+        entity: camera.camera_1_latest_person_night
+      - type: picture-entity
+        entity: camera.camera_1_latest_animal
+      - type: entities
+        entities:
+          - entity: automation.camera_1_startup
+          - entity: automation.camera_1_shutdown
+          - entity: automation.camera_1_image_processing
+          - entity: automation.camera_1_person_detected
+          - entity: automation.camera_1_person_detected_create_video
+          - entity: automation.camera_1_animal_detected
+        state_color: true
+        show_header_toggle: true
+        title: Automationer
+      - type: entity
+        entity: input_text.camera_1_person_confidence
+      - type: entity
+        entity: input_text.camera_1_person_time_fired
+      - type: entities
+        entities:
+          - entity: timer.timer_camera_1_away_person_detected

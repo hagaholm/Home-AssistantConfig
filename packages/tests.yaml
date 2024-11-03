@@ -3,7 +3,7 @@
 ##############
 script:
   # Test of sending message to mobile app
-  test_notify_to mobile_app_SM-A52B:
+  test_notify_to_mobile_app_SM-A52B:
     sequence:
       - service: notify.notify.mobile_app_SM-A52B
         data:

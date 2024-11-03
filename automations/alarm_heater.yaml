@@ -1,7 +1,7 @@
     ############################################
     ### Låg temp ackumulatortank             ###
     ### T: sensor.varmepump_temperature < 20 ###
-    ### A: notify.pushbullet                 ###
+    ### A: notify.mobile_app_sm_a528b        ###
     ############################################
   - alias: Låg temp ackumulatortank
     id: '5099658940929' 
@@ -12,14 +12,14 @@
       below: '20'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: "Larm! Låg temp ackumulatortank: {{ states('sensor.varmepump_temperature') }} {{ state_attr('sensor.varmepump_temperature', 'unit_of_measurement') }}"
 
     ############################################
     ### Hög temp ackumulatortank             ###
     ### T: sensor.varmepump_temperature > 52 ###
-    ### A: notify.pushbullet                 ###
+    ### A: notify.mobile_app_sm_a528b        ###
     ############################################
   - alias: Hög temp ackumulatortank
     id: '6125166678823' 
@@ -30,6 +30,6 @@
       above: '52'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: "Larm! Hög temp ackumulatortank: {{ states('sensor.varmepump_temperature') }} {{ state_attr('sensor.varmepump_temperature', 'unit_of_measurement') }}"

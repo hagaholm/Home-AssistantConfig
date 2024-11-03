@@ -3,7 +3,7 @@
 ### T: switch.ringklocka_tvattstuga == on   ###
 ### C: input_select.home_status == Hemma på ###
 ### A: switch.ringklocka_tvattstuga = off   ###
-###    notify.pushbullet                    ###
+###    notify.mobile_app_sm_a528b           ###
 ###############################################
   - alias: Ringklocka tvättstuga dag
     id: '4680276550082' 
@@ -25,7 +25,7 @@
         entity_id: switch.ringklocka_tvattstuga
       - delay:
           seconds: 5
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           message: "Ringklocka tvättstuga, dag"
@@ -39,7 +39,7 @@
 ### T: switch.ringklocka_tvattstuga == on   ###
 ### C: input_select.home_status == Hemma av ###
 ### A: switch.ringklocka_tvattstuga = off   ###
-###    notify.pushbullet                    ###
+###    notify.mobile_app_sm_a528b           ###
 ###############################################
   - alias: Ringklocka tvättstuga natt
     id: '8581808842331' 
@@ -61,7 +61,7 @@
         entity_id: switch.ringklocka_tvattstuga
       - delay:
           seconds: 5
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           message: "Ringklocka tvättstuga, natt"
@@ -75,7 +75,7 @@
 ### T: switch.ringklocka_tvattstuga == on ###
 ### C: input_select.home_status == borta  ###
 ### A: switch.ringklocka_tvattstuga = off ###
-###    notify.pushbullet                  ###
+###    notify.mobile_app_sm_a528b         ###
 #############################################
   - alias: Ringklocka tvättstuga borta
     id: '8856227519117' 
@@ -97,7 +97,7 @@
         entity_id: switch.ringklocka_tvattstuga
       - delay:
           seconds: 5
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           message: "Ringklocka tvättstuga, borta"
@@ -111,7 +111,7 @@
 ### T: switch.ringklocka_hall == on         ###
 ### C: input_select.home_status == Hemma på ###
 ### A: switch.ringklocka_hall = off         ###
-###    notify.pushbullet                    ###
+###    notify.mobile_app_sm_a528b           ###
 ###############################################
   - alias: Ringklocka hall dag
     id: '2011937267368' 
@@ -133,7 +133,7 @@
         entity_id: switch.ringklocka_hall
       - delay:
           seconds: 5
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           message: "Ringklocka hall, dag"
@@ -147,7 +147,7 @@
 ### T: switch.ringklocka_hall == on         ###
 ### C: input_select.home_status == Hemma av ###
 ### A: switch.ringklocka_hall = off         ###
-###    notify.pushbullet                    ###
+###    notify.mobile_app_sm_a528b           ###
 ###############################################
   - alias: Ringklocka hall natt
     id: '7558417871695' 
@@ -169,7 +169,7 @@
         entity_id: switch.ringklocka_hall
       - delay:
           seconds: 5
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           message: "Ringklocka hall, natt"
@@ -183,7 +183,7 @@
 ### T: switch.ringklocka_hall == on      ###
 ### C: input_select.home_status == borta ###
 ### A: switch.ringklocka_hall = off      ###
-###    notify.pushbullet                 ###
+###    notify.mobile_app_sm_a528b        ###
 ############################################
   - alias: Ringklocka hall borta
     id: '7706419791465' 
@@ -205,7 +205,7 @@
         entity_id: switch.ringklocka_hall
       - delay:
           seconds: 5
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           message: "Ringklocka hall, borta"

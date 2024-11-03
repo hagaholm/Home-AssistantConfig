@@ -1,7 +1,7 @@
     ######################################
     ### Hög temp Raspberry             ###
     ### T: sensor.cpu_temperature > 70 ###
-    ### A: notify.pushbullet           ###
+    ### A: notify.mobile_app_sm_a528b  ###
     ######################################
   - alias: Hög temp Raspberry
     id: '5633269798813' 
@@ -12,14 +12,14 @@
       above: '70'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: "Raspberry HOMEASS CPU hög temp"
 
     #####################################################
     ### Raspberry Pi B+ (1-Wire) - Offline            ###
     ### T: group.track_for_home_devices to 'not_home' ###
-    ### A: notify.pushbullet                          ###
+    ### A: notify.mobile_app_sm_a528b                 ###
     #####################################################
   - alias: Raspberry Pi B+ (1-Wire) - Offline
     id: '3286196096527' 
@@ -30,14 +30,14 @@
       to: 'not_home'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: "Raspberry Pi B+ (1-Wire) - Offline"
 
     #####################################################
     ### Raspberry Pi 3B (Hagaholm) - Offline          ###
     ### T: group.track_for_home_devices to 'not_home' ###
-    ### A: notify.pushbullet                          ###
+    ### A: notify.mobile_app_sm_a528b                 ###
     #####################################################
   - alias: Raspberry Pi 3B (Hagaholm) Offline
     id: '4476180256489' 
@@ -48,14 +48,14 @@
       to: 'not_home'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: "Raspberry Pi 3B (Hagaholm) - Offline"
 
     #####################################################
     ### Raspberry Pi 3B (Lux) - Offline               ###
     ### T: group.track_for_home_devices to 'not_home' ###
-    ### A: notify.pushbullet                          ###
+    ### A: notify.mobile_app_sm_a528b                 ###
     #####################################################
   - alias: Raspberry Pi 3B (Lux) Offline
     id: '6331068671219' 
@@ -66,14 +66,14 @@
       to: 'not_home'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: "Raspberry Pi 3B (Lux) - Offline"
 
     #####################################################
     ### Raspberry Pi 3B+ - Offline                    ###
     ### T: group.track_for_home_devices to 'not_home' ###
-    ### A: notify.pushbullet                          ###
+    ### A: notify.mobile_app_sm_a528b                 ###
     #####################################################
   - alias: Raspberry Pi 3B+ Offline
     id: '5793834656757' 
@@ -84,14 +84,14 @@
       to: 'not_home'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: "Raspberry Pi 3B+ - Offline"
 
     #####################################################
     ### Raspberry Pi 4B (Hassbian) - Offline          ###
     ### T: group.track_for_home_devices to 'not_home' ###
-    ### A: notify.pushbullet                          ###
+    ### A: notify.mobile_app_sm_a528b                 ###
     #####################################################
   - alias: Raspberry Pi 4B (Hassbian) Offline
     id: '3302518344852' 
@@ -102,6 +102,6 @@
       to: 'not_home'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: "Raspberry Pi 4B (Hassbian) - Offline"

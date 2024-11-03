@@ -15,7 +15,7 @@ automation:
         to: 'on'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: "Bilen startar"
       - service: automation.turn_off
@@ -34,7 +34,7 @@ automation:
         to: 'off'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: "Bilen stannar"
       - service: automation.turn_off

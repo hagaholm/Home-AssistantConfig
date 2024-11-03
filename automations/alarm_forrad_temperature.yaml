@@ -1,9 +1,9 @@
-    ######################################################
-    ### Varnar för hög temp i Förråd                   ###
-    ### T: sensor.forrad_temperature > 11              ###
-    ### C: sensor.ute < 5                              ###
-    ### A: notify.pushbullet "LARM! Hög temp i Förråd" ###
-    ######################################################
+    ###############################################################
+    ### Varnar för hög temp i Förråd                            ###
+    ### T: sensor.forrad_temperature > 11                       ###
+    ### C: sensor.ute < 5                                       ###
+    ### A: notify.mobile_app_sm_a528b "LARM! Hög temp i Förråd" ###
+    ###############################################################
   - alias: Förråd larm hög temp
     id: '0720252362419' 
 
@@ -26,16 +26,16 @@
           below: '5'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: "LARM! Hög temp i Förråd: {{ states('sensor.forrad_temperature') }} {{ state_attr('sensor.forrad_temperature', 'unit_of_measurement') }}"
 
-    ######################################################
-    ### Varnar för låg temp i Förråd                   ###
-    ### T: sensor.forrad_temperature < 4               ###
-    ### C: sensor.ute < 5                              ###
-    ### A: notify.pushbullet "LARM! Låg temp i Förråd" ###
-    ######################################################
+    ###############################################################
+    ### Varnar för låg temp i Förråd                            ###
+    ### T: sensor.forrad_temperature < 4                        ###
+    ### C: sensor.ute < 5                                       ###
+    ### A: notify.mobile_app_sm_a528b "LARM! Låg temp i Förråd" ###
+    ###############################################################
   - alias: Förråd larm låg temp
     id: '6116341527796' 
 
@@ -64,6 +64,6 @@
           below: '5'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: "LARM! Låg temp i Förråd: {{ states('sensor.forrad_temperature') }} {{ state_attr('sensor.forrad_temperature', 'unit_of_measurement') }}"

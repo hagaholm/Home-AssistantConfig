@@ -1,7 +1,7 @@
     ###############################################
     ### Ingen kontakt med förråd fasadbelysning ###
     ### T: light.forrad_fasad == unavailable    ###
-    ### A: notify.pushbullet                    ###
+    ### A: notify.mobile_app_sm_a528b           ###
     ###############################################
   - alias: Ingen kontakt med förråd fasadbelysning
     id: '7338664836264' 
@@ -12,14 +12,14 @@
       to: 'unavailable'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: 'Ingen kontakt med förråd fasadbelysning'
 
     ##################################################
     ### Ingen kontakt med friggebod fasadbelysning ###
     ### T: light.friggebod_fasad == unavailable    ###
-    ### A: notify.pushbullet                       ###
+    ### A: notify.mobile_app_sm_a528b              ###
     ##################################################
   - alias: Ingen kontakt med friggebod fasadbelysning
     id: '5022043152648' 
@@ -30,14 +30,14 @@
       to: 'unavailable'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: 'Ingen kontakt med friggebod fasadbelysning'
 
     ################################################
     ### Ingen kontakt med vardagsrum skänk       ###
     ### T: light.vardagsrum_skank == unavailable ###
-    ### A: notify.pushbullet                     ###
+    ### A: notify.mobile_app_sm_a528b            ###
     ################################################
   - alias: Ingen kontakt med vardagsrum skänk
     id: '7356461610079' 
@@ -48,14 +48,14 @@
       to: 'unavailable'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: 'Ingen kontakt med vardagsrum skänk'
 
     ###############################################
     ### Ingen kontakt med vardagsrum vagn       ###
     ### T: light.vardagsrum_vagn == unavailable ###
-    ### A: notify.pushbullet                    ###
+    ### A: notify.mobile_app_sm_a528b           ###
     ###############################################
   - alias: Ingen kontakt med vardagsrum vagn
     id: '7548905676269' 
@@ -66,14 +66,14 @@
       to: 'unavailable'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: 'Ingen kontakt med vardagsrum vagn'
 
     ###################################################
     ### Ingen kontakt med tvättstuga fasadbelysning ###
     ### T: light.tvattstugan_fasad == unavailable   ###
-    ### A: notify.pushbullet                        ###
+    ### A: notify.mobile_app_sm_a528b               ###
     ###################################################
   - alias: Ingen kontakt med tvättstuga fasadbelysning
     id: '7370087697383' 
@@ -84,14 +84,14 @@
       to: 'unavailable'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: 'Ingen kontakt med tvättstuga fasadbelysning'
 
     ##############################################
     ### Ingen kontakt med uterum fönster       ###
     ### T: light.uterum_fonster == unavailable ###
-    ### A: notify.pushbullet                   ###
+    ### A: notify.mobile_app_sm_a528b          ###
     ##############################################
   - alias: Ingen kontakt med uterum fönster 
     id: '5775648200365' 
@@ -102,14 +102,14 @@
       to: 'unavailable'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: 'Ingen kontakt med uterum fönster'
 
     ###################################################
     ### Ingen kontakt med fotogenlampa i uterum     ###
     ### T: light.uterum_fotogenlampa == unavailable ###
-    ### A: notify.pushbullet                        ###
+    ### A: notify.mobile_app_sm_a528b               ###
     ###################################################
   - alias: Ingen kontakt med fotogenlampa i uterum
     id: '7330489742231' 
@@ -120,14 +120,14 @@
       to: 'unavailable'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: 'Ingen kontakt med fotogenlampa i uterum'
 
     ##############################################################
     ### Ingen kontakt med friggebod brytare vid stora fönstret ###
     ### T: switch.friggebod_fonster == unavailable             ###
-    ### A: notify.pushbullet                                   ###
+    ### A: notify.mobile_app_sm_a528b                          ###
     ##############################################################
   - alias: Ingen kontakt med friggebod brytare vid stora fönstret
     id: '1767434803425' 
@@ -138,14 +138,14 @@
       to: 'unavailable'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: 'Ingen kontakt med friggebod brytare vid stora fönstret'
 
     #################################################
     ### Ingen kontakt med garage avfuktare        ###
     ### T: switch.garage_avfuktare == unavailable ###
-    ### A: notify.pushbullet                      ###
+    ### A: notify.mobile_app_sm_a528b             ###
     #################################################
   - alias: Ingen kontakt med garage avfuktare
     id: '3398822533924' 
@@ -156,14 +156,14 @@
       to: 'unavailable'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: 'Ingen kontakt med garage avfuktare'
 
     ###############################################
     ### Ingen kontakt med garage element        ###
     ### T: switch.garage_elvarme == unavailable ###
-    ### A: notify.pushbullet                    ###
+    ### A: notify.mobile_app_sm_a528b           ###
     ###############################################
   - alias: Ingen kontakt med garage elvärme
     id: '1865282099042' 
@@ -174,7 +174,7 @@
       to: 'unavailable'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: 'Ingen kontakt med garage elvärme'
 
@@ -185,7 +185,7 @@
     ############################################
     ### Kontakt med förråd fasadbelysning    ###
     ### T: light.forrad_fasad != unavailable ###
-    ### A: notify.pushbullet                 ###
+    ### A: notify.mobile_app_sm_a528b        ###
     ############################################
   - alias: Kontakt med förråd fasadbelysning
     id: '8367909789106' 
@@ -196,14 +196,14 @@
       from: 'unavailable'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: 'Kontakt med förråd fasadbelysning'
 
     ###############################################
     ### Kontakt med friggebod fasadbelysning    ###
     ### T: light.friggebod_fasad != unavailable ###
-    ### A: notify.pushbullet                    ###
+    ### A: notify.mobile_app_sm_a528b           ###
     ###############################################
   - alias: Kontakt med friggebod fasadbelysning
     id: '3134579676050' 
@@ -214,14 +214,14 @@
       from: 'unavailable'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: 'Kontakt med friggebod fasadbelysning'
 
     #################################################
     ### Kontakt med tvättstuga fasadbelysning     ###
     ### T: light.tvattstugan_fasad != unavailable ###
-    ### A: notify.pushbullet                      ###
+    ### A: notify.mobile_app_sm_a528b             ###
     #################################################
   - alias: Kontakt med tvättstuga fasadbelysning
     id: '5383553895744' 
@@ -232,14 +232,14 @@
       from: 'unavailable'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: 'Kontakt med tvättstuga fasadbelysning'
 
     ################################################
     ### Kontakt med vardagsrum skänk             ###
     ### T: light.vardagsrum_skank != unavailable ###
-    ### A: notify.pushbullet                     ###
+    ### A: notify.mobile_app_sm_a528b            ###
     ################################################
   - alias: Kontakt med vardagsrum skänk
     id: '2460248912353' 
@@ -250,14 +250,14 @@
       from: 'unavailable'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: 'Kontakt med vardagsrum skänk'
 
     ###############################################
     ### Kontakt med vardagsrum vagn             ###
     ### T: light.vardagsrum_vagn != unavailable ###
-    ### A: notify.pushbullet                    ###
+    ### A: notify.mobile_app_sm_a528b           ###
     ###############################################
   - alias: Kontakt med vardagsrum vagn
     id: '4199380667378' 
@@ -268,14 +268,14 @@
       from: 'unavailable'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: 'Kontakt med vardagsrum vagn'
 
     ##############################################
     ### Kontakt med uterum fönster             ###
     ### T: light.uterum_fonster != unavailable ###
-    ### A: notify.pushbullet                   ###
+    ### A: notify.mobile_app_sm_a528b          ###
     ##############################################
   - alias: Kontakt med uterum fönster 
     id: '4360940163018' 
@@ -286,14 +286,14 @@
       from: 'unavailable'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: 'Kontakt med uterum fönster'
 
     ###################################################
     ### Kontakt med fotogenlampa i uterum           ###
     ### T: light.uterum_fotogenlampa != unavailable ###
-    ### A: notify.pushbullet                        ###
+    ### A: notify.mobile_app_sm_a528b               ###
     ###################################################
   - alias: Kontakt med fotogenlampa i uterum
     id: '3742480343318' 
@@ -304,14 +304,14 @@
       from: 'unavailable'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: 'Kontakt med fotogenlampa i uterum'
 
     ########################################################
     ### Kontakt med friggebod brytare vid stora fönstret ###
     ### T: switch.friggebod_fonster != unavailable       ###
-    ### A: notify.pushbullet                             ###
+    ### A: notify.mobile_app_sm_a528b                    ###
     ########################################################
   - alias: Kontakt med friggebod brytare vid stora fönstret
     id: '6417433437904' 
@@ -322,14 +322,14 @@
       from: 'unavailable'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: 'Kontakt med friggebod brytare vid stora fönstret'
 
     #################################################
     ### Kontakt med garage avfuktare              ###
     ### T: switch.garage_avfuktare != unavailable ###
-    ### A: notify.pushbullet                      ###
+    ### A: notify.mobile_app_sm_a528b             ###
     #################################################
   - alias: Kontakt med garage avfuktare
     id: '7492173251603' 
@@ -340,14 +340,14 @@
       from: 'unavailable'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: 'Kontakt med garage avfuktare'
 
     ###############################################
     ### Kontakt med garage element              ###
     ### T: switch.garage_elvarme != unavailable ###
-    ### A: notify.pushbullet                    ###
+    ### A: notify.mobile_app_sm_a528b           ###
     ###############################################
   - alias: Kontakt med garage elvärme
     id: '6697221792740' 
@@ -358,6 +358,6 @@
       from: 'unavailable'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: 'Kontakt med garage elvärme'

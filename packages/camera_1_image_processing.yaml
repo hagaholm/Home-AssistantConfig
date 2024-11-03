@@ -396,7 +396,7 @@ automation:
         entity_id: timer.timer_camera_1_away_person_detected
 
       # Send notify
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           message: "Camera 1 Person detekterad away"

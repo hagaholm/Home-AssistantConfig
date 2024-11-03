@@ -1,8 +1,8 @@
-﻿    #####################################################
-    ### Varnar för hög temp i kylen                   ###
-    ### T: sensor.kyl_temperature > 10                ###
-    ### A: notify.pushbullet "LARM! Hög temp i kylen" ###
-    #####################################################
+    ##############################################################
+    ### Varnar för hög temp i kylen                            ###
+    ### T: sensor.kyl_temperature > 10                         ###
+    ### A: notify.mobile_app_sm_a528b "LARM! Hög temp i kylen" ###
+    ##############################################################
   - alias: Larm! Hög temp i kyl
     id: '9665695675546' 
 
@@ -12,15 +12,15 @@
       above: '10'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: "LARM! Hög temp i kylen: {{ states('sensor.kyl_temperature') }} {{ state_attr('sensor.kyl_temperature', 'unit_of_measurement') }}"
 
-    #####################################################
-    ### Varnar för låg temp i kylen                   ###
-    ### T: sensor.kyl_temperature < 3                 ###
-    ### A: notify.pushbullet "LARM! Låg temp i kylen" ###
-    #####################################################
+    ##############################################################
+    ### Varnar för låg temp i kylen                            ###
+    ### T: sensor.kyl_temperature < 3                          ###
+    ### A: notify.mobile_app_sm_a528b "LARM! Låg temp i kylen" ###
+    ##############################################################
   - alias: Larm! Låg temp i kyl
     id: '8148240711901' 
 
@@ -30,6 +30,6 @@
       below: '3'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: "LARM! Låg temp i kylen: {{ states('sensor.kyl_temperature') }} {{ state_attr('sensor.kyl_temperature', 'unit_of_measurement') }}"

@@ -192,14 +192,14 @@ automation:
       - service: input_boolean.turn_on
         data:
           entity_id: input_boolean.high_humidity_bathroom_away
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: "Larm! Hög fukt i badrummet {{ states('sensor.fukt_badrumsfonster') }} {{ state_attr('sensor.fukt_badrumsfonster', 'unit_of_measurement') }}, ingen är hemma"
 
     ###########################################
     ### Larm! Låg temp ventilation frånluft ###
     ### T: sensor.Franluft < 17             ###
-    ### A: notify.pushbullet                ###
+    ### A: notify.mobile_app_sm_a528b       ###
     ###########################################
   - alias: Låg temp frånluft
     id: '9429831261148' 
@@ -220,14 +220,14 @@ automation:
       - service: input_boolean.turn_on
         data:
           entity_id: input_boolean.low_temp_franluft
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: "Larm! Låg temp frånluft ventilation: {{ states('sensor.Franluft') }} {{ state_attr('sensor.Franluft', 'unit_of_measurement') }}"
 
     ###########################################
     ### Larm! Hög temp ventilation frånluft ###
     ### T: sensor.Franluft > 35             ###
-    ### A: notify.pushbullet                ###
+    ### A: notify.mobile_app_sm_a528b       ###
     ###########################################
   - alias: Hög temp frånluft
     id: '9899866850141' 
@@ -248,14 +248,14 @@ automation:
       - service: input_boolean.turn_on
         data:
           entity_id: input_boolean.high_temp_franluft
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: "Larm! Hög temp frånluft ventilation: {{ states('sensor.Franluft') }} {{ state_attr('sensor.Franluft', 'unit_of_measurement') }}"
 
     ##########################################
     ### Larm! Låg temp ventilation tilluft ###
     ### T: sensor.Tilluft < 12             ###
-    ### A: notify.pushbullet               ###
+    ### A: notify.mobile_app_sm_a528b      ###
     ##########################################
   - alias: Låg temp tilluft
     id: '4486107333202' 
@@ -276,14 +276,14 @@ automation:
       - service: input_boolean.turn_on
         data:
           entity_id: input_boolean.low_temp_tilluft
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: "Larm! Låg temp tilluft ventilation: {{ states('sensor.Tilluft') }} {{ state_attr('sensor.Tilluft', 'unit_of_measurement') }}"
 
     ##########################################
     ### Larm! Hög temp ventilation tilluft ###
     ### T: sensor.Tilluft > 35             ###
-    ### A: notify.pushbullet               ###
+    ### A: notify.mobile_app_sm_a528b      ###
     ##########################################
   - alias: Hög temp tilluft
     id: '0562422564630' 
@@ -304,7 +304,7 @@ automation:
       - service: input_boolean.turn_on
         data:
           entity_id: input_boolean.high_temp_tilluft
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: "Larm! Hög temp tilluft ventilation: {{ states('sensor.Tilluft') }} {{ state_attr('sensor.Tilluft', 'unit_of_measurement') }}"
 
@@ -620,7 +620,7 @@ automation:
       - delay: '00:00:05'
       - service: homeassistant.turn_off
         entity_id: switch.ventilationsaggregat
-#      - service: notify.pushbullet
+#      - service: notify.mobile_app_sm_a528b
 #        data:
 #          message: 'Ventilation off (Borta, ute >24°C, <60%, Inne > 23°C)'
 
@@ -678,7 +678,7 @@ automation:
       - delay: '00:00:05'
       - service: homeassistant.turn_off
         entity_id: switch.ventilationsaggregat
-#      - service: notify.pushbullet
+#      - service: notify.mobile_app_sm_a528b
 #        data:
 #          message: Ventilation off (Ute >24°C, Borta, <60%, Inne > 23°C)
 
@@ -736,7 +736,7 @@ automation:
       - delay: '00:00:05'
       - service: homeassistant.turn_off
         entity_id: switch.ventilationsaggregat
-#      - service: notify.pushbullet
+#      - service: notify.mobile_app_sm_a528b
 #        data:
 #          message: 'Ventilation off (<60%, Borta, Ute >24°C, Inne > 23°C)'
 
@@ -794,7 +794,7 @@ automation:
       - delay: '00:00:05'
       - service: homeassistant.turn_off
         entity_id: switch.ventilationsaggregat
-#      - service: notify.pushbullet
+#      - service: notify.mobile_app_sm_a528b
 #        data:
 #          message: Ventilation off (Inne >23°C, Borta, <60%, Ute > 24°C)
 
@@ -842,7 +842,7 @@ automation:
       - delay: '00:00:05'
       - service: homeassistant.turn_on
         entity_id: switch.ventilationsaggregat
-#      - service: notify.pushbullet
+#      - service: notify.mobile_app_sm_a528b
 #        data:
 #          message: 'Ventilation on (Hemma, Off)'
 
@@ -886,7 +886,7 @@ automation:
       - delay: '00:00:05'
       - service: homeassistant.turn_on
         entity_id: switch.ventilationsaggregat
-#      - service: notify.pushbullet
+#      - service: notify.mobile_app_sm_a528b
 #        data:
 #          message: 'Ventilation on (Ute <22°C, Off)'
 
@@ -930,7 +930,7 @@ automation:
       - delay: '00:00:05'
       - service: homeassistant.turn_on
         entity_id: switch.ventilationsaggregat
-#      - service: notify.pushbullet
+#      - service: notify.mobile_app_sm_a528b
 #        data:
 #          message: 'Ventilation on (>60%, Off)'
 
@@ -974,6 +974,6 @@ automation:
       - delay: '00:00:05'
       - service: homeassistant.turn_on
         entity_id: switch.ventilationsaggregat
-#      - service: notify.pushbullet
+#      - service: notify.mobile_app_sm_a528b
 ##        data:
 #          message: 'Ventilation on (Inne <23°C, Off)'

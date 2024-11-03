@@ -1,9 +1,9 @@
-    #########################################################
-    ### Varnar för hög temp i Friggebod                   ###
-    ### T: sensor.friggebod_temperature > 23              ###
-    ### C: sensor.ute < 15                                ###
-    ### A: notify.pushbullet "LARM! Hög temp i Friggebod" ###
-    #########################################################
+    ##################################################################
+    ### Varnar för hög temp i Friggebod                            ###
+    ### T: sensor.friggebod_temperature > 23                       ###
+    ### C: sensor.ute < 15                                         ###
+    ### A: notify.mobile_app_sm_a528b "LARM! Hög temp i Friggebod" ###
+    ##################################################################
   - alias: Friggebod larm hög temp
     id: '8904329147725' 
 
@@ -20,16 +20,16 @@
           below: '15'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: "LARM! Hög temp i Friggebod: {{ states('sensor.friggebod_temperature') }} {{ state_attr('sensor.friggebod_temperature', 'unit_of_measurement') }}"
 
-    #########################################################
-    ### Varnar för låg temp i Friggebod                   ###
-    ### T: sensor.friggebod_temperature < 19              ###
-    ### C: sensor.ute < 15                                ###
-    ### A: notify.pushbullet "LARM! Låg temp i Friggebod" ###
-    #########################################################
+    ##################################################################
+    ### Varnar för låg temp i Friggebod                            ###
+    ### T: sensor.friggebod_temperature < 19                       ###
+    ### C: sensor.ute < 15                                         ###
+    ### A: notify.mobile_app_sm_a528b "LARM! Låg temp i Friggebod" ###
+    ##################################################################
   - alias: Friggebod larm låg temp
     id: '3853132210260' 
 
@@ -46,15 +46,15 @@
           below: '15'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: "LARM! Låg temp i Friggebod: {{ states('sensor.friggebod_temperature') }} {{ state_attr('sensor.friggebod_temperature', 'unit_of_measurement') }}"
 
-    #######################################################
-    ### Frysvakt Friggebod                              ###
-    ### T: sensor.friggebod_temperature < 3             ###
-    ### A: notify.pushbullet "LARM! Frysvakt Friggebod" ###
-    #######################################################
+    ################################################################
+    ### Frysvakt Friggebod                                       ###
+    ### T: sensor.friggebod_temperature < 3                      ###
+    ### A: notify.mobile_app_sm_a528b "LARM! Frysvakt Friggebod" ###
+    ################################################################
   - alias: Friggebod frysvakt
     id: '8790714161214' 
 
@@ -64,6 +64,6 @@
       below: '3'
 
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           message: "LARM! Frysvakt Friggebod: {{ states('sensor.friggebod_temperature') }} {{ state_attr('sensor.friggebod_temperature', 'unit_of_measurement') }}"

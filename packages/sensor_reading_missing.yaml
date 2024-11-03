@@ -467,7 +467,7 @@ automation:
     action:
       - service: homeassistant.turn_on
         entity_id: input_boolean.frys_reading_missing_alarm
-#      - service: notify.pushbullet
+#      - service: notify.mobile_app_sm_a528b
 #        data:
 #          message: 'Frys - ingen avläsning på 2 timmar'
 #########################################################
@@ -495,7 +495,7 @@ automation:
     action:
       - service: homeassistant.turn_on
         entity_id: input_boolean.kyl_reading_missing_alarm
-#      - service: notify.pushbullet
+#      - service: notify.mobile_app_sm_a528b
 #        data:
 #          message: 'Kyl - ingen avläsning på 2 timmar'
 #########################################################
@@ -532,7 +532,7 @@ automation:
     action:
       - service: homeassistant.turn_on
         entity_id: input_boolean.badrum_reading_missing_alarm
-#      - service: notify.pushbullet
+#      - service: notify.mobile_app_sm_a528b
 #        data:
 #          message: 'Badrum - ingen avläsning på 2 timmar'
 #########################################################
@@ -569,7 +569,7 @@ automation:
     action:
       - service: homeassistant.turn_on
         entity_id: input_boolean.tvattstuga_reading_missing_alarm
-#      - service: notify.pushbullet
+#      - service: notify.mobile_app_sm_a528b
 #        data:
 #          message: 'Badrum - ingen avläsning på 2 timmar'
 #########################################################
@@ -597,7 +597,7 @@ automation:
     action:
       - service: homeassistant.turn_on
         entity_id: input_boolean.varmepump_reading_missing_alarm
-#      - service: notify.pushbullet
+#      - service: notify.mobile_app_sm_a528b
 #        data:
 #          message: 'Värmepump - ingen avläsning på 2 timmar'
 #########################################################
@@ -625,7 +625,7 @@ automation:
     action:
       - service: homeassistant.turn_on
         entity_id: input_boolean.vardagsrum_reading_missing_alarm
-#      - service: notify.pushbullet
+#      - service: notify.mobile_app_sm_a528b
 #        data:
 #          message: 'Vardagsrum - ingen avläsning på 2 timmar'
 #########################################################
@@ -662,7 +662,7 @@ automation:
     action:
       - service: homeassistant.turn_on
         entity_id: input_boolean.hall_reading_missing_alarm
-#      - service: notify.pushbullet
+#      - service: notify.mobile_app_sm_a528b
 #        data:
 #          message: 'Hall - ingen avläsning på 2 timmar'
 #########################################################
@@ -699,7 +699,7 @@ automation:
     action:
       - service: homeassistant.turn_on
         entity_id: input_boolean.garage_reading_missing_alarm
-#      - service: notify.pushbullet
+#      - service: notify.mobile_app_sm_a528b
 #        data:
 #          message: 'Garage - ingen avläsning på 2 timmar'
 #########################################################
@@ -727,7 +727,7 @@ automation:
     action:
       - service: homeassistant.turn_on
         entity_id: input_boolean.forrad_reading_missing_alarm
-#      - service: notify.pushbullet
+#      - service: notify.mobile_app_sm_a528b
 #        data:
 #          message: 'Förråd - ingen avläsning på 2 timmar'
 #########################################################
@@ -764,7 +764,7 @@ automation:
     action:
       - service: homeassistant.turn_on
         entity_id: input_boolean.friggebod_reading_missing_alarm
-#      - service: notify.pushbullet
+#      - service: notify.mobile_app_sm_a528b
 #        data:
 #          message: 'Friggebod - ingen avläsning på 2 timmar'
 #########################################################
@@ -800,7 +800,7 @@ automation:
     action:
       - service: homeassistant.turn_on
         entity_id: input_boolean.ute_friggebod_reading_missing_alarm
-#      - service: notify.pushbullet
+#      - service: notify.mobile_app_sm_a528b
 #        data:
 #          message: 'Friggebod - ingen avläsning på 2 timmar'
 #########################################################

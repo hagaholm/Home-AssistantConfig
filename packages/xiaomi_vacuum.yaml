@@ -354,7 +354,7 @@ automation:
         entity_id: vacuum.xiaomi_vacuum_cleaner
         to: "error"
     action:
-      - service: notify.pushbullet
+      - service: notify.mobile_app_sm_a528b
         data:
           title: "Dammsugaren har problem"
           message: "Sitter fast eller vill bara ha lite uppmärksamhet"

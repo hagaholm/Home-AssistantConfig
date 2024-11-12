@@ -85,11 +85,15 @@ input_text:
     name: Camera 5 person time fired
   camera_5_person_confidence:
     name: Camera 5 person confidence
+  camera_5_person_saved_file:
+    name: Camera 5 person saved file
 
   camera_5_animal_time_fired:
     name: Camera 5 animal time fired
   camera_5_animal_confidence:
     name: Camera 5 animal confidence
+  camera_5_animal_saved_file:
+    name: Camera 5 animal saved file
 
   camera_5_trigger_light_on:
     name: Camera 5 trigger light on
@@ -286,8 +290,8 @@ automation:
   ### Camera 5 Animal detected ###
   ################################
   - alias: Camera 5 Animal detected
-    id: '1416857464757' 
-    mode: parallel
+    id: '8116220452311' 
+    mode: single
 
     # Object detected
     trigger:
@@ -325,35 +329,19 @@ automation:
         entity_id: input_text.camera_5_animal_confidence
         data_template:
           value: '{{ trigger.event.data.confidence }}'
-
-
-      # Delay 1 sec to be sure the images is saved
-      - delay:
-          seconds: 1
-
-      # Move images to correct /media folder
-      - data:
-          source_file: '/config/camera/deepstack_photo/deepstack_camera_5_latest.jpg'
-          dest_file: '/media/0/animal/camera_5_latest.jpg'
-        service: shell_command.camera_5_mv_deepstack
-      - data:
-          source_file: '{{ trigger.event.data.saved_file }}'
-          dest_file: '/media/0/animal/{{ trigger.event.data.saved_file[41:] }}'
-        service: shell_command.camera_5_mv_deepstack
-
-      # Send notify
-      - service: notify.mobile_app_sm_a528b
-        data:
-          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-          message: "Camera 5 Djur detekterad"
+      # Get saved file
+      - service: input_text.set_value
+        entity_id: input_text.camera_5_animal_saved_file
+        data_template:
+          value: '{{ trigger.event.data.saved_file }}'
+      
 
   ################################
   ### Camera 5 Person detected ###
   ################################
   - alias: Camera 5 Person detected
-    id: '8116100082377' 
-    mode: parallel
-    max: 130 
+    id: '8116220452312' 
+    mode: single
 
     # Object detected
     trigger:
@@ -386,129 +374,168 @@ automation:
         entity_id: input_text.camera_5_person_confidence
         data_template:
           value: '{{ trigger.event.data.confidence }}'
+      # Get saved file
+      - service: input_text.set_value
+        entity_id: input_text.camera_5_person_saved_file
+        data_template:
+          value: '{{ trigger.event.data.saved_file }}'
 
+  #########################################
+  ### Camera 5 Animal is confidence day ###
+  #########################################
+  - alias: Camera 5 Animal is confidence day
+    id: '1416857464757' 
+    mode: single
+
+    trigger:
+      - platform: template
+          value_template: >
+            {{ states('input_text.camera_5_animal_confidence') | float > states('input_text.camera_5_trigger_image_day') | float }}
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: switch.kamera5_infra_red_lights_in_night_mode
+          state: 'off'
+
+    action:
       # Delay 1 sec to be sure the images is saved
       - delay:
           seconds: 1
 
-      # If Camera mode is Away, then wait until it has changed to another mode or continue after 120 sec
-      - wait_template: "{{ not is_state('input_select.camera_mode', 'Away') }}"
-        timeout: 120
-        continue_on_timeout: true
-
-      # Move images
+      # Move images to correct /media folder
       - data:
           source_file: '/config/camera/deepstack_photo/deepstack_camera_5_latest.jpg'
-          dest_file: "/media/0/{{ states('input_select.camera_mode') }}/camera_5_latest.jpg"
+          dest_file: '/media/0/animal/camera_5_latest.jpg'
         service: shell_command.camera_5_mv_deepstack
       - data:
           source_file: '{{ trigger.event.data.saved_file }}'
-          dest_file: "/media/0/{{ states('input_select.camera_mode') }}/{{ trigger.event.data.saved_file[41:] }}"
+          dest_file: '/media/0/animal/{{ input_text.camera_5_animal_saved_file[41:] }}'
         service: shell_command.camera_5_mv_deepstack
-
-      # If Camera mode is Away, then continue
-      - condition: state
-        entity_id: input_select.camera_mode
-        state: 'Away'
-
-      # If timer is idle, then continue
-      - condition: state
-        entity_id: timer.timer_camera_5_away_person_detected
-        state: idle
-
-      # Cancel timer and reset to max time
-      - service: timer.cancel
-        entity_id: timer.timer_camera_5_away_person_detected
-
-      # Start timer and count down
-      - service: timer.start
-        entity_id: timer.timer_camera_5_away_person_detected
 
       # Send notify
       - service: notify.mobile_app_sm_a528b
         data:
           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-          message: "Camera 5 Person detekterad away"
-          data:
-            file: "/media/0/{{ states('input_select.camera_mode') }}/{{ trigger.event.data.saved_file[41:] }}"
+          message: "Camera 5 Djur detekterad dag"
 
-  #############################################
-  ### Camera 5 Person detected create video ###
-  #############################################
-  - alias: Camera 5 Person detected create video
-    id: '9999129171319' 
-    mode: parallel
+  ###########################################
+  ### Camera 5 Animal is confidence night ###
+  ###########################################
+  - alias: Camera 5 Animal is confidence night 
+    id: '1416857464757' 
+    mode: single
 
-    # Object detected
     trigger:
-      - platform: event
-        event_type: deepstack.object_detected
+      - platform: template
+          value_template: >
+            {{ states('input_text.camera_5_animal_confidence') | float > states('input_text.camera_5_trigger_image_night') | float }}
 
-   # Need to be a person on the image from camera 5
     condition:
       condition: and
       conditions:
-      
-        # Needs to be image processing from camera 5
-        - condition: template
-          value_template: >
-            {{ trigger.event.data.entity_id == 'image_processing.deepstack_camera_5' }}
-
-        # Person on image is needed
-        - condition: template
-          value_template: >
-            {{ trigger.event.data.object_type == 'person' }}
-
-        # Only start record if no ongoing record
         - condition: state
-          entity_id: input_boolean.camera_5_recording_video
-          state: 'off'
-
-        # Never record if camera mode is Day
-        - condition: template
-          value_template: >
-            {{ not is_state('input_select.camera_mode', 'Day') }}
+          entity_id: switch.kamera5_infra_red_lights_in_night_mode
+          state: 'on'
 
     action:
-      # Videos vill be left if camera mode changes to Day when recording, start to delete these files 
-      - service: shell_command.camera_5_delete_videos
-
-      # Turn on: input_boolean.camera_5_recording_video
-      - service: input_boolean.turn_on
-        entity_id: input_boolean.camera_5_recording_video
-
-      # Save a video with timestamp to '/config/camera/motion_detected/camera_5_YYYYMMDD-HHMMSS.mp4'
-      - service: camera.record
-        data:
-          entity_id: camera.kamera5_main
-          filename: "/config/camera/motion_detected/camera_5_{{ states('input_select.camera_mode') }}_{{ trigger.event.data.saved_file[41:-4] }}.mp4"
-          lookback: 0
-          duration: 60
-
-      # Delay 70 sec to be sure the video is stopped and saved
+      # Delay 1 sec to be sure the images is saved
       - delay:
-          seconds: 70
+          seconds: 1
 
-      - service: input_boolean.turn_off
-        entity_id: input_boolean.camera_5_recording_video
-
-      # Delay 50 sec, need to wait 120 sec until sure nobody get home
-      - delay:
-          seconds: 50
-
-      # If not Day, then continue
-      - condition: template
-        value_template: >
-          {{ not is_state('input_select.camera_mode', 'Day') }}
-
-      # Copy video
+      # Move images to correct /media folder
       - data:
-          source_file: "/config/camera/motion_detected/camera_5_{{ states('input_select.camera_mode') }}_{{ trigger.event.data.saved_file[41:-4] }}.mp4"
-          dest_file: "/media/0/video_{{ states('input_select.camera_mode') }}/camera_5_video_latest.mp4"
-        service: shell_command.camera_5_cp_deepstack
-
-      # Move video
-      - data:
-          source_file: "/config/camera/motion_detected/camera_5_{{ states('input_select.camera_mode') }}_{{ trigger.event.data.saved_file[41:-4] }}.mp4"
-          dest_file: "/media/0/video_{{ states('input_select.camera_mode') }}/camera_5_{{ trigger.event.data.saved_file[41:-4] }}.mp4"
+          source_file: '/config/camera/deepstack_photo/deepstack_camera_5_latest.jpg'
+          dest_file: '/media/0/animal/camera_5_latest.jpg'
         service: shell_command.camera_5_mv_deepstack
+      - data:
+          source_file: '{{ trigger.event.data.saved_file }}'
+          dest_file: '/media/0/animal/{{ input_text.camera_5_animal_saved_file[41:] }}'
+        service: shell_command.camera_5_mv_deepstack
+
+      # Send notify
+      - service: notify.mobile_app_sm_a528b
+        data:
+          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+          message: "Camera 5 Djur detekterad natt"
+
+  #########################################
+  ### Camera 5 Person is confidence day ###
+  #########################################
+  - alias: Camera 5 Person is confidence day
+    id: '1416857464757' 
+    mode: single
+
+    trigger:
+      - platform: template
+          value_template: >
+            {{ states('input_text.camera_5_person_confidence') | float > states('input_text.camera_5_trigger_image_day') | float }}
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: switch.kamera5_infra_red_lights_in_night_mode
+          state: 'off'
+
+    action:
+      # Delay 1 sec to be sure the images is saved
+      - delay:
+          seconds: 1
+
+      # Move images to correct /media folder
+      - data:
+          source_file: '/config/camera/deepstack_photo/deepstack_camera_5_latest.jpg'
+          dest_file: '/media/0/person/camera_5_latest.jpg'
+        service: shell_command.camera_5_mv_deepstack
+      - data:
+          source_file: '{{ trigger.event.data.saved_file }}'
+          dest_file: '/media/0/person/{{ input_text.camera_5_person_saved_file[41:] }}'
+        service: shell_command.camera_5_mv_deepstack
+
+      # Send notify
+      - service: notify.mobile_app_sm_a528b
+        data:
+          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+          message: "Camera 5 Person detekterad dag"
+
+  ###########################################
+  ### Camera 5 Person is confidence night ###
+  ###########################################
+  - alias: Camera 5 Person is confidence night 
+    id: '1416857464757' 
+    mode: single
+
+    trigger:
+      - platform: template
+          value_template: >
+            {{ states('input_text.camera_5_person_confidence') | float > states('input_text.camera_5_trigger_image_night') | float }}
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: switch.kamera5_infra_red_lights_in_night_mode
+          state: 'on'
+
+    action:
+      # Delay 1 sec to be sure the images is saved
+      - delay:
+          seconds: 1
+
+      # Move images to correct /media folder
+      - data:
+          source_file: '/config/camera/deepstack_photo/deepstack_camera_5_latest.jpg'
+          dest_file: '/media/0/person/camera_5_latest.jpg'
+        service: shell_command.camera_5_mv_deepstack
+      - data:
+          source_file: '{{ trigger.event.data.saved_file }}'
+          dest_file: '/media/0/person/{{ input_text.camera_5_animal_saved_file[41:] }}'
+        service: shell_command.camera_5_mv_deepstack
+
+      # Send notify
+      - service: notify.mobile_app_sm_a528b
+        data:
+          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+          message: "Camera 5 Person detekterad natt"

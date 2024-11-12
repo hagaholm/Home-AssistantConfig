@@ -1,0 +1,492 @@
+# Folder structure
+# /config/camera/deepstack_photo
+# Image is created here by deepstack if person is detected
+# All files are moved to /media/0/xxx folder
+
+# Folder
+# /config/camera/motion_detected
+# When person detected and no one is home, then create video to this folder
+# If home before 2 minutes, then all files in the foder is deleted
+# After 2 minutes:
+# If still away after 2 minutes, all files are moved into /media/0/video_Away
+# If still night after 2 minutes, all files are moved into /media/0/video_Night
+
+# Folder
+# /media/0/Day
+# Only images captured when camera mode "Day"
+
+# /media/0/Away
+# Only images captured when camera mode "Away"
+
+# /media/0/Night
+# Only images captured when camera mode "Night"
+
+# /media/0/animal
+# Only images captured when an animal is detected
+
+# /media/0/video_Away
+# Only videos captured when camera mode "Away"
+
+# /media/0/video_Night
+# Only videos captured when camera mode "Night"
+
+#deepstack.object_detected
+#{
+#    "event_type": "deepstack.object_detected",
+#    "data": {
+#        "bounding_box": {
+#            "height": 0.77,
+#            "width": 0.564,
+#            "y_min": 0.017,
+#            "x_min": 0.436,
+#            "y_max": 0.786,
+#            "x_max": 1
+#        },
+#        "box_area": 0.434,
+#        "centroid": {
+#            "x": 0.718,
+#            "y": 0.402
+#        },
+#        "name": "cat",
+#        "object_type": "animal",
+#        "confidence": 70.414,
+#        "entity_id": "image_processing.deepstack_camera_5",
+#        "saved_file": "/config/camera/deepstack_photo/deepstack_camera_5_2021-03-03_14-32-44.jpg"
+#    },
+#    "origin": "LOCAL",
+#    "time_fired": "2021-03-03T13:32:44.261103+00:00",
+#    "context": {
+#        "id": "44199add85354dbe6693afab01a73e9c",
+#        "parent_id": null,
+#        "user_id": null
+#    }
+#}
+
+
+#####################
+### Input Boolean ###
+#####################
+input_boolean:
+  camera_5_active:
+    name: Camera 5 aktiv
+    initial: off
+  camera_5_person_detected:
+    name: Camera 5 person detekterad
+    initial: off
+  camera_5_recording_video:
+    name: Camera 5 recording video
+    initial: off
+
+##################
+### Input Text ###
+##################
+input_text:
+  camera_5_person_time_fired:
+    name: Camera 5 person time fired
+  camera_5_person_confidence:
+    name: Camera 5 person confidence
+
+#############
+### Timer ###
+#############
+timer:
+  # Used for control when mode Away and person detected
+  timer_camera_5_away_person_detected:
+    name: Timer camera 5 away person detected
+    duration: '00:02:00'
+
+##############
+### Sensor ###
+##############
+sensor:
+  - platform: template
+    sensors:
+      camera_5_person:
+        friendly_name: "Personer"
+        value_template: >-
+          {% set summary = (state_attr('image_processing.deepstack_camera_5', 'summary')) %}
+          {% if summary.person is defined %}
+            {{ summary.person }}
+          {% else %}
+            0
+          {% endif %}
+
+      camera_5_animal:
+        friendly_name: "Djur"
+        value_template: >-
+          {% set summary = (state_attr('image_processing.deepstack_camera_5', 'summary')) %}
+          {% if summary.animal is defined %}
+            {{ summary.animal }}
+          {% else %}
+            0
+          {% endif %}
+          
+########################
+### Image processing ###
+########################
+image_processing:
+  - platform: deepstack_object
+    ip_address: localhost
+    port: 5000
+    api_key: !secret deepstack_password
+    save_file_folder: /config/camera/deepstack_photo/
+    save_timestamped_file: True
+    targets:
+      - target: person
+        confidence: 60
+      - target: animal
+        confidence: 60
+    source:
+      - entity_id: camera.kamera5_main
+        name: deepstack_camera_5
+    timeout: 5
+
+##############
+### Camera ###
+##############
+camera:
+  # Keep latest image of a detected person day
+  - platform: local_file
+    name: Camera 5 Latest person
+    file_path: /media/0/Day/camera_5_latest.jpg
+
+  # Keep latest image of a detected person away
+  - platform: local_file
+    name: Camera 5 Latest person away
+    file_path: /media/0/Away/camera_5_latest.jpg
+
+  # Keep latest image of a detected person night
+  - platform: local_file
+    name: Camera 5 Latest person night
+    file_path: /media/0/Night/camera_5_latest.jpg
+
+  # Keep latest image of a detected animal
+  - platform: local_file
+    name: Camera 5 Latest animal
+    file_path: /media/0/animal/camera_5_latest.jpg
+
+  # Keep latest video when away
+  - platform: local_file
+    name: Camera 5 Video away
+    file_path: /media/0/video_Away/camera_5_video_latest.mp4
+
+  # Keep latest video when night
+  - platform: local_file
+    name: Camera 5 Video night
+    file_path: /media/0/video_Night/camera_5_video_latest.mp4
+
+#####################
+### Shell command ###
+#####################
+shell_command:
+  # Used by automation Camera 5 Animal detected
+  # Used by automation Camera 5 Person detected
+  # Used by automation Camera 5 Person detected create video
+  camera_5_mv_deepstack: "mv -f {{source_file}} {{dest_file}}"
+
+  # Used by automation Camera 5 Person detected create video
+  camera_5_cp_deepstack: "cp -f {{source_file}} {{dest_file}}"
+
+  # Used by automation Camera 5 Person detected create video
+  camera_5_delete_videos: "rm -f /config/camera/motion_detected/*.mp4"#
+
+##################
+### Automation ###
+##################
+automation:
+  ###############################################
+  ### At startup:                             ###
+  ### Turn off: input_boolean.camera_5_active ###
+  ### Wait 10 sec                             ###
+  ### Turn on input_boolean.camera_5_active   ###
+  ###############################################
+  - alias: Camera 5 startup
+    id: '9556319091599' 
+    mode: single
+
+    trigger:
+      - platform: homeassistant
+        event: start
+
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.camera_5_active
+
+      - delay:
+          seconds: 10
+
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.camera_5_active
+
+  ###############################################
+  ### At shutdown:                            ###
+  ### Turn off: input_boolean.camera_5_active ###
+  ###############################################
+  - alias: Camera 5 shutdown
+    id: '5924169939928' 
+    mode: single
+
+    trigger:
+      - platform: homeassistant
+        event: shutdown
+
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.camera_5_active
+
+  ###################################################################################
+  ### Start image processing, scan images for detection of object                 ###
+  ### If input_boolean.camera_5_active == on                                      ###
+  ### Get dynamic delay from input_number.camera_duration before image processing ###
+  ### Restart the automation when done                                            ###
+  ###################################################################################
+  - alias: Camera 5 Image processing
+    id: '0099648445442' 
+    mode: single
+    
+    trigger:
+      - platform: time_pattern
+        seconds: /2
+    
+    action:
+      # Add dynamic delay. input_number.camera_duration is controlled by another automation
+      - delay: 
+          milliseconds: "{{ states('input_number.camera_duration') }}"
+
+      # Scan a new image
+      - service: image_processing.scan
+        entity_id: image_processing.deepstack_camera_5
+
+  ################################
+  ### Camera 5 Animal detected ###
+  ################################
+  - alias: Camera 5 Animal detected
+    id: '1416857464757' 
+    mode: parallel
+
+    # Object detected
+    trigger:
+      - platform: event
+        event_type: deepstack.object_detected
+
+   # Need to be an animal and no person on the image from camera 5
+    condition:
+      condition: and
+      conditions:
+
+        # Needs to be image processing from camera 5
+        - condition: template
+          value_template: >
+            {{ trigger.event.data.entity_id == 'image_processing.deepstack_camera_5' }}
+
+        # Animal on image is needed
+        - condition: template
+          value_template: >
+            {{ trigger.event.data.object_type == 'animal' }}
+
+        # Person on image is not allowed as it will be handled in another automation
+        - condition: template
+          value_template: >
+            {{ trigger.event.data.object_type != 'person' }}
+
+    action:
+      # Get timestamp when animal detected, just for information
+      - service: input_text.set_value
+        entity_id: input_text.camera_5_animal_time_fired
+        data_template:
+          value: '{{ trigger.event.data.saved_file[50:-4] }}'
+      # Get confidence, just for information
+      - service: input_text.set_value
+        entity_id: input_text.camera_5_animal_confidence
+        data_template:
+          value: '{{ trigger.event.data.confidence }}'
+
+
+      # Delay 1 sec to be sure the images is saved
+      - delay:
+          seconds: 1
+
+      # Move images to correct /media folder
+      - data:
+          source_file: '/config/camera/deepstack_photo/deepstack_camera_5_latest.jpg'
+          dest_file: '/media/0/animal/camera_5_latest.jpg'
+        service: shell_command.camera_5_mv_deepstack
+      - data:
+          source_file: '{{ trigger.event.data.saved_file }}'
+          dest_file: '/media/0/animal/{{ trigger.event.data.saved_file[41:] }}'
+        service: shell_command.camera_5_mv_deepstack
+
+      # Send notify
+      - service: notify.mobile_app_sm_a528b
+        data:
+          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+          message: "Camera 5 Djur detekterad"
+
+  ################################
+  ### Camera 5 Person detected ###
+  ################################
+  - alias: Camera 5 Person detected
+    id: '8116100082377' 
+    mode: parallel
+    max: 130 
+
+    # Object detected
+    trigger:
+      - platform: event
+        event_type: deepstack.object_detected
+
+   # Need to be a person on the image from camera 5
+    condition:
+      condition: and
+      conditions:
+
+        # Needs to be image processing from camera 5
+        - condition: template
+          value_template: >
+            {{ trigger.event.data.entity_id == 'image_processing.deepstack_camera_5' }}
+
+        # Person on image is needed
+        - condition: template
+          value_template: >
+            {{ trigger.event.data.object_type == 'person' }}
+
+    action:
+      # Get timestamp when person detected, just for information
+      - service: input_text.set_value
+        entity_id: input_text.camera_5_person_time_fired
+        data_template:
+          value: '{{ trigger.event.data.saved_file[50:-4] }}'
+      # Get confidence, just for information
+      - service: input_text.set_value
+        entity_id: input_text.camera_5_person_confidence
+        data_template:
+          value: '{{ trigger.event.data.confidence }}'
+
+      # Delay 1 sec to be sure the images is saved
+      - delay:
+          seconds: 1
+
+      # If Camera mode is Away, then wait until it has changed to another mode or continue after 120 sec
+      - wait_template: "{{ not is_state('input_select.camera_mode', 'Away') }}"
+        timeout: 120
+        continue_on_timeout: true
+
+      # Move images
+      - data:
+          source_file: '/config/camera/deepstack_photo/deepstack_camera_5_latest.jpg'
+          dest_file: "/media/0/{{ states('input_select.camera_mode') }}/camera_5_latest.jpg"
+        service: shell_command.camera_5_mv_deepstack
+      - data:
+          source_file: '{{ trigger.event.data.saved_file }}'
+          dest_file: "/media/0/{{ states('input_select.camera_mode') }}/{{ trigger.event.data.saved_file[41:] }}"
+        service: shell_command.camera_5_mv_deepstack
+
+      # If Camera mode is Away, then continue
+      - condition: state
+        entity_id: input_select.camera_mode
+        state: 'Away'
+
+      # If timer is idle, then continue
+      - condition: state
+        entity_id: timer.timer_camera_5_away_person_detected
+        state: idle
+
+      # Cancel timer and reset to max time
+      - service: timer.cancel
+        entity_id: timer.timer_camera_5_away_person_detected
+
+      # Start timer and count down
+      - service: timer.start
+        entity_id: timer.timer_camera_5_away_person_detected
+
+      # Send notify
+      - service: notify.mobile_app_sm_a528b
+        data:
+          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+          message: "Camera 5 Person detekterad away"
+          data:
+            file: "/media/0/{{ states('input_select.camera_mode') }}/{{ trigger.event.data.saved_file[41:] }}"
+
+  #############################################
+  ### Camera 5 Person detected create video ###
+  #############################################
+  - alias: Camera 5 Person detected create video
+    id: '9999129171319' 
+    mode: parallel
+
+    # Object detected
+    trigger:
+      - platform: event
+        event_type: deepstack.object_detected
+
+   # Need to be a person on the image from camera 5
+    condition:
+      condition: and
+      conditions:
+      
+        # Needs to be image processing from camera 5
+        - condition: template
+          value_template: >
+            {{ trigger.event.data.entity_id == 'image_processing.deepstack_camera_5' }}
+
+        # Person on image is needed
+        - condition: template
+          value_template: >
+            {{ trigger.event.data.object_type == 'person' }}
+
+        # Only start record if no ongoing record
+        - condition: state
+          entity_id: input_boolean.camera_5_recording_video
+          state: 'off'
+
+        # Never record if camera mode is Day
+        - condition: template
+          value_template: >
+            {{ not is_state('input_select.camera_mode', 'Day') }}
+
+    action:
+      # Videos vill be left if camera mode changes to Day when recording, start to delete these files 
+      - service: shell_command.camera_5_delete_videos
+
+      # Turn on: input_boolean.camera_5_recording_video
+      - service: input_boolean.turn_on
+        entity_id: input_boolean.camera_5_recording_video
+
+      # Save a video with timestamp to '/config/camera/motion_detected/camera_5_YYYYMMDD-HHMMSS.mp4'
+      - service: camera.record
+        data:
+          entity_id: camera.kamera5_main
+          filename: "/config/camera/motion_detected/camera_5_{{ states('input_select.camera_mode') }}_{{ trigger.event.data.saved_file[41:-4] }}.mp4"
+          lookback: 0
+          duration: 60
+
+      # Delay 70 sec to be sure the video is stopped and saved
+      - delay:
+          seconds: 70
+
+      - service: input_boolean.turn_off
+        entity_id: input_boolean.camera_5_recording_video
+
+      # Delay 50 sec, need to wait 120 sec until sure nobody get home
+      - delay:
+          seconds: 50
+
+      # If not Day, then continue
+      - condition: template
+        value_template: >
+          {{ not is_state('input_select.camera_mode', 'Day') }}
+
+      # Copy video
+      - data:
+          source_file: "/config/camera/motion_detected/camera_5_{{ states('input_select.camera_mode') }}_{{ trigger.event.data.saved_file[41:-4] }}.mp4"
+          dest_file: "/media/0/video_{{ states('input_select.camera_mode') }}/camera_5_video_latest.mp4"
+        service: shell_command.camera_5_cp_deepstack
+
+      # Move video
+      - data:
+          source_file: "/config/camera/motion_detected/camera_5_{{ states('input_select.camera_mode') }}_{{ trigger.event.data.saved_file[41:-4] }}.mp4"
+          dest_file: "/media/0/video_{{ states('input_select.camera_mode') }}/camera_5_{{ trigger.event.data.saved_file[41:-4] }}.mp4"
+        service: shell_command.camera_5_mv_deepstack

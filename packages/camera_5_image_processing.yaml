@@ -86,6 +86,28 @@ input_text:
   camera_5_person_confidence:
     name: Camera 5 person confidence
 
+  camera_5_animal_time_fired:
+    name: Camera 5 animal time fired
+  camera_5_animal_confidence:
+    name: Camera 5 animal confidence
+
+  camera_5_trigger_light_on:
+    name: Camera 5 trigger light on
+    initial: "10.00"
+  camera_5_trigger_image_day:
+    name: Camera 5 trigger image day
+    initial: "50.00"
+  camera_5_trigger_image_night:
+    name: Camera 5 trigger image night
+    initial: "30.00"
+
+  // This is used in automation
+  // Source to the value is from camera_5_trigger_image_day or camera_5_trigger_image_night
+  camera_5_trigger_image_curr_level:
+    name: Camera 5 trigger image curr level
+    initial: "30.00"
+
+
 #############
 ### Timer ###
 #############
@@ -133,9 +155,9 @@ image_processing:
     save_timestamped_file: True
     targets:
       - target: person
-        confidence: 60
+        confidence: 10
       - target: animal
-        confidence: 60
+        confidence: 10
     source:
       - entity_id: camera.kamera5_main
         name: deepstack_camera_5

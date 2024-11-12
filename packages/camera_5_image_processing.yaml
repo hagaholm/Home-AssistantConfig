@@ -388,13 +388,16 @@ automation:
     mode: single
 
     trigger:
-      - platform: template
-          value_template: >
-            {{ states('input_text.camera_5_animal_confidence') | float > states('input_text.camera_5_trigger_image_day') | float }}
+      - platform: state
+        entity_id: input_text.camera_5_animal_confidence
 
     condition:
       condition: and
       conditions:
+        - condition: template
+          value_template: >
+            {{ states('input_text.camera_5_animal_confidence') | float > states('input_text.camera_5_trigger_image_day') | float }}
+
         - condition: state
           entity_id: switch.kamera5_infra_red_lights_in_night_mode
           state: 'off'
@@ -428,13 +431,16 @@ automation:
     mode: single
 
     trigger:
-      - platform: template
-          value_template: >
-            {{ states('input_text.camera_5_animal_confidence') | float > states('input_text.camera_5_trigger_image_night') | float }}
+      - platform: state
+        entity_id: input_text.camera_5_animal_confidence
 
     condition:
       condition: and
       conditions:
+        - condition: template
+          value_template: >
+            {{ states('input_text.camera_5_animal_confidence') | float > states('input_text.camera_5_trigger_image_night') | float }}
+
         - condition: state
           entity_id: switch.kamera5_infra_red_lights_in_night_mode
           state: 'on'
@@ -468,13 +474,16 @@ automation:
     mode: single
 
     trigger:
-      - platform: template
-          value_template: >
-            {{ states('input_text.camera_5_person_confidence') | float > states('input_text.camera_5_trigger_image_day') | float }}
+      - platform: state
+        entity_id: input_text.camera_5_person_confidence
 
     condition:
       condition: and
       conditions:
+        - condition: template
+          value_template: >
+            {{ states('input_text.camera_5_person_confidence') | float > states('input_text.camera_5_trigger_image_day') | float }}
+
         - condition: state
           entity_id: switch.kamera5_infra_red_lights_in_night_mode
           state: 'off'
@@ -508,13 +517,16 @@ automation:
     mode: single
 
     trigger:
-      - platform: template
-          value_template: >
-            {{ states('input_text.camera_5_person_confidence') | float > states('input_text.camera_5_trigger_image_night') | float }}
+      - platform: state
+        entity_id: input_text.camera_5_person_confidence
 
     condition:
       condition: and
       conditions:
+        - condition: template
+          value_template: >
+            {{ states('input_text.camera_5_person_confidence') | float > states('input_text.camera_5_trigger_image_night') | float }}
+
         - condition: state
           entity_id: switch.kamera5_infra_red_lights_in_night_mode
           state: 'on'

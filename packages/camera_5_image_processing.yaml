@@ -186,6 +186,7 @@ camera:
 shell_command:
   # Used by automation Camera 5 Animal detected
   # Used by automation Camera 5 Person detected
+  print_text: 'echo {{source_file}} {{dest_file}'
   camera_5_mv_deepstack: "mv -f {{source_file}} {{dest_file}}"
 
 
@@ -513,6 +514,15 @@ automation:
           seconds: 1
 
       # Move images to correct /media folder
+      - data:
+          source_file: "{{ states('input_text.camera_5_person_saved_file') }}"
+          dest_file: "/media/0/person/camera_5_latest.jpg"
+        service: shell_command.print_text
+      - data:
+          source_file: "{{ states('input_text.camera_5_person_saved_file') }}"
+          dest_file: "/media/0/person/{{ states('input_text.camera_5_person_saved_file[41:]') }}"
+        service: shell_command.print_text
+
       - data:
           source_file: "{{ states('input_text.camera_5_person_saved_file') }}"
           dest_file: "/media/0/person/camera_5_latest.jpg"

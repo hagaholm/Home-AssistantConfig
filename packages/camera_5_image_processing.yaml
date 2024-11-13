@@ -385,11 +385,11 @@ automation:
 
       # Move images to correct /media folder
       - data:
-          source_file: '/config/camera/deepstack_photo/deepstack_camera_5_latest.jpg'
+          source_file: '{{ input_text.camera_5_animal_saved_file }}'
           dest_file: '/media/0/animal/camera_5_latest.jpg'
         service: shell_command.camera_5_mv_deepstack
       - data:
-          source_file: '{{ trigger.event.data.saved_file }}'
+          source_file: '{{ input_text.camera_5_animal_saved_file }}'
           dest_file: '/media/0/animal/{{ input_text.camera_5_animal_saved_file[41:] }}'
         service: shell_command.camera_5_mv_deepstack
 
@@ -428,11 +428,11 @@ automation:
 
       # Move images to correct /media folder
       - data:
-          source_file: '/config/camera/deepstack_photo/deepstack_camera_5_latest.jpg'
+          source_file: '{{ input_text.camera_5_animal_saved_file }}'
           dest_file: '/media/0/animal/camera_5_latest.jpg'
         service: shell_command.camera_5_mv_deepstack
       - data:
-          source_file: '{{ trigger.event.data.saved_file }}'
+          source_file: '{{ input_text.camera_5_animal_saved_file }}'
           dest_file: '/media/0/animal/{{ input_text.camera_5_animal_saved_file[41:] }}'
         service: shell_command.camera_5_mv_deepstack
 
@@ -471,11 +471,11 @@ automation:
 
       # Move images to correct /media folder
       - data:
-          source_file: '/config/camera/deepstack_photo/deepstack_camera_5_latest.jpg'
+          source_file: '{{ input_text.camera_5_person_saved_file }}'
           dest_file: '/media/0/person/camera_5_latest.jpg'
         service: shell_command.camera_5_mv_deepstack
       - data:
-          source_file: '{{ trigger.event.data.saved_file }}'
+          source_file: '{{ input_text.camera_5_person_saved_file }}'
           dest_file: '/media/0/person/{{ input_text.camera_5_person_saved_file[41:] }}'
         service: shell_command.camera_5_mv_deepstack
 
@@ -514,12 +514,12 @@ automation:
 
       # Move images to correct /media folder
       - data:
-          source_file: '/config/camera/deepstack_photo/deepstack_camera_5_latest.jpg'
+          source_file: '{{ input_text.camera_5_person_saved_file }}'
           dest_file: '/media/0/person/camera_5_latest.jpg'
         service: shell_command.camera_5_mv_deepstack
       - data:
-          source_file: '{{ trigger.event.data.saved_file }}'
-          dest_file: '/media/0/person/{{ input_text.camera_5_animal_saved_file[41:] }}'
+          source_file: '{{ input_text.camera_5_person_saved_file }}'
+          dest_file: '/media/0/person/{{ input_text.camera_5_person_saved_file[41:] }}'
         service: shell_command.camera_5_mv_deepstack
 
       # Send notify

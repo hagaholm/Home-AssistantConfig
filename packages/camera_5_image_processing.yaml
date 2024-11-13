@@ -88,6 +88,8 @@ input_text:
     name: Camera 5 person confidence
   camera_5_person_saved_file:
     name: Camera 5 person saved file
+  camera_5_person_file_name:
+    name: Camera 5 person file name
 
   camera_5_animal_time_fired:
     name: Camera 5 animal time fired
@@ -95,6 +97,8 @@ input_text:
     name: Camera 5 animal confidence
   camera_5_animal_saved_file:
     name: Camera 5 animal saved file
+  camera_5_animal_file_name:
+    name: Camera 5 animal file name
 
   camera_5_trigger_light_on:
     name: Camera 5 trigger light on
@@ -311,6 +315,12 @@ automation:
         data_template:
           value: '{{ trigger.event.data.saved_file }}'
 
+      # Get file name
+      - service: input_text.set_value
+        entity_id: input_text.camera_5_animal_file_name
+        data_template:
+          value: '{{ trigger.event.data.saved_file[41:] }}'
+
   ################################
   ### Camera 5 Person detected ###
   ################################
@@ -357,6 +367,12 @@ automation:
         data_template:
           value: '{{ trigger.event.data.saved_file }}'
 
+      # Get file name
+      - service: input_text.set_value
+        entity_id: input_text.camera_5_person_file_name
+        data_template:
+          value: '{{ trigger.event.data.saved_file[41:] }}'
+
   #########################################
   ### Camera 5 Animal is confidence day ###
   #########################################
@@ -391,7 +407,7 @@ automation:
         service: shell_command.print_text
       - data:
           source_file: "{{ states('input_text.camera_5_animal_saved_file') }}"
-          dest_file: "/media/0/animal/{{ states('input_text.camera_5_animal_saved_file[41:]') }}"
+          dest_file: "/media/0/animal/{{ states('input_text.camera_5_animal_file_name') }}"
         service: shell_command.print_text
 
       - data:
@@ -400,7 +416,7 @@ automation:
         service: shell_command.camera_5_mv_deepstack
       - data:
           source_file: "{{ states('input_text.camera_5_animal_saved_file') }}"
-          dest_file: "/media/0/animal/{{ states('input_text.camera_5_animal_saved_file[41:]') }}"
+          dest_file: "/media/0/animal/{{ states('input_text.camera_5_animal_file_name') }}"
         service: shell_command.camera_5_mv_deepstack
 
       # Send notify
@@ -443,7 +459,7 @@ automation:
         service: shell_command.print_text
       - data:
           source_file: "{{ states('input_text.camera_5_animal_saved_file') }}"
-          dest_file: "/media/0/animal/{{ states('input_text.camera_5_animal_saved_file[41:]') }}"
+          dest_file: "/media/0/animal/{{ states('input_text.camera_5_animal_file_name') }}"
         service: shell_command.print_text
 
       - data:
@@ -452,7 +468,7 @@ automation:
         service: shell_command.camera_5_mv_deepstack
       - data:
           source_file: "{{ states('input_text.camera_5_animal_saved_file') }}"
-          dest_file: "/media/0/animal/{{ states('input_text.camera_5_animal_saved_file[41:]') }}"
+          dest_file: "/media/0/animal/{{ states('input_text.camera_5_animal_file_name') }}"
         service: shell_command.camera_5_mv_deepstack
 
       # Send notify
@@ -495,7 +511,7 @@ automation:
         service: shell_command.print_text
       - data:
           source_file: "{{ states('input_text.camera_5_person_saved_file') }}"
-          dest_file: "/media/0/{{ states('input_select.camera_mode') }}/{{ states('input_text.camera_5_person_saved_file[41:]') }}"
+          dest_file: "/media/0/{{ states('input_select.camera_mode') }}/{{ states('input_text.camera_5_person_file_name') }}"
         service: shell_command.print_text
 
       - data:
@@ -504,7 +520,7 @@ automation:
         service: shell_command.camera_5_mv_deepstack
       - data:
           source_file: "{{ states('input_text.camera_5_person_saved_file') }}"
-          dest_file: "/media/0/{{ states('input_select.camera_mode') }}/{{ states('input_text.camera_5_person_saved_file[41:]') }}"
+          dest_file: "/media/0/{{ states('input_select.camera_mode') }}/{{ states('input_text.camera_5_person_file_name') }}"
         service: shell_command.camera_5_mv_deepstack
 
       # Send notify
@@ -547,7 +563,7 @@ automation:
         service: shell_command.print_text
       - data:
           source_file: "{{ states('input_text.camera_5_person_saved_file') }}"
-          dest_file: "/media/0/{{ states('input_select.camera_mode') }}/{{ states('input_text.camera_5_person_saved_file[41:]') }}"
+          dest_file: "/media/0/{{ states('input_select.camera_mode') }}/{{ states('input_text.camera_5_person_file_name') }}"
         service: shell_command.print_text
 
       - data:
@@ -556,7 +572,7 @@ automation:
         service: shell_command.camera_5_mv_deepstack
       - data:
           source_file: "{{ states('input_text.camera_5_person_saved_file') }}"
-          dest_file: "/media/0/{{ states('input_select.camera_mode') }}/{{ states('input_text.camera_5_person_saved_file[41:]') }}"
+          dest_file: "/media/0/{{ states('input_select.camera_mode') }}/{{ states('input_text.camera_5_person_file_name') }}"
         service: shell_command.camera_5_mv_deepstack
 
       # Send notify

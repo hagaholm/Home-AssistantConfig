@@ -190,7 +190,6 @@ camera:
 shell_command:
   # Used by automation Camera 5 Animal detected
   # Used by automation Camera 5 Person detected
-  print_text: "echo {{source_file}} {{dest_file}}"
   camera_5_mv_deepstack: "mv -f {{source_file}} {{dest_file}}"
 
 
@@ -404,15 +403,6 @@ automation:
       - data:
           source_file: "{{ states('input_text.camera_5_animal_saved_file') }}"
           dest_file: "/media/0/animal/camera_5_latest.jpg"
-        service: shell_command.print_text
-      - data:
-          source_file: "{{ states('input_text.camera_5_animal_saved_file') }}"
-          dest_file: "/media/0/animal/{{ states('input_text.camera_5_animal_file_name') }}"
-        service: shell_command.print_text
-
-      - data:
-          source_file: "{{ states('input_text.camera_5_animal_saved_file') }}"
-          dest_file: "/media/0/animal/camera_5_latest.jpg"
         service: shell_command.camera_5_mv_deepstack
       - data:
           source_file: "{{ states('input_text.camera_5_animal_saved_file') }}"
@@ -453,15 +443,6 @@ automation:
           seconds: 1
 
       # Move images to correct /media folder
-      - data:
-          source_file: "{{ states('input_text.camera_5_animal_saved_file') }}"
-          dest_file: "/media/0/animal/camera_5_latest.jpg"
-        service: shell_command.print_text
-      - data:
-          source_file: "{{ states('input_text.camera_5_animal_saved_file') }}"
-          dest_file: "/media/0/animal/{{ states('input_text.camera_5_animal_file_name') }}"
-        service: shell_command.print_text
-
       - data:
           source_file: "{{ states('input_text.camera_5_animal_saved_file') }}"
           dest_file: "/media/0/animal/camera_5_latest.jpg"
@@ -508,15 +489,6 @@ automation:
       - data:
           source_file: "{{ states('input_text.camera_5_person_saved_file') }}"
           dest_file: "/media/0/{{ states('input_select.camera_mode') }}/camera_5_latest.jpg"
-        service: shell_command.print_text
-      - data:
-          source_file: "{{ states('input_text.camera_5_person_saved_file') }}"
-          dest_file: "/media/0/{{ states('input_select.camera_mode') }}/{{ states('input_text.camera_5_person_file_name') }}"
-        service: shell_command.print_text
-
-      - data:
-          source_file: "{{ states('input_text.camera_5_person_saved_file') }}"
-          dest_file: "/media/0/{{ states('input_select.camera_mode') }}/camera_5_latest.jpg"
         service: shell_command.camera_5_mv_deepstack
       - data:
           source_file: "{{ states('input_text.camera_5_person_saved_file') }}"
@@ -560,15 +532,6 @@ automation:
       - data:
           source_file: "{{ states('input_text.camera_5_person_saved_file') }}"
           dest_file: "/media/0/{{ states('input_select.camera_mode') }}/camera_5_latest.jpg"
-        service: shell_command.print_text
-      - data:
-          source_file: "{{ states('input_text.camera_5_person_saved_file') }}"
-          dest_file: "/media/0/{{ states('input_select.camera_mode') }}/{{ states('input_text.camera_5_person_file_name') }}"
-        service: shell_command.print_text
-
-      - data:
-          source_file: "{{ states('input_text.camera_5_person_saved_file') }}"
-          dest_file: "/media/0/{{ states('input_select.camera_mode') }}/camera_5_latest.jpg"
         service: shell_command.camera_5_mv_deepstack
       - data:
           source_file: "{{ states('input_text.camera_5_person_saved_file') }}"
@@ -580,3 +543,37 @@ automation:
         data:
           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           message: "Camera 5 Person detected night"
+
+  #########################
+  ### Camera 5 Light on ###
+  #########################
+  - alias: Camera 5 Light on 
+    id: '1416857464436' 
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: light.kamera5_stralkastare
+        to: 'on'
+
+    action:
+      - service: light.turn_on
+        target:
+          entity_id: light.stralkastare_husgavel
+
+  ##########################
+  ### Camera 5 Light off ###
+  ##########################
+  - alias: Camera 5 Light off 
+    id: '1415557464436' 
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: light.kamera5_stralkastare
+        to: 'off'
+
+    action:
+      - service: light.turn_off
+        target:
+          entity_id: light.stralkastare_husgavel

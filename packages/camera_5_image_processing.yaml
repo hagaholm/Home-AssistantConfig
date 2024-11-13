@@ -70,12 +70,13 @@ input_boolean:
   camera_5_active:
     name: Camera 5 aktiv
     initial: off
+  camera_5_animal_detected:
+    name: Camera 5 animal detected
+    initial: off
   camera_5_person_detected:
-    name: Camera 5 person detekterad
+    name: Camera 5 person detected
     initial: off
-  camera_5_recording_video:
-    name: Camera 5 recording video
-    initial: off
+
 
 ##################
 ### Input Text ###
@@ -105,21 +106,6 @@ input_text:
     name: Camera 5 trigger image night
     initial: "30.00"
 
-  # This is used in automation
-  # Source to the value is from camera_5_trigger_image_day or camera_5_trigger_image_night
-  camera_5_trigger_image_curr_level:
-    name: Camera 5 trigger image curr level
-    initial: "30.00"
-
-
-#############
-### Timer ###
-#############
-timer:
-  # Used for control when mode Away and person detected
-  timer_camera_5_away_person_detected:
-    name: Timer camera 5 away person detected
-    duration: '00:02:00'
 
 ##############
 ### Sensor ###
@@ -128,7 +114,7 @@ sensor:
   - platform: template
     sensors:
       camera_5_person:
-        friendly_name: "Personer"
+        friendly_name: "Person"
         value_template: >-
           {% set summary = (state_attr('image_processing.deepstack_camera_5', 'summary')) %}
           {% if summary.person is defined %}
@@ -138,7 +124,7 @@ sensor:
           {% endif %}
 
       camera_5_animal:
-        friendly_name: "Djur"
+        friendly_name: "Animal"
         value_template: >-
           {% set summary = (state_attr('image_processing.deepstack_camera_5', 'summary')) %}
           {% if summary.animal is defined %}
@@ -146,7 +132,8 @@ sensor:
           {% else %}
             0
           {% endif %}
-          
+
+
 ########################
 ### Image processing ###
 ########################
@@ -167,6 +154,7 @@ image_processing:
         name: deepstack_camera_5
     timeout: 5
 
+
 ##############
 ### Camera ###
 ##############
@@ -186,20 +174,11 @@ camera:
     name: Camera 5 Latest person night
     file_path: /media/0/Night/camera_5_latest.jpg
 
-  # Keep latest image of a detected animal
+  # Keep latest image of a detected animal day
   - platform: local_file
     name: Camera 5 Latest animal
     file_path: /media/0/animal/camera_5_latest.jpg
 
-  # Keep latest video when away
-  - platform: local_file
-    name: Camera 5 Video away
-    file_path: /media/0/video_Away/camera_5_video_latest.mp4
-
-  # Keep latest video when night
-  - platform: local_file
-    name: Camera 5 Video night
-    file_path: /media/0/video_Night/camera_5_video_latest.mp4
 
 #####################
 ### Shell command ###
@@ -207,14 +186,8 @@ camera:
 shell_command:
   # Used by automation Camera 5 Animal detected
   # Used by automation Camera 5 Person detected
-  # Used by automation Camera 5 Person detected create video
   camera_5_mv_deepstack: "mv -f {{source_file}} {{dest_file}}"
 
-  # Used by automation Camera 5 Person detected create video
-  camera_5_cp_deepstack: "cp -f {{source_file}} {{dest_file}}"
-
-  # Used by automation Camera 5 Person detected create video
-  camera_5_delete_videos: "rm -f /config/camera/motion_detected/*.mp4"#
 
 ##################
 ### Automation ###
@@ -324,17 +297,18 @@ automation:
         entity_id: input_text.camera_5_animal_time_fired
         data_template:
           value: '{{ trigger.event.data.saved_file[50:-4] }}'
+
       # Get confidence, just for information
       - service: input_text.set_value
         entity_id: input_text.camera_5_animal_confidence
         data_template:
           value: '{{ trigger.event.data.confidence }}'
+
       # Get saved file
       - service: input_text.set_value
         entity_id: input_text.camera_5_animal_saved_file
         data_template:
           value: '{{ trigger.event.data.saved_file }}'
-      
 
   ################################
   ### Camera 5 Person detected ###
@@ -369,11 +343,13 @@ automation:
         entity_id: input_text.camera_5_person_time_fired
         data_template:
           value: '{{ trigger.event.data.saved_file[50:-4] }}'
+
       # Get confidence, just for information
       - service: input_text.set_value
         entity_id: input_text.camera_5_person_confidence
         data_template:
           value: '{{ trigger.event.data.confidence }}'
+
       # Get saved file
       - service: input_text.set_value
         entity_id: input_text.camera_5_person_saved_file
@@ -421,7 +397,7 @@ automation:
       - service: notify.mobile_app_sm_a528b
         data:
           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-          message: "Camera 5 Djur detekterad dag"
+          message: "Camera 5 Animal detected dag"
 
   ###########################################
   ### Camera 5 Animal is confidence night ###
@@ -464,7 +440,7 @@ automation:
       - service: notify.mobile_app_sm_a528b
         data:
           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-          message: "Camera 5 Djur detekterad natt"
+          message: "Camera 5 Animal detected night"
 
   #########################################
   ### Camera 5 Person is confidence day ###
@@ -507,7 +483,7 @@ automation:
       - service: notify.mobile_app_sm_a528b
         data:
           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-          message: "Camera 5 Person detekterad dag"
+          message: "Camera 5 Person detected day"
 
   ###########################################
   ### Camera 5 Person is confidence night ###
@@ -550,4 +526,4 @@ automation:
       - service: notify.mobile_app_sm_a528b
         data:
           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-          message: "Camera 5 Person detekterad natt"
+          message: "Camera 5 Person detected night"

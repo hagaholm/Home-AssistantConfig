@@ -186,7 +186,7 @@ camera:
 shell_command:
   # Used by automation Camera 5 Animal detected
   # Used by automation Camera 5 Person detected
-  print_text: 'echo {{source_file}} {{dest_file}'
+  print_text: "echo {{source_file}} {{dest_file}}"
   camera_5_mv_deepstack: "mv -f {{source_file}} {{dest_file}}"
 
 

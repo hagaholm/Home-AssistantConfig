@@ -577,3 +577,77 @@ automation:
       - service: light.turn_off
         target:
           entity_id: light.stralkastare_husgavel
+
+  ##################################################
+  ### Camera 5 Animal detected - flash light day ###
+  ##################################################
+  - alias: Camera 5 Animal detected flash light day
+    id: '8116232452399' 
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: sensor.camera_5_person
+        from: '0'
+      - platform: state
+        entity_id: sensor.camera_5_animal
+        from: '0'
+
+    condition:
+      condition: or
+      conditions:
+        - condition: state
+          entity_id: input_select.camera_mode
+          state: 'Day'
+
+    action:
+      - repeat:
+          count: 4
+          sequence:
+            - service: light.turn_on
+              target:
+                entity_id: 
+                  - light.hall_skap
+                  - light.hall_byra
+            - delay: "1"
+            - service: light.turn_off
+              target:
+                entity_id: 
+                  - light.hall_skap
+                  - light.hall_byra
+            - delay: "1"
+
+  ####################################################
+  ### Camera 5 Animal detected - flash light night ###
+  ####################################################
+  - alias: Camera 5 Animal detected flash light night
+    id: '8111901152399' 
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: sensor.camera_5_person
+        from: '0'
+      - platform: state
+        entity_id: sensor.camera_5_animal
+        from: '0'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_select.camera_mode
+          state: 'Night'
+
+    action:
+      - repeat:
+          count: 4
+          sequence:
+            - service: light.turn_on
+              target:
+                entity_id: light.sovrum_fonster
+            - delay: "1"
+            - service: light.turn_off
+              target:
+                entity_id: light.sovrum_fonster
+            - delay: "1"

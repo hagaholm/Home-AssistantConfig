@@ -407,10 +407,7 @@ automation:
       - delay:
           seconds: 1
 
-      # Timer is used to turn on the light
-      - service: input_boolean.turn_off
-        data:
-          entity_id: input_boolean.camera_5_animal_detected
+      # Animal is detected
       - service: input_boolean.turn_on
         data:
           entity_id: input_boolean.camera_5_animal_detected
@@ -426,10 +423,10 @@ automation:
         service: shell_command.camera_5_mv_deepstack
 
       # Send notify
-      - service: notify.mobile_app_sm_a528b
-        data:
-          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-          message: "Camera 5 Animal detected dag"
+#      - service: notify.mobile_app_sm_a528b
+#        data:
+#          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+#          message: "Camera 5 Animal detected dag"
 
   ###########################################
   ### Camera 5 Animal is confidence night ###
@@ -458,10 +455,7 @@ automation:
       - delay:
           seconds: 1
 
-      # Timer is used to turn on the light
-      - service: input_boolean.turn_off
-        data:
-          entity_id: input_boolean.camera_5_animal_detected
+      # Animal is detected
       - service: input_boolean.turn_on
         data:
           entity_id: input_boolean.camera_5_animal_detected
@@ -477,10 +471,10 @@ automation:
         service: shell_command.camera_5_mv_deepstack
 
       # Send notify
-      - service: notify.mobile_app_sm_a528b
-        data:
-          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-          message: "Camera 5 Animal detected night"
+#      - service: notify.mobile_app_sm_a528b
+#        data:
+#          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+#          message: "Camera 5 Animal detected night"
 
   #########################################
   ### Camera 5 Person is confidence day ###
@@ -509,10 +503,7 @@ automation:
       - delay:
           seconds: 1
 
-      # Timer is used to turn on the light
-      - service: input_boolean.turn_off
-        data:
-          entity_id: input_boolean.camera_5_person_detected
+      # Person is detected
       - service: input_boolean.turn_on
         data:
           entity_id: input_boolean.camera_5_person_detected
@@ -528,10 +519,10 @@ automation:
         service: shell_command.camera_5_mv_deepstack
 
       # Send notify
-      - service: notify.mobile_app_sm_a528b
-        data:
-          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-          message: "Camera 5 Person detected day"
+#      - service: notify.mobile_app_sm_a528b
+#        data:
+#          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+#          message: "Camera 5 Person detected day"
 
   ###########################################
   ### Camera 5 Person is confidence night ###
@@ -560,10 +551,7 @@ automation:
       - delay:
           seconds: 1
 
-      # Timer is used to turn on the light
-      - service: input_boolean.turn_off
-        data:
-          entity_id: input_boolean.camera_5_person_detected
+      # Person is detected
       - service: input_boolean.turn_on
         data:
           entity_id: input_boolean.camera_5_person_detected
@@ -579,10 +567,42 @@ automation:
         service: shell_command.camera_5_mv_deepstack
 
       # Send notify
-      - service: notify.mobile_app_sm_a528b
+#      - service: notify.mobile_app_sm_a528b
+#        data:
+#          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+#          message: "Camera 5 Person detected night"
+
+  ##############################################################
+  ### Camera 5 Start timer when animal or person is detected ###
+  ##############################################################
+  - alias: Camera 5 Start timer when detected
+    id: '1416857464476' 
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_boolean.camera_5_animal_detected
+        to: 'on'
+      - platform: state
+        entity_id: input_boolean.camera_5_person_detected
+        to: 'on'
+
+    action:
+      # Reset, so it be turn on again when detected 
+      - service: input_boolean.turn_off
         data:
-          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-          message: "Camera 5 Person detected night"
+          entity_id: input_boolean.camera_5_animal_detected
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.camera_5_person_detected
+
+      # Cancel timer and reset to max time
+      - service: timer.cancel
+        entity_id: timer.timer_camera_5_person_animal_detected
+
+      # Start timer and count down
+      - service: timer.start
+        entity_id: timer.timer_camera_5_person_animal_detected
 
   #########################
   ### Camera 5 Light on ###
@@ -595,6 +615,19 @@ automation:
       - platform: state
         entity_id: light.kamera5_stralkastare
         to: 'on'
+      - platform: state
+        entity_id: timer.timer_camera_5_person_animal_detected
+        to: 'active'
+
+    condition:
+      condition: or
+      conditions:
+        - condition: state
+          entity_id: input_select.camera_mode
+          state: 'Away'
+        - condition: state
+          entity_id: input_select.camera_mode
+          state: 'Night'
 
     action:
       - service: light.turn_on
@@ -610,8 +643,13 @@ automation:
 
     trigger:
       - platform: state
-        entity_id: light.kamera5_stralkastare
-        to: 'off'
+        entity_id: timer.timer_camera_5_person_animal_detected
+        to: 'idle'
+
+    conditions:
+      - condition: state
+        entity_id: light.stralkastare_husgavel
+        state: 'on'
 
     action:
       - service: light.turn_off

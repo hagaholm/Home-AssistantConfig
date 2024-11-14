@@ -620,14 +620,11 @@ automation:
         to: 'active'
 
     condition:
-      condition: or
+      condition: and
       conditions:
-        - condition: state
-          entity_id: input_select.camera_mode
-          state: 'Away'
-        - condition: state
-          entity_id: input_select.camera_mode
-          state: 'Night'
+        - condition: numeric_state
+          entity_id: sensor.ljusstyrka
+          below: 5
 
     action:
       - service: light.turn_on

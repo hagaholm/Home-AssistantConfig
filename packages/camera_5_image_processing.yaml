@@ -665,11 +665,11 @@ automation:
         to: 'active'
 
     condition:
-      condition: or
+      condition: and
       conditions:
         - condition: state
-          entity_id: input_select.camera_mode
-          state: 'Day'
+          entity_id: input_select.home_status
+          state: 'Hemma på'
 
     action:
       - repeat:
@@ -710,8 +710,8 @@ automation:
       condition: and
       conditions:
         - condition: state
-          entity_id: input_select.camera_mode
-          state: 'Night'
+          entity_id: input_select.home_status
+          state: 'Hemma av'
 
     action:
       - repeat:

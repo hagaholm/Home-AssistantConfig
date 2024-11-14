@@ -596,11 +596,7 @@ automation:
         data:
           entity_id: input_boolean.camera_5_person_detected
 
-      # Cancel timer and reset to max time
-      - service: timer.cancel
-        entity_id: timer.timer_camera_5_person_animal_detected
-
-      # Start timer and count down
+      # Start/restart timer and count down
       - service: timer.start
         entity_id: timer.timer_camera_5_person_animal_detected
 

@@ -110,6 +110,14 @@ input_text:
     name: Camera 5 trigger image night
     initial: "30.00"
 
+#############
+### Timer ###
+#############
+timer:
+  # Used for control when person or animal is detected
+  timer_camera_5_person_animal_detected:
+    name: Timer camera 5 person or animal detected
+    duration: '00:00:30'
 
 ##############
 ### Sensor ###
@@ -399,6 +407,14 @@ automation:
       - delay:
           seconds: 1
 
+      # Timer is used to turn on the light
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.camera_5_animal_detected
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.camera_5_animal_detected
+
       # Move images to correct /media folder
       - data:
           source_file: "{{ states('input_text.camera_5_animal_saved_file') }}"
@@ -441,6 +457,14 @@ automation:
       # Delay 1 sec to be sure the images is saved
       - delay:
           seconds: 1
+
+      # Timer is used to turn on the light
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.camera_5_animal_detected
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.camera_5_animal_detected
 
       # Move images to correct /media folder
       - data:
@@ -485,6 +509,14 @@ automation:
       - delay:
           seconds: 1
 
+      # Timer is used to turn on the light
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.camera_5_person_detected
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.camera_5_person_detected
+
       # Move images to correct /media folder
       - data:
           source_file: "{{ states('input_text.camera_5_person_saved_file') }}"
@@ -527,6 +559,14 @@ automation:
       # Delay 1 sec to be sure the images is saved
       - delay:
           seconds: 1
+
+      # Timer is used to turn on the light
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.camera_5_person_detected
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.camera_5_person_detected
 
       # Move images to correct /media folder
       - data:

@@ -115,8 +115,11 @@ input_text:
 #############
 timer:
   # Used for control when person or animal is detected
-  timer_camera_5_person_animal_detected:
-    name: Timer camera 5 person or animal detected
+  timer_camera_5_animal_detected:
+    name: Timer camera 5 animal detected
+    duration: '00:00:30'
+  timer_camera_5_person_detected:
+    name: Timer camera 5 person detected
     duration: '00:00:30'
 
 ##############
@@ -600,6 +603,33 @@ automation:
       - service: timer.start
         entity_id: timer.timer_camera_5_person_animal_detected
 
+    action:
+    - choose:
+      - conditions:
+          - condition: state
+            entity_id: input_boolean.camera_5_animal_detected
+            state: 'on'
+        sequence:
+              # Reset, so it be turn on again when detected 
+          - service: input_boolean.turn_off
+            data:
+              entity_id: input_boolean.camera_5_animal_detected
+              # Start/restart timer and count down
+          - service: timer.start
+            entity_id: timer.timer_camera_5_animal_detected
+      - conditions:
+          - condition: state
+            entity_id: input_boolean.camera_5_person_detected
+            state: 'on'
+        sequence:
+              # Reset, so it be turn on again when detected 
+          - service: input_boolean.turn_off
+            data:
+              entity_id: input_boolean.camera_5_person_detected
+              # Start/restart timer and count down
+          - service: timer.start
+            entity_id: timer.timer_camera_5_person_detected
+
   #########################
   ### Camera 5 Light on ###
   #########################
@@ -612,7 +642,10 @@ automation:
         entity_id: light.kamera5_stralkastare
         to: 'on'
       - platform: state
-        entity_id: timer.timer_camera_5_person_animal_detected
+        entity_id: timer.timer_camera_5_animal_detected
+        to: 'active'
+      - platform: state
+        entity_id: timer.timer_camera_5_person_detected
         to: 'active'
 
     condition:
@@ -636,7 +669,10 @@ automation:
 
     trigger:
       - platform: state
-        entity_id: timer.timer_camera_5_person_animal_detected
+        entity_id: timer.timer_camera_5_animal_detected
+        to: 'idle'
+      - platform: state
+        entity_id: timer.timer_camera_5_person_detected
         to: 'idle'
 
     conditions:
@@ -661,7 +697,7 @@ automation:
         entity_id: light.kamera5_stralkastare
         to: 'on'
       - platform: state
-        entity_id: timer.timer_camera_5_person_animal_detected
+        entity_id: timer.timer_camera_5_animal_detected
         to: 'active'
 
     condition:
@@ -703,7 +739,7 @@ automation:
         entity_id: light.kamera5_stralkastare
         to: 'on'
       - platform: state
-        entity_id: timer.timer_camera_5_person_animal_detected
+        entity_id: timer.timer_camera_5_animal_detected
         to: 'active'
 
     condition:

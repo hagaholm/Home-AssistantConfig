@@ -602,9 +602,6 @@ automation:
 
     trigger:
       - platform: state
-        entity_id: light.kamera5_stralkastare
-        to: 'on'
-      - platform: state
         entity_id: timer.timer_camera_5_animal_detected
         to: 'active'
       - platform: state
@@ -657,9 +654,6 @@ automation:
 
     trigger:
       - platform: state
-        entity_id: light.kamera5_stralkastare
-        to: 'on'
-      - platform: state
         entity_id: timer.timer_camera_5_animal_detected
         to: 'active'
 
@@ -698,9 +692,6 @@ automation:
     mode: single
 
     trigger:
-      - platform: state
-        entity_id: light.kamera5_stralkastare
-        to: 'on'
       - platform: state
         entity_id: timer.timer_camera_5_animal_detected
         to: 'active'

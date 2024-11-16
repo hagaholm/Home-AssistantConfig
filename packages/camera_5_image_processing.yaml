@@ -102,13 +102,13 @@ input_text:
 
   camera_5_trigger_light_on:
     name: Camera 5 trigger light on
-    initial: "10.00"
+    initial: "20.00"
   camera_5_trigger_image_day:
     name: Camera 5 trigger image day
     initial: "50.00"
   camera_5_trigger_image_night:
     name: Camera 5 trigger image night
-    initial: "30.00"
+    initial: "40.00"
 
 #############
 ### Timer ###
@@ -161,9 +161,9 @@ image_processing:
     save_timestamped_file: True
     targets:
       - target: person
-        confidence: 10
+        confidence: 20
       - target: animal
-        confidence: 10
+        confidence: 20
     source:
       - entity_id: camera.kamera5_clear
         name: deepstack_camera_5

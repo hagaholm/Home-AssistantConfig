@@ -7,13 +7,19 @@ automation:
       platform: event
       event_type: deepstack.object_detected
     action:
+      - condition: template
+        value_template: >
+          {% set confidence_threshold = 50 %}
+          {% set animals = trigger.event.data.data | selectattr('object_type', 'equalto', 'animal') | selectattr('confidence', 'ge', confidence_threshold) | list %}
+          {% set persons = trigger.event.data.data | selectattr('object_type', 'equalto', 'person') | selectattr('confidence', 'ge', confidence_threshold) | list %}
+          {{ animals | length > 0 or persons | length > 0 }}
       - service: notify.mobile_app_sm_a528b
         data_template:
           title: >
-            Camera {{ trigger.event.data.entity_id }} detection {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
+            Camera {{ trigger.event.data.entity_id.split('_')[-1] }} detection {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
           message: >
             {% set animals = trigger.event.data.data | selectattr('object_type', 'equalto', 'animal') | list %}
-            {% set persons = trigger.event.data.data | selectattr('object_type', 'equalto', 'human') | list %}
+            {% set persons = trigger.event.data.data | selectattr('object_type', 'equalto', 'person') | list %}
             {% if animals | length > 0 or persons | length > 0 %}
               {% if animals | length > 0 %}
                 Detected {{ animals | length }} animals: 

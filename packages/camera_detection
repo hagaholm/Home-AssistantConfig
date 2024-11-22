@@ -1,0 +1,32 @@
+##################
+### Automation ###
+##################
+automation:
+  - alias: "Announce Detected Objects"
+    trigger:
+      platform: event
+      event_type: deepstack.object_detected
+    action:
+      - service: notify.mobile_app_sm_a528b
+        data_template:
+          title: >
+            Camera {{ trigger.event.data.entity_id }} detection {{ now().strftime('%Y-%m-%d %H:%M:%S') }}
+          message: >
+            {% set animals = trigger.event.data.data | selectattr('object_type', 'equalto', 'animal') | list %}
+            {% set persons = trigger.event.data.data | selectattr('object_type', 'equalto', 'human') | list %}
+            {% if animals | length > 0 or persons | length > 0 %}
+              {% if animals | length > 0 %}
+                Detected {{ animals | length }} animals: 
+                {% for animal in animals %}
+                  - {{ animal.name }} with confidence {{ animal.confidence }}%
+                {% endfor %}
+              {% endif %}
+              {% if persons | length > 0 %}
+                Detected {{ persons | length }} persons: 
+                {% for person in persons %}
+                  - Person with confidence {{ person.confidence }}%
+                {% endfor %}
+              {% endif %}
+            {% else %}
+              No animals or persons detected.
+            {% endif %}

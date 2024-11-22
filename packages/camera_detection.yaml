@@ -7,10 +7,6 @@ automation:
       platform: event
       event_type: deepstack.object_detected
     action:
-      - condition: template
-        value_template: >
-          {% set persons = trigger.event.data.data | selectattr('object_type', 'equalto', 'person') %}
-          {{ persons | length > 0 }}
       - service: notify.mobile_app_sm_a528b
         data_template:
           title: >

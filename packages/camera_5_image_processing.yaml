@@ -130,6 +130,7 @@ sensor:
     sensors:
       camera_5_person:
         friendly_name: "Person"
+        unit_of_measurement: "persons"
         value_template: >-
           {% set summary = (state_attr('image_processing.deepstack_camera_5', 'summary')) %}
           {% if summary.person is defined %}
@@ -140,6 +141,7 @@ sensor:
 
       camera_5_animal:
         friendly_name: "Animal"
+        unit_of_measurement: "animals"
         value_template: >-
           {% set summary = (state_attr('image_processing.deepstack_camera_5', 'summary')) %}
           {% if summary.animal is defined %}
@@ -147,6 +149,12 @@ sensor:
           {% else %}
             0
           {% endif %}
+
+      camera_5_total:
+        friendly_name: "Total"
+        unit_of_measurement: "totals"
+        value_template: >-
+          {{ states('sensor.camera_5_person') | int + states('sensor.camera_5_animal') | int }}
 
 
 ########################
@@ -647,6 +655,7 @@ automation:
 
   ##################################################
   ### Camera 5 Animal detected - flash light day ###
+  ### Flash if total detected is 2 or more       ###
   ##################################################
   - alias: Camera 5 Animal detected flash light day
     id: '8116232452399' 
@@ -660,6 +669,8 @@ automation:
     condition:
       condition: and
       conditions:
+        - condition: template
+          value_template: "{{ states('sensor.camera_5_total') | int >= 2 }}"
         - condition: state
           entity_id: input_select.home_status
           state: 'Hemma på'
@@ -686,6 +697,7 @@ automation:
 
   ####################################################
   ### Camera 5 Animal detected - flash light night ###
+  ### Flash if total detected is 2 or more         ###
   ####################################################
   - alias: Camera 5 Animal detected flash light night
     id: '8111901152399' 
@@ -699,6 +711,8 @@ automation:
     condition:
       condition: and
       conditions:
+        - condition: template
+          value_template: "{{ states('sensor.camera_5_total') | int >= 2 }}"
         - condition: state
           entity_id: input_select.home_status
           state: 'Hemma av'
@@ -719,9 +733,10 @@ automation:
 
             - delay: "1"
 
-  ###################################
-  ### Camera 5 Detection - notify ###
-  ###################################
+  ############################################
+  ### Camera 5 Detection - notify          ###
+  ### Flash if total detected is 2 or more ###
+  ############################################
   - alias: Camera 5 Detection notify
     id: '8111901152345' 
     mode: single
@@ -737,13 +752,20 @@ automation:
     condition:
       condition: and
       conditions:
-        - condition: state
-          entity_id: input_select.home_status
-          state: 'Borta'
+        - condition: template
+          value_template: "{{ states('sensor.camera_5_total') | int >= 2 }}"
+¤        - condition: state
+¤          entity_id: input_select.home_status
+¤          state: 'Borta'
 
     action:
       # Send notify
       - service: notify.mobile_app_sm_a528b
         data:
-          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-          message: "Camera 5 Detection"
+          title: >
+            "Camera 5 Detection Alert {{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+          message: >
+            Camera 5 has detected:
+            - Total: {{ states('sensor.camera_5_total') | int }}
+            - Persons: {{ states('sensor.camera_5_persons') | int }} , confidence: {{ states('sensor.camera_5_person_confidence') | int }}
+            - Animals: {{ states('sensor.camera_5_animals') | int }} , confidence: {{ states('sensor.camera_5_animals_confidence') | int }}

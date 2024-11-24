@@ -150,11 +150,6 @@ sensor:
             0
           {% endif %}
 
-      camera_5_total:
-        friendly_name: "Total"
-        unit_of_measurement: "totals"
-        state: {{ states('sensor.camera_5_person') | int + states('sensor.camera_5_animal') | int }}
-
 
 ########################
 ### Image processing ###
@@ -669,7 +664,8 @@ automation:
       condition: and
       conditions:
         - condition: template
-          value_template: "{{ states('sensor.camera_5_total') | int >= 2 }}"
+          value_template: >
+            {{ states('sensor.camera_5_person') | int + states('sensor.camera_5_animal') | int >= 2 }}
         - condition: state
           entity_id: input_select.home_status
           state: 'Hemma på'
@@ -711,7 +707,8 @@ automation:
       condition: and
       conditions:
         - condition: template
-          value_template: "{{ states('sensor.camera_5_total') | int >= 2 }}"
+          value_template: >
+            {{ states('sensor.camera_5_person') | int + states('sensor.camera_5_animal') | int >= 2 }}
         - condition: state
           entity_id: input_select.home_status
           state: 'Hemma av'
@@ -752,7 +749,8 @@ automation:
       condition: and
       conditions:
         - condition: template
-          value_template: "{{ states('sensor.camera_5_total') | int >= 2 }}"
+          value_template: >
+            {{ states('sensor.camera_5_person') | int + states('sensor.camera_5_animal') | int >= 2 }}
 #        - condition: state
 #          entity_id: input_select.home_status
 #          state: 'Borta'
@@ -765,6 +763,5 @@ automation:
             "Camera 5 Detection Alert {{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           message: >
             Camera 5 has detected:
-            - Total: {{ states('sensor.camera_5_total') | int }}
             - Persons: {{ states('sensor.camera_5_persons') | int }} , confidence: {{ states('sensor.camera_5_person_confidence') | int }}
             - Animals: {{ states('sensor.camera_5_animals') | int }} , confidence: {{ states('sensor.camera_5_animals_confidence') | int }}

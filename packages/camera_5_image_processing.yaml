@@ -153,8 +153,7 @@ sensor:
       camera_5_total:
         friendly_name: "Total"
         unit_of_measurement: "totals"
-        value_template: >-
-          {{ states('sensor.camera_5_person') | int + states('sensor.camera_5_animal') | int }}
+        value_template: {{ states('sensor.camera_5_person') | int + states('sensor.camera_5_animal') | int }}
 
 
 ########################

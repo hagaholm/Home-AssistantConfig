@@ -753,9 +753,9 @@ automation:
       conditions:
         - condition: template
           value_template: "{{ states('sensor.camera_5_total') | int >= 2 }}"
-¤        - condition: state
-¤          entity_id: input_select.home_status
-¤          state: 'Borta'
+#        - condition: state
+#          entity_id: input_select.home_status
+#          state: 'Borta'
 
     action:
       # Send notify

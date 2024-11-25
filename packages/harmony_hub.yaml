@@ -46,7 +46,7 @@ script:
         entity_id: remote.harmony_hub
         data:
           activity: '-1'
-      - delay: '00:00:05'
+      - delay: '00:00:07'
       - service: remote.turn_off
         entity_id: remote.harmony_hub
 
@@ -259,7 +259,7 @@ automation:
         entity_id: switch.vardagsrum_stereobank
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_tv
-      - delay: '00:00:05'
+      - delay: '00:00:07'
       - service: script.harmony_tv
 
     #####################################################
@@ -294,7 +294,7 @@ automation:
         entity_id: switch.vardagsrum_stereobank
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_tv
-      - delay: '00:00:05'
+      - delay: '00:00:07'
       - service: script.harmony_radio
 
     ######################################################
@@ -329,7 +329,7 @@ automation:
         entity_id: switch.vardagsrum_stereobank
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_tv
-      - delay: '00:00:05'
+      - delay: '00:00:07'
       - service: script.harmony_chromecast
 
     #######################################################
@@ -364,7 +364,7 @@ automation:
         entity_id: switch.vardagsrum_stereobank
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_tv
-      - delay: '00:00:05'
+      - delay: '00:00:07'
       - service: script.harmony_spotify
 
     ############################################################
@@ -399,7 +399,7 @@ automation:
         entity_id: switch.vardagsrum_stereobank
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_tv
-      - delay: '00:00:05'
+      - delay: '00:00:07'
       - service: script.harmony_chromecast_ultra
 
     ################################################################
@@ -434,7 +434,7 @@ automation:
         entity_id: switch.vardagsrum_stereobank
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_tv
-      - delay: '00:00:05'
+      - delay: '00:00:07'
       - service: script.harmony_chromecast_ultra_listen
 
     ######################################

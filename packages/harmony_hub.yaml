@@ -260,8 +260,6 @@ automation:
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_tv
       - delay: '00:00:05'
-      - service: script.harmony_off
-      - delay: '00:00:05'
       - service: script.harmony_tv
 
     #####################################################
@@ -296,8 +294,6 @@ automation:
         entity_id: switch.vardagsrum_stereobank
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_tv
-      - delay: '00:00:05'
-      - service: script.harmony_off
       - delay: '00:00:05'
       - service: script.harmony_radio
 
@@ -334,8 +330,6 @@ automation:
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_tv
       - delay: '00:00:05'
-      - service: script.harmony_off
-      - delay: '00:00:05'
       - service: script.harmony_chromecast
 
     #######################################################
@@ -370,8 +364,6 @@ automation:
         entity_id: switch.vardagsrum_stereobank
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_tv
-      - delay: '00:00:05'
-      - service: script.harmony_off
       - delay: '00:00:05'
       - service: script.harmony_spotify
 
@@ -408,8 +400,6 @@ automation:
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_tv
       - delay: '00:00:05'
-      - service: script.harmony_off
-      - delay: '00:00:05'
       - service: script.harmony_chromecast_ultra
 
     ################################################################
@@ -444,8 +434,6 @@ automation:
         entity_id: switch.vardagsrum_stereobank
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_tv
-      - delay: '00:00:05'
-      - service: script.harmony_off
       - delay: '00:00:05'
       - service: script.harmony_chromecast_ultra_listen
 

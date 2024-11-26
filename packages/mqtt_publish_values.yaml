@@ -21,7 +21,10 @@ automation:
           topic: !secret mqtt_path_publish_outside_temperaure
 
 
-
+  ######################################################################################
+  ### Pause MQTT Broker when light.stralkastare_husgavel turn on                     ###
+  ### Otherwise it turn off light outside as lux sendor react on the activated light ###
+  ######################################################################################
   - alias: Pause MQTT Broker
     id: '9256370676345' 
     mode: single
@@ -37,6 +40,10 @@ automation:
           addon: core_mosquitto
 
 
+  ####################################################################
+  ### Resume MQTT Broker when light.stralkastare_husgavel turn off ###
+  ### Need to wait 20 sec to be sure no high values are received   ###
+  ####################################################################
   - alias: Resume MQTT Broker
     id: '9251230676345' 
     mode: single

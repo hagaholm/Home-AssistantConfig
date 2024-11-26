@@ -32,6 +32,8 @@
           entity_id: switch.friggebod_fonster
       - service: switch.turn_off
         entity_id: switch.tradgard
+      - service: light.turn_off
+        entity_id: light.tradack_ute
 
       - repeat:
           count: 10
@@ -76,6 +78,8 @@
           entity_id: switch.friggebod_fonster
       - service: switch.turn_off
         entity_id: switch.tradgard
+      - service: light.turn_off
+        entity_id: light.tradack_ute
 
       - repeat:
           count: 10
@@ -119,6 +123,9 @@
       - service: switch.turn_off
         data:
           entity_id: switch.friggebod_fonster
+
+      - service: light.turn_off
+        entity_id: light.tradack_ute
 
       - service: remote.turn_off
         entity_id: remote.harmony_hub
@@ -178,6 +185,9 @@
         data:
           entity_id: switch.friggebod_fonster
 
+      - service: light.turn_off
+        entity_id: light.tradack_ute
+
       - service: remote.turn_off
         entity_id: remote.harmony_hub
 
@@ -235,6 +245,9 @@
       - service: switch.turn_off
         data:
           entity_id: switch.friggebod_fonster
+
+      - service: light.turn_off
+        entity_id: light.tradack_ute
 
       - delay: '00:10:00'
 

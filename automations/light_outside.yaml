@@ -116,6 +116,86 @@
 
 #############################################################
 
+    ##########################################################
+    ### Tänder trädäck ute på morgonen vid rörelse i köket ###
+    ### T: input_boolean.rorelsedetektor_kok_aktiv == on   ###
+    ### C: sensor.ljusstyrka < 500                         ###
+    ###    05:00:00 - 12:00:00                             ###
+    ### A: light.tradack_ute = on                          ###
+    ##########################################################
+  - alias: Träckdäck ute on (sensor on, <500)
+    id: '9369632281987' 
+
+    trigger:
+      platform: state
+      entity_id: input_boolean.rorelsedetektor_kok_aktiv
+      to: 'on'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: numeric_state
+          entity_id: sensor.ljusstyrka
+          below: 500
+        - condition: state
+          entity_id: light.friggebod_fasad
+          state: 'off'
+        - condition: time
+          after: '05:00:00'
+          before: '12:00:00'
+
+    action:
+      - service: light.turn_on
+        entity_id: light.tradack_ute
+
+    ###########################################
+    ### Tänder trädäck ute på eftermiddagen ###
+    ### T: sensor.ljusstyrka < 500          ###
+    ### C: 12:00:00 - 21:45:00              ###
+    ### A: light.tradack_ute = on           ###
+    ###########################################
+  - alias: Trädäck ute on (<500)
+    id: '2246049822272' 
+
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      below: 500
+
+    condition:
+      condition: time
+      after: '12:00:00'
+      before: '21:45:00' 
+
+    action:
+      - service: light.turn_on
+        entity_id: light.tradack_ute
+
+    ##############################################
+    ### Släcker trädäck ute när det blir ljust ###
+    ### T: sensor.ljusstyrka > 600             ###
+    ### C: light.tradack_ute == on             ###
+    ### A: light.tradack_ute = off             ###
+    ##############################################
+  - alias: Trädäck ute off (>600)
+    id: '6395264032481' 
+
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      above: 600
+
+    condition:
+      condition: state
+      entity_id: light.tradack_ute
+      state: 'on'
+
+    action:
+      - service: light.turn_off
+        entity_id: light.tradack_ute
+
+#############################################################
+
     #####################################################
     ### Tänder belysning i Friggebod på eftermiddagen ###
     ### T: sensor.ljusstyrka < 1                      ###

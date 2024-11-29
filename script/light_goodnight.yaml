@@ -138,8 +138,6 @@
         entity_id: switch.vardagsrum_tv
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_subbas
-      - service: homeassistant.turn_off
-        entity_id: switch.vardagsrum_extra_subbas
 
       - repeat:
           count: 10
@@ -199,8 +197,6 @@
         entity_id: switch.vardagsrum_tv
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_subbas
-      - service: homeassistant.turn_off
-        entity_id: switch.vardagsrum_extra_subbas
 
       - repeat:
           count: 10
@@ -262,8 +258,6 @@
         entity_id: switch.vardagsrum_tv
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_subbas
-      - service: homeassistant.turn_off
-        entity_id: switch.vardagsrum_extra_subbas
 
       - repeat:
           count: 10

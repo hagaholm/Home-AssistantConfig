@@ -98,15 +98,14 @@ script:
         data:
           activity: '42812128'
 automation:
-    ###############################################
-    ### Stäng av subbasar vid PowerOff          ###
-    ### T: remote.harmony_hub                   ###
-    ### C: to current_activity == "PowerOff"    ###
-    ###    switch.vardagsrum_subbas = on        ###
-    ### A: switch.vardagsrum_subbas = off       ###
-    ###    switch.vardagsrum_extra_subbas = off ###
-    ###############################################
-  - alias: "Stäng av subbasar vid PowerOff"
+    #############################################
+    ### Stäng av subbas vid PowerOff          ###
+    ### T: remote.harmony_hub                 ###
+    ### C: to current_activity == "PowerOff"  ###
+    ###    switch.vardagsrum_subbas = on      ###
+    ### A: switch.vardagsrum_subbas = off     ###
+    #############################################
+  - alias: "Stäng av subbas vid PowerOff"
     id: '8746776562814' 
     mode: queued
 
@@ -125,22 +124,19 @@ automation:
     action:
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_subbas
-      - service: homeassistant.turn_off
-        entity_id: switch.vardagsrum_extra_subbas
 
-    #########################################################################
-    ### Sätt på subbasar vid PowerOn                                      ###
-    ### T: remote.harmony_hub                                             ###
-    ### C: to current_activity == "Watch TV"                              ###
-    ###    or to current_activity == "Watch ChromeCast"                   ###
-    ###    or to current_activity == "Listen to Radio"                    ###
-    ###    or to current_activity == "Listen to Spotify"                  ###
-    ###    or to current_activity == "Watch ChromeCast ultra"             ###
-    ###    or to current_activity == "Listen to ChromeCast ultra"         ###
-    ### A: switch.vardagsrum_subbas = on                                  ###
-    ###    switch.vardagsrum_extra_subbas = on                            ###
-    #########################################################################
-  - alias: "Sätt på subbasar vid PowerOn"
+    #################################################################
+    ### Sätt på subbas vid PowerOn                                ###
+    ### T: remote.harmony_hub                                     ###
+    ### C: to current_activity == "Watch TV"                      ###
+    ###    or to current_activity == "Watch ChromeCast"           ###
+    ###    or to current_activity == "Listen to Radio"            ###
+    ###    or to current_activity == "Listen to Spotify"          ###
+    ###    or to current_activity == "Watch ChromeCast ultra"     ###
+    ###    or to current_activity == "Listen to ChromeCast ultra" ###
+    ### A: switch.vardagsrum_subbas = on                          ###
+    #################################################################
+  - alias: "Sätt på subbas vid PowerOn"
     id: '9341608555148' 
     mode: queued
 
@@ -167,8 +163,6 @@ automation:
     action:
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_subbas
-      - service: homeassistant.turn_on
-        entity_id: switch.vardagsrum_extra_subbas
 
     ##################################################################
     ### Sätt på mediaspelare om off                                ###
@@ -233,7 +227,9 @@ automation:
     ### C: from current_activity == "PowerOff" ###
     ###    to   current_activity == "Watch TV" ###
     ###    switch.vardagsrum_stereobank = off  ###
-    ### A: switch.vardagsrum_extra_subbas = on ###
+    ### A: switch.vardagsrum_stereobank = on   ###
+    ###    switch.vardagsrum_tv = on           ###
+    ###    switch.script.harmony_tv            ###
     ##############################################
   - alias: "Sätt på mediaspelare vid Watch TV"
     id: '1091797301837' 
@@ -268,7 +264,9 @@ automation:
     ### C: from current_activity == "PowerOff"        ###
     ###    to   current_activity == "Listen to Radio" ###
     ###    switch.vardagsrum_stereobank = off         ###
-    ### A: switch.vardagsrum_extra_subbas = on        ###
+    ### A: switch.vardagsrum_stereobank = on          ###
+    ###    switch.vardagsrum_tv = on                  ###
+    ###    switch.script.harmony_radio                ###
     #####################################################
   - alias: "Sätt på mediaspelare vid Listen to Radio"
     id: '9113977047127' 
@@ -303,7 +301,9 @@ automation:
     ### C: from current_activity == "PowerOff"         ###
     ###    to   current_activity == "Watch ChromeCast" ###
     ###    switch.vardagsrum_stereobank = off          ###
-    ### A: switch.vardagsrum_extra_subbas = on         ###
+    ### A: switch.vardagsrum_stereobank = on           ###
+    ###    switch.vardagsrum_tv = on                   ###
+    ###    switch.script.harmony_chromecast            ###
     ######################################################
   - alias: "Sätt på mediaspelare vid Watch ChromeCast"
     id: '1959270592778' 
@@ -338,7 +338,9 @@ automation:
     ### C: from current_activity == "PowerOff"          ###
     ###    to   current_activity == "Listen to Spotify" ###
     ###    switch.vardagsrum_stereobank = off           ###
-    ### A: switch.vardagsrum_extra_subbas = on          ###
+    ### A: switch.vardagsrum_stereobank = on            ###
+    ###    switch.vardagsrum_tv = on                    ###
+    ###    switch.script.harmony_spotify                ###
     #######################################################
   - alias: "Sätt på mediaspelare vid Listen to Spotify"
     id: '1528678028280' 
@@ -373,7 +375,9 @@ automation:
     ### C: from current_activity == "PowerOff"               ###
     ###    to   current_activity == "Watch ChromeCast ultra" ###
     ###    switch.vardagsrum_stereobank = off                ###
-    ### A: switch.vardagsrum_extra_subbas = on               ###
+    ### A: switch.vardagsrum_stereobank = on                 ###
+    ###    switch.vardagsrum_tv = on                         ###
+    ###    switch.script.harmony_chromecast_ultra            ###
     ############################################################
   - alias: "Sätt på mediaspelare vid Watch ChromeCast ultra"
     id: '3045520962205' 
@@ -408,7 +412,9 @@ automation:
     ### C: from current_activity == "PowerOff"                   ###
     ###    to   current_activity == "Listen to ChromeCast ultra" ###
     ###    switch.vardagsrum_stereobank = off                    ###
-    ### A: switch.vardagsrum_extra_subbas = on                   ###
+    ### A: switch.vardagsrum_stereobank = on                     ###
+    ###    switch.vardagsrum_tv = on                             ###
+    ###    switch.script.harmony_chromecast_ultra_listen         ###
     ################################################################
   - alias: "Sätt på mediaspelare vid Listen to ChromeCast ultra"
     id: '6031274697836' 
@@ -437,10 +443,10 @@ automation:
       - delay: '00:00:05'
       - service: script.harmony_chromecast_ultra_listen
 
-    ######################################
-    ### Sätt på subbasar vid hög volym ###
-    ######################################
-  - alias: Sätt på subbasar vid hög volym
+    ####################################
+    ### Sätt på subbas vid hög volym ###
+    ####################################
+  - alias: Sätt på subbas vid hög volym
     id: '4756621854305' 
     mode: queued
 
@@ -459,13 +465,11 @@ automation:
     action:
       - service: homeassistant.turn_on
         entity_id: switch.vardagsrum_subbas
-      - service: homeassistant.turn_on
-        entity_id: switch.vardagsrum_extra_subbas
 
-    #######################################
-    ### Stäng av subbasar vid låg volym ###
-    #######################################
-  - alias: Stäng av subbasar vid låg volym
+    #####################################
+    ### Stäng av subbas vid låg volym ###
+    #####################################
+  - alias: Stäng av subbas vid låg volym
     id: '4354585216156' 
     mode: queued
 
@@ -484,8 +488,6 @@ automation:
     action:
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_subbas
-      - service: homeassistant.turn_off
-        entity_id: switch.vardagsrum_extra_subbas
 
     ###################################
     ### Sätt på tv bänk vid rörelse ###

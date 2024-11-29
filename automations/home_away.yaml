@@ -92,8 +92,6 @@
     ### A: remote.harmony_hub = off                     ###
     ###    switch.vardagsrum_stereobank                 ###
     ###    switch.vardagsrum_tv                         ###
-    ###    switch.vardagsrum_subbas                     ###
-    ###    switch.vardagsrum_extra_subbas               ###
     #######################################################
   - alias: Mediaspelare off (-> borta)
     id: '4088468088280' 
@@ -113,5 +111,3 @@
         entity_id: switch.vardagsrum_tv
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_subbas
-      - service: homeassistant.turn_off
-        entity_id: switch.vardagsrum_extra_subbas

@@ -3,7 +3,7 @@
     ### T: input_boolean.rorelsedetektor_kok_aktiv == on     ###
     ### C: sensor.ljusstyrka < 40                            ###
     ###    05:00:00 - 12:00:00                               ###
-    ### A: light.friggebod_ute = on                          ###
+    ### A: light.friggebod_ute_2 = on                        ###
     ############################################################
   - alias: Friggebod ute on (sensor on, <40)
     id: '9369632281021' 
@@ -28,13 +28,13 @@
 
     action:
       - service: light.turn_on
-        entity_id: light.friggebod_ute
+        entity_id: light.friggebod_ute_2
 
     #############################################
     ### Tänder friggebod ute på eftermiddagen ###
     ### T: sensor.ljusstyrka < 40             ###
     ### C: 12:00:00 - 21:45:00                ###
-    ### A: light.friggebod_ute = on           ###
+    ### A: light.friggebod_ute_2 = on         ###
     #############################################
   - alias: Friggebod ute on (<40)
     id: '2246049822272' 
@@ -51,13 +51,13 @@
 
     action:
       - service: light.turn_on
-        entity_id: light.friggebod_ute
+        entity_id: light.friggebod_ute_2
 
     ################################################
     ### Släcker friggebod ute när det blir ljust ###
     ### T: sensor.ljusstyrka > 60                ###
-    ### C: light.friggebod_ute == on             ###
-    ### A: light.friggebod_ute = off             ###
+    ### C: light.friggebod_ute_2 == on           ###
+    ### A: light.friggebod_ute_2 = off           ###
     ################################################
   - alias: Friggebod ute off (>60)
     id: '6395264032481' 
@@ -69,12 +69,12 @@
 
     condition:
       condition: state
-      entity_id: light.friggebod_ute
+      entity_id: light.friggebod_ute_2
       state: 'on'
 
     action:
       - service: light.turn_off
-        entity_id: light.friggebod_ute
+        entity_id: light.friggebod_ute_2
 
 #############################################################
 

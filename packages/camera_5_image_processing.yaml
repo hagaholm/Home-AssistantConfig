@@ -667,12 +667,6 @@ automation:
           below: 5
 
     action:
-      - service: hassio.addon_stop
-        data:
-          addon: core_mosquitto
-
-      - delay: "1"
-
       - service: light.turn_on
         target:
           entity_id: light.stralkastare_husgavel
@@ -701,12 +695,6 @@ automation:
       - service: light.turn_off
         target:
           entity_id: light.stralkastare_husgavel
-
-      - delay: "1"
-
-      - service: hassio.addon_start
-        data:
-          addon: core_mosquitto
 
   ##################################################
   ### Camera 5 Animal detected - flash light day ###

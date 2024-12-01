@@ -87,27 +87,6 @@
       - service: light.turn_off
         entity_id: light.vardagsrum_vitrinskap
 
-# Tellstick Julbelysning
-#      - service: light.turn_on
-#        entity_id: light.kok_stora_fonstret_ljusstake
-#
-#      - service: light.turn_on
-#        data:
-#          entity_id: light.vardagsrum_fonster_ljusstake_2
-#          brightness_pct: 100
-#          transition: 2
-#      - service: light.turn_on
-#        entity_id: light.vardagsrum_gran
-#
-#      - service: light.turn_on
-#        entity_id: light.uterum_julstjarnor
-#
-#      - service: light.turn_on
-#        entity_id: light.andreas_fonster_julstjarna
-#
-#      - service: light.turn_on
-#        entity_id: light.sovrum_sangbord
-
   ### --------------------- ###
   ### Bortabelysning jul on ###
   ### --------------------- ###
@@ -117,42 +96,13 @@
 
 # IKEA
 
-#      - service: light.turn_on
-#        data:
-#          entity_id: light.kok_stora_fonstret
-#          brightness_pct: 50
-#          transition: 2
-
       - service: light.turn_off
         entity_id: light.hall_skap
 
-#      - service: light.turn_on
-#        data:
-#          entity_id: light.vardagsrum_fonster
-#          brightness_pct: 50
-#          transition: 2
       - service: light.turn_off
         entity_id: light.vardagsrum_skank
       - service: light.turn_off
         entity_id: light.vardagsrum_vagn
-
-#      - service: light.turn_on
-#        data:
-#          entity_id: light.uterum_fonster
-#          brightness_pct: 80
-#          transition: 2
-
-#      - service: light.turn_on
-#        data:
-#          entity_id: light.andreas_fonster_2
-#          brightness_pct: 30
-#          transition: 2
-
-#      - service: light.turn_on
-#        data:
-#          entity_id: light.sovrum_fonster
-#          brightness_pct: 50
-#          transition: 2
 
       - service: light.turn_on
         data:
@@ -258,24 +208,6 @@
       - service: light.turn_off
         entity_id: light.vardagsrum_vitrinskap
 
-# Tellstick Julbelysning
-#      - service: light.turn_off
-#        entity_id: light.kok_stora_fonstret_ljusstake
-#
-#      - service: light.turn_off
-#        entity_id: light.vardagsrum_fonster_ljusstake_2
-#      - service: light.turn_off
-#        entity_id: light.vardagsrum_gran
-#
-#      - service: light.turn_off
-#        entity_id: light.uterum_julstjarnor
-#
-#      - service: light.turn_off
-#        entity_id: light.andreas_fonster_julstjarna
-#
-#      - service: light.turn_off
-#        entity_id: light.sovrum_sangbord
-
   ### ---------------------- ###
   ### Bortabelysning jul off ###
   ### ---------------------- ###
@@ -285,27 +217,13 @@
 
 # IKEA
 
-#      - service: light.turn_off
-#        entity_id: light.kok_stora_fonstret
-
       - service: light.turn_off
         entity_id: light.hall_skap
 
-#      - service: light.turn_off
-#        entity_id: light.vardagsrum_fonster
       - service: light.turn_off
         entity_id: light.vardagsrum_skank
       - service: light.turn_off
         entity_id: light.vardagsrum_vagn
-
-#      - service: light.turn_off
-#        entity_id: light.uterum_fonster
-
-#      - service: light.turn_off
-#        entity_id: light.andreas_fonster_2
-
-#      - service: light.turn_off
-#        entity_id: light.sovrum_fonster
 
       - service: light.turn_off
         entity_id: light.louise_fonster

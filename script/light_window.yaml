@@ -12,8 +12,6 @@
 #          transition: 2
 
       - service: light.turn_off
-        entity_id: light.hall_byra
-      - service: light.turn_off
         entity_id: light.hall_skap
 
 #      - service: light.turn_on
@@ -82,3 +80,6 @@
 
       - service: light.turn_on
         entity_id: light.sovrum_sangbord
+
+      - service: light.turn_off
+        entity_id: light.hall_jullampa

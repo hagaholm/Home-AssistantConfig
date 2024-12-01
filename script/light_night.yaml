@@ -42,10 +42,7 @@
     sequence:
 
 # IKEA
-      - service: light.turn_on
-        data:
-          entity_id: light.hall_byra
-          brightness_pct: 1
+
 
 # Tellstick
       - service: light.turn_on
@@ -53,6 +50,9 @@
           entity_id: light.vardagsrum_fonster_ljusstake_2
           brightness_pct: 10
           transition: 5
+
+      - service: light.turn_on
+        entity_id: light.hall_jullampa
 
   #########################
   ### Nattbelysning off ###
@@ -84,3 +84,4 @@
         data:
           entity_id: light.nattbelysning_jul
           transition: 2
+

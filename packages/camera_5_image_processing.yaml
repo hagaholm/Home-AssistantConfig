@@ -459,7 +459,7 @@ automation:
     action:
       # Delay 1 sec to be sure the images is saved
       - delay:
-          milliseconds: 500
+          milliseconds: 200
 
       # Animal is detected
       - service: input_boolean.turn_on
@@ -501,7 +501,7 @@ automation:
     action:
       # Delay 1 sec to be sure the images is saved
       - delay:
-          milliseconds: 500
+          milliseconds: 200
 
       # Animal is detected
       - service: input_boolean.turn_on
@@ -543,7 +543,7 @@ automation:
     action:
       # Delay 1 sec to be sure the images is saved
       - delay:
-          milliseconds: 500
+          milliseconds: 200
 
       # Person is detected
       - service: input_boolean.turn_on
@@ -585,7 +585,7 @@ automation:
     action:
       # Delay 1 sec to be sure the images is saved
       - delay:
-          milliseconds: 500
+          milliseconds: 200
 
       # Person is detected
       - service: input_boolean.turn_on

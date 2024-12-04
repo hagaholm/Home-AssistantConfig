@@ -306,7 +306,7 @@ automation:
 
       # Delay 1 sec to be sure the images is saved
       - delay:
-          milliseconds: 500
+          milliseconds: 200
 
       # Move images to correct /media folder
       - data:
@@ -360,7 +360,7 @@ automation:
 
       # Delay 1 sec to be sure the images is saved
       - delay:
-          milliseconds: 500
+          milliseconds: 200
 
       # If Camera mode is Away, then wait until it has changed to another mode or continue after 120 sec
       - wait_template: "{{ not is_state('input_select.camera_mode', 'Away') }}"

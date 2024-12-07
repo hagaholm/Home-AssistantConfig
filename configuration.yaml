@@ -26,6 +26,9 @@ homeassistant:
   # Package folder
   packages: !include_dir_named packages
 
+  media_dirs:
+    local: /media
+    
   allowlist_external_dirs:
     - /config
     - /config/camera

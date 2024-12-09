@@ -708,6 +708,11 @@ automation:
         - condition: numeric_state
           entity_id: sensor.ljusstyrka
           below: 5
+        - condition: or
+          conditions:
+          - condition: state
+            entity_id: light.kamera5_stralkastare
+            state: 'on'
 
     action:
       - service: light.turn_on

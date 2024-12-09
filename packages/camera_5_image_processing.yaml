@@ -464,7 +464,7 @@ automation:
         continue_on_timeout: true
       - choose:
         - conditions:
-            - condition: template
+          - condition: template
             value_template: >
                 "{{ states('input_text.camera_5_animal_saved_file') | file_exists }}"
         sequence:
@@ -516,7 +516,7 @@ automation:
         continue_on_timeout: true
       - choose:
         - conditions:
-            - condition: template
+          - condition: template
             value_template: >
                 "{{ states('input_text.camera_5_animal_saved_file') | file_exists }}"
         sequence:
@@ -568,7 +568,7 @@ automation:
         continue_on_timeout: true
       - choose:
         - conditions:
-            - condition: template
+          - condition: template
             value_template: >
                 "{{ states('input_text.camera_5_person_saved_file') | file_exists }}"
         sequence:
@@ -621,7 +621,7 @@ automation:
         continue_on_timeout: true
       - choose:
         - conditions:
-            - condition: template
+          - condition: template
             value_template: >
                 "{{ states('input_text.camera_5_person_saved_file') | file_exists }}"
         sequence:

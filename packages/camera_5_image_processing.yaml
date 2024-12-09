@@ -458,24 +458,34 @@ automation:
           state: 'off'
 
     action:
-      # Delay 1 sec to be sure the images is saved
-      - delay:
-          milliseconds: 200
-
-      # Animal is detected
-      - service: input_boolean.turn_on
-        data:
-          entity_id: input_boolean.camera_5_animal_detected
-
-      # Move images to correct /media folder
-      - data:
-          source_file: "{{ states('input_text.camera_5_animal_saved_file') }}"
-          dest_file: "/media/0/animal/camera_5_latest.jpg"
-        service: shell_command.camera_5_cp_deepstack
-      - data:
-          source_file: "{{ states('input_text.camera_5_animal_saved_file') }}"
-          dest_file: "/media/0/animal/{{ states('input_text.camera_5_animal_file_name') }}"
-        service: shell_command.camera_5_mv_deepstack
+      - wait_template: >
+          "{{ states('input_text.camera_5_animal_saved_file') | file_exists }}"
+        timeout: '00:00:01'  # Timeout after 1 second
+        continue_on_timeout: true
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: >
+                  "{{ states('input_text.camera_5_animal_saved_file') | file_exists }}"
+            sequence:
+              # Animal is detected
+              - service: input_boolean.turn_on
+                data:
+                  entity_id: input_boolean.camera_5_animal_detected
+              # Move images to correct /media folder
+              - data:
+                  source_file: "{{ states('input_text.camera_5_animal_saved_file') }}"
+                  dest_file: "/media/0/animal/camera_5_latest.jpg"
+                service: shell_command.camera_5_cp_deepstack
+              - data:
+                  source_file: "{{ states('input_text.camera_5_animal_saved_file') }}"
+                  dest_file: "/media/0/animal/{{ states('input_text.camera_5_animal_file_name') }}"
+                service: shell_command.camera_5_mv_deepstack
+          default:
+            - service: logbook.log
+              data:
+                name: File Check
+                message: "Timeout reached: The file {{ states('input_text.camera_5_animal_saved_file') }} does not exist."
 
   ###########################################
   ### Camera 5 Animal is confidence night ###
@@ -500,24 +510,34 @@ automation:
           state: 'on'
 
     action:
-      # Delay 1 sec to be sure the images is saved
-      - delay:
-          milliseconds: 200
-
-      # Animal is detected
-      - service: input_boolean.turn_on
-        data:
-          entity_id: input_boolean.camera_5_animal_detected
-
-      # Move images to correct /media folder
-      - data:
-          source_file: "{{ states('input_text.camera_5_animal_saved_file') }}"
-          dest_file: "/media/0/animal/camera_5_latest.jpg"
-        service: shell_command.camera_5_cp_deepstack
-      - data:
-          source_file: "{{ states('input_text.camera_5_animal_saved_file') }}"
-          dest_file: "/media/0/animal/{{ states('input_text.camera_5_animal_file_name') }}"
-        service: shell_command.camera_5_mv_deepstack
+      - wait_template: >
+          "{{ states('input_text.camera_5_animal_saved_file') | file_exists }}"
+        timeout: '00:00:01'  # Timeout after 1 second
+        continue_on_timeout: true
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: >
+                  "{{ states('input_text.camera_5_animal_saved_file') | file_exists }}"
+            sequence:
+              # Animal is detected
+              - service: input_boolean.turn_on
+                data:
+                  entity_id: input_boolean.camera_5_animal_detected
+              # Move images to correct /media folder
+              - data:
+                  source_file: "{{ states('input_text.camera_5_animal_saved_file') }}"
+                  dest_file: "/media/0/animal/camera_5_latest.jpg"
+                service: shell_command.camera_5_cp_deepstack
+              - data:
+                  source_file: "{{ states('input_text.camera_5_animal_saved_file') }}"
+                  dest_file: "/media/0/animal/{{ states('input_text.camera_5_animal_file_name') }}"
+                service: shell_command.camera_5_mv_deepstack
+          default:
+            - service: logbook.log
+              data:
+                name: File Check
+                message: "Timeout reached: The file {{ states('input_text.camera_5_animal_saved_file') }} does not exist."
 
   #########################################
   ### Camera 5 Person is confidence day ###
@@ -542,30 +562,35 @@ automation:
           state: 'off'
 
     action:
-      # Delay 1 sec to be sure the images is saved
-      - delay:
-          milliseconds: 200
+      - wait_template: >
+          "{{ states('input_text.camera_5_person_saved_file') | file_exists }}"
+        timeout: '00:00:01'  # Timeout after 1 second
+        continue_on_timeout: true
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: >
+                  "{{ states('input_text.camera_5_person_saved_file') | file_exists }}"
+            sequence:
+              # Person is detected
+              - service: input_boolean.turn_on
+                data:
+                  entity_id: input_boolean.camera_5_person_detected
 
-      # Person is detected
-      - service: input_boolean.turn_on
-        data:
-          entity_id: input_boolean.camera_5_person_detected
-
-#      - service: system_log.write
-#          data:
-#          level: info
-#          message: "MK 1416857464759 {{ states('input_text.camera_5_person_saved_file') }} --> /media/0/{{ states('input_select.camera_mode') }}/camera_5_latest.jpg"
-#          message: "MK 1416857464759 {{ states('input_text.camera_5_person_saved_file') }} --> /media/0/{{ states('input_select.camera_mode') }}/{{ states('input_text.camera_5_person_file_name') }}"
-
-      # Move images to correct /media folder      
-      - data:
-          source_file: "{{ states('input_text.camera_5_person_saved_file') }}"
-          dest_file: "/media/0/{{ states('input_select.camera_mode') }}/camera_5_latest.jpg"
-        service: shell_command.camera_5_cp_deepstack
-      - data:
-          source_file: "{{ states('input_text.camera_5_person_saved_file') }}"
-          dest_file: "/media/0/{{ states('input_select.camera_mode') }}/{{ states('input_text.camera_5_person_file_name') }}"
-        service: shell_command.camera_5_mv_deepstack
+              # Move images to correct /media folder
+              - data:
+                  source_file: "{{ states('input_text.camera_5_person_saved_file') }}"
+                  dest_file: "/media/0/person/camera_5_latest.jpg"
+                service: shell_command.camera_5_cp_deepstack
+              - data:
+                  source_file: "{{ states('input_text.camera_5_person_saved_file') }}"
+                  dest_file: "/media/0/person/{{ states('input_text.camera_5_person_file_name') }}"
+                service: shell_command.camera_5_mv_deepstack
+          default:
+            - service: logbook.log
+              data:
+                name: File Check
+                message: "Timeout reached: The file {{ states('input_text.camera_5_person_saved_file') }} does not exist."
 
   ###########################################
   ### Camera 5 Person is confidence night ###
@@ -590,24 +615,35 @@ automation:
           state: 'on'
 
     action:
-      # Delay 1 sec to be sure the images is saved
-      - delay:
-          milliseconds: 200
+      - wait_template: >
+          "{{ states('input_text.camera_5_person_saved_file') | file_exists }}"
+        timeout: '00:00:01'  # Timeout after 1 second
+        continue_on_timeout: true
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: >
+                  "{{ states('input_text.camera_5_person_saved_file') | file_exists }}"
+            sequence:
+              # Person is detected
+              - service: input_boolean.turn_on
+                data:
+                  entity_id: input_boolean.camera_5_person_detected
 
-      # Person is detected
-      - service: input_boolean.turn_on
-        data:
-          entity_id: input_boolean.camera_5_person_detected
-
-      # Move images to correct /media folder
-      - data:
-          source_file: "{{ states('input_text.camera_5_person_saved_file') }}"
-          dest_file: "/media/0/{{ states('input_select.camera_mode') }}/camera_5_latest.jpg"
-        service: shell_command.camera_5_cp_deepstack
-      - data:
-          source_file: "{{ states('input_text.camera_5_person_saved_file') }}"
-          dest_file: "/media/0/{{ states('input_select.camera_mode') }}/{{ states('input_text.camera_5_person_file_name') }}"
-        service: shell_command.camera_5_mv_deepstack
+              # Move images to correct /media folder
+              - data:
+                  source_file: "{{ states('input_text.camera_5_person_saved_file') }}"
+                  dest_file: "/media/0/person/camera_5_latest.jpg"
+                service: shell_command.camera_5_cp_deepstack
+              - data:
+                  source_file: "{{ states('input_text.camera_5_person_saved_file') }}"
+                  dest_file: "/media/0/person/{{ states('input_text.camera_5_person_file_name') }}"
+                service: shell_command.camera_5_mv_deepstack
+          default:
+            - service: logbook.log
+              data:
+                name: File Check
+                message: "Timeout reached: The file {{ states('input_text.camera_5_person_saved_file') }} does not exist."
 
   ##############################################################
   ### Camera 5 Start timer when animal or person is detected ###
@@ -775,13 +811,17 @@ automation:
           sequence:
             - service: light.turn_on
               target:
-                entity_id: light.sovrum_fonster
+                entity_id: 
+                  - light.sovrum_fonster
+                  - light.sovrum_sangbord
 
             - delay: "1"
 
             - service: light.turn_off
               target:
-                entity_id: light.sovrum_fonster
+                entity_id: 
+                  - light.sovrum_fonster
+                  - light.sovrum_sangbord
 
             - delay: "1"
 

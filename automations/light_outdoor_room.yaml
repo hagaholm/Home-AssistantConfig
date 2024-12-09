@@ -124,6 +124,9 @@
         - condition: state
           entity_id: group.track_for_home_devices
           state: 'home'
+        - condition: state
+          entity_id: light.stralkastare_husgavel
+          state: 'off'
 
     action:
       - service: input_select.select_option
@@ -145,6 +148,13 @@
       from: 'home'
       to: 'not_home'
 
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.stralkastare_husgavel
+          state: 'off'
+
     action:
       - service: input_select.select_option
         data:
@@ -163,6 +173,13 @@
       platform: numeric_state
       entity_id: sensor.lumi_lumi_weather_temperature_3
       below: 17
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.stralkastare_husgavel
+          state: 'off'
 
     action:
       - service: input_select.select_option

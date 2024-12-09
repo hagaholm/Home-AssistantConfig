@@ -619,24 +619,31 @@ automation:
         to: 'on'
 
     action:
-      # Delay to be sure the images is saved
-      - delay:
-          milliseconds: 200
-
-      # Person is detected
-      - service: input_boolean.turn_on
-        data:
-          entity_id: input_boolean.camera_5_person_detected
-
-      # Move images to correct /media folder
-      - data:
-          source_file: "{{ states('input_text.camera_5_person_saved_file') }}"
-          dest_file: "/media/0/{{ states('input_select.camera_mode') }}/camera_5_latest.jpg"
-        service: shell_command.camera_5_cp_deepstack
-      - data:
-          source_file: "{{ states('input_text.camera_5_person_saved_file') }}"
-          dest_file: "/media/0/{{ states('input_select.camera_mode') }}/{{ states('input_text.camera_5_person_file_name') }}"
-        service: shell_command.camera_5_mv_deepstack
+    - choose:
+      - conditions:
+          - condition: state
+            entity_id: input_boolean.camera_5_animal_detected
+            state: 'on'
+        sequence:
+              # Reset, so it be turn on again when detected 
+          - service: input_boolean.turn_off
+            data:
+              entity_id: input_boolean.camera_5_animal_detected
+              # Start/restart timer and count down
+          - service: timer.start
+            entity_id: timer.timer_camera_5_animal_detected
+      - conditions:
+          - condition: state
+            entity_id: input_boolean.camera_5_person_detected
+            state: 'on'
+        sequence:
+              # Reset, so it be turn on again when detected 
+          - service: input_boolean.turn_off
+            data:
+              entity_id: input_boolean.camera_5_person_detected
+              # Start/restart timer and count down
+          - service: timer.start
+            entity_id: timer.timer_camera_5_person_detected
 
   #########################
   ### Camera 5 Light on ###

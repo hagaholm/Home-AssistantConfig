@@ -18,7 +18,7 @@
 
     ############################################
     ### Hög temp ackumulatortank             ###
-    ### T: sensor.varmepump_temperature > 52 ###
+    ### T: sensor.varmepump_temperature > 55 ###
     ### A: notify.mobile_app_sm_a528b        ###
     ############################################
   - alias: Hög temp ackumulatortank
@@ -27,7 +27,7 @@
     trigger:
       platform: numeric_state
       entity_id: sensor.varmepump_temperature
-      above: '52'
+      above: '55'
 
     action:
       - service: notify.mobile_app_sm_a528b

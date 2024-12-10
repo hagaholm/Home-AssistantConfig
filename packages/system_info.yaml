@@ -165,6 +165,12 @@ sensor:
       camera4:
         friendly_name: 'Kamera 4'
         value_template: "{{ 'Online' if is_state('device_tracker.kamera4', 'home') else 'Offline' }}"
+      camera5:
+        friendly_name: 'Kamera 5'
+        value_template: "{{ 'Online' if is_state('device_tracker.kamera5', 'home') else 'Offline' }}"
+      camera6:
+        friendly_name: 'Kamera 6'
+        value_template: "{{ 'Online' if is_state('device_tracker.kamera6', 'home') else 'Offline' }}"
       garmin_fenix_5_plus:
         friendly_name: 'Garmin Fenix 5 Plus'
         value_template: "{{ 'Online' if is_state('device_tracker.GarminFenix5Plus', 'home') else 'Offline' }}"

@@ -70,6 +70,10 @@ views:
             entity: camera.kamera3_snapshots
           - type: picture-entity
             entity: camera.kamera4_snapshots
+          - type: picture-entity
+            entity: camera.kamera5_snapshots
+          - type: picture-entity
+            entity: camera.kamera6_snapshots
       - entity: script.delete_camera_files
         type: entity
         name: Delete all camera files
@@ -229,19 +233,19 @@ views:
       - type: picture-entity
         entity: camera.kamera3_main
   - title: Kamera friggebod
-    path: kamera-4
+    path: kamera-6
     badges: []
     cards:
       - entities:
-          - entity: input_boolean.camera_4_active
+          - entity: input_boolean.camera_6_active
             name: Aktiv
           - entity: input_select.camera_mode
             name: Mode
-          - entity: image_processing.deepstack_camera_4
+          - entity: image_processing.deepstack_camera_6
             name: Deepstack
-          - entity: sensor.camera_4_person
-          - entity: sensor.camera_4_animal
-          - entity: input_boolean.camera_4_recording_video
+          - entity: sensor.camera_6_person
+          - entity: sensor.camera_6_animal
+          - entity: input_boolean.camera_6_recording_video
             name: Rec video
         title: Status Kamera
         type: glance
@@ -249,35 +253,35 @@ views:
         show_state: true
         show_name: true
         show_icon: true
-      - entity: camera.camera_4_latest_person
+      - entity: camera.camera_6_latest_person
         show_name: true
         show_state: false
         type: picture-entity
       - type: picture-entity
-        entity: camera.camera_4_latest_person_away
+        entity: camera.camera_6_latest_person_away
       - type: picture-entity
-        entity: camera.camera_4_latest_person_night
+        entity: camera.camera_6_latest_person_night
       - type: picture-entity
-        entity: camera.camera_4_latest_animal
+        entity: camera.camera_6_latest_animal
       - type: entities
         entities:
-          - entity: automation.camera_4_startup
-          - entity: automation.camera_4_shutdown
-          - entity: automation.camera_4_image_processing
-          - entity: automation.camera_4_person_detected
-          - entity: automation.camera_4_person_detected_create_video
-          - entity: automation.camera_4_animal_detected
+          - entity: automation.camera_6_startup
+          - entity: automation.camera_6_shutdown
+          - entity: automation.camera_6_image_processing
+          - entity: automation.camera_6_person_detected
+          - entity: automation.camera_6_person_detected_create_video
+          - entity: automation.camera_6_animal_detected
         state_color: true
         title: Automationer
       - type: entity
-        entity: input_text.camera_4_person_confidence
+        entity: input_text.camera_6_person_confidence
       - type: entity
-        entity: input_text.camera_4_person_time_fired
+        entity: input_text.camera_6_person_time_fired
       - type: entities
         entities:
-          - entity: timer.timer_camera_4_away_person_detected
+          - entity: timer.timer_camera_6_away_person_detected
       - type: picture-entity
-        entity: camera.kamera4_main
+        entity: camera.kamera6_clear
   - title: Kamera uteplats
     path: kamera-1
     badges: []

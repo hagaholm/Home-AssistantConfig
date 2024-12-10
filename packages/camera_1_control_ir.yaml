@@ -18,6 +18,8 @@ automation:
 
     action:
       - service: homeassistant.turn_on
+        entity_id: input_boolean.camera_1_active
+      - service: homeassistant.turn_on
         entity_id: switch.kamera1_infra_red_lights_in_night_mode
 
   - alias: Camera 1 Ir off
@@ -32,5 +34,7 @@ automation:
         to: "Day"
 
     action:
+      - service: homeassistant.turn_off
+        entity_id: input_boolean.camera_1_active
       - service: homeassistant.turn_off
         entity_id: switch.kamera1_infra_red_lights_in_night_mode

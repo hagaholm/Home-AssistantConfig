@@ -809,7 +809,7 @@ automation:
       conditions:
         - condition: template
           value_template: >
-            {{ states('sensor.camera_5_person') | int + states('sensor.camera_5_animal') | int >= 2 }}
+            {{ states('sensor.camera_5_person') | int + states('sensor.camera_5_animal') | int >= 1 }}
 #        - condition: state
 #          entity_id: input_select.home_status
 #          state: 'Borta'
@@ -822,5 +822,5 @@ automation:
             "Camera 5 Detection Alert {{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           message: >
             Camera 5 has detected:
-            - Persons: {{ states('sensor.camera_5_persons') | int }} , confidence: {{ states('sensor.camera_5_person_confidence') | int }}
-            - Animals: {{ states('sensor.camera_5_animals') | int }} , confidence: {{ states('sensor.camera_5_animals_confidence') | int }}
+            - Persons: {{ states('sensor.camera_5_person') | int }} , confidence: {{ states('input_text.camera_5_person_confidence') | int }}
+            - Animals: {{ states('sensor.camera_5_animal') | int }} , confidence: {{ states('input_text.camera_5_animal_confidence') | int }}

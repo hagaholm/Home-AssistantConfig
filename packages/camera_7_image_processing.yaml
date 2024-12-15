@@ -804,7 +804,7 @@ automation:
       conditions:
         - condition: template
           value_template: >
-            {{ states('sensor.camera_7_person') | int + states('sensor.camera_7_animal') | int >= 1 }}
+            {{ states('sensor.camera_7_person') | int + states('sensor.camera_7_animal') | int >= 2 }}
 #        - condition: state
 #          entity_id: input_select.home_status
 #          state: 'Borta'

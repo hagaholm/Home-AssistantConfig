@@ -50,8 +50,8 @@
 #        "name": "cat",
 #        "object_type": "animal",
 #        "confidence": 70.414,
-#        "entity_id": "image_processing.deepstack_camera_4",
-#        "saved_file": "/config/camera/deepstack_photo/deepstack_camera_4_2021-03-03_14-32-44.jpg"
+#        "entity_id": "image_processing.deepstack_camera_7",
+#        "saved_file": "/config/camera/deepstack_photo/deepstack_camera_7_2021-03-03_14-32-44.jpg"
 #    },
 #    "origin": "LOCAL",
 #    "time_fired": "2021-03-03T13:32:44.261103+00:00",
@@ -106,7 +106,7 @@
 #    "always_save_latest_file": false
 #  },
 #  "unit_of_measurement": "targets",
-#  "friendly_name": "deepstack_camera_4",
+#  "friendly_name": "deepstack_camera_7",
 #  "last_updated": "2024-11-24T18:37:09.371857+01:00"
 #}
 
@@ -116,14 +116,14 @@
 ### Input Boolean ###
 #####################
 input_boolean:
-  camera_4_active:
-    name: Camera 4 aktiv
+  camera_7_active:
+    name: Camera 7 aktiv
     initial: off
-  camera_4_animal_detected:
-    name: Camera 4 animal detected
+  camera_7_animal_detected:
+    name: Camera 7 animal detected
     initial: off
-  camera_4_person_detected:
-    name: Camera 4 person detected
+  camera_7_person_detected:
+    name: Camera 7 person detected
     initial: off
 
 
@@ -131,32 +131,32 @@ input_boolean:
 ### Input Text ###
 ##################
 input_text:
-  camera_4_person_time_fired:
-    name: Camera 4 person time fired
-  camera_4_person_confidence:
-    name: Camera 4 person confidence
-  camera_4_person_saved_file:
-    name: Camera 4 person saved file
-  camera_4_person_file_name:
-    name: Camera 4 person file name
+  camera_7_person_time_fired:
+    name: Camera 7 person time fired
+  camera_7_person_confidence:
+    name: Camera 7 person confidence
+  camera_7_person_saved_file:
+    name: Camera 7 person saved file
+  camera_7_person_file_name:
+    name: Camera 7 person file name
 
-  camera_4_animal_time_fired:
-    name: Camera 4 animal time fired
-  camera_4_animal_confidence:
-    name: Camera 4 animal confidence
-  camera_4_animal_saved_file:
-    name: Camera 4 animal saved file
-  camera_4_animal_file_name:
-    name: Camera 4 animal file name
+  camera_7_animal_time_fired:
+    name: Camera 7 animal time fired
+  camera_7_animal_confidence:
+    name: Camera 7 animal confidence
+  camera_7_animal_saved_file:
+    name: Camera 7 animal saved file
+  camera_7_animal_file_name:
+    name: Camera 7 animal file name
 
-  camera_4_trigger_light_on:
-    name: Camera 4 trigger light on
+  camera_7_trigger_light_on:
+    name: Camera 7 trigger light on
     initial: "20.00"
-  camera_4_trigger_image_day:
-    name: Camera 4 trigger image day
+  camera_7_trigger_image_day:
+    name: Camera 7 trigger image day
     initial: "50.00"
-  camera_4_trigger_image_night:
-    name: Camera 4 trigger image night
+  camera_7_trigger_image_night:
+    name: Camera 7 trigger image night
     initial: "40.00"
 
 #############
@@ -164,11 +164,11 @@ input_text:
 #############
 timer:
   # Used for control when person or animal is detected
-  timer_camera_4_animal_detected:
-    name: Timer camera 4 animal detected
+  timer_camera_7_animal_detected:
+    name: Timer camera 7 animal detected
     duration: '00:00:30'
-  timer_camera_4_person_detected:
-    name: Timer camera 4 person detected
+  timer_camera_7_person_detected:
+    name: Timer camera 7 person detected
     duration: '00:00:30'
 
 ##############
@@ -177,22 +177,22 @@ timer:
 sensor:
   - platform: template
     sensors:
-      camera_4_person:
+      camera_7_person:
         friendly_name: "Person"
         unit_of_measurement: "persons"
         value_template: >-
-          {% set summary = (state_attr('image_processing.deepstack_camera_4', 'summary')) %}
+          {% set summary = (state_attr('image_processing.deepstack_camera_7', 'summary')) %}
           {% if summary.person is defined %}
             {{ summary.person }}
           {% else %}
             0
           {% endif %}
 
-      camera_4_animal:
+      camera_7_animal:
         friendly_name: "Animal"
         unit_of_measurement: "animals"
         value_template: >-
-          {% set summary = (state_attr('image_processing.deepstack_camera_4', 'summary')) %}
+          {% set summary = (state_attr('image_processing.deepstack_camera_7', 'summary')) %}
           {% if summary.animal is defined %}
             {{ summary.animal }}
           {% else %}
@@ -216,8 +216,8 @@ image_processing:
       - target: animal
         confidence: 20
     source:
-      - entity_id: camera.kamera4_main
-        name: deepstack_camera_4
+      - entity_id: camera.kamera7_main
+        name: deepstack_camera_7
     timeout: 5
 
 
@@ -227,33 +227,33 @@ image_processing:
 camera:
   # Keep latest image of a detected person day
   - platform: local_file
-    name: Camera 4 Latest person
-    file_path: /media/0/Day/camera_4_latest.jpg
+    name: Camera 7 Latest person
+    file_path: /media/0/Day/camera_7_latest.jpg
 
   # Keep latest image of a detected person away
   - platform: local_file
-    name: Camera 4 Latest person away
-    file_path: /media/0/Away/camera_4_latest.jpg
+    name: Camera 7 Latest person away
+    file_path: /media/0/Away/camera_7_latest.jpg
 
   # Keep latest image of a detected person night
   - platform: local_file
-    name: Camera 4 Latest person night
-    file_path: /media/0/Night/camera_4_latest.jpg
+    name: Camera 7 Latest person night
+    file_path: /media/0/Night/camera_7_latest.jpg
 
   # Keep latest image of a detected animal day
   - platform: local_file
-    name: Camera 4 Latest animal
-    file_path: /media/0/animal/camera_4_latest.jpg
+    name: Camera 7 Latest animal
+    file_path: /media/0/animal/camera_7_latest.jpg
 
 
 #####################
 ### Shell command ###
 #####################
 shell_command:
-  # Used by automation Camera 4 copy file
-  camera_4_cp_deepstack: "cp -f {{source_file}} {{dest_file}}"
-  # Used by automation Camera 4 move file
-  camera_4_mv_deepstack: "mv -f {{source_file}} {{dest_file}}"
+  # Used by automation Camera 7 copy file
+  camera_7_cp_deepstack: "cp -f {{source_file}} {{dest_file}}"
+  # Used by automation Camera 7 move file
+  camera_7_mv_deepstack: "mv -f {{source_file}} {{dest_file}}"
 
 
 ##################
@@ -262,12 +262,12 @@ shell_command:
 automation:
   ###############################################
   ### At startup:                             ###
-  ### Turn off: input_boolean.camera_4_active ###
+  ### Turn off: input_boolean.camera_7_active ###
   ### Wait 10 sec                             ###
-  ### Turn on input_boolean.camera_4_active   ###
+  ### Turn on input_boolean.camera_7_active   ###
   ###############################################
-  - alias: Camera 4 startup
-    id: '9556319091601' 
+  - alias: Camera 7 startup
+    id: '1234319091601' 
     mode: single
 
     trigger:
@@ -277,21 +277,21 @@ automation:
     action:
       - service: input_boolean.turn_off
         data:
-          entity_id: input_boolean.camera_4_active
+          entity_id: input_boolean.camera_7_active
 
       - delay:
           seconds: 10
 
       - service: input_boolean.turn_on
         data:
-          entity_id: input_boolean.camera_4_active
+          entity_id: input_boolean.camera_7_active
 
   ###############################################
   ### At shutdown:                            ###
-  ### Turn off: input_boolean.camera_4_active ###
+  ### Turn off: input_boolean.camera_7_active ###
   ###############################################
-  - alias: Camera 4 shutdown
-    id: '5924169936018' 
+  - alias: Camera 7 shutdown
+    id: '1234169936018' 
     mode: single
 
     trigger:
@@ -301,16 +301,16 @@ automation:
     action:
       - service: input_boolean.turn_off
         data:
-          entity_id: input_boolean.camera_4_active
+          entity_id: input_boolean.camera_7_active
 
   ###################################################################################
   ### Start image processing, scan images for detection of object                 ###
-  ### If input_boolean.camera_4_active == on                                      ###
+  ### If input_boolean.camera_7_active == on                                      ###
   ### Get dynamic delay from input_number.camera_duration before image processing ###
   ### Restart the automation when done                                            ###
   ###################################################################################
-  - alias: Camera 4 Image processing
-    id: '0099648460142' 
+  - alias: Camera 7 Image processing
+    id: '1234648460142' 
     mode: single
     
     trigger:
@@ -324,13 +324,13 @@ automation:
 
       # Scan a new image
       - service: image_processing.scan
-        entity_id: image_processing.deepstack_camera_4
+        entity_id: image_processing.deepstack_camera_7
 
   ################################
-  ### Camera 4 Animal detected ###
+  ### Camera 7 Animal detected ###
   ################################
-  - alias: Camera 4 Animal detected
-    id: '8116220456701' 
+  - alias: Camera 7 Animal detected
+    id: '1234220456701' 
     mode: single
 
     # Object detected
@@ -338,15 +338,15 @@ automation:
       - platform: event
         event_type: deepstack.object_detected
 
-   # Need to be an animal and no person on the image from camera 4
+   # Need to be an animal and no person on the image from camera 7
     condition:
       condition: and
       conditions:
 
-        # Needs to be image processing from camera 4
+        # Needs to be image processing from camera 7
         - condition: template
           value_template: >
-            {{ trigger.event.data.entity_id == 'image_processing.deepstack_camera_4' }}
+            {{ trigger.event.data.entity_id == 'image_processing.deepstack_camera_7' }}
 
         # Animal on image is needed
         - condition: template
@@ -361,33 +361,33 @@ automation:
     action:
       # Get timestamp when animal detected, just for information
       - service: input_text.set_value
-        entity_id: input_text.camera_4_animal_time_fired
+        entity_id: input_text.camera_7_animal_time_fired
         data_template:
           value: '{{ trigger.event.data.saved_file[50:-4] }}'
 
       # Get confidence, just for information
       - service: input_text.set_value
-        entity_id: input_text.camera_4_animal_confidence
+        entity_id: input_text.camera_7_animal_confidence
         data_template:
           value: '{{ trigger.event.data.confidence }}'
 
       # Get saved file
       - service: input_text.set_value
-        entity_id: input_text.camera_4_animal_saved_file
+        entity_id: input_text.camera_7_animal_saved_file
         data_template:
           value: '{{ trigger.event.data.saved_file }}'
 
       # Get file name
       - service: input_text.set_value
-        entity_id: input_text.camera_4_animal_file_name
+        entity_id: input_text.camera_7_animal_file_name
         data_template:
           value: '{{ trigger.event.data.saved_file[41:] }}'
 
   ################################
-  ### Camera 4 Person detected ###
+  ### Camera 7 Person detected ###
   ################################
-  - alias: Camera 4 Person detected
-    id: '8116220452601' 
+  - alias: Camera 7 Person detected
+    id: '1234220452601' 
     mode: single
 
     # Object detected
@@ -395,15 +395,15 @@ automation:
       - platform: event
         event_type: deepstack.object_detected
 
-   # Need to be a person on the image from camera 4
+   # Need to be a person on the image from camera 7
     condition:
       condition: and
       conditions:
 
-        # Needs to be image processing from camera 4
+        # Needs to be image processing from camera 7
         - condition: template
           value_template: >
-            {{ trigger.event.data.entity_id == 'image_processing.deepstack_camera_4' }}
+            {{ trigger.event.data.entity_id == 'image_processing.deepstack_camera_7' }}
 
         # Person on image is needed
         - condition: template
@@ -413,48 +413,48 @@ automation:
     action:
       # Get timestamp when person detected, just for information
       - service: input_text.set_value
-        entity_id: input_text.camera_4_person_time_fired
+        entity_id: input_text.camera_7_person_time_fired
         data_template:
           value: '{{ trigger.event.data.saved_file[50:-4] }}'
 
       # Get confidence, just for information
       - service: input_text.set_value
-        entity_id: input_text.camera_4_person_confidence
+        entity_id: input_text.camera_7_person_confidence
         data_template:
           value: '{{ trigger.event.data.confidence }}'
 
       # Get saved file
       - service: input_text.set_value
-        entity_id: input_text.camera_4_person_saved_file
+        entity_id: input_text.camera_7_person_saved_file
         data_template:
           value: '{{ trigger.event.data.saved_file }}'
 
       # Get file name
       - service: input_text.set_value
-        entity_id: input_text.camera_4_person_file_name
+        entity_id: input_text.camera_7_person_file_name
         data_template:
           value: '{{ trigger.event.data.saved_file[41:] }}'
 
   #########################################
-  ### Camera 4 Animal is confidence day ###
+  ### Camera 7 Animal is confidence day ###
   #########################################
-  - alias: Camera 4 Animal is confidence day
-    id: '1416856014757' 
+  - alias: Camera 7 Animal is confidence day
+    id: '1234856014757' 
     mode: single
 
     trigger:
       - platform: state
-        entity_id: input_text.camera_4_animal_confidence
+        entity_id: input_text.camera_7_animal_confidence
 
     condition:
       condition: and
       conditions:
         - condition: template
           value_template: >
-            {{ states('input_text.camera_4_animal_confidence') | float > states('input_text.camera_4_trigger_image_day') | float }}
+            {{ states('input_text.camera_7_animal_confidence') | float > states('input_text.camera_7_trigger_image_day') | float }}
 
         - condition: state
-          entity_id: switch.kamera4_infra_red_lights_in_night_mode
+          entity_id: switch.kamera7_infra_red_lights_in_night_mode
           state: 'off'
 
     action:
@@ -465,38 +465,38 @@ automation:
       # Animal is detected
       - service: input_boolean.turn_on
         data:
-          entity_id: input_boolean.camera_4_animal_detected
+          entity_id: input_boolean.camera_7_animal_detected
 
       # Move images to correct /media folder
       - data:
-          source_file: "{{ states('input_text.camera_4_animal_saved_file') }}"
-          dest_file: "/media/0/animal/camera_4_latest.jpg"
-        service: shell_command.camera_4_cp_deepstack
+          source_file: "{{ states('input_text.camera_7_animal_saved_file') }}"
+          dest_file: "/media/0/animal/camera_7_latest.jpg"
+        service: shell_command.camera_7_cp_deepstack
       - data:
-          source_file: "{{ states('input_text.camera_4_animal_saved_file') }}"
-          dest_file: "/media/0/animal/{{ states('input_text.camera_4_animal_file_name') }}"
-        service: shell_command.camera_4_mv_deepstack
+          source_file: "{{ states('input_text.camera_7_animal_saved_file') }}"
+          dest_file: "/media/0/animal/{{ states('input_text.camera_7_animal_file_name') }}"
+        service: shell_command.camera_7_mv_deepstack
 
   ###########################################
-  ### Camera 4 Animal is confidence night ###
+  ### Camera 7 Animal is confidence night ###
   ###########################################
-  - alias: Camera 4 Animal is confidence night 
-    id: '1416857464701' 
+  - alias: Camera 7 Animal is confidence night 
+    id: '1234857464701' 
     mode: single
 
     trigger:
       - platform: state
-        entity_id: input_text.camera_4_animal_confidence
+        entity_id: input_text.camera_7_animal_confidence
 
     condition:
       condition: and
       conditions:
         - condition: template
           value_template: >
-            {{ states('input_text.camera_4_animal_confidence') | float > states('input_text.camera_4_trigger_image_night') | float }}
+            {{ states('input_text.camera_7_animal_confidence') | float > states('input_text.camera_7_trigger_image_night') | float }}
 
         - condition: state
-          entity_id: switch.kamera4_infra_red_lights_in_night_mode
+          entity_id: switch.kamera7_infra_red_lights_in_night_mode
           state: 'on'
 
     action:
@@ -507,38 +507,38 @@ automation:
       # Animal is detected
       - service: input_boolean.turn_on
         data:
-          entity_id: input_boolean.camera_4_animal_detected
+          entity_id: input_boolean.camera_7_animal_detected
 
       # Move images to correct /media folder
       - data:
-          source_file: "{{ states('input_text.camera_4_animal_saved_file') }}"
-          dest_file: "/media/0/animal/camera_4_latest.jpg"
-        service: shell_command.camera_4_cp_deepstack
+          source_file: "{{ states('input_text.camera_7_animal_saved_file') }}"
+          dest_file: "/media/0/animal/camera_7_latest.jpg"
+        service: shell_command.camera_7_cp_deepstack
       - data:
-          source_file: "{{ states('input_text.camera_4_animal_saved_file') }}"
-          dest_file: "/media/0/animal/{{ states('input_text.camera_4_animal_file_name') }}"
-        service: shell_command.camera_4_mv_deepstack
+          source_file: "{{ states('input_text.camera_7_animal_saved_file') }}"
+          dest_file: "/media/0/animal/{{ states('input_text.camera_7_animal_file_name') }}"
+        service: shell_command.camera_7_mv_deepstack
 
   #########################################
-  ### Camera 4 Person is confidence day ###
+  ### Camera 7 Person is confidence day ###
   #########################################
-  - alias: Camera 4 Person is confidence day
-    id: '1416857460159' 
+  - alias: Camera 7 Person is confidence day
+    id: '1234857460159' 
     mode: single
 
     trigger:
       - platform: state
-        entity_id: input_text.camera_4_person_confidence
+        entity_id: input_text.camera_7_person_confidence
 
     condition:
       condition: and
       conditions:
         - condition: template
           value_template: >
-            {{ states('input_text.camera_4_person_confidence') | float > states('input_text.camera_4_trigger_image_day') | float }}
+            {{ states('input_text.camera_7_person_confidence') | float > states('input_text.camera_7_trigger_image_day') | float }}
 
         - condition: state
-          entity_id: switch.kamera4_infra_red_lights_in_night_mode
+          entity_id: switch.kamera7_infra_red_lights_in_night_mode
           state: 'off'
 
     action:
@@ -549,38 +549,38 @@ automation:
       # Animal is detected
       - service: input_boolean.turn_on
         data:
-          entity_id: input_boolean.camera_4_person_detected
+          entity_id: input_boolean.camera_7_person_detected
 
       # Move images to correct /media folder
       - data:
-          source_file: "{{ states('input_text.camera_4_person_saved_file') }}"
-          dest_file: "/media/0/person/camera_4_latest.jpg"
-        service: shell_command.camera_4_cp_deepstack
+          source_file: "{{ states('input_text.camera_7_person_saved_file') }}"
+          dest_file: "/media/0/person/camera_7_latest.jpg"
+        service: shell_command.camera_7_cp_deepstack
       - data:
-          source_file: "{{ states('input_text.camera_4_animal_saved_file') }}"
-          dest_file: "/media/0/animal/{{ states('input_text.camera_4_animal_file_name') }}"
-        service: shell_command.camera_4_mv_deepstack
+          source_file: "{{ states('input_text.camera_7_animal_saved_file') }}"
+          dest_file: "/media/0/animal/{{ states('input_text.camera_7_animal_file_name') }}"
+        service: shell_command.camera_7_mv_deepstack
 
   ###########################################
-  ### Camera 4 Person is confidence night ###
+  ### Camera 7 Person is confidence night ###
   ###########################################
-  - alias: Camera 4 Person is confidence night 
-    id: '1416017464756' 
+  - alias: Camera 7 Person is confidence night 
+    id: '1234017464756' 
     mode: single
 
     trigger:
       - platform: state
-        entity_id: input_text.camera_4_person_confidence
+        entity_id: input_text.camera_7_person_confidence
 
     condition:
       condition: and
       conditions:
         - condition: template
           value_template: >
-            {{ states('input_text.camera_4_person_confidence') | float > states('input_text.camera_4_trigger_image_night') | float }}
+            {{ states('input_text.camera_7_person_confidence') | float > states('input_text.camera_7_trigger_image_night') | float }}
 
         - condition: state
-          entity_id: switch.kamera4_infra_red_lights_in_night_mode
+          entity_id: switch.kamera7_infra_red_lights_in_night_mode
           state: 'on'
 
     action:
@@ -591,73 +591,73 @@ automation:
       # Person is detected
       - service: input_boolean.turn_on
         data:
-          entity_id: input_boolean.camera_4_person_detected
+          entity_id: input_boolean.camera_7_person_detected
 
       # Move images to correct /media folder
       - data:
-          source_file: "{{ states('input_text.camera_4_person_saved_file') }}"
-          dest_file: "/media/0/{{ states('input_select.camera_mode') }}/camera_4_latest.jpg"
-        service: shell_command.camera_4_cp_deepstack
+          source_file: "{{ states('input_text.camera_7_person_saved_file') }}"
+          dest_file: "/media/0/{{ states('input_select.camera_mode') }}/camera_7_latest.jpg"
+        service: shell_command.camera_7_cp_deepstack
       - data:
-          source_file: "{{ states('input_text.camera_4_person_saved_file') }}"
-          dest_file: "/media/0/{{ states('input_select.camera_mode') }}/{{ states('input_text.camera_4_person_file_name') }}"
-        service: shell_command.camera_4_mv_deepstack
+          source_file: "{{ states('input_text.camera_7_person_saved_file') }}"
+          dest_file: "/media/0/{{ states('input_select.camera_mode') }}/{{ states('input_text.camera_7_person_file_name') }}"
+        service: shell_command.camera_7_mv_deepstack
 
   ##############################################################
-  ### Camera 4 Start timer when animal or person is detected ###
+  ### Camera 7 Start timer when animal or person is detected ###
   ##############################################################
-  - alias: Camera 4 Start timer when detected
-    id: '1416857464801' 
+  - alias: Camera 7 Start timer when detected
+    id: '1234857464801' 
     mode: single
 
     trigger:
       - platform: state
-        entity_id: input_boolean.camera_4_animal_detected
+        entity_id: input_boolean.camera_7_animal_detected
         to: 'on'
       - platform: state
-        entity_id: input_boolean.camera_4_person_detected
+        entity_id: input_boolean.camera_7_person_detected
         to: 'on'
 
     action:
     - choose:
       - conditions:
           - condition: state
-            entity_id: input_boolean.camera_4_animal_detected
+            entity_id: input_boolean.camera_7_animal_detected
             state: 'on'
         sequence:
               # Reset, so it be turn on again when detected 
           - service: input_boolean.turn_off
             data:
-              entity_id: input_boolean.camera_4_animal_detected
+              entity_id: input_boolean.camera_7_animal_detected
               # Start/restart timer and count down
           - service: timer.start
-            entity_id: timer.timer_camera_4_animal_detected
+            entity_id: timer.timer_camera_7_animal_detected
       - conditions:
           - condition: state
-            entity_id: input_boolean.camera_4_person_detected
+            entity_id: input_boolean.camera_7_person_detected
             state: 'on'
         sequence:
               # Reset, so it be turn on again when detected 
           - service: input_boolean.turn_off
             data:
-              entity_id: input_boolean.camera_4_person_detected
+              entity_id: input_boolean.camera_7_person_detected
               # Start/restart timer and count down
           - service: timer.start
-            entity_id: timer.timer_camera_4_person_detected
+            entity_id: timer.timer_camera_7_person_detected
 
   #########################
-  ### Camera 4 Light on ###
+  ### Camera 7 Light on ###
   #########################
-  - alias: Camera 4 Light on 
-    id: '1416857464901' 
+  - alias: Camera 7 Light on 
+    id: '1234857464901' 
     mode: single
 
     trigger:
       - platform: state
-        entity_id: timer.timer_camera_4_animal_detected
+        entity_id: timer.timer_camera_7_animal_detected
         to: 'active'
       - platform: state
-        entity_id: timer.timer_camera_4_person_detected
+        entity_id: timer.timer_camera_7_person_detected
         to: 'active'
 
     condition:
@@ -673,18 +673,18 @@ automation:
           entity_id: light.stralkastare_husgavel
 
   ##########################
-  ### Camera 4 Light off ###
+  ### Camera 7 Light off ###
   ##########################
-  - alias: Camera 4 Light off 
-    id: '1415557464601' 
+  - alias: Camera 7 Light off 
+    id: '1234557464601' 
     mode: single
 
     trigger:
       - platform: state
-        entity_id: timer.timer_camera_4_animal_detected
+        entity_id: timer.timer_camera_7_animal_detected
         to: 'idle'
       - platform: state
-        entity_id: timer.timer_camera_4_person_detected
+        entity_id: timer.timer_camera_7_person_detected
         to: 'idle'
 
     conditions:
@@ -698,16 +698,16 @@ automation:
           entity_id: light.stralkastare_husgavel
 
   ##################################################
-  ### Camera 4 Animal detected - flash light day ###
+  ### Camera 7 Animal detected - flash light day ###
   ### Flash if total detected is 2 or more       ###
   ##################################################
-  - alias: Camera 4 Animal detected flash light day
+  - alias: Camera 7 Animal detected flash light day
     id: '8116232452601' 
     mode: single
 
     trigger:
       - platform: state
-        entity_id: timer.timer_camera_4_animal_detected
+        entity_id: timer.timer_camera_7_animal_detected
         to: 'active'
 
     condition:
@@ -715,7 +715,7 @@ automation:
       conditions:
         - condition: template
           value_template: >
-            {{ states('sensor.camera_4_person') | int + states('sensor.camera_4_animal') | int >= 2 }}
+            {{ states('sensor.camera_7_person') | int + states('sensor.camera_7_animal') | int >= 2 }}
         - condition: state
           entity_id: input_select.home_status
           state: 'Hemma på'
@@ -741,16 +741,16 @@ automation:
             - delay: "1"
 
   ####################################################
-  ### Camera 4 Animal detected - flash light night ###
+  ### Camera 7 Animal detected - flash light night ###
   ### Flash if total detected is 2 or more         ###
   ####################################################
-  - alias: Camera 4 Animal detected flash light night
-    id: '8111967152601' 
+  - alias: Camera 7 Animal detected flash light night
+    id: '1234967152601' 
     mode: single
 
     trigger:
       - platform: state
-        entity_id: timer.timer_camera_4_animal_detected
+        entity_id: timer.timer_camera_7_animal_detected
         to: 'active'
 
     condition:
@@ -758,7 +758,7 @@ automation:
       conditions:
         - condition: template
           value_template: >
-            {{ states('sensor.camera_4_person') | int + states('sensor.camera_4_animal') | int >= 2 }}
+            {{ states('sensor.camera_7_person') | int + states('sensor.camera_7_animal') | int >= 2 }}
         - condition: state
           entity_id: input_select.home_status
           state: 'Hemma av'
@@ -784,19 +784,19 @@ automation:
             - delay: "1"
 
   ############################################
-  ### Camera 4 Detection - notify          ###
+  ### Camera 7 Detection - notify          ###
   ### Flash if total detected is 2 or more ###
   ############################################
-  - alias: Camera 4 Detection notify
-    id: '8111901152601' 
+  - alias: Camera 7 Detection notify
+    id: '1234901152601' 
     mode: single
 
     trigger:
       - platform: state
-        entity_id: timer.timer_camera_4_animal_detected
+        entity_id: timer.timer_camera_7_animal_detected
         to: 'active'
       - platform: state
-        entity_id: timer.timer_camera_4_person_detected
+        entity_id: timer.timer_camera_7_person_detected
         to: 'active'
 
     condition:
@@ -804,7 +804,7 @@ automation:
       conditions:
         - condition: template
           value_template: >
-            {{ states('sensor.camera_4_person') | int + states('sensor.camera_4_animal') | int >= 2 }}
+            {{ states('sensor.camera_7_person') | int + states('sensor.camera_7_animal') | int >= 2 }}
 #        - condition: state
 #          entity_id: input_select.home_status
 #          state: 'Borta'
@@ -814,8 +814,8 @@ automation:
       - service: notify.mobile_app_sm_a528b
         data:
           title: >
-            "Camera 4 Detection Alert {{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+            "Camera 7 Detection Alert {{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           message: >
-            Camera 4 has detected:
-            - Persons: {{ states('sensor.camera_4_persons') | int }} , confidence: {{ states('sensor.camera_4_person_confidence') | int }}
-            - Animals: {{ states('sensor.camera_4_animals') | int }} , confidence: {{ states('sensor.camera_4_animals_confidence') | int }}
+            Camera 7 has detected:
+            - Persons: {{ states('sensor.camera_7_persons') | int }} , confidence: {{ states('sensor.camera_7_person_confidence') | int }}
+            - Animals: {{ states('sensor.camera_7_animals') | int }} , confidence: {{ states('sensor.camera_7_animals_confidence') | int }}

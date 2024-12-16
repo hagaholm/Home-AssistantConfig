@@ -819,3 +819,43 @@ automation:
             Camera 7 has detected:
             - Persons: {{ states('sensor.camera_7_person') | int }} , confidence: {{ states('input_text.camera_7_person_confidence') | int }}
             - Animals: {{ states('sensor.camera_7_animal') | int }} , confidence: {{ states('input_text.camera_7_animal_confidence') | int }}
+
+  ############################################
+  ### Camera 7 Detection - notify          ###
+  ### Flash if total detected is 2 or more ###
+  ############################################
+  - alias: Camera 7 Detection notify 2
+    id: '8111901155328' 
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: timer.timer_camera_7_animal_detected
+        to: 'active'
+      - platform: state
+        entity_id: timer.timer_camera_7_person_detected
+        to: 'active'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: template
+          value_template: >
+            {{ states('sensor.camera_7_person') | int + states('sensor.camera_7_animal') | int >= 1 }}
+        - condition: time
+          after: '22:00:00'
+          before: '07:00:00'
+#        - condition: state
+#          entity_id: input_select.home_status
+#          state: 'Borta'
+
+    action:
+      # Send notify
+      - service: notify.mobile_app_sm_a528b
+        data:
+          title: >
+            "Camera 7 Detection Alert 2 {{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+          message: >
+            Camera 7 has detected:
+            - Persons: {{ states('sensor.camera_7_person') | int }} , confidence: {{ states('input_text.camera_7_person_confidence') | int }}
+            - Animals: {{ states('sensor.camera_7_animal') | int }} , confidence: {{ states('input_text.camera_7_animal_confidence') | int }}

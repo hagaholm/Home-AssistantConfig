@@ -88,8 +88,9 @@
     ### T: sensor.ljusstyrka < 5                     ###
     ### C: binary_sensor.workday_tomorrow = off      ###
     ### C: 12:00:00 - 21:45:00                       ###
-    ### C: light.spabad_vanster = off                ###
-    ### C: light.spabad_hoger = off                  ###
+    ### C: light.spabad_v = off                      ###
+    ### C: light.spabad_m = off                      ###
+    ### C: light.spabad_h= off                       ###
     ### A: script.night_light                        ###
     ####################################################
   - alias: Spabelysning on (<5)
@@ -110,10 +111,13 @@
           after: '12:00:00'
           before: '21:45:00'
         - condition: state
-          entity_id: light.spabad_vanster
+          entity_id: light.spabad_v
           state: 'off'
         - condition: state
-          entity_id: light.spabad_hoger
+          entity_id: light.spabad_m
+          state: 'off'
+        - condition: state
+          entity_id: light.spabad_h
           state: 'off'
 
     action:
@@ -128,7 +132,7 @@
     ###    05:00:00 - 12:00:00                             ###
     ### A: light.tradack_ute = on                          ###
     ##########################################################
-  - alias: Träckdäck ute on (sensor on, <40)
+  - alias: Trädäck ute on (sensor on, <40)
     id: '9369632281987' 
 
     trigger:

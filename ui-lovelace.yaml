@@ -447,10 +447,9 @@ views:
         entities:
           - switch.friggebod_fonster
           - light.friggebod_ute_2
-          - light.spabad_vagg
-          - light.spabad_vanster
-          - light.spabad_mitten
-          - light.spabad_hoger
+          - light.spabad_v
+          - light.spabad_m
+          - light.spabad_h
           - light.tradack_ute
           - switch.tradgard
         title: Utebelysning
@@ -629,13 +628,11 @@ views:
         state_color: true
       - type: entities
         entities:
-          - entity: light.spabad_vagg
-            name: Vägg
-          - entity: light.spabad_vanster
+          - entity: light.spabad_v
             name: Vägg vänster
-          - entity: light.spabad_mitten
+          - entity: light.spabad_m
             name: Vägg mitten
-          - entity: light.spabad_hoger
+          - entity: light.spabad_h
             name: Vägg höger
         title: Spabad
         show_header_toggle: false

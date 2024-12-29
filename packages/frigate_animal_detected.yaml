@@ -1,0 +1,42 @@
+automation:
+  - alias: Animal Detection Notify
+    id: '81119011564329' 
+    mode: single
+
+    trigger:
+      - platform: numeric_state
+        entity_id:
+          - sensor.cam5_all_count
+          - sensor.cam7_all_count
+        above: 0
+
+    condition:
+      condition: and
+      conditions:
+        - condition: time
+          after: '21:00:00'
+          before: '08:00:00'
+        - condition: or
+          conditions:
+            - condition: state
+              entity_id: input_select.home_status
+              state: 'Borta'
+
+    action:
+      - service: notify.mobile_app_sm_a528b
+        data_template:
+          title: >
+            "Detection Alert {{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+          message: >
+            Camera {{ trigger.entity_id.split('_')[0][-1] }} has detected:
+            - All:      {{ states('sensor.cam' ~ trigger.entity_id.split('_')[0][-1] ~ '_all_count') | int }}
+            - Person:   {{ states('sensor.cam' ~ trigger.entity_id.split('_')[0][-1] ~ '_person_count') | int }}
+            - Bear:     {{ states('sensor.cam' ~ trigger.entity_id.split('_')[0][-1] ~ '_bear_count') | int }}
+            - Bird:     {{ states('sensor.cam' ~ trigger.entity_id.split('_')[0][-1] ~ '_bird_count') | int }}
+            - Cow:      {{ states('sensor.cam' ~ trigger.entity_id.split('_')[0][-1] ~ '_cat_count') | int }}
+            - Dog:      {{ states('sensor.cam' ~ trigger.entity_id.split('_')[0][-1] ~ '_dog_count') | int }}
+            - Elephant: {{ states('sensor.cam' ~ trigger.entity_id.split('_')[0][-1] ~ '_elephant_count') | int }}
+            - Giraffe:  {{ states('sensor.cam' ~ trigger.entity_id.split('_')[0][-1] ~ '_giraffe_count') | int }}
+            - Horse:    {{ states('sensor.cam' ~ trigger.entity_id.split('_')[0][-1] ~ '_horse_count') | int }}
+            - Sheep:    {{ states('sensor.cam' ~ trigger.entity_id.split('_')[0][-1] ~ '_sheep_count') | int }}
+            - Zebra:    {{ states('sensor.cam' ~ trigger.entity_id.split('_')[0][-1] ~ '_zebra_count') | int }}

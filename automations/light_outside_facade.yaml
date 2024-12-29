@@ -1,337 +1,203 @@
-    #################
-    ### Friggebod ###
-    #################
-    #######################################################################
-    ### Tänder friggebod fasadbelysning på morgonen vid rörelse i köket ###
-    ### T: input_boolean.rorelsedetektor_kok_aktiv == on                ###
-    ### C: sensor.ljusstyrka < 40                                       ###
-    ###    05:00:00 - 12:00:00                                          ###
-    ### A: script.friggebod_fasadbelysning_on                           ###
-    #######################################################################
-  - alias: Friggebod fasadbelysning on (sensor on, <40)
-    id: '5947255877535' 
+# Släckt - lux above 60
+# Tänt   - lux below 40
+# Natt   - inside light off. lux below 40 
+# Max    - person detected. lux below 40 and 
+########################################################################
+# Släckt - lux above 60
+  - alias: Facade Light Off When Bright Outside
+    id: '6820471947302'
+    mode: single
+
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      above: 60
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.stralkastare_gavel
+          state: 'off'
+
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.facade_lights
+          option: Släckt
+
+########################################################################
+# Tänt - lux below 40
+  - alias: Facade Light On When Dark Outside
+    id: '6820471947303'
+    mode: single
+
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      below: 40
+
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.facade_lights
+          option: Tänt
+
+########################################################################
+# Natt - inside light off. Outside on 
+  - alias: Facade Light Night Mode
+    id: '6820471947304'
+    mode: single
 
     trigger:
       platform: state
-      entity_id: input_boolean.rorelsedetektor_kok_aktiv
+      entity_id: input_select.light_inside
+      to: "Släckt"
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_select.facade_lights
+          state: 'Tänt'
+
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.facade_lights
+          option: Natt
+
+########################################################################
+# Max - person detected. lux below 40 and 
+  - alias: Facade Light Max When Person Detected
+    id: '6820471947305'
+    mode: single
+
+    trigger:
+      platform: state
+      entity_id:
+        - binary_sensor.cam2_person_occupancy
+        - binary_sensor.cam3_person_occupancy
+        - binary_sensor.cam6_person_occupancy
       to: 'on'
 
     condition:
       condition: and
       conditions:
-        - condition: numeric_state
-          entity_id: sensor.ljusstyrka
-          below: 40
         - condition: state
-          entity_id: light.friggebod_fasad
-          state: 'off'
-        - condition: time
-          after: '05:00:00'
-          before: '12:00:00'
+          entity_id: input_select.facade_lights
+          state: 'Tänt'
 
     action:
-      - service: script.friggebod_fasadbelysning_on
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.facade_lights
+          option: Max
 
-    ##########################################################
-    ### Tänder friggebod fasadbelysning när det blir mörkt ###
-    ### T: sensor.ljusstyrka < 40                          ###
-    ### C: group.track_for_home_devices == 'home'          ###
-    ###    input_select.home_status == 'hemma på'          ###
-    ###    time: 12:00 - 05:00                             ###
-    ###    light.friggebod_fasad == off                    ###
-    ### A: script.friggebod_fasadbelysning_on              ###
-    ##########################################################
-  - alias: Friggebod fasadbelysning on (home, <40) 
-    id: '1244727684651' 
-
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.ljusstyrka
-      below: 40
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'home'
-        - condition: state
-          entity_id: input_select.home_status
-          state: 'Hemma på'
-        - condition: time
-          after: '12:00:00'
-          before: '05:00:00'
-        - condition: state
-          entity_id: light.friggebod_fasad
-          state: 'off'
-
-    action:
-      - service: script.friggebod_fasadbelysning_on
-
-    #############################################################################
-    ### Tänder friggebod fasadbelysning när det blir mörkt och ingen är hemma ###
-    ### T: sensor.ljusstyrka < 40                                             ###
-    ### C: group.track_for_home_devices == not_home'                          ###
-    ### C: time: 12:00 - 05:00                                                ###
-    ###    light.friggebod_fasad == off                                       ###
-    ### A: script.friggebod_fasadbelysning_on                                 ###
-    #############################################################################
-  - alias: Friggebod fasadbelysning on (away, <40)
-    id: '2256055081511' 
-
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.ljusstyrka
-      below: 40
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'not_home'
-        - condition: time
-          after: '12:00:00'
-          before: '05:00:00'
-        - condition: state
-          entity_id: light.friggebod_fasad
-          state: 'off'
-
-    action:
-      - service: script.friggebod_fasadbelysning_on
-
-    ###########################################################
-    ### Släcker friggebod fasadbelysning när det blir ljust ###
-    ### T: sensor.ljusstyrka > 60                           ###
-    ### C: light.friggebod_fasad == on                      ###
-    ### A: light.friggebod_fasad = off                      ###
-    ###########################################################
-  - alias: Friggebod fasadbelysning off (>60)
-    id: '4295369747116' 
-
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.ljusstyrka
-      above: 60
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: light.friggebod_fasad
-          state: 'on'
-        - condition: state
-          entity_id: light.stralkastare_husgavel
-          state: 'off'
-
-    action:
-      - service: script.friggebod_fasadbelysning_off
-
-    ############################################################
-    ### Släcker friggebod fasadbelysning när det släcks inne ###
-    ### T: light.kok_lilla_fonstret == off                   ###
-    ### C: time: 21:00 - 06:00                               ###
-    ###    group.track_for_home_devices = 'home'             ###
-    ###    light.friggebod_fasad == on                       ###
-    ### A: light.friggebod_fasad = off                       ###
-    ############################################################
-  - alias: Friggebod fasadbelysning off
-    id: '7538286126415' 
+########################################################################
+# Tänt - person not detected anymore
+  - alias: Facade Light On When No Person Detected
+    id: '6820471947306'
+    mode: single
 
     trigger:
       platform: state
-      entity_id: light.kok_lilla_fonstret
+      entity_id:
+        - binary_sensor.cam2_person_occupancy
+        - binary_sensor.cam3_person_occupancy
+        - binary_sensor.cam6_person_occupancy
       to: 'off'
 
     condition:
       condition: and
       conditions:
-        - condition: time
-          after: '21:00:00'
-          before: '06:00:00'
         - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'home'
+          entity_id: input_select.facade_lights
+          state: 'Max'
         - condition: state
-          entity_id: light.friggebod_fasad
-          state: 'on'
+          entity_id: binary_sensor.cam2_person_occupancy
+          state: 'off'
         - condition: state
-          entity_id: light.stralkastare_husgavel
+          entity_id: binary_sensor.cam3_person_occupancy
+          state: 'off'
+        - condition: state
+          entity_id: binary_sensor.cam6_person_occupancy
           state: 'off'
 
     action:
-      - service: script.friggebod_fasadbelysning_off
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_inside
+                state: "Släckt"
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.facade_lights
+                  option: Natt
+        default:
+          - service: input_select.select_option
+            data:
+              entity_id: input_select.facade_lights
+              option: Tänt
 
-###############################################################################
-###############################################################################
-###############################################################################
-
-    ##############
-    ### Förråd ###
-    ##############
-    #######################################################
-    ### Tänder förråd fasadbelysning när det blir mörkt ###
-    ### T: sensor.ljusstyrka < 40                       ###
-    ### C: light.forrad_fasad == off                    ###
-    ### A: light.forrad_fasad = on                      ###
-    #######################################################
-  - alias: Förråd fasadbelysning on (<40)
-    id: '6228207915804' 
+########################################################################
+# Tänt - light turn on inside
+  - alias: Facade Light from Night to On
+    id: '6820471947307'
+    mode: single
 
     trigger:
-      platform: numeric_state
-      entity_id: sensor.ljusstyrka
-      below: 40
+      platform: state
+      entity_id: input_select.light_inside
+      from: "Släckt"
 
     condition:
       condition: and
       conditions:
         - condition: state
-          entity_id: light.forrad_fasad
-          state: 'off'
+          entity_id: input_select.facade_lights
+          state: 'Night'
 
     action:
-      - service: script.forrad_fasadbelysning_on
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.facade_lights
+          option: Tänt
 
-    ########################################################
-    ### Släcker förråd fasadbelysning när det blir ljust ###
-    ### T: sensor.ljusstyrka > 60                        ###
-    ### C: light.forrad_fasad == on                      ###
-    ### A: light.forrad_fasad = off                      ###
-    ########################################################
-  - alias: Förråd fasadbelysning off (>60)
-    id: '0711439602443' 
+
+########################################################################
+  - alias: Facade Light changed
+    id: '6820471947308'
+    mode: single
 
     trigger:
-      platform: numeric_state
-      entity_id: sensor.ljusstyrka
-      above: 60
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: light.forrad_fasad
-          state: 'on'
-        - condition: state
-          entity_id: light.stralkastare_husgavel
-          state: 'off'
+      platform: state
+      entity_id: input_select.facade_lights
 
     action:
-      - service: script.forrad_fasadbelysning_off
-
-###############################################################################
-###############################################################################
-###############################################################################
-
-    ###################
-    ### Tvättstugan ###
-    ###################
-    ###########################################################
-    ### Tänder tvättstuga fasadbelysning när det blir mörkt ###
-    ### T: sensor.ljusstyrka < 40                           ###
-    ### C: light.tvattstugan_fasad == off                   ###
-    ### A: light.tvattstugan_fasad = on                     ###
-    ###########################################################
-  - alias: Tvättstuga fasadbelysning on (<40)
-    id: '1592766055335' 
-
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.ljusstyrka
-      below: 40
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: light.tvattstugan_fasad
-          state: 'off'
-
-    action:
-      - service: script.tvattstuga_fasadbelysning_on
-
-    ############################################################
-    ### Släcker tvättstuga fasadbelysning när det blir ljust ###
-    ### T: sensor.ljusstyrka > 60                            ###
-    ### C: light.tvattstugan_fasad == on                     ###
-    ### A: light.tvattstugan_fasad = off                     ###
-    ############################################################
-  - alias: Tvättstuga fasadbelysning off (>60)
-    id: '6624653674964' 
-
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.ljusstyrka
-      above: 60
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: light.tvattstugan_fasad
-          state: 'on'
-        - condition: state
-          entity_id: light.stralkastare_husgavel
-          state: 'off'
-
-    action:
-      - service: script.tvattstuga_fasadbelysning_off
-
-###############################################################################
-###############################################################################
-###############################################################################
-
-    ##################
-    ### Huvudentre ###
-    ##################
-    ######################################################
-    ### Tänder huvudentre belysning när det blir mörkt ###
-    ### T: sensor.ljusstyrka < 40                      ###
-    ### C: light.huvudentre == off                     ###
-    ### A: light.huvudentre = on                       ###
-    ######################################################
-  - alias: Huvudentre belysning on (<40)
-    id: '9695584899993' 
-
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.ljusstyrka
-      below: 40
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: light.huvudentre
-          state: 'off'
-
-    action:
-      - service: script.huvudentre_belysning_on
-
-    #######################################################
-    ### Släcker huvudentre belysning när det blir ljust ###
-    ### T: sensor.ljusstyrka > 60                       ###
-    ### C: light.huvudentre == on                       ###
-    ### A: light.huvudentre = off                       ###
-    #######################################################
-  - alias: Huvudentre belysning off (>60)
-    id: '0506106759643' 
-
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.ljusstyrka
-      above: 60
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: light.huvudentre
-          state: 'on'
-        - condition: state
-          entity_id: light.stralkastare_husgavel
-          state: 'off'
-
-    action:
-      - service: script.huvudentre_belysning_off
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: input_select.facade_lights
+                state: "Släckt"
+            sequence:
+              - service: script.fasadbelysning_off
+          - conditions:
+              - condition: state
+                entity_id: input_select.facade_lights
+                state: "Tänt"
+            sequence:
+              - service: script.fasadbelysning_on
+          - conditions:
+              - condition: state
+                entity_id: input_select.facade_lights
+                state: "Natt"
+            sequence:
+              - service: script.fasadbelysning_night
+          - conditions:
+              - condition: state
+                entity_id: input_select.facade_lights
+                state: "Max"
+            sequence:
+              - service: script.fasadbelysning_max

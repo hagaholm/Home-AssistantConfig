@@ -157,7 +157,7 @@
       conditions:
         - condition: state
           entity_id: input_select.facade_lights
-          state: 'Night'
+          state: 'Natt'
 
     action:
       - service: input_select.select_option

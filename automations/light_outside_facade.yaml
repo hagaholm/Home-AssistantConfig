@@ -76,9 +76,9 @@
     trigger:
       platform: state
       entity_id:
-        - binary_sensor.cam2_person_occupancy
         - binary_sensor.cam3_person_occupancy
         - binary_sensor.cam6_person_occupancy
+        - binary_sensor.cam7_person_occupancy
       to: 'on'
 
     condition:
@@ -103,9 +103,9 @@
     trigger:
       platform: state
       entity_id:
-        - binary_sensor.cam2_person_occupancy
         - binary_sensor.cam3_person_occupancy
         - binary_sensor.cam6_person_occupancy
+        - binary_sensor.cam7_person_occupancy
       to: 'off'
 
     condition:
@@ -115,13 +115,13 @@
           entity_id: input_select.facade_lights
           state: 'Max'
         - condition: state
-          entity_id: binary_sensor.cam2_person_occupancy
-          state: 'off'
-        - condition: state
           entity_id: binary_sensor.cam3_person_occupancy
           state: 'off'
         - condition: state
           entity_id: binary_sensor.cam6_person_occupancy
+          state: 'off'
+        - condition: state
+          entity_id: binary_sensor.cam7_person_occupancy
           state: 'off'
 
     action:
@@ -164,7 +164,6 @@
         data:
           entity_id: input_select.facade_lights
           option: Tänt
-
 
 ########################################################################
   - alias: Facade Light changed

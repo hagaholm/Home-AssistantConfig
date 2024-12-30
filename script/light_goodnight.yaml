@@ -121,7 +121,7 @@
 
       - service: input_select.select_option
         data:
-          entity_id: input_select.garden
+          entity_id: input_select.light_garden
           option: Släckt
 
       - service: light.turn_off
@@ -184,7 +184,7 @@
 
       - service: input_select.select_option
         data:
-          entity_id: input_select.garden
+          entity_id: input_select.light_garden
           option: Släckt
 
       - service: light.turn_off
@@ -246,7 +246,7 @@
 
       - service: input_select.select_option
         data:
-          entity_id: input_select.garden
+          entity_id: input_select.light_garden
           option: Släckt
 
       - service: light.turn_off

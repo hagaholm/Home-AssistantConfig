@@ -56,10 +56,18 @@ automation:
     mode: single
 
     trigger:
-      - platform: numeric_state
+      - platform: state
         entity_id:
-          - sensor.cam5_all_count
-        above: 0
+          - sensor.cam5_person_count
+          - sensor.cam5_bear_count
+          - sensor.cam5_cat_count
+          - sensor.cam5_cow_count
+          - sensor.cam5_dog_count
+          - sensor.cam5_elephant_count
+          - sensor.cam5_giraffe_count
+          - sensor.cam5_horse_count
+          - sensor.cam5_sheep_count
+          - sensor.cam5_zebra_count
 
     condition:
       condition: or
@@ -84,7 +92,7 @@ automation:
             - All:      {{ states('sensor.cam5_all_count') | int }}
             - Person:   {{ states('sensor.cam5_person_count') | int }}
             - Bear:     {{ states('sensor.cam5_bear_count') | int }}
-            - Bird:     {{ states('sensor.cam5_bird_count') | int }}
+#            - Bird:     {{ states('sensor.cam5_bird_count') | int }}
             - Cow:      {{ states('sensor.cam5_cat_count') | int }}
             - Dog:      {{ states('sensor.cam5_dog_count') | int }}
             - Elephant: {{ states('sensor.cam5_elephant_count') | int }}

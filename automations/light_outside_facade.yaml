@@ -98,7 +98,7 @@
 # Tänt - person not detected anymore
   - alias: Facade Light On When No Person Detected
     id: '6820471947306'
-    mode: single
+    mode: restart
 
     trigger:
       platform: state
@@ -125,6 +125,18 @@
           state: 'off'
 
     action:
+      - delay: "00:00:30"
+      - condition: and
+        conditions:
+          - condition: state
+            entity_id: binary_sensor.cam3_person_occupancy
+            state: 'off'
+          - condition: state
+            entity_id: binary_sensor.cam6_person_occupancy
+            state: 'off'
+          - condition: state
+            entity_id: binary_sensor.cam7_person_occupancy
+            state: 'off'
       - choose:
           - conditions:
               - condition: state

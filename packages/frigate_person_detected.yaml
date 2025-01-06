@@ -1,0 +1,64 @@
+##################
+### Automation ###
+##################
+automation:
+  - alias: Person Detection Notify
+    id: '81119011564368'
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id:
+          - sensor.cam3_person_count
+          - sensor.cam5_person_count
+          - sensor.cam6_person_count
+          - sensor.cam7_person_count
+
+    condition:
+      condition: or
+      conditions:
+        - condition: state
+          entity_id: input_select.home_status
+          state: 'Borta'
+        - condition: state
+          entity_id: input_select.home_status
+          state: 'Hemma av'
+
+    action:
+      - choose:
+          # If home_status is 'Borta', add a delay and re-check the state
+          - conditions:
+              - condition: state
+                entity_id: input_select.home_status
+                state: 'Borta'
+            sequence:
+              - delay: "00:00:30"
+              - condition: state
+                entity_id: input_select.home_status
+                state: 'Borta'
+              - service: notify.mobile_app_sm_a528b
+                data_template:
+                  title: >
+                    "Person Detection Away Alert {{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+                  message: >
+                    Person detected:
+                    - Cam 3 Uppfart:   {{ states('sensor.cam3_person_count') | int }}
+                    - Cam 5 Baksida:   {{ states('sensor.cam5_person_count') | int }}
+                    - Cam 6 Friggebod: {{ states('sensor.cam6_person_count') | int }}
+                    - Cam 7 Entre:     {{ states('sensor.cam7_person_count') | int }}
+          # If home_status is 'Hemma av', send the notification immediately
+          - conditions:
+              - condition: state
+                entity_id: input_select.home_status
+                state: 'Hemma av'
+            sequence:
+              - service: notify.mobile_app_sm_a528b
+                data_template:
+                  title: >
+                    "Person Detection Sleep Alert {{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+                  message: >
+                    Person detected:
+                    - Cam 3 Uppfart:   {{ states('sensor.cam3_person_count') | int }}
+                    - Cam 5 Baksida:   {{ states('sensor.cam5_person_count') | int }}
+                    - Cam 6 Friggebod: {{ states('sensor.cam6_person_count') | int }}
+                    - Cam 7 Entre:     {{ states('sensor.cam7_person_count') | int }}

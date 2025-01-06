@@ -270,17 +270,13 @@ views:
         state_color: true
       - type: entities
         entities:
-          - automation.friggebod_fasadbelysning_on_sensor_on_40
-          - automation.friggebod_fasadbelysning_on_home_40
-          - automation.friggebod_fasadbelysning_on_away_40
-          - automation.forrad_fasadbelysning_on_40
-          - automation.huvudentre_belysning_on_40
-          - automation.tvattstuga_fasadbelysning_on_40
-          - automation.friggebod_fasadbelysning_off
-          - automation.friggebod_fasadbelysning_off_60
-          - automation.forrad_fasadbelysning_off_60
-          - automation.huvudentre_belysning_off_60
-          - automation.tvattstuga_fasadbelysning_off_60
+          - automation.facade_light_off_when_bright_qutside
+          - automation.facade_light_on_when_dark_outside
+          - automation.facade_light_night_mode
+          - automation.facade_light_max_when_person_detected
+          - automation.facade_light_on_when_no_person_detected
+          - automation.facade_light_from_night_to_on
+          - automation.facade_light_changed
         title: Fasadbelysning
         show_header_toggle: true
         state_color: true

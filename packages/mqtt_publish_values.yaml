@@ -20,6 +20,30 @@ automation:
           payload: "{{trigger.to_state.state}}"
           topic: !secret mqtt_path_publish_outside_temperaure
 
+  #########################################
+  ### MQTT Publish filtered outside lux ###
+  ### Used by Thomas C.                 ###
+  #########################################
+  - alias: MQTT Publish filtered outside lux
+    id: '9256370678754'
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: sensor.ljusstyrka
+    
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: light.stralkastare_husgavel
+          state: 'off'
+
+    action:
+      - service: mqtt.publish
+        data_template:
+          payload: "{{trigger.to_state.state}}"
+          topic: !secret mqtt_path_publish_outside_filtered_outside_lux
 
   ######################################################################################
   ### Pause MQTT Broker when light.stralkastare_husgavel turn on                     ###

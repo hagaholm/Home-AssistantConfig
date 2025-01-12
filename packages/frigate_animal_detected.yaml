@@ -113,7 +113,15 @@ automation:
         entity_id: sensor.cam5_all_count
         above: 0
 
-    condition: []
+    condition:
+      condition: or
+      conditions:
+        - condition: state
+          entity_id: input_select.home_status
+          state: 'Hemma av'
+        - condition: state
+          entity_id: input_select.home_status
+          state: 'Hemma på'
 
     action:
       - variables:

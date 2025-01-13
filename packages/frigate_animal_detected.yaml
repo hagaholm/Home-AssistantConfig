@@ -106,7 +106,7 @@ automation:
   #####################################
   - alias: Blink Light When Detcection Cam 5
     id: '81119011512345'
-    mode: restart
+    mode: single
 
     trigger:
       - platform: numeric_state

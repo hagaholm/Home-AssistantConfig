@@ -124,6 +124,7 @@ automation:
           state: 'Hemma på'
 
     action:
+      - delay: "00:00:01"
       - variables:
           sovrum_initial_state: "{{ is_state('light.sovrum_fonster', 'on') }}"
           hall_initial_state: "{{ is_state('light.hall_byra', 'on') }}"

@@ -48,6 +48,52 @@ automation:
         target:
           entity_id: light.stralkastare_husgavel
 
+  ##############################
+  ### Animal Motion Radio on ###
+  ##############################
+  - alias: Animal Motion Radio on 
+    id: '1416857464463' 
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.cam5_all_occupancy
+        to: 'on'
+
+    condition:
+      condition: and
+      conditions:
+        - condition: numeric_state
+          entity_id: sensor.ljusstyrka
+          below: 5
+
+    action:
+      - service: light.turn_on
+        target:
+          entity_id: light.tradack_ute
+
+  ###############################
+  ### Animal Motion Radio off ###
+  ###############################
+  - alias: Animal Motion Radio off 
+    id: '1415557464463' 
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.cam5_all_occupancy
+        to: 'off'
+
+    conditions:
+      - condition: state
+        entity_id: light.tradack_ute
+        state: 'on'
+
+    action:
+      - service: light.turn_off
+        target:
+          entity_id: light.tradack_ute
+
   #####################################
   ### Animal Detection Cam 5 Notify ###
   #####################################

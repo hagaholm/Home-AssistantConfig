@@ -132,30 +132,30 @@
     ###    05:00:00 - 12:00:00                             ###
     ### A: light.tradack_ute = on                          ###
     ##########################################################
-  - alias: Trädäck ute on (sensor on, <40)
-    id: '9369632281987' 
+#  - alias: Trädäck ute on (sensor on, <40)
+#    id: '9369632281987' 
 
-    trigger:
-      platform: state
-      entity_id: input_boolean.rorelsedetektor_kok_aktiv
-      to: 'on'
+#    trigger:
+#      platform: state
+#      entity_id: input_boolean.rorelsedetektor_kok_aktiv
+#      to: 'on'
 
-    condition:
-      condition: and
-      conditions:
-        - condition: numeric_state
-          entity_id: sensor.ljusstyrka
-          below: 40
-        - condition: state
-          entity_id: light.friggebod_fasad
-          state: 'off'
-        - condition: time
-          after: '05:00:00'
-          before: '12:00:00'
+#    condition:
+#      condition: and
+#      conditions:
+#        - condition: numeric_state
+#          entity_id: sensor.ljusstyrka
+#          below: 40
+#        - condition: state
+#          entity_id: light.friggebod_fasad
+#          state: 'off'
+#        - condition: time
+#          after: '05:00:00'
+#          before: '12:00:00'
 
-    action:
-      - service: light.turn_on
-        entity_id: light.tradack_ute
+#    action:
+#      - service: light.turn_on
+#        entity_id: light.tradack_ute
 
     ###########################################
     ### Tänder trädäck ute på eftermiddagen ###
@@ -163,22 +163,22 @@
     ### C: 12:00:00 - 21:45:00              ###
     ### A: light.tradack_ute = on           ###
     ###########################################
-  - alias: Trädäck ute on (<40)
-    id: '2246049822391' 
+#  - alias: Trädäck ute on (<40)
+#    id: '2246049822391' 
 
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.ljusstyrka
-      below: 40
+#    trigger:
+#      platform: numeric_state
+#      entity_id: sensor.ljusstyrka
+#      below: 40
 
-    condition:
-      condition: time
-      after: '12:00:00'
-      before: '21:45:00' 
+#    condition:
+#      condition: time
+#      after: '12:00:00'
+#      before: '21:45:00' 
 
-    action:
-      - service: light.turn_on
-        entity_id: light.tradack_ute
+#    action:
+#      - service: light.turn_on
+#        entity_id: light.tradack_ute
 
     ##############################################
     ### Släcker trädäck ute när det blir ljust ###
@@ -186,27 +186,27 @@
     ### C: light.tradack_ute == on             ###
     ### A: light.tradack_ute = off             ###
     ##############################################
-  - alias: Trädäck ute off (>60)
-    id: '6395267532481' 
+#  - alias: Trädäck ute off (>60)
+#    id: '6395267532481' 
 
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.ljusstyrka
-      above: 60
+#    trigger:
+#      platform: numeric_state
+#      entity_id: sensor.ljusstyrka
+#      above: 60
 
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: light.tradack_ute
-          state: 'on'
-        - condition: state
-          entity_id: light.stralkastare_husgavel
-          state: 'off'
+#    condition:
+#      condition: and
+#      conditions:
+#        - condition: state
+#          entity_id: light.tradack_ute
+#          state: 'on'
+#        - condition: state
+#          entity_id: light.stralkastare_husgavel
+#          state: 'off'
 
-    action:
-      - service: light.turn_off
-        entity_id: light.tradack_ute
+#    action:
+#      - service: light.turn_off
+#        entity_id: light.tradack_ute
 
 #############################################################
 

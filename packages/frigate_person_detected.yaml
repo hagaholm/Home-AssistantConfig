@@ -42,10 +42,10 @@ automation:
                     "Person Detection Away Alert {{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
                   message: >
                     Person detected:
-                    - Cam 3 Uppfart:   {{ states('sensor.cam3_person_count') | int }}
-                    - Cam 5 Baksida:   {{ states('sensor.cam5_person_count') | int }}
-                    - Cam 6 Friggebod: {{ states('sensor.cam6_person_count') | int }}
-                    - Cam 7 Entre:     {{ states('sensor.cam7_person_count') | int }}
+                    - Cam 3 Uppfart: {{ states('sensor.cam3_person_count') | int }}
+                    - Cam 5 Baksida: {{ states('sensor.cam5_person_count') | int }}
+                    - Cam 6 Baksida: {{ states('sensor.cam6_person_count') | int }}
+                    - Cam 7 Entre:   {{ states('sensor.cam7_person_count') | int }}
           # If home_status is 'Hemma av', send the notification immediately
           - conditions:
               - condition: state
@@ -58,7 +58,7 @@ automation:
                     "Person Detection Sleep Alert {{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
                   message: >
                     Person detected:
-                    - Cam 3 Uppfart:   {{ states('sensor.cam3_person_count') | int }}
-                    - Cam 5 Baksida:   {{ states('sensor.cam5_person_count') | int }}
-                    - Cam 6 Friggebod: {{ states('sensor.cam6_person_count') | int }}
-                    - Cam 7 Entre:     {{ states('sensor.cam7_person_count') | int }}
+                    - Cam 3 Uppfart: {{ states('sensor.cam3_person_count') | int }}
+                    - Cam 5 Baksida: {{ states('sensor.cam5_person_count') | int }}
+                    - Cam 6 Baksida: {{ states('sensor.cam6_person_count') | int }}
+                    - Cam 7 Entre:   {{ states('sensor.cam7_person_count') | int }}

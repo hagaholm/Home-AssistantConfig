@@ -77,7 +77,6 @@
       platform: state
       entity_id:
         - binary_sensor.cam3_person_occupancy
-        - binary_sensor.cam6_person_occupancy
         - binary_sensor.cam7_person_occupancy
       to: 'on'
 
@@ -104,7 +103,6 @@
       platform: state
       entity_id:
         - binary_sensor.cam3_person_occupancy
-        - binary_sensor.cam6_person_occupancy
         - binary_sensor.cam7_person_occupancy
       to: 'off'
 
@@ -118,9 +116,6 @@
           entity_id: binary_sensor.cam3_person_occupancy
           state: 'off'
         - condition: state
-          entity_id: binary_sensor.cam6_person_occupancy
-          state: 'off'
-        - condition: state
           entity_id: binary_sensor.cam7_person_occupancy
           state: 'off'
 
@@ -130,9 +125,6 @@
         conditions:
           - condition: state
             entity_id: binary_sensor.cam3_person_occupancy
-            state: 'off'
-          - condition: state
-            entity_id: binary_sensor.cam6_person_occupancy
             state: 'off'
           - condition: state
             entity_id: binary_sensor.cam7_person_occupancy

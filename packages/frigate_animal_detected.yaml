@@ -5,116 +5,116 @@ automation:
   ###################################
   ### Animal Motion Radio Control ###
   ###################################
-- alias: Animal Motion Radio Control
-  id: '1416857464463'
-  mode: restart  # Allows the automation to reset the timer on new triggers
+  - alias: Animal Motion Radio Control
+    id: '1416857464463'
+    mode: restart
 
-  trigger:
-    # Triggers for occupancy changes
-    - platform: state
-      entity_id: binary_sensor.cam5_all_occupancy
-    - platform: state
-      entity_id: binary_sensor.cam6_all_occupancy
+    trigger:
+      # Triggers for occupancy changes
+      - platform: state
+        entity_id: binary_sensor.cam5_all_occupancy
+      - platform: state
+        entity_id: binary_sensor.cam6_all_occupancy
 
-  condition: []
+    condition: []
 
-  action:
-    - choose:
-        # When either sensor detects motion
-        - conditions:
-            - condition: or
-              conditions:
-                - condition: state
-                  entity_id: binary_sensor.cam5_all_occupancy
-                  state: 'on'
-                - condition: state
-                  entity_id: binary_sensor.cam6_all_occupancy
-                  state: 'on'
-            - condition: numeric_state
-              entity_id: sensor.ljusstyrka
-              below: 5
-          sequence:
-            - service: light.turn_on
-              target:
-                entity_id: light.tradack_ute
-        # When both sensors are off
-        - conditions:
-            - condition: state
-              entity_id: binary_sensor.cam5_all_occupancy
-              state: 'off'
-            - condition: state
-              entity_id: binary_sensor.cam6_all_occupancy
-              state: 'off'
-          sequence:
-            - delay: '00:00:30'  # Wait 30 seconds
-            - condition: and  # Check if both sensors remain off
-              conditions:
-                - condition: state
-                  entity_id: binary_sensor.cam5_all_occupancy
-                  state: 'off'
-                - condition: state
-                  entity_id: binary_sensor.cam6_all_occupancy
-                  state: 'off'
-            - service: light.turn_off
-              target:
-                entity_id: light.tradack_ute
+    action:
+      - choose:
+          # Turn on light when motion is detected and light level is low
+          - conditions:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity_id: binary_sensor.cam5_all_occupancy
+                    state: 'on'
+                  - condition: state
+                    entity_id: binary_sensor.cam6_all_occupancy
+                    state: 'on'
+              - condition: numeric_state
+                entity_id: sensor.ljusstyrka
+                below: 5
+            sequence:
+              - service: light.turn_on
+                target:
+                  entity_id: light.tradack_ute
+          # Turn off light if no motion is detected after 30 seconds
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.cam5_all_occupancy
+                state: 'off'
+              - condition: state
+                entity_id: binary_sensor.cam6_all_occupancy
+                state: 'off'
+            sequence:
+              - delay: '00:00:30'
+              - condition: and
+                conditions:
+                  - condition: state
+                    entity_id: binary_sensor.cam5_all_occupancy
+                    state: 'off'
+                  - condition: state
+                    entity_id: binary_sensor.cam6_all_occupancy
+                    state: 'off'
+              - service: light.turn_off
+                target:
+                  entity_id: light.tradack_ute
 
   ###################################
   ### Animal Motion Light Control ###
   ###################################
-- alias: Animal Motion Light Control
-  id: '1416857464346'
-  mode: restart  # Allows the automation to reset the timer on new triggers
+  - alias: Animal Motion Light Control
+    id: '1416857464346'
+    mode: restart
 
-  trigger:
-    # Triggers for occupancy changes
-    - platform: state
-      entity_id: binary_sensor.cam5_all_occupancy
-    - platform: state
-      entity_id: binary_sensor.cam6_all_occupancy
+    trigger:
+      # Triggers for occupancy changes
+      - platform: state
+        entity_id: binary_sensor.cam5_all_occupancy
+      - platform: state
+        entity_id: binary_sensor.cam6_all_occupancy
 
-  condition: []
+    condition: []
 
-  action:
-    - choose:
-        # When either sensor detects motion
-        - conditions:
-            - condition: or
-              conditions:
-                - condition: state
-                  entity_id: binary_sensor.cam5_all_occupancy
-                  state: 'on'
-                - condition: state
-                  entity_id: binary_sensor.cam6_all_occupancy
-                  state: 'on'
-            - condition: numeric_state
-              entity_id: sensor.ljusstyrka
-              below: 5
-          sequence:
-            - service: light.turn_on
-              target:
-                entity_id: light.stralkastare_husgavel
-        # When both sensors are off
-        - conditions:
-            - condition: state
-              entity_id: binary_sensor.cam5_all_occupancy
-              state: 'off'
-            - condition: state
-              entity_id: binary_sensor.cam6_all_occupancy
-              state: 'off'
-          sequence:
-            - delay: '00:00:30'  # Wait 30 seconds
-            - condition: and  # Check if both sensors remain off
-              conditions:
-                - condition: state
-                  entity_id: binary_sensor.cam5_all_occupancy
-                  state: 'off'
-                - condition: state
-                  entity_id: binary_sensor.cam6_all_occupancy
-                  state: 'off'
-            - service: light.turn_off
-              target:
-                entity_id: light.stralkastare_husgavel
+    action:
+      - choose:
+          # Turn on light when motion is detected and light level is low
+          - conditions:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity_id: binary_sensor.cam5_all_occupancy
+                    state: 'on'
+                  - condition: state
+                    entity_id: binary_sensor.cam6_all_occupancy
+                    state: 'on'
+              - condition: numeric_state
+                entity_id: sensor.ljusstyrka
+                below: 5
+            sequence:
+              - service: light.turn_on
+                target:
+                  entity_id: light.stralkastare_husgavel
+          # Turn off light if no motion is detected after 30 seconds
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.cam5_all_occupancy
+                state: 'off'
+              - condition: state
+                entity_id: binary_sensor.cam6_all_occupancy
+                state: 'off'
+            sequence:
+              - delay: '00:00:30'
+              - condition: and
+                conditions:
+                  - condition: state
+                    entity_id: binary_sensor.cam5_all_occupancy
+                    state: 'off'
+                  - condition: state
+                    entity_id: binary_sensor.cam6_all_occupancy
+                    state: 'off'
+              - service: light.turn_off
+                target:
+                  entity_id: light.stralkastare_husgavel
 
   #####################################
   ### Animal Detection Cam 5 Notify ###

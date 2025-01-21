@@ -15,6 +15,8 @@ automation:
         entity_id: binary_sensor.cam5_all_occupancy
       - platform: state
         entity_id: binary_sensor.cam6_all_occupancy
+      - platform: state
+        entity_id: binary_sensor.cam7_all_occupancy
 
     condition: []
 
@@ -30,9 +32,12 @@ automation:
                   - condition: state
                     entity_id: binary_sensor.cam6_all_occupancy
                     state: 'on'
+                  - condition: state
+                    entity_id: binary_sensor.cam7_all_occupancy
+                    state: 'on'
               - condition: numeric_state
                 entity_id: sensor.ljusstyrka
-                below: 5
+                below: 10
             sequence:
               - service: light.turn_on
                 target:
@@ -45,6 +50,9 @@ automation:
               - condition: state
                 entity_id: binary_sensor.cam6_all_occupancy
                 state: 'off'
+              - condition: state
+                entity_id: binary_sensor.cam7_all_occupancy
+                state: 'off'
             sequence:
               - delay: '00:00:30'
               - condition: and
@@ -54,6 +62,9 @@ automation:
                     state: 'off'
                   - condition: state
                     entity_id: binary_sensor.cam6_all_occupancy
+                    state: 'off'
+                  - condition: state
+                    entity_id: binary_sensor.cam7_all_occupancy
                     state: 'off'
               - service: light.turn_off
                 target:
@@ -72,6 +83,8 @@ automation:
         entity_id: binary_sensor.cam5_all_occupancy
       - platform: state
         entity_id: binary_sensor.cam6_all_occupancy
+      - platform: state
+        entity_id: binary_sensor.cam7_all_occupancy
 
     condition: []
 
@@ -87,9 +100,12 @@ automation:
                   - condition: state
                     entity_id: binary_sensor.cam6_all_occupancy
                     state: 'on'
+                  - condition: state
+                    entity_id: binary_sensor.cam7_all_occupancy
+                    state: 'on'
               - condition: numeric_state
                 entity_id: sensor.ljusstyrka
-                below: 5
+                below: 10
             sequence:
               - service: light.turn_on
                 target:
@@ -102,6 +118,9 @@ automation:
               - condition: state
                 entity_id: binary_sensor.cam6_all_occupancy
                 state: 'off'
+              - condition: state
+                entity_id: binary_sensor.cam7_all_occupancy
+                state: 'off'
             sequence:
               - delay: '00:00:30'
               - condition: and
@@ -111,6 +130,9 @@ automation:
                     state: 'off'
                   - condition: state
                     entity_id: binary_sensor.cam6_all_occupancy
+                    state: 'off'
+                  - condition: state
+                    entity_id: binary_sensor.cam7_all_occupancy
                     state: 'off'
               - service: light.turn_off
                 target:
@@ -146,6 +168,16 @@ automation:
           - sensor.cam6_horse_count
           - sensor.cam6_sheep_count
           - sensor.cam6_zebra_count
+          - sensor.cam7_person_count
+          - sensor.cam7_bear_count
+          - sensor.cam7_cat_count
+          - sensor.cam7_cow_count
+          - sensor.cam7_dog_count
+          - sensor.cam7_elephant_count
+          - sensor.cam7_giraffe_count
+          - sensor.cam7_horse_count
+          - sensor.cam7_sheep_count
+          - sensor.cam7_zebra_count
 
     condition:
       condition: or
@@ -166,17 +198,17 @@ automation:
           title: >
             "Detection Alert {{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           message: >
-            Camera 5 or 6 has detected. lux: {{ states('sensor.ljusstyrka') | int }}:
-            - All:      {{ states('sensor.cam5_all_count') | int }} {{ states('sensor.cam6_all_count') | int }}
-            - Person:   {{ states('sensor.cam5_person_count') | int }} {{ states('sensor.cam6_person_count') | int }}
-            - Bear:     {{ states('sensor.cam5_bear_count') | int }} {{ states('sensor.cam6_bear_count') | int }}
-            - Cow:      {{ states('sensor.cam5_cat_count') | int }} {{ states('sensor.cam6_cat_count') | int }}
-            - Dog:      {{ states('sensor.cam5_dog_count') | int }} {{ states('sensor.cam6_dog_count') | int }}
-            - Elephant: {{ states('sensor.cam5_elephant_count') | int }} {{ states('sensor.cam6_elephant_count') | int }}
-            - Giraffe:  {{ states('sensor.cam5_giraffe_count') | int }} {{ states('sensor.cam6_giraffe_count') | int }}
-            - Horse:    {{ states('sensor.cam5_horse_count') | int }} {{ states('sensor.cam6_horse_count') | int }}
-            - Sheep:    {{ states('sensor.cam5_sheep_count') | int }} {{ states('sensor.cam6_sheep_count') | int }}
-            - Zebra:    {{ states('sensor.cam5_zebra_count') | int }} {{ states('sensor.cam6_zebra_count') | int }}
+            Camera 5, 6 or 7 has detected. lux: {{ states('sensor.ljusstyrka') | int }}:
+            - All:      {{ states('sensor.cam5_all_count') | int }} {{ states('sensor.cam6_all_count') | int }} {{ states('sensor.cam7_all_count') | int }}
+            - Person:   {{ states('sensor.cam5_person_count') | int }} {{ states('sensor.cam6_person_count') | int }} {{ states('sensor.cam7_person_count') | int }}
+            - Bear:     {{ states('sensor.cam5_bear_count') | int }} {{ states('sensor.cam6_bear_count') | int }} {{ states('sensor.cam7_bear_count') | int }}
+            - Cow:      {{ states('sensor.cam5_cat_count') | int }} {{ states('sensor.cam6_cat_count') | int }} {{ states('sensor.cam7_cat_count') | int }}
+            - Dog:      {{ states('sensor.cam5_dog_count') | int }} {{ states('sensor.cam6_dog_count') | int }} {{ states('sensor.cam7_dog_count') | int }}
+            - Elephant: {{ states('sensor.cam5_elephant_count') | int }} {{ states('sensor.cam6_elephant_count') | int }} {{ states('sensor.cam7_elephant_count') | int }}
+            - Giraffe:  {{ states('sensor.cam5_giraffe_count') | int }} {{ states('sensor.cam6_giraffe_count') | int }} {{ states('sensor.cam7_giraffe_count') | int }}
+            - Horse:    {{ states('sensor.cam5_horse_count') | int }} {{ states('sensor.cam6_horse_count') | int }} {{ states('sensor.cam7_horse_count') | int }}
+            - Sheep:    {{ states('sensor.cam5_sheep_count') | int }} {{ states('sensor.cam6_sheep_count') | int }} {{ states('sensor.cam7_sheep_count') | int }}
+            - Zebra:    {{ states('sensor.cam5_zebra_count') | int }} {{ states('sensor.cam6_zebra_count') | int }} {{ states('sensor.cam7_zebra_count') | int }}
 
   #####################################
   ### Animal Detection Cam 5 Notify ###
@@ -191,6 +223,9 @@ automation:
         above: 0
       - platform: numeric_state
         entity_id: sensor.cam6_all_count
+        above: 0
+      - platform: numeric_state
+        entity_id: sensor.cam7_all_count
         above: 0
 
     condition:
@@ -217,6 +252,9 @@ automation:
               above: 0
             - condition: numeric_state
               entity_id: sensor.cam6_all_count
+              above: 0
+            - condition: numeric_state
+              entity_id: sensor.cam7_all_count
               above: 0
           sequence:
             # Handle light.sovrum_fonster

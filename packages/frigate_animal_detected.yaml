@@ -110,6 +110,12 @@ automation:
               - service: light.turn_on
                 target:
                   entity_id: light.stralkastare_husgavel
+              - service: light.turn_on
+                target:
+                  entity_id: light.kamera5_stralkastare
+              - service: light.turn_on
+                target:
+                  entity_id: light.kamera6_stralkastare
           # Turn off light if no motion is detected after 30 seconds
           - conditions:
               - condition: state
@@ -137,6 +143,12 @@ automation:
               - service: light.turn_off
                 target:
                   entity_id: light.stralkastare_husgavel
+              - service: light.turn_off
+                target:
+                  entity_id: light.kamera5_stralkastare
+              - service: light.turn_off
+                target:
+                  entity_id: light.kamera6_stralkastare
 
   #####################################
   ### Animal Detection Cam 5 Notify ###

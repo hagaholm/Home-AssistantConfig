@@ -116,6 +116,19 @@ automation:
               - service: light.turn_on
                 target:
                   entity_id: light.kamera6_stralkastare
+              - service: light.turn_on
+                data:
+                  entity_id: light.spabad_v
+                  brightness_pct: 100
+              - service: light.turn_on
+                data:
+                  entity_id: light.spabad_m
+                  brightness_pct: 100
+              - service: light.turn_on
+                data:
+                  entity_id: light.spabad_h
+                  brightness_pct: 100
+
           # Turn off light if no motion is detected after 30 seconds
           - conditions:
               - condition: state
@@ -149,6 +162,15 @@ automation:
               - service: light.turn_off
                 target:
                   entity_id: light.kamera6_stralkastare
+              - service: light.turn_off
+                target:
+                  entity_id: light.spabad_v
+              - service: light.turn_off
+                target:
+                  entity_id: light.spabad_m
+              - service: light.turn_off
+                target:
+                  entity_id: light.spabad_h
 
   #####################################
   ### Animal Detection Cam 5 Notify ###

@@ -352,10 +352,10 @@ automation:
                 target:
                   entity_id: light.spabad_h
 
-  #####################################
-  ### Animal Detection Cam 5 Notify ###
-  #####################################
-  - alias: Animal Detection Cam 5 Notify
+  ###############################
+  ### Animal Detection Notify ###
+  ###############################
+  - alias: Animal Detection Notify
     id: '81119011564329' 
     mode: single
 
@@ -424,10 +424,10 @@ automation:
             - Sheep:    {{ states('sensor.cam5_sheep_count') | int }} {{ states('sensor.cam6_sheep_count') | int }} {{ states('sensor.cam7_sheep_count') | int }}
             - Zebra:    {{ states('sensor.cam5_zebra_count') | int }} {{ states('sensor.cam6_zebra_count') | int }} {{ states('sensor.cam7_zebra_count') | int }}
 
-  #####################################
-  ### Animal Detection Cam 5 Notify ###
-  #####################################
-  - alias: Blink Light When Detcection Cam 5
+  ###################################
+  ### Blink Light When Detcection ###
+  ###################################
+  - alias: Blink Light When Detcection
     id: '81119011512345'
     mode: single
 

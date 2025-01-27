@@ -360,38 +360,43 @@ automation:
     mode: single
 
     trigger:
-      - platform: state
-        entity_id:
-          - sensor.cam5_person_count
-          - sensor.cam5_bear_count
-          - sensor.cam5_cat_count
-          - sensor.cam5_cow_count
-          - sensor.cam5_dog_count
-          - sensor.cam5_elephant_count
-          - sensor.cam5_giraffe_count
-          - sensor.cam5_horse_count
-          - sensor.cam5_sheep_count
-          - sensor.cam5_zebra_count
-          - sensor.cam6_person_count
-          - sensor.cam6_bear_count
-          - sensor.cam6_cat_count
-          - sensor.cam6_cow_count
-          - sensor.cam6_dog_count
-          - sensor.cam6_elephant_count
-          - sensor.cam6_giraffe_count
-          - sensor.cam6_horse_count
-          - sensor.cam6_sheep_count
-          - sensor.cam6_zebra_count
-          - sensor.cam7_person_count
-          - sensor.cam7_bear_count
-          - sensor.cam7_cat_count
-          - sensor.cam7_cow_count
-          - sensor.cam7_dog_count
-          - sensor.cam7_elephant_count
-          - sensor.cam7_giraffe_count
-          - sensor.cam7_horse_count
-          - sensor.cam7_sheep_count
-          - sensor.cam7_zebra_count
+      - platform: numeric_state
+        entity_id: sensor.cam5_all_count
+        above: 0
+      - platform: numeric_state
+        entity_id: sensor.cam6_all_count
+        above: 0
+      - platform: numeric_state
+        entity_id: sensor.cam7_all_count
+        above: 0
+        
+      - platform: numeric_state
+        entity_id: sensor.cam3_bear_count
+        above: 0
+      - platform: numeric_state
+        entity_id: sensor.cam3_cat_count
+        above: 0
+      - platform: numeric_state
+        entity_id: sensor.cam3_cow_count
+        above: 0
+      - platform: numeric_state
+        entity_id: sensor.cam3_dog_count
+        above: 0
+      - platform: numeric_state
+        entity_id: sensor.cam3_elephant_count
+        above: 0
+      - platform: numeric_state
+        entity_id: sensor.cam3_giraffe_count
+        above: 0
+      - platform: numeric_state
+        entity_id: sensor.cam3_horse_count
+        above: 0
+      - platform: numeric_state
+        entity_id: sensor.cam3_sheep_count
+        above: 0
+      - platform: numeric_state
+        entity_id: sensor.cam3_zebra_count
+        above: 0
 
     condition:
       condition: or
@@ -412,17 +417,17 @@ automation:
           title: >
             "Detection Alert {{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           message: >
-            Camera 5, 6 or 7 has detected. lux: {{ states('sensor.ljusstyrka') | int }}:
-            - All:      {{ states('sensor.cam5_all_count') | int }} {{ states('sensor.cam6_all_count') | int }} {{ states('sensor.cam7_all_count') | int }}
-            - Person:   {{ states('sensor.cam5_person_count') | int }} {{ states('sensor.cam6_person_count') | int }} {{ states('sensor.cam7_person_count') | int }}
-            - Bear:     {{ states('sensor.cam5_bear_count') | int }} {{ states('sensor.cam6_bear_count') | int }} {{ states('sensor.cam7_bear_count') | int }}
-            - Cow:      {{ states('sensor.cam5_cat_count') | int }} {{ states('sensor.cam6_cat_count') | int }} {{ states('sensor.cam7_cat_count') | int }}
-            - Dog:      {{ states('sensor.cam5_dog_count') | int }} {{ states('sensor.cam6_dog_count') | int }} {{ states('sensor.cam7_dog_count') | int }}
-            - Elephant: {{ states('sensor.cam5_elephant_count') | int }} {{ states('sensor.cam6_elephant_count') | int }} {{ states('sensor.cam7_elephant_count') | int }}
-            - Giraffe:  {{ states('sensor.cam5_giraffe_count') | int }} {{ states('sensor.cam6_giraffe_count') | int }} {{ states('sensor.cam7_giraffe_count') | int }}
-            - Horse:    {{ states('sensor.cam5_horse_count') | int }} {{ states('sensor.cam6_horse_count') | int }} {{ states('sensor.cam7_horse_count') | int }}
-            - Sheep:    {{ states('sensor.cam5_sheep_count') | int }} {{ states('sensor.cam6_sheep_count') | int }} {{ states('sensor.cam7_sheep_count') | int }}
-            - Zebra:    {{ states('sensor.cam5_zebra_count') | int }} {{ states('sensor.cam6_zebra_count') | int }} {{ states('sensor.cam7_zebra_count') | int }}
+            Camera 3, 5, 6 or 7 has detected. lux: {{ states('sensor.ljusstyrka') | int }}:
+            - All:      {{ states('sensor.cam3_all_count') | int }} {{ states('sensor.cam5_all_count') | int }} {{ states('sensor.cam6_all_count') | int }} {{ states('sensor.cam7_all_count') | int }}
+            - Person:   {{ states('sensor.cam3_person_count') | int }} {{ states('sensor.cam5_person_count') | int }} {{ states('sensor.cam6_person_count') | int }} {{ states('sensor.cam7_person_count') | int }}
+            - Bear:     {{ states('sensor.cam3_bear_count') | int }} {{ states('sensor.cam5_bear_count') | int }} {{ states('sensor.cam6_bear_count') | int }} {{ states('sensor.cam7_bear_count') | int }}
+            - Cow:      {{ states('sensor.cam3_cat_count') | int }} {{ states('sensor.cam5_cat_count') | int }} {{ states('sensor.cam6_cat_count') | int }} {{ states('sensor.cam7_cat_count') | int }}
+            - Dog:      {{ states('sensor.cam3_dog_count') | int }} {{ states('sensor.cam5_dog_count') | int }} {{ states('sensor.cam6_dog_count') | int }} {{ states('sensor.cam7_dog_count') | int }}
+            - Elephant: {{ states('sensor.cam3_elephant_count') | int }} {{ states('sensor.cam5_elephant_count') | int }} {{ states('sensor.cam6_elephant_count') | int }} {{ states('sensor.cam7_elephant_count') | int }}
+            - Giraffe:  {{ states('sensor.cam3_giraffe_count') | int }} {{ states('sensor.cam5_giraffe_count') | int }} {{ states('sensor.cam6_giraffe_count') | int }} {{ states('sensor.cam7_giraffe_count') | int }}
+            - Horse:    {{ states('sensor.cam3_horse_count') | int }} {{ states('sensor.cam5_horse_count') | int }} {{ states('sensor.cam6_horse_count') | int }} {{ states('sensor.cam7_horse_count') | int }}
+            - Sheep:    {{ states('sensor.cam3_sheep_count') | int }} {{ states('sensor.cam5_sheep_count') | int }} {{ states('sensor.cam6_sheep_count') | int }} {{ states('sensor.cam7_sheep_count') | int }}
+            - Zebra:    {{ states('sensor.cam3_zebra_count') | int }} {{ states('sensor.cam5_zebra_count') | int }} {{ states('sensor.cam6_zebra_count') | int }} {{ states('sensor.cam7_zebra_count') | int }}
 
   ###################################
   ### Blink Light When Detcection ###

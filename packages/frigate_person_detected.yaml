@@ -7,12 +7,18 @@ automation:
     mode: single
 
     trigger:
-      - platform: state
-        entity_id:
-          - sensor.cam3_person_count
-          - sensor.cam5_person_count
-          - sensor.cam6_person_count
-          - sensor.cam7_person_count
+      - platform: numeric_state
+        entity_id: sensor.cam3_person_count
+        above: 0
+      - platform: numeric_state
+        entity_id: sensor.cam5_person_count
+        above: 0
+      - platform: numeric_state
+        entity_id: sensor.cam6_person_count
+        above: 0
+      - platform: numeric_state
+        entity_id: sensor.cam7_person_count
+        above: 0
 
     condition:
       condition: or

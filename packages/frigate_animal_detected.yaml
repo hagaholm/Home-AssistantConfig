@@ -17,20 +17,11 @@ automation:
           - binary_sensor.cam6_all_occupancy
           - binary_sensor.cam7_all_occupancy
 
-          - binary_sensor.cam3_bear_occupancy
-          - binary_sensor.cam3_cat_occupancy
-          - binary_sensor.cam3_cow_occupancy
-          - binary_sensor.cam3_dog_occupancy
-          - binary_sensor.cam3_elephant_occupancy
-          - binary_sensor.cam3_giraffe_occupancy
-          - binary_sensor.cam3_horse_occupancy
-          - binary_sensor.cam3_sheep_occupancy
-          - binary_sensor.cam3_zebra_occupancy
-
     condition: []
 
     action:
       - choose:
+
           # Turn on light when motion is detected and light level is low
           - conditions:
               - condition: or
@@ -44,33 +35,6 @@ automation:
                   - condition: state
                     entity_id: binary_sensor.cam7_all_occupancy
                     state: 'on'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_bear_occupancy
-                    state: 'on'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_cat_occupancy
-                    state: 'on'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_cow_occupancy
-                    state: 'on'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_dog_occupancy
-                    state: 'on'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_elephant_occupancy
-                    state: 'on'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_giraffe_occupancy
-                    state: 'on'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_horse_occupancy
-                    state: 'on'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_horse_occupancy
-                    state: 'on'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_zebra_occupancy
-                    state: 'on'
               - condition: numeric_state
                 entity_id: sensor.ljusstyrka
                 below: 10
@@ -78,6 +42,7 @@ automation:
               - service: light.turn_on
                 target:
                   entity_id: light.tradack_ute
+
           # Turn off light if no motion is detected after 30 seconds
           - conditions:
               - condition: state
@@ -88,33 +53,6 @@ automation:
                 state: 'off'
               - condition: state
                 entity_id: binary_sensor.cam7_all_occupancy
-                state: 'off'
-              - condition: state
-                entity_id: binary_sensor.cam3_bear_occupancy
-                state: 'off'
-              - condition: state
-                entity_id: binary_sensor.cam3_cat_occupancy
-                state: 'off'
-              - condition: state
-                entity_id: binary_sensor.cam3_cow_occupancy
-                state: 'off'
-              - condition: state
-                entity_id: binary_sensor.cam3_dog_occupancy
-                state: 'off'
-              - condition: state
-                entity_id: binary_sensor.cam3_elephant_occupancy
-                state: 'off'
-              - condition: state
-                entity_id: binary_sensor.cam3_giraffe_occupancy
-                state: 'off'
-              - condition: state
-                entity_id: binary_sensor.cam3_horse_occupancy
-                state: 'off'
-              - condition: state
-                entity_id: binary_sensor.cam3_horse_occupancy
-                state: 'off'
-              - condition: state
-                entity_id: binary_sensor.cam3_zebra_occupancy
                 state: 'off'
             sequence:
               - delay: '00:00:30'
@@ -128,33 +66,6 @@ automation:
                     state: 'off'
                   - condition: state
                     entity_id: binary_sensor.cam7_all_occupancy
-                    state: 'off'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_bear_occupancy
-                    state: 'off'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_cat_occupancy
-                    state: 'off'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_cow_occupancy
-                    state: 'off'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_dog_occupancy
-                    state: 'off'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_elephant_occupancy
-                    state: 'off'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_giraffe_occupancy
-                    state: 'off'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_horse_occupancy
-                    state: 'off'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_horse_occupancy
-                    state: 'off'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_zebra_occupancy
                     state: 'off'
               - service: light.turn_off
                 target:
@@ -175,20 +86,11 @@ automation:
           - binary_sensor.cam6_all_occupancy
           - binary_sensor.cam7_all_occupancy
 
-          - binary_sensor.cam3_bear_occupancy
-          - binary_sensor.cam3_cat_occupancy
-          - binary_sensor.cam3_cow_occupancy
-          - binary_sensor.cam3_dog_occupancy
-          - binary_sensor.cam3_elephant_occupancy
-          - binary_sensor.cam3_giraffe_occupancy
-          - binary_sensor.cam3_horse_occupancy
-          - binary_sensor.cam3_sheep_occupancy
-          - binary_sensor.cam3_zebra_occupancy
-
     condition: []
 
     action:
       - choose:
+
           # Turn on light when motion is detected and light level is low
           - conditions:
               - condition: or
@@ -201,33 +103,6 @@ automation:
                     state: 'on'
                   - condition: state
                     entity_id: binary_sensor.cam7_all_occupancy
-                    state: 'on'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_bear_occupancy
-                    state: 'on'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_cat_occupancy
-                    state: 'on'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_cow_occupancy
-                    state: 'on'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_dog_occupancy
-                    state: 'on'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_elephant_occupancy
-                    state: 'on'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_giraffe_occupancy
-                    state: 'on'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_horse_occupancy
-                    state: 'on'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_horse_occupancy
-                    state: 'on'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_zebra_occupancy
                     state: 'on'
               - condition: numeric_state
                 entity_id: sensor.ljusstyrka
@@ -266,33 +141,6 @@ automation:
               - condition: state
                 entity_id: binary_sensor.cam7_all_occupancy
                 state: 'off'
-              - condition: state
-                entity_id: binary_sensor.cam3_bear_occupancy
-                state: 'off'
-              - condition: state
-                entity_id: binary_sensor.cam3_cat_occupancy
-                state: 'off'
-              - condition: state
-                entity_id: binary_sensor.cam3_cow_occupancy
-                state: 'off'
-              - condition: state
-                entity_id: binary_sensor.cam3_dog_occupancy
-                state: 'off'
-              - condition: state
-                entity_id: binary_sensor.cam3_elephant_occupancy
-                state: 'off'
-              - condition: state
-                entity_id: binary_sensor.cam3_giraffe_occupancy
-                state: 'off'
-              - condition: state
-                entity_id: binary_sensor.cam3_horse_occupancy
-                state: 'off'
-              - condition: state
-                entity_id: binary_sensor.cam3_horse_occupancy
-                state: 'off'
-              - condition: state
-                entity_id: binary_sensor.cam3_zebra_occupancy
-                state: 'off'
             sequence:
               - delay: '00:00:30'
               - condition: and
@@ -305,33 +153,6 @@ automation:
                     state: 'off'
                   - condition: state
                     entity_id: binary_sensor.cam7_all_occupancy
-                    state: 'off'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_bear_occupancy
-                    state: 'off'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_cat_occupancy
-                    state: 'off'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_cow_occupancy
-                    state: 'off'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_dog_occupancy
-                    state: 'off'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_elephant_occupancy
-                    state: 'off'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_giraffe_occupancy
-                    state: 'off'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_horse_occupancy
-                    state: 'off'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_horse_occupancy
-                    state: 'off'
-                  - condition: state
-                    entity_id: binary_sensor.cam3_zebra_occupancy
                     state: 'off'
               - service: light.turn_off
                 target:

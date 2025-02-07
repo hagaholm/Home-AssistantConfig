@@ -8,16 +8,7 @@ automation:
 
     trigger:
       - platform: numeric_state
-        entity_id: sensor.cam3_person_count
-        above: 0
-      - platform: numeric_state
-        entity_id: sensor.cam5_person_count
-        above: 0
-      - platform: numeric_state
-        entity_id: sensor.cam6_person_count
-        above: 0
-      - platform: numeric_state
-        entity_id: sensor.cam7_person_count
+        entity_id: sensor.cams_all_person_count
         above: 0
 
     condition:

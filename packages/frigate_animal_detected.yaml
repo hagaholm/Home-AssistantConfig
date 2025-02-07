@@ -10,12 +10,10 @@ automation:
     mode: restart
 
     trigger:
-      # Triggers for occupancy changes
+      # Triggers for animal detection on backside
       - platform: state
         entity_id: 
-          - binary_sensor.cam5_all_occupancy
-          - binary_sensor.cam6_all_occupancy
-          - binary_sensor.cam7_all_occupancy
+          - binary_sensor.cams_animal_backside_active
 
     condition: []
 
@@ -24,20 +22,14 @@ automation:
 
           # Turn on light when motion is detected and light level is low
           - conditions:
-              - condition: or
+              - condition: and
                 conditions:
                   - condition: state
-                    entity_id: binary_sensor.cam5_all_occupancy
+                    entity_id: binary_sensor.cams_animal_backside_active
                     state: 'on'
-                  - condition: state
-                    entity_id: binary_sensor.cam6_all_occupancy
-                    state: 'on'
-                  - condition: state
-                    entity_id: binary_sensor.cam7_all_occupancy
-                    state: 'on'
-              - condition: numeric_state
-                entity_id: sensor.ljusstyrka
-                below: 10
+                  - condition: numeric_state
+                    entity_id: sensor.ljusstyrka
+                    below: 10
             sequence:
               - service: light.turn_on
                 target:
@@ -46,26 +38,14 @@ automation:
           # Turn off light if no motion is detected after 30 seconds
           - conditions:
               - condition: state
-                entity_id: binary_sensor.cam5_all_occupancy
-                state: 'off'
-              - condition: state
-                entity_id: binary_sensor.cam6_all_occupancy
-                state: 'off'
-              - condition: state
-                entity_id: binary_sensor.cam7_all_occupancy
+                entity_id: binary_sensor.cams_animal_backside_active
                 state: 'off'
             sequence:
               - delay: '00:00:30'
               - condition: and
                 conditions:
                   - condition: state
-                    entity_id: binary_sensor.cam5_all_occupancy
-                    state: 'off'
-                  - condition: state
-                    entity_id: binary_sensor.cam6_all_occupancy
-                    state: 'off'
-                  - condition: state
-                    entity_id: binary_sensor.cam7_all_occupancy
+                    entity_id: binary_sensor.cams_animal_backside_active
                     state: 'off'
               - service: light.turn_off
                 target:
@@ -79,12 +59,10 @@ automation:
     mode: restart
 
     trigger:
-      # Triggers for occupancy changes
+      # Triggers for animal detection on backside
       - platform: state
         entity_id: 
-          - binary_sensor.cam5_all_occupancy
-          - binary_sensor.cam6_all_occupancy
-          - binary_sensor.cam7_all_occupancy
+          - binary_sensor.cams_animal_backside_active
 
     condition: []
 
@@ -93,20 +71,14 @@ automation:
 
           # Turn on light when motion is detected and light level is low
           - conditions:
-              - condition: or
+              - condition: and
                 conditions:
                   - condition: state
-                    entity_id: binary_sensor.cam5_all_occupancy
+                    entity_id: binary_sensor.cams_animal_backside_active
                     state: 'on'
-                  - condition: state
-                    entity_id: binary_sensor.cam6_all_occupancy
-                    state: 'on'
-                  - condition: state
-                    entity_id: binary_sensor.cam7_all_occupancy
-                    state: 'on'
-              - condition: numeric_state
-                entity_id: sensor.ljusstyrka
-                below: 10
+                  - condition: numeric_state
+                    entity_id: sensor.ljusstyrka
+                    below: 10
             sequence:
               - service: light.turn_on
                 target:
@@ -133,26 +105,14 @@ automation:
           # Turn off light if no motion is detected after 30 seconds
           - conditions:
               - condition: state
-                entity_id: binary_sensor.cam5_all_occupancy
-                state: 'off'
-              - condition: state
-                entity_id: binary_sensor.cam6_all_occupancy
-                state: 'off'
-              - condition: state
-                entity_id: binary_sensor.cam7_all_occupancy
+                entity_id: binary_sensor.cams_animal_backside_active
                 state: 'off'
             sequence:
               - delay: '00:00:30'
               - condition: and
                 conditions:
                   - condition: state
-                    entity_id: binary_sensor.cam5_all_occupancy
-                    state: 'off'
-                  - condition: state
-                    entity_id: binary_sensor.cam6_all_occupancy
-                    state: 'off'
-                  - condition: state
-                    entity_id: binary_sensor.cam7_all_occupancy
+                    entity_id: binary_sensor.cams_animal_backside_active
                     state: 'off'
               - service: light.turn_off
                 target:
@@ -181,43 +141,11 @@ automation:
     mode: single
 
     trigger:
-      - platform: numeric_state
-        entity_id: sensor.cam5_all_count
-        above: 0
-      - platform: numeric_state
-        entity_id: sensor.cam6_all_count
-        above: 0
-      - platform: numeric_state
-        entity_id: sensor.cam7_all_count
-        above: 0
-        
-      - platform: numeric_state
-        entity_id: sensor.cam3_bear_count
-        above: 0
-      - platform: numeric_state
-        entity_id: sensor.cam3_cat_count
-        above: 0
-      - platform: numeric_state
-        entity_id: sensor.cam3_cow_count
-        above: 0
-      - platform: numeric_state
-        entity_id: sensor.cam3_dog_count
-        above: 0
-      - platform: numeric_state
-        entity_id: sensor.cam3_elephant_count
-        above: 0
-      - platform: numeric_state
-        entity_id: sensor.cam3_giraffe_count
-        above: 0
-      - platform: numeric_state
-        entity_id: sensor.cam3_horse_count
-        above: 0
-      - platform: numeric_state
-        entity_id: sensor.cam3_sheep_count
-        above: 0
-      - platform: numeric_state
-        entity_id: sensor.cam3_zebra_count
-        above: 0
+      # Triggers for animal detection on backside
+      - platform: state
+        entity_id: 
+          - binary_sensor.cams_animal_backside_active
+        to: 'on'
 
     condition:
       condition: or
@@ -238,17 +166,15 @@ automation:
           title: >
             "Detection Alert {{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           message: >
-            Camera 3, 5, 6 or 7 has detected. lux: {{ states('sensor.ljusstyrka') | int }}:
-            - All:      {{ states('sensor.cam3_all_count') | int }} {{ states('sensor.cam5_all_count') | int }} {{ states('sensor.cam6_all_count') | int }} {{ states('sensor.cam7_all_count') | int }}
-            - Person:   {{ states('sensor.cam3_person_count') | int }} {{ states('sensor.cam5_person_count') | int }} {{ states('sensor.cam6_person_count') | int }} {{ states('sensor.cam7_person_count') | int }}
-            - Bear:     {{ states('sensor.cam3_bear_count') | int }} {{ states('sensor.cam5_bear_count') | int }} {{ states('sensor.cam6_bear_count') | int }} {{ states('sensor.cam7_bear_count') | int }}
-            - Cow:      {{ states('sensor.cam3_cat_count') | int }} {{ states('sensor.cam5_cat_count') | int }} {{ states('sensor.cam6_cat_count') | int }} {{ states('sensor.cam7_cat_count') | int }}
-            - Dog:      {{ states('sensor.cam3_dog_count') | int }} {{ states('sensor.cam5_dog_count') | int }} {{ states('sensor.cam6_dog_count') | int }} {{ states('sensor.cam7_dog_count') | int }}
-            - Elephant: {{ states('sensor.cam3_elephant_count') | int }} {{ states('sensor.cam5_elephant_count') | int }} {{ states('sensor.cam6_elephant_count') | int }} {{ states('sensor.cam7_elephant_count') | int }}
-            - Giraffe:  {{ states('sensor.cam3_giraffe_count') | int }} {{ states('sensor.cam5_giraffe_count') | int }} {{ states('sensor.cam6_giraffe_count') | int }} {{ states('sensor.cam7_giraffe_count') | int }}
-            - Horse:    {{ states('sensor.cam3_horse_count') | int }} {{ states('sensor.cam5_horse_count') | int }} {{ states('sensor.cam6_horse_count') | int }} {{ states('sensor.cam7_horse_count') | int }}
-            - Sheep:    {{ states('sensor.cam3_sheep_count') | int }} {{ states('sensor.cam5_sheep_count') | int }} {{ states('sensor.cam6_sheep_count') | int }} {{ states('sensor.cam7_sheep_count') | int }}
-            - Zebra:    {{ states('sensor.cam3_zebra_count') | int }} {{ states('sensor.cam5_zebra_count') | int }} {{ states('sensor.cam6_zebra_count') | int }} {{ states('sensor.cam7_zebra_count') | int }}
+            Camera 5, 6 or 7 has detected. lux: {{ states('sensor.ljusstyrka') | int }}:
+            - Bear:     {{ states('sensor.cam5_bear_count') | int }} {{ states('sensor.cam6_bear_count') | int }} {{ states('sensor.cam7_bear_count') | int }}
+            - Cow:      {{ states('sensor.cam5_cat_count') | int }} {{ states('sensor.cam6_cat_count') | int }} {{ states('sensor.cam7_cat_count') | int }}
+            - Dog:      {{ states('sensor.cam5_dog_count') | int }} {{ states('sensor.cam6_dog_count') | int }} {{ states('sensor.cam7_dog_count') | int }}
+            - Elephant: {{ states('sensor.cam5_elephant_count') | int }} {{ states('sensor.cam6_elephant_count') | int }} {{ states('sensor.cam7_elephant_count') | int }}
+            - Giraffe:  {{ states('sensor.cam5_giraffe_count') | int }} {{ states('sensor.cam6_giraffe_count') | int }} {{ states('sensor.cam7_giraffe_count') | int }}
+            - Horse:    {{ states('sensor.cam5_horse_count') | int }} {{ states('sensor.cam6_horse_count') | int }} {{ states('sensor.cam7_horse_count') | int }}
+            - Sheep:    {{ states('sensor.cam5_sheep_count') | int }} {{ states('sensor.cam6_sheep_count') | int }} {{ states('sensor.cam7_sheep_count') | int }}
+            - Zebra:    {{ states('sensor.cam5_zebra_count') | int }} {{ states('sensor.cam6_zebra_count') | int }} {{ states('sensor.cam7_zebra_count') | int }}
 
   ###################################
   ### Blink Light When Detcection ###
@@ -258,15 +184,11 @@ automation:
     mode: single
 
     trigger:
-      - platform: numeric_state
-        entity_id: sensor.cam5_all_count
-        above: 0
-      - platform: numeric_state
-        entity_id: sensor.cam6_all_count
-        above: 0
-      - platform: numeric_state
-        entity_id: sensor.cam7_all_count
-        above: 0
+      # Triggers for animal detection on backside
+      - platform: state
+        entity_id: 
+          - binary_sensor.cams_animal_backside_active
+        to: 'on'
 
     condition:
       condition: or
@@ -288,13 +210,7 @@ automation:
       - repeat:
           while:
             - condition: numeric_state
-              entity_id: sensor.cam5_all_count
-              above: 0
-            - condition: numeric_state
-              entity_id: sensor.cam6_all_count
-              above: 0
-            - condition: numeric_state
-              entity_id: sensor.cam7_all_count
+              entity_id: sensor.cams_animal_backside_count
               above: 0
           sequence:
             # Handle light.sovrum_fonster

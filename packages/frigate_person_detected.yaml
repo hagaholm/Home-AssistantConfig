@@ -63,7 +63,7 @@ automation:
   ####################################
   ### Blink Light Person Detcected ###
   ####################################
-  - alias: Blink Light Person Detcected
+  - alias: Blink Light Person Detected
     id: '81119011512346'
     mode: single
 
@@ -79,6 +79,9 @@ automation:
           sovrum_initial_state: "{{ is_state('light.sovrum_fonster', 'on') }}"
           hall_initial_state: "{{ is_state('light.hall_byra', 'on') }}"
           vardagsrum_initial_state: "{{ is_state('light.vardagsrum_skank', 'on') }}"
+
+      - service: automation.turn_off
+        entity_id: automation.blink_light_person_detected
 
       - repeat:
           count: 4
@@ -198,6 +201,3 @@ automation:
               - service: light.turn_off
                 target:
                   entity_id: light.vardagsrum_skank
-
-      - service: automation.turn_off
-        entity_id: automation.blink_light_person_detected

@@ -133,6 +133,88 @@ automation:
                 target:
                   entity_id: light.spabad_h
 
+  ###################################
+  ### Test Motion Light Control ###
+  ###################################
+  - alias: Test Motion Light Control
+    id: '1416857464347'
+    mode: restart
+
+    trigger:
+      # Triggers for all detection on backside
+      - platform: state
+        entity_id: 
+          - binary_sensor.cams_all_backside_active
+
+    condition: []
+
+    action:
+      - choose:
+
+          # Turn on light when motion is detected and light level is low
+          - conditions:
+              - condition: and
+                conditions:
+                  - condition: state
+                    entity_id: binary_sensor.cams_all_backside_active
+                    state: 'on'
+                  - condition: numeric_state
+                    entity_id: sensor.ljusstyrka
+                    below: 10
+            sequence:
+              - service: light.turn_on
+                target:
+                  entity_id: light.stralkastare_husgavel
+              - service: light.turn_on
+                target:
+                  entity_id: light.kamera5_stralkastare
+              - service: light.turn_on
+                target:
+                  entity_id: light.kamera6_stralkastare
+              - service: light.turn_on
+                data:
+                  entity_id: light.spabad_v
+                  brightness_pct: 100
+              - service: light.turn_on
+                data:
+                  entity_id: light.spabad_m
+                  brightness_pct: 100
+              - service: light.turn_on
+                data:
+                  entity_id: light.spabad_h
+                  brightness_pct: 100
+
+          # Turn off light if no motion is detected after 30 seconds
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.cams_all_backside_active
+                state: 'off'
+            sequence:
+              - delay: '00:00:30'
+              - condition: and
+                conditions:
+                  - condition: state
+                    entity_id: binary_sensor.cams_all_backside_active
+                    state: 'off'
+              - service: light.turn_off
+                target:
+                  entity_id: light.stralkastare_husgavel
+              - service: light.turn_off
+                target:
+                  entity_id: light.kamera5_stralkastare
+              - service: light.turn_off
+                target:
+                  entity_id: light.kamera6_stralkastare
+              - service: light.turn_off
+                target:
+                  entity_id: light.spabad_v
+              - service: light.turn_off
+                target:
+                  entity_id: light.spabad_m
+              - service: light.turn_off
+                target:
+                  entity_id: light.spabad_h
+
   ###############################
   ### Animal Detection Notify ###
   ###############################

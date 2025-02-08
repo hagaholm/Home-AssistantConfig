@@ -44,6 +44,7 @@ template:
 
   - sensor:
       - name: "Cams All Count"
+        state_class: measurement
         state: >
           {{
             states('sensor.cam3_all_count') | int(0) +
@@ -53,6 +54,7 @@ template:
           }}
 
       - name: "Cams All Backside Count"
+        state_class: measurement
         state: >
           {{
             states('sensor.cam5_all_count') | int(0) +
@@ -61,12 +63,14 @@ template:
           }}
 
       - name: "Cams All Frontside Count"
+        state_class: measurement
         state: >
           {{
             states('sensor.cam3_all_count') | int(0)
           }}
 
       - name: "Cams Person Count"
+        state_class: measurement
         state: >
           {{
             states('sensor.cam3_person_count') | int(0) +
@@ -76,6 +80,7 @@ template:
           }}
 
       - name: "Cams Person Backside Count"
+        state_class: measurement
         state: >
           {{
             states('sensor.cam5_person_count') | int(0) +
@@ -84,6 +89,7 @@ template:
           }}
 
       - name: "Cams Person Frontside Count"
+        state_class: measurement
         state: >
           {{
             states('sensor.cam3_person_count') | int(0)
@@ -91,6 +97,7 @@ template:
 
 
       - name: "Cam3 Animal Count"
+        state_class: measurement
         state: >
           {{
             states('sensor.cam3_bear_count') | int(0) +
@@ -104,6 +111,7 @@ template:
           }}
 
       - name: "Cam5 Animal Count"
+        state_class: measurement
         state: >
           {{
             states('sensor.cam5_bear_count') | int(0) +
@@ -117,6 +125,7 @@ template:
           }}
 
       - name: "Cam6 Animal Count"
+        state_class: measurement
         state: >
           {{
             states('sensor.cam6_bear_count') | int(0) +
@@ -130,6 +139,7 @@ template:
           }}
 
       - name: "Cam7 Animal Count"
+        state_class: measurement
         state: >
           {{
             states('sensor.cam7_bear_count') | int(0) +
@@ -143,6 +153,7 @@ template:
           }}
 
       - name: "Cams Animal Count"
+        state_class: measurement
         state: >
           {{
             states('sensor.cam3_animal_count') | int(0) +
@@ -152,6 +163,7 @@ template:
           }}
 
       - name: "Cams Animal Backside Count"
+        state_class: measurement
         state: >
           {{
             states('sensor.cam5_animal_count') | int(0) +
@@ -160,6 +172,7 @@ template:
           }}
 
       - name: "Cams Animal Frontside Count"
+        state_class: measurement
         state: >
           {{
             states('sensor.cam3_animal_count') | int(0)

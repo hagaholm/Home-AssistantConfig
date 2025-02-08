@@ -3,6 +3,7 @@
 ################
 template:
   - binary_sensor:
+##################################################################################
       - name: "Cams All Active"
         state: "{{ states('sensor.cams_all_count')|int(0) > 0 }}"
 
@@ -11,7 +12,7 @@ template:
 
       - name: "Cams All Frontside Active"
         state: "{{ states('sensor.cams_all_frontside_count')|int(0) > 0 }}"
-
+##################################################################################
       - name: "Cams Person Active"
         state: "{{ states('sensor.cams_person_count')|int(0) > 0 }}"
 
@@ -20,7 +21,16 @@ template:
 
       - name: "Cams Person Frontside Active"
         state: "{{ states('sensor.cams_person_frontside_count')|int(0) > 0 }}"
+##################################################################################
+      - name: "Cams Bird Active"
+        state: "{{ states('sensor.cams_bird_count')|int(0) > 0 }}"
 
+      - name: "Cams Bird Backside Active"
+        state: "{{ states('sensor.cams_bird_backside_count')|int(0) > 0 }}"
+
+      - name: "Cams Bird Frontside Active"
+        state: "{{ states('sensor.cams_bird_frontside_count')|int(0) > 0 }}"
+##################################################################################
       - name: "Cam3 Animal Active"
         state: "{{ states('sensor.cam3_animal_count')|int(0) > 0 }}"
 
@@ -41,6 +51,7 @@ template:
 
       - name: "Cams Animal Frontside Active"
         state: "{{ states('sensor.cams_animal_frontside_count')|int(0) > 0 }}"
+##################################################################################
 
   - sensor:
       - name: "Cams All Count"
@@ -68,7 +79,7 @@ template:
           {{
             states('sensor.cam3_all_count') | int(0)
           }}
-
+##################################################################################
       - name: "Cams Person Count"
         state_class: measurement
         state: >
@@ -94,8 +105,33 @@ template:
           {{
             states('sensor.cam3_person_count') | int(0)
           }}
+##################################################################################
+      - name: "Cams Bird Count"
+        state_class: measurement
+        state: >
+          {{
+            states('sensor.cam3_bird_count') | int(0) +
+            states('sensor.cam5_bird_count') | int(0) +
+            states('sensor.cam6_bird_count') | int(0) +
+            states('sensor.cam7_bird_count') | int(0)
+          }}
 
+      - name: "Cams Bird Backside Count"
+        state_class: measurement
+        state: >
+          {{
+            states('sensor.cam5_bird_count') | int(0) +
+            states('sensor.cam6_bird_count') | int(0) +
+            states('sensor.cam7_bird_count') | int(0)
+          }}
 
+      - name: "Cams Bird Frontside Count"
+        state_class: measurement
+        state: >
+          {{
+            states('sensor.cam3_bird_count') | int(0)
+          }}
+##################################################################################
       - name: "Cam3 Animal Count"
         state_class: measurement
         state: >

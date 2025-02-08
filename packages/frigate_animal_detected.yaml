@@ -255,10 +255,10 @@ automation:
             - Sheep:    {{ states('sensor.cam5_sheep_count') | int }} {{ states('sensor.cam6_sheep_count') | int }} {{ states('sensor.cam7_sheep_count') | int }}
             - Zebra:    {{ states('sensor.cam5_zebra_count') | int }} {{ states('sensor.cam6_zebra_count') | int }} {{ states('sensor.cam7_zebra_count') | int }}
 
-  ###################################
-  ### Blink Light When Detcection ###
-  ###################################
-  - alias: Blink Light When Detcection
+  ####################################
+  ### Blink Light Animal Detcected ###
+  ####################################
+  - alias: Blink Light Animal Detcected
     id: '81119011512345'
     mode: single
 

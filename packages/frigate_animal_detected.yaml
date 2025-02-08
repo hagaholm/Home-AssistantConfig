@@ -158,9 +158,6 @@ automation:
                   - condition: state
                     entity_id: binary_sensor.cams_all_backside_active
                     state: 'on'
-                  - condition: numeric_state
-                    entity_id: sensor.ljusstyrka
-                    below: 10
             sequence:
               - service: light.turn_on
                 target:

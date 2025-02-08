@@ -93,53 +93,53 @@ template:
       - name: "Cam3 Animal Count"
         state: >
           {{
-            state('sensor.cam3_bear_count') | int(0) +
-            state('sensor.cam3_cat_count') | int(0) +
-            state('sensor.cam3_dog_count') | int(0) +
-            state('sensor.cam3_elephant_count') | int(0) +
-            state('sensor.cam3_giraffe_count') | int(0) +
-            state('sensor.cam3_horse_count') | int(0) +
-            state('sensor.cam3_sheep_count') | int(0) +
-            state('sensor.cam3_zebra_count') | int(0)
+            states('sensor.cam3_bear_count') | int(0) +
+            states('sensor.cam3_cat_count') | int(0) +
+            states('sensor.cam3_dog_count') | int(0) +
+            states('sensor.cam3_elephant_count') | int(0) +
+            states('sensor.cam3_giraffe_count') | int(0) +
+            states('sensor.cam3_horse_count') | int(0) +
+            states('sensor.cam3_sheep_count') | int(0) +
+            states('sensor.cam3_zebra_count') | int(0)
           }}
 
       - name: "Cam5 Animal Count"
         state: >
           {{
-            state('sensor.cam5_bear_count') | int(0) +
-            state('sensor.cam5_cat_count') | int(0) +
-            state('sensor.cam5_dog_count') | int(0) +
-            state('sensor.cam5_elephant_count') | int(0) +
-            state('sensor.cam5_giraffe_count') | int(0) +
-            state('sensor.cam5_horse_count') | int(0) +
-            state('sensor.cam5_sheep_count') | int(0) +
-            state('sensor.cam5_zebra_count') | int(0)
+            states('sensor.cam5_bear_count') | int(0) +
+            states('sensor.cam5_cat_count') | int(0) +
+            states('sensor.cam5_dog_count') | int(0) +
+            states('sensor.cam5_elephant_count') | int(0) +
+            states('sensor.cam5_giraffe_count') | int(0) +
+            states('sensor.cam5_horse_count') | int(0) +
+            states('sensor.cam5_sheep_count') | int(0) +
+            states('sensor.cam5_zebra_count') | int(0)
           }}
 
       - name: "Cam6 Animal Count"
         state: >
           {{
-            state('sensor.cam6_bear_count') | int(0) +
-            state('sensor.cam6_cat_count') | int(0) +
-            state('sensor.cam6_dog_count') | int(0) +
-            state('sensor.cam6_elephant_count') | int(0) +
-            state('sensor.cam6_giraffe_count') | int(0) +
-            state('sensor.cam6_horse_count') | int(0) +
-            state('sensor.cam6_sheep_count') | int(0) +
-            state('sensor.cam6_zebra_count') | int(0)
+            states('sensor.cam6_bear_count') | int(0) +
+            states('sensor.cam6_cat_count') | int(0) +
+            states('sensor.cam6_dog_count') | int(0) +
+            states('sensor.cam6_elephant_count') | int(0) +
+            states('sensor.cam6_giraffe_count') | int(0) +
+            states('sensor.cam6_horse_count') | int(0) +
+            states('sensor.cam6_sheep_count') | int(0) +
+            states('sensor.cam6_zebra_count') | int(0)
           }}
 
       - name: "Cam7 Animal Count"
         state: >
           {{
-            state('sensor.cam7_bear_count') | int(0) +
-            state('sensor.cam7_cat_count') | int(0) +
-            state('sensor.cam7_dog_count') | int(0) +
-            state('sensor.cam7_elephant_count') | int(0) +
-            state('sensor.cam7_giraffe_count') | int(0) +
-            state('sensor.cam7_horse_count') | int(0) +
-            state('sensor.cam7_sheep_count') | int(0) +
-            state('sensor.cam7_zebra_count') | int(0)
+            states('sensor.cam7_bear_count') | int(0) +
+            states('sensor.cam7_cat_count') | int(0) +
+            states('sensor.cam7_dog_count') | int(0) +
+            states('sensor.cam7_elephant_count') | int(0) +
+            states('sensor.cam7_giraffe_count') | int(0) +
+            states('sensor.cam7_horse_count') | int(0) +
+            states('sensor.cam7_sheep_count') | int(0) +
+            states('sensor.cam7_zebra_count') | int(0)
           }}
 
       - name: "Cams Animal Count"

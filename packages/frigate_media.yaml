@@ -1,6 +1,6 @@
 shell_command:
   delete_frigate_media_files: "rm -rf /media/frigate/clips/* /media/frigate/exports/* /media/frigate/recordings/*"
-  delete_frigate_db_files: "rm /config/frigate.db*"
+  delete_frigate_db_files: "rm /config/frigate.db /config/frigate.db-shm /config/frigate.db-wal"
 
 
 script:
@@ -12,7 +12,7 @@ script:
           addon: "ccab4aaf_frigate"
       - delay: "00:00:05"
       - service: shell_command.delete_frigate_media_files
-      - service: shell_command.delete_frigate_db-files
+      - service: shell_command.delete_frigate_db_files
       - delay: "00:00:05"
       - service: hassio.addon_start
         data:

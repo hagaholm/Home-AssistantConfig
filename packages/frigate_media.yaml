@@ -7,4 +7,12 @@ script:
   delete_frigate_media_files:
     alias: "Delete Frigate Media Files"
     sequence:
+      - service: hassio.addon_stop
+        data:
+          addon: "ccab4aaf_frigate"
+      - delay: "00:00:10"  # Wait 10 second
       - service: shell_command.delete_frigate_media_files
+      - delay: "00:00:10"  # Wait 10 second
+      - service: hassio.addon_start
+        data:
+          addon: "ccab4aaf_frigate"

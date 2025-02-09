@@ -1,2 +1,10 @@
 shell_command:
-  delete_frigate_images: "rm -rf /media/frigate/clips/* /media/frigate/exports/* /media/frigate/recordings/*"
+  delete_frigate_media_files: "rm -rf /media/frigate/clips/* /media/frigate/exports/* /media/frigate/recordings/*"
+
+
+
+script:
+  delete_frigate_media_files:
+    alias: "Delete Frigate Media Files"
+    sequence:
+      - service: shell_command.delete_frigate_media_files

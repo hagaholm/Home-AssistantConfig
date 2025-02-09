@@ -1,6 +1,6 @@
 shell_command:
   delete_frigate_media_files: "rm -rf /media/frigate/clips/* /media/frigate/exports/* /media/frigate/recordings/*"
-  delete_frigate_db_files: "rm /config/frigate.db /config/frigate.db-shm /config/frigate.db-wal"
+  delete_frigate_db_files: "rm /config/frigate.db*"
 
 
 script:

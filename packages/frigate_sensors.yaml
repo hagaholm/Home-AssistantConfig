@@ -47,7 +47,7 @@ template:
         state: "{{ states('sensor.cams_animal_count')|int(0) > 0 }}"
 
       - name: "Cams Animal Backside Active"
-        state: "{{ states('sensor.cams_backside_animal_count')|int(0) > 0 }}"
+        state: "{{ states('sensor.cams_animal_backside_count')|int(0) > 0 }}"
 
       - name: "Cams Animal Frontside Active"
         state: "{{ states('sensor.cams_animal_frontside_count')|int(0) > 0 }}"

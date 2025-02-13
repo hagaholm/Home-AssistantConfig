@@ -74,6 +74,18 @@ input_boolean:
 ### Automation ###
 ##################
 automation:
+  - alias: Turn off max speed when available again
+    id: '2167646707765' 
+
+    trigger:
+      platform: state
+      entity_id: switch.shelly1_c45bbe77099d
+      from: "unavailable"
+
+    action:
+      - service: homeassistant.turn_off
+        entity_id: switch.shelly1_c45bbe77099d
+
     ##############################################################
     ### Startar Timer när forcerad fläkt startar               ###
     ### T: switch.shelly1_c45bbe77099d == on                   ###

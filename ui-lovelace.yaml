@@ -222,7 +222,7 @@ views:
         entities:
           - sensor.lumi_lumi_weather_temperature_3 # Uterum
           - sensor.lumi_lumi_weather_temperatur # Hall
-          - sensor.lumi_lumi_weather_temperature_4 # Vardagsrum
+          - sensor.lumi_lumi_sensor_ht_agl02_temperatur_2 # Vardagsrum
           - sensor.sovrum
           - sensor.louise_rum_temperature
           - sensor.andreas_rum_temperature
@@ -235,7 +235,7 @@ views:
         entities:
           - sensor.lumi_lumi_weather_humidity_3 # Uterum
           - sensor.lumi_lumi_weather_luftfuktighet # Hall
-          - sensor.lumi_lumi_weather_humidity_4 # Vardagsrum
+          - sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet_2 # Vardagsrum
           - sensor.louise_rum_humidity
           - sensor.tvattstuga_humidity
           - sensor.lumi_lumi_weather_humidity   # Badrum
@@ -550,7 +550,7 @@ views:
         state_color: true
       - type: entities
         entities:
-          - sensor.lumi_lumi_weather_temperature_4
+          - sensor.lumi_lumi_sensor_ht_agl02_temperatur_2
           - entity: light.vardagsrum_fonster
             name: Fönster
           - entity: light.vardagsrum_skank

@@ -111,7 +111,7 @@ automation:
 
     ##########################################################
     ### Startar Timer när luftfuktighet ändras i badrummet ###
-    ### T: sensor.lumi_lumi_weather_humidity               ###
+    ### T: sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet  ###
     ### C: sensor.fukt_badrumsfonster < 90                 ###
     ###    sensor.fukt_badrumsfonster > 75                 ###
     ### A: Cancel timer timer.timer_humidity_bathroom      ###
@@ -123,7 +123,7 @@ automation:
 
     trigger:
       - platform: state
-        entity_id: sensor.lumi_lumi_weather_humidity
+        entity_id: sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet
 
     condition:
       condition: and
@@ -474,18 +474,18 @@ automation:
 
         # Make a check that needed parts exists, if not using this it will be an error in the next step 
         - condition: template
-          value_template: "{{ not is_state('sensor.lumi_lumi_weather_humidity', 'None') }}"
+          value_template: "{{ not is_state('sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet', 'None') }}"
         - condition: template
           value_template: "{{ not is_state('sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet_2', 'None') }}"
         - condition: template
-          value_template: "{{ state_attr('sensor.lumi_lumi_weather_humidity', 'last_updated') != None }}"
+          value_template: "{{ state_attr('sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet', 'last_updated') != None }}"
         - condition: template
           value_template: "{{ state_attr('sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet_2', 'last_updated') != None }}"
 
         - condition: template
-          value_template: "{{ (states('sensor.lumi_lumi_weather_humidity')|int - 8) <= (states('sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet_2')|int) }}"
+          value_template: "{{ (states('sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet')|int - 8) <= (states('sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet_2')|int) }}"
         - condition: template
-          value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.lumi_lumi_weather_humidity', 'last_updated'))) < 600 }}"
+          value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet', 'last_updated'))) < 600 }}"
         - condition: template
           value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet_2', 'last_updated'))) < 600 }}"
     action:

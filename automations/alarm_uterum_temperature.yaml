@@ -1,6 +1,6 @@
     ###############################################################
     ### Varnar för hög temp i Uterum                            ###
-    ### T: sensor.lumi_lumi_weather_temperature_3 > 35          ###
+    ### T: sensor.lumi_lumi_sensor_ht_agl02_temperatur_3 > 35   ###
     ### A: notify.mobile_app_sm_a528b "LARM! Hög temp i Uterum" ###
     ###############################################################
   - alias: Uterum larm hög temp
@@ -8,10 +8,10 @@
 
     trigger:
       platform: numeric_state
-      entity_id: sensor.lumi_lumi_weather_temperature_3
+      entity_id: sensor.lumi_lumi_sensor_ht_agl02_temperatur_3
       above: '35'
 
     action:
       - service: notify.mobile_app_sm_a528b
         data:
-          message: "LARM! Hög temp i Uterum: {{ states('sensor.lumi_lumi_weather_temperature_3') }} {{ state_attr('sensor.lumi_lumi_weather_temperature_3', 'unit_of_measurement') }}"
+          message: "LARM! Hög temp i Uterum: {{ states('sensor.lumi_lumi_sensor_ht_agl02_temperatur_3') }} {{ state_attr('sensor.lumi_lumi_sensor_ht_agl02_temperatur_3', 'unit_of_measurement') }}"

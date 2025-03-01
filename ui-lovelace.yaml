@@ -227,7 +227,7 @@ views:
           - sensor.louise_rum_temperature
           - sensor.andreas_rum_temperature
           - sensor.tvattstuga_temperature
-          - sensor.lumi_lumi_weather_temperature   # Badrum
+          - sensor.lumi_lumi_sensor_ht_agl02_temperatur   # Badrum
         title: Inomhus temperatur
         show_header_toggle: false
         state_color: true
@@ -238,7 +238,7 @@ views:
           - sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet_2 # Vardagsrum
           - sensor.louise_rum_humidity
           - sensor.tvattstuga_humidity
-          - sensor.lumi_lumi_weather_humidity   # Badrum
+          - sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet   # Badrum
           - sensor.fukt_badrumsfonster
         title: Inomhus luftfuktighet
         show_header_toggle: false
@@ -571,8 +571,8 @@ views:
         state_color: true
       - type: entities
         entities:
-          - entity: sensor.lumi_lumi_weather_temperature
-          - sensor.lumi_lumi_weather_humidity
+          - entity: sensor.lumi_lumi_sensor_ht_agl02_temperatur
+          - sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet
           - sensor.fukt_badrumsfonster
           - switch.shelly1_c45bbe77099d
         title: Badrum
@@ -810,7 +810,7 @@ views:
         state_color: true
       - type: entities
         entities:
-          - sensor.lumi_lumi_weather_humidity
+          - sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet
           - sensor.fukt_badrumsfonster
           - switch.shelly1_c45bbe77099d
           - switch.ventilationsaggregat

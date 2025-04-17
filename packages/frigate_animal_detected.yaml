@@ -20,28 +20,32 @@ automation:
     action:
       - choose:
 
-          # Turn on light when motion is detected and light level is low
+          # Wait 15 seconds and check if motion is still detected before turning on the light
           - conditions:
               - condition: and
                 conditions:
                   - condition: state
                     entity_id: binary_sensor.cams_animal_backside_active
                     state: 'on'
-                  - condition: numeric_state
-                    entity_id: sensor.ljusstyrka
-                    below: 10
             sequence:
+              - delay: '00:00:15'
+              - condition: state
+                entity_id: binary_sensor.cams_animal_backside_active
+                state: 'on'
+              - condition: numeric_state
+                entity_id: sensor.ljusstyrka
+                below: 100
               - service: light.turn_on
                 target:
                   entity_id: light.tradack_ute
 
-          # Turn off light if no motion is detected after 30 seconds
+          # Turn off light if no motion is detected after 20 seconds
           - conditions:
               - condition: state
                 entity_id: binary_sensor.cams_animal_backside_active
                 state: 'off'
             sequence:
-              - delay: '00:00:30'
+              - delay: '00:00:20'
               - condition: and
                 conditions:
                   - condition: state
@@ -50,7 +54,7 @@ automation:
               - service: light.turn_off
                 target:
                   entity_id: light.tradack_ute
-
+  
   ###################################
   ### Animal Motion Light Control ###
   ###################################
@@ -78,7 +82,7 @@ automation:
                     state: 'on'
                   - condition: numeric_state
                     entity_id: sensor.ljusstyrka
-                    below: 10
+                    below: 100
             sequence:
               - service: light.turn_on
                 target:
@@ -181,13 +185,13 @@ automation:
                   entity_id: light.spabad_h
                   brightness_pct: 100
 
-          # Turn off light if no motion is detected after 30 seconds
+          # Turn off light if no motion is detected after 10 seconds
           - conditions:
               - condition: state
                 entity_id: binary_sensor.cams_all_backside_active
                 state: 'off'
             sequence:
-              - delay: '00:00:30'
+              - delay: '00:00:10'
               - condition: and
                 conditions:
                   - condition: state
@@ -237,7 +241,7 @@ automation:
           state: 'Borta'
         - condition: numeric_state
           entity_id: sensor.ljusstyrka
-          below: 10
+          below: 100
 
     action:
       - service: notify.mobile_app_sm_a528b
@@ -284,6 +288,8 @@ automation:
           sovrum_initial_state: "{{ is_state('light.sovrum_fonster', 'on') }}"
           hall_initial_state: "{{ is_state('light.hall_byra', 'on') }}"
           vardagsrum_initial_state: "{{ is_state('light.vardagsrum_skank', 'on') }}"
+
+      - delay: "00:00:30"
 
       - repeat:
           while:

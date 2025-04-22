@@ -270,14 +270,14 @@ automation:
         to: 'on'
 
     condition:
-      condition: or
+      condition: and
       conditions:
         - condition: state
           entity_id: input_select.home_status
-          state: 'Hemma av'
-        - condition: state
-          entity_id: input_select.home_status
           state: 'Hemma på'
+        - condition: numeric_state
+          entity_id: sensor.ljusstyrka
+          below: 100
 
     action:
       - variables:

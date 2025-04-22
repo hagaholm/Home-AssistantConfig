@@ -29,7 +29,7 @@ automation:
                     state: 'on'
                   - condition: numeric_state
                     entity_id: sensor.ljusstyrka
-                    below: 10
+                    below: 100
             sequence:
               - service: light.turn_on
                 target:
@@ -78,7 +78,7 @@ automation:
                     state: 'on'
                   - condition: numeric_state
                     entity_id: sensor.ljusstyrka
-                    below: 10
+                    below: 100
             sequence:
               - service: light.turn_on
                 target:
@@ -237,7 +237,7 @@ automation:
           state: 'Borta'
         - condition: numeric_state
           entity_id: sensor.ljusstyrka
-          below: 10
+          below: 100
 
     action:
       - service: notify.mobile_app_sm_a528b

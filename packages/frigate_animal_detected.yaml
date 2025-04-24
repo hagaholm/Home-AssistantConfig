@@ -408,6 +408,26 @@ automation:
                 target:
                   entity_id: light.vardagsrum_skank
 
+  #######################################
+  ### Turn Off Radio After 10 Minutes ###
+  #######################################
+  - alias: Turn Off Radio After 10 Minutes
+    id: '1416857469999'
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: light.tradack_ute
+        to: 'on'
+        for: '00:10:00'
+
+    condition: []
+
+    action:
+      - service: light.turn_off
+        target:
+          entity_id: light.tradack_ute
+
 ######################################
 ### Script: Reset Animal detection ###
 ######################################

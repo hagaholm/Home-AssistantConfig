@@ -407,3 +407,47 @@ automation:
               - service: light.turn_off
                 target:
                   entity_id: light.vardagsrum_skank
+
+######################################
+### Script: Reset Animal detection ###
+######################################
+
+script:
+  reset_animal_detection:
+    alias: Reset Animal Detection
+    sequence:
+      # Turn off all automations
+      - service: automation.turn_off
+        target:
+          entity_id:
+            - automation.animal_motion_radio_control
+            - automation.animal_motion_light_control
+            - automation.animal_detection_notify
+            - automation.blink_light_animal_detcected
+
+      # Turn off all lights controlled by the automations
+      - service: light.turn_off
+        target:
+          entity_id:
+            - light.tradack_ute
+            - light.stralkastare_husgavel
+            - light.kamera5_stralkastare
+            - light.kamera6_stralkastare
+            - light.spabad_v
+            - light.spabad_m
+            - light.spabad_h
+            - light.sovrum_fonster
+            - light.hall_byra
+            - light.vardagsrum_skank
+
+      # Wait for 30 seconds
+      - delay: "00:00:30"
+
+      # Turn on all automations
+      - service: automation.turn_on
+        target:
+          entity_id:
+            - automation.animal_motion_radio_control
+            - automation.animal_motion_light_control
+            - automation.animal_detection_notify
+            - automation.blink_light_animal_detcected

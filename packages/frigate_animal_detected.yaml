@@ -249,11 +249,8 @@ automation:
             - Bear:     {{ states('sensor.cam5_bear_count') | int }} {{ states('sensor.cam6_bear_count') | int }} {{ states('sensor.cam7_bear_count') | int }}
             - Cow:      {{ states('sensor.cam5_cat_count') | int }} {{ states('sensor.cam6_cat_count') | int }} {{ states('sensor.cam7_cat_count') | int }}
             - Dog:      {{ states('sensor.cam5_dog_count') | int }} {{ states('sensor.cam6_dog_count') | int }} {{ states('sensor.cam7_dog_count') | int }}
-            - Elephant: {{ states('sensor.cam5_elephant_count') | int }} {{ states('sensor.cam6_elephant_count') | int }} {{ states('sensor.cam7_elephant_count') | int }}
-            - Giraffe:  {{ states('sensor.cam5_giraffe_count') | int }} {{ states('sensor.cam6_giraffe_count') | int }} {{ states('sensor.cam7_giraffe_count') | int }}
             - Horse:    {{ states('sensor.cam5_horse_count') | int }} {{ states('sensor.cam6_horse_count') | int }} {{ states('sensor.cam7_horse_count') | int }}
             - Sheep:    {{ states('sensor.cam5_sheep_count') | int }} {{ states('sensor.cam6_sheep_count') | int }} {{ states('sensor.cam7_sheep_count') | int }}
-            - Zebra:    {{ states('sensor.cam5_zebra_count') | int }} {{ states('sensor.cam6_zebra_count') | int }} {{ states('sensor.cam7_zebra_count') | int }}
 
   ####################################
   ### Blink Light Animal Detcected ###

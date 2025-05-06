@@ -27,9 +27,14 @@ automation:
                   - condition: state
                     entity_id: binary_sensor.cams_animal_backside_active
                     state: 'on'
-                  - condition: numeric_state
-                    entity_id: sensor.ljusstyrka
-                    below: 100
+                  - condition: or
+                    conditions:
+                      - condition: time
+                        after: '20:00:00'
+                        before: '08:00:00'
+                      - condition: numeric_state
+                        entity_id: sensor.ljusstyrka
+                        below: 100
             sequence:
               - service: light.turn_on
                 target:
@@ -76,9 +81,14 @@ automation:
                   - condition: state
                     entity_id: binary_sensor.cams_animal_backside_active
                     state: 'on'
-                  - condition: numeric_state
-                    entity_id: sensor.ljusstyrka
-                    below: 100
+                  - condition: or
+                    conditions:
+                      - condition: time
+                        after: '20:00:00'
+                        before: '08:00:00'
+                      - condition: numeric_state
+                        entity_id: sensor.ljusstyrka
+                        below: 100
             sequence:
               - service: light.turn_on
                 target:
@@ -230,7 +240,7 @@ automation:
       condition: or
       conditions:
         - condition: time
-          after: '21:00:00'
+          after: '20:00:00'
           before: '08:00:00'
         - condition: state
           entity_id: input_select.home_status

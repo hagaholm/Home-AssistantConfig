@@ -37,6 +37,9 @@ template:
       - name: "Cams Animal Active"
         state: "{{ states('sensor.cams_animal_count')|int(0) > 0 }}"
 
+      - name: "Cams Animal Backside Eastside Active"
+        state: "{{ states('sensor.cams_animal_backside_eastside_count')|int(0) > 0 }}"
+
       - name: "Cams Animal Backside Active"
         state: "{{ states('sensor.cams_animal_backside_count')|int(0) > 0 }}"
 
@@ -151,13 +154,21 @@ template:
             states('sensor.cam7_animal_count') | int(0)
           }}
 
-      - name: "Cams Animal Backside Count"
+      - name: "Cams Animal Backside Eastside Count"
         state_class: measurement
         state: >
           {{
             states('sensor.cam5_animal_count') | int(0) +
             states('sensor.cam6_animal_count') | int(0) +
             states('sensor.cam7_animal_count') | int(0)
+          }}
+
+      - name: "Cams Animal Backside Count"
+        state_class: measurement
+        state: >
+          {{
+            states('sensor.cam5_animal_count') | int(0) +
+            states('sensor.cam6_animal_count') | int(0) +
           }}
 
       - name: "Cams Animal Frontside Count"

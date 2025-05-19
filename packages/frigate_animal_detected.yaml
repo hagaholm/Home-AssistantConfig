@@ -2,10 +2,10 @@
 ### Automation ###
 ##################
 automation:
-  ###################################
-  ### Animal Motion Radio Control ###
-  ###################################
-  - alias: Animal Motion Radio Control
+  ############################################
+  ### Animal Motion Radio Control Backside ###
+  ############################################
+  - alias: Animal Motion Radio Control Backside
     id: '1416857464463'
     mode: restart
 
@@ -51,6 +51,60 @@ automation:
                 conditions:
                   - condition: state
                     entity_id: binary_sensor.cams_animal_backside_active
+                    state: 'off'
+              - service: light.turn_off
+                target:
+                  entity_id: light.tradack_ute
+
+  #####################################################
+  ### Animal Motion Radio Control Backside Eastside ###
+  #####################################################
+  - alias: Animal Motion Radio Control Backside Eastside
+    id: '1416857464464'
+    mode: restart
+
+    trigger:
+      # Triggers for animal detection on backside eastside
+      - platform: state
+        entity_id: 
+          - binary_sensor.cams_animal_backside_eastside_active
+
+    condition: []
+
+    action:
+      - choose:
+
+          # Turn on light when motion is detected and light level is low
+          - conditions:
+              - condition: and
+                conditions:
+                  - condition: state
+                    entity_id: binary_sensor.cams_animal_backside_eastside_active
+                    state: 'on'
+                  - condition: or
+                    conditions:
+                      - condition: time
+                        after: '20:00:00'
+                        before: '08:00:00'
+                      - condition: numeric_state
+                        entity_id: sensor.ljusstyrka
+                        below: 50
+            sequence:
+              - service: light.turn_on
+                target:
+                  entity_id: light.tradack_ute
+
+          # Turn off light if no motion is detected after 30 seconds
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.cams_animal_backside_eastside_active
+                state: 'off'
+            sequence:
+              - delay: '00:00:30'
+              - condition: and
+                conditions:
+                  - condition: state
+                    entity_id: binary_sensor.cams_animal_backside_eastside_active
                     state: 'off'
               - service: light.turn_off
                 target:

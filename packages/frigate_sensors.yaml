@@ -168,7 +168,7 @@ template:
         state: >
           {{
             states('sensor.cam5_animal_count') | int(0) +
-            states('sensor.cam6_animal_count') | int(0) +
+            states('sensor.cam6_animal_count') | int(0)
           }}
 
       - name: "Cams Animal Frontside Count"

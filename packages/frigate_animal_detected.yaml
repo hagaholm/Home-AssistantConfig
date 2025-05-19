@@ -34,7 +34,7 @@ automation:
                         before: '08:00:00'
                       - condition: numeric_state
                         entity_id: sensor.ljusstyrka
-                        below: 100
+                        below: 50
             sequence:
               - service: light.turn_on
                 target:
@@ -88,7 +88,7 @@ automation:
                         before: '08:00:00'
                       - condition: numeric_state
                         entity_id: sensor.ljusstyrka
-                        below: 100
+                        below: 50
             sequence:
               - service: light.turn_on
                 target:
@@ -247,7 +247,7 @@ automation:
           state: 'Borta'
         - condition: numeric_state
           entity_id: sensor.ljusstyrka
-          below: 100
+          below: 50
 
     action:
       - service: notify.mobile_app_sm_a528b
@@ -284,7 +284,7 @@ automation:
           state: 'Hemma på'
         - condition: numeric_state
           entity_id: sensor.ljusstyrka
-          below: 100
+          below: 50
 
     action:
       - variables:

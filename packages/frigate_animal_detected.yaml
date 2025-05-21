@@ -15,7 +15,13 @@ automation:
         entity_id: 
           - binary_sensor.cams_animal_backside_active
 
-    condition: []
+    condition:
+      - condition: state
+        entity_id: switch.kamera5_infra_red_lights_in_night_mode
+        state: 'off'
+      - condition: state
+        entity_id: switch.kamera6_infra_red_lights_in_night_mode
+        state: 'off'
 
     action:
       - choose:
@@ -126,6 +132,10 @@ automation:
     condition: []
 
     action:
+      - variables:
+          kamera5_ir_initial: "{{ is_state('switch.kamera5_infra_red_lights_in_night_mode', 'on') }}"
+          kamera6_ir_initial: "{{ is_state('switch.kamera6_infra_red_lights_in_night_mode', 'on') }}"
+
       - choose:
 
           # Turn on light when motion is detected and light level is low
@@ -144,6 +154,28 @@ automation:
                         entity_id: sensor.ljusstyrka
                         below: 50
             sequence:
+              # Turn off IR lights if they are on
+              - choose:
+                  - conditions:
+                      - condition: template
+                        value_template: "{{ kamera5_ir_initial }}"
+                    sequence:
+                      - service: switch.turn_off
+                        target:
+                          entity_id: switch.kamera5_infra_red_lights_in_night_mode
+              - choose:
+                  - conditions:
+                      - condition: template
+                        value_template: "{{ kamera6_ir_initial }}"
+                    sequence:
+                      - service: switch.turn_off
+                        target:
+                          entity_id: switch.kamera6_infra_red_lights_in_night_mode
+
+              # Add 2 second delay before turning on lights
+              - delay: "00:00:02"
+
+              # Turn on lights as before
               - service: light.turn_on
                 target:
                   entity_id: light.stralkastare_husgavel
@@ -178,6 +210,39 @@ automation:
                   - condition: state
                     entity_id: binary_sensor.cams_animal_backside_active
                     state: 'off'
+              # Restore IR switches to their previous state
+              - choose:
+                  - conditions:
+                      - condition: template
+                        value_template: "{{ kamera5_ir_initial }}"
+                    sequence:
+                      - service: switch.turn_on
+                        target:
+                          entity_id: switch.kamera5_infra_red_lights_in_night_mode
+                  - conditions:
+                      - condition: template
+                        value_template: "{{ not kamera5_ir_initial }}"
+                    sequence:
+                      - service: switch.turn_off
+                        target:
+                          entity_id: switch.kamera5_infra_red_lights_in_night_mode
+              - choose:
+                  - conditions:
+                      - condition: template
+                        value_template: "{{ kamera6_ir_initial }}"
+                    sequence:
+                      - service: switch.turn_on
+                        target:
+                          entity_id: switch.kamera6_infra_red_lights_in_night_mode
+                  - conditions:
+                      - condition: template
+                        value_template: "{{ not kamera6_ir_initial }}"
+                    sequence:
+                      - service: switch.turn_off
+                        target:
+                          entity_id: switch.kamera6_infra_red_lights_in_night_mode
+
+              # Turn off lights as before
               - service: light.turn_off
                 target:
                   entity_id: light.stralkastare_husgavel
@@ -497,11 +562,20 @@ script:
   reset_animal_detection:
     alias: Reset Animal Detection
     sequence:
+      # Store initial automation states
+      - variables:
+          auto_backside: "{{ is_state('automation.animal_motion_radio_control_backside', 'on') }}"
+          auto_eastside: "{{ is_state('automation.animal_motion_radio_control_backside_eastside', 'on') }}"
+          auto_light: "{{ is_state('automation.animal_motion_light_control', 'on') }}"
+          auto_notify: "{{ is_state('automation.animal_detection_notify', 'on') }}"
+          auto_blink: "{{ is_state('automation.blink_light_when_detcection_cam_5', 'on') }}"
+
       # Turn off all automations
       - service: automation.turn_off
         target:
           entity_id:
-            - automation.animal_motion_radio_on
+            - automation.animal_motion_radio_control_backside
+            - automation.animal_motion_radio_control_backside_eastside
             - automation.animal_motion_light_control
             - automation.animal_detection_notify
             - automation.blink_light_when_detcection_cam_5
@@ -524,11 +598,40 @@ script:
       # Wait for 30 seconds
       - delay: "00:00:30"
 
-      # Turn on all automations
-      - service: automation.turn_on
-        target:
-          entity_id:
-            - automation.animal_motion_radio_on
-            - automation.animal_motion_light_control
-            - automation.animal_detection_notify
-            - automation.blink_light_when_detcection_cam_5
+      # Only turn on automations that were on before
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: "{{ auto_backside }}"
+            sequence:
+              - service: automation.turn_on
+                target:
+                  entity_id: automation.animal_motion_radio_control_backside
+          - conditions:
+              - condition: template
+                value_template: "{{ auto_eastside }}"
+            sequence:
+              - service: automation.turn_on
+                target:
+                  entity_id: automation.animal_motion_radio_control_backside_eastside
+          - conditions:
+              - condition: template
+                value_template: "{{ auto_light }}"
+            sequence:
+              - service: automation.turn_on
+                target:
+                  entity_id: automation.animal_motion_light_control
+          - conditions:
+              - condition: template
+                value_template: "{{ auto_notify }}"
+            sequence:
+              - service: automation.turn_on
+                target:
+                  entity_id: automation.animal_detection_notify
+          - conditions:
+              - condition: template
+                value_template: "{{ auto_blink }}"
+            sequence:
+              - service: automation.turn_on
+                target:
+                  entity_id: automation.blink_light_when_detcection_cam_5

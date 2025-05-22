@@ -288,6 +288,28 @@ automation:
                     entity_id: binary_sensor.cams_all_backside_active
                     state: 'on'
             sequence:
+              # Turn off IR lights if they are on
+              - choose:
+                  - conditions:
+                      - condition: template
+                        value_template: "{{ kamera5_ir_initial }}"
+                    sequence:
+                      - service: switch.turn_off
+                        target:
+                          entity_id: switch.kamera5_infra_red_lights_in_night_mode
+              - choose:
+                  - conditions:
+                      - condition: template
+                        value_template: "{{ kamera6_ir_initial }}"
+                    sequence:
+                      - service: switch.turn_off
+                        target:
+                          entity_id: switch.kamera6_infra_red_lights_in_night_mode
+
+              # Add 2 second delay before turning on lights
+              - delay: "00:00:02"
+
+              # Turn on lights as before
               - service: light.turn_on
                 target:
                   entity_id: light.stralkastare_husgavel
@@ -313,15 +335,48 @@ automation:
           # Turn off light if no motion is detected after 30 seconds
           - conditions:
               - condition: state
-                entity_id: binary_sensor.cams_all_backside_active
+                entity_id: binary_sensor.cams_animal_backside_active
                 state: 'off'
             sequence:
               - delay: '00:00:30'
               - condition: and
                 conditions:
                   - condition: state
-                    entity_id: binary_sensor.cams_all_backside_active
+                    entity_id: binary_sensor.cams_animal_backside_active
                     state: 'off'
+              # Restore IR switches to their previous state
+              - choose:
+                  - conditions:
+                      - condition: template
+                        value_template: "{{ kamera5_ir_initial }}"
+                    sequence:
+                      - service: switch.turn_on
+                        target:
+                          entity_id: switch.kamera5_infra_red_lights_in_night_mode
+                  - conditions:
+                      - condition: template
+                        value_template: "{{ not kamera5_ir_initial }}"
+                    sequence:
+                      - service: switch.turn_off
+                        target:
+                          entity_id: switch.kamera5_infra_red_lights_in_night_mode
+              - choose:
+                  - conditions:
+                      - condition: template
+                        value_template: "{{ kamera6_ir_initial }}"
+                    sequence:
+                      - service: switch.turn_on
+                        target:
+                          entity_id: switch.kamera6_infra_red_lights_in_night_mode
+                  - conditions:
+                      - condition: template
+                        value_template: "{{ not kamera6_ir_initial }}"
+                    sequence:
+                      - service: switch.turn_off
+                        target:
+                          entity_id: switch.kamera6_infra_red_lights_in_night_mode
+
+              # Turn off lights as before
               - service: light.turn_off
                 target:
                   entity_id: light.stralkastare_husgavel
@@ -340,6 +395,58 @@ automation:
               - service: light.turn_off
                 target:
                   entity_id: light.spabad_h
+
+  ##########################################
+  ### Test Motion Radio Control Backside ###
+  ##########################################
+  - alias: Test Motion Radio Control Backside
+    id: '1416857464444'
+    mode: restart
+
+    trigger:
+      # Triggers for all detection on backside
+      - platform: state
+        entity_id: 
+          - binary_sensor.cams_all_backside_active
+
+    condition:
+      - condition: state
+        entity_id: switch.kamera5_infra_red_lights_in_night_mode
+        state: 'off'
+      - condition: state
+        entity_id: switch.kamera6_infra_red_lights_in_night_mode
+        state: 'off'
+
+    action:
+      - choose:
+
+          # Turn on light when motion is detected and light level is low
+          - conditions:
+              - condition: and
+                conditions:
+                  - condition: state
+                    entity_id: binary_sensor.cams_all_backside_active
+                    state: 'on'
+            sequence:
+              - service: light.turn_on
+                target:
+                  entity_id: light.tradack_ute
+
+          # Turn off light if no motion is detected after 30 seconds
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.cams_all_backside_active
+                state: 'off'
+            sequence:
+              - delay: '00:00:30'
+              - condition: and
+                conditions:
+                  - condition: state
+                    entity_id: binary_sensor.cams_all_backside_active
+                    state: 'off'
+              - service: light.turn_off
+                target:
+                  entity_id: light.tradack_ute
 
   ###############################
   ### Animal Detection Notify ###
@@ -372,7 +479,7 @@ automation:
       - service: notify.mobile_app_sm_a528b
         data_template:
           title: >
-            "Detection Alert {{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+            "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           message: >
             Camera 5, 6 or 7 has detected. lux: {{ states('sensor.ljusstyrka') | int }}:
             - Bear:     {{ states('sensor.cam5_bear_count') | int }} {{ states('sensor.cam6_bear_count') | int }} {{ states('sensor.cam7_bear_count') | int }}

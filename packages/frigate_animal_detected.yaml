@@ -26,7 +26,7 @@ automation:
     action:
       - choose:
 
-          # Turn on light when motion is detected and light level is low
+          # Wait 15 seconds and check if motion is still detected before turning on the light
           - conditions:
               - condition: and
                 conditions:
@@ -42,17 +42,24 @@ automation:
                         entity_id: sensor.ljusstyrka
                         below: 50
             sequence:
+              - delay: '00:00:15'
+              - condition: state
+                entity_id: binary_sensor.cams_animal_backside_active
+                state: 'on'
+              - condition: numeric_state
+                entity_id: sensor.ljusstyrka
+                below: 100
               - service: light.turn_on
                 target:
                   entity_id: light.tradack_ute
 
-          # Turn off light if no motion is detected after 30 seconds
+          # Turn off light if no motion is detected after 20 seconds
           - conditions:
               - condition: state
                 entity_id: binary_sensor.cams_animal_backside_active
                 state: 'off'
             sequence:
-              - delay: '00:00:30'
+              - delay: '00:00:20'
               - condition: and
                 conditions:
                   - condition: state
@@ -332,13 +339,13 @@ automation:
                   entity_id: light.spabad_h
                   brightness_pct: 100
 
-          # Turn off light if no motion is detected after 30 seconds
+          # Turn off light if no motion is detected after 10 seconds
           - conditions:
               - condition: state
                 entity_id: binary_sensor.cams_animal_backside_active
                 state: 'off'
             sequence:
-              - delay: '00:00:30'
+              - delay: '00:00:10'
               - condition: and
                 conditions:
                   - condition: state
@@ -517,6 +524,8 @@ automation:
           sovrum_initial_state: "{{ is_state('light.sovrum_fonster', 'on') }}"
           hall_initial_state: "{{ is_state('light.hall_byra', 'on') }}"
           vardagsrum_initial_state: "{{ is_state('light.vardagsrum_skank', 'on') }}"
+
+      - delay: "00:00:30"
 
       - repeat:
           while:

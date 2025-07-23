@@ -78,6 +78,7 @@
       entity_id:
         - binary_sensor.cam3_person_occupancy
         - binary_sensor.cam7_person_occupancy
+        - binary_sensor.cam8_person_occupancy
       to: 'on'
 
     condition:
@@ -104,6 +105,7 @@
       entity_id:
         - binary_sensor.cam3_person_occupancy
         - binary_sensor.cam7_person_occupancy
+        - binary_sensor.cam8_person_occupancy
       to: 'off'
 
     condition:
@@ -118,6 +120,9 @@
         - condition: state
           entity_id: binary_sensor.cam7_person_occupancy
           state: 'off'
+        - condition: state
+          entity_id: binary_sensor.cam8_person_occupancy
+          state: 'off'
 
     action:
       - delay: "00:00:30"
@@ -128,6 +133,9 @@
             state: 'off'
           - condition: state
             entity_id: binary_sensor.cam7_person_occupancy
+            state: 'off'
+          - condition: state
+            entity_id: binary_sensor.cam8_person_occupancy
             state: 'off'
       - choose:
           - conditions:

@@ -15,16 +15,7 @@ automation:
         entity_id: 
           - binary_sensor.cams_animal_backside_active
 
-    condition:
-      - condition: state
-        entity_id: switch.kamera5_infra_red_lights_in_night_mode
-        state: 'off'
-      - condition: state
-        entity_id: switch.kamera6_infra_red_lights_in_night_mode
-        state: 'off'
-      - condition: state
-        entity_id: switch.kamera8_infra_red_lights_in_night_mode
-        state: 'off'
+    condition: []
 
     action:
       - choose:
@@ -43,7 +34,7 @@ automation:
                         before: '08:00:00'
                       - condition: numeric_state
                         entity_id: sensor.ljusstyrka
-                        below: 50
+                        below: 100
             sequence:
               - delay: '00:00:15'
               - condition: state
@@ -77,7 +68,7 @@ automation:
   ###################################
   - alias: Animal Motion Light Control
     id: '1416857464346'
-    mode: single
+    mode: restart
 
     trigger:
       # Triggers for animal detection on backside
@@ -109,7 +100,7 @@ automation:
                         before: '08:00:00'
                       - condition: numeric_state
                         entity_id: sensor.ljusstyrka
-                        below: 50
+                        below: 100
             sequence:
               # Turn off IR lights if they are on
               - choose:
@@ -332,14 +323,14 @@ automation:
           # Turn off light if no motion is detected after 10 seconds
           - conditions:
               - condition: state
-                entity_id: binary_sensor.cams_animal_backside_active
+                entity_id: binary_sensor.cams_all_backside_active
                 state: 'off'
             sequence:
               - delay: '00:00:10'
               - condition: and
                 conditions:
                   - condition: state
-                    entity_id: binary_sensor.cams_animal_backside_active
+                    entity_id: binary_sensor.cams_all_backside_active
                     state: 'off'
               # Restore IR switches to their previous state
               - choose:
@@ -491,7 +482,7 @@ automation:
           state: 'Borta'
         - condition: numeric_state
           entity_id: sensor.ljusstyrka
-          below: 50
+          below: 100
 
     action:
       - service: notify.mobile_app_sm_a528b
@@ -528,7 +519,7 @@ automation:
           state: 'Hemma på'
         - condition: numeric_state
           entity_id: sensor.ljusstyrka
-          below: 50
+          below: 100
 
     action:
       - variables:

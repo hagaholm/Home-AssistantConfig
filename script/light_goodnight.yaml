@@ -41,11 +41,11 @@
       - service: light.turn_off
         entity_id: light.spabad_h
 
-      - repeat:
-          count: 10
-          sequence:
-            - service: light.turn_off
-              entity_id: light.friggebod_ute_2
+#      - repeat:
+#          count: 10
+#          sequence:
+#            - service: light.turn_off
+#              entity_id: light.friggebod_ute_2
 
   ###########################################
   ### Godnatt, släcker allt om 10 minuter ###
@@ -91,11 +91,11 @@
       - service: light.turn_off
         entity_id: light.spabad_h
 
-      - repeat:
-          count: 10
-          sequence:
-            - service: light.turn_off
-              entity_id: light.friggebod_ute_2
+#      - repeat:
+#          count: 10
+#          sequence:
+#            - service: light.turn_off
+#              entity_id: light.friggebod_ute_2
 
   ################################
   ### Godnatt, stänger av allt ###
@@ -153,11 +153,11 @@
       - service: light.turn_off
         entity_id: light.spabad_h
 
-      - repeat:
-          count: 10
-          sequence:
-            - service: light.turn_off
-              entity_id: light.friggebod_ute_2
+#      - repeat:
+#          count: 10
+#          sequence:
+#            - service: light.turn_off
+#              entity_id: light.friggebod_ute_2
 
   ##############################################
   ### Godnatt, stänger av allt om 10 minuter ###
@@ -216,11 +216,11 @@
       - service: light.turn_off
         entity_id: light.spabad_h
 
-      - repeat:
-          count: 10
-          sequence:
-            - service: light.turn_off
-              entity_id: light.friggebod_ute_2
+#      - repeat:
+#          count: 10
+#          sequence:
+#            - service: light.turn_off
+#              entity_id: light.friggebod_ute_2
 
   ###################################################
   ### Godnatt, stänger av allt (tv om 10 minuter) ###
@@ -281,11 +281,11 @@
       - service: light.turn_off
         entity_id: light.spabad_h
 
-      - repeat:
-          count: 10
-          sequence:
-            - service: light.turn_off
-              entity_id: light.friggebod_ute_2
+#      - repeat:
+#          count: 10
+#          sequence:
+#            - service: light.turn_off
+#              entity_id: light.friggebod_ute_2
 
   #########################
   ### Släck i sovrummet ###

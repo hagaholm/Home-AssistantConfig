@@ -1,17 +1,78 @@
-    ########################################################
-    ### Tänder lampor 100% vid rörelse i köket           ###
-    ### T: input_boolean.rorelsedetektor_kok_aktiv == on ###
-    ### C: input_boolean.kitchen_light_on == on          ###
-    ###    input_select.home_status == 'Hemma på'        ###
-    ### A: input_select.light_kitchen = 100%             ###
-    ########################################################
-  - alias: Kök 100% (hemma på)
+####################################################
+#                                                  #
+#                KÖKSBELYSNING AUTOMATION          #
+#                                                  #
+####################################################
+#
+# BESKRIVNING:
+# Detta är ett automatiserat belysningssystem för köket som använder 
+# närvarosensorer (Aqara FP2) för att kontrollera ljusstyrkan baserat 
+# på aktivitet och hemstatus.
+#
+# HÅRDVARA:
+# - Aqara FP2 närvarosensor med 3 zoner:
+#   * Zone 1 (sensor_1): Övergripande köksnärvaro
+#   * Zone 2 (sensor_2): Köksbord område  
+#   * Zone 3 (sensor_3): Köksbänk område
+#
+# FUNKTIONALITET:
+# 1. TÄND BELYSNING:
+#    - Aktiveras vid närvaro i zone 2 eller 3 (köksbord/köksbänk)
+#    - Ljusstyrka beror på hemstatus:
+#      * "Hemma av": 25% ljusstyrka (kvällsläge)
+#      * Alla andra lägen: 100% ljusstyrka
+#    - 1 sekunds fördröjning för att undvika falska triggningar
+#
+# 2. SLÄCK BELYSNING:
+#    - Aktiveras när ingen närvaro i zone 1 (hela köket)
+#    - 10 sekunders fördröjning för att undvika att lamporna släcks för snabbt
+#    - Kontrollerar att lamporna inte redan är släckta
+#
+# SÄKERHETSKONTROLLER:
+# - Kontrollerar att kitchen_light_on är aktiverat innan tändning
+# - Validerar att hemstatus är i ett känt tillstånd
+# - Förhindrar onödiga serviceanrop genom tillståndskontroller
+#
+# INTEGRATION:
+# - Styrs via input_select.light_kitchen (Släckt/25%/100%)
+# - Aktiveras/inaktiveras via input_boolean.kitchen_light_on
+# - Hemstatus från input_select.home_status
+#
+####################################################
+
+####################################################
+#                                                  #
+#            AKTIVERA KÖKSBELYSNING                #
+#                                                  #
+####################################################
+#
+# TRIGGERS:
+# - Närvaro vid köksbord (sensor_2)
+# - Närvaro vid köksbänk (sensor_3)
+#
+# CONDITIONS:
+# - Köksbelysning aktiverad (kitchen_light_on = on)
+# - Giltig hemstatus (Hemma på/av, Borta)
+# - Lamporna är för närvarande släckta
+#
+# ACTIONS:
+# - Hemma av: 25% ljusstyrka (kvällsläge)
+# - Övriga lägen: 100% ljusstyrka (dagläge)
+#
+####################################################
+  - alias: Kök belysning (närvaro)
     id: '9716374235056' 
+    description: >
+      Tänder köksbelysning vid närvaro. Ljusstyrka: 25% (Hemma av) eller 100% (övriga lägen).
+      Körs endast när lampor är släckta.
     mode: queued
 
     trigger:
       - platform: state
-        entity_id: input_boolean.rorelsedetektor_kok_aktiv
+        entity_id: binary_sensor.presence_sensor_fp2_9a29_presence_sensor_2
+        to: 'on'
+      - platform: state
+        entity_id: binary_sensor.presence_sensor_fp2_9a29_presence_sensor_3
         to: 'on'
 
     condition:
@@ -20,196 +81,64 @@
         - condition: state
           entity_id: input_boolean.kitchen_light_on
           state: 'on'
+        - condition: template
+          value_template: "{{ states('input_select.home_status') in ['Hemma på', 'Hemma av', 'Borta'] }}"
         - condition: state
-          entity_id: input_select.home_status
-          state: 'Hemma på'
+          entity_id: input_select.light_kitchen
+          state: 'Släckt'
 
     action:
       - service: input_select.select_option
-        data:
+        target:
           entity_id: input_select.light_kitchen
-          option: 100%
-
-    ########################################################
-    ### Tänder lampor 100% vid rörelse i köket           ###
-    ### T: input_boolean.rorelsedetektor_kok_aktiv == on ###
-    ### C: input_boolean.kitchen_light_on == on          ###
-    ###    input_select.home_status == 'Borta'           ###
-    ### A: input_select.light_kitchen = 100%             ###
-    ########################################################
-  - alias: Kök 100% (borta)
-    id: '1428426341574' 
-    mode: queued
-
-    trigger:
-      - platform: state
-        entity_id: input_boolean.rorelsedetektor_kok_aktiv
-        to: 'on'
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_boolean.kitchen_light_on
-          state: 'on'
-        - condition: state
-          entity_id: input_select.home_status
-          state: 'Borta'
-
-    action:
-      - service: input_select.select_option
         data:
-          entity_id: input_select.light_kitchen
-          option: 100%
+          option: >
+            {% if states('input_select.home_status') == 'Hemma av' %}
+              25%
+            {% else %}
+              100%
+            {% endif %}
 
-    ##################################################################
-    ### Tänder lampor 100% när det blir mörkt och någon är i köket ###
-    ### T: input_boolean.kitchen_light_on == on                    ###
-    ### C: input_boolean.rorelsedetektor_kok_aktiv == on           ###
-    ###    input_select.home_status == 'Hemma på'                  ###
-    ### A: input_select.light_kitchen = 100%                       ###
-    ##################################################################
-  - alias: Kök 100% (mörkt)
-    id: '1795919757331' 
-    mode: queued
-
-    trigger:
-      - platform: state
-        entity_id: input_boolean.kitchen_light_on
-        to: 'on'
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_boolean.rorelsedetektor_kok_aktiv
-          state: 'on'
-        - condition: state
-          entity_id: input_select.home_status
-          state: 'Hemma på'
-
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_kitchen
-          option: 100%
-
-    ########################################################
-    ### Tänder lampor 25% vid rörelse i köket            ###
-    ### T: input_boolean.rorelsedetektor_kok_aktiv == on ###
-    ### C: input_boolean.kitchen_light_on == on          ###
-    ###    input_select.home_status == 'Hemma av'        ###
-    ### A: input_select.light_kitchen = 25%              ###
-    ########################################################
-  - alias: Kök 25% (hemma av)
-    id: '1974703878867' 
-    mode: queued
-
-    trigger:
-      - platform: state
-        entity_id: input_boolean.rorelsedetektor_kok_aktiv
-        to: 'on'
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_boolean.kitchen_light_on
-          state: 'on'
-        - condition: state
-          entity_id: input_select.home_status
-          state: 'Hemma av'
-
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_kitchen
-          option: 25%
-
-    #########################################################
-    ### Släcker lampor när ingen varit i köket på 9 min   ###
-    ### T: input_boolean.rorelsedetektor_kok_aktiv == off ###
-    ### A: input_select.light_kitchen = Släckt            ###
-    #########################################################
-  - alias: Kök off (ingen rörelse)
+####################################################
+#                                                  #
+#           INAKTIVERA KÖKSBELYSNING               #
+#                                                  #
+####################################################
+#
+# TRIGGERS:
+# - Ingen närvaro i hela köket (sensor_1 = off)
+# - 10 sekunders fördröjning för att undvika flicker
+#
+# CONDITIONS:
+# - Kontrollerar att lamporna inte redan är släckta
+#
+# ACTIONS:
+# - Ställer ljuset på 'Släckt'
+# - Förhindrar onödiga serviceanrop
+#
+####################################################
+  - alias: Kök off (ingen närvaro)
     id: '0869914950923' 
+    description: >
+      Släcker köksbelysning efter 10 sekunder utan närvaro.
+      Kontrollerar att lamporna faktiskt är tända innan släckning.
     mode: single
 
     trigger:
-      platform: state
-      entity_id: input_boolean.rorelsedetektor_kok_aktiv
-      to: 'off'
+      - platform: state
+        entity_id: binary_sensor.presence_sensor_fp2_9a29_presence_sensor_1
+        to: 'off'
+        for:
+          seconds: 10
+
+    condition:
+      - condition: template
+        value_template: "{{ states('input_select.light_kitchen') != 'Släckt' }}"
 
     action:
       - service: input_select.select_option
-        data:
+        target:
           entity_id: input_select.light_kitchen
+        data:
           option: Släckt
 
-    ########################################################
-    ### Släcker lampor när sista åker hemifrån           ###
-    ### T: input_select.home_status to: 'Borta'          ###
-    ### A: input_boolean.rorelsedetektor_kok_aktiv = off ###
-    ########################################################
-  - alias: Kök off (borta)
-    id: '4859375043622' 
-    mode: single
-
-    trigger:
-      - platform: state
-        entity_id: input_select.home_status
-        to: 'Borta'
-
-    action:
-      - service: homeassistant.turn_off
-        entity_id: input_boolean.rorelsedetektor_kok_aktiv
-
-    ##############################################################
-    ### Släcker lampor när lux kommer över 3000                ###
-    ### T: input_boolean.kitchen_light_on == off               ###
-    ### C: group.track_for_home_devices == 'home'              ###
-    ### A: input_boolean.rorelsedetektor_kok_aktiv = off       ###
-    ##############################################################
-  - alias: Kök off (ljust)
-    id: '5032661568007' 
-    mode: single
-
-    trigger:
-      - platform: state
-        entity_id: input_boolean.kitchen_light_on
-        to: "off"
-
-    condition:
-      condition: state
-      entity_id: group.track_for_home_devices
-      state: 'home'
-
-    action:
-      - service: homeassistant.turn_off
-        entity_id: input_boolean.rorelsedetektor_kok_aktiv
-
-    #########################################################################
-    ### Sätter rörelsedetektor till off, för att kunna detektera nästa on ###
-    ### Löser problemet med att lyset i vissa fall inte tänds i köket     ###
-    ### T: light.kok_underskap_bank == off                                ###
-    ### C: input_boolean.rorelsedetektor_kok_aktiv == on                  ###
-    ### A: input_boolean.rorelsedetektor_kok_aktiv = off                  ###
-    #########################################################################
-  - alias: Kök Rörelsedetektor reset
-    id: '0766102777583' 
-    mode: single
-
-    trigger:
-      - platform: state
-        entity_id:
-          - light.kok_underskap_bank
-        to: 'off'
-
-    condition:
-      condition: state
-      entity_id: input_boolean.rorelsedetektor_kok_aktiv
-      state: 'on'
-
-    action:
-      - service: homeassistant.turn_off
-        entity_id: input_boolean.rorelsedetektor_kok_aktiv

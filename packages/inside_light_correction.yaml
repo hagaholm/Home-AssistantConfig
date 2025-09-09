@@ -182,8 +182,8 @@ automation:
             Old sensor lux: {{ states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2') | int }}
             New sensor lux: {{ states('sensor.presence_sensor_fp2_9a29_light_sensor_light_level') | int }}
             Outside lux:    {{ states('sensor.ljusstyrka') | int }}
-            On level:       {{ states(''input_number.inside_kitchen_light_on'') | int }}
-            Off level:      {{ states(''input_number.inside_kitchen_light_off'') | int }}
+            On level:       {{ states('input_number.inside_kitchen_light_on') | int }}
+            Off level:      {{ states('input_number.inside_kitchen_light_off') | int }}
 
   ##################################
   - alias: Kitchen light on - inside

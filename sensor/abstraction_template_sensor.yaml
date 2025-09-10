@@ -1,0 +1,55 @@
+# Home Assistant Template Sensors - Grouped by Room
+# -------------------------------------------------
+# Add new rooms and sensors following the structure below.
+
+template:
+  # -------------------
+  # Kitchen Sensors
+  # -------------------
+  - sensor:
+      # Source: Xiaomi Lumi Sen Ill MGL01 (Illuminance sensor)
+      # Company: Xiaomi
+      # Type: Illuminance (lux) sensor
+      - name: "Kökets ljusnivå"
+        unique_id: kitchen_illuminance
+        state: "{{ states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2') | int }}"
+        unit_of_measurement: "lx"
+        device_class: illuminance
+        attributes:
+          source_sensor: sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2
+          icon: mdi:weather-sunny
+          friendly_name: Kökets ljusnivå
+
+  - binary_sensor:
+      # Source: Aqara FP2 Presence Sensor (Zone 1)
+      # Company: Aqara
+      # Type: Presence (motion) sensor
+      - name: "Kökets närvaro"
+        unique_id: kitchen_presence
+        state: "{{ is_state('binary_sensor.presence_sensor_fp2_9a29_presence_sensor_1', 'on') }}"
+        device_class: presence
+        attributes:
+          source_sensor: binary_sensor.presence_sensor_fp2_9a29_presence_sensor_1
+          icon: mdi:motion-sensor
+
+      # Source: Aqara FP2 Presence Sensor (Zone 2)
+      # Company: Aqara
+      # Type: Presence (motion) sensor
+      - name: "Köksbordet närvaro"
+        unique_id: kitchentable_presence
+        state: "{{ is_state('binary_sensor.presence_sensor_fp2_9a29_presence_sensor_2', 'on') }}"
+        device_class: presence
+        attributes:
+          source_sensor: binary_sensor.presence_sensor_fp2_9a29_presence_sensor_2
+          icon: mdi:motion-sensor
+
+      # Source: Aqara FP2 Presence Sensor (Zone 3)
+      # Company: Aqara
+      # Type: Presence (motion) sensor
+      - name: "Köksbänk närvaro"
+        unique_id: kitchen_counter_presence
+        state: "{{ is_state('binary_sensor.presence_sensor_fp2_9a29_presence_sensor_3, 'on') }}"
+        device_class: presence
+        attributes:
+          source_sensor: binary_sensor.presence_sensor_fp2_9a29_presence_sensor_3
+          icon: mdi:motion-sensor

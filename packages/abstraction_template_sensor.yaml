@@ -27,7 +27,7 @@ template:
       - name: "Kök närvaro"
         unique_id: kitchen_presence
         state: "{{ is_state('binary_sensor.presence_sensor_fp2_9a29_presence_sensor_1', 'on') }}"
-        device_class: presence
+        device_class: occupancy
         attributes:
           source_sensor: binary_sensor.presence_sensor_fp2_9a29_presence_sensor_1
           icon: mdi:motion-sensor
@@ -38,7 +38,7 @@ template:
       - name: "Köksbord närvaro"
         unique_id: kitchen_table_presence
         state: "{{ is_state('binary_sensor.presence_sensor_fp2_9a29_presence_sensor_2', 'on') }}"
-        device_class: presence
+        device_class: occupancy
         attributes:
           source_sensor: binary_sensor.presence_sensor_fp2_9a29_presence_sensor_2
           icon: mdi:motion-sensor
@@ -49,7 +49,7 @@ template:
       - name: "Köksbänk närvaro"
         unique_id: kitchen_counter_presence
         state: "{{ is_state('binary_sensor.presence_sensor_fp2_9a29_presence_sensor_3', 'on') }}"
-        device_class: presence
+        device_class: occupancy
         attributes:
           source_sensor: binary_sensor.presence_sensor_fp2_9a29_presence_sensor_3
           icon: mdi:motion-sensor

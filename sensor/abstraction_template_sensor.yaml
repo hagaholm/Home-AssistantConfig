@@ -24,7 +24,7 @@ template:
       # Source: Aqara FP2 Presence Sensor (Zone 1)
       # Company: Aqara
       # Type: Presence (motion) sensor
-      - name: "Kökets närvaro"
+      - name: "Kök närvaro"
         unique_id: kitchen_presence
         state: "{{ is_state('binary_sensor.presence_sensor_fp2_9a29_presence_sensor_1', 'on') }}"
         device_class: presence
@@ -35,8 +35,8 @@ template:
       # Source: Aqara FP2 Presence Sensor (Zone 2)
       # Company: Aqara
       # Type: Presence (motion) sensor
-      - name: "Köksbordet närvaro"
-        unique_id: kitchentable_presence
+      - name: "Köksbord närvaro"
+        unique_id: kitchen_table_presence
         state: "{{ is_state('binary_sensor.presence_sensor_fp2_9a29_presence_sensor_2', 'on') }}"
         device_class: presence
         attributes:

@@ -10,7 +10,7 @@ template:
       # Source: Xiaomi Lumi Sen Ill MGL01 (Illuminance sensor)
       # Company: Xiaomi
       # Type: Illuminance (lux) sensor
-      - name: "Kökets ljusnivå"
+      - name: "Kök ljusnivå"
         unique_id: kitchen_illuminance
         state: "{{ states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2') | int }}"
         unit_of_measurement: "lx"

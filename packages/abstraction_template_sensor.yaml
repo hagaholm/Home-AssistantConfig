@@ -10,7 +10,7 @@ template:
       # Source: Aqara FP2 Light Sensor (Light Level)
       # Company: Aqara
       # Type: Illuminance (lux) sensor
-      - name: "Kök ljusnivå"
+      - name: "Kökets ljusnivå"
         unique_id: kitchen_illuminance
         state: "{{ states('sensor.presence_sensor_fp2_9a29_light_sensor_light_level') | int }}"
         unit_of_measurement: "lx"
@@ -18,7 +18,7 @@ template:
         attributes:
           source_sensor: sensor.presence_sensor_fp2_9a29_light_sensor_light_level
           icon: mdi:weather-sunny
-          friendly_name: Kök ljusnivå
+          friendly_name: Kökets ljusnivå
 
   - binary_sensor:
       # Source: Aqara FP2 Presence Sensor (Zone 1)

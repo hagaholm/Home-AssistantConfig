@@ -53,3 +53,37 @@ template:
         attributes:
           source_sensor: binary_sensor.presence_sensor_fp2_9a29_presence_sensor_3
           icon: mdi:motion-sensor
+
+  # -------------------
+  # Hall Sensors
+  # -------------------
+  - sensor:
+      # Source: Xiaomi Lumi Sen Ill MGL01 (Illuminance sensor)
+      # Company: Xiaomi
+      # Type: Illuminance (lux) sensor
+      - name: "Hall ljusnivå"
+        unique_id: hall_illuminance
+        state: "{{ states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2') | int }}"
+        unit_of_measurement: "lx"
+        device_class: illuminance
+        attributes:
+          source_sensor: sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2
+          icon: mdi:weather-sunny
+          friendly_name: Hall ljusnivå
+
+  # -------------------
+  # Living Room Sensors
+  # -------------------
+  - sensor:
+      # Source: Xiaomi Lumi Sen Ill MGL01 (Illuminance sensor)
+      # Company: Xiaomi
+      # Type: Illuminance (lux) sensor
+      - name: "Vardagsrum ljusnivå"
+        unique_id: livingrom_illuminance
+        state: "{{ states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance') | int }}"
+        unit_of_measurement: "lx"
+        device_class: illuminance
+        attributes:
+          source_sensor: sensor.xiaomi_lumi_sen_ill_mgl01_illuminance
+          icon: mdi:weather-sunny
+          friendly_name: Vardagsrum ljusnivå

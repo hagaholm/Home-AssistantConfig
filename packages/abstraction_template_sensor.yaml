@@ -7,18 +7,18 @@ template:
   # Kitchen Sensors
   # -------------------
   - sensor:
-      # Source: Xiaomi Lumi Sen Ill MGL01 (Illuminance sensor)
-      # Company: Xiaomi
+      # Source: Aqara FP2 Light Sensor (Light Level)
+      # Company: Aqara
       # Type: Illuminance (lux) sensor
       - name: "Kök ljusnivå"
         unique_id: kitchen_illuminance
-        state: "{{ states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2') | int }}"
+        state: "{{ states('sensor.presence_sensor_fp2_9a29_light_sensor_light_level') | int }}"
         unit_of_measurement: "lx"
         device_class: illuminance
         attributes:
-          source_sensor: sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2
+          source_sensor: sensor.presence_sensor_fp2_9a29_light_sensor_light_level
           icon: mdi:weather-sunny
-          friendly_name: Kökets ljusnivå
+          friendly_name: Kök ljusnivå
 
   - binary_sensor:
       # Source: Aqara FP2 Presence Sensor (Zone 1)

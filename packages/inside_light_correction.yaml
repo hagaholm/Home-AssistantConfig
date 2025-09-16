@@ -167,24 +167,24 @@ automation:
 
     trigger:
       - platform: template
-        value_template: "{{((states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2') | int) | int(0)) < (states('input_number.inside_kitchen_light_on') | int(0) )}}"
+        value_template: "{{((states('sensor.kok_ljusniva') | int) | int(0)) < (states('input_number.inside_kitchen_light_on') | int(0) )}}"
       - platform: template
-        value_template: "{{((states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2') | int) | int(0)) > (states('input_number.inside_kitchen_light_off') | int(0) )}}"
+        value_template: "{{((states('sensor.kok_ljusniva') | int) | int(0)) > (states('input_number.inside_kitchen_light_off') | int(0) )}}"
 
       - platform: template
-        value_template: "{{((states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2') | int) | int(0)) < (states('input_number.inside_morning_light_on') | int(0) )}}"
+        value_template: "{{((states('sensor.kok_ljusniva') | int) | int(0)) < (states('input_number.inside_morning_light_on') | int(0) )}}"
       - platform: template
-        value_template: "{{((states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2') | int) | int(0)) > (states('input_number.inside_morning_light_off') | int(0) )}}"
+        value_template: "{{((states('sensor.kok_ljusniva') | int) | int(0)) > (states('input_number.inside_morning_light_off') | int(0) )}}"
 
       - platform: template
-        value_template: "{{((states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2') | int) | int(0)) < (states('input_number.inside_daylight_on') | int(0) )}}"
+        value_template: "{{((states('sensor.kok_ljusniva') | int) | int(0)) < (states('input_number.inside_daylight_on') | int(0) )}}"
       - platform: template
-        value_template: "{{((states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2') | int) | int(0)) > (states('input_number.inside_daylight_off') | int(0) )}}"
+        value_template: "{{((states('sensor.kok_ljusniva') | int) | int(0)) > (states('input_number.inside_daylight_off') | int(0) )}}"
 
       - platform: template
-        value_template: "{{((states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2') | int) | int(0)) < (states('input_number.inside_awaylight_on') | int(0) )}}"
+        value_template: "{{((states('sensor.kok_ljusniva') | int) | int(0)) < (states('input_number.inside_awaylight_on') | int(0) )}}"
       - platform: template
-        value_template: "{{((states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2') | int) | int(0)) > (states('input_number.inside_awaylight_off') | int(0) )}}"
+        value_template: "{{((states('sensor.kok_ljusniva') | int) | int(0)) > (states('input_number.inside_awaylight_off') | int(0) )}}"
 
     condition: []
 
@@ -194,7 +194,7 @@ automation:
           title: >
             "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           message: >
-            Old sensor lux: {{ states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2') | int }}
+            Old sensor lux: {{ states('sensor.kok_ljusniva') | int }}
             New sensor lux: {{ states('sensor.presence_sensor_fp2_9a29_light_sensor_light_level') | int }}
             Outside lux:    {{ states('sensor.ljusstyrka') | int }}
             inside_kitchen_light_on:  {{ states('input_number.inside_kitchen_light_on') | int }}
@@ -212,7 +212,7 @@ automation:
 
     trigger:
       - platform: template
-        value_template: "{{((states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2') | int) | int(0)) < (states('input_number.inside_kitchen_light_on') | int(0) )}}"
+        value_template: "{{((states('sensor.kok_ljusniva') | int) | int(0)) < (states('input_number.inside_kitchen_light_on') | int(0) )}}"
 
     condition:
       condition: and
@@ -372,7 +372,7 @@ automation:
 
     trigger:
       - platform: template
-        value_template: "{{((states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2') | int) | int(0)) > (states('input_number.inside_kitchen_light_off') | int(0) )}}"
+        value_template: "{{((states('sensor.kok_ljusniva') | int) | int(0)) > (states('input_number.inside_kitchen_light_off') | int(0) )}}"
 
     condition:
       condition: and

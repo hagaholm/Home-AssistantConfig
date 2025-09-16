@@ -87,3 +87,20 @@ template:
           source_sensor: sensor.xiaomi_lumi_sen_ill_mgl01_illuminance
           icon: mdi:weather-sunny
           friendly_name: Vardagsrum ljusnivå
+
+  # -------------------
+  # Louise Room Sensors
+  # -------------------
+  - sensor:
+      # Source: Xiaomi Lumi Sen Ill MGL01 (Illuminance sensor)
+      # Company: Xiaomi
+      # Type: lluminance (lux) sensor
+      - name: "Louise rum ljusnivå"
+        unique_id: louise_rom_illuminance
+        state: "{{ states('sensor.xiaomi_lumi_sen_ill_mgl01') | int }}"
+        unit_of_measurement: "lx"
+        device_class: illuminance
+        attributes:
+          source_sensor: sensor.xiaomi_lumi_sen_ill_mgl01
+          icon: mdi:weather-sunny
+          friendly_name: Louise rum ljusnivå

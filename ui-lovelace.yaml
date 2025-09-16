@@ -538,6 +538,7 @@ views:
         entities:
           - sensor.lumi_lumi_weather_temperature_2
           - sensor.lumi_lumi_weather_humidity_2
+          - sensor.hall_ljusniva
           - entity: light.hall_byra
             name: Byrå
           - entity: light.hall_skap
@@ -558,6 +559,7 @@ views:
       - type: entities
         entities:
           - sensor.lumi_lumi_sensor_ht_agl02_temperatur_2
+          - sensor.vardagsrum_ljusniva
           - entity: light.vardagsrum_fonster
             name: Fönster
           - entity: light.vardagsrum_skank

@@ -299,6 +299,9 @@ views:
           - light.kok_underskap_bank
           - light.kok_underskap_diskbank
           - light.kok_vitrinskap
+          - binary_sensor.kok_narvaro
+          - binary_sensor.koksbord_narvaro
+          - binary_sensor.koksbank_narvaro
           - input_boolean.rorelsedetektor_kok_aktiv
           - timer.timer_rorelsedetektor_kok_medium
           - timer.timer_rorelsedetektor_kok_reset
@@ -507,6 +510,7 @@ views:
     cards:
       - type: entities
         entities:
+          - sensor.kokets_ljusniva
           - sensor.kyl_temperature
           - sensor.frys_temperature
           - entity: light.kok_stora_fonstret
@@ -514,11 +518,14 @@ views:
           - entity: light.kok_lilla_fonstret
             name: Lilla fönstret
           - entity: light.kok_underskap_bank
-            name: Underskåp bänk
+            name: Underskåp köksbänk
           - entity: light.kok_underskap_diskbank
             name: Underskåp diskbänk
           - entity: light.kok_vitrinskap
             name: Vitrinskåp
+          - binary_sensor.kok_narvaro
+          - binary_sensor.koksbord_narvaro
+          - binary_sensor.koksbank_narvaro
           - input_boolean.rorelsedetektor_kok_aktiv
           - timer.timer_rorelsedetektor_kok_medium
           - binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse

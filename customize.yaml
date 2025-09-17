@@ -2,12 +2,28 @@
 
     # MQTT
     sensor.pa_vinden:
+      friendly_name: På vinden
       icon: mdi:thermometer
     sensor.sovrum:
+      friendly_name: Sovrum
       icon: mdi:thermometer
     sensor.ute:
+      friendly_name: Ute
       icon: mdi:thermometer
     sensor.uterum:
+      friendly_name: Uterum
+      icon: mdi:thermometer
+    sensor.franluft:
+      friendly_name: Frånluft
+      icon: mdi:thermometer
+    sensor.uteluft:
+      friendly_name: Uteluft
+      icon: mdi:thermometer
+    sensor.tilluft:
+      friendly_name: Tillluft
+      icon: mdi:thermometer
+    sensor.avluft:
+      friendly_name: Avluft
       icon: mdi:thermometer
 
     switch.shelly1_c45bbe77099d:
@@ -115,9 +131,6 @@
       icon: mdi:thermometer
     sensor.forrad_temperature:
       friendly_name: Förråd
-      icon: mdi:thermometer
-    sensor.franluft:
-      friendly_name: Frånluft
       icon: mdi:thermometer
     sensor.friggebod_humidity:
       friendly_name: Friggebod

@@ -116,6 +116,7 @@ sensor:
       canal_digital:
         friendly_name: 'Canal Digital'
         value_template: "{{ 'Online' if is_state('device_tracker.68_63_59_44_5a_17', 'home') else 'Offline' }}"
+        icon: mdi:television-box
       classic:
         friendly_name: 'SqueezeBox Classic'
         value_template: "{{ 'Online' if is_state('device_tracker.classic', 'home') else 'Offline' }}"
@@ -143,6 +144,7 @@ sensor:
       apple_tv:
         friendly_name: 'Apple Tv'
         value_template: "{{ 'Online' if is_state('device_tracker.forrad', 'home') else 'Offline' }}"
+        icon: mdi:television-box
 
     #########
     # Other #

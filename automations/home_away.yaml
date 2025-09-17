@@ -42,28 +42,21 @@
           entity_id: input_select.home_status
           option: Hemma på
 
-    #####################################################################
-    ### Aktivera Hemma på mode vid rörelse                            ###
-    ### T: binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse to 'on'  ###
-    ###    binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2 to 'on' ###
-    ###    binary_sensor.motion_sensor to 'on'                        ###
-    ### C: group.track_for_home_devices = on                          ###
-    ###    time before: '21:00:00'                                    ###
-    ###    time after: '05:00:00'                                     ###
-    ### A: input_select.home_status = Hemma på                        ###
-    #####################################################################
+    ##############################################
+    ### Aktivera Hemma på mode vid rörelse     ###
+    ### T: binary_sensor.kok_narvaro to 'on'   ###
+    ### C: group.track_for_home_devices = on   ###
+    ###    time before: '21:00:00'             ###
+    ###    time after: '05:00:00'              ###
+           input_select.home_status = Hemma av ###
+    ### A: input_select.home_status = Hemma på ###
+    ##############################################
   - alias: Aktivera Hemma på mode vid rörelse
     id: '8016198182454' 
 
     trigger:
       - platform: state
-        entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse # Kök köksskåp
-        to: 'on'
-      - platform: state
-        entity_id: binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2 # Kök fönsterbänk
-        to: 'on'
-      - platform: state
-        entity_id: binary_sensor.motion_sensor # Köksgolv IKEA
+        entity_id: binary_sensor.kok_narvaro
         to: 'on'
 
     condition:

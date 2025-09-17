@@ -1,6 +1,6 @@
     ############################################################
     ### Tänder friggebod ute på morgonen vid rörelse i köket ###
-    ### T: input_boolean.rorelsedetektor_kok_aktiv == on     ###
+    ### T: binary_sensor.kok_narvaro == on                   ###
     ### C: sensor.ljusstyrka < 40                            ###
     ###    05:00:00 - 12:00:00                               ###
     ### A: light.friggebod_ute_2 = on                        ###
@@ -10,7 +10,7 @@
 
     trigger:
       platform: state
-      entity_id: input_boolean.rorelsedetektor_kok_aktiv
+      entity_id: binary_sensor.kok_narvaro
       to: 'on'
 
     condition:
@@ -127,7 +127,7 @@
 
     ##########################################################
     ### Tänder trädäck ute på morgonen vid rörelse i köket ###
-    ### T: input_boolean.rorelsedetektor_kok_aktiv == on   ###
+    ### T: binary_sensor.kok_narvaro == on                 ###
     ### C: sensor.ljusstyrka < 40                          ###
     ###    05:00:00 - 12:00:00                             ###
     ### A: light.tradack_ute = on                          ###
@@ -137,7 +137,7 @@
 
 #    trigger:
 #      platform: state
-#      entity_id: input_boolean.rorelsedetektor_kok_aktiv
+#      entity_id: binary_sensor.kok_narvaro
 #      to: 'on'
 
 #    condition:

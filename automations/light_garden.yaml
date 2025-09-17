@@ -3,7 +3,7 @@
     ##########################
     #################################################################
     ### Tänder trädgårdsbelysning på morgonen vid rörelse i köket ###
-    ### T: input_boolean.rorelsedetektor_kok_aktiv == on          ###
+    ### T: input_select.home_status == hemma på                   ###
     ### C: sensor.ljusstyrka < 40                                 ###
     ###    05:00:00 - 12:00:00                                    ###
     ### A: input_select.light_garden = Tänt                       ###
@@ -12,9 +12,9 @@
     id: '3424915007859' 
 
     trigger:
-      platform: state
-      entity_id: input_boolean.rorelsedetektor_kok_aktiv
-      to: 'on'
+      - platform: state
+        entity_id: input_select.home_status
+        to: 'hemma på'
 
     condition:
       condition: and

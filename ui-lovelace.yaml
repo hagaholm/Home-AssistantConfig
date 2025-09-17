@@ -13,7 +13,7 @@ views:
             type: sensor
           - entity: sensor.lumi_lumi_weather_temperature_3
             graph: line
-            name: Uterum
+            name: Uteruminomhus
             type: sensor
         type: horizontal-stack
       - cards:
@@ -302,10 +302,6 @@ views:
           - binary_sensor.kok_narvaro
           - binary_sensor.koksbord_narvaro
           - binary_sensor.koksbank_narvaro
-          - input_boolean.rorelsedetektor_kok_aktiv
-          - timer.timer_rorelsedetektor_kok_medium
-          - timer.timer_rorelsedetektor_kok_reset
-          - input_boolean.kitchen_light_on
         title: Köksbelysning
         show_header_toggle: true
         state_color: true
@@ -399,8 +395,6 @@ views:
           entities:
             - light.hall_byra
             - light.vardagsrum_fonster
-            - input_boolean.rorelsedetektor_kok_aktiv
-            - timer.timer_rorelsedetektor_kok_short
           title: Nattbelysning
           show_header_toggle: true
           state_color: true
@@ -413,8 +407,6 @@ views:
           entities:
             - entity: light.hall_jullampa
             - entity: light.vardagsrum_fonster_ljusstake_2
-            - input_boolean.rorelsedetektor_kok_aktiv
-            - timer.timer_rorelsedetektor_kok_short
           title: Nattbelysning jul
           show_header_toggle: true
           state_color: true
@@ -526,11 +518,6 @@ views:
           - binary_sensor.kok_narvaro
           - binary_sensor.koksbord_narvaro
           - binary_sensor.koksbank_narvaro
-          - input_boolean.rorelsedetektor_kok_aktiv
-          - timer.timer_rorelsedetektor_kok_medium
-          - binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse
-          - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2
-          - binary_sensor.motion_sensor # Köksgolv
         title: Kök
         show_header_toggle: false
         state_color: true
@@ -784,11 +771,11 @@ views:
         camera_view: auto
       - type: entities
         entities:
-          - binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse
-          - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2
+#          - binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse
+#          - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2
           - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_3
           - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_4
-          - binary_sensor.motion_sensor # Köksgolv
+#          - binary_sensor.motion_sensor # Köksgolv
         title: Rörelsedetektorer inne
         show_header_toggle: false
         state_color: true
@@ -829,11 +816,11 @@ views:
         state_color: true
       - type: entities
         entities:
-          - binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse
-          - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2
+#          - binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse
+#          - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2
           - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_3
           - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_4
-          - binary_sensor.motion_sensor # Köksgolv
+#          - binary_sensor.motion_sensor # Köksgolv
         title: Rörelsedetektorer
         show_header_toggle: false
         state_color: true

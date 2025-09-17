@@ -1,6 +1,6 @@
     #############################################################################
     ### Tänder nattbelysning vid rörelse i köket vid hemma av och dagsljus på ###
-    ### T: input_boolean.rorelsedetektor_kok_aktiv = on                       ###
+    ### T: binary_sensor.kok_narvaro = on                                     ###
     ### C: input_select.home_status == 'Hemma av'                             ###
     ###    input_boolean.daylight_on == on                                    ###
     ### A: input_select.light_inside = Nattbelysning                          ###
@@ -10,7 +10,7 @@
 
     trigger:
       platform: state
-      entity_id: input_boolean.rorelsedetektor_kok_aktiv
+      entity_id: binary_sensor.kok_narvaro
       to: 'on'
 
     condition:
@@ -29,18 +29,18 @@
           entity_id: input_select.light_inside
           option: Nattbelysning
 
-    #########################################################
-    ### Släcker nattbelysning 30 s efter sista aktivering ###
-    ### T: input_boolean.rorelsedetektor_kok_aktiv == off ###
-    ### C: input_select.home_status == 'Hemma av'         ###
-    ### A: input_select.light_inside = Släckt             ###
-    #########################################################
+    ####################################################
+    ### Släcker nattbelysning efter sista aktivering ###
+    ### T: binary_sensor.kok_narvaro == off          ###
+    ### C: input_select.home_status == 'Hemma av'    ###
+    ### A: input_select.light_inside = Släckt        ###
+    ####################################################
   - alias: Nattbelysning off
     id: '2393518316319' 
 
     trigger:
       platform: state
-      entity_id: input_boolean.rorelsedetektor_kok_aktiv
+      entity_id: binary_sensor.kok_narvaro
       to: 'off'
 
     condition:

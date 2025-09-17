@@ -136,6 +136,7 @@ input_number:
     min: 100
     step: 50
     mode: box
+
 #####################
 ### Input Boolean ###
 #####################
@@ -159,7 +160,6 @@ input_boolean:
 ##################
 ### Automation ###
 ##################
-
 automation:
   ##################################
   - alias: Kitchen light on - inside
@@ -597,3 +597,20 @@ automation:
         entity_id: input_number.daylight_off
         data_template: 
           value: '2500'
+
+##############
+### Script ###
+##############
+script:
+  # Script: Send lux sensor values to mobile notification
+  send_lux_values:
+    alias: "Send lux sensor values"
+    sequence:
+      - service: notify.mobile_app_sm_a528b
+        data:
+          title: "Ljusnivåer. {{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+          message: |
+            Utomhus    {{ states('sensor.ljusstyrka') | int }} lx
+            Kökets     {{ states('sensor.kokets_ljusniva') | int }} lx
+            Hall       {{ states('sensor.hall_ljusniva') | int }} lx
+            Vardagsrum {{ states('sensor.vardagsrum_ljusniva') | int }} lx

@@ -12,9 +12,7 @@ template:
       # Type: Illuminance (lux) sensor
       - name: "Kökets ljusnivå"
         unique_id: kitchen_illuminance
-        state: >
-          {% set value = states('sensor.presence_sensor_fp2_9a29_light_sensor_light_level') %}
-          {{ value | int if value not in ['unknown', 'unavailable', ''] else 0 }}
+        state: "{{ states('sensor.presence_sensor_fp2_9a29_light_sensor_light_level') | int }}"
         unit_of_measurement: "lx"
         device_class: illuminance
         attributes:
@@ -65,9 +63,7 @@ template:
       # Type: Illuminance (lux) sensor
       - name: "Hall ljusnivå"
         unique_id: hall_illuminance
-        state: >
-          {% set value = states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2') %}
-          {{ value | int if value not in ['unknown', 'unavailable', ''] else 0 }}
+        state: "{{ states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2') | int }}"
         unit_of_measurement: "lx"
         device_class: illuminance
         attributes:
@@ -84,9 +80,7 @@ template:
       # Type: Illuminance (lux) sensor
       - name: "Vardagsrum ljusnivå"
         unique_id: livingrom_illuminance
-        state: >
-          {% set value = states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance') %}
-          {{ value | int if value not in ['unknown', 'unavailable', ''] else 0 }}
+        state: "{{ states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance') | int }}"
         unit_of_measurement: "lx"
         device_class: illuminance
         attributes:
@@ -103,9 +97,7 @@ template:
       # Type: lluminance (lux) sensor
       - name: "Louise rum ljusnivå"
         unique_id: louise_rom_illuminance
-        state: >
-          {% set value = states('sensor.xiaomi_lumi_sen_ill_mgl01') %}
-          {{ value | int if value not in ['unknown', 'unavailable', ''] else 0 }}
+        state: "{{ states('sensor.xiaomi_lumi_sen_ill_mgl01') | int }}"
         unit_of_measurement: "lx"
         device_class: illuminance
         attributes:

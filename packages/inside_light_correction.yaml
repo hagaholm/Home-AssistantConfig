@@ -162,57 +162,17 @@ input_boolean:
 
 automation:
   ##################################
-  - alias: Old new lux sensor in kitchen
-    id: '4720950564477' 
-
-    trigger:
-      - platform: template
-        value_template: "{{((states('sensor.kokets_ljusniva') | int) | int(0)) < (states('input_number.inside_kitchen_light_on') | int(0) )}}"
-      - platform: template
-        value_template: "{{((states('sensor.kokets_ljusniva') | int) | int(0)) > (states('input_number.inside_kitchen_light_off') | int(0) )}}"
-
-      - platform: template
-        value_template: "{{((states('sensor.kokets_ljusniva') | int) | int(0)) < (states('input_number.inside_morning_light_on') | int(0) )}}"
-      - platform: template
-        value_template: "{{((states('sensor.kokets_ljusniva') | int) | int(0)) > (states('input_number.inside_morning_light_off') | int(0) )}}"
-
-      - platform: template
-        value_template: "{{((states('sensor.kokets_ljusniva') | int) | int(0)) < (states('input_number.inside_daylight_on') | int(0) )}}"
-      - platform: template
-        value_template: "{{((states('sensor.kokets_ljusniva') | int) | int(0)) > (states('input_number.inside_daylight_off') | int(0) )}}"
-
-      - platform: template
-        value_template: "{{((states('sensor.kokets_ljusniva') | int) | int(0)) < (states('input_number.inside_awaylight_on') | int(0) )}}"
-      - platform: template
-        value_template: "{{((states('sensor.kokets_ljusniva') | int) | int(0)) > (states('input_number.inside_awaylight_off') | int(0) )}}"
-
-    condition: []
-
-    action:
-      - service: notify.mobile_app_sm_a528b
-        data_template:
-          title: >
-            "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-          message: >
-            Old sensor lux: {{ states('sensor.kokets_ljusniva') | int }}
-            New sensor lux: {{ states('sensor.presence_sensor_fp2_9a29_light_sensor_light_level') | int }}
-            Outside lux:    {{ states('sensor.ljusstyrka') | int }}
-            inside_kitchen_light_on:  {{ states('input_number.inside_kitchen_light_on') | int }}
-            inside_kitchen_light_off: {{ states('input_number.inside_kitchen_light_off') | int }}
-            inside_morning_light_on:  {{ states('input_number.inside_morning_light_on') | int }}
-            inside_morning_light_off: {{ states('input_number.inside_morning_light_off') | int }}
-            inside_daylight_on:       {{ states('input_number.inside_daylight_on') | int }}
-            inside_daylight_off:      {{ states('input_number.inside_daylight_off') | int }}
-            inside_awaylight_on:      {{ states('input_number.inside_awaylight_on') | int }}
-            inside_awaylight_off:     {{ states('input_number.inside_awaylight_off') | int }}
-
-  ##################################
   - alias: Kitchen light on - inside
     id: '4720950564444' 
 
     trigger:
       - platform: template
-        value_template: "{{((states('sensor.kokets_ljusniva') | int) | int(0)) < (states('input_number.inside_kitchen_light_on') | int(0) )}}"
+        value_template: >
+          {% set curr_level = states('sensor.kokets_ljusniva') %}
+          {% set set_level = states('input_number.inside_kitchen_light_on') %}
+          {{ curr_level not in ['unknown', 'unavailable', ''] and (curr_level | int(0)) < (set_level | int(0)) }}
+        for:
+          minutes: 1
 
     condition:
       condition: and
@@ -252,7 +212,12 @@ automation:
 
     trigger:
       - platform: template
-        value_template: "{{((states('kokets_ljusniva') | int) | int(0)) < (states('input_number.inside_morning_light_on') | int(0) )}}"
+        value_template: >
+          {% set curr_level = states('sensor.kokets_ljusniva') %}
+          {% set set_level = states('input_number.inside_morning_light_on') %}
+          {{ curr_level not in ['unknown', 'unavailable', ''] and (curr_level | int(0)) < (set_level | int(0)) }}
+        for:
+          minutes: 1
 
     condition:
       condition: and
@@ -292,7 +257,12 @@ automation:
 
     trigger:
       - platform: template
-        value_template: "{{((states('kokets_ljusniva') | int) | int(0)) < (states('input_number.inside_daylight_on') | int(0) )}}"
+        value_template: >
+          {% set curr_level = states('sensor.kokets_ljusniva') %}
+          {% set set_level = states('input_number.inside_daylight_on') %}
+          {{ curr_level not in ['unknown', 'unavailable', ''] and (curr_level | int(0)) < (set_level | int(0)) }}
+        for:
+          minutes: 1
     
     condition:
       condition: and
@@ -332,7 +302,12 @@ automation:
 
     trigger:
       - platform: template
-        value_template: "{{((states('kokets_ljusniva') | int) | int(0)) < (states('input_number.inside_awaylight_on') | int(0) )}}"
+        value_template: >
+          {% set curr_level = states('sensor.kokets_ljusniva') %}
+          {% set set_level = states('input_number.inside_awaylight_on') %}
+          {{ curr_level not in ['unknown', 'unavailable', ''] and (curr_level | int(0)) < (set_level | int(0)) }}
+        for:
+          minutes: 1
 
     condition:
       condition: and
@@ -372,7 +347,12 @@ automation:
 
     trigger:
       - platform: template
-        value_template: "{{((states('sensor.kokets_ljusniva') | int) | int(0)) > (states('input_number.inside_kitchen_light_off') | int(0) )}}"
+        value_template: >
+          {% set curr_level = states('sensor.kokets_ljusniva') %}
+          {% set set_level = states('input_number.inside_kitchen_light_off') %}
+          {{ curr_level not in ['unknown', 'unavailable', ''] and (curr_level | int(0)) < (set_level | int(0)) }}
+        for:
+          minutes: 1
 
     condition:
       condition: and
@@ -412,7 +392,12 @@ automation:
 
     trigger:
       - platform: template
-        value_template: "{{((states('kokets_ljusniva') | int) | int(0)) > (states('input_number.inside_morning_light_off') | int(0) )}}"
+        value_template: >
+          {% set curr_level = states('sensor.kokets_ljusniva') %}
+          {% set set_level = states('input_number.inside_morning_light_off') %}
+          {{ curr_level not in ['unknown', 'unavailable', ''] and (curr_level | int(0)) < (set_level | int(0)) }}
+        for:
+          minutes: 1
 
     condition:
       condition: and
@@ -452,7 +437,12 @@ automation:
 
     trigger:
       - platform: template
-        value_template: "{{((states('kokets_ljusniva') | int) | int(0)) > (states('input_number.inside_daylight_off') | int(0) )}}"
+        value_template: >
+          {% set curr_level = states('sensor.kokets_ljusniva') %}
+          {% set set_level = states('input_number.inside_daylight_off') %}
+          {{ curr_level not in ['unknown', 'unavailable', ''] and (curr_level | int(0)) < (set_level | int(0)) }}
+        for:
+          minutes: 1
 
     condition:
       condition: and
@@ -492,7 +482,12 @@ automation:
 
     trigger:
       - platform: template
-        value_template: "{{((states('kokets_ljusniva') | int) | int(0)) > (states('input_number.inside_awaylight_off') | int(0) )}}"
+        value_template: >
+          {% set curr_level = states('sensor.kokets_ljusniva') %}
+          {% set set_level = states('input_number.inside_awaylight_off') %}
+          {{ curr_level not in ['unknown', 'unavailable', ''] and (curr_level | int(0)) < (set_level | int(0)) }}
+        for:
+          minutes: 1
 
     condition:
       condition: and

@@ -18,7 +18,7 @@
       conditions:
         - condition: numeric_state
           entity_id: sensor.ljusstyrka
-          below: ljusstyrka_40
+          below: input_number.ljusstyrka_40
         - condition: state
           entity_id: light.friggebod_fasad
           state: 'off'
@@ -42,7 +42,7 @@
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      below: ljusstyrka_40
+      below: input_number.ljusstyrka_40
 
     condition:
       condition: time
@@ -65,7 +65,7 @@
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      above: ljusstyrka_60
+      above: input_number.ljusstyrka_60
 
     condition:
       condition: and
@@ -99,7 +99,7 @@
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      below: ljusstyrka_5
+      below: input_number.ljusstyrka_5
 
     condition:
       condition: and
@@ -145,7 +145,7 @@
 #      conditions:
 #        - condition: numeric_state
 #          entity_id: sensor.ljusstyrka
-#          below: ljusstyrka_40
+#          below: input_number.ljusstyrka_40
 #        - condition: state
 #          entity_id: light.friggebod_fasad
 #          state: 'off'
@@ -169,7 +169,7 @@
 #    trigger:
 #      platform: numeric_state
 #      entity_id: sensor.ljusstyrka
-#      below: ljusstyrka_40
+#      below: input_number.ljusstyrka_40
 
 #    condition:
 #      condition: time
@@ -192,7 +192,7 @@
 #    trigger:
 #      platform: numeric_state
 #      entity_id: sensor.ljusstyrka
-#      above: ljusstyrka_60
+#      above: input_number.ljusstyrka_60
 
 #    condition:
 #      condition: and
@@ -222,7 +222,7 @@
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      below: ljusstyrka_1
+      below: input_number.ljusstyrka_1
 
     condition:
       condition: time

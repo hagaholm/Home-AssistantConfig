@@ -21,7 +21,7 @@
       conditions:
         - condition: numeric_state
           entity_id: sensor.ljusstyrka
-          below: ljusstyrka_40
+          below: input_number.ljusstyrka_40
         - condition: state
           entity_id: switch.tradgard
           state: 'off'
@@ -50,7 +50,7 @@
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      below: ljusstyrka_40
+      below: input_number.ljusstyrka_40
 
     condition:
       condition: and
@@ -88,7 +88,7 @@
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      below: ljusstyrka_40
+      below: input_number.ljusstyrka_40
 
     condition:
       condition: and
@@ -121,7 +121,7 @@
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      above: ljusstyrka_60
+      above: input_number.ljusstyrka_60
 
     condition:
       condition: and

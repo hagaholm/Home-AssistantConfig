@@ -1,5 +1,143 @@
 # Light sensor threshold variables for automations
 input_number:
+
+  ###############################################
+  # Values from inside sensor to be used inside #
+  ###############################################
+  inside_kitchen_light_on:
+    name: Inside kitchen light On
+    initial: 320
+    max: 600
+    min: 20
+    step: 20
+    mode: box
+
+  inside_kitchen_light_off:
+    name: Inside kitchen light Off
+    initial: 400
+    max: 600
+    min: 20
+    step: 20
+    mode: box
+
+  inside_morning_light_on:
+    name: Inside morning light On
+    initial: 100
+    max: 100
+    min: 0
+    step: 10
+    mode: box
+
+  inside_morning_light_off:
+    name: Inside morning light Off
+    initial: 150
+    max: 200
+    min: 100
+    step: 10
+    mode: box
+    
+  inside_daylight_on:
+    name: Inside daylight On
+    initial: 150
+    max: 200
+    min: 100
+    step: 10
+    mode: box
+
+  inside_daylight_off:
+    name: Inside daylight Off
+    initial: 200
+    max: 250
+    min: 150
+    step: 10
+    mode: box
+
+  inside_awaylight_on:
+    name: Inside awaylight On
+    initial: 30
+    max: 100
+    min: 10
+    step: 10
+    mode: box
+
+  inside_awaylight_off:
+    name: Inside awaylight Off
+    initial: 40
+    max: 100
+    min: 10
+    step: 10
+    mode: box
+
+  ################################################
+  # Values from outside sensor to be used inside #
+  ################################################
+  kitchen_light_on:
+    name: On (3000,4000)
+    initial: 3000
+    max: 5000
+    min: 2500
+    step: 500
+    mode: box
+
+  kitchen_light_off:
+    name: Off (3500,5000)
+    initial: 3500
+    max: 6000
+    min: 3000
+    step: 500
+    mode: box
+
+  morning_light_on:
+    name: On (2000,3000)
+    initial: 2000
+    max: 4000
+    min: 2000
+    step: 500
+    mode: box
+
+  morning_light_off:
+    name: Off (2500,4000)
+    initial: 2500
+    max: 5000
+    min: 2000
+    step: 500
+    mode: box
+
+  daylight_on:
+    name: On (2000,3500)
+    initial: 2000
+    max: 5000
+    min: 1500
+    step: 500
+    mode: box
+
+  daylight_off:
+    name: Off (2500,4500)
+    initial: 2500
+    max: 5000
+    min: 2000
+    step: 500
+    mode: box
+
+  awaylight_on:
+    name: On (200)
+    initial: 200
+    max: 500
+    min: 100
+    step: 50
+    mode: box
+
+  awaylight_off:
+    name: Off (250)
+    initial: 250
+    max: 500
+    min: 100
+    step: 50
+    mode: box
+
+  #################################################
+  # Values from outside sensor to be used outside #
+  #################################################
   ljusstyrka_150:
     name: Ljusstyrka 150
     initial: 150
@@ -30,3 +168,400 @@ input_number:
     min: 0
     max: 1000
     step: 1
+
+#####################
+### Input Boolean ###
+#####################
+input_boolean:
+  kitchen_light_on:
+    name: Köksbelysning on
+
+  morning_light_on:
+    name: Morgonbelysning on
+
+  daylight_on:
+    name: Dagbelysning on
+
+  awaylight_on:
+    name: Bortabelysning on
+
+##################
+### Automation ###
+##################
+automation:
+  ##################################
+  - alias: Kitchen light on - inside
+    id: '4720950564444' 
+
+    trigger:
+      - platform: template
+        value_template: >
+          {% set curr_level = states('sensor.kokets_ljusniva') %}
+          {% set set_level = states('input_number.inside_kitchen_light_on') %}
+          {{ curr_level not in ['unknown', 'unavailable', ''] and (curr_level | int(0)) < (set_level | int(0)) }}
+#        for:
+#          minutes: 1
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id:  input_boolean.kitchen_light_on
+          state: 'off'
+
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.kitchen_light_on
+
+  ###################################
+  - alias: Kitchen light on - outside
+    id: '3203744919900' 
+
+    trigger:
+      - platform: template
+        value_template: "{{((states('sensor.ljusstyrka') | int) | int(0)) < (states('input_number.kitchen_light_on') | int(0) )}}"
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id:  input_boolean.kitchen_light_on
+          state: 'off'
+
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.kitchen_light_on
+
+  ##################################
+  - alias: Morning light on - inside
+    id: '1687579356936' 
+
+    trigger:
+      - platform: template
+        value_template: >
+          {% set curr_level = states('sensor.kokets_ljusniva') %}
+          {% set set_level = states('input_number.inside_morning_light_on') %}
+          {{ curr_level not in ['unknown', 'unavailable', ''] and (curr_level | int(0)) < (set_level | int(0)) }}
+#        for:
+#          minutes: 1
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id:  input_boolean.morning_light_on
+          state: 'off'
+
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.morning_light_on
+
+  ###################################
+  - alias: Morning light on - outside
+    id: '6341834276701' 
+
+    trigger:
+      - platform: template
+        value_template: "{{((states('sensor.ljusstyrka') | int) | int(0)) < (states('input_number.morning_light_on') | int(0) )}}"
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id:  input_boolean.morning_light_on
+          state: 'off'
+
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.morning_light_on
+
+  #############################
+  - alias: Daylight on - inside
+    id: '9088346658492' 
+
+    trigger:
+      - platform: template
+        value_template: >
+          {% set curr_level = states('sensor.kokets_ljusniva') %}
+          {% set set_level = states('input_number.inside_daylight_on') %}
+          {{ curr_level not in ['unknown', 'unavailable', ''] and (curr_level | int(0)) < (set_level | int(0)) }}
+#        for:
+#          minutes: 1
+    
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id:  input_boolean.daylight_on
+          state: 'off'
+
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.daylight_on
+
+  ##############################
+  - alias: Daylight on - outside
+    id: '4138808209427' 
+
+    trigger:
+      - platform: template
+        value_template: "{{((states('sensor.ljusstyrka') | int) | int(0)) < (states('input_number.daylight_on') | int(0) )}}"
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id:  input_boolean.daylight_on
+          state: 'off'
+
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.daylight_on
+
+  #############################
+  - alias: Awaylight on - inside
+    id: '4890224970185' 
+
+    trigger:
+      - platform: template
+        value_template: >
+          {% set curr_level = states('sensor.kokets_ljusniva') %}
+          {% set set_level = states('input_number.inside_awaylight_on') %}
+          {{ curr_level not in ['unknown', 'unavailable', ''] and (curr_level | int(0)) < (set_level | int(0)) }}
+#        for:
+#          minutes: 1
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id:  input_boolean.awaylight_on
+          state: 'off'
+
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.awaylight_on
+
+  ##############################
+  - alias: Awaylight on - outside
+    id: '7650354818024' 
+
+    trigger:
+      - platform: template
+        value_template: "{{((states('sensor.ljusstyrka') | int) | int(0)) < (states('input_number.awaylight_on') | int(0) )}}"
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id:  input_boolean.awaylight_on
+          state: 'off'
+
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.awaylight_on
+
+  ##################################
+  - alias: Kitchen light off - inside
+    id: '5872198468581' 
+
+    trigger:
+      - platform: template
+        value_template: >
+          {% set curr_level = states('sensor.kokets_ljusniva') %}
+          {% set set_level = states('input_number.inside_kitchen_light_off') %}
+          {{ curr_level not in ['unknown', 'unavailable', ''] and (curr_level | int(0)) > (set_level | int(0)) }}
+#        for:
+#          minutes: 1
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id:  input_boolean.kitchen_light_on
+          state: 'on'
+
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.kitchen_light_on
+
+  ###################################
+  - alias: Kitchen light off - outside
+    id: '6515655078109' 
+
+    trigger:
+      - platform: template
+        value_template: "{{((states('sensor.ljusstyrka') | int) | int(0)) > (states('input_number.kitchen_light_off') | int(0) )}}"
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id:  input_boolean.kitchen_light_on
+          state: 'on'
+
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.kitchen_light_on
+
+  ##################################
+  - alias: Morning light off - inside
+    id: '6667421012599' 
+
+    trigger:
+      - platform: template
+        value_template: >
+          {% set curr_level = states('sensor.kokets_ljusniva') %}
+          {% set set_level = states('input_number.inside_morning_light_off') %}
+          {{ curr_level not in ['unknown', 'unavailable', ''] and (curr_level | int(0)) > (set_level | int(0)) }}
+#        for:
+#          minutes: 1
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id:  input_boolean.morning_light_on
+          state: 'on'
+
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.morning_light_on
+
+  ###################################
+  - alias: Morning light off - outside
+    id: '4996982587450' 
+
+    trigger:
+      - platform: template
+        value_template: "{{((states('sensor.ljusstyrka') | int) | int(0)) > (states('input_number.morning_light_off') | int(0) )}}"
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id:  input_boolean.morning_light_on
+          state: 'on'
+
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.morning_light_on
+
+  #############################
+  - alias: Daylight off - inside
+    id: '7697305793023' 
+
+    trigger:
+      - platform: template
+        value_template: >
+          {% set curr_level = states('sensor.kokets_ljusniva') %}
+          {% set set_level = states('input_number.inside_daylight_off') %}
+          {{ curr_level not in ['unknown', 'unavailable', ''] and (curr_level | int(0)) > (set_level | int(0)) }}
+#        for:
+#          minutes: 1
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id:  input_boolean.daylight_on
+          state: 'on'
+
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.daylight_on
+
+  ##############################
+  - alias: Daylight off - outside
+    id: '9301524978530' 
+
+    trigger:
+      - platform: template
+        value_template: "{{((states('sensor.ljusstyrka') | int) | int(0)) > (states('input_number.daylight_off') | int(0) )}}"
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id:  input_boolean.daylight_on
+          state: 'on'
+
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.daylight_on
+
+  #############################
+  - alias: Awaylight off - inside
+    id: '9196778709815' 
+
+    trigger:
+      - platform: template
+        value_template: >
+          {% set curr_level = states('sensor.kokets_ljusniva') %}
+          {% set set_level = states('input_number.inside_awaylight_off') %}
+          {{ curr_level not in ['unknown', 'unavailable', ''] and (curr_level | int(0)) > (set_level | int(0)) }}
+#        for:
+#          minutes: 1
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id:  input_boolean.awaylight_on
+          state: 'on'
+
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.awaylight_on
+
+  ##############################
+  - alias: Awaylight off - outside
+    id: '9143329069739' 
+
+    trigger:
+      - platform: template
+        value_template: "{{((states('sensor.ljusstyrka') | int) | int(0)) > (states('input_number.awaylight_off') | int(0) )}}"
+
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id:  input_boolean.awaylight_on
+          state: 'on'
+
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.awaylight_on
+
+##############
+### Script ###
+##############
+script:
+  # Script: Send lux sensor values to mobile notification
+  send_lux_values:
+    alias: "Send lux sensor values"
+    sequence:
+      - service: notify.mobile_app_sm_a528b
+        data:
+          title: "Ljusnivåer. {{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+          message: |
+            Utomhus    {{ states('sensor.ljusstyrka') | int }} lx
+            Kökets     {{ states('sensor.kokets_ljusniva') | int }} lx
+            Hall       {{ states('sensor.hall_ljusniva') | int }} lx
+            Vardagsrum {{ states('sensor.vardagsrum_ljusniva') | int }} lx

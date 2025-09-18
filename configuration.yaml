@@ -346,6 +346,7 @@ light:
   - platform: group
     name: Nattbelysning
     entities:
+      - light.kok_lilla_fonstret
       - light.kok_stora_fonstret    
       - light.hall_byra
       - light.vardagsrum_fonster
@@ -353,6 +354,8 @@ light:
   - platform: group
     name: Nattbelysning jul
     entities:
+      - light.kok_lilla_fonstret
+      - light.kok_stora_fonstret_ljusstake #jul
       - light.hall_jullampa
       - light.vardagsrum_fonster_ljusstake_2 #jul
 

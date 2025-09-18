@@ -34,6 +34,10 @@
           entity_id: light.vardagsrum_fonster
           brightness_pct: 1
 
+# Tellstick
+      - service: light.turn_on
+        entity_id: light.kok_lilla_fonstret
+
   ##################################
   ### Nattbelysning christmas on ###
   ##################################
@@ -53,6 +57,9 @@
 
       - service: light.turn_on
         entity_id: light.hall_jullampa
+
+      - service: light.turn_on
+        entity_id: light.kok_lilla_fonstret
 
   #########################
   ### Nattbelysning off ###

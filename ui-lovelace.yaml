@@ -394,6 +394,8 @@ views:
         card:
           type: entities
           entities:
+            - light.kok_lilla_fonstret
+            - light.kok_stora_fonstret    
             - light.hall_byra
             - light.vardagsrum_fonster
           title: Nattbelysning
@@ -406,12 +408,13 @@ views:
         card:
           type: entities
           entities:
-            - entity: light.hall_jullampa
-            - entity: light.vardagsrum_fonster_ljusstake_2
+            - light.kok_lilla_fonstret
+            - light.kok_stora_fonstret_ljusstake #jul
+            - light.hall_jullampa
+            - light.vardagsrum_fonster_ljusstake_2 #jul
           title: Nattbelysning jul
           show_header_toggle: true
           state_color: true
-
       - type: conditional
         conditions:
           - entity: input_boolean.christmas_light

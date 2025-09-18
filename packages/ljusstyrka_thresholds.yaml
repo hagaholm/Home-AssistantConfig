@@ -1,6 +1,32 @@
 # Light sensor threshold variables for automations
-ljusstyrka_150: 150
-ljusstyrka_60: 60
-ljusstyrka_40: 40
-ljusstyrka_5: 5
-ljusstyrka_1: 1
+input_number:
+  ljusstyrka_150:
+    name: Ljusstyrka 150
+    initial: 150
+    min: 0
+    max: 1000
+    step: 1
+  ljusstyrka_60:
+    name: Ljusstyrka 60
+    initial: 60
+    min: 0
+    max: 1000
+    step: 1
+  ljusstyrka_40:
+    name: Ljusstyrka 40
+    initial: 40
+    min: 0
+    max: 1000
+    step: 1
+  ljusstyrka_5:
+    name: Ljusstyrka 5
+    initial: 5
+    min: 0
+    max: 1000
+    step: 1
+  ljusstyrka_1:
+    name: Ljusstyrka 1
+    initial: 1
+    min: 0
+    max: 1000
+    step: 1

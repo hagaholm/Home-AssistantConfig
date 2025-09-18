@@ -23,7 +23,7 @@
           before: '21:45:00' 
         - condition: numeric_state
           entity_id: sensor.ljusstyrka
-          below: 150
+          below: ljusstyrka_150
         - condition: numeric_state
           entity_id: sensor.lumi_lumi_weather_temperature_3
           above: 18
@@ -58,7 +58,7 @@
           before: '21:45:00' 
         - condition: numeric_state
           entity_id: sensor.ljusstyrka
-          below: 150
+          below: ljusstyrka_150
         - condition: state
           entity_id: group.track_for_home_devices
           state: 'home'
@@ -83,7 +83,7 @@
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      below: 150
+      below: ljusstyrka_150
 
     condition:
       condition: and

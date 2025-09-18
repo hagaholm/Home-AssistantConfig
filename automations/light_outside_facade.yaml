@@ -11,7 +11,7 @@
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      above: 60
+      above: ljusstyrka_60
 
     condition:
       condition: and
@@ -35,7 +35,7 @@
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      below: 40
+      below: ljusstyrka_40
 
     action:
       - service: input_select.select_option

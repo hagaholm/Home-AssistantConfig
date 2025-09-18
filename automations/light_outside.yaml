@@ -1,11 +1,11 @@
     ############################################################
     ### Tänder friggebod ute på morgonen vid rörelse i köket ###
     ### T: binary_sensor.kok_narvaro == on                   ###
-    ### C: sensor.ljusstyrka < 40                            ###
+    ### C: sensor.ljusstyrka < ljusstyrka_40                 ###
     ###    05:00:00 - 12:00:00                               ###
     ### A: light.friggebod_ute_2 = on                        ###
     ############################################################
-  - alias: Friggebod ute on (sensor on, <40)
+  - alias: Friggebod ute on (sensor on, <ljusstyrka_40)
     id: '9369632281021' 
 
     trigger:
@@ -18,7 +18,7 @@
       conditions:
         - condition: numeric_state
           entity_id: sensor.ljusstyrka
-          below: 40
+          below: ljusstyrka_40
         - condition: state
           entity_id: light.friggebod_fasad
           state: 'off'
@@ -32,17 +32,17 @@
 
     #############################################
     ### Tänder friggebod ute på eftermiddagen ###
-    ### T: sensor.ljusstyrka < 40             ###
+    ### T: sensor.ljusstyrka < ljusstyrka_40  ###
     ### C: 12:00:00 - 21:45:00                ###
     ### A: light.friggebod_ute_2 = on         ###
     #############################################
-  - alias: Friggebod ute on (<40)
+  - alias: Friggebod ute on (<ljusstyrka_40)
     id: '2246049822272' 
 
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      below: 40
+      below: ljusstyrka_40
 
     condition:
       condition: time
@@ -55,17 +55,17 @@
 
     ################################################
     ### Släcker friggebod ute när det blir ljust ###
-    ### T: sensor.ljusstyrka > 60                ###
+    ### T: sensor.ljusstyrka > ljusstyrka_60     ###
     ### C: light.friggebod_ute_2 == on           ###
     ### A: light.friggebod_ute_2 = off           ###
     ################################################
-  - alias: Friggebod ute off (>60)
+  - alias: Friggebod ute off (>ljusstyrka_60)
     id: '6395264032481' 
 
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      above: 60
+      above: ljusstyrka_60
 
     condition:
       condition: and
@@ -85,7 +85,7 @@
 
     ####################################################
     ### Tänder belysning vid Spabad på eftermiddagen ###
-    ### T: sensor.ljusstyrka < 5                     ###
+    ### T: sensor.ljusstyrka < ljusstyrka_5          ###
     ### C: binary_sensor.workday_tomorrow = off      ###
     ### C: 12:00:00 - 21:45:00                       ###
     ### C: light.spabad_v = off                      ###
@@ -93,13 +93,13 @@
     ### C: light.spabad_h= off                       ###
     ### A: script.night_light                        ###
     ####################################################
-  - alias: Spabelysning on (<5)
+  - alias: Spabelysning on (<ljusstyrka_5)
     id: '8301399257818' 
 
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      below: 5
+      below: ljusstyrka_5
 
     condition:
       condition: and
@@ -128,11 +128,11 @@
     ##########################################################
     ### Tänder trädäck ute på morgonen vid rörelse i köket ###
     ### T: binary_sensor.kok_narvaro == on                 ###
-    ### C: sensor.ljusstyrka < 40                          ###
+    ### C: sensor.ljusstyrka < ljusstyrka_40               ###
     ###    05:00:00 - 12:00:00                             ###
     ### A: light.tradack_ute = on                          ###
     ##########################################################
-#  - alias: Trädäck ute on (sensor on, <40)
+#  - alias: Trädäck ute on (sensor on, <ljusstyrka_40)
 #    id: '9369632281987' 
 
 #    trigger:
@@ -145,7 +145,7 @@
 #      conditions:
 #        - condition: numeric_state
 #          entity_id: sensor.ljusstyrka
-#          below: 40
+#          below: ljusstyrka_40
 #        - condition: state
 #          entity_id: light.friggebod_fasad
 #          state: 'off'
@@ -157,19 +157,19 @@
 #      - service: light.turn_on
 #        entity_id: light.tradack_ute
 
-    ###########################################
-    ### Tänder trädäck ute på eftermiddagen ###
-    ### T: sensor.ljusstyrka < 40           ###
-    ### C: 12:00:00 - 21:45:00              ###
-    ### A: light.tradack_ute = on           ###
-    ###########################################
-#  - alias: Trädäck ute on (<40)
+    ############################################
+    ### Tänder trädäck ute på eftermiddagen  ###
+    ### T: sensor.ljusstyrka < ljusstyrka_40 ###
+    ### C: 12:00:00 - 21:45:00               ###
+    ### A: light.tradack_ute = on            ###
+    ############################################
+#  - alias: Trädäck ute on (<ljusstyrka_40)
 #    id: '2246049822391' 
 
 #    trigger:
 #      platform: numeric_state
 #      entity_id: sensor.ljusstyrka
-#      below: 40
+#      below: ljusstyrka_40
 
 #    condition:
 #      condition: time
@@ -182,17 +182,17 @@
 
     ##############################################
     ### Släcker trädäck ute när det blir ljust ###
-    ### T: sensor.ljusstyrka > 60              ###
+    ### T: sensor.ljusstyrka > ljusstyrka_60   ###
     ### C: light.tradack_ute == on             ###
     ### A: light.tradack_ute = off             ###
     ##############################################
-#  - alias: Trädäck ute off (>60)
+#  - alias: Trädäck ute off (>ljusstyrka_60)
 #    id: '6395267532481' 
 
 #    trigger:
 #      platform: numeric_state
 #      entity_id: sensor.ljusstyrka
-#      above: 60
+#      above: ljusstyrka_60
 
 #    condition:
 #      condition: and
@@ -212,17 +212,17 @@
 
     #####################################################
     ### Tänder belysning i Friggebod på eftermiddagen ###
-    ### T: sensor.ljusstyrka < 1                      ###
+    ### T: sensor.ljusstyrka < ljusstyrka_1           ###
     ### C: 12:00:00 - 21:45:00                        ###
     ### A: script.friggebod_light_on                  ###
     #####################################################
-  - alias: Friggebod belysning on (<1)
+  - alias: Friggebod belysning on (<ljusstyrka_1)
     id: '5915819999254' 
 
     trigger:
       platform: numeric_state
       entity_id: sensor.ljusstyrka
-      below: 1
+      below: ljusstyrka_1
 
     condition:
       condition: time

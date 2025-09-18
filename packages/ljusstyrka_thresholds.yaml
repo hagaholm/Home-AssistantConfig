@@ -199,8 +199,8 @@ automation:
           {% set curr_level = states('sensor.kokets_ljusniva') %}
           {% set set_level = states('input_number.inside_kitchen_light_on') %}
           {{ curr_level not in ['unknown', 'unavailable', ''] and (curr_level | int(0)) < (set_level | int(0)) }}
-#        for:
-#          minutes: 1
+        for:
+          minutes: 2
 
     condition:
       condition: and
@@ -244,8 +244,8 @@ automation:
           {% set curr_level = states('sensor.kokets_ljusniva') %}
           {% set set_level = states('input_number.inside_morning_light_on') %}
           {{ curr_level not in ['unknown', 'unavailable', ''] and (curr_level | int(0)) < (set_level | int(0)) }}
-#        for:
-#          minutes: 1
+        for:
+          minutes: 2
 
     condition:
       condition: and
@@ -289,8 +289,8 @@ automation:
           {% set curr_level = states('sensor.kokets_ljusniva') %}
           {% set set_level = states('input_number.inside_daylight_on') %}
           {{ curr_level not in ['unknown', 'unavailable', ''] and (curr_level | int(0)) < (set_level | int(0)) }}
-#        for:
-#          minutes: 1
+        for:
+          minutes: 2
     
     condition:
       condition: and
@@ -334,8 +334,8 @@ automation:
           {% set curr_level = states('sensor.kokets_ljusniva') %}
           {% set set_level = states('input_number.inside_awaylight_on') %}
           {{ curr_level not in ['unknown', 'unavailable', ''] and (curr_level | int(0)) < (set_level | int(0)) }}
-#        for:
-#          minutes: 1
+        for:
+          minutes: 2
 
     condition:
       condition: and
@@ -379,8 +379,8 @@ automation:
           {% set curr_level = states('sensor.kokets_ljusniva') %}
           {% set set_level = states('input_number.inside_kitchen_light_off') %}
           {{ curr_level not in ['unknown', 'unavailable', ''] and (curr_level | int(0)) > (set_level | int(0)) }}
-#        for:
-#          minutes: 1
+        for:
+          minutes: 2
 
     condition:
       condition: and
@@ -424,8 +424,8 @@ automation:
           {% set curr_level = states('sensor.kokets_ljusniva') %}
           {% set set_level = states('input_number.inside_morning_light_off') %}
           {{ curr_level not in ['unknown', 'unavailable', ''] and (curr_level | int(0)) > (set_level | int(0)) }}
-#        for:
-#          minutes: 1
+        for:
+          minutes: 2
 
     condition:
       condition: and
@@ -469,8 +469,8 @@ automation:
           {% set curr_level = states('sensor.kokets_ljusniva') %}
           {% set set_level = states('input_number.inside_daylight_off') %}
           {{ curr_level not in ['unknown', 'unavailable', ''] and (curr_level | int(0)) > (set_level | int(0)) }}
-#        for:
-#          minutes: 1
+        for:
+          minutes: 2
 
     condition:
       condition: and
@@ -514,8 +514,8 @@ automation:
           {% set curr_level = states('sensor.kokets_ljusniva') %}
           {% set set_level = states('input_number.inside_awaylight_off') %}
           {{ curr_level not in ['unknown', 'unavailable', ''] and (curr_level | int(0)) > (set_level | int(0)) }}
-#        for:
-#          minutes: 1
+        for:
+          minutes: 2
 
     condition:
       condition: and

@@ -29,6 +29,36 @@
           transition: 2
 
   #########################
+  ### Köksbelysning 50% ###
+  #########################
+  kitchen_light_50:
+    alias: Köksbelysning 50%
+    sequence:
+      - choose:
+        - conditions: "{{ not is_state('light.kok_underskap_bank', '50%') }}"
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id: light.kok_underskap_bank
+                brightness_pct: 40
+                transition: 2
+
+      - choose:
+        - conditions: "{{ not is_state('light.kok_underskap_diskbank', '50%') }}"
+          sequence:
+            - service: light.turn_on
+              data:
+                entity_id: light.kok_underskap_diskbank
+                brightness_pct: 40
+                transition: 2
+
+      - service: light.turn_on
+        data:
+          entity_id: light.kok_vitrinskap
+          brightness_pct: 50
+          transition: 2
+
+  #########################
   ### Köksbelysning 25% ###
   #########################
   kitchen_light_25:

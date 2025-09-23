@@ -76,27 +76,17 @@
 - alias: Kök belysning 25% (närvaro hela köket)
   id: 'kitchen_light_25_presence_all'
   description: >
-    Sätter köksbelysning till 25% om närvaro i hela köket (sensor_1 = on) och home_status = 'Hemma av'.
-    Om home_status = 'Hemma på' krävs även att kitchen_light_on är på.
+    Sätter köksbelysning till 25% om närvaro i hela köket (sensor_1 = on) 
+    om kitchen_light_on är på.
   mode: single
   trigger:
     - platform: state
       entity_id: binary_sensor.presence_sensor_fp2_9a29_presence_sensor_1
       to: 'on'
   condition:
-    - condition: or
-      conditions:
-        - condition: and
-          conditions:
-            - condition: template
-              value_template: "{{ states('input_select.home_status') == 'Hemma av' }}"
-        - condition: and
-          conditions:
-            - condition: template
-              value_template: "{{ states('input_select.home_status') == 'Hemma på' }}"
-            - condition: state
-              entity_id: input_boolean.kitchen_light_on
-              state: 'on'
+    - condition: state
+      entity_id: input_boolean.kitchen_light_on
+      state: 'on'
   action:
     - service: input_select.select_option
       target:

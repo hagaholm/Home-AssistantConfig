@@ -5,7 +5,7 @@
     alias: Köksbelysning 100%
     sequence:
       - choose:
-        - conditions: "{{ is_state('light.kok_underskap_bank', 'off') }}"
+        - conditions: "{{ not is_state('light.kok_underskap_bank', '100%') }}"
           sequence:
             - service: light.turn_on
               data:
@@ -14,7 +14,7 @@
                 transition: 2
 
       - choose:
-        - conditions: "{{ is_state('light.kok_underskap_diskbank', 'off') }}"
+        - conditions: "{{ not is_state('light.kok_underskap_diskbank', '100%') }}"
           sequence:
             - service: light.turn_on
               data:
@@ -35,7 +35,7 @@
     alias: Köksbelysning 25%
     sequence:
       - choose:
-        - conditions: "{{ is_state('light.kok_underskap_bank', 'off') }}"
+        - conditions: "{{ not is_state('light.kok_underskap_bank', '25%') }}"
           sequence:
             - service: light.turn_on
               data:
@@ -44,7 +44,7 @@
                 transition: 2
 
       - choose:
-        - conditions: "{{ is_state('light.kok_underskap_diskbank', 'off') }}"
+        - conditions: "{{ not is_state('light.kok_underskap_diskbank', '25%') }}"
           sequence:
             - service: light.turn_on
               data:

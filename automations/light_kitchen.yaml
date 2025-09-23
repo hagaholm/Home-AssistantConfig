@@ -1,3 +1,4 @@
+
 ####################################################
 #                                                  #
 #                KÖKSBELYSNING AUTOMATION          #
@@ -5,140 +6,127 @@
 ####################################################
 #
 # BESKRIVNING:
-# Detta är ett automatiserat belysningssystem för köket som använder 
-# närvarosensorer (Aqara FP2) för att kontrollera ljusstyrkan baserat 
-# på aktivitet och hemstatus.
+# Automatiserat belysningssystem för köket som styrs av Aqara FP2-närvarosensorer och hemstatus.
 #
 # HÅRDVARA:
 # - Aqara FP2 närvarosensor med 3 zoner:
 #   * Zone 1 (sensor_1): Övergripande köksnärvaro
-#   * Zone 2 (sensor_2): Köksbord område  
-#   * Zone 3 (sensor_3): Köksbänk område
+#   * Zone 2 (sensor_2): Köksbord
+#   * Zone 3 (sensor_3): Köksbänk
 #
 # FUNKTIONALITET:
-# 1. TÄND BELYSNING:
-#    - Aktiveras vid närvaro i zone 2 eller 3 (köksbord/köksbänk)
-#    - Ljusstyrka beror på hemstatus:
-#      * "Hemma av": 25% ljusstyrka (kvällsläge)
-#      * Alla andra lägen: 100% ljusstyrka
-#    - 1 sekunds fördröjning för att undvika falska triggningar
-#
-# 2. SLÄCK BELYSNING:
-#    - Aktiveras när ingen närvaro i zone 1 (hela köket)
-#    - 10 sekunders fördröjning för att undvika att lamporna släcks för snabbt
-#    - Kontrollerar att lamporna inte redan är släckta
+# 1. SLÄCK BELYSNING:
+#    - Om ingen närvaro i hela köket (sensor_1 = off):
+#      * Sätter input_select.light_kitchen till 'Släckt' om den inte redan är det.
+# 2. TÄND 25%:
+#    - Om närvaro i hela köket (sensor_1 = on):
+#      * Sätter input_select.light_kitchen till 25% om home_status = 'Hemma av'.
+#      * Om home_status = 'Hemma på' krävs även att kitchen_light_on är på.
+# 3. TÄND 100%:
+#    - Om närvaro vid köksbord (sensor_2) eller köksbänk (sensor_3):
+#      * Sätter input_select.light_kitchen till 100% om kitchen_light_on är på.
 #
 # SÄKERHETSKONTROLLER:
-# - Kontrollerar att kitchen_light_on är aktiverat innan tändning
-# - Validerar att hemstatus är i ett känt tillstånd
-# - Förhindrar onödiga serviceanrop genom tillståndskontroller
+# - Kontroll av att lampor inte redan är släckta innan släckning.
+# - Kontroll av hemstatus och kitchen_light_on innan tändning.
 #
 # INTEGRATION:
 # - Styrs via input_select.light_kitchen (Släckt/25%/100%)
 # - Aktiveras/inaktiveras via input_boolean.kitchen_light_on
 # - Hemstatus från input_select.home_status
-#
 ####################################################
+
 
 ####################################################
 #                                                  #
-#            AKTIVERA KÖKSBELYSNING                #
+#            AUTOMATIONER FÖR KÖKSBELYSNING        #
 #                                                  #
 ####################################################
-#
-# TRIGGERS:
-# - Närvaro vid köksbord (sensor_2)
-# - Närvaro vid köksbänk (sensor_3)
-#
-# CONDITIONS:
-# - Köksbelysning aktiverad (kitchen_light_on = on)
-# - Giltig hemstatus (Hemma på/av, Borta)
-# - Lamporna är för närvarande släckta
-#
-# ACTIONS:
-# - Hemma av: 25% ljusstyrka (kvällsläge)
-# - Övriga lägen: 100% ljusstyrka (dagläge)
-#
-####################################################
-  - alias: Kök belysning (närvaro)
-    id: '9716374235056' 
-    description: >
-      Tänder köksbelysning vid närvaro. Ljusstyrka: 25% (Hemma av) eller 100% (övriga lägen).
-      Körs endast när lampor är släckta.
-    mode: queued
 
-    trigger:
-      - platform: state
-        entity_id: binary_sensor.presence_sensor_fp2_9a29_presence_sensor_2
-        to: 'on'
-      - platform: state
-        entity_id: binary_sensor.presence_sensor_fp2_9a29_presence_sensor_3
-        to: 'on'
 
-    condition:
-      condition: and
+#################################################
+# SLÄCK KÖKSBELYSNING VID INGEN NÄRVARO         #
+#################################################
+- alias: Kök belysning av (ingen närvaro)
+  id: 'kitchen_light_off_no_presence'
+  description: >
+    Släcker köksbelysning när ingen närvaro i hela köket (sensor_1 = off).
+    Sätter input_select.light_kitchen till 'Släckt' om den inte redan är det.
+  mode: single
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.presence_sensor_fp2_9a29_presence_sensor_1
+      to: 'off'
+      for:
+        seconds: 10
+  condition:
+    - condition: template
+      value_template: "{{ states('input_select.light_kitchen') != 'Släckt' }}"
+  action:
+    - service: input_select.select_option
+      target:
+        entity_id: input_select.light_kitchen
+      data:
+        option: Släckt
+
+
+#################################################
+# TÄND 25% VID NÄRVARO I HELA KÖKET             #
+#################################################
+- alias: Kök belysning 25% (närvaro hela köket)
+  id: 'kitchen_light_25_presence_all'
+  description: >
+    Sätter köksbelysning till 25% om närvaro i hela köket (sensor_1 = on) och home_status = 'Hemma av'.
+    Om home_status = 'Hemma på' krävs även att kitchen_light_on är på.
+  mode: single
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.presence_sensor_fp2_9a29_presence_sensor_1
+      to: 'on'
+  condition:
+    - condition: or
       conditions:
-        - condition: state
-          entity_id: input_boolean.kitchen_light_on
-          state: 'on'
-        - condition: template
-          value_template: "{{ states('input_select.home_status') in ['Hemma på', 'Hemma av', 'Borta'] }}"
-        - condition: state
-          entity_id: input_select.light_kitchen
-          state: 'Släckt'
+        - condition: and
+          conditions:
+            - condition: template
+              value_template: "{{ states('input_select.home_status') == 'Hemma av' }}"
+        - condition: and
+          conditions:
+            - condition: template
+              value_template: "{{ states('input_select.home_status') == 'Hemma på' }}"
+            - condition: state
+              entity_id: input_boolean.kitchen_light_on
+              state: 'on'
+  action:
+    - service: input_select.select_option
+      target:
+        entity_id: input_select.light_kitchen
+      data:
+        option: 25%
 
-    action:
-      - service: input_select.select_option
-        target:
-          entity_id: input_select.light_kitchen
-        data:
-          option: >
-            {% if states('input_select.home_status') == 'Hemma av' %}
-              25%
-            {% else %}
-              100%
-            {% endif %}
 
-####################################################
-#                                                  #
-#           INAKTIVERA KÖKSBELYSNING               #
-#                                                  #
-####################################################
-#
-# TRIGGERS:
-# - Ingen närvaro i hela köket (sensor_1 = off)
-# - 10 sekunders fördröjning för att undvika flicker
-#
-# CONDITIONS:
-# - Kontrollerar att lamporna inte redan är släckta
-#
-# ACTIONS:
-# - Ställer ljuset på 'Släckt'
-# - Förhindrar onödiga serviceanrop
-#
-####################################################
-  - alias: Kök off (ingen närvaro)
-    id: '0869914950923' 
-    description: >
-      Släcker köksbelysning efter 10 sekunder utan närvaro.
-      Kontrollerar att lamporna faktiskt är tända innan släckning.
-    mode: single
-
-    trigger:
-      - platform: state
-        entity_id: binary_sensor.presence_sensor_fp2_9a29_presence_sensor_1
-        to: 'off'
-        for:
-          seconds: 10
-
-    condition:
-      - condition: template
-        value_template: "{{ states('input_select.light_kitchen') != 'Släckt' }}"
-
-    action:
-      - service: input_select.select_option
-        target:
-          entity_id: input_select.light_kitchen
-        data:
-          option: Släckt
-
+#################################################
+# TÄND 100% VID NÄRVARO VID KÖKSBORD/BÄNK       #
+#################################################
+- alias: Kök belysning 100% (närvaro zon 2/3)
+  id: 'kitchen_light_100_presence_2_3'
+  description: >
+    Sätter köksbelysning till 100% om närvaro vid köksbord (sensor_2) eller köksbänk (sensor_3) och kitchen_light_on är på.
+  mode: queued
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.presence_sensor_fp2_9a29_presence_sensor_2
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.presence_sensor_fp2_9a29_presence_sensor_3
+      to: 'on'
+  condition:
+    - condition: state
+      entity_id: input_boolean.kitchen_light_on
+      state: 'on'
+  action:
+    - service: input_select.select_option
+      target:
+        entity_id: input_select.light_kitchen
+      data:
+        option: 100%

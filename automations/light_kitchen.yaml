@@ -89,6 +89,9 @@
     - condition: state
       entity_id: input_select.home_status
       state: 'Hemma av'
+    - condition: state
+      entity_id: input_select.light_kitchen
+      state: 'Släckt'
   action:
     - service: input_select.select_option
       target:
@@ -119,6 +122,9 @@
       - condition: state
         entity_id: input_select.home_status
         state: 'Hemma på'
+      - condition: state
+        entity_id: input_select.light_kitchen
+        state: 'Släckt'
   action:
     - service: input_select.select_option
       target:

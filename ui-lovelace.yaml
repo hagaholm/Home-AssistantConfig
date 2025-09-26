@@ -789,12 +789,14 @@ views:
     cards:
       - type: entities
         entities:
+          - entity: sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet
+            secondary_info: last-updated
           - entity: sensor.lumi_lumi_sensor_ht_agl02_temperatur
             secondary_info: last-updated
-          - sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet
-          - sensor.lumi_lumi_sensor_ht_agl02_temperatur
-          - sensor.lumi_lumi_sensor_ht_agl02_tryck
-          - sensor.lumi_lumi_sensor_ht_agl02_batteri
+          - entity: sensor.lumi_lumi_sensor_ht_agl02_tryck
+            secondary_info: last-updated
+          - entity: sensor.lumi_lumi_sensor_ht_agl02_batteri
+            secondary_info: last-updated
         title: Badrum Zigbee lumi.sensor_ht.agl02
         show_header_toggle: false
         state_color: true

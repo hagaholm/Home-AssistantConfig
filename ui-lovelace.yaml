@@ -789,6 +789,25 @@ views:
     cards:
       - type: entities
         entities:
+          - sensor.lumi_lumi_sensor_ht_agl02_batteri
+          - sensor.lumi_lumi_sensor_ht_agl02_batteri_2
+          - sensor.lumi_lumi_sensor_motion_aq2_batteri
+          - sensor.lumi_lumi_sensor_motion_aq2_batteri_2
+          - sensor.lumi_lumi_sensor_motion_aq2_battery_2
+          - sensor.lumi_lumi_weather_batteri
+          - sensor.lumi_lumi_weather_battery_3
+          - sensor.motion_sensor_battery
+          - sensor.motion_sensor_battery_2
+          - sensor.sensor_3_battery
+          - sensor.sensor_4_battery
+          - sensor.xiaomi_lumi_sen_ill_mgl01_batteri
+          - sensor.xiaomi_lumi_sen_ill_mgl01_battery
+          - sensor.xiaomi_lumi_sen_ill_mgl01_battery_2
+        title: Batteri status Zigbee
+        show_header_toggle: false
+        state_color: true
+      - type: entities
+        entities:
           - sensor.frys_temp_lastupdated
           - sensor.kyl_temp_lastupdated
           - sensor.badrum_temp_lastupdated

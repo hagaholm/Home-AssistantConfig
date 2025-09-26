@@ -22,7 +22,7 @@
 #    - Om närvaro i hela köket (sensor_1 = on) och home_status = 'Hemma av':
 #      * Sätter input_select.light_kitchen till 25%.
 # 3. TÄND 50%:
-#    - Om närvaro i hela köket (sensor_1 = on) och home_status = 'Hemma på' samt kitchen_light_on är på:
+#    - Om närvaro i hela köket (sensor_1 = on) och home_status = 'Hemma på' samt morning_light_ont_on är på:
 #      * Sätter input_select.light_kitchen till 50%.
 # 4. TÄND 100%:
 #    - Om närvaro vid köksbord (sensor_2) eller köksbänk (sensor_3) och home_status = 'Hemma på' samt kitchen_light_on är på:
@@ -107,7 +107,7 @@
   id: 'kitchen_light_50_presence_all'
   description: >
     Sätter köksbelysning till 50% om närvaro i hela köket (sensor_1 = on)
-    och home_status är 'Hemma på' samt kitchen_light_on är på.
+    och home_status är 'Hemma på' samt morning_light_on är på.
   mode: single
   trigger:
     - platform: state
@@ -117,7 +117,7 @@
     condition: and
     conditions:
       - condition: state
-        entity_id: input_boolean.kitchen_light_on
+        entity_id: input_boolean.morning_light_on
         state: 'on'
       - condition: state
         entity_id: input_select.home_status

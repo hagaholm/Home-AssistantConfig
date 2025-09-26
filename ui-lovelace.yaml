@@ -789,25 +789,48 @@ views:
     cards:
       - type: entities
         entities:
+          - sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet
+          - sensor.lumi_lumi_sensor_ht_agl02_temperatur
+          - sensor.lumi_lumi_sensor_ht_agl02_tryck
           - sensor.lumi_lumi_sensor_ht_agl02_batteri
-            name: Badrum Temperatur/Luftfuktighet
+          
+          - sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet_2
+          - sensor.lumi_lumi_sensor_ht_agl02_temperatur_2
+          - sensor.lumi_lumi_sensor_ht_agl02_tryck_2
           - sensor.lumi_lumi_sensor_ht_agl02_batteri_2
-            name: Vardagsrum Temperatur/Luftfuktighet
 
+          - binary_sensor.lumi_lumi_sensor_motion_aq2_narvaro
+          - sensor.lumi_lumi_sensor_motion_aq2_ljusstyrka
+          - binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse
           - sensor.lumi_lumi_sensor_motion_aq2_batteri
-            name: Kök Rörelsedetektor
+
+          - binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse
+          - sensor.lumi_lumi_sensor_motion_aq2_ljusstyrka_2
+          - binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse_2
           - sensor.lumi_lumi_sensor_motion_aq2_batteri_2
-            name: Kök Rörelsedetektor
+          
+          - sensor.lumi_lumi_sensor_motion_aq2_illuminance_2
+          - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2
+          - binary_sensor.lumi_lumi_sensor_motion_aq2_occupancy_2
           - sensor.lumi_lumi_sensor_motion_aq2_battery_2
-            name: Kök Rörelsedetektor
+          
+          - sensor.lumi_lumi_weather_luftfuktighet
+          - sensor.lumi_lumi_weather_temperatur
+          - sensor.lumi_lumi_weather_tryck
           - sensor.lumi_lumi_weather_batteri
-            name: Hall Temperatur/Luftfuktighet
+
+          - sensor.lumi_lumi_weather_humidity_3
+          - sensor.lumi_lumi_weather_pressure_3
+          - sensor.lumi_lumi_weather_temperature_3
           - sensor.lumi_lumi_weather_battery_3
-            name: Uterum Temperatur/Luftfuktighet
+          
+          - sensor.xiaomi_lumi_sen_ill_mgl01
           - sensor.xiaomi_lumi_sen_ill_mgl01_batteri
-            name: Louise rum Ljusstyrka
+          
+          - sensor.xiaomi_lumi_sen_ill_mgl01_illuminance
           - sensor.xiaomi_lumi_sen_ill_mgl01_battery
-            name: Vardagsrum Ljusstyrka
+          
+          - sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2
           - sensor.xiaomi_lumi_sen_ill_mgl01_battery_2
         title: Batteri status Zigbee
         show_header_toggle: false

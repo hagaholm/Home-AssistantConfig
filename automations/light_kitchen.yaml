@@ -60,7 +60,7 @@
       entity_id: binary_sensor.presence_sensor_fp2_9a29_presence_sensor_1
       to: 'off'
       for:
-        seconds: 10
+        seconds: 30
   condition:
     - condition: template
       value_template: "{{ states('input_select.light_kitchen') != 'Släckt' }}"

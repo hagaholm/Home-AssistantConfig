@@ -118,3 +118,151 @@ template:
 #    binary_sensor.motion_sensor:
 #      friendly_name: Rörelsedetektor Köksgolv
 #      icon: mdi:motion-sensor
+
+  # -------------------
+  # Uterum Sensors (LUMI Weather.3)
+  # -------------------
+  - sensor:
+      # Source: LUMI lumi.weather.3 (Uterum)
+      # Company: LUMI
+      # Type: Temperature, Humidity, Pressure sensor
+      - name: "Uterum Temperatur"
+        unique_id: uterum_lumi_weather_temperature_3
+        state: "{{ states('sensor.lumi_lumi_weather_temperature_3') }}"
+        unit_of_measurement: "°C"
+        device_class: temperature
+        attributes:
+          source_sensor: sensor.lumi_lumi_weather_temperature_3
+          icon: mdi:thermometer
+          friendly_name: Uterum Temperatur
+
+      - name: "Uterum Luftfuktighet"
+        unique_id: uterum_lumi_weather_humidity_3
+        state: "{{ states('sensor.lumi_lumi_weather_humidity_3') }}"
+        unit_of_measurement: "%"
+        device_class: humidity
+        attributes:
+          source_sensor: sensor.lumi_lumi_weather_humidity_3
+          icon: mdi:water-percent
+          friendly_name: Uterum Luftfuktighet
+
+      - name: "Uterum Lufttryck"
+        unique_id: uterum_lumi_weather_pressure_3
+        state: "{{ states('sensor.lumi_lumi_weather_pressure_3') }}"
+        unit_of_measurement: "hPa"
+        device_class: pressure
+        attributes:
+          source_sensor: sensor.lumi_lumi_weather_pressure_3
+          icon: mdi:gauge
+          friendly_name: Uterum Lufttryck
+
+  # -------------------
+  # Vardagsrum Sensors
+  # -------------------
+  - sensor:
+      # Source: LUMI lumi.sensor_ht.agl02 (Vardagsrum)
+      # Company: LUMI
+      # Type: Temperature, Humidity, Pressure sensor
+      - name: "Vardagsrum Temperatur"
+        unique_id: vardagsrum_lumi_sensor_ht_agl02_temperatur_2
+        state: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_temperatur_2') }}"
+        unit_of_measurement: "°C"
+        device_class: temperature
+        attributes:
+          source_sensor: sensor.lumi_lumi_sensor_ht_agl02_temperatur_2
+          icon: mdi:thermometer
+          friendly_name: Vardagsrum Temperatur
+
+      - name: "Vardagsrum Luftfuktighet"
+        unique_id: vardagsrum_lumi_sensor_ht_agl02_luftfuktighet_2
+        state: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet_2') }}"
+        unit_of_measurement: "%"
+        device_class: humidity
+        attributes:
+          source_sensor: sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet_2
+          icon: mdi:water-percent
+          friendly_name: Vardagsrum Luftfuktighet
+
+      - name: "Vardagsrum Lufttryck"
+        unique_id: vardagsrum_lumi_sensor_ht_agl02_tryck_2
+        state: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_tryck_2') }}"
+        unit_of_measurement: "hPa"
+        device_class: pressure
+        attributes:
+          source_sensor: sensor.lumi_lumi_sensor_ht_agl02_tryck_2
+          icon: mdi:gauge
+          friendly_name: Vardagsrum Lufttryck
+
+  # -------------------
+  # Hall Sensors (LUMI Weather)
+  # -------------------
+  - sensor:
+      # Source: LUMI lumi.weather (Hall)
+      # Company: LUMI
+      # Type: Temperature, Humidity, Pressure sensor
+      - name: "Hall Temperatur"
+        unique_id: hall_lumi_weather_temperatur
+        state: "{{ states('sensor.lumi_lumi_weather_temperatur') }}"
+        unit_of_measurement: "°C"
+        device_class: temperature
+        attributes:
+          source_sensor: sensor.lumi_lumi_weather_temperatur
+          icon: mdi:thermometer
+          friendly_name: Hall Temperatur
+
+      - name: "Hall Luftfuktighet"
+        unique_id: hall_lumi_weather_luftfuktighet
+        state: "{{ states('sensor.lumi_lumi_weather_luftfuktighet') }}"
+        unit_of_measurement: "%"
+        device_class: humidity
+        attributes:
+          source_sensor: sensor.lumi_lumi_weather_luftfuktighet
+          icon: mdi:water-percent
+          friendly_name: Hall Luftfuktighet
+
+      - name: "Hall Lufttryck"
+        unique_id: hall_lumi_weather_tryck
+        state: "{{ states('sensor.lumi_lumi_weather_tryck') }}"
+        unit_of_measurement: "hPa"
+        device_class: pressure
+        attributes:
+          source_sensor: sensor.lumi_lumi_weather_tryck
+          icon: mdi:gauge
+          friendly_name: Hall Lufttryck
+
+  # -------------------
+  # Badrum Sensors
+  # -------------------
+  - sensor:
+      # Source: LUMI lumi.sensor_ht.agl02 (Badrum)
+      # Company: LUMI
+      # Type: Temperature, Humidity, Pressure sensor
+      - name: "Badrum Temperatur"
+        unique_id: badrum_lumi_sensor_ht_agl02_temperatur
+        state: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_temperatur') }}"
+        unit_of_measurement: "°C"
+        device_class: temperature
+        attributes:
+          source_sensor: sensor.lumi_lumi_sensor_ht_agl02_temperatur
+          icon: mdi:thermometer
+          friendly_name: Badrum Temperatur
+
+      - name: "Badrum Luftfuktighet"
+        unique_id: badrum_lumi_sensor_ht_agl02_luftfuktighet
+        state: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet') }}"
+        unit_of_measurement: "%"
+        device_class: humidity
+        attributes:
+          source_sensor: sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet
+          icon: mdi:water-percent
+          friendly_name: Badrum Luftfuktighet
+
+      - name: "Badrum Lufttryck"
+        unique_id: badrum_lumi_sensor_ht_agl02_tryck
+        state: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_tryck') }}"
+        unit_of_measurement: "hPa"
+        device_class: pressure
+        attributes:
+          source_sensor: sensor.lumi_lumi_sensor_ht_agl02_tryck
+          icon: mdi:gauge
+          friendly_name: Badrum Lufttryck

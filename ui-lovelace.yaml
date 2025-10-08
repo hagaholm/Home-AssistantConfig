@@ -11,7 +11,7 @@ views:
             graph: line
             name: Inne
             type: sensor
-          - entity: sensor.lumi_lumi_weather_temperature_3
+          - entity: uterum_temperatur
             graph: line
             name: Uteruminomhus
             type: sensor
@@ -206,7 +206,7 @@ views:
           - sensor.ute_friggebod_temperature
           - sensor.ute_friggebod_humidity
           - sensor.ljusstyrka
-          - sensor.lumi_lumi_weather_pressure_3
+          - sensor.uterum_lufttryck
         title: Utomhus
         show_header_toggle: false
         state_color: true
@@ -220,25 +220,25 @@ views:
         state_color: true
       - type: entities
         entities:
-          - sensor.lumi_lumi_weather_temperature_3 # Uterum
-          - sensor.lumi_lumi_weather_temperatur # Hall
-          - sensor.lumi_lumi_sensor_ht_agl02_temperatur_2 # Vardagsrum
+          - sensor.uterum_temperatur # Uterum
+          - sensor.hall_temperatur # Hall
+          - sensor.vardagsrum_temperatur # Vardagsrum
           - sensor.sovrum
           - sensor.louise_rum_temperature
           - sensor.andreas_rum_temperature
           - sensor.tvattstuga_temperature
-          - sensor.lumi_lumi_sensor_ht_agl02_temperatur   # Badrum
+          - sensor.badrum_temperatur   # Badrum
         title: Inomhus temperatur
         show_header_toggle: false
         state_color: true
       - type: entities
         entities:
-          - sensor.lumi_lumi_weather_humidity_3 # Uterum
-          - sensor.lumi_lumi_weather_luftfuktighet # Hall
-          - sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet_2 # Vardagsrum
+          - sensor.uterum_luftfuktighet # Uterum
+          - sensor.hall_luftfuktighet # Hall
+          - sensor.vardagsrum_luftfuktighet # Vardagsrum
           - sensor.louise_rum_humidity
           - sensor.tvattstuga_humidity
-          - sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet   # Badrum
+          - sensor.badrum_luftfuktighet   # Badrum
           - sensor.fukt_badrumsfonster
         title: Inomhus luftfuktighet
         show_header_toggle: false
@@ -549,7 +549,7 @@ views:
         state_color: true
       - type: entities
         entities:
-          - sensor.lumi_lumi_sensor_ht_agl02_temperatur_2
+          - sensor.vardagsrum_temperatur
           - sensor.vardagsrum_ljusniva
           - entity: light.vardagsrum_fonster
             name: Fönster
@@ -571,8 +571,8 @@ views:
         state_color: true
       - type: entities
         entities:
-          - entity: sensor.lumi_lumi_sensor_ht_agl02_temperatur
-          - sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet
+          - entity: sensor.badrum_temperatur
+          - sensor.badrum_luftfuktighet
           - sensor.fukt_badrumsfonster
           - switch.shelly1_c45bbe77099d
         title: Badrum
@@ -611,7 +611,7 @@ views:
         state_color: true
       - type: entities
         entities:
-          - sensor.lumi_lumi_weather_temperature_3
+          - sensor.uterum_temperatur
           - entity: light.uterum_fonster
             name: Fönster
           - entity: light.uterum_led
@@ -673,7 +673,7 @@ views:
           - sensor.ute_friggebod_temperature
           - sensor.ute_friggebod_humidity
           - sensor.ljusstyrka
-          - sensor.lumi_lumi_weather_pressure_3
+          - sensor.uterum_lufttryck
           - light.huvudentre
           - light.tvattstugan_fasad
           - light.forrad_fasad
@@ -908,7 +908,7 @@ views:
         state_color: true
       - type: entities
         entities:
-          - sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet
+          - sensor.badrum_luftfuktighet
           - sensor.fukt_badrumsfonster
           - switch.shelly1_c45bbe77099d
           - switch.ventilationsaggregat

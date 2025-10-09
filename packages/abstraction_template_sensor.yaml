@@ -15,6 +15,7 @@ template:
         state: "{{ states('sensor.presence_sensor_fp2_9a29_light_sensor_light_level') | int }}"
         unit_of_measurement: "lx"
         device_class: illuminance
+        state_class: measurement
         attributes:
           source_sensor: sensor.presence_sensor_fp2_9a29_light_sensor_light_level
           icon: mdi:weather-sunny
@@ -66,6 +67,7 @@ template:
         state: "{{ states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2') | int }}"
         unit_of_measurement: "lx"
         device_class: illuminance
+        state_class: measurement
         attributes:
           source_sensor: sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2
           icon: mdi:weather-sunny
@@ -83,6 +85,7 @@ template:
         state: "{{ states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance') | int }}"
         unit_of_measurement: "lx"
         device_class: illuminance
+        state_class: measurement
         attributes:
           source_sensor: sensor.xiaomi_lumi_sen_ill_mgl01_illuminance
           icon: mdi:weather-sunny
@@ -100,6 +103,7 @@ template:
         state: "{{ states('sensor.xiaomi_lumi_sen_ill_mgl01') | int }}"
         unit_of_measurement: "lx"
         device_class: illuminance
+        state_class: measurement
         attributes:
           source_sensor: sensor.xiaomi_lumi_sen_ill_mgl01
           icon: mdi:weather-sunny
@@ -131,6 +135,7 @@ template:
         state: "{{ states('sensor.lumi_lumi_weather_temperature_3') }}"
         unit_of_measurement: "°C"
         device_class: temperature
+        state_class: measurement
         attributes:
           source_sensor: sensor.lumi_lumi_weather_temperature_3
           icon: mdi:thermometer
@@ -141,6 +146,7 @@ template:
         state: "{{ states('sensor.lumi_lumi_weather_humidity_3') }}"
         unit_of_measurement: "%"
         device_class: humidity
+        state_class: measurement
         attributes:
           source_sensor: sensor.lumi_lumi_weather_humidity_3
           icon: mdi:water-percent
@@ -151,6 +157,7 @@ template:
         state: "{{ states('sensor.lumi_lumi_weather_pressure_3') }}"
         unit_of_measurement: "hPa"
         device_class: pressure
+        state_class: measurement
         attributes:
           source_sensor: sensor.lumi_lumi_weather_pressure_3
           icon: mdi:gauge
@@ -168,6 +175,7 @@ template:
         state: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_temperatur_2') }}"
         unit_of_measurement: "°C"
         device_class: temperature
+        state_class: measurement
         attributes:
           source_sensor: sensor.lumi_lumi_sensor_ht_agl02_temperatur_2
           icon: mdi:thermometer
@@ -178,6 +186,7 @@ template:
         state: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet_2') }}"
         unit_of_measurement: "%"
         device_class: humidity
+        state_class: measurement
         attributes:
           source_sensor: sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet_2
           icon: mdi:water-percent
@@ -188,6 +197,7 @@ template:
         state: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_tryck_2') }}"
         unit_of_measurement: "hPa"
         device_class: pressure
+        state_class: measurement
         attributes:
           source_sensor: sensor.lumi_lumi_sensor_ht_agl02_tryck_2
           icon: mdi:gauge
@@ -205,6 +215,7 @@ template:
         state: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_temperatur') }}"
         unit_of_measurement: "°C"
         device_class: temperature
+        state_class: measurement
         attributes:
           source_sensor: sensor.lumi_lumi_sensor_ht_agl02_temperatur
           icon: mdi:thermometer
@@ -215,6 +226,7 @@ template:
         state: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet') }}"
         unit_of_measurement: "%"
         device_class: humidity
+        state_class: measurement
         attributes:
           source_sensor: sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet
           icon: mdi:water-percent
@@ -225,6 +237,7 @@ template:
         state: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_tryck') }}"
         unit_of_measurement: "hPa"
         device_class: pressure
+        state_class: measurement
         attributes:
           source_sensor: sensor.lumi_lumi_sensor_ht_agl02_tryck
           icon: mdi:gauge
@@ -242,6 +255,7 @@ template:
         state: "{{ states('sensor.lumi_lumi_weather_temperatur') }}"
         unit_of_measurement: "°C"
         device_class: temperature
+        state_class: measurement
         attributes:
           source_sensor: sensor.lumi_lumi_weather_temperatur
           icon: mdi:thermometer
@@ -252,6 +266,7 @@ template:
         state: "{{ states('sensor.lumi_lumi_weather_luftfuktighet') }}"
         unit_of_measurement: "%"
         device_class: humidity
+        state_class: measurement
         attributes:
           source_sensor: sensor.lumi_lumi_weather_luftfuktighet
           icon: mdi:water-percent
@@ -262,6 +277,7 @@ template:
         state: "{{ states('sensor.lumi_lumi_weather_tryck') }}"
         unit_of_measurement: "hPa"
         device_class: pressure
+        state_class: measurement
         attributes:
           source_sensor: sensor.lumi_lumi_weather_tryck
           icon: mdi:gauge

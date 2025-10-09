@@ -1,0 +1,38 @@
+# LUMI Weather Sensors (Badrum)
+template:
+  - sensor:
+      # Source: LUMI lumi.weather (Badrum)
+      # Company: LUMI
+      # Type: Temperature, Humidity, Pressure sensor
+      - name: "Badrum Temperatur"
+        unique_id: badrum_lumi_sensor_ht_agl02_temperatur
+        state: "{{ states('sensor.lumi_lumi_weather_temperatur') }}"
+        unit_of_measurement: "°C"
+        device_class: temperature
+        state_class: measurement
+        attributes:
+          source_sensor: sensor.lumi_lumi_weather_temperatur
+          icon: mdi:thermometer
+          friendly_name: Badrum Temperatur
+
+      - name: "Badrum Luftfuktighet"
+        unique_id: badrum_lumi_sensor_ht_agl02_luftfuktighet
+        state: "{{ states('sensor.lumi_lumi_weather_luftfuktighet') }}"
+        unit_of_measurement: "%"
+        device_class: humidity
+        state_class: measurement
+        attributes:
+          source_sensor: sensor.lumi_lumi_weather_luftfuktighet
+          icon: mdi:water-percent
+          friendly_name: Badrum Luftfuktighet
+
+      - name: "Badrum Lufttryck"
+        unique_id: badrum_lumi_sensor_ht_agl02_tryck
+        state: "{{ states('sensor.lumi_lumi_weather_tryck') }}"
+        unit_of_measurement: "hPa"
+        device_class: pressure
+        state_class: measurement
+        attributes:
+          source_sensor: sensor.lumi_lumi_weather_tryck
+          icon: mdi:gauge
+          friendly_name: Badrum Lufttryck

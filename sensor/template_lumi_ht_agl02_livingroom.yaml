@@ -1,0 +1,38 @@
+# LUMI Sensor HT AGL02 (Vardagsrum)
+template:
+  - sensor:
+      # Source: LUMI lumi.sensor_ht.agl02 (Vardagsrum)
+      # Company: LUMI
+      # Type: Temperature, Humidity, Pressure sensor
+      - name: "Vardagsrum Temperatur"
+        unique_id: vardagsrum_lumi_sensor_ht_agl02_temperatur_2
+        state: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_temperatur_2') }}"
+        unit_of_measurement: "°C"
+        device_class: temperature
+        state_class: measurement
+        attributes:
+          source_sensor: sensor.lumi_lumi_sensor_ht_agl02_temperatur_2
+          icon: mdi:thermometer
+          friendly_name: Vardagsrum Temperatur
+
+      - name: "Vardagsrum Luftfuktighet"
+        unique_id: vardagsrum_lumi_sensor_ht_agl02_luftfuktighet_2
+        state: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet_2') }}"
+        unit_of_measurement: "%"
+        device_class: humidity
+        state_class: measurement
+        attributes:
+          source_sensor: sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet_2
+          icon: mdi:water-percent
+          friendly_name: Vardagsrum Luftfuktighet
+
+      - name: "Vardagsrum Lufttryck"
+        unique_id: vardagsrum_lumi_sensor_ht_agl02_tryck_2
+        state: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_tryck_2') }}"
+        unit_of_measurement: "hPa"
+        device_class: pressure
+        state_class: measurement
+        attributes:
+          source_sensor: sensor.lumi_lumi_sensor_ht_agl02_tryck_2
+          icon: mdi:gauge
+          friendly_name: Vardagsrum Lufttryck

@@ -1,0 +1,38 @@
+# LUMI Sensor HT AGL02 (Hall)
+template:
+  - sensor:
+      # Source: LUMI lumi.sensor_ht.agl02 (Hall)
+      # Company: LUMI
+      # Type: Temperature, Humidity, Pressure sensor
+      - name: "Hall Temperatur"
+        unique_id: hall_lumi_weather_temperatur
+        state: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_temperatur') }}"
+        unit_of_measurement: "°C"
+        device_class: temperature
+        state_class: measurement
+        attributes:
+          source_sensor: sensor.lumi_lumi_sensor_ht_agl02_temperatur
+          icon: mdi:thermometer
+          friendly_name: Hall Temperatur
+
+      - name: "Hall Luftfuktighet"
+        unique_id: hall_lumi_weather_luftfuktighet
+        state: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet') }}"
+        unit_of_measurement: "%"
+        device_class: humidity
+        state_class: measurement
+        attributes:
+          source_sensor: sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet
+          icon: mdi:water-percent
+          friendly_name: Hall Luftfuktighet
+
+      - name: "Hall Lufttryck"
+        unique_id: hall_lumi_weather_tryck
+        state: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_tryck') }}"
+        unit_of_measurement: "hPa"
+        device_class: pressure
+        state_class: measurement
+        attributes:
+          source_sensor: sensor.lumi_lumi_sensor_ht_agl02_tryck
+          icon: mdi:gauge
+          friendly_name: Hall Lufttryck

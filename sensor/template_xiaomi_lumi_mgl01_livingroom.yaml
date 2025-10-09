@@ -1,0 +1,18 @@
+# Xiaomi Lumi Sen Ill MGL01 Sensors
+# Living Room
+
+template:
+  - sensor:
+      # Source: Xiaomi Lumi Sen Ill MGL01 (Illuminance sensor)
+      # Company: Xiaomi
+      # Type: Illuminance (lux) sensor
+      - name: "Vardagsrum ljusnivå"
+        unique_id: livingrom_illuminance
+        state: "{{ states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance') | int }}"
+        unit_of_measurement: "lx"
+        device_class: illuminance
+        state_class: measurement
+        attributes:
+          source_sensor: sensor.xiaomi_lumi_sen_ill_mgl01_illuminance
+          icon: mdi:weather-sunny
+          friendly_name: Vardagsrum ljusnivå

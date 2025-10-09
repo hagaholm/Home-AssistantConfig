@@ -409,47 +409,6 @@ automation:
       - service: homeassistant.turn_off
         entity_id: switch.shelly1_c45bbe77099d
 
-#    #################################################################################################
-#    ### Badrumsfönster stabiliserad fukt                                                          ###
-#    ### Fukt värdet har varit still i minst 15 minuter,                                           ###
-#    ### men det har kommit in nya ouppdaterade värden under denna tid --> stäng av forcerad fläkt ###
-#    ### T: state sensor.fukt_badrumsfonster                                                       ###
-#    ### C: no changes last 15 minutes                                                             ###
-#    ### C: updated last 15 minutes                                                                ###
-#    ### A: switch.shelly1_c45bbe77099d = off                                                      ###
-#    #################################################################################################
-#  - alias: Normal Badrumsfönster stabiliserad fukt
-#    trigger:
-#      - platform: state
-#        entity_id: sensor.fukt_badrumsfonster
-#
-#    condition:
-#      condition: and
-#      conditions:
-#        - condition: state
-#          entity_id: switch.shelly1_c45bbe77099d
-#          state: 'on'
-#
-#        # Make a check that needed parts exists, if not using this it will be an error in the next step 
-#        - condition: template
-#          value_template: "{{ not is_state('sensor.fukt_badrumsfonster', 'None') }}"
-#        - condition: template
-#          value_template: "{{ state_attr('sensor.fukt_badrumsfonster', 'last_changed') != None }}"
-#        - condition: template
-#          value_template: "{{ state_attr('sensor.fukt_badrumsfonster', 'last_updated') != None }}"
-#
-#        - condition: template
-#          value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.fukt_badrumsfonster', 'last_changed'))) > 900 }}"
-#        - condition: template
-#          value_template: "{{ (as_timestamp(now())-as_timestamp(state_attr('sensor.fukt_badrumsfonster', 'last_updated'))) < 900 }}"
-#
-#    action:
-#      - service: homeassistant.turn_off
-#        entity_id: switch.shelly1_c45bbe77099d
-
-#last_updated is the last time an entity did send its value to HA
-#last_changed is the last time there was a difference between the previous value and the new.
-
     #################################################################################################
     ### Hög fukt i huset                                                                          ###
     ### Fukt värdet är högt i huset då kan vi stänga av forcerad fläkt vid högre värde än normalt ###
@@ -898,9 +857,6 @@ automation:
       - delay: '00:00:05'
       - service: homeassistant.turn_on
         entity_id: switch.ventilationsaggregat
-#      - service: notify.mobile_app_sm_a528b
-#        data:
-#          message: 'Ventilation on (Ute <22°C, Off)'
 
     #############################################
     ### Ventilation on                        ###
@@ -942,9 +898,6 @@ automation:
       - delay: '00:00:05'
       - service: homeassistant.turn_on
         entity_id: switch.ventilationsaggregat
-#      - service: notify.mobile_app_sm_a528b
-#        data:
-#          message: 'Ventilation on (>60%, Off)'
 
     #############################################
     ### Ventilation on                        ###
@@ -986,6 +939,3 @@ automation:
       - delay: '00:00:05'
       - service: homeassistant.turn_on
         entity_id: switch.ventilationsaggregat
-#      - service: notify.mobile_app_sm_a528b
-##        data:
-#          message: 'Ventilation on (Inne <23°C, Off)'

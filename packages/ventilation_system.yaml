@@ -571,29 +571,8 @@ automation:
           above: '23'
 
     action:
-      - service: homeassistant.turn_off
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: switch.ventilationsaggregat
-#      - service: notify.mobile_app_sm_a528b
-#        data:
-#          message: 'Ventilation off (Borta, ute >24°C, <60%, Inne > 23°C)'
+      - service: script.ventilation_turn_off_loop
+        data: {}
 
     #####################################################
     ### Ventilation off                               ###
@@ -629,29 +608,8 @@ automation:
           above: '23'
 
     action:
-      - service: homeassistant.turn_off
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: switch.ventilationsaggregat
-#      - service: notify.mobile_app_sm_a528b
-#        data:
-#          message: Ventilation off (Ute >24°C, Borta, <60%, Inne > 23°C)
+      - service: script.ventilation_turn_off_loop
+        data: {}
 
     #####################################################
     ### Ventilation off                               ###
@@ -687,29 +645,8 @@ automation:
           above: '23'
 
     action:
-      - service: homeassistant.turn_off
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: switch.ventilationsaggregat
-#      - service: notify.mobile_app_sm_a528b
-#        data:
-#          message: 'Ventilation off (<60%, Borta, Ute >24°C, Inne > 23°C)'
+      - service: script.ventilation_turn_off_loop 
+        data: {} 
 
     #####################################################
     ### Ventilation off                               ###
@@ -745,29 +682,8 @@ automation:
           above: '24'
 
     action:
-      - service: homeassistant.turn_off
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_off
-        entity_id: switch.ventilationsaggregat
-#      - service: notify.mobile_app_sm_a528b
-#        data:
-#          message: Ventilation off (Inne >23°C, Borta, <60%, Ute > 24°C)
+      - service: script.ventilation_turn_off_loop 
+        data: {} 
 
     ######################
     ### Ventilation on ###
@@ -793,29 +709,8 @@ automation:
       state: 'off'
 
     action:
-      - service: homeassistant.turn_on
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_on
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_on
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_on
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_on
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_on
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_on
-        entity_id: switch.ventilationsaggregat
-#      - service: notify.mobile_app_sm_a528b
-#        data:
-#          message: 'Ventilation on (Hemma, Off)'
+      - service: script.ventilation_turn_on_loop 
+        data: {} 
 
     ################################################
     ### Ventilation on                           ###
@@ -837,26 +732,8 @@ automation:
       state: 'off'
 
     action:
-      - service: homeassistant.turn_on
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_on
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_on
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_on
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_on
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_on
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_on
-        entity_id: switch.ventilationsaggregat
+      - service: script.ventilation_turn_on_loop 
+        data: {} 
 
     #############################################
     ### Ventilation on                        ###
@@ -878,26 +755,8 @@ automation:
       state: 'off'
 
     action:
-      - service: homeassistant.turn_on
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_on
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_on
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_on
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_on
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_on
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_on
-        entity_id: switch.ventilationsaggregat
+      - service: script.ventilation_turn_on_loop 
+        data: {} 
 
     #############################################
     ### Ventilation on                        ###
@@ -919,23 +778,30 @@ automation:
       state: 'off'
 
     action:
-      - service: homeassistant.turn_on
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_on
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_on
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_on
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_on
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_on
-        entity_id: switch.ventilationsaggregat
-      - delay: '00:00:05'
-      - service: homeassistant.turn_on
-        entity_id: switch.ventilationsaggregat
+      - service: script.ventilation_turn_on_loop 
+        data: {} 
+
+##############
+### Script ###
+##############
+# Script for repeated turn_off or turn_on ventilation
+script:
+  ventilation_turn_off_loop:
+    alias: Ventilation Turn Off Loop
+    sequence:
+      - repeat:
+          count: 7
+          sequence:
+            - service: homeassistant.turn_off
+              entity_id: switch.ventilationsaggregat
+            - delay: '00:00:05'
+
+  ventilation_turn_on_loop:
+    alias: Ventilation Turn On Loop
+    sequence:
+      - repeat:
+          count: 7
+          sequence:
+            - service: homeassistant.turn_on
+              entity_id: switch.ventilationsaggregat
+            - delay: '00:00:05'

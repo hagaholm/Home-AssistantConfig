@@ -10,7 +10,7 @@
             - service: light.turn_on
               data:
                 entity_id: light.kok_underskap_bank
-                brightness_pct: 85
+                brightness_pct: 90
                 transition: 2
 
       - choose:
@@ -19,7 +19,7 @@
             - service: light.turn_on
               data:
                 entity_id: light.kok_underskap_diskbank
-                brightness_pct: 85
+                brightness_pct: 90
                 transition: 2
 
       - service: light.turn_on
@@ -40,7 +40,7 @@
             - service: light.turn_on
               data:
                 entity_id: light.kok_underskap_bank
-                brightness_pct: 40
+                brightness_pct: 50
                 transition: 2
 
       - choose:
@@ -49,13 +49,13 @@
             - service: light.turn_on
               data:
                 entity_id: light.kok_underskap_diskbank
-                brightness_pct: 40
+                brightness_pct: 50
                 transition: 2
 
       - service: light.turn_on
         data:
           entity_id: light.kok_vitrinskap
-          brightness_pct: 50
+          brightness_pct: 60
           transition: 2
 
   #########################

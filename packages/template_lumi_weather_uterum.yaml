@@ -5,7 +5,7 @@ template:
       # Company: LUMI
       # Type: Temperature, Humidity, Pressure sensor
       - name: "Uterum Temperatur"
-        unique_id: uterum_lumi_weather_temperature_4
+        unique_id: uterum_lumi_weather_temperature_3
         state: "{{ states('sensor.lumi_lumi_weather_temperature_4') }}"
         unit_of_measurement: "°C"
         device_class: temperature
@@ -16,7 +16,7 @@ template:
           friendly_name: Uterum Temperatur
 
       - name: "Uterum Luftfuktighet"
-        unique_id: uterum_lumi_weather_humidity_4
+        unique_id: uterum_lumi_weather_humidity_3
         state: "{{ states('sensor.lumi_lumi_weather_humidity_4') }}"
         unit_of_measurement: "%"
         device_class: humidity
@@ -27,7 +27,7 @@ template:
           friendly_name: Uterum Luftfuktighet
 
       - name: "Uterum Lufttryck"
-        unique_id: uterum_lumi_weather_pressure_4
+        unique_id: uterum_lumi_weather_pressure_3
         state: "{{ states('sensor.lumi_lumi_weather_pressure_4') }}"
         unit_of_measurement: "hPa"
         device_class: pressure

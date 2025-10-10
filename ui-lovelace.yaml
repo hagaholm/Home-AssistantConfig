@@ -11,7 +11,7 @@ views:
             graph: line
             name: Inne
             type: sensor
-          - entity: uterum_temperatur
+          - entity: sensor.uterum_temperatur
             graph: line
             name: Uteruminomhus
             type: sensor
@@ -565,7 +565,6 @@ views:
             name: Tv
           - entity: switch.vardagsrum_subbas
             name: Subbas
-          - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_4
         title: Vardagsrum
         show_header_toggle: false
         state_color: true

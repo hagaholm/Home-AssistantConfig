@@ -17,7 +17,7 @@ template:
 
       - name: "Uterum Luftfuktighet"
         unique_id: uterum_lumi_weather_humidity_4
-        state: "{{ states('sensor.lumi_lumi_weather_humidity_4) }}"
+        state: "{{ states('sensor.lumi_lumi_weather_humidity_4') }}"
         unit_of_measurement: "%"
         device_class: humidity
         state_class: measurement

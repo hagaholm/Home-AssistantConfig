@@ -30,7 +30,7 @@ automation:
                 entity_id: input_select.home_status
                 state: 'Borta'
             sequence:
-              - delay: "00:00:30"
+              - delay: "00:03:00"
               - condition: state
                 entity_id: input_select.home_status
                 state: 'Borta'
@@ -39,7 +39,7 @@ automation:
                   title: >
                     "Person Detection Away Alert {{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
                   message: >
-                    Person detected:
+                    Person detected 3 minutes ago:
                     - Cam 3 Uppfart: {{ states('sensor.cam3_person_count') | int }}
                     - Cam 5 Baksida: {{ states('sensor.cam5_person_count') | int }}
                     - Cam 6 Baksida: {{ states('sensor.cam6_person_count') | int }}

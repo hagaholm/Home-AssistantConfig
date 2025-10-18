@@ -919,6 +919,33 @@ views:
         state_color: true
       - type: entities
         entities:
+          - entity: sensor.lumi_lumi_sensor_ht_agl02_batteri
+            secondary_info: last-updated
+          - entity: sensor.lumi_lumi_sensor_ht_agl02_batteri_2
+            secondary_info: last-updated
+          - entity: sensor.lumi_lumi_sensor_motion_aq2_batteri
+            secondary_info: last-updated
+          - entity: sensor.lumi_lumi_sensor_motion_aq2_batteri_2
+            secondary_info: last-updated
+          - entity: sensor.lumi_lumi_sensor_motion_aq2_battery_2
+            secondary_info: last-updated
+          - entity: sensor.lumi_lumi_weather_batteri
+            secondary_info: last-updated
+          - entity: sensor.lumi_lumi_weather_battery_4
+            secondary_info: last-updated
+          - entity: sensor.lumi_lumi_weather_battery_3
+            secondary_info: last-updated
+          - entity: sensor.xiaomi_lumi_sen_ill_mgl01_batteri
+            secondary_info: last-updated
+          - entity: sensor.xiaomi_lumi_sen_ill_mgl01_battery
+            secondary_info: last-updated
+          - entity: sensor.xiaomi_lumi_sen_ill_mgl01_battery_2
+            secondary_info: last-updated
+        title: Batteri status Zigbee
+        show_header_toggle: false
+        state_color: true
+      - type: entities
+        entities:
           - entity: sensor.motion_sensor_battery
             secondary_info: last-updated
           - entity: sensor.motion_sensor_battery_2

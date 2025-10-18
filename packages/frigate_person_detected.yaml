@@ -7,9 +7,10 @@ automation:
     mode: single
 
     trigger:
-      - platform: numeric_state
-        entity_id: sensor.cams_all_person_count
-        above: 0
+      - platform: state
+        entity_id: 
+          - binary_sensor.cams_person_active
+        to: 'on'
 
     condition:
       condition: or

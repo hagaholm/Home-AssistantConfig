@@ -796,132 +796,138 @@ views:
             secondary_info: last-updated
           - entity: sensor.lumi_lumi_sensor_ht_agl02_batteri
             secondary_info: last-updated
-        title: Badrum Zigbee lumi.sensor_ht.agl02
+        title: Hall Zigbee lumi.sensor_ht.agl02
         show_header_toggle: false
         state_color: true
       - type: entities
         entities:
-          - sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet_2
-          - sensor.lumi_lumi_sensor_ht_agl02_temperatur_2
-          - sensor.lumi_lumi_sensor_ht_agl02_tryck_2
-          - sensor.lumi_lumi_sensor_ht_agl02_batteri_2
+          - entity: sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet_2
+            secondary_info: last-updated
+          - entity: sensor.lumi_lumi_sensor_ht_agl02_temperatur_2
+            secondary_info: last-updated
+          - entity: sensor.lumi_lumi_sensor_ht_agl02_tryck_2
+            secondary_info: last-updated
+          - entity: sensor.lumi_lumi_sensor_ht_agl02_batteri_2
+            secondary_info: last-updated
         title: Vardagsrum Zigbee lumi.sensor_ht.agl02
         show_header_toggle: false
         state_color: true
       - type: entities
         entities:
-          - binary_sensor.lumi_lumi_sensor_motion_aq2_narvaro
-          - sensor.lumi_lumi_sensor_motion_aq2_ljusstyrka
-          - binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse
-          - sensor.lumi_lumi_sensor_motion_aq2_batteri
+          - entity: binary_sensor.lumi_lumi_sensor_motion_aq2_narvaro
+            secondary_info: last-updated
+          - entity: sensor.lumi_lumi_sensor_motion_aq2_ljusstyrka
+            secondary_info: last-updated
+          - entity: binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse
+            secondary_info: last-updated
+          - entity: sensor.lumi_lumi_sensor_motion_aq2_batteri
+            secondary_info: last-updated
         title: Kök Zigbee LUMI lumi.sensor_motion.aq2
         show_header_toggle: false
         state_color: true
       - type: entities
         entities:
-          - binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse
-          - sensor.lumi_lumi_sensor_motion_aq2_ljusstyrka_2
-          - binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse_2
-          - sensor.lumi_lumi_sensor_motion_aq2_batteri_2
+          - entity: binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse
+            secondary_info: last-updated
+          - entity: sensor.lumi_lumi_sensor_motion_aq2_ljusstyrka_2
+            secondary_info: last-updated
+          - entity: binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse_2
+            secondary_info: last-updated
+          - entity: sensor.lumi_lumi_sensor_motion_aq2_batteri_2
+            secondary_info: last-updated
         title: Kök Zigbee LUMI lumi.sensor_motion.aq2
         show_header_toggle: false
         state_color: true
       - type: entities
         entities:
-          - sensor.lumi_lumi_sensor_motion_aq2_illuminance_2
-          - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2
-          - binary_sensor.lumi_lumi_sensor_motion_aq2_occupancy_2
-          - sensor.lumi_lumi_sensor_motion_aq2_battery_2
+          - entity: sensor.lumi_lumi_sensor_motion_aq2_illuminance_2
+            secondary_info: last-updated
+          - entity: binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2
+            secondary_info: last-updated
+          - entity: binary_sensor.lumi_lumi_sensor_motion_aq2_occupancy_2
+            secondary_info: last-updated
+          - entity: sensor.lumi_lumi_sensor_motion_aq2_battery_2
+            secondary_info: last-updated
         title: Kök Zigbee LUMI lumi.sensor_motion.aq2.2
         show_header_toggle: false
         state_color: true
       - type: entities
         entities:
-          - sensor.lumi_lumi_weather_luftfuktighet
-          - sensor.lumi_lumi_weather_temperatur
-          - sensor.lumi_lumi_weather_tryck
-          - sensor.lumi_lumi_weather_batteri
-        title: Hall Zigbee LUMI lumi.weather
+          - entity: sensor.lumi_lumi_weather_luftfuktighet
+            secondary_info: last-updated
+          - entity: sensor.lumi_lumi_weather_temperatur
+            secondary_info: last-updated
+          - entity: sensor.lumi_lumi_weather_tryck
+            secondary_info: last-updated
+          - entity: sensor.lumi_lumi_weather_batteri
+            secondary_info: last-updated
+        title: Badrum Zigbee LUMI lumi.weather
         show_header_toggle: false
         state_color: true
       - type: entities
         entities:
-          - sensor.lumi_lumi_weather_humidity_3
-          - sensor.lumi_lumi_weather_pressure_3
-          - sensor.lumi_lumi_weather_temperature_3
-          - sensor.lumi_lumi_weather_battery_3
-        title: Uterum Zigbee LUMI lumi.weather.3
+          - entity: sensor.lumi_lumi_weather_humidity_4
+            secondary_info: last-updated
+          - entity: sensor.lumi_lumi_weather_pressure_4
+            secondary_info: last-updated
+          - entity: sensor.lumi_lumi_weather_temperature_4
+            secondary_info: last-updated
+          - entity: sensor.lumi_lumi_weather_battery_4
+            secondary_info: last-updated
+        title: Uterum Zigbee LUMI lumi.weather.4
         show_header_toggle: false
         state_color: true
       - type: entities
         entities:
-          - sensor.xiaomi_lumi_sen_ill_mgl01
-          - sensor.xiaomi_lumi_sen_ill_mgl01_batteri
+          - entity: sensor.lumi_lumi_weather_humidity_3
+            secondary_info: last-updated
+          - entity: sensor.lumi_lumi_weather_pressure_3
+            secondary_info: last-updated
+          - entity: sensor.lumi_lumi_weather_temperature_3
+            secondary_info: last-updated
+          - entity: sensor.lumi_lumi_weather_battery_3
+            secondary_info: last-updated
+        title: Zigbee LUMI lumi.weather.3
+        show_header_toggle: false
+        state_color: true
+      - type: entities
+        entities:
+          - entity: sensor.xiaomi_lumi_sen_ill_mgl01
+            secondary_info: last-updated
+          - entity: sensor.xiaomi_lumi_sen_ill_mgl01_batteri
+            secondary_info: last-updated
         title: Louise rum Zigbee XIAOMI lumi.sen_ill.mgl01
         show_header_toggle: false
         state_color: true
       - type: entities
         entities:
-          - sensor.xiaomi_lumi_sen_ill_mgl01_illuminance
-          - sensor.xiaomi_lumi_sen_ill_mgl01_battery
+          - entity: sensor.xiaomi_lumi_sen_ill_mgl01_illuminance
+            secondary_info: last-updated
+          - entity: sensor.xiaomi_lumi_sen_ill_mgl01_battery
+            secondary_info: last-updated
         title: Vardagsrum Zigbee XIAOMI lumi.sen_ill.mgl01.1
         show_header_toggle: false
         state_color: true
       - type: entities
-        entities:          
-          - sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2
-          - sensor.xiaomi_lumi_sen_ill_mgl01_battery_2
+        entities:
+          - entity: sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2
+            secondary_info: last-updated
+          - entity: sensor.xiaomi_lumi_sen_ill_mgl01_battery_2
+            secondary_info: last-updated
         title: Hall Zigbee XIAOMI lumi.sen_ill.mgl02.2
         show_header_toggle: false
         state_color: true
       - type: entities
         entities:
-          - sensor.motion_sensor_battery
-          - sensor.motion_sensor_battery_2
-          - sensor.sensor_3_battery
-          - sensor.sensor_4_battery
+          - entity: sensor.motion_sensor_battery
+            secondary_info: last-updated
+          - entity: sensor.motion_sensor_battery_2
+            secondary_info: last-updated
+          - entity: sensor.sensor_3_battery
+            secondary_info: last-updated
+          - entity: sensor.sensor_4_battery
+            secondary_info: last-updated
         title: Batteri status IKEA
-        show_header_toggle: false
-        state_color: true
-      - type: entities
-        entities:
-          - sensor.frys_temp_lastupdated
-          - sensor.kyl_temp_lastupdated
-          - sensor.badrum_temp_lastupdated
-          - sensor.badrum_fukt_lastupdated
-          - sensor.tvattstuga_temp_lastupdated
-          - sensor.tvattstuga_fukt_lastupdated
-          - sensor.varmepump_temp_lastupdated
-          - sensor.vardagsrum_temp_lastupdated
-          - sensor.hall_temp_lastupdated
-          - sensor.hall_fukt_lastupdated
-          - sensor.forrad_temp_lastupdated
-          - sensor.garage_temp_lastupdated
-          - sensor.garage_fukt_lastupdated
-          - sensor.friggebod_temp_lastupdated
-          - sensor.friggebod_fukt_lastupdated
-          - sensor.ute_friggebod_temp_lastupdated
-          - sensor.ute_friggebod_fukt_lastupdated
-        title: Temperatursensor senast
-        show_header_toggle: false
-        state_color: true
-      - type: entities
-        entities:
-          - sensor.badrum_luftfuktighet
-          - sensor.fukt_badrumsfonster
-          - switch.shelly1_c45bbe77099d
-          - switch.ventilationsaggregat
-        title: Ventilation badrum
-        show_header_toggle: false
-        state_color: true
-      - type: entities
-        entities:
-#          - binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse
-#          - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2
-          - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_3
-          - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_4
-#          - binary_sensor.motion_sensor # Köksgolv
-        title: Rörelsedetektorer
         show_header_toggle: false
         state_color: true
   - path: car

@@ -252,36 +252,32 @@
       - service: light.toggle
         entity_id: light.vardagsrum_vitrinskap
 
-    #####################################################
-    ### Stänger av ringklocka när ingen är hemma      ###
-    ### T: group.track_for_home_devices to 'not_home' ###
-    ### A: switch.ringklocka = off                    ###
-    #####################################################
-  - alias: Ringklocka off (-> borta)
-    id: '5771075505803' 
+  #############################################
+  ### Slå ihop: Stänger/sätter på ringklocka ###
+  #############################################
+  - alias: Ringklocka on off
+      id: '2421022434972' 
+    mode: single
 
     trigger:
-      platform: state
-      entity_id: group.track_for_home_devices
-      to: 'not_home'
+      - platform: state
+        entity_id: group.track_for_home_devices
+        to: 'not_home'
+      - platform: state
+        entity_id: group.track_for_home_devices
+        to: 'home'
 
     action:
-      - service: homeassistant.turn_off
-        entity_id: switch.ringklocka
-
-    #################################################
-    ### Sätter på ringklocka när ingen är hemma   ###
-    ### T: group.track_for_home_devices to 'home' ###
-    ### A: switch.ringklocka = on                 ###
-    #################################################
-  - alias: Ringklocka on (-> hemma)
-    id: '2421022434972' 
-
-    trigger:
-      platform: state
-      entity_id: group.track_for_home_devices
-      to: 'home'
-
-    action:
-      - service: homeassistant.turn_on
-        entity_id: switch.ringklocka
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: "{{ trigger.to_state.state == 'not_home' }}"
+            sequence:
+              - service: homeassistant.turn_off
+                entity_id: switch.ringklocka
+          - conditions:
+              - condition: template
+                value_template: "{{ trigger.to_state.state == 'home' }}"
+            sequence:
+              - service: homeassistant.turn_on
+                entity_id: switch.ringklocka

@@ -1,17 +1,28 @@
     ###############################################################
     ### Varnar för hög temp i Uterum                            ###
-    ### T: sensor.lumi_lumi_sensor_ht_agl02_temperatur_3 > 35   ###
+    ### T: sensor.uterum_temperatur > 35                        ###
     ### A: notify.mobile_app_sm_a528b "LARM! Hög temp i Uterum" ###
     ###############################################################
   - alias: Uterum larm hög temp
-    id: '4622609198485' 
+    id: '4622609198485'
+    mode: single
 
     trigger:
-      platform: numeric_state
-      entity_id: sensor.lumi_lumi_sensor_ht_agl02_temperatur_3
-      above: '35'
+      - platform: numeric_state
+        entity_id: sensor.uterum_temperatur
+        above: 35
+        for: "00:10:00"
+
+    condition:
+      - condition: template
+        value_template: "{{ not is_state('sensor.uterum_temperatur','unknown') }}"
 
     action:
       - service: notify.mobile_app_sm_a528b
         data:
-          message: "LARM! Hög temp i Uterum: {{ states('sensor.lumi_lumi_sensor_ht_agl02_temperatur_3') }} {{ state_attr('sensor.lumi_lumi_sensor_ht_agl02_temperatur_3', 'unit_of_measurement') }}"
+          title: "LARM! Uterum - hög temperatur"
+          message: >
+            {% set t = states('sensor.uterum_temperatur')|float(0) %}
+            {% set unit = state_attr('sensor.uterum_temperatur','unit_of_measurement') %}
+            LARM! Hög temp i Uterum: {{ t }} {{ unit }}
+            Nivå: {% if t > 40 %}Mycket hög{% elif t > 37 %}Hög{% else %}Mild{% endif %}

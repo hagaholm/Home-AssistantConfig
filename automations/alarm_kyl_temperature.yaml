@@ -4,17 +4,28 @@
     ### A: notify.mobile_app_sm_a528b "LARM! Hög temp i kylen" ###
     ##############################################################
   - alias: Larm! Hög temp i kyl
-    id: '9665695675546' 
+    id: '9665695675546'
+    mode: single
 
     trigger:
-      platform: numeric_state
-      entity_id: sensor.kyl_temperature
-      above: '10'
+      - platform: numeric_state
+        entity_id: sensor.kyl_temperature
+        above: 10
+        for: "00:10:00"
+
+    condition:
+      - condition: template
+        value_template: "{{ not is_state('sensor.kyl_temperature','unknown') }}"
 
     action:
       - service: notify.mobile_app_sm_a528b
         data:
-          message: "LARM! Hög temp i kylen: {{ states('sensor.kyl_temperature') }} {{ state_attr('sensor.kyl_temperature', 'unit_of_measurement') }}"
+          title: "LARM! Kyl - hög temperatur"
+          message: >
+            {% set t = states('sensor.kyl_temperature')|float(0) %}
+            {% set unit = state_attr('sensor.kyl_temperature','unit_of_measurement') %}
+            LARM! Hög temp i kylen: {{ t }} {{ unit }}
+            Nivå: {% if t > 12 %}Mycket hög{% elif t > 10 %}Hög{% else %}Mild{% endif %}
 
     ##############################################################
     ### Varnar för låg temp i kylen                            ###
@@ -22,14 +33,25 @@
     ### A: notify.mobile_app_sm_a528b "LARM! Låg temp i kylen" ###
     ##############################################################
   - alias: Larm! Låg temp i kyl
-    id: '8148240711901' 
+    id: '8148240711901'
+    mode: single
 
     trigger:
-      platform: numeric_state
-      entity_id: sensor.kyl_temperature
-      below: '3'
+      - platform: numeric_state
+        entity_id: sensor.kyl_temperature
+        below: 3
+        for: "00:10:00"
+
+    condition:
+      - condition: template
+        value_template: "{{ not is_state('sensor.kyl_temperature','unknown') }}"
 
     action:
       - service: notify.mobile_app_sm_a528b
         data:
-          message: "LARM! Låg temp i kylen: {{ states('sensor.kyl_temperature') }} {{ state_attr('sensor.kyl_temperature', 'unit_of_measurement') }}"
+          title: "LARM! Kyl - låg temperatur"
+          message: >
+            {% set t = states('sensor.kyl_temperature')|float(0) %}
+            {% set unit = state_attr('sensor.kyl_temperature','unit_of_measurement') %}
+            LARM! Låg temp i kylen: {{ t }} {{ unit }}
+            Nivå: {% if t < 0 %}Mycket låg{% elif t < 2 %}Låg{% else %}Mild{% endif %}

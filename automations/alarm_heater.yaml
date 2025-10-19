@@ -4,17 +4,28 @@
     ### A: notify.mobile_app_sm_a528b        ###
     ############################################
   - alias: Låg temp ackumulatortank
-    id: '5099658940929' 
+    id: '5099658940929'
+    mode: single
 
     trigger:
-      platform: numeric_state
-      entity_id: sensor.varmepump_temperature
-      below: '20'
+      - platform: numeric_state
+        entity_id: sensor.varmepump_temperature
+        below: 20
+        for: "00:10:00"
+
+    condition:
+      - condition: template
+        value_template: "{{ not is_state('sensor.varmepump_temperature','unknown') }}"
 
     action:
       - service: notify.mobile_app_sm_a528b
         data:
-          message: "Larm! Låg temp ackumulatortank: {{ states('sensor.varmepump_temperature') }} {{ state_attr('sensor.varmepump_temperature', 'unit_of_measurement') }}"
+          title: "Larm! Låg temp ackumulatortank"
+          message: >
+            {% set t = states('sensor.varmepump_temperature')|float(0) %}
+            {% set unit = state_attr('sensor.varmepump_temperature','unit_of_measurement') %}
+            LARM! Låg temp i ackumulatortank: {{ t }} {{ unit }}
+            Nivå: {% if t < 10 %}Mycket låg{% elif t < 18 %}Låg{% else %}Mild{% endif %}
 
     ############################################
     ### Hög temp ackumulatortank             ###
@@ -22,14 +33,25 @@
     ### A: notify.mobile_app_sm_a528b        ###
     ############################################
   - alias: Hög temp ackumulatortank
-    id: '6125166678823' 
+    id: '6125166678823'
+    mode: single
 
     trigger:
-      platform: numeric_state
-      entity_id: sensor.varmepump_temperature
-      above: '55'
+      - platform: numeric_state
+        entity_id: sensor.varmepump_temperature
+        above: 55
+        for: "00:10:00"
+
+    condition:
+      - condition: template
+        value_template: "{{ not is_state('sensor.varmepump_temperature','unknown') }}"
 
     action:
       - service: notify.mobile_app_sm_a528b
         data:
-          message: "Larm! Hög temp ackumulatortank: {{ states('sensor.varmepump_temperature') }} {{ state_attr('sensor.varmepump_temperature', 'unit_of_measurement') }}"
+          title: "Larm! Hög temp ackumulatortank"
+          message: >
+            {% set t = states('sensor.varmepump_temperature')|float(0) %}
+            {% set unit = state_attr('sensor.varmepump_temperature','unit_of_measurement') %}
+            LARM! Hög temp i ackumulatortank: {{ t }} {{ unit }}
+            Nivå: {% if t > 65 %}Mycket hög{% elif t > 60 %}Hög{% else %}Mild{% endif %}

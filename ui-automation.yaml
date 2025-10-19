@@ -108,15 +108,45 @@ views:
         state_color: true
       - type: entities
         entities:
-          - automation.uterum_larm_hog_temp
+          - automation.friggebod_frysvakt
           - automation.friggebod_larm_hog_temp
-          - automation.larm_hog_temp_i_kyl
+          - automation.friggebod_larm_lag_temp
+        title: Larm friggebod
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.forrad_larm_hog_temp
+          - automation.forrad_larm_lag_temp
+        title: Larm förråd
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
           - automation.larm_varning_hog_temp_i_frys
           - automation.larm_hog_temp_i_frys
           - automation.larm_lag_temp_i_frys
-          - automation.hog_temp_raspberry
+        title: Larm frys
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.larm_hog_temp_i_kyl
+          - automation.larm_lag_temp_i_kyl
+        title: Larm kyl
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
           - automation.lag_temp_ackumulatortank
           - automation.hog_temp_ackumulatortank
+        title: Larm bergvärme
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.uterum_larm_hog_temp
+          - automation.hog_temp_raspberry
           - automation.lag_temp_franluft
           - automation.hog_temp_franluft
           - automation.hog_temp_tilluft
@@ -130,31 +160,6 @@ views:
           - automation.larm_lag_temp_i_kyl
           - automation.lag_temp_tilluft
         title: Larm temperatur off
-        show_header_toggle: true
-        state_color: true
-      - type: entities
-        entities:
-          - automation.ingen_kontakt_med_forrad_fasadbelysning
-          - automation.ingen_kontakt_med_fotogenlampa_i_uterum
-          - automation.ingen_kontakt_med_friggebod_brytare_vid_stora_fonstret
-          - automation.ingen_kontakt_med_friggebod_fasadbelysning
-          - automation.ingen_kontakt_med_garage_avfuktare
-          - automation.ingen_kontakt_med_garage_elvarme
-          - automation.ingen_kontakt_med_tvattstuga_fasadbelysning
-          - automation.ingen_kontakt_med_uterum_fonster
-          - automation.ingen_kontakt_med_vardagsrum_skank
-          - automation.ingen_kontakt_med_vardagsrum_vagn
-          - automation.kontakt_med_forrad_fasadbelysning
-          - automation.kontakt_med_fotogenlampa_i_uterum
-          - automation.kontakt_med_friggebod_brytare_vid_stora_fonstret
-          - automation.kontakt_med_friggebod_fasadbelysning
-          - automation.kontakt_med_garage_avfuktare
-          - automation.kontakt_med_garage_elvarme
-          - automation.kontakt_med_tvattstuga_fasadbelysning
-          - automation.kontakt_med_uterum_fonster
-          - automation.kontakt_med_vardagsrum_skank
-          - automation.kontakt_med_vardagsrum_vagn
-        title: IKEA
         show_header_toggle: true
         state_color: true
       - type: entities

@@ -1,66 +1,89 @@
-    #######################################################################
-    ### Extra varning för hög temp i frysen                             ###
-    ### T: sensor.frys_temperature > - 13                               ###
-    ### A: notify.mobile_app_sm_a528b "LARM! Varning hög temp i frysen" ###
-    #######################################################################
+    #################################################
+    ### Extra varning för hög temp i frysen       ###
+    ### T: sensor.frys_temperature > -13 (stabil) ###
+    ### A: notify.mobile_app_sm_a528b             ###
+    #################################################
   - alias: Larm! Varning hög temp i frys
-    id: '1480319093817' 
+    id: '1480319093817'
+    mode: single
 
     trigger:
-      platform: numeric_state
-      entity_id: sensor.frys_temperature
-      above: '-13'
+      - platform: numeric_state
+        entity_id: sensor.frys_temperature
+        above: -13
+        for: "00:10:00"
+
+    condition:
+      - condition: template
+        value_template: "{{ not is_state('sensor.frys_temperature','unknown') }}"
 
     action:
-      - choose:
-          - conditions: "{{ states('sensor.frys_temperature') != 'unknown' }}"
-            sequence:
-              - service: notify.mobile_app_sm_a528b
-                data:
-                  message: "LARM! Varning hög temp i frysen: {{ states('sensor.frys_temperature') }} {{ state_attr('sensor.frys_temperature', 'unit_of_measurement') }}"
-              - delay: '00:00:10'
-              - service: notify.mobile_app_sm_a528b
-                data:
-                  message: "LARM! Varning hög temp i frysen: {{ states('sensor.frys_temperature') }} {{ state_attr('sensor.frys_temperature', 'unit_of_measurement') }}"
+      - service: notify.mobile_app_sm_a528b
+        data:
+          title: "Varning! Frys - hög temperatur"
+          message: >
+            {% set t = states('sensor.frys_temperature')|float(0) %}
+            {% set unit = state_attr('sensor.frys_temperature','unit_of_measurement') %}
+            Varning! Hög temp i frysen: {{ t }} {{ unit }}
 
-    ###############################################################
-    ### Varnar för hög temp i frysen                            ###
-    ### T: sensor.frys_temperature > - 15                       ###
-    ### A: notify.mobile_app_sm_a528b "LARM! Hög temp i frysen" ###
-    ###############################################################
+    #########################################################
+    ### Varnar för hög temp i frysen (mellan -15 och -13) ###
+    ### T: sensor.frys_temperature > -15                  ###
+    ### C: sensor.frys_temperature < -13                  ###
+    ### A: notify.mobile_app_sm_a528b                     ###
+    #########################################################
   - alias: Larm! Hög temp i frys
-    id: '1128705003746' 
+    id: '1128705003746'
+    mode: single
 
     trigger:
-      platform: numeric_state
-      entity_id: sensor.frys_temperature
-      above: '-15'
+      - platform: numeric_state
+        entity_id: sensor.frys_temperature
+        above: -15
+        for: "00:10:00"
+
+    condition:
+      condition: and
+      conditions:
+        - condition: template
+          value_template: "{{ not is_state('sensor.frys_temperature','unknown') }}"
+        - condition: numeric_state
+          entity_id: sensor.frys_temperature
+          below: -13
 
     action:
-      - choose:
-          - conditions: "{{ states('sensor.frys_temperature') != 'unknown' }}"
-            sequence:
-              - service: notify.mobile_app_sm_a528b
-                data:
-                  message: "LARM! Hög temp i frysen: {{ states('sensor.frys_temperature') }} {{ state_attr('sensor.frys_temperature', 'unit_of_measurement') }}"
+      - service: notify.mobile_app_sm_a528b
+        data:
+          title: "Larm! Frys - hög temperatur"
+          message: >
+            {% set t = states('sensor.frys_temperature')|float(0) %}
+            {% set unit = state_attr('sensor.frys_temperature','unit_of_measurement') %}
+            LARM! Hög temp i frysen: {{ t }} {{ unit }}
 
     #############################################################
     ### Varnar för låg temp i Frys                            ###
-    ### T: sensor.frys_temperature < - 25                     ###
+    ### T: sensor.frys_temperature < -25                      ###
     ### A: notify.mobile_app_sm_a528b "LARM! Låg temp i Frys" ###
     #############################################################
   - alias: Larm! Låg temp i frys
-    id: '4559659707597' 
+    id: '4559659707597'
+    mode: single
 
     trigger:
-      platform: numeric_state
-      entity_id: sensor.frys_temperature
-      below: '-25'
+      - platform: numeric_state
+        entity_id: sensor.frys_temperature
+        below: -25
+        for: "00:10:00"
+
+    condition:
+      - condition: template
+        value_template: "{{ not is_state('sensor.frys_temperature','unknown') }}"
 
     action:
-      - choose:
-          - conditions: "{{ states('sensor.frys_temperature') != 'unknown' }}"
-            sequence:
-              - service: notify.mobile_app_sm_a528b
-                data:
-                  message: "LARM! Låg temp i frysen: {{ states('sensor.frys_temperature') }} {{ state_attr('sensor.frys_temperature', 'unit_of_measurement') }}"
+      - service: notify.mobile_app_sm_a528b
+        data:
+          title: "Larm! Frys - låg temperatur"
+          message: >
+            {% set t = states('sensor.frys_temperature')|float(0) %}
+            {% set unit = state_attr('sensor.frys_temperature','unit_of_measurement') %}
+            LARM! Låg temp i frysen: {{ t }} {{ unit }}

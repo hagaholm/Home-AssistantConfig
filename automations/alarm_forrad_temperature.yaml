@@ -1,69 +1,67 @@
-    ###############################################################
-    ### Varnar för hög temp i Förråd                            ###
-    ### T: sensor.forrad_temperature > 11                       ###
-    ### C: sensor.ute < 5                                       ###
-    ### A: notify.mobile_app_sm_a528b "LARM! Hög temp i Förråd" ###
-    ###############################################################
+    ###########################################################
+    ### Varnar för hög temp i Förråd                        ###
+    ### T: sensor.forrad_temperature > 11 (stabil i 10 min) ###
+    ### C: sensor.ute < 5                                   ###
+    ### A: notify.mobile_app_sm_a528b                       ###
+    ###########################################################
   - alias: Förråd larm hög temp
-    id: '0720252362419' 
+    id: '0720252362419'
+    mode: single
 
     trigger:
       - platform: numeric_state
         entity_id: sensor.forrad_temperature
-        above: '11'
-      - platform: numeric_state
-        entity_id: sensor.forrad_temperature
-        above: '12'
-      - platform: numeric_state
-        entity_id: sensor.forrad_temperature
-        above: '13'
+        above: 11
+        for: "00:10:00"
 
     condition:
       condition: and
       conditions:
         - condition: numeric_state
           entity_id: sensor.ute
-          below: '5'
+          below: 5
 
     action:
       - service: notify.mobile_app_sm_a528b
         data:
-          message: "LARM! Hög temp i Förråd: {{ states('sensor.forrad_temperature') }} {{ state_attr('sensor.forrad_temperature', 'unit_of_measurement') }}"
+          title: "LARM! Förråd - hög temperatur"
+          message: >
+            {% set t = states('sensor.forrad_temperature')|float(0) %}
+            {% set unit = state_attr('sensor.forrad_temperature','unit_of_measurement') %}
+            {% set ute = states('sensor.ute') %}
+            LARM! Hög temp i Förråd: {{ t }} {{ unit }} (ute: {{ ute }})
+            Nivå: {% if t > 13 %}Mycket hög{% elif t > 12 %}Hög{% else %}Mild{% endif %}
 
-    ###############################################################
-    ### Varnar för låg temp i Förråd                            ###
-    ### T: sensor.forrad_temperature < 4                        ###
-    ### C: sensor.ute < 5                                       ###
-    ### A: notify.mobile_app_sm_a528b "LARM! Låg temp i Förråd" ###
-    ###############################################################
+    ##########################################################
+    ### Varnar för låg temp i Förråd                       ###
+    ### T: sensor.forrad_temperature < 4 (stabil i 10 min) ###
+    ### C: sensor.ute < 5                                  ###
+    ### A: notify.mobile_app_sm_a528b                      ###
+    ##########################################################
   - alias: Förråd larm låg temp
-    id: '6116341527796' 
+    id: '6116341527796'
+    mode: single
 
     trigger:
       - platform: numeric_state
         entity_id: sensor.forrad_temperature
-        below: '4'
-      - platform: numeric_state
-        entity_id: sensor.forrad_temperature
-        below: '3'
-      - platform: numeric_state
-        entity_id: sensor.forrad_temperature
-        below: '2'
-      - platform: numeric_state
-        entity_id: sensor.forrad_temperature
-        below: '1'
-      - platform: numeric_state
-        entity_id: sensor.forrad_temperature
-        below: '0'
+        below: 4
+        for: "00:10:00"
 
     condition:
       condition: and
       conditions:
         - condition: numeric_state
           entity_id: sensor.ute
-          below: '5'
+          below: 5
 
     action:
       - service: notify.mobile_app_sm_a528b
         data:
-          message: "LARM! Låg temp i Förråd: {{ states('sensor.forrad_temperature') }} {{ state_attr('sensor.forrad_temperature', 'unit_of_measurement') }}"
+          title: "LARM! Förråd - låg temperatur"
+          message: >
+            {% set t = states('sensor.forrad_temperature')|float(0) %}
+            {% set unit = state_attr('sensor.forrad_temperature','unit_of_measurement') %}
+            {% set ute = states('sensor.ute') %}
+            LARM! Låg temp i Förråd: {{ t }} {{ unit }} (ute: {{ ute }})
+            Nivå: {% if t < 0 %}Mycket låg{% elif t < 2 %}Låg{% else %}Mild{% endif %}

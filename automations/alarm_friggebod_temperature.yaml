@@ -5,24 +5,32 @@
     ### A: notify.mobile_app_sm_a528b "LARM! Hög temp i Friggebod" ###
     ##################################################################
   - alias: Friggebod larm hög temp
-    id: '8904329147725' 
+    id: '8904329147725'
+    mode: single
 
     trigger:
-      platform: numeric_state
-      entity_id: sensor.friggebod_temperature
-      above: '23'
+      - platform: numeric_state
+        entity_id: sensor.friggebod_temperature
+        above: 23
+        for: "00:10:00"
 
     condition:
       condition: and
       conditions:
         - condition: numeric_state
           entity_id: sensor.ute
-          below: '15'
+          below: 15
 
     action:
       - service: notify.mobile_app_sm_a528b
         data:
-          message: "LARM! Hög temp i Friggebod: {{ states('sensor.friggebod_temperature') }} {{ state_attr('sensor.friggebod_temperature', 'unit_of_measurement') }}"
+          title: "LARM! Friggebod - hög temperatur"
+          message: >
+            {% set t = states('sensor.friggebod_temperature')|float(0) %}
+            {% set unit = state_attr('sensor.friggebod_temperature','unit_of_measurement') %}
+            {% set ute = states('sensor.ute') %}
+            LARM! Hög temp i Friggebod: {{ t }} {{ unit }} (ute: {{ ute }})
+            Nivå: {% if t > 27 %}Mycket hög{% elif t > 24 %}Hög{% else %}Mild{% endif %}
 
     ##################################################################
     ### Varnar för låg temp i Friggebod                            ###
@@ -31,24 +39,32 @@
     ### A: notify.mobile_app_sm_a528b "LARM! Låg temp i Friggebod" ###
     ##################################################################
   - alias: Friggebod larm låg temp
-    id: '3853132210260' 
+    id: '3853132210260'
+    mode: single
 
     trigger:
-      platform: numeric_state
-      entity_id: sensor.friggebod_temperature
-      below: '19'
+      - platform: numeric_state
+        entity_id: sensor.friggebod_temperature
+        below: 19
+        for: "00:10:00"
 
     condition:
       condition: and
       conditions:
         - condition: numeric_state
           entity_id: sensor.ute
-          below: '15'
+          below: 15
 
     action:
       - service: notify.mobile_app_sm_a528b
         data:
-          message: "LARM! Låg temp i Friggebod: {{ states('sensor.friggebod_temperature') }} {{ state_attr('sensor.friggebod_temperature', 'unit_of_measurement') }}"
+          title: "LARM! Friggebod - låg temperatur"
+          message: >
+            {% set t = states('sensor.friggebod_temperature')|float(0) %}
+            {% set unit = state_attr('sensor.friggebod_temperature','unit_of_measurement') %}
+            {% set ute = states('sensor.ute') %}
+            LARM! Låg temp i Friggebod: {{ t }} {{ unit }} (ute: {{ ute }})
+            Nivå: {% if t < 0 %}Mycket låg{% elif t < 17 %}Låg{% else %}Mild{% endif %}
 
     ################################################################
     ### Frysvakt Friggebod                                       ###
@@ -56,14 +72,20 @@
     ### A: notify.mobile_app_sm_a528b "LARM! Frysvakt Friggebod" ###
     ################################################################
   - alias: Friggebod frysvakt
-    id: '8790714161214' 
+    id: '8790714161214'
+    mode: single
 
     trigger:
-      platform: numeric_state
-      entity_id: sensor.friggebod_temperature
-      below: '3'
+      - platform: numeric_state
+        entity_id: sensor.friggebod_temperature
+        below: 3
+        for: "00:05:00"
 
     action:
       - service: notify.mobile_app_sm_a528b
         data:
-          message: "LARM! Frysvakt Friggebod: {{ states('sensor.friggebod_temperature') }} {{ state_attr('sensor.friggebod_temperature', 'unit_of_measurement') }}"
+          title: "LARM! Frysvakt Friggebod"
+          message: >
+            {% set t = states('sensor.friggebod_temperature')|float(0) %}
+            {% set unit = state_attr('sensor.friggebod_temperature','unit_of_measurement') %}
+            LARM! Frysvakt Friggebod: {{ t }} {{ unit }}

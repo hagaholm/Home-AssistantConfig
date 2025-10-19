@@ -1,216 +1,108 @@
-###############################################
-### Ringklocka tvättstuga dag               ###
-### T: switch.ringklocka_tvattstuga == on   ###
-### C: input_select.home_status == Hemma på ###
-### A: switch.ringklocka_tvattstuga = off   ###
-###    notify.mobile_app_sm_a528b           ###
-###############################################
-  - alias: Ringklocka tvättstuga dag
-    id: '4680276550082' 
+##################################################
+### Ringklocka tvättstuga (dag / natt / borta) ###
+##################################################
+  - alias: Ringklocka tvättstuga
+    id: '4680276550081'
+    mode: single
 
     trigger:
-      platform: state
-      entity_id: switch.ringklocka_tvattstuga
-      to: 'on'
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_select.home_status
-          state: 'Hemma på'
+      - platform: state
+        entity_id: switch.ringklocka_tvattstuga
+        to: 'on'
 
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ringklocka_tvattstuga
       - delay:
           seconds: 5
-      - service: notify.mobile_app_sm_a528b
-        data:
-          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-          message: "Ringklocka tvättstuga, dag"
-          data:
-            file: /media/Day/camera_3_latest.jpg
-      - delay:
-          seconds: 10
-
-###############################################
-### Ringklocka tvättstuga natt              ###
-### T: switch.ringklocka_tvattstuga == on   ###
-### C: input_select.home_status == Hemma av ###
-### A: switch.ringklocka_tvattstuga = off   ###
-###    notify.mobile_app_sm_a528b           ###
-###############################################
-  - alias: Ringklocka tvättstuga natt
-    id: '8581808842331' 
-
-    trigger:
-      platform: state
-      entity_id: switch.ringklocka_tvattstuga
-      to: 'on'
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_select.home_status
-          state: 'Hemma av'
-
-    action:
-      - service: homeassistant.turn_off
-        entity_id: switch.ringklocka_tvattstuga
-      - delay:
-          seconds: 5
-      - service: notify.mobile_app_sm_a528b
-        data:
-          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-          message: "Ringklocka tvättstuga, natt"
-          data:
-            file: /media/Night/camera_3_latest.jpg
-      - delay:
-          seconds: 10
-
-#############################################
-### Ringklocka tvättstuga borta           ###
-### T: switch.ringklocka_tvattstuga == on ###
-### C: input_select.home_status == borta  ###
-### A: switch.ringklocka_tvattstuga = off ###
-###    notify.mobile_app_sm_a528b         ###
-#############################################
-  - alias: Ringklocka tvättstuga borta
-    id: '8856227519117' 
-
-    trigger:
-      platform: state
-      entity_id: switch.ringklocka_tvattstuga
-      to: 'on'
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_select.home_status
-          state: 'borta'
-
-    action:
-      - service: homeassistant.turn_off
-        entity_id: switch.ringklocka_tvattstuga
-      - delay:
-          seconds: 5
-      - service: notify.mobile_app_sm_a528b
-        data:
-          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-          message: "Ringklocka tvättstuga, borta"
-          data:
-            file: /media/Away/camera_3_latest.jpg
-      - delay:
-          seconds: 10
-
-###############################################
-### Ringklocka hall dag                     ###
-### T: switch.ringklocka_hall == on         ###
-### C: input_select.home_status == Hemma på ###
-### A: switch.ringklocka_hall = off         ###
-###    notify.mobile_app_sm_a528b           ###
-###############################################
-  - alias: Ringklocka hall dag
-    id: '2011937267368' 
-
-    trigger:
-      platform: state
-      entity_id: switch.ringklocka_hall
-      to: 'on'
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_select.home_status
-          state: 'Hemma på'
-
-    action:
-      - service: homeassistant.turn_off
-        entity_id: switch.ringklocka_hall
-      - delay:
-          seconds: 5
-      - service: notify.mobile_app_sm_a528b
-        data:
-          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-          message: "Ringklocka hall, dag"
-          data:
-            file: /media/Day/camera_2_latest.jpg
-      - delay:
-          seconds: 10
-
-###############################################
-### Ringklocka hall natt                    ###
-### T: switch.ringklocka_hall == on         ###
-### C: input_select.home_status == Hemma av ###
-### A: switch.ringklocka_hall = off         ###
-###    notify.mobile_app_sm_a528b           ###
-###############################################
-  - alias: Ringklocka hall natt
-    id: '7558417871695' 
-
-    trigger:
-      platform: state
-      entity_id: switch.ringklocka_hall
-      to: 'on'
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_select.home_status
-          state: 'Hemma av'
-
-    action:
-      - service: homeassistant.turn_off
-        entity_id: switch.ringklocka_hall
-      - delay:
-          seconds: 5
-      - service: notify.mobile_app_sm_a528b
-        data:
-          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-          message: "Ringklocka hall, natt"
-          data:
-            file: /media/Night/camera_2_latest.jpg
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: input_select.home_status
+                state: 'Hemma på'
+            sequence:
+              - service: notify.mobile_app_sm_a528b
+                data:
+                  title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+                  message: "Ringklocka tvättstuga, dag"
+                  data:
+                    file: /media/Day/camera_3_latest.jpg
+          - conditions:
+              - condition: state
+                entity_id: input_select.home_status
+                state: 'Hemma av'
+            sequence:
+              - service: notify.mobile_app_sm_a528b
+                data:
+                  title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+                  message: "Ringklocka tvättstuga, natt"
+                  data:
+                    file: /media/Night/camera_3_latest.jpg
+          - conditions:
+              - condition: state
+                entity_id: input_select.home_status
+                state: 'borta'
+            sequence:
+              - service: notify.mobile_app_sm_a528b
+                data:
+                  title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+                  message: "Ringklocka tvättstuga, borta"
+                  data:
+                    file: /media/Away/camera_3_latest.jpg
       - delay:
           seconds: 10
 
 ############################################
-### Ringklocka hall borta                ###
-### T: switch.ringklocka_hall == on      ###
-### C: input_select.home_status == borta ###
-### A: switch.ringklocka_hall = off      ###
-###    notify.mobile_app_sm_a528b        ###
+### Ringklocka hall (dag / natt / borta) ###
 ############################################
-  - alias: Ringklocka hall borta
-    id: '7706419791465' 
+  - alias: Ringklocka hall
+    id: '2011937267361'
+    mode: single
 
     trigger:
-      platform: state
-      entity_id: switch.ringklocka_hall
-      to: 'on'
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_select.home_status
-          state: 'borta'
+      - platform: state
+        entity_id: switch.ringklocka_hall
+        to: 'on'
 
     action:
       - service: homeassistant.turn_off
         entity_id: switch.ringklocka_hall
       - delay:
           seconds: 5
-      - service: notify.mobile_app_sm_a528b
-        data:
-          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-          message: "Ringklocka hall, borta"
-          data:
-            file: /media/Away/camera_2_latest.jpg
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: input_select.home_status
+                state: 'Hemma på'
+            sequence:
+              - service: notify.mobile_app_sm_a528b
+                data:
+                  title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+                  message: "Ringklocka hall, dag"
+                  data:
+                    file: /media/Day/camera_2_latest.jpg
+          - conditions:
+              - condition: state
+                entity_id: input_select.home_status
+                state: 'Hemma av'
+            sequence:
+              - service: notify.mobile_app_sm_a528b
+                data:
+                  title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+                  message: "Ringklocka hall, natt"
+                  data:
+                    file: /media/Night/camera_2_latest.jpg
+          - conditions:
+              - condition: state
+                entity_id: input_select.home_status
+                state: 'borta'
+            sequence:
+              - service: notify.mobile_app_sm_a528b
+                data:
+                  title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+                  message: "Ringklocka hall, borta"
+                  data:
+                    file: /media/Away/camera_2_latest.jpg
       - delay:
           seconds: 10
 
@@ -252,9 +144,9 @@
       - service: light.toggle
         entity_id: light.vardagsrum_vitrinskap
 
-  #############################################
+  ##############################################
   ### Slå ihop: Stänger/sätter på ringklocka ###
-  #############################################
+  ##############################################
   - alias: Ringklocka on off
     id: '2421022434971' 
     mode: single

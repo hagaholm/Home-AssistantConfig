@@ -21,6 +21,10 @@
                 entity_id: input_select.home_status
                 state: 'Hemma på'
             sequence:
+              - service: camera.snapshot
+                data:
+                  entity_id: camera.camera_3
+                  filename: /media/Day/camera_3_latest.jpg
               - service: notify.mobile_app_sm_a528b
                 data:
                   title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
@@ -32,6 +36,10 @@
                 entity_id: input_select.home_status
                 state: 'Hemma av'
             sequence:
+              - service: camera.snapshot
+                data:
+                  entity_id: camera.camera_3
+                  filename: /media/Night/camera_3_latest.jpg
               - service: notify.mobile_app_sm_a528b
                 data:
                   title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
@@ -43,6 +51,10 @@
                 entity_id: input_select.home_status
                 state: 'borta'
             sequence:
+              - service: camera.snapshot
+                data:
+                  entity_id: camera.camera_3
+                  filename: /media/Away/camera_3_latest.jpg
               - service: notify.mobile_app_sm_a528b
                 data:
                   title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
@@ -75,6 +87,10 @@
                 entity_id: input_select.home_status
                 state: 'Hemma på'
             sequence:
+              - service: camera.snapshot
+                data:
+                  entity_id: camera.camera_2
+                  filename: /media/Day/camera_2_latest.jpg
               - service: notify.mobile_app_sm_a528b
                 data:
                   title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
@@ -86,6 +102,10 @@
                 entity_id: input_select.home_status
                 state: 'Hemma av'
             sequence:
+              - service: camera.snapshot
+                data:
+                  entity_id: camera.camera_2
+                  filename: /media/Night/camera_2_latest.jpg
               - service: notify.mobile_app_sm_a528b
                 data:
                   title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
@@ -97,6 +117,10 @@
                 entity_id: input_select.home_status
                 state: 'borta'
             sequence:
+              - service: camera.snapshot
+                data:
+                  entity_id: camera.camera_2
+                  filename: /media/Away/camera_2_latest.jpg
               - service: notify.mobile_app_sm_a528b
                 data:
                   title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"

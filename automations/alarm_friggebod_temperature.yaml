@@ -1,9 +1,15 @@
-    ##################################################################
-    ### Varnar för hög temp i Friggebod                            ###
-    ### T: sensor.friggebod_temperature > 23                       ###
-    ### C: sensor.ute < 15                                         ###
-    ### A: notify.mobile_app_sm_a528b "LARM! Hög temp i Friggebod" ###
-    ##################################################################
+##############################################################
+### Fil: alarm_friggebod_temperature.yaml
+### Innehåll: Temperaturlarm för friggebod (hög, låg samt frysvakt).
+### Viktiga enheter: sensor.friggebod_temperature, sensor.ute
+##############################################################
+ 
+  ########################################################################
+  ### Friggebod - Varnar för hög temperatur
+  ### T: sensor.friggebod_temperature > 23 (for: 00:10:00)
+  ### C: sensor.ute < 15
+  ### A: notify.mobile_app_sm_a528b (title + templated message)
+  ########################################################################
   - alias: Friggebod larm hög temp
     id: '8904329147725'
     mode: single
@@ -32,12 +38,12 @@
             LARM! Hög temp i Friggebod: {{ t }} {{ unit }} (ute: {{ ute }})
             Nivå: {% if t > 27 %}Mycket hög{% elif t > 24 %}Hög{% else %}Mild{% endif %}
 
-    ##################################################################
-    ### Varnar för låg temp i Friggebod                            ###
-    ### T: sensor.friggebod_temperature < 19                       ###
-    ### C: sensor.ute < 15                                         ###
-    ### A: notify.mobile_app_sm_a528b "LARM! Låg temp i Friggebod" ###
-    ##################################################################
+  ########################################################################
+  ### Friggebod - Varnar för låg temperatur
+  ### T: sensor.friggebod_temperature < 19 (for: 00:10:00)
+  ### C: sensor.ute < 15
+  ### A: notify.mobile_app_sm_a528b (title + templated message)
+  ########################################################################
   - alias: Friggebod larm låg temp
     id: '3853132210260'
     mode: single
@@ -66,11 +72,12 @@
             LARM! Låg temp i Friggebod: {{ t }} {{ unit }} (ute: {{ ute }})
             Nivå: {% if t < 0 %}Mycket låg{% elif t < 17 %}Låg{% else %}Mild{% endif %}
 
-    ################################################################
-    ### Frysvakt Friggebod                                       ###
-    ### T: sensor.friggebod_temperature < 3                      ###
-    ### A: notify.mobile_app_sm_a528b "LARM! Frysvakt Friggebod" ###
-    ################################################################
+  ########################################################################
+  ### Friggebod - Frysvakt (larm vid frostrisk)
+  ### T: sensor.friggebod_temperature < 3 (for: 00:05:00)
+  ### C: none
+  ### A: notify.mobile_app_sm_a528b (title + templated message)
+  ########################################################################
   - alias: Friggebod frysvakt
     id: '8790714161214'
     mode: single

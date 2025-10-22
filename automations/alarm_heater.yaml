@@ -1,8 +1,15 @@
-    ############################################
-    ### Låg temp ackumulatortank             ###
-    ### T: sensor.varmepump_temperature < 20 ###
-    ### A: notify.mobile_app_sm_a528b        ###
-    ############################################
+##############################################
+# Fil: alarm_heater.yaml
+# Innehåll: Larm för ackumulatortank (låg och hög temperatur)
+# Viktiga enheter: sensor.varmepump_temperature
+##############################################
+ 
+  ########################################################################
+  ### Ackumulatortank - Varnar för låg temperatur
+  ### T: sensor.varmepump_temperature < 20 (for: 00:10:00)
+  ### C: not unknown
+  ### A: notify.mobile_app_sm_a528b (title + templated message)
+  ########################################################################
   - alias: Låg temp ackumulatortank
     id: '5099658940929'
     mode: single
@@ -27,11 +34,12 @@
             LARM! Låg temp i ackumulatortank: {{ t }} {{ unit }}
             Nivå: {% if t < 10 %}Mycket låg{% elif t < 18 %}Låg{% else %}Mild{% endif %}
 
-    ############################################
-    ### Hög temp ackumulatortank             ###
-    ### T: sensor.varmepump_temperature > 55 ###
-    ### A: notify.mobile_app_sm_a528b        ###
-    ############################################
+  ########################################################################
+  ### Ackumulatortank - Varnar för hög temperatur
+  ### T: sensor.varmepump_temperature > 55 (for: 00:10:00)
+  ### C: not unknown
+  ### A: notify.mobile_app_sm_a528b (title + templated message)
+  ########################################################################
   - alias: Hög temp ackumulatortank
     id: '6125166678823'
     mode: single

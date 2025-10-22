@@ -1,9 +1,16 @@
-    ###########################################################
-    ### Varnar för hög temp i Förråd                        ###
-    ### T: sensor.forrad_temperature > 11 (stabil i 10 min) ###
-    ### C: sensor.ute < 5                                   ###
-    ### A: notify.mobile_app_sm_a528b                       ###
-    ###########################################################
+############################################################
+### Fil: alarm_forrad_temperature.yaml
+### Innehåll: Larm/varningar för temperatur i förrådet.
+###           Inkluderar varning för hög och låg temperatur.
+### Viktiga enheter: sensor.forrad_temperature, sensor.ute
+############################################################
+ 
+  ########################################################################
+  ### Förråd - Varnar för hög temperatur
+  ### T: sensor.forrad_temperature > 11 (for: 00:10:00)
+  ### C: sensor.ute < 5
+  ### A: notify.mobile_app_sm_a528b (title + templated message)
+  ########################################################################
   - alias: Förråd larm hög temp
     id: '0720252362419'
     mode: single
@@ -32,12 +39,12 @@
             LARM! Hög temp i Förråd: {{ t }} {{ unit }} (ute: {{ ute }})
             Nivå: {% if t > 13 %}Mycket hög{% elif t > 12 %}Hög{% else %}Mild{% endif %}
 
-    ##########################################################
-    ### Varnar för låg temp i Förråd                       ###
-    ### T: sensor.forrad_temperature < 4 (stabil i 10 min) ###
-    ### C: sensor.ute < 5                                  ###
-    ### A: notify.mobile_app_sm_a528b                      ###
-    ##########################################################
+  ########################################################################
+  ### Förråd - Varnar för låg temperatur
+  ### T: sensor.forrad_temperature < 4 (for: 00:10:00)
+  ### C: sensor.ute < 5
+  ### A: notify.mobile_app_sm_a528b (title + templated message)
+  ########################################################################
   - alias: Förråd larm låg temp
     id: '6116341527796'
     mode: single

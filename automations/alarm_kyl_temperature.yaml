@@ -1,8 +1,15 @@
-    ##############################################################
-    ### Varnar för hög temp i kylen                            ###
-    ### T: sensor.kyl_temperature > 10                         ###
-    ### A: notify.mobile_app_sm_a528b "LARM! Hög temp i kylen" ###
-    ##############################################################
+############################################################
+# Fil: alarm_kyl_temperature.yaml
+# Innehåll: Temperaturlarm för kyl (hög och låg temperatur)
+# Viktiga enheter: sensor.kyl_temperature
+############################################################
+ 
+  ########################################################################
+  ### Kyl - Varnar för hög temperatur
+  ### T: sensor.kyl_temperature > 10 (for: 00:10:00)
+  ### C: not unknown
+  ### A: notify.mobile_app_sm_a528b (title + templated message)
+  ########################################################################
   - alias: Larm! Hög temp i kyl
     id: '9665695675546'
     mode: single
@@ -27,11 +34,12 @@
             LARM! Hög temp i kylen: {{ t }} {{ unit }}
             Nivå: {% if t > 12 %}Mycket hög{% elif t > 10 %}Hög{% else %}Mild{% endif %}
 
-    ##############################################################
-    ### Varnar för låg temp i kylen                            ###
-    ### T: sensor.kyl_temperature < 3                          ###
-    ### A: notify.mobile_app_sm_a528b "LARM! Låg temp i kylen" ###
-    ##############################################################
+  ########################################################################
+  ### Kyl - Varnar för låg temperatur
+  ### T: sensor.kyl_temperature < 3 (for: 00:10:00)
+  ### C: not unknown
+  ### A: notify.mobile_app_sm_a528b (title + templated message)
+  ########################################################################
   - alias: Larm! Låg temp i kyl
     id: '8148240711901'
     mode: single

@@ -1,6 +1,22 @@
-##################################################
-### Ringklocka tvättstuga (dag / natt / borta) ###
-##################################################
+#############################################################
+### Fil: alarm_doorbell.yaml
+### Innehåll: Automations för ringklockor (tvättstuga & hall),
+###           blinkning av ljus vid ringsignal och en
+###           automation för att slå på/av ringklockor baserat
+###           på närvaro (home/not_home).
+### Viktiga enheter: switch.ringklocka_tvattstuga,
+###                  switch.ringklocka_hall,
+###                  camera.camera_3, camera.camera_2,
+###                  input_select.home_status,
+###                  group.track_for_home_devices
+#############################################################
+ 
+  ###############################################################################
+  ### Ringklocka tvättstuga (samlad: dag / natt / borta)
+  ### T: switch.ringklocka_tvattstuga == on
+  ### C: input_select.home_status — hanteras med choose (dag/natt/borta)
+  ### A: homeassistant.turn_off switch, camera.snapshot, notify.mobile_app_sm_a528b
+  ###############################################################################
   - alias: Ringklocka tvättstuga
     id: '4680276550081'
     mode: single
@@ -64,9 +80,12 @@
       - delay:
           seconds: 10
 
-############################################
-### Ringklocka hall (dag / natt / borta) ###
-############################################
+  ###############################################################################
+  ### Ringklocka hall (samlad: dag / natt / borta)
+  ### T: switch.ringklocka_hall == on
+  ### C: input_select.home_status — hanteras med choose (dag/natt/borta)
+  ### A: homeassistant.turn_off switch, camera.snapshot, notify.mobile_app_sm_a528b
+  ###############################################################################
   - alias: Ringklocka hall
     id: '2011937267361'
     mode: single
@@ -130,9 +149,12 @@
       - delay:
           seconds: 10
 
-  ##############################################
-  ### Blinka med lyset när ringklocka ringer ###
-  ##############################################
+  ###############################################################################
+  ### Blinka med lyset när ringklocka ringer
+  ### T: switch.ringklocka_tvattstuga == on OR switch.ringklocka_hall == on
+  ### C: group.track_for_home_devices == 'home'
+  ### A: light.toggle light.vardagsrum_vitrinskap
+  ###############################################################################
   - alias: Blinka med lyset när ringklocka ringer
     id: '8363608373239' 
     mode: single
@@ -168,9 +190,12 @@
       - service: light.toggle
         entity_id: light.vardagsrum_vitrinskap
 
-  ##############################################
-  ### Slå ihop: Stänger/sätter på ringklocka ###
-  ##############################################
+  ###############################################################################
+  ### Slå ihop: Stänger/sätter på ringklocka
+  ### T: group.track_for_home_devices changes to 'not_home' or 'home'
+  ### C: none
+  ### A: homeassistant.turn_off/turn_on switch.ringklocka
+  ###############################################################################
   - alias: Ringklocka on off
     id: '2421022434971' 
     mode: single

@@ -1,8 +1,15 @@
-    ###############################################################
-    ### Varnar för hög temp i Uterum                            ###
-    ### T: sensor.uterum_temperatur > 35                        ###
-    ### A: notify.mobile_app_sm_a528b "LARM! Hög temp i Uterum" ###
-    ###############################################################
+############################################################
+# Fil: alarm_uterum_temperature.yaml
+# Innehåll: Temperaturlarm för uterum (hög temperatur)
+# Viktiga enheter: sensor.uterum_temperatur
+############################################################
+ 
+  ########################################################################
+  ### Uterum - Varnar för hög temperatur
+  ### T: sensor.uterum_temperatur > 35 (for: 00:10:00)
+  ### C: not unknown
+  ### A: notify.mobile_app_sm_a528b (title + templated message)
+  ########################################################################
   - alias: Uterum larm hög temp
     id: '4622609198485'
     mode: single

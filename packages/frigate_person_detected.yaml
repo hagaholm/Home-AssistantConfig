@@ -78,12 +78,8 @@ automation:
         to: 'on'
 
     action:
-      - variables:
-          blink_count: 6
-          blink_delay: '00:00:01'
-
       - repeat:
-          count: "{{ blink_count }}"
+          count: 6
           sequence:
             - service: light.toggle
               target:
@@ -91,4 +87,8 @@ automation:
                   - light.sovrum_fonster
                   - light.hall_byra
                   - light.vardagsrum_skank
-            - delay: "{{ blink_delay }}"
+            - delay: '00:00:01'
+
+      - service: automation.turn_off
+        target:
+          entity_id: automation.blink_light_person_detected

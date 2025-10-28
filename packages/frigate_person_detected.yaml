@@ -79,129 +79,16 @@ automation:
 
     action:
       - variables:
-          sovrum_initial_state: "{{ is_state('light.sovrum_fonster', 'on') }}"
-          hall_initial_state: "{{ is_state('light.hall_byra', 'on') }}"
-          vardagsrum_initial_state: "{{ is_state('light.vardagsrum_skank', 'on') }}"
-
-      - service: automation.turn_off
-        entity_id: automation.blink_light_person_detected
+          blink_count: 6
+          blink_delay: '00:00:01'
 
       - repeat:
-          count: 5
-
+          count: "{{ blink_count }}"
           sequence:
-
-            # Handle light.sovrum_fonster            
-            - choose:
-                - conditions:
-                    - condition: template
-                      value_template: "{{ sovrum_initial_state }}"
-                  sequence:
-                    - service: light.turn_off
-                      target:
-                        entity_id: light.sovrum_fonster
-                - conditions:
-                    - condition: template
-                      value_template: "{{ not sovrum_initial_state }}"
-                  sequence:
-                    - service: light.turn_on
-                      target:
-                        entity_id: light.sovrum_fonster
-
-            # Handle light.hall_byra
-            - choose:
-                - conditions:
-                    - condition: template
-                      value_template: "{{ hall_initial_state }}"
-                  sequence:
-                    - service: light.turn_off
-                      target:
-                        entity_id: light.hall_byra
-                - conditions:
-                    - condition: template
-                      value_template: "{{ not hall_initial_state }}"
-                  sequence:
-                    - service: light.turn_on
-                      target:
-                        entity_id: light.hall_byra
-
-            # Handle light.vardagsrum_skank
-            - choose:
-                - conditions:
-                    - condition: template
-                      value_template: "{{ vardagsrum_initial_state }}"
-                  sequence:
-                    - service: light.turn_off
-                      target:
-                        entity_id: light.vardagsrum_skank
-                - conditions:
-                    - condition: template
-                      value_template: "{{ not vardagsrum_initial_state }}"
-                  sequence:
-                    - service: light.turn_on
-                      target:
-                        entity_id: light.vardagsrum_skank
-
-
-            - delay: "00:00:01"
-
             - service: light.toggle
               target:
-                entity_id: light.sovrum_fonster
-            - service: light.toggle
-              target:
-                entity_id: light.hall_byra
-            - service: light.toggle
-              target:
-                entity_id: light.vardagsrum_skank
-
-            - delay: "00:00:01"
-
-      # Restore lights to their initial states
-      - choose:
-          - conditions:
-              - condition: template
-                value_template: "{{ sovrum_initial_state }}"
-            sequence:
-              - service: light.turn_on
-                target:
-                  entity_id: light.sovrum_fonster
-          - conditions:
-              - condition: template
-                value_template: "{{ not sovrum_initial_state }}"
-            sequence:
-              - service: light.turn_off
-                target:
-                  entity_id: light.sovrum_fonster
-
-      - choose:
-          - conditions:
-              - condition: template
-                value_template: "{{ hall_initial_state }}"
-            sequence:
-              - service: light.turn_on
-                target:
-                  entity_id: light.hall_byra
-          - conditions:
-              - condition: template
-                value_template: "{{ not hall_initial_state }}"
-            sequence:
-              - service: light.turn_off
-                target:
-                  entity_id: light.hall_byra
-
-      - choose:
-          - conditions:
-              - condition: template
-                value_template: "{{ vardagsrum_initial_state }}"
-            sequence:
-              - service: light.turn_on
-                target:
-                  entity_id: light.vardagsrum_skank
-          - conditions:
-              - condition: template
-                value_template: "{{ not vardagsrum_initial_state }}"
-            sequence:
-              - service: light.turn_off
-                target:
-                  entity_id: light.vardagsrum_skank
+                entity_id:
+                  - light.sovrum_fonster
+                  - light.hall_byra
+                  - light.vardagsrum_skank
+            - delay: "{{ blink_delay }}"

@@ -60,13 +60,13 @@
           option: Dagbelysning
 
     ###################################################
-    ### Tänder lampor när 'hemma på'                ###
+    ### Tänder lampor när 'Hemma på'                ###
     ### T: input_select.home_status to 'Hemma på'   ###
     ### C: input_boolean.day_light_on == on         ###
     ###    09:00:00 - 05:00:00                      ###
     ### A: input_select.light_inside = Dagbelysning ###
     ###################################################
-  - alias: Dagbelysning on (hemma på)
+  - alias: Dagbelysning on (Hemma på)
     id: '7461985972140' 
 
     trigger:

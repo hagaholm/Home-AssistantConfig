@@ -3,7 +3,7 @@
     ##########################
     #################################################################
     ### Tänder trädgårdsbelysning på morgonen vid rörelse i köket ###
-    ### T: input_select.home_status == hemma på                   ###
+    ### T: input_select.home_status == Hemma på                   ###
     ### C: sensor.ljusstyrka < ljusstyrka_40                      ###
     ###    05:00:00 - 12:00:00                                    ###
     ### A: input_select.light_garden = Tänt                       ###
@@ -14,7 +14,7 @@
     trigger:
       - platform: state
         entity_id: input_select.home_status
-        to: 'hemma på'
+        to: 'Hemma på'
 
     condition:
       condition: and
@@ -39,7 +39,7 @@
     ### Tänder trädgårdsbelysning när det blir mörkt ###
     ### T: sensor.ljusstyrka < ljusstyrka_40         ###
     ### C: group.track_for_home_devices == 'home'    ###
-    ###    input_select.home_status == 'hemma på'    ###
+    ###    input_select.home_status == 'Hemma på'    ###
     ###    time: 12:00 - 05:00                       ###
     ###    switch.tradgard == off                    ###
     ### A: input_select.light_garden = Tänt          ###

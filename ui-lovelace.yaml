@@ -1058,7 +1058,11 @@ views:
           - sensor.camera1
           - sensor.camera2
           - sensor.camera3
+          - sensor.camera4
+          - sensor.camera5
           - sensor.camera6
+          - sensor.camera7
+          - sensor.camera8
           - sensor.garmin_fenix_5_plus
         title: Övrigt status
         show_header_toggle: true
@@ -1069,27 +1073,26 @@ views:
         title: Raspberry Pi B+ (1-Wire)
         show_header_toggle: true
         state_color: true
-      - type: entities
-        entities:
-          - sensor.raspberry_pi_3b_1
-        title: Raspberry Pi 3B (Hagaholm)
-        show_header_toggle: true
-        state_color: true
+#      - type: entities
+#        entities:
+#          - sensor.raspberry_pi_3b_1
+#        title: Raspberry Pi 3B (Hagaholm)
+#        show_header_toggle: true
+#        state_color: true
       - type: entities
         entities:
           - sensor.raspberry_pi_3b_2
         title: Raspberry Pi 3B (Lux)
         show_header_toggle: true
         state_color: true
+#      - type: entities
+#        entities:
+#          - sensor.raspberry_pi_3b_plus
+#        title: Raspberry Pi 3B+ (Flightradar24)
+#        show_header_toggle: true
+#        state_color: true
       - type: entities
         entities:
-          - sensor.raspberry_pi_3b_plus
-        title: Raspberry Pi 3B+ (Flightradar24)
-        show_header_toggle: true
-        state_color: true
-      - type: entities
-        entities:
-          - sensor.raspberry_pi_4b
           - sensor.last_boot
           - sensor.acpitz_0_temperature
           - sensor.acpitz_1_temperature

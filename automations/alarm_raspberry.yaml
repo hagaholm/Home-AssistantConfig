@@ -1,21 +1,3 @@
-    ######################################
-    ### Hög temp Raspberry             ###
-    ### T: sensor.cpu_temperature > 70 ###
-    ### A: notify.mobile_app_sm_a528b  ###
-    ######################################
-  - alias: Hög temp Raspberry
-    id: '5633269798813' 
-
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.cpu_temperature
-      above: '70'
-
-    action:
-      - service: notify.mobile_app_sm_a528b
-        data:
-          message: "Raspberry HOMEASS CPU hög temp"
-
     #####################################################
     ### Raspberry Pi B+ (1-Wire) - Offline            ###
     ### T: group.track_for_home_devices to 'not_home' ###
@@ -39,18 +21,18 @@
     ### T: group.track_for_home_devices to 'not_home' ###
     ### A: notify.mobile_app_sm_a528b                 ###
     #####################################################
-  - alias: Raspberry Pi 3B (Hagaholm) Offline
-    id: '4476180256489' 
+#  - alias: Raspberry Pi 3B (Hagaholm) Offline
+#    id: '4476180256489' 
 
-    trigger:
-      platform: state
-      entity_id: device_tracker.raspberry_pi_3b_1
-      to: 'not_home'
+#    trigger:
+#      platform: state
+#      entity_id: device_tracker.raspberry_pi_3b_1
+#      to: 'not_home'
 
-    action:
-      - service: notify.mobile_app_sm_a528b
-        data:
-          message: "Raspberry Pi 3B (Hagaholm) - Offline"
+#    action:
+#      - service: notify.mobile_app_sm_a528b
+#        data:
+#          message: "Raspberry Pi 3B (Hagaholm) - Offline"
 
     #####################################################
     ### Raspberry Pi 3B (Lux) - Offline               ###
@@ -75,33 +57,33 @@
     ### T: group.track_for_home_devices to 'not_home' ###
     ### A: notify.mobile_app_sm_a528b                 ###
     #####################################################
-  - alias: Raspberry Pi 3B+ Offline
-    id: '5793834656757' 
+#  - alias: Raspberry Pi 3B+ Offline
+#    id: '5793834656757' 
 
-    trigger:
-      platform: state
-      entity_id: device_tracker.raspberry_pi_3b_plus
-      to: 'not_home'
+#    trigger:
+#      platform: state
+#      entity_id: device_tracker.raspberry_pi_3b_plus
+#      to: 'not_home'
 
-    action:
-      - service: notify.mobile_app_sm_a528b
-        data:
-          message: "Raspberry Pi 3B+ - Offline"
+#    action:
+#      - service: notify.mobile_app_sm_a528b
+#        data:
+#          message: "Raspberry Pi 3B+ - Offline"
 
     #####################################################
     ### Raspberry Pi 4B (Hassbian) - Offline          ###
     ### T: group.track_for_home_devices to 'not_home' ###
     ### A: notify.mobile_app_sm_a528b                 ###
     #####################################################
-  - alias: Raspberry Pi 4B (Hassbian) Offline
-    id: '3302518344852' 
+#  - alias: Raspberry Pi 4B (Hassbian) Offline
+#    id: '3302518344852' 
 
-    trigger:
-      platform: state
-      entity_id: device_tracker.raspberry_pi_4b
-      to: 'not_home'
+#    trigger:
+#      platform: state
+#      entity_id: device_tracker.raspberry_pi_4b
+#      to: 'not_home'
 
-    action:
-      - service: notify.mobile_app_sm_a528b
-        data:
-          message: "Raspberry Pi 4B (Hassbian) - Offline"
+#    action:
+#      - service: notify.mobile_app_sm_a528b
+#        data:
+#          message: "Raspberry Pi 4B (Hassbian) - Offline"

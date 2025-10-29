@@ -145,7 +145,6 @@ views:
       - type: entities
         entities:
           - automation.uterum_larm_hog_temp
-          - automation.hog_temp_raspberry
           - automation.lag_temp_franluft
           - automation.hog_temp_franluft
           - automation.hog_temp_tilluft
@@ -164,10 +163,10 @@ views:
       - type: entities
         entities:
           - automation.raspberry_pi_b_1_wire_offline
-          - automation.raspberry_pi_3b_hagaholm_offline
+#          - automation.raspberry_pi_3b_hagaholm_offline
           - automation.raspberry_pi_3b_lux_offline
-          - automation.raspberry_pi_3b_offline
-          - automation.raspberry_pi_4b_hassbian_offline
+#          - automation.raspberry_pi_3b_offline
+#          - automation.raspberry_pi_4b_hassbian_offline
         title: Larm Raspberry Pi offline off
         show_header_toggle: true
         state_color: true

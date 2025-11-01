@@ -6,6 +6,8 @@
     sequence:
       - service: switch.turn_on
         entity_id: switch.tradgard
+      - service: switch.turn_on
+        entity_id: switch.stickpropp_8 # Trädäck uterum
  
   ###############################
   ### Tradgards belysning off ###
@@ -15,4 +17,6 @@
     sequence:
       - service: switch.turn_off
         entity_id: switch.tradgard
+      - service: switch.turn_off
+        entity_id: switch.stickpropp_8 # Trädäck uterum
  

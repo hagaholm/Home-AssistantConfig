@@ -14,11 +14,6 @@
       above: input_number.ljusstyrka_60
 
     condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: light.stralkastare_husgavel
-          state: 'off'
 
     action:
       - service: input_select.select_option

@@ -5,6 +5,20 @@
 ####################################################
 # https://home-assistant.io/components/sensor/
 
+
+# Filtered ljusstyrka: expose sensor.Ljusstyrka_measured only when the
+# main outside floodlight (`light.stralkastare_husgavel`) is off.
+  - platform: template
+    sensors:
+      ljusstyrka:
+        friendly_name: "Ljusstyrka"
+        unit_of_measurement: 'lx'
+        value_template: >-
+          {% if is_state('light.stralkastare_husgavel', 'off') %}
+            {{ states('sensor.Ljusstyrka_measured') }}
+          {% endif %}
+
+
 #############
 # Tellstick #
 #############

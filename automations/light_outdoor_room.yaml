@@ -124,9 +124,6 @@
         - condition: state
           entity_id: group.track_for_home_devices
           state: 'home'
-        - condition: state
-          entity_id: light.stralkastare_husgavel
-          state: 'off'
 
     action:
       - service: input_select.select_option
@@ -149,11 +146,6 @@
       to: 'not_home'
 
     condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: light.stralkastare_husgavel
-          state: 'off'
 
     action:
       - service: input_select.select_option
@@ -175,11 +167,6 @@
       below: 17
 
     condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: light.stralkastare_husgavel
-          state: 'off'
 
     action:
       - service: input_select.select_option

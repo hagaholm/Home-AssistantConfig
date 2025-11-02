@@ -33,53 +33,9 @@ automation:
         entity_id: sensor.ljusstyrka
     
     condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: light.stralkastare_husgavel
-          state: 'off'
 
     action:
       - service: mqtt.publish
         data_template:
           payload: "{{trigger.to_state.state}}"
           topic: !secret mqtt_path_publish_outside_filtered_outside_lux
-
-  ######################################################################################
-  ### Pause MQTT Broker when light.stralkastare_husgavel turn on                     ###
-  ### Otherwise it turn off light outside as lux sendor react on the activated light ###
-  ######################################################################################
-#  - alias: Pause MQTT Broker
-#    id: '9256370676345' 
-#    mode: single
-
-#    trigger:
-#      - platform: state
-#        entity_id: light.stralkastare_husgavel
-#        to: 'on'
-
-#    action:
-#      - service: hassio.addon_stop
-#        data:
-#          addon: core_mosquitto
-
-
-  ####################################################################
-  ### Resume MQTT Broker when light.stralkastare_husgavel turn off ###
-  ### Need to wait 20 sec to be sure no high values are received   ###
-  ####################################################################
-#  - alias: Resume MQTT Broker
-#    id: '9251230676345' 
-#    mode: single
-
-#    trigger:
-#      - platform: state
-#        entity_id: light.stralkastare_husgavel
-#        to: 'off'
-
-#    action:    
-#      - delay: "30"
-      
-#      - service: hassio.addon_start
-#        data:
-#          addon: core_mosquitto

@@ -73,9 +73,6 @@
         - condition: state
           entity_id: light.friggebod_ute_2
           state: 'on'
-        - condition: state
-          entity_id: light.stralkastare_husgavel
-          state: 'off'
 
     action:
       - service: light.turn_on
@@ -200,9 +197,6 @@
 #        - condition: state
 #          entity_id: light.tradack_ute
 #          state: 'on'
-#        - condition: state
-#          entity_id: light.stralkastare_husgavel
-#          state: 'off'
 
 #    action:
 #      - service: light.turn_off
@@ -252,9 +246,6 @@
         - condition: state
           entity_id: group.track_for_home_devices
           state: 'not_home'
-        - condition: state
-          entity_id: light.stralkastare_husgavel
-          state: 'off'
 
     action:
       - service: script.outside_light_off
@@ -282,9 +273,6 @@
         - condition: state
           entity_id: binary_sensor.workday_tomorrow
           state: 'on'
-        - condition: state
-          entity_id: light.stralkastare_husgavel
-          state: 'off'
 
     action:
       - service: script.outside_light_off
@@ -313,9 +301,6 @@
           state: 'home'
         - condition: state
           entity_id: binary_sensor.workday_tomorrow
-          state: 'off'
-        - condition: state
-          entity_id: light.stralkastare_husgavel
           state: 'off'
 
     action:

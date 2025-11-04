@@ -1115,3 +1115,57 @@ views:
         show_header_toggle: true
         state_color: true
     icon: 'mdi:lan'
+  - path: quick
+    title: Quick
+    badges:
+      - person.micke
+      - person.annelie
+      - person.louise
+      - sensor.ute
+      - sensor.ljusstyrka
+      - light.friggebod_ute_2
+      - binary_sensor.kok_narvaro
+    icon: 'mdi:rocket'
+    badges_layout: horizontal
+    cards:
+      - type: glance
+        title: Quick overview
+        entities:
+          - entity: sensor.ute
+            name: Outside
+          - entity: sensor.ljusstyrka
+            name: Lux
+          - entity: sensor.uteluft
+            name: Outdoor air
+          - entity: binary_sensor.kok_narvaro
+            name: Kitchen motion
+
+      - type: horizontal-stack
+        cards:
+          - type: button
+            entity: light.friggebod_ute_2
+            name: Friggebod
+            icon: mdi:lightbulb-group
+            show_state: true
+            tap_action:
+              action: toggle
+          - type: button
+            entity: light.friggebod_fasad
+            name: Fasad
+            icon: mdi:home-light
+            show_state: true
+            tap_action:
+              action: toggle
+          - type: button
+            entity: switch.tradgard
+            name: Garden
+            icon: mdi:leaf
+            tap_action:
+              action: toggle
+
+      - type: entities
+        title: Quick controls
+        show_header_toggle: false
+        entities:
+          - entity: input_select.home_status
+          - entity: input_boolean.christmas_light

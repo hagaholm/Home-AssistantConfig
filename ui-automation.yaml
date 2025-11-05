@@ -73,6 +73,43 @@ views:
     cards:
       - type: entities
         entities:
+          - automation.forrad_larm_hog_temp
+          - automation.forrad_larm_lag_temp
+        title: Larm förråd
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.friggebod_frysvakt
+          - automation.friggebod_larm_hog_temp
+          - automation.friggebod_larm_lag_temp
+        title: Larm friggebod
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.larm_varning_hog_temp_i_frys
+          - automation.larm_hog_temp_i_frys
+          - automation.larm_lag_temp_i_frys
+        title: Larm frys
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.lag_temp_ackumulatortank
+          - automation.hog_temp_ackumulatortank
+        title: Larm bergvärme
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.larm_hog_temp_i_kyl
+          - automation.larm_lag_temp_i_kyl
+        title: Larm kyl
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
           - automation.larm_rorelse_i_hallen
           - automation.larm_rorelse_i_louise_rum
         title: Larm
@@ -103,43 +140,6 @@ views:
           - automation.avlasning_saknas_friggebod
           - automation.avlasning_saknas_ute_friggebod
         title: Larm avläsningar saknas
-        show_header_toggle: true
-        state_color: true
-      - type: entities
-        entities:
-          - automation.friggebod_frysvakt
-          - automation.friggebod_larm_hog_temp
-          - automation.friggebod_larm_lag_temp
-        title: Larm friggebod
-        show_header_toggle: true
-        state_color: true
-      - type: entities
-        entities:
-          - automation.forrad_larm_hog_temp
-          - automation.forrad_larm_lag_temp
-        title: Larm förråd
-        show_header_toggle: true
-        state_color: true
-      - type: entities
-        entities:
-          - automation.larm_varning_hog_temp_i_frys
-          - automation.larm_hog_temp_i_frys
-          - automation.larm_lag_temp_i_frys
-        title: Larm frys
-        show_header_toggle: true
-        state_color: true
-      - type: entities
-        entities:
-          - automation.larm_hog_temp_i_kyl
-          - automation.larm_lag_temp_i_kyl
-        title: Larm kyl
-        show_header_toggle: true
-        state_color: true
-      - type: entities
-        entities:
-          - automation.lag_temp_ackumulatortank
-          - automation.hog_temp_ackumulatortank
-        title: Larm bergvärme
         show_header_toggle: true
         state_color: true
       - type: entities

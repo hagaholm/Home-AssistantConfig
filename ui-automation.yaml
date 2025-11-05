@@ -122,7 +122,7 @@ views:
           - automation.raspberry_pi_3b_lux_offline
 #          - automation.raspberry_pi_3b_offline
 #          - automation.raspberry_pi_4b_hassbian_offline
-        title: Larm Raspberry Pi offline
+        title: Larm Raspberry Pi
         show_header_toggle: true
         state_color: true
       - type: entities
@@ -131,6 +131,8 @@ views:
         title: Larm uterun temperatur
         show_header_toggle: true
         state_color: true
+
+#TODO: Below have to be verified
       - type: entities
         entities:
           - input_boolean.frys_reading_missing_alarm

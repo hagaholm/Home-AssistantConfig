@@ -6,6 +6,15 @@ views:
     cards:
       - type: entities
         entities:
+          - automation.ringklocka_tvattstuga
+          - automation.ringklocka_hall
+          - automation.blinka_med_lyset_nar_ringklocka_ringer_2
+          - automation.ringklocka_on_off
+        title: Ringklocka
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
           - automation.ny_enhet_hittad
           - automation.hassbian_uppdatering
         title: Hassbian
@@ -16,15 +25,6 @@ views:
           - automation.hassbian_startad
           - automation.hassbian_stoppad
         title: Hassbian off
-        show_header_toggle: true
-        state_color: true
-      - type: entities
-        entities:
-          - automation.ringklocka_tvattstuga
-          - automation.ringklocka_hall
-          - automation.blinka_med_lyset_nar_ringklocka_ringer_2
-          - automation.ringklocka_on_off
-        title: Ringklocka
         show_header_toggle: true
         state_color: true
       - type: entities

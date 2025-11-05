@@ -112,7 +112,23 @@ views:
         entities:
           - automation.larm_rorelse_i_hallen
           - automation.larm_rorelse_i_louise_rum
-        title: Larm
+        title: Larm rörelsedetektorer (avstängd)
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.raspberry_pi_b_1_wire_offline
+#          - automation.raspberry_pi_3b_hagaholm_offline
+          - automation.raspberry_pi_3b_lux_offline
+#          - automation.raspberry_pi_3b_offline
+#          - automation.raspberry_pi_4b_hassbian_offline
+        title: Larm Raspberry Pi offline
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.uterum_larm_hog_temp
+        title: Larm uterun temperatur
         show_header_toggle: true
         state_color: true
       - type: entities
@@ -144,11 +160,10 @@ views:
         state_color: true
       - type: entities
         entities:
-          - automation.uterum_larm_hog_temp
           - automation.lag_temp_franluft
           - automation.hog_temp_franluft
           - automation.hog_temp_tilluft
-        title: Larm temperatur
+        title: Larm ventilation temperatur
         show_header_toggle: true
         state_color: true
       - type: entities
@@ -158,16 +173,6 @@ views:
           - automation.larm_lag_temp_i_kyl
           - automation.lag_temp_tilluft
         title: Larm temperatur off
-        show_header_toggle: true
-        state_color: true
-      - type: entities
-        entities:
-          - automation.raspberry_pi_b_1_wire_offline
-#          - automation.raspberry_pi_3b_hagaholm_offline
-          - automation.raspberry_pi_3b_lux_offline
-#          - automation.raspberry_pi_3b_offline
-#          - automation.raspberry_pi_4b_hassbian_offline
-        title: Larm Raspberry Pi offline off
         show_header_toggle: true
         state_color: true
   - path: lights

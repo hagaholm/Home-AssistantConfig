@@ -2,9 +2,11 @@
 ### Automation ###
 ##################
 automation:
-  - alias: Person Detection Notify
+  # Immediate notifications for priority cameras and sleep mode
+  - alias: Person Detection Notify Immediate
     id: '81119011564368'
     mode: single
+    max_exceeded: silent
 
     trigger:
       - platform: state
@@ -13,39 +15,46 @@ automation:
         to: 'on'
 
     condition:
-      condition: or
-      conditions:
-        - condition: state
-          entity_id: input_select.home_status
-          state: 'Borta'
-        - condition: state
-          entity_id: input_select.home_status
-          state: 'Hemma av'
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: input_select.home_status
+            state: 'Hemma av'
+          - condition: and
+            conditions:
+              - condition: state
+                entity_id: input_select.home_status
+                state: 'Borta'
+              - condition: or
+                conditions:
+                  - condition: numeric_state
+                    entity_id: sensor.cam5_person_count
+                    above: 0
+                  - condition: numeric_state
+                    entity_id: sensor.cam6_person_count
+                    above: 0
 
     action:
+      - variables:
+          detection_message: >
+            {% set detections = [] %}
+            {% if states('sensor.cam3_person_count') | int(0) > 0 %}
+              {% set detections = detections + ['- Cam 3 Uppfart: ' + states('sensor.cam3_person_count')] %}
+            {% endif %}
+            {% if states('sensor.cam5_person_count') | int(0) > 0 %}
+              {% set detections = detections + ['- Cam 5 Baksida: ' + states('sensor.cam5_person_count')] %}
+            {% endif %}
+            {% if states('sensor.cam6_person_count') | int(0) > 0 %}
+              {% set detections = detections + ['- Cam 6 Baksida: ' + states('sensor.cam6_person_count')] %}
+            {% endif %}
+            {% if states('sensor.cam7_person_count') | int(0) > 0 %}
+              {% set detections = detections + ['- Cam 7 Frigge: ' + states('sensor.cam7_person_count')] %}
+            {% endif %}
+            {% if states('sensor.cam8_person_count') | int(0) > 0 %}
+              {% set detections = detections + ['- Cam 8 Entre: ' + states('sensor.cam8_person_count')] %}
+            {% endif %}
+            {{ detections | join('\n') }}
       - choose:
-          # If home_status is 'Borta', add a delay and re-check the state
-          - conditions:
-              - condition: state
-                entity_id: input_select.home_status
-                state: 'Borta'
-            sequence:
-              - delay: "00:03:00"
-              - condition: state
-                entity_id: input_select.home_status
-                state: 'Borta'
-              - service: notify.mobile_app_sm_a528b
-                data_template:
-                  title: >
-                    "Person Detection Away Alert {{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-                  message: >
-                    Person detected 3 minutes ago:
-                    - Cam 3 Uppfart: {{ states('sensor.cam3_person_count') | int }}
-                    - Cam 5 Baksida: {{ states('sensor.cam5_person_count') | int }}
-                    - Cam 6 Baksida: {{ states('sensor.cam6_person_count') | int }}
-                    - Cam 7 Frigge:  {{ states('sensor.cam7_person_count') | int }}
-                    - Cam 8 Entre:   {{ states('sensor.cam8_person_count') | int }}
-          # If home_status is 'Hemma av', send the notification immediately
           - conditions:
               - condition: state
                 entity_id: input_select.home_status
@@ -57,11 +66,89 @@ automation:
                     "Person Detection Sleep Alert {{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
                   message: >
                     Person detected:
-                    - Cam 3 Uppfart: {{ states('sensor.cam3_person_count') | int }}
-                    - Cam 5 Baksida: {{ states('sensor.cam5_person_count') | int }}
-                    - Cam 6 Baksida: {{ states('sensor.cam6_person_count') | int }}
-                    - Cam 7 Frigge:  {{ states('sensor.cam7_person_count') | int }}
-                    - Cam 8 Entre:   {{ states('sensor.cam8_person_count') | int }}
+                    {{ detection_message }}
+          - conditions:
+              - condition: state
+                entity_id: input_select.home_status
+                state: 'Borta'
+            sequence:
+              - service: notify.mobile_app_sm_a528b
+                data_template:
+                  title: >
+                    "Person Detection Away Alert (Priority) {{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+                  message: >
+                    Person detected (priority cameras):
+                    {{ detection_message }}
+
+  # Delayed notifications for non-priority cameras when away
+  - alias: Person Detection Notify Delayed
+    id: '81119011564369'
+    mode: parallel
+    max: 5
+
+    trigger:
+      - platform: state
+        entity_id: 
+          - binary_sensor.cams_person_active
+        to: 'on'
+
+    condition:
+      - condition: state
+        entity_id: input_select.home_status
+        state: 'Borta'
+      - condition: and
+        conditions:
+          - condition: numeric_state
+            entity_id: sensor.cam5_person_count
+            below: 1
+          - condition: numeric_state
+            entity_id: sensor.cam6_person_count
+            below: 1
+
+    action:
+      # Capture detection info at trigger time
+      - variables:
+          trigger_time: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+          detection_message: >
+            {% set detections = [] %}
+            {% if states('sensor.cam3_person_count') | int(0) > 0 %}
+              {% set detections = detections + ['- Cam 3 Uppfart: ' + states('sensor.cam3_person_count')] %}
+            {% endif %}
+            {% if states('sensor.cam5_person_count') | int(0) > 0 %}
+              {% set detections = detections + ['- Cam 5 Baksida: ' + states('sensor.cam5_person_count')] %}
+            {% endif %}
+            {% if states('sensor.cam6_person_count') | int(0) > 0 %}
+              {% set detections = detections + ['- Cam 6 Baksida: ' + states('sensor.cam6_person_count')] %}
+            {% endif %}
+            {% if states('sensor.cam7_person_count') | int(0) > 0 %}
+              {% set detections = detections + ['- Cam 7 Frigge: ' + states('sensor.cam7_person_count')] %}
+            {% endif %}
+            {% if states('sensor.cam8_person_count') | int(0) > 0 %}
+              {% set detections = detections + ['- Cam 8 Entre: ' + states('sensor.cam8_person_count')] %}
+            {% endif %}
+            {{ detections | join('\n') }}
+      # Wait 3 minutes
+      - delay: "00:03:00"
+      # Check if still away and no immediate notification was sent in the meantime
+      - condition: state
+        entity_id: input_select.home_status
+        state: 'Borta'
+      # Check if priority cameras are still inactive (to avoid duplicate with immediate notification)
+      - condition: and
+        conditions:
+          - condition: numeric_state
+            entity_id: sensor.cam5_person_count
+            below: 1
+          - condition: numeric_state
+            entity_id: sensor.cam6_person_count
+            below: 1
+      - service: notify.mobile_app_sm_a528b
+        data_template:
+          title: >
+            "Person Detection Away Alert {{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+          message: >
+            Person detected at {{ trigger_time }}:
+            {{ detection_message }}
 
   ####################################
   ### Blink Light Person Detcected ###

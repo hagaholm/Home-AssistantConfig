@@ -1,209 +1,271 @@
-# Släckt - lux above 60
-# Tänt   - lux below 40
-# Natt   - inside light off. lux below 40 
-# Max    - person detected. lux below 40 and 
-########################################################################
-# Släckt - lux above 60
-  - alias: Facade Light Off When Bright Outside
-    id: '6820471947302'
-    mode: single
+####################################################
+#                                                  #
+#            FACADE LIGHT AUTOMATIONS              #
+#                                                  #
+####################################################
+#
+# Manages exterior facade lighting based on:
+# - Ambient light levels (lux sensors)
+# - Home occupancy status
+# - Person detection from cameras
+#
+# Light States:
+# - Släckt: Off (lux > 60)
+# - Tänt: On (lux < 40, home active)
+# - Natt: Night mode (home away)
+# - Max: Maximum brightness (person detected)
+#
+# Related Entities:
+# - sensor.ljusstyrka
+# - input_select.facade_lights
+# - input_select.home_status
+# - binary_sensor.cam3/7/8_person_occupancy
+# - script.fasadbelysning_*
+#
+####################################################
 
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.ljusstyrka
-      above: input_number.ljusstyrka_60
+####################################################
+#                                                  #
+#         LIGHT OFF WHEN BRIGHT OUTSIDE            #
+#                                                  #
+####################################################
+- alias: Facade Light Off When Bright Outside
+  id: '6820471947302'
+  mode: single
 
-    condition:
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.ljusstyrka
+    above: input_number.ljusstyrka_60
+    for: "00:02:00"
 
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.facade_lights
-          option: Släckt
+  condition:
+    condition: not
+    conditions:
+      - condition: state
+        entity_id: input_select.facade_lights
+        state: 'Släckt'
 
-########################################################################
-# Tänt - lux below 40
-  - alias: Facade Light On When Dark Outside
-    id: '6820471947303'
-    mode: single
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.facade_lights
+        option: Släckt
 
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.ljusstyrka
-      below: input_number.ljusstyrka_40
+####################################################
+#                                                  #
+#          LIGHT ON WHEN DARK OUTSIDE              #
+#                                                  #
+####################################################
+- alias: Facade Light On When Dark Outside
+  id: '6820471947303'
+  mode: single
 
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.facade_lights
-          option: Tänt
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.ljusstyrka
+    below: input_number.ljusstyrka_40
+    for: "00:02:00"
 
-########################################################################
-# Natt - inside light off. Outside on 
-  - alias: Facade Light Night Mode
-    id: '6820471947304'
-    mode: single
+  condition:
+    condition: not
+    conditions:
+      - condition: state
+        entity_id: input_select.facade_lights
+        state: 'Tänt'
 
-    trigger:
-      platform: state
-      entity_id: input_select.light_inside
-      to: "Släckt"
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.facade_lights
+        option: Tänt
 
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_select.facade_lights
-          state: 'Tänt'
+####################################################
+#                                                  #
+#              NIGHT MODE ACTIVATION               #
+#                                                  #
+####################################################
+- alias: Facade Light Night Mode
+  id: '6820471947304'
+  mode: single
 
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.facade_lights
-          option: Natt
+  trigger:
+    platform: state
+    entity_id: input_select.home_status
+    to: "Hemma av"
 
-########################################################################
-# Max - person detected. lux below 40 and 
-  - alias: Facade Light Max When Person Detected
-    id: '6820471947305'
-    mode: single
-
-    trigger:
-      platform: state
-      entity_id:
-        - binary_sensor.cam3_person_occupancy
-        - binary_sensor.cam7_person_occupancy
-        - binary_sensor.cam8_person_occupancy
-      to: 'on'
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_select.facade_lights
-          state: 'Tänt'
-
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.facade_lights
-          option: Max
-
-########################################################################
-# Tänt - person not detected anymore
-  - alias: Facade Light On When No Person Detected
-    id: '6820471947306'
-    mode: restart
-
-    trigger:
-      platform: state
-      entity_id:
-        - binary_sensor.cam3_person_occupancy
-        - binary_sensor.cam7_person_occupancy
-        - binary_sensor.cam8_person_occupancy
-      to: 'off'
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_select.facade_lights
-          state: 'Max'
-        - condition: state
-          entity_id: binary_sensor.cam3_person_occupancy
-          state: 'off'
-        - condition: state
-          entity_id: binary_sensor.cam7_person_occupancy
-          state: 'off'
-        - condition: state
-          entity_id: binary_sensor.cam8_person_occupancy
-          state: 'off'
-
-    action:
-      - delay: "00:00:30"
-      - condition: and
+  condition:
+    condition: and
+    conditions:
+      - condition: not
         conditions:
           - condition: state
-            entity_id: binary_sensor.cam3_person_occupancy
-            state: 'off'
+            entity_id: input_select.facade_lights
+            state: 'Natt'
+      - condition: numeric_state
+        entity_id: sensor.ljusstyrka
+        below: input_number.ljusstyrka_60
+
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.facade_lights
+        option: Natt
+
+####################################################
+#                                                  #
+#         MAX LIGHT WHEN PERSON DETECTED           #
+#                                                  #
+####################################################
+- alias: Facade Light Max When Person Detected
+  id: '6820471947305'
+  mode: single
+
+  trigger:
+    platform: state
+    entity_id:
+      - binary_sensor.cam3_person_occupancy
+      - binary_sensor.cam7_person_occupancy
+      - binary_sensor.cam8_person_occupancy
+    to: 'on'
+
+  condition:
+    condition: and
+    conditions:
+      - condition: or
+        conditions:
           - condition: state
-            entity_id: binary_sensor.cam7_person_occupancy
-            state: 'off'
+            entity_id: input_select.facade_lights
+            state: 'Tänt'
           - condition: state
-            entity_id: binary_sensor.cam8_person_occupancy
-            state: 'off'
-      - choose:
-          - conditions:
-              - condition: state
-                entity_id: input_select.light_inside
-                state: "Släckt"
-            sequence:
-              - service: input_select.select_option
-                data:
-                  entity_id: input_select.facade_lights
-                  option: Natt
-        default:
-          - service: input_select.select_option
-            data:
+            entity_id: input_select.facade_lights
+            state: 'Natt'
+      - condition: not
+        conditions:
+          - condition: state
+            entity_id: input_select.facade_lights
+            state: 'Max'
+
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.facade_lights
+        option: Max
+
+####################################################
+#                                                  #
+#       RETURN TO NORMAL AFTER PERSON LEAVES       #
+#                                                  #
+####################################################
+- alias: Facade Light On When No Person Detected
+  id: '6820471947306'
+  mode: restart
+
+  trigger:
+    platform: state
+    entity_id:
+      - binary_sensor.cam3_person_occupancy
+      - binary_sensor.cam7_person_occupancy
+      - binary_sensor.cam8_person_occupancy
+    to: 'off'
+    for: "00:00:30"
+
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_select.facade_lights
+        state: 'Max'
+      - condition: state
+        entity_id: binary_sensor.cam3_person_occupancy
+        state: 'off'
+      - condition: state
+        entity_id: binary_sensor.cam7_person_occupancy
+        state: 'off'
+      - condition: state
+        entity_id: binary_sensor.cam8_person_occupancy
+        state: 'off'
+
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_select.home_status
+              state: "Hemma av"
+          sequence:
+            - service: input_select.select_option
+              data:
+                entity_id: input_select.facade_lights
+                option: Natt
+      default:
+        - service: input_select.select_option
+          data:
+            entity_id: input_select.facade_lights
+            option: Tänt
+
+####################################################
+#                                                  #
+#         EXIT NIGHT MODE WHEN HOME ACTIVE         #
+#                                                  #
+####################################################
+- alias: Facade Light from Night to On
+  id: '6820471947307'
+  mode: single
+
+  trigger:
+    platform: state
+    entity_id: input_select.home_status
+    to: "Hemma på"
+
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_select.facade_lights
+        state: 'Natt'
+
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.facade_lights
+        option: Tänt
+
+####################################################
+#                                                  #
+#          EXECUTE SCRIPT ON STATE CHANGE          #
+#                                                  #
+####################################################
+- alias: Facade Light changed
+  id: '6820471947308'
+  mode: single
+
+  trigger:
+    platform: state
+    entity_id: input_select.facade_lights
+
+  action:
+    - choose:
+        - conditions:
+            - condition: state
               entity_id: input_select.facade_lights
-              option: Tänt
-
-########################################################################
-# Tänt - light turn on inside
-  - alias: Facade Light from Night to On
-    id: '6820471947307'
-    mode: single
-
-    trigger:
-      platform: state
-      entity_id: input_select.light_inside
-      to: "Morgonbelysning"
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_select.facade_lights
-          state: 'Natt'
-
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.facade_lights
-          option: Tänt
-
-########################################################################
-  - alias: Facade Light changed
-    id: '6820471947308'
-    mode: single
-
-    trigger:
-      platform: state
-      entity_id: input_select.facade_lights
-
-    action:
-      - choose:
-          - conditions:
-              - condition: state
-                entity_id: input_select.facade_lights
-                state: "Släckt"
-            sequence:
-              - service: script.fasadbelysning_off
-          - conditions:
-              - condition: state
-                entity_id: input_select.facade_lights
-                state: "Tänt"
-            sequence:
-              - service: script.fasadbelysning_on
-          - conditions:
-              - condition: state
-                entity_id: input_select.facade_lights
-                state: "Natt"
-            sequence:
-              - service: script.fasadbelysning_night
-          - conditions:
-              - condition: state
-                entity_id: input_select.facade_lights
-                state: "Max"
-            sequence:
-              - service: script.fasadbelysning_max
+              state: "Släckt"
+          sequence:
+            - service: script.fasadbelysning_off
+        - conditions:
+            - condition: state
+              entity_id: input_select.facade_lights
+              state: "Tänt"
+          sequence:
+            - service: script.fasadbelysning_on
+        - conditions:
+            - condition: state
+              entity_id: input_select.facade_lights
+              state: "Natt"
+          sequence:
+            - service: script.fasadbelysning_night
+        - conditions:
+            - condition: state
+              entity_id: input_select.facade_lights
+              state: "Max"
+          sequence:
+            - service: script.fasadbelysning_max

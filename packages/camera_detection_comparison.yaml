@@ -564,4 +564,3 @@ shell_command:
     chmod -R 755 /config/snapshots 2>/dev/null || true
   delete_old_frigate_snapshots: 'find /config/snapshots/frigate -type f -mtime +10 -delete 2>/dev/null || true'
   delete_old_reolink_snapshots: 'find /config/snapshots/reolink -type f -mtime +10 -delete 2>/dev/null || true'
-40

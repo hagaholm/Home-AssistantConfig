@@ -335,11 +335,11 @@ automation:
     trigger:
       - platform: state
         entity_id:
-          - binary_sensor.cam3_person
-          - binary_sensor.cam5_person
-          - binary_sensor.cam6_person
-          - binary_sensor.cam7_person
-          - binary_sensor.cam8_person
+          - binary_sensor.cam3_person_occupancy
+          - binary_sensor.cam5_person_occupancy
+          - binary_sensor.cam6_person_occupancy
+          - binary_sensor.cam7_person_occupancy
+          - binary_sensor.cam8_person_occupancy
         to: 'on'
 
     action:
@@ -368,11 +368,11 @@ automation:
     trigger:
       - platform: state
         entity_id:
-          - binary_sensor.cam3_animal
-          - binary_sensor.cam5_animal
-          - binary_sensor.cam6_animal
-          - binary_sensor.cam7_animal
-          - binary_sensor.cam8_animal
+          - binary_sensor.cam3_animal_active
+          - binary_sensor.cam5_animal_active
+          - binary_sensor.cam6_animal_active
+          - binary_sensor.cam7_animal_active
+          - binary_sensor.cam8_animal_active
         to: 'on'
 
     action:

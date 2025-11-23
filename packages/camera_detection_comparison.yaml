@@ -1,0 +1,567 @@
+################################################################################
+### Camera Detection Comparison - Frigate vs Reolink
+### Compares detections, takes snapshots, tracks statistics, and sends reports
+################################################################################
+
+#############################################
+### Input Numbers - Statistics Trackers   ###
+#############################################
+input_number:
+  # Frigate Statistics
+  frigate_cam3_person_count:
+    name: "Frigate Cam3 Person Total"
+    min: 0
+    max: 10000
+    unit_of_measurement: "detections"
+    icon: mdi:counter
+
+  frigate_cam3_animal_count:
+    name: "Frigate Cam3 Animal Total"
+    min: 0
+    max: 10000
+    unit_of_measurement: "detections"
+    icon: mdi:counter
+
+  frigate_cam5_person_count:
+    name: "Frigate Cam5 Person Total"
+    min: 0
+    max: 10000
+    unit_of_measurement: "detections"
+    icon: mdi:counter
+
+  frigate_cam5_animal_count:
+    name: "Frigate Cam5 Animal Total"
+    min: 0
+    max: 10000
+    unit_of_measurement: "detections"
+    icon: mdi:counter
+
+  frigate_cam6_person_count:
+    name: "Frigate Cam6 Person Total"
+    min: 0
+    max: 10000
+    unit_of_measurement: "detections"
+    icon: mdi:counter
+
+  frigate_cam6_animal_count:
+    name: "Frigate Cam6 Animal Total"
+    min: 0
+    max: 10000
+    unit_of_measurement: "detections"
+    icon: mdi:counter
+
+  frigate_cam7_person_count:
+    name: "Frigate Cam7 Person Total"
+    min: 0
+    max: 10000
+    unit_of_measurement: "detections"
+    icon: mdi:counter
+
+  frigate_cam7_animal_count:
+    name: "Frigate Cam7 Animal Total"
+    min: 0
+    max: 10000
+    unit_of_measurement: "detections"
+    icon: mdi:counter
+
+  frigate_cam8_person_count:
+    name: "Frigate Cam8 Person Total"
+    min: 0
+    max: 10000
+    unit_of_measurement: "detections"
+    icon: mdi:counter
+
+  frigate_cam8_animal_count:
+    name: "Frigate Cam8 Animal Total"
+    min: 0
+    max: 10000
+    unit_of_measurement: "detections"
+    icon: mdi:counter
+
+  # Reolink Statistics
+  reolink_cam3_person_count:
+    name: "Reolink Cam3 Person Total"
+    min: 0
+    max: 10000
+    unit_of_measurement: "detections"
+    icon: mdi:counter
+
+  reolink_cam3_animal_count:
+    name: "Reolink Cam3 Animal Total"
+    min: 0
+    max: 10000
+    unit_of_measurement: "detections"
+    icon: mdi:counter
+
+  reolink_cam5_person_count:
+    name: "Reolink Cam5 Person Total"
+    min: 0
+    max: 10000
+    unit_of_measurement: "detections"
+    icon: mdi:counter
+
+  reolink_cam5_animal_count:
+    name: "Reolink Cam5 Animal Total"
+    min: 0
+    max: 10000
+    unit_of_measurement: "detections"
+    icon: mdi:counter
+
+  reolink_cam6_person_count:
+    name: "Reolink Cam6 Person Total"
+    min: 0
+    max: 10000
+    unit_of_measurement: "detections"
+    icon: mdi:counter
+
+  reolink_cam6_animal_count:
+    name: "Reolink Cam6 Animal Total"
+    min: 0
+    max: 10000
+    unit_of_measurement: "detections"
+    icon: mdi:counter
+
+  reolink_cam7_person_count:
+    name: "Reolink Cam7 Person Total"
+    min: 0
+    max: 10000
+    unit_of_measurement: "detections"
+    icon: mdi:counter
+
+  reolink_cam7_animal_count:
+    name: "Reolink Cam7 Animal Total"
+    min: 0
+    max: 10000
+    unit_of_measurement: "detections"
+    icon: mdi:counter
+
+  reolink_cam8_person_count:
+    name: "Reolink Cam8 Person Total"
+    min: 0
+    max: 10000
+    unit_of_measurement: "detections"
+    icon: mdi:counter
+
+  reolink_cam8_animal_count:
+    name: "Reolink Cam8 Animal Total"
+    min: 0
+    max: 10000
+    unit_of_measurement: "detections"
+    icon: mdi:counter
+
+#############################################
+### Template Sensors - Daily Statistics  ###
+#############################################
+template:
+  - sensor:
+      # Frigate Total Detections
+      - name: "Frigate Cam3 Person Daily Count"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam3_person_count') | int(0) }}"
+        attributes:
+          friendly_name: "Frigate Camera 3 Person Detections Today"
+
+      - name: "Frigate Cam3 Animal Daily Count"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam3_animal_count') | int(0) }}"
+
+      - name: "Frigate Cam5 Person Daily Count"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam5_person_count') | int(0) }}"
+
+      - name: "Frigate Cam5 Animal Daily Count"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam5_animal_count') | int(0) }}"
+
+      - name: "Frigate Cam6 Person Daily Count"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam6_person_count') | int(0) }}"
+
+      - name: "Frigate Cam6 Animal Daily Count"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam6_animal_count') | int(0) }}"
+
+      - name: "Frigate Cam7 Person Daily Count"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam7_person_count') | int(0) }}"
+
+      - name: "Frigate Cam7 Animal Daily Count"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam7_animal_count') | int(0) }}"
+
+      - name: "Frigate Cam8 Person Daily Count"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam8_person_count') | int(0) }}"
+
+      - name: "Frigate Cam8 Animal Daily Count"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam8_animal_count') | int(0) }}"
+
+      - name: "Frigate Total Person Detections"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: >
+          {{
+            states('input_number.frigate_cam3_person_count') | int(0) +
+            states('input_number.frigate_cam5_person_count') | int(0) +
+            states('input_number.frigate_cam6_person_count') | int(0) +
+            states('input_number.frigate_cam7_person_count') | int(0) +
+            states('input_number.frigate_cam8_person_count') | int(0)
+          }}
+
+      - name: "Frigate Total Animal Detections"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: >
+          {{
+            states('input_number.frigate_cam3_animal_count') | int(0) +
+            states('input_number.frigate_cam5_animal_count') | int(0) +
+            states('input_number.frigate_cam6_animal_count') | int(0) +
+            states('input_number.frigate_cam7_animal_count') | int(0) +
+            states('input_number.frigate_cam8_animal_count') | int(0)
+          }}
+
+      # Reolink Total Detections
+      - name: "Reolink Cam3 Person Daily Count"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam3_person_count') | int(0) }}"
+
+      - name: "Reolink Cam3 Animal Daily Count"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam3_animal_count') | int(0) }}"
+
+      - name: "Reolink Cam5 Person Daily Count"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam5_person_count') | int(0) }}"
+
+      - name: "Reolink Cam5 Animal Daily Count"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam5_animal_count') | int(0) }}"
+
+      - name: "Reolink Cam6 Person Daily Count"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam6_person_count') | int(0) }}"
+
+      - name: "Reolink Cam6 Animal Daily Count"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam6_animal_count') | int(0) }}"
+
+      - name: "Reolink Cam7 Person Daily Count"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam7_person_count') | int(0) }}"
+
+      - name: "Reolink Cam7 Animal Daily Count"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam7_animal_count') | int(0) }}"
+
+      - name: "Reolink Cam8 Person Daily Count"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam8_person_count') | int(0) }}"
+
+      - name: "Reolink Cam8 Animal Daily Count"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam8_animal_count') | int(0) }}"
+
+      - name: "Reolink Total Person Detections"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: >
+          {{
+            states('input_number.reolink_cam3_person_count') | int(0) +
+            states('input_number.reolink_cam5_person_count') | int(0) +
+            states('input_number.reolink_cam6_person_count') | int(0) +
+            states('input_number.reolink_cam7_person_count') | int(0) +
+            states('input_number.reolink_cam8_person_count') | int(0)
+          }}
+
+      - name: "Reolink Total Animal Detections"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: >
+          {{
+            states('input_number.reolink_cam3_animal_count') | int(0) +
+            states('input_number.reolink_cam5_animal_count') | int(0) +
+            states('input_number.reolink_cam6_animal_count') | int(0) +
+            states('input_number.reolink_cam7_animal_count') | int(0) +
+            states('input_number.reolink_cam8_animal_count') | int(0)
+          }}
+
+##################
+### Automation ###
+##################
+automation:
+  ##########################################################
+  ### Initialize Snapshot Directories on Startup       ###
+  ##########################################################
+  - alias: "Initialize Camera Snapshot Directories"
+    id: 'initialize_snapshot_directories'
+    mode: single
+
+    trigger:
+      - platform: homeassistant
+        event: start
+
+    action:
+      - service: shell_command.create_snapshot_directories
+
+  ###########################################
+  ### Frigate Person Detection - Snapshot ###
+  ###########################################
+  - alias: "Frigate Person Detection - Snapshot"
+    id: 'frigate_person_detection_snapshot'
+    mode: parallel
+    max: 10
+
+    trigger:
+      - platform: state
+        entity_id:
+          - binary_sensor.cam3_person
+          - binary_sensor.cam5_person
+          - binary_sensor.cam6_person
+          - binary_sensor.cam7_person
+          - binary_sensor.cam8_person
+        to: 'on'
+
+    action:
+      - variables:
+          camera_num: "{{ trigger.entity_id.split('.')[-1].split('_')[0][3:] }}"
+          snapshot_path: "/config/snapshots/frigate/person/cam{{ camera_num }}_person_{{ now().timestamp() | int }}.jpg"
+
+      - service: camera.snapshot
+        data:
+          filename: "{{ snapshot_path }}"
+        target:
+          entity_id: "camera.cam{{ camera_num }}"
+
+      - service: input_number.increment
+        target:
+          entity_id: "input_number.frigate_cam{{ camera_num }}_person_count"
+
+  ###########################################
+  ### Frigate Animal Detection - Snapshot ###
+  ###########################################
+  - alias: "Frigate Animal Detection - Snapshot"
+    id: 'frigate_animal_detection_snapshot'
+    mode: parallel
+    max: 10
+
+    trigger:
+      - platform: state
+        entity_id:
+          - binary_sensor.cam3_animal
+          - binary_sensor.cam5_animal
+          - binary_sensor.cam6_animal
+          - binary_sensor.cam7_animal
+          - binary_sensor.cam8_animal
+        to: 'on'
+
+    action:
+      - variables:
+          camera_num: "{{ trigger.entity_id.split('.')[-1].split('_')[0][3:] }}"
+          snapshot_path: "/config/snapshots/frigate/animal/cam{{ camera_num }}_animal_{{ now().timestamp() | int }}.jpg"
+
+      - service: camera.snapshot
+        data:
+          filename: "{{ snapshot_path }}"
+        target:
+          entity_id: "camera.cam{{ camera_num }}"
+
+      - service: input_number.increment
+        target:
+          entity_id: "input_number.frigate_cam{{ camera_num }}_animal_count"
+
+  ##############################################
+  ### Reolink Person Detection - Snapshot    ###
+  ##############################################
+  - alias: "Reolink Person Detection - Snapshot"
+    id: 'reolink_person_detection_snapshot'
+    mode: parallel
+    max: 10
+
+    trigger:
+      - platform: state
+        entity_id:
+          - binary_sensor.kamera3_person
+          - binary_sensor.kamera5_person
+          - binary_sensor.kamera6_person
+          - binary_sensor.kamera7_person
+          - binary_sensor.kamera8_person
+        to: 'on'
+
+    action:
+      - variables:
+          camera_num: "{{ trigger.entity_id.split('.')[-1].split('_')[0][-1] }}"
+          snapshot_path: "/config/snapshots/reolink/person/kamera{{ camera_num }}_person_{{ now().timestamp() | int }}.jpg"
+
+      - service: camera.snapshot
+        data:
+          filename: "{{ snapshot_path }}"
+        target:
+          entity_id: "camera.kamera{{ camera_num }}"
+
+      - service: input_number.increment
+        target:
+          entity_id: "input_number.reolink_cam{{ camera_num }}_person_count"
+
+  ##############################################
+  ### Reolink Animal Detection - Snapshot    ###
+  ##############################################
+  - alias: "Reolink Animal Detection - Snapshot"
+    id: 'reolink_animal_detection_snapshot'
+    mode: parallel
+    max: 10
+
+    trigger:
+      - platform: state
+        entity_id:
+          - binary_sensor.kamera3_husdjur
+          - binary_sensor.kamera5_husdjur
+          - binary_sensor.kamera6_husdjur
+          - binary_sensor.kamera7_husdjur
+          - binary_sensor.kamera8_husdjur
+        to: 'on'
+
+    action:
+      - variables:
+          camera_num: "{{ trigger.entity_id.split('.')[-1].split('_')[0][-1] }}"
+          snapshot_path: "/config/snapshots/reolink/animal/kamera{{ camera_num }}_animal_{{ now().timestamp() | int }}.jpg"
+
+      - service: camera.snapshot
+        data:
+          filename: "{{ snapshot_path }}"
+        target:
+          entity_id: "camera.kamera{{ camera_num }}"
+
+      - service: input_number.increment
+        target:
+          entity_id: "input_number.reolink_cam{{ camera_num }}_animal_count"
+
+  ###############################################
+  ### Daily Summary Report at Midnight       ###
+  ###############################################
+  - alias: "Camera Detection Daily Summary Report"
+    id: 'camera_detection_summary_report'
+    mode: single
+
+    trigger:
+      - platform: time
+        at: '00:00:00'
+
+    action:
+      - variables:
+          frigate_person_total: "{{ states('sensor.frigate_total_person_detections') | int(0) }}"
+          frigate_animal_total: "{{ states('sensor.frigate_total_animal_detections') | int(0) }}"
+          reolink_person_total: "{{ states('sensor.reolink_total_person_detections') | int(0) }}"
+          reolink_animal_total: "{{ states('sensor.reolink_total_animal_detections') | int(0) }}"
+          person_winner: "{% if frigate_person_total > reolink_person_total %}Frigate{% elif reolink_person_total > frigate_person_total %}Reolink{% else %}Tie{% endif %}"
+          animal_winner: "{% if frigate_animal_total > reolink_animal_total %}Frigate{% elif reolink_animal_total > frigate_animal_total %}Reolink{% else %}Tie{% endif %}"
+          report_message: |
+            📊 **Camera Detection Comparison Report**
+            
+            🚨 **Person Detection**
+            Frigate:  {{ frigate_person_total }} detections
+            Reolink: {{ reolink_person_total }} detections
+            Winner: {{ person_winner }}
+            
+            Individual Camera Breakdown:
+            Cam 3:  Frigate: {{ states('input_number.frigate_cam3_person_count') | int(0) }} | Reolink: {{ states('input_number.reolink_cam3_person_count') | int(0) }}
+            Cam 5:  Frigate: {{ states('input_number.frigate_cam5_person_count') | int(0) }} | Reolink: {{ states('input_number.reolink_cam5_person_count') | int(0) }}
+            Cam 6:  Frigate: {{ states('input_number.frigate_cam6_person_count') | int(0) }} | Reolink: {{ states('input_number.reolink_cam6_person_count') | int(0) }}
+            Cam 7:  Frigate: {{ states('input_number.frigate_cam7_person_count') | int(0) }} | Reolink: {{ states('input_number.reolink_cam7_person_count') | int(0) }}
+            Cam 8:  Frigate: {{ states('input_number.frigate_cam8_person_count') | int(0) }} | Reolink: {{ states('input_number.reolink_cam8_person_count') | int(0) }}
+            
+            🐾 **Animal Detection**
+            Frigate:  {{ frigate_animal_total }} detections
+            Reolink: {{ reolink_animal_total }} detections
+            Winner: {{ animal_winner }}
+            
+            Individual Camera Breakdown:
+            Cam 3:  Frigate: {{ states('input_number.frigate_cam3_animal_count') | int(0) }} | Reolink: {{ states('input_number.reolink_cam3_animal_count') | int(0) }}
+            Cam 5:  Frigate: {{ states('input_number.frigate_cam5_animal_count') | int(0) }} | Reolink: {{ states('input_number.reolink_cam5_animal_count') | int(0) }}
+            Cam 6:  Frigate: {{ states('input_number.frigate_cam6_animal_count') | int(0) }} | Reolink: {{ states('input_number.reolink_cam6_animal_count') | int(0) }}
+            Cam 7:  Frigate: {{ states('input_number.frigate_cam7_animal_count') | int(0) }} | Reolink: {{ states('input_number.reolink_cam7_animal_count') | int(0) }}
+            Cam 8:  Frigate: {{ states('input_number.frigate_cam8_animal_count') | int(0) }} | Reolink: {{ states('input_number.reolink_cam8_animal_count') | int(0) }}
+
+      - service: notify.mobile_app_sm_a528b
+        data:
+          title: "🎥 Detection Summary Report"
+          message: "{{ report_message }}"
+
+      - service: input_number.set_value
+        data:
+          value: 0
+        target:
+          entity_id:
+            - input_number.frigate_cam3_person_count
+            - input_number.frigate_cam3_animal_count
+            - input_number.frigate_cam5_person_count
+            - input_number.frigate_cam5_animal_count
+            - input_number.frigate_cam6_person_count
+            - input_number.frigate_cam6_animal_count
+            - input_number.frigate_cam7_person_count
+            - input_number.frigate_cam7_animal_count
+            - input_number.frigate_cam8_person_count
+            - input_number.frigate_cam8_animal_count
+            - input_number.reolink_cam3_person_count
+            - input_number.reolink_cam3_animal_count
+            - input_number.reolink_cam5_person_count
+            - input_number.reolink_cam5_animal_count
+            - input_number.reolink_cam6_person_count
+            - input_number.reolink_cam6_animal_count
+            - input_number.reolink_cam7_person_count
+            - input_number.reolink_cam7_animal_count
+            - input_number.reolink_cam8_person_count
+            - input_number.reolink_cam8_animal_count
+
+  ##########################################################
+  ### Delete Old Snapshots (Older than 10 days)        ###
+  ##########################################################
+  - alias: "Delete Old Camera Snapshots"
+    id: 'delete_old_snapshots'
+    mode: single
+
+    trigger:
+      - platform: time
+        at: '03:00:00'  # Run at 3 AM daily
+
+    action:
+      - service: shell_command.delete_old_frigate_snapshots
+      - service: shell_command.delete_old_reolink_snapshots
+      - service: notify.mobile_app_sm_a528b
+        data:
+          title: "🗑️ Snapshot Cleanup"
+          message: "Old snapshots (>10 days) have been deleted"
+
+##########################
+### Shell Commands      ###
+##########################
+shell_command:
+  create_snapshot_directories: |
+    mkdir -p /config/snapshots/frigate/person
+    mkdir -p /config/snapshots/frigate/animal
+    mkdir -p /config/snapshots/reolink/person
+    mkdir -p /config/snapshots/reolink/animal
+    chmod -R 755 /config/snapshots 2>/dev/null || true
+  delete_old_frigate_snapshots: 'find /config/snapshots/frigate -type f -mtime +10 -delete 2>/dev/null || true'
+  delete_old_reolink_snapshots: 'find /config/snapshots/reolink -type f -mtime +10 -delete 2>/dev/null || true'
+40

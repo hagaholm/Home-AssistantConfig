@@ -83,10 +83,6 @@ automation:
       from: "unavailable"
 
     condition:
-      - condition: template
-        value_template: "{{ not is_state('timer.timer_humidity_bathroom_max_time','active') }}"
-
-    condition:
       condition: and
       conditions:
         - condition: state

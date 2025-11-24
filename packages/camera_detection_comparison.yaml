@@ -1646,17 +1646,6 @@ automation:
 ### Shell Commands      ###
 ##########################
 shell_command:
-  create_snapshot_directories: |
-    mkdir -p /config/media/camera_compare/frigate/person
-    mkdir -p /config/media/camera_compare/frigate/animal
-    mkdir -p /config/media/camera_compare/reolink/person
-    mkdir -p /config/media/camera_compare/reolink/animal
-    chmod -R 755 /config/media/camera_compare 2>/dev/null || true
-    if [ -d /config/snapshots/frigate/person ]; then mv /config/snapshots/frigate/person/* /config/media/camera_compare/frigate/person/ 2>/dev/null || true; fi
-    if [ -d /config/snapshots/frigate/animal ]; then mv /config/snapshots/frigate/animal/* /config/media/camera_compare/frigate/animal/ 2>/dev/null || true; fi
-    if [ -d /config/snapshots/reolink/person ]; then mv /config/snapshots/reolink/person/* /config/media/camera_compare/reolink/person/ 2>/dev/null || true; fi
-    if [ -d /config/snapshots/reolink/animal ]; then mv /config/snapshots/reolink/animal/* /config/media/camera_compare/reolink/animal/ 2>/dev/null || true; fi
-    if [ -d /config/www/camera_compare ]; then mv /config/www/camera_compare/* /config/media/camera_compare/ 2>/dev/null || true; rm -rf /config/www/camera_compare 2>/dev/null || true; fi
-    rm -rf /config/snapshots 2>/dev/null || true
+  create_snapshot_directories: bash -c 'mkdir -p /config/media/camera_compare/frigate/person && mkdir -p /config/media/camera_compare/frigate/animal && mkdir -p /config/media/camera_compare/reolink/person && mkdir -p /config/media/camera_compare/reolink/animal && chmod -R 755 /config/media/camera_compare 2>/dev/null || true && ([ -d /config/snapshots/frigate/person ] && mv /config/snapshots/frigate/person/* /config/media/camera_compare/frigate/person/ 2>/dev/null || true) && ([ -d /config/snapshots/frigate/animal ] && mv /config/snapshots/frigate/animal/* /config/media/camera_compare/frigate/animal/ 2>/dev/null || true) && ([ -d /config/snapshots/reolink/person ] && mv /config/snapshots/reolink/person/* /config/media/camera_compare/reolink/person/ 2>/dev/null || true) && ([ -d /config/snapshots/reolink/animal ] && mv /config/snapshots/reolink/animal/* /config/media/camera_compare/reolink/animal/ 2>/dev/null || true) && ([ -d /config/www/camera_compare ] && mv /config/www/camera_compare/* /config/media/camera_compare/ 2>/dev/null || true && rm -rf /config/www/camera_compare 2>/dev/null || true) && ([ -d /config/snapshots ] && rm -rf /config/snapshots 2>/dev/null || true)'
   delete_old_frigate_snapshots: 'find /config/media/camera_compare/frigate -type f -mtime +10 -delete 2>/dev/null || true'
   delete_old_reolink_snapshots: 'find /config/media/camera_compare/reolink -type f -mtime +10 -delete 2>/dev/null || true'

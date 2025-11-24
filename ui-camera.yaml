@@ -665,33 +665,18 @@ views:
     title: Gallery
     badges: []
     cards:
-      - type: heading
-        heading: 📸 Camera Comparison Snapshots Gallery
-
-      - type: heading
-        heading: Frigate - Person Detections
-
-      - type: web-iframe
-        url: /local/camera_compare/frigate/person/
-        aspect_ratio: 100%
-
-      - type: heading
-        heading: Frigate - Animal Detections
-
-      - type: web-iframe
-        url: /local/camera_compare/frigate/animal/
-        aspect_ratio: 100%
-
-      - type: heading
-        heading: Reolink - Person Detections
-
-      - type: web-iframe
-        url: /local/camera_compare/reolink/person/
-        aspect_ratio: 100%
-
-      - type: heading
-        heading: Reolink - Animal Detections
-
-      - type: web-iframe
-        url: /local/camera_compare/reolink/animal/
-        aspect_ratio: 100%
+      - type: markdown
+        content: |
+          # 📸 Camera Comparison Snapshots Gallery
+          
+          ## Frigate - Person Detections
+          Browse snapshots at: [`/local/camera_compare/frigate/person/`](/local/camera_compare/frigate/person/)
+          
+          ## Frigate - Animal Detections
+          Browse snapshots at: [`/local/camera_compare/frigate/animal/`](/local/camera_compare/frigate/animal/)
+          
+          ## Reolink - Person Detections
+          Browse snapshots at: [`/local/camera_compare/reolink/person/`](/local/camera_compare/reolink/person/)
+          
+          ## Reolink - Animal Detections
+          Browse snapshots at: [`/local/camera_compare/reolink/animal/`](/local/camera_compare/reolink/animal/)

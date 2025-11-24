@@ -660,3 +660,38 @@ views:
               - condition: numeric_state
                 entity: input_number.reolink_cam8_borta_animal_count
                 above: 0
+
+  - path: gallery
+    title: Gallery
+    badges: []
+    cards:
+      - type: heading
+        heading: 📸 Camera Comparison Snapshots Gallery
+
+      - type: heading
+        heading: Frigate - Person Detections
+
+      - type: web-iframe
+        url: /local/camera_compare/frigate/person/
+        aspect_ratio: 100%
+
+      - type: heading
+        heading: Frigate - Animal Detections
+
+      - type: web-iframe
+        url: /local/camera_compare/frigate/animal/
+        aspect_ratio: 100%
+
+      - type: heading
+        heading: Reolink - Person Detections
+
+      - type: web-iframe
+        url: /local/camera_compare/reolink/person/
+        aspect_ratio: 100%
+
+      - type: heading
+        heading: Reolink - Animal Detections
+
+      - type: web-iframe
+        url: /local/camera_compare/reolink/animal/
+        aspect_ratio: 100%

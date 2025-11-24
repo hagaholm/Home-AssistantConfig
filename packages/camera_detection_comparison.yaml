@@ -1163,7 +1163,7 @@ automation:
     action:
       - variables:
           camera_num: "{{ trigger.entity_id.split('.')[-1].split('_')[0][3:] }}"
-          snapshot_path: "/config/snapshots/frigate/person/cam{{ camera_num }}_person_{{ now().timestamp() | int }}.jpg"
+          snapshot_path: "/config/www/camera_compare/frigate/person/cam{{ camera_num }}_person_{{ now().timestamp() | int }}.jpg"
           home_status: "{{ states('input_select.home_status') }}"
 
       - service: camera.snapshot
@@ -1232,7 +1232,7 @@ automation:
     action:
       - variables:
           camera_num: "{{ trigger.entity_id.split('.')[-1].split('_')[0][3:] }}"
-          snapshot_path: "/config/snapshots/frigate/animal/cam{{ camera_num }}_animal_{{ now().timestamp() | int }}.jpg"
+          snapshot_path: "/config/www/camera_compare/frigate/animal/cam{{ camera_num }}_animal_{{ now().timestamp() | int }}.jpg"
           home_status: "{{ states('input_select.home_status') }}"
 
       - service: camera.snapshot
@@ -1301,7 +1301,7 @@ automation:
     action:
       - variables:
           camera_num: "{{ trigger.entity_id.split('.')[-1].split('_')[0][-1] }}"
-          snapshot_path: "/config/snapshots/reolink/person/kamera{{ camera_num }}_person_{{ now().timestamp() | int }}.jpg"
+          snapshot_path: "/config/www/camera_compare/reolink/person/kamera{{ camera_num }}_person_{{ now().timestamp() | int }}.jpg"
           home_status: "{{ states('input_select.home_status') }}"
 
       - service: camera.snapshot
@@ -1370,7 +1370,7 @@ automation:
     action:
       - variables:
           camera_num: "{{ trigger.entity_id.split('.')[-1].split('_')[0][-1] }}"
-          snapshot_path: "/config/snapshots/reolink/animal/kamera{{ camera_num }}_animal_{{ now().timestamp() | int }}.jpg"
+          snapshot_path: "/config/www/camera_compare/reolink/animal/kamera{{ camera_num }}_animal_{{ now().timestamp() | int }}.jpg"
           home_status: "{{ states('input_select.home_status') }}"
 
       - service: camera.snapshot
@@ -1647,10 +1647,15 @@ automation:
 ##########################
 shell_command:
   create_snapshot_directories: |
-    mkdir -p /config/snapshots/frigate/person
-    mkdir -p /config/snapshots/frigate/animal
-    mkdir -p /config/snapshots/reolink/person
-    mkdir -p /config/snapshots/reolink/animal
-    chmod -R 755 /config/snapshots 2>/dev/null || true
-  delete_old_frigate_snapshots: 'find /config/snapshots/frigate -type f -mtime +10 -delete 2>/dev/null || true'
-  delete_old_reolink_snapshots: 'find /config/snapshots/reolink -type f -mtime +10 -delete 2>/dev/null || true'
+    mkdir -p /config/www/camera_compare/frigate/person
+    mkdir -p /config/www/camera_compare/frigate/animal
+    mkdir -p /config/www/camera_compare/reolink/person
+    mkdir -p /config/www/camera_compare/reolink/animal
+    chmod -R 755 /config/www/camera_compare 2>/dev/null || true
+    if [ -d /config/snapshots/frigate/person ]; then mv /config/snapshots/frigate/person/* /config/www/camera_compare/frigate/person/ 2>/dev/null || true; fi
+    if [ -d /config/snapshots/frigate/animal ]; then mv /config/snapshots/frigate/animal/* /config/www/camera_compare/frigate/animal/ 2>/dev/null || true; fi
+    if [ -d /config/snapshots/reolink/person ]; then mv /config/snapshots/reolink/person/* /config/www/camera_compare/reolink/person/ 2>/dev/null || true; fi
+    if [ -d /config/snapshots/reolink/animal ]; then mv /config/snapshots/reolink/animal/* /config/www/camera_compare/reolink/animal/ 2>/dev/null || true; fi
+    rm -rf /config/snapshots 2>/dev/null || true
+  delete_old_frigate_snapshots: 'find /config/snapshots/frigate -type f -mtime +10 -delete 2>/dev/null || true; find /config/www/camera_compare/frigate -type f -mtime +10 -delete 2>/dev/null || true'
+  delete_old_reolink_snapshots: 'find /config/snapshots/reolink -type f -mtime +10 -delete 2>/dev/null || true; find /config/www/camera_compare/reolink -type f -mtime +10 -delete 2>/dev/null || true'

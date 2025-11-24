@@ -3,3 +3,660 @@ views:
   - path: kamera-gemensamt
     title: Kamera gemensamt
     badges: []
+
+  - path: compare
+    title: Compare
+    badges: []
+    cards:
+      - type: heading
+        heading: Frigate Daily Detections
+
+      - type: custom:stack-in-card
+        cards:
+          - type: entities
+            title: Frigate Camera Totals
+            entities:
+              - entity: input_number.frigate_cam3_person_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.frigate_cam3_person_count
+                    above: 0
+              - entity: input_number.frigate_cam3_animal_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.frigate_cam3_animal_count
+                    above: 0
+              - entity: input_number.frigate_cam5_person_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.frigate_cam5_person_count
+                    above: 0
+              - entity: input_number.frigate_cam5_animal_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.frigate_cam5_animal_count
+                    above: 0
+              - entity: input_number.frigate_cam6_person_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.frigate_cam6_person_count
+                    above: 0
+              - entity: input_number.frigate_cam6_animal_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.frigate_cam6_animal_count
+                    above: 0
+              - entity: input_number.frigate_cam7_person_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.frigate_cam7_person_count
+                    above: 0
+              - entity: input_number.frigate_cam7_animal_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.frigate_cam7_animal_count
+                    above: 0
+              - entity: input_number.frigate_cam8_person_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.frigate_cam8_person_count
+                    above: 0
+              - entity: input_number.frigate_cam8_animal_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.frigate_cam8_animal_count
+                    above: 0
+          - type: entities
+            title: Frigate Summary
+            entities:
+              - sensor.frigate_total_person_detections
+              - sensor.frigate_total_animal_detections
+
+      - type: heading
+        heading: Reolink Daily Detections
+
+      - type: custom:stack-in-card
+        cards:
+          - type: entities
+            title: Reolink Camera Totals
+            entities:
+              - entity: input_number.reolink_cam3_person_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.reolink_cam3_person_count
+                    above: 0
+              - entity: input_number.reolink_cam3_animal_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.reolink_cam3_animal_count
+                    above: 0
+              - entity: input_number.reolink_cam5_person_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.reolink_cam5_person_count
+                    above: 0
+              - entity: input_number.reolink_cam5_animal_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.reolink_cam5_animal_count
+                    above: 0
+              - entity: input_number.reolink_cam6_person_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.reolink_cam6_person_count
+                    above: 0
+              - entity: input_number.reolink_cam6_animal_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.reolink_cam6_animal_count
+                    above: 0
+              - entity: input_number.reolink_cam7_person_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.reolink_cam7_person_count
+                    above: 0
+              - entity: input_number.reolink_cam7_animal_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.reolink_cam7_animal_count
+                    above: 0
+              - entity: input_number.reolink_cam8_person_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.reolink_cam8_person_count
+                    above: 0
+              - entity: input_number.reolink_cam8_animal_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.reolink_cam8_animal_count
+                    above: 0
+          - type: entities
+            title: Reolink Summary
+            entities:
+              - sensor.reolink_total_person_detections
+              - sensor.reolink_total_animal_detections
+
+      - type: heading
+        heading: Detections by Home Status (Summary)
+
+      - type: custom:stack-in-card
+        cards:
+          - type: entities
+            title: 🏠 Hemma på (Home - Occupied)
+            entities:
+              - entity: input_number.frigate_hemma_pa_person_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.frigate_hemma_pa_person_count
+                    above: 0
+              - entity: input_number.frigate_hemma_pa_animal_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.frigate_hemma_pa_animal_count
+                    above: 0
+              - entity: input_number.reolink_hemma_pa_person_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.reolink_hemma_pa_person_count
+                    above: 0
+              - entity: input_number.reolink_hemma_pa_animal_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.reolink_hemma_pa_animal_count
+                    above: 0
+          - type: entities
+            title: 🏡 Hemma av (Home - Not Occupied)
+            entities:
+              - entity: input_number.frigate_hemma_av_person_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.frigate_hemma_av_person_count
+                    above: 0
+              - entity: input_number.frigate_hemma_av_animal_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.frigate_hemma_av_animal_count
+                    above: 0
+              - entity: input_number.reolink_hemma_av_person_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.reolink_hemma_av_person_count
+                    above: 0
+              - entity: input_number.reolink_hemma_av_animal_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.reolink_hemma_av_animal_count
+                    above: 0
+          - type: entities
+            title: ✈️ Borta (Away)
+            entities:
+              - entity: input_number.frigate_borta_person_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.frigate_borta_person_count
+                    above: 0
+              - entity: input_number.frigate_borta_animal_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.frigate_borta_animal_count
+                    above: 0
+              - entity: input_number.reolink_borta_person_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.reolink_borta_person_count
+                    above: 0
+              - entity: input_number.reolink_borta_animal_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.reolink_borta_animal_count
+                    above: 0
+
+      - type: heading
+        heading: Frigate Camera 3 - Home Status
+
+      - type: entities
+        title: Cam3 - Hemma på
+        entities:
+          - entity: input_number.frigate_cam3_hemma_pa_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam3_hemma_pa_person_count
+                above: 0
+          - entity: input_number.frigate_cam3_hemma_pa_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam3_hemma_pa_animal_count
+                above: 0
+
+      - type: entities
+        title: Cam3 - Hemma av
+        entities:
+          - entity: input_number.frigate_cam3_hemma_av_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam3_hemma_av_person_count
+                above: 0
+          - entity: input_number.frigate_cam3_hemma_av_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam3_hemma_av_animal_count
+                above: 0
+
+      - type: entities
+        title: Cam3 - Borta
+        entities:
+          - entity: input_number.frigate_cam3_borta_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam3_borta_person_count
+                above: 0
+          - entity: input_number.frigate_cam3_borta_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam3_borta_animal_count
+                above: 0
+
+      - type: heading
+        heading: Frigate Camera 5 - Home Status
+
+      - type: entities
+        title: Cam5 - Hemma på
+        entities:
+          - entity: input_number.frigate_cam5_hemma_pa_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam5_hemma_pa_person_count
+                above: 0
+          - entity: input_number.frigate_cam5_hemma_pa_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam5_hemma_pa_animal_count
+                above: 0
+
+      - type: entities
+        title: Cam5 - Hemma av
+        entities:
+          - entity: input_number.frigate_cam5_hemma_av_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam5_hemma_av_person_count
+                above: 0
+          - entity: input_number.frigate_cam5_hemma_av_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam5_hemma_av_animal_count
+                above: 0
+
+      - type: entities
+        title: Cam5 - Borta
+        entities:
+          - entity: input_number.frigate_cam5_borta_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam5_borta_person_count
+                above: 0
+          - entity: input_number.frigate_cam5_borta_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam5_borta_animal_count
+                above: 0
+
+      - type: heading
+        heading: Frigate Camera 6 - Home Status
+
+      - type: entities
+        title: Cam6 - Hemma på
+        entities:
+          - entity: input_number.frigate_cam6_hemma_pa_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam6_hemma_pa_person_count
+                above: 0
+          - entity: input_number.frigate_cam6_hemma_pa_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam6_hemma_pa_animal_count
+                above: 0
+
+      - type: entities
+        title: Cam6 - Hemma av
+        entities:
+          - entity: input_number.frigate_cam6_hemma_av_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam6_hemma_av_person_count
+                above: 0
+          - entity: input_number.frigate_cam6_hemma_av_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam6_hemma_av_animal_count
+                above: 0
+
+      - type: entities
+        title: Cam6 - Borta
+        entities:
+          - entity: input_number.frigate_cam6_borta_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam6_borta_person_count
+                above: 0
+          - entity: input_number.frigate_cam6_borta_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam6_borta_animal_count
+                above: 0
+
+      - type: heading
+        heading: Frigate Camera 7 - Home Status
+
+      - type: entities
+        title: Cam7 - Hemma på
+        entities:
+          - entity: input_number.frigate_cam7_hemma_pa_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam7_hemma_pa_person_count
+                above: 0
+          - entity: input_number.frigate_cam7_hemma_pa_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam7_hemma_pa_animal_count
+                above: 0
+
+      - type: entities
+        title: Cam7 - Hemma av
+        entities:
+          - entity: input_number.frigate_cam7_hemma_av_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam7_hemma_av_person_count
+                above: 0
+          - entity: input_number.frigate_cam7_hemma_av_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam7_hemma_av_animal_count
+                above: 0
+
+      - type: entities
+        title: Cam7 - Borta
+        entities:
+          - entity: input_number.frigate_cam7_borta_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam7_borta_person_count
+                above: 0
+          - entity: input_number.frigate_cam7_borta_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam7_borta_animal_count
+                above: 0
+
+      - type: heading
+        heading: Frigate Camera 8 - Home Status
+
+      - type: entities
+        title: Cam8 - Hemma på
+        entities:
+          - entity: input_number.frigate_cam8_hemma_pa_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam8_hemma_pa_person_count
+                above: 0
+          - entity: input_number.frigate_cam8_hemma_pa_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam8_hemma_pa_animal_count
+                above: 0
+
+      - type: entities
+        title: Cam8 - Hemma av
+        entities:
+          - entity: input_number.frigate_cam8_hemma_av_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam8_hemma_av_person_count
+                above: 0
+          - entity: input_number.frigate_cam8_hemma_av_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam8_hemma_av_animal_count
+                above: 0
+
+      - type: entities
+        title: Cam8 - Borta
+        entities:
+          - entity: input_number.frigate_cam8_borta_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam8_borta_person_count
+                above: 0
+          - entity: input_number.frigate_cam8_borta_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam8_borta_animal_count
+                above: 0
+
+      - type: heading
+        heading: Reolink Camera 3 - Home Status
+
+      - type: entities
+        title: Cam3 - Hemma på
+        entities:
+          - entity: input_number.reolink_cam3_hemma_pa_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam3_hemma_pa_person_count
+                above: 0
+          - entity: input_number.reolink_cam3_hemma_pa_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam3_hemma_pa_animal_count
+                above: 0
+
+      - type: entities
+        title: Cam3 - Hemma av
+        entities:
+          - entity: input_number.reolink_cam3_hemma_av_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam3_hemma_av_person_count
+                above: 0
+          - entity: input_number.reolink_cam3_hemma_av_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam3_hemma_av_animal_count
+                above: 0
+
+      - type: entities
+        title: Cam3 - Borta
+        entities:
+          - entity: input_number.reolink_cam3_borta_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam3_borta_person_count
+                above: 0
+          - entity: input_number.reolink_cam3_borta_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam3_borta_animal_count
+                above: 0
+
+      - type: heading
+        heading: Reolink Camera 5 - Home Status
+
+      - type: entities
+        title: Cam5 - Hemma på
+        entities:
+          - entity: input_number.reolink_cam5_hemma_pa_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam5_hemma_pa_person_count
+                above: 0
+          - entity: input_number.reolink_cam5_hemma_pa_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam5_hemma_pa_animal_count
+                above: 0
+
+      - type: entities
+        title: Cam5 - Hemma av
+        entities:
+          - entity: input_number.reolink_cam5_hemma_av_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam5_hemma_av_person_count
+                above: 0
+          - entity: input_number.reolink_cam5_hemma_av_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam5_hemma_av_animal_count
+                above: 0
+
+      - type: entities
+        title: Cam5 - Borta
+        entities:
+          - entity: input_number.reolink_cam5_borta_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam5_borta_person_count
+                above: 0
+          - entity: input_number.reolink_cam5_borta_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam5_borta_animal_count
+                above: 0
+
+      - type: heading
+        heading: Reolink Camera 6 - Home Status
+
+      - type: entities
+        title: Cam6 - Hemma på
+        entities:
+          - entity: input_number.reolink_cam6_hemma_pa_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam6_hemma_pa_person_count
+                above: 0
+          - entity: input_number.reolink_cam6_hemma_pa_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam6_hemma_pa_animal_count
+                above: 0
+
+      - type: entities
+        title: Cam6 - Hemma av
+        entities:
+          - entity: input_number.reolink_cam6_hemma_av_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam6_hemma_av_person_count
+                above: 0
+          - entity: input_number.reolink_cam6_hemma_av_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam6_hemma_av_animal_count
+                above: 0
+
+      - type: entities
+        title: Cam6 - Borta
+        entities:
+          - entity: input_number.reolink_cam6_borta_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam6_borta_person_count
+                above: 0
+          - entity: input_number.reolink_cam6_borta_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam6_borta_animal_count
+                above: 0
+
+      - type: heading
+        heading: Reolink Camera 7 - Home Status
+
+      - type: entities
+        title: Cam7 - Hemma på
+        entities:
+          - entity: input_number.reolink_cam7_hemma_pa_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam7_hemma_pa_person_count
+                above: 0
+          - entity: input_number.reolink_cam7_hemma_pa_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam7_hemma_pa_animal_count
+                above: 0
+
+      - type: entities
+        title: Cam7 - Hemma av
+        entities:
+          - entity: input_number.reolink_cam7_hemma_av_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam7_hemma_av_person_count
+                above: 0
+          - entity: input_number.reolink_cam7_hemma_av_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam7_hemma_av_animal_count
+                above: 0
+
+      - type: entities
+        title: Cam7 - Borta
+        entities:
+          - entity: input_number.reolink_cam7_borta_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam7_borta_person_count
+                above: 0
+          - entity: input_number.reolink_cam7_borta_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam7_borta_animal_count
+                above: 0
+
+      - type: heading
+        heading: Reolink Camera 8 - Home Status
+
+      - type: entities
+        title: Cam8 - Hemma på
+        entities:
+          - entity: input_number.reolink_cam8_hemma_pa_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam8_hemma_pa_person_count
+                above: 0
+          - entity: input_number.reolink_cam8_hemma_pa_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam8_hemma_pa_animal_count
+                above: 0
+
+      - type: entities
+        title: Cam8 - Hemma av
+        entities:
+          - entity: input_number.reolink_cam8_hemma_av_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam8_hemma_av_person_count
+                above: 0
+          - entity: input_number.reolink_cam8_hemma_av_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam8_hemma_av_animal_count
+                above: 0
+
+      - type: entities
+        title: Cam8 - Borta
+        entities:
+          - entity: input_number.reolink_cam8_borta_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam8_borta_person_count
+                above: 0
+          - entity: input_number.reolink_cam8_borta_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam8_borta_animal_count
+                above: 0

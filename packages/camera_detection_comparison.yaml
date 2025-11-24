@@ -822,6 +822,308 @@ template:
             states('input_number.reolink_cam8_animal_count') | int(0)
           }}
 
+      # Per-Camera Home Status Sensors - Frigate
+      - name: "Frigate Cam3 Person - Hemma på"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam3_hemma_pa_person_count') | int(0) }}"
+
+      - name: "Frigate Cam3 Animal - Hemma på"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam3_hemma_pa_animal_count') | int(0) }}"
+
+      - name: "Frigate Cam3 Person - Hemma av"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam3_hemma_av_person_count') | int(0) }}"
+
+      - name: "Frigate Cam3 Animal - Hemma av"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam3_hemma_av_animal_count') | int(0) }}"
+
+      - name: "Frigate Cam3 Person - Borta"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam3_borta_person_count') | int(0) }}"
+
+      - name: "Frigate Cam3 Animal - Borta"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam3_borta_animal_count') | int(0) }}"
+
+      - name: "Frigate Cam5 Person - Hemma på"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam5_hemma_pa_person_count') | int(0) }}"
+
+      - name: "Frigate Cam5 Animal - Hemma på"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam5_hemma_pa_animal_count') | int(0) }}"
+
+      - name: "Frigate Cam5 Person - Hemma av"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam5_hemma_av_person_count') | int(0) }}"
+
+      - name: "Frigate Cam5 Animal - Hemma av"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam5_hemma_av_animal_count') | int(0) }}"
+
+      - name: "Frigate Cam5 Person - Borta"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam5_borta_person_count') | int(0) }}"
+
+      - name: "Frigate Cam5 Animal - Borta"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam5_borta_animal_count') | int(0) }}"
+
+      - name: "Frigate Cam6 Person - Hemma på"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam6_hemma_pa_person_count') | int(0) }}"
+
+      - name: "Frigate Cam6 Animal - Hemma på"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam6_hemma_pa_animal_count') | int(0) }}"
+
+      - name: "Frigate Cam6 Person - Hemma av"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam6_hemma_av_person_count') | int(0) }}"
+
+      - name: "Frigate Cam6 Animal - Hemma av"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam6_hemma_av_animal_count') | int(0) }}"
+
+      - name: "Frigate Cam6 Person - Borta"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam6_borta_person_count') | int(0) }}"
+
+      - name: "Frigate Cam6 Animal - Borta"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam6_borta_animal_count') | int(0) }}"
+
+      - name: "Frigate Cam7 Person - Hemma på"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam7_hemma_pa_person_count') | int(0) }}"
+
+      - name: "Frigate Cam7 Animal - Hemma på"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam7_hemma_pa_animal_count') | int(0) }}"
+
+      - name: "Frigate Cam7 Person - Hemma av"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam7_hemma_av_person_count') | int(0) }}"
+
+      - name: "Frigate Cam7 Animal - Hemma av"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam7_hemma_av_animal_count') | int(0) }}"
+
+      - name: "Frigate Cam7 Person - Borta"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam7_borta_person_count') | int(0) }}"
+
+      - name: "Frigate Cam7 Animal - Borta"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam7_borta_animal_count') | int(0) }}"
+
+      - name: "Frigate Cam8 Person - Hemma på"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam8_hemma_pa_person_count') | int(0) }}"
+
+      - name: "Frigate Cam8 Animal - Hemma på"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam8_hemma_pa_animal_count') | int(0) }}"
+
+      - name: "Frigate Cam8 Person - Hemma av"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam8_hemma_av_person_count') | int(0) }}"
+
+      - name: "Frigate Cam8 Animal - Hemma av"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam8_hemma_av_animal_count') | int(0) }}"
+
+      - name: "Frigate Cam8 Person - Borta"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam8_borta_person_count') | int(0) }}"
+
+      - name: "Frigate Cam8 Animal - Borta"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.frigate_cam8_borta_animal_count') | int(0) }}"
+
+      # Per-Camera Home Status Sensors - Reolink
+      - name: "Reolink Cam3 Person - Hemma på"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam3_hemma_pa_person_count') | int(0) }}"
+
+      - name: "Reolink Cam3 Animal - Hemma på"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam3_hemma_pa_animal_count') | int(0) }}"
+
+      - name: "Reolink Cam3 Person - Hemma av"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam3_hemma_av_person_count') | int(0) }}"
+
+      - name: "Reolink Cam3 Animal - Hemma av"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam3_hemma_av_animal_count') | int(0) }}"
+
+      - name: "Reolink Cam3 Person - Borta"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam3_borta_person_count') | int(0) }}"
+
+      - name: "Reolink Cam3 Animal - Borta"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam3_borta_animal_count') | int(0) }}"
+
+      - name: "Reolink Cam5 Person - Hemma på"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam5_hemma_pa_person_count') | int(0) }}"
+
+      - name: "Reolink Cam5 Animal - Hemma på"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam5_hemma_pa_animal_count') | int(0) }}"
+
+      - name: "Reolink Cam5 Person - Hemma av"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam5_hemma_av_person_count') | int(0) }}"
+
+      - name: "Reolink Cam5 Animal - Hemma av"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam5_hemma_av_animal_count') | int(0) }}"
+
+      - name: "Reolink Cam5 Person - Borta"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam5_borta_person_count') | int(0) }}"
+
+      - name: "Reolink Cam5 Animal - Borta"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam5_borta_animal_count') | int(0) }}"
+
+      - name: "Reolink Cam6 Person - Hemma på"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam6_hemma_pa_person_count') | int(0) }}"
+
+      - name: "Reolink Cam6 Animal - Hemma på"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam6_hemma_pa_animal_count') | int(0) }}"
+
+      - name: "Reolink Cam6 Person - Hemma av"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam6_hemma_av_person_count') | int(0) }}"
+
+      - name: "Reolink Cam6 Animal - Hemma av"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam6_hemma_av_animal_count') | int(0) }}"
+
+      - name: "Reolink Cam6 Person - Borta"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam6_borta_person_count') | int(0) }}"
+
+      - name: "Reolink Cam6 Animal - Borta"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam6_borta_animal_count') | int(0) }}"
+
+      - name: "Reolink Cam7 Person - Hemma på"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam7_hemma_pa_person_count') | int(0) }}"
+
+      - name: "Reolink Cam7 Animal - Hemma på"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam7_hemma_pa_animal_count') | int(0) }}"
+
+      - name: "Reolink Cam7 Person - Hemma av"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam7_hemma_av_person_count') | int(0) }}"
+
+      - name: "Reolink Cam7 Animal - Hemma av"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam7_hemma_av_animal_count') | int(0) }}"
+
+      - name: "Reolink Cam7 Person - Borta"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam7_borta_person_count') | int(0) }}"
+
+      - name: "Reolink Cam7 Animal - Borta"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam7_borta_animal_count') | int(0) }}"
+
+      - name: "Reolink Cam8 Person - Hemma på"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam8_hemma_pa_person_count') | int(0) }}"
+
+      - name: "Reolink Cam8 Animal - Hemma på"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam8_hemma_pa_animal_count') | int(0) }}"
+
+      - name: "Reolink Cam8 Person - Hemma av"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam8_hemma_av_person_count') | int(0) }}"
+
+      - name: "Reolink Cam8 Animal - Hemma av"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam8_hemma_av_animal_count') | int(0) }}"
+
+      - name: "Reolink Cam8 Person - Borta"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam8_borta_person_count') | int(0) }}"
+
+      - name: "Reolink Cam8 Animal - Borta"
+        state_class: measurement
+        unit_of_measurement: "detections"
+        state: "{{ states('input_number.reolink_cam8_borta_animal_count') | int(0) }}"
+
 ##################
 ### Automation ###
 ##################
@@ -1135,8 +1437,41 @@ automation:
           reolink_animal_total: "{{ states('sensor.reolink_total_animal_detections') | int(0) }}"
           person_winner: "{% if frigate_person_total > reolink_person_total %}Frigate{% elif reolink_person_total > frigate_person_total %}Reolink{% else %}Tie{% endif %}"
           animal_winner: "{% if frigate_animal_total > reolink_animal_total %}Frigate{% elif reolink_animal_total > frigate_animal_total %}Reolink{% else %}Tie{% endif %}"
+          frigate_cam3_person: "{{ states('input_number.frigate_cam3_person_count') | int(0) }}"
+          reolink_cam3_person: "{{ states('input_number.reolink_cam3_person_count') | int(0) }}"
+          frigate_cam5_person: "{{ states('input_number.frigate_cam5_person_count') | int(0) }}"
+          reolink_cam5_person: "{{ states('input_number.reolink_cam5_person_count') | int(0) }}"
+          frigate_cam6_person: "{{ states('input_number.frigate_cam6_person_count') | int(0) }}"
+          reolink_cam6_person: "{{ states('input_number.reolink_cam6_person_count') | int(0) }}"
+          frigate_cam7_person: "{{ states('input_number.frigate_cam7_person_count') | int(0) }}"
+          reolink_cam7_person: "{{ states('input_number.reolink_cam7_person_count') | int(0) }}"
+          frigate_cam8_person: "{{ states('input_number.frigate_cam8_person_count') | int(0) }}"
+          reolink_cam8_person: "{{ states('input_number.reolink_cam8_person_count') | int(0) }}"
+          frigate_cam3_animal: "{{ states('input_number.frigate_cam3_animal_count') | int(0) }}"
+          reolink_cam3_animal: "{{ states('input_number.reolink_cam3_animal_count') | int(0) }}"
+          frigate_cam5_animal: "{{ states('input_number.frigate_cam5_animal_count') | int(0) }}"
+          reolink_cam5_animal: "{{ states('input_number.reolink_cam5_animal_count') | int(0) }}"
+          frigate_cam6_animal: "{{ states('input_number.frigate_cam6_animal_count') | int(0) }}"
+          reolink_cam6_animal: "{{ states('input_number.reolink_cam6_animal_count') | int(0) }}"
+          frigate_cam7_animal: "{{ states('input_number.frigate_cam7_animal_count') | int(0) }}"
+          reolink_cam7_animal: "{{ states('input_number.reolink_cam7_animal_count') | int(0) }}"
+          frigate_cam8_animal: "{{ states('input_number.frigate_cam8_animal_count') | int(0) }}"
+          reolink_cam8_animal: "{{ states('input_number.reolink_cam8_animal_count') | int(0) }}"
+          frigate_hemma_pa_person: "{{ states('input_number.frigate_hemma_pa_person_count') | int(0) }}"
+          frigate_hemma_pa_animal: "{{ states('input_number.frigate_hemma_pa_animal_count') | int(0) }}"
+          reolink_hemma_pa_person: "{{ states('input_number.reolink_hemma_pa_person_count') | int(0) }}"
+          reolink_hemma_pa_animal: "{{ states('input_number.reolink_hemma_pa_animal_count') | int(0) }}"
+          frigate_hemma_av_person: "{{ states('input_number.frigate_hemma_av_person_count') | int(0) }}"
+          frigate_hemma_av_animal: "{{ states('input_number.frigate_hemma_av_animal_count') | int(0) }}"
+          reolink_hemma_av_person: "{{ states('input_number.reolink_hemma_av_person_count') | int(0) }}"
+          reolink_hemma_av_animal: "{{ states('input_number.reolink_hemma_av_animal_count') | int(0) }}"
+          frigate_borta_person: "{{ states('input_number.frigate_borta_person_count') | int(0) }}"
+          frigate_borta_animal: "{{ states('input_number.frigate_borta_animal_count') | int(0) }}"
+          reolink_borta_person: "{{ states('input_number.reolink_borta_person_count') | int(0) }}"
+          reolink_borta_animal: "{{ states('input_number.reolink_borta_animal_count') | int(0) }}"
           report_message: |
-            📊 **Camera Detection Comparison Report**
+            � **Camera Detection Comparison Report**
+            {% if frigate_person_total > 0 or reolink_person_total > 0 %}
             
             🚨 **Person Detection**
             Frigate:  {{ frigate_person_total }} detections
@@ -1144,11 +1479,12 @@ automation:
             Winner: {{ person_winner }}
             
             Individual Camera Breakdown:
-            Cam 3:  Frigate: {{ states('input_number.frigate_cam3_person_count') | int(0) }} | Reolink: {{ states('input_number.reolink_cam3_person_count') | int(0) }}
-            Cam 5:  Frigate: {{ states('input_number.frigate_cam5_person_count') | int(0) }} | Reolink: {{ states('input_number.reolink_cam5_person_count') | int(0) }}
-            Cam 6:  Frigate: {{ states('input_number.frigate_cam6_person_count') | int(0) }} | Reolink: {{ states('input_number.reolink_cam6_person_count') | int(0) }}
-            Cam 7:  Frigate: {{ states('input_number.frigate_cam7_person_count') | int(0) }} | Reolink: {{ states('input_number.reolink_cam7_person_count') | int(0) }}
-            Cam 8:  Frigate: {{ states('input_number.frigate_cam8_person_count') | int(0) }} | Reolink: {{ states('input_number.reolink_cam8_person_count') | int(0) }}
+            {% if frigate_cam3_person > 0 or reolink_cam3_person > 0 %}Cam 3:  Frigate: {{ frigate_cam3_person }} | Reolink: {{ reolink_cam3_person }}
+            {% endif %}{% if frigate_cam5_person > 0 or reolink_cam5_person > 0 %}Cam 5:  Frigate: {{ frigate_cam5_person }} | Reolink: {{ reolink_cam5_person }}
+            {% endif %}{% if frigate_cam6_person > 0 or reolink_cam6_person > 0 %}Cam 6:  Frigate: {{ frigate_cam6_person }} | Reolink: {{ reolink_cam6_person }}
+            {% endif %}{% if frigate_cam7_person > 0 or reolink_cam7_person > 0 %}Cam 7:  Frigate: {{ frigate_cam7_person }} | Reolink: {{ reolink_cam7_person }}
+            {% endif %}{% if frigate_cam8_person > 0 or reolink_cam8_person > 0 %}Cam 8:  Frigate: {{ frigate_cam8_person }} | Reolink: {{ reolink_cam8_person }}
+            {% endif %}{% endif %}{% if frigate_animal_total > 0 or reolink_animal_total > 0 %}
             
             🐾 **Animal Detection**
             Frigate:  {{ frigate_animal_total }} detections
@@ -1156,25 +1492,29 @@ automation:
             Winner: {{ animal_winner }}
             
             Individual Camera Breakdown:
-            Cam 3:  Frigate: {{ states('input_number.frigate_cam3_animal_count') | int(0) }} | Reolink: {{ states('input_number.reolink_cam3_animal_count') | int(0) }}
-            Cam 5:  Frigate: {{ states('input_number.frigate_cam5_animal_count') | int(0) }} | Reolink: {{ states('input_number.reolink_cam5_animal_count') | int(0) }}
-            Cam 6:  Frigate: {{ states('input_number.frigate_cam6_animal_count') | int(0) }} | Reolink: {{ states('input_number.reolink_cam6_animal_count') | int(0) }}
-            Cam 7:  Frigate: {{ states('input_number.frigate_cam7_animal_count') | int(0) }} | Reolink: {{ states('input_number.reolink_cam7_animal_count') | int(0) }}
-            Cam 8:  Frigate: {{ states('input_number.frigate_cam8_animal_count') | int(0) }} | Reolink: {{ states('input_number.reolink_cam8_animal_count') | int(0) }}
+            {% if frigate_cam3_animal > 0 or reolink_cam3_animal > 0 %}Cam 3:  Frigate: {{ frigate_cam3_animal }} | Reolink: {{ reolink_cam3_animal }}
+            {% endif %}{% if frigate_cam5_animal > 0 or reolink_cam5_animal > 0 %}Cam 5:  Frigate: {{ frigate_cam5_animal }} | Reolink: {{ reolink_cam5_animal }}
+            {% endif %}{% if frigate_cam6_animal > 0 or reolink_cam6_animal > 0 %}Cam 6:  Frigate: {{ frigate_cam6_animal }} | Reolink: {{ reolink_cam6_animal }}
+            {% endif %}{% if frigate_cam7_animal > 0 or reolink_cam7_animal > 0 %}Cam 7:  Frigate: {{ frigate_cam7_animal }} | Reolink: {{ reolink_cam7_animal }}
+            {% endif %}{% if frigate_cam8_animal > 0 or reolink_cam8_animal > 0 %}Cam 8:  Frigate: {{ frigate_cam8_animal }} | Reolink: {{ reolink_cam8_animal }}
+            {% endif %}{% endif %}{% if frigate_hemma_pa_person > 0 or frigate_hemma_pa_animal > 0 or reolink_hemma_pa_person > 0 or reolink_hemma_pa_animal > 0 %}
             
             📍 **By Home Status**
             
-            🏠 Hemma på (Home - Occupied):
-            Frigate - Person: {{ states('input_number.frigate_hemma_pa_person_count') | int(0) }} | Animal: {{ states('input_number.frigate_hemma_pa_animal_count') | int(0) }}
-            Reolink - Person: {{ states('input_number.reolink_hemma_pa_person_count') | int(0) }} | Animal: {{ states('input_number.reolink_hemma_pa_animal_count') | int(0) }}
+            � Hemma på (Home - Occupied):
+            Frigate - Person: {{ frigate_hemma_pa_person }} | Animal: {{ frigate_hemma_pa_animal }}
+            Reolink - Person: {{ reolink_hemma_pa_person }} | Animal: {{ reolink_hemma_pa_animal }}
+            {% endif %}{% if frigate_hemma_av_person > 0 or frigate_hemma_av_animal > 0 or reolink_hemma_av_person > 0 or reolink_hemma_av_animal > 0 %}
             
             🏡 Hemma av (Home - Not Occupied):
-            Frigate - Person: {{ states('input_number.frigate_hemma_av_person_count') | int(0) }} | Animal: {{ states('input_number.frigate_hemma_av_animal_count') | int(0) }}
-            Reolink - Person: {{ states('input_number.reolink_hemma_av_person_count') | int(0) }} | Animal: {{ states('input_number.reolink_hemma_av_animal_count') | int(0) }}
+            Frigate - Person: {{ frigate_hemma_av_person }} | Animal: {{ frigate_hemma_av_animal }}
+            Reolink - Person: {{ reolink_hemma_av_person }} | Animal: {{ reolink_hemma_av_animal }}
+            {% endif %}{% if frigate_borta_person > 0 or frigate_borta_animal > 0 or reolink_borta_person > 0 or reolink_borta_animal > 0 %}
             
             ✈️ Borta (Away):
-            Frigate - Person: {{ states('input_number.frigate_borta_person_count') | int(0) }} | Animal: {{ states('input_number.frigate_borta_animal_count') | int(0) }}
-            Reolink - Person: {{ states('input_number.reolink_borta_person_count') | int(0) }} | Animal: {{ states('input_number.reolink_borta_animal_count') | int(0) }}
+            Frigate - Person: {{ frigate_borta_person }} | Animal: {{ frigate_borta_animal }}
+            Reolink - Person: {{ reolink_borta_person }} | Animal: {{ reolink_borta_animal }}
+            {% endif %}
 
       - service: notify.mobile_app_sm_a528b
         data:

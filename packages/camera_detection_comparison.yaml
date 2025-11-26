@@ -665,6 +665,28 @@ input_number:
     unit_of_measurement: "detections"
     icon: mdi:counter
 
+  # Response Time Tracking (in milliseconds)
+  frigate_last_detection_time:
+    name: "Frigate Last Detection Time"
+    min: 0
+    max: 999999
+    unit_of_measurement: "ms"
+    icon: mdi:timer
+
+  reolink_last_detection_time:
+    name: "Reolink Last Detection Time"
+    min: 0
+    max: 999999
+    unit_of_measurement: "ms"
+    icon: mdi:timer
+
+  fastest_detector_response_time:
+    name: "Fastest Detector Response Time"
+    min: 0
+    max: 999999
+    unit_of_measurement: "ms"
+    icon: mdi:speedometer
+
 #############################################
 ### Template Sensors - Daily Statistics  ###
 #############################################
@@ -1124,6 +1146,26 @@ template:
         unit_of_measurement: "detections"
         state: "{{ states('input_number.reolink_cam8_borta_animal_count') | int(0) }}"
 
+      # Response Time Comparison Sensors
+      - name: "Fastest Detection System"
+        unique_id: "fastest_detection_system"
+        state: |
+          {% set frigate_time = state_attr('input_number.frigate_last_detection_time', 'last_changed') %}
+          {% set reolink_time = state_attr('input_number.reolink_last_detection_time', 'last_changed') %}
+          {% if frigate_time and reolink_time %}
+            {% if frigate_time > reolink_time %}Frigate{% else %}Reolink{% endif %}
+          {% else %}Unknown{% endif %}
+
+      - name: "Detection Response Time Difference"
+        unique_id: "detection_response_time_diff"
+        unit_of_measurement: "ms"
+        state: |
+          {% set frigate_time = states('input_number.frigate_last_detection_time') | int(0) %}
+          {% set reolink_time = states('input_number.reolink_last_detection_time') | int(0) %}
+          {% if frigate_time > 0 and reolink_time > 0 %}
+            {{ (frigate_time - reolink_time) | abs }}
+          {% else %}0{% endif %}
+
 ##################
 ### Automation ###
 ##################
@@ -1178,6 +1220,13 @@ automation:
       - service: input_number.increment
         target:
           entity_id: "input_number.frigate_cam{{ camera_num }}_person_count"
+
+      # Log detection time for Frigate (current timestamp in ms)
+      - service: input_number.set_value
+        target:
+          entity_id: "input_number.frigate_last_detection_time"
+        data:
+          value: "{{ (now().timestamp() * 1000) | int }}"
 
       - choose:
           - conditions:
@@ -1248,6 +1297,13 @@ automation:
         target:
           entity_id: "input_number.frigate_cam{{ camera_num }}_animal_count"
 
+      # Log detection time for Frigate (current timestamp in ms)
+      - service: input_number.set_value
+        target:
+          entity_id: "input_number.frigate_last_detection_time"
+        data:
+          value: "{{ (now().timestamp() * 1000) | int }}"
+
       - choose:
           - conditions:
               - condition: state
@@ -1317,6 +1373,13 @@ automation:
         target:
           entity_id: "input_number.reolink_cam{{ camera_num }}_person_count"
 
+      # Log detection time for Reolink (current timestamp in ms)
+      - service: input_number.set_value
+        target:
+          entity_id: "input_number.reolink_last_detection_time"
+        data:
+          value: "{{ (now().timestamp() * 1000) | int }}"
+
       - choose:
           - conditions:
               - condition: state
@@ -1385,6 +1448,13 @@ automation:
       - service: input_number.increment
         target:
           entity_id: "input_number.reolink_cam{{ camera_num }}_animal_count"
+
+      # Log detection time for Reolink (current timestamp in ms)
+      - service: input_number.set_value
+        target:
+          entity_id: "input_number.reolink_last_detection_time"
+        data:
+          value: "{{ (now().timestamp() * 1000) | int }}"
 
       - choose:
           - conditions:
@@ -1625,6 +1695,49 @@ automation:
             - input_number.reolink_cam8_hemma_av_animal_count
             - input_number.reolink_cam8_borta_person_count
             - input_number.reolink_cam8_borta_animal_count
+
+  ##########################################################
+  ### Compare Response Times - Analyze Fastest Detector ###
+  ##########################################################
+  - alias: "Analyze Detection Response Time"
+    id: 'analyze_detection_response_time'
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: 
+          - input_number.frigate_last_detection_time
+          - input_number.reolink_last_detection_time
+
+    condition:
+      # Only analyze if both have detected within the last 2 minutes (to ensure simultaneous detection)
+      - condition: template
+        value_template: |
+          {% set frigate_time = state_attr('input_number.frigate_last_detection_time', 'last_changed') %}
+          {% set reolink_time = state_attr('input_number.reolink_last_detection_time', 'last_changed') %}
+          {% set now = now() %}
+          {% if frigate_time and reolink_time %}
+            {% set frigate_age = (now - frigate_time.replace(tzinfo=None)).total_seconds() %}
+            {% set reolink_age = (now - reolink_time.replace(tzinfo=None)).total_seconds() %}
+            {{ frigate_age < 120 and reolink_age < 120 }}
+          {% else %}false{% endif %}
+
+    action:
+      - variables:
+          frigate_time: "{{ states('input_number.frigate_last_detection_time') | int(0) }}"
+          reolink_time: "{{ states('input_number.reolink_last_detection_time') | int(0) }}"
+          time_difference: "{{ (frigate_time - reolink_time) | abs }}"
+          faster_system: "{% if frigate_time > reolink_time %}Frigate{% else %}Reolink{% endif %}"
+
+      # Send notification with analysis
+      - service: notify.mobile_app_sm_a528b
+        data:
+          title: "⚡ Detection Speed Analysis"
+          message: |
+            {{ faster_system }} was faster!
+            Difference: {{ time_difference }}ms
+            Frigate: {{ frigate_time }}ms
+            Reolink: {{ reolink_time }}ms
 
   ##########################################################
   ### Delete Old Snapshots (Older than 10 days)        ###

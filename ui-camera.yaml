@@ -137,6 +137,19 @@ views:
               - sensor.reolink_total_animal_detections
 
       - type: heading
+        heading: ⚡ Response Time Analysis
+
+      - type: custom:stack-in-card
+        cards:
+          - type: entities
+            title: Detection Speed Comparison
+            entities:
+              - sensor.fastest_detection_system
+              - sensor.detection_response_time_difference
+              - input_number.frigate_last_detection_time
+              - input_number.reolink_last_detection_time
+
+      - type: heading
         heading: Detections by Home Status (Summary)
 
       - type: custom:stack-in-card

@@ -47,9 +47,6 @@
 
 #      - service: light.turn_off
 #        entity_id: light.tradack_ute
-  
-#      - repeat:
-#          count: 10
-#          sequence:
-#            - service: light.turn_off
-#              entity_id: light.friggebod_ute_2
+
+      - service: light.turn_off
+        entity_id: light.friggebod_ute_2

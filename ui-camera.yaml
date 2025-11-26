@@ -9,6 +9,32 @@ views:
     badges: []
     cards:
       - type: heading
+        heading: 📊 Daily Detection Summary & Comparison
+
+      - type: custom:stack-in-card
+        cards:
+          - type: entities
+            title: Overall Totals
+            entities:
+              - sensor.frigate_total_person_detections
+              - sensor.frigate_total_animal_detections
+              - sensor.reolink_total_person_detections
+              - sensor.reolink_total_animal_detections
+
+      - type: heading
+        heading: ⚡ Response Time Analysis
+
+      - type: custom:stack-in-card
+        cards:
+          - type: entities
+            title: Detection Speed Comparison
+            entities:
+              - sensor.fastest_detection_system
+              - sensor.detection_response_time_difference
+              - input_number.frigate_last_detection_time
+              - input_number.reolink_last_detection_time
+
+      - type: heading
         heading: Frigate Daily Detections
 
       - type: custom:stack-in-card
@@ -66,11 +92,6 @@ views:
                   - condition: numeric_state
                     entity: input_number.frigate_cam8_animal_count
                     above: 0
-          - type: entities
-            title: Frigate Summary
-            entities:
-              - sensor.frigate_total_person_detections
-              - sensor.frigate_total_animal_detections
 
       - type: heading
         heading: Reolink Daily Detections
@@ -130,24 +151,6 @@ views:
                   - condition: numeric_state
                     entity: input_number.reolink_cam8_animal_count
                     above: 0
-          - type: entities
-            title: Reolink Summary
-            entities:
-              - sensor.reolink_total_person_detections
-              - sensor.reolink_total_animal_detections
-
-      - type: heading
-        heading: ⚡ Response Time Analysis
-
-      - type: custom:stack-in-card
-        cards:
-          - type: entities
-            title: Detection Speed Comparison
-            entities:
-              - sensor.fastest_detection_system
-              - sensor.detection_response_time_difference
-              - input_number.frigate_last_detection_time
-              - input_number.reolink_last_detection_time
 
       - type: heading
         heading: Detections by Home Status (Summary)
@@ -693,3 +696,74 @@ views:
           
           ## Reolink - Animal Detections
           Browse snapshots at: [`/media/camera_compare/reolink/animal/`](/media/camera_compare/reolink/animal/)
+
+  - path: settings
+    title: Settings
+    badges: []
+    cards:
+      - type: heading
+        heading: 🔧 Automation Controls
+
+      - type: custom:stack-in-card
+        cards:
+          - type: entities
+            title: Detection Automations
+            entities:
+              - automation.frigate_person_detection_snapshot
+              - automation.frigate_animal_detection_snapshot
+              - automation.reolink_person_detection_snapshot
+              - automation.reolink_animal_detection_snapshot
+
+      - type: custom:stack-in-card
+        cards:
+          - type: entities
+            title: Analysis & Reporting
+            entities:
+              - automation.analyze_detection_response_time
+              - automation.camera_detection_daily_summary_report
+              - automation.delete_old_camera_snapshots
+
+      - type: custom:stack-in-card
+        cards:
+          - type: entities
+            title: System
+            entities:
+              - automation.initialize_camera_snapshot_directories
+
+      - type: heading
+        heading: 📊 Daily Statistics Reset (Midnight)
+
+      - type: entities
+        entities:
+          - input_number.frigate_cam3_person_count
+          - input_number.frigate_cam3_animal_count
+          - input_number.frigate_cam5_person_count
+          - input_number.frigate_cam5_animal_count
+          - input_number.frigate_cam6_person_count
+          - input_number.frigate_cam6_animal_count
+          - input_number.frigate_cam7_person_count
+          - input_number.frigate_cam7_animal_count
+          - input_number.frigate_cam8_person_count
+          - input_number.frigate_cam8_animal_count
+          - input_number.reolink_cam3_person_count
+          - input_number.reolink_cam3_animal_count
+          - input_number.reolink_cam5_person_count
+          - input_number.reolink_cam5_animal_count
+          - input_number.reolink_cam6_person_count
+          - input_number.reolink_cam6_animal_count
+          - input_number.reolink_cam7_person_count
+          - input_number.reolink_cam7_animal_count
+          - input_number.reolink_cam8_person_count
+          - input_number.reolink_cam8_animal_count
+          - input_number.frigate_hemma_pa_person_count
+          - input_number.frigate_hemma_pa_animal_count
+          - input_number.frigate_hemma_av_person_count
+          - input_number.frigate_hemma_av_animal_count
+          - input_number.frigate_borta_person_count
+          - input_number.frigate_borta_animal_count
+          - input_number.reolink_hemma_pa_person_count
+          - input_number.reolink_hemma_pa_animal_count
+          - input_number.reolink_hemma_av_person_count
+          - input_number.reolink_hemma_av_animal_count
+          - input_number.reolink_borta_person_count
+          - input_number.reolink_borta_animal_count

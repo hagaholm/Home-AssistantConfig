@@ -86,15 +86,14 @@
           entity_id: light.louise_golvlampa
           brightness_pct: 80
           transition: 2
+      - service: light.turn_on
+        entity_id: light.vardagsrum_vitrinskap
 
 # IKEA Julbelysning
 
 # Tellstick
       - service: light.turn_on
         entity_id: light.kok_lilla_fonstret
-
-      - service: light.turn_on
-        entity_id: light.vardagsrum_vitrinskap
  
   ### ------------------- ###
   ### Dagbelysning Jul on ###
@@ -131,16 +130,14 @@
           entity_id: light.louise_golvlampa
           brightness_pct: 80
           transition: 2
+      - service: light.turn_on
+        entity_id: light.vardagsrum_vitrinskap
 
 # IKEA Julbelysning
 
 # Tellstick
       - service: light.turn_on
         entity_id: light.kok_lilla_fonstret
-
-      - service: light.turn_on
-        entity_id: light.vardagsrum_vitrinskap
-
 
 # Tellstick Julbelysning
       - service: light.turn_on

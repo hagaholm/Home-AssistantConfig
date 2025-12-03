@@ -34,7 +34,7 @@ automation:
                         before: '08:00:00'
                       - condition: numeric_state
                         entity_id: sensor.ljusstyrka
-                        below: 100
+                        below: 10
             sequence:
               - delay: '00:00:15'
               - condition: state
@@ -42,7 +42,7 @@ automation:
                 state: 'on'
               - condition: numeric_state
                 entity_id: sensor.ljusstyrka
-                below: 100
+                below: 10
               - service: light.turn_on
                 target:
                   entity_id: light.tradack_ute
@@ -95,7 +95,7 @@ automation:
                         before: '08:00:00'
                       - condition: numeric_state
                         entity_id: sensor.ljusstyrka
-                        below: 100
+                        below: 10
             sequence:
 
               # Add 2 second delay before turning on lights
@@ -326,7 +326,7 @@ automation:
           state: 'Borta'
         - condition: numeric_state
           entity_id: sensor.ljusstyrka
-          below: 100
+          below: 10
 
     action:
       - service: notify.mobile_app_sm_a528b
@@ -363,7 +363,7 @@ automation:
           state: 'Hemma på'
         - condition: numeric_state
           entity_id: sensor.ljusstyrka
-          below: 100
+          below: 10
 
     action:
       - variables:

@@ -153,7 +153,7 @@
   ### Blinka med lyset när ringklocka ringer
   ### T: switch.ringklocka_tvattstuga == on OR switch.ringklocka_hall == on
   ### C: group.track_for_home_devices == 'home'
-  ### A: light.toggle light.vardagsrum_vitrinskap
+  ### A: light.toggle light.vardagsrum_vitrinskap2
   ################################################################################
   - alias: Blinka med lyset när ringklocka ringer
     id: '8363608373239' 
@@ -176,19 +176,19 @@
 
     action:
       - service: light.toggle
-        entity_id: light.vardagsrum_vitrinskap
+        entity_id: light.vardagsrum_vitrinskap2
       - delay:
           seconds: 1
       - service: light.toggle
-        entity_id: light.vardagsrum_vitrinskap
+        entity_id: light.vardagsrum_vitrinskap2
       - delay:
           seconds: 1
       - service: light.toggle
-        entity_id: light.vardagsrum_vitrinskap
+        entity_id: light.vardagsrum_vitrinskap2
       - delay:
           seconds: 1
       - service: light.toggle
-        entity_id: light.vardagsrum_vitrinskap
+        entity_id: light.vardagsrum_vitrinskap2
 
   ################################################################################
   ### Stänger/sätter på ringklocka

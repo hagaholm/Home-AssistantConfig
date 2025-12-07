@@ -2,11 +2,7 @@
 # Enables support for tracking state changes over time
 # https://home-assistant.io/components/history/
 #-------------------------------------------------------
-  purge_keep_days: 30
-  
-  # Using entity_globs instead of deprecated include/exclude
-  entity_globs:
-    - sensor.inne_medel
-    - sensor.ute
-    - sensor.ute_friggebod_temperature
+# Note: The 'include' and 'exclude' options are deprecated
+# Modern Home Assistant automatically tracks all entities
+# No specific configuration needed - history component is enabled by default
 

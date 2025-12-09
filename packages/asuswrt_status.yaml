@@ -1,0 +1,22 @@
+command_line:
+  - binary_sensor:
+      name: "Router SSH Status 1"
+      unique_id: router_ssh_status
+      command: 'nc -z -w 5 192.168.1.1 22 && echo "on" || echo "off"'
+      payload_on: "on"
+      payload_off: "off"
+      scan_interval: 30
+      device_class: connectivity
+
+binary_sensor:
+  - platform: ping
+    name: "Router SSH Status 2"
+    host: 192.168.1.1
+    count: 2
+    scan_interval: 30
+    
+  - platform: tcp
+    name: "Router SSH Status 3"
+    host: 192.168.1.1
+    port: 22
+    timeout: 5

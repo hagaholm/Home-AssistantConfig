@@ -14,9 +14,4 @@ binary_sensor:
     host: 192.168.1.1
     count: 2
     scan_interval: 30
-    
-  - platform: tcp
-    name: "Router SSH Status 3"
-    host: 192.168.1.1
-    port: 22
-    timeout: 5
+

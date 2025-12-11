@@ -76,7 +76,7 @@
   mode: single
   trigger:
     - platform: state
-      entity_id: binary_sensor.binary_sensor.motion_sensor
+      entity_id: binary_sensor.motion_sensor
       to: 'off'
       for:
         seconds: 60

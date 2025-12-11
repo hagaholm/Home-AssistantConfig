@@ -273,6 +273,14 @@ views:
         title: Trädgårdsbelysning
         show_header_toggle: true
         state_color: true
+      - type: entities
+        entities:
+          - entity: automation.badrumsbelysning_fonster_natt
+          - entity: automation.badrumsbelysning_i_fonster_av_ingen_narvaro
+          - entity: automation.badrumsbelysning_i_fonster_av_nar_borta
+        title: Badrumsbelysning
+        show_header_toggle: true
+        state_color: true
   - path: ventilation
     title: Ventilation
     badges: []

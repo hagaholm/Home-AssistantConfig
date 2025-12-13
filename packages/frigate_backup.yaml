@@ -1,0 +1,49 @@
+shell_command:
+  copy_frigate_config: "cp /addon_configs/ccab4aaf_frigate/config.yaml /config/frigate/config.yaml"
+  sanitize_frigate_config: "/config/frigate/sanitize.sh"
+  git_sync_frigate_config: "/config/frigate/git-sync.sh"
+
+sensor:
+  - platform: file
+    file_paths:
+      - /config/frigateconfig.yaml
+    name: Frigate Config Last Modified
+    scan_interval: 3600   # check every hour
+
+template:
+  - sensor:
+      - name: "Frigate Config Last Modified Local"
+        state: >
+          {{ as_datetime(states('sensor.config_last_modified'))
+             | as_local }}
+        device_class: timestamp
+
+automation:
+  - alias: "Sync Frigate config to Git repo"
+    trigger:
+      - platform: time
+        at: "03:00:00"
+      - platform: state
+        entity_id: addon.ccab4aaf_frigate
+        to: "on"
+    action:
+      - service: shell_command.copy_frigate_config
+
+  - alias: "Update sanitized Frigate template"
+    trigger:
+      - platform: time
+        at: "03:05:00"
+    action:
+      - service: shell_command.sanitize_frigate_config
+
+#  - alias: "Sync Frigate config to Git repo"
+#    trigger:
+#      - platform: time
+#        at: "03:00:10"
+#      - platform: state
+#        entity_id: addon.ccab4aaf_frigate
+#        to: "on"
+#    action:
+#      - service: shell_command.git_sync_frigate_config
+
+

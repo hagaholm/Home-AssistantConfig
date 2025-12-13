@@ -1,0 +1,41 @@
+  ###############################
+  ### Badrumsbelysning släckt ###
+  ###############################
+  bathroom_light_off:
+    alias: Badrumsbelysning släckt
+    sequence:
+      - service: light.turn_off
+        entity_id: light.fonster_spott
+
+  ############################
+  ### Badrumsbelysning dag ###
+  ############################
+  bathroom_light_day:
+    alias: Badrumsbelysning dag
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: light.fonster_spott
+          brightness_pct: 20
+
+  ####################################
+  ### Badrumsbelysning dag närvaro ###
+  ####################################
+  bathroom_light_day_presence:
+    alias: Badrumsbelysning dag närvaro
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: light.fonster_spott
+          brightness_pct: 50
+
+  #####################################
+  ### Badrumsbelysning natt närvaro ###
+  #####################################
+  bathroom_light_night_presence:
+    alias: Badrumsbelysning natt närvaro
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: light.fonster_spott
+          brightness_pct: 2

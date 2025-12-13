@@ -1,0 +1,76 @@
+#  light_bathroom:
+#    name: Badrumsbelysning
+#    options: 
+#     - Släckt
+#     - Dag
+#     - Dag närvaro
+#     - Natt närvaro
+#    icon: mdi:lightbulb
+
+    ################################################
+    ### Släcker lampor                           ###
+    ### T: input_select.light_bathroom == slackt ###
+    ### A: script.bathroom_light_off             ###
+    ################################################
+  - alias: Släck badrum
+    id: light_off_bathroom
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_select.light_bathroom
+        to: slackt
+
+    action:
+      - service: script.bathroom_light_off
+
+    #############################################
+    ### Tänder lampor dag                     ###
+    ### T: input_select.light_bathroom == dag ###
+    ### A: script.bathroom_light_day          ###
+    #############################################
+  - alias: Tänd badrum dag
+    id: light_on_bathroom_day
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_select.light_bathroom
+        to: dag
+
+    action:
+      - service: script.bathroom_light_day
+
+    #####################################################
+    ### Tänder lampor dag närvaro                     ###
+    ### T: input_select.light_bathroom == dag_narvaro ###
+    ### A: script.bathroom_light_day_presence         ###
+    #####################################################
+  - alias: Tänd badrum dag närvaro
+    id: light_on_bathroom_day_presence
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_select.light_bathroom
+        to: dag_narvaro
+
+    action:
+      - service: script.bathroom_light_day_presence
+
+    ######################################################
+    ### Tänder lampor natt närvaro                     ###
+    ### T: input_select.light_bathroom == natt_narvaro ###
+    ### A: script.bathroom_light_night_presence        ###
+    ######################################################
+  - alias: Tänd badrum natt närvaro
+    id: light_on_bathroom_night_presence
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_select.light_bathroom
+        to: natt_narvaro
+
+    action:
+      - service: script.bathroom_light_night_presence

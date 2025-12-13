@@ -3,21 +3,6 @@ shell_command:
   sanitize_frigate_config: "/config/frigate/sanitize.sh"
   git_sync_frigate_config: "/config/frigate/git-sync.sh"
 
-sensor:
-  - platform: file
-    file_paths:
-      - /config/frigateconfig.yaml
-    name: Frigate Config Last Modified
-    scan_interval: 3600   # check every hour
-
-template:
-  - sensor:
-      - name: "Frigate Config Last Modified Local"
-        state: >
-          {{ as_datetime(states('sensor.config_last_modified'))
-             | as_local }}
-        device_class: timestamp
-
 automation:
   - alias: "Sync Frigate config to Git repo"
     trigger:

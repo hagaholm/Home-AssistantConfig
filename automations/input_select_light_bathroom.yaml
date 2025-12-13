@@ -19,7 +19,7 @@
     trigger:
       - platform: state
         entity_id: input_select.light_bathroom
-        to: slackt
+        to: Släckt
 
     action:
       - service: script.bathroom_light_off
@@ -36,7 +36,7 @@
     trigger:
       - platform: state
         entity_id: input_select.light_bathroom
-        to: dag
+        to: Dag
 
     action:
       - service: script.bathroom_light_day
@@ -53,7 +53,7 @@
     trigger:
       - platform: state
         entity_id: input_select.light_bathroom
-        to: dag_narvaro
+        to: Dag närvaro
 
     action:
       - service: script.bathroom_light_day_presence
@@ -70,7 +70,7 @@
     trigger:
       - platform: state
         entity_id: input_select.light_bathroom
-        to: natt_narvaro
+        to: Natt närvaro
 
     action:
       - service: script.bathroom_light_night_presence

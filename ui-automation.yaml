@@ -275,9 +275,13 @@ views:
         state_color: true
       - type: entities
         entities:
-          - entity: automation.badrumsbelysning_fonster_natt
-          - entity: automation.badrumsbelysning_i_fonster_av_ingen_narvaro
           - entity: automation.badrumsbelysning_i_fonster_av_nar_borta
+          - entity: automation.badrumsbelysning_dag_vid_hemma_pa
+          - entity: automation.badrumsbelysning_dag_vid_narvaro_och_hemma_pa
+          - entity: automation.badrumsbelysning_fran_dag_narvaro_till_dag
+          - entity: automation.badrumsbelysning_fran_natt_narvaro_till_slackt
+          - entity: automation.badrumsbelysning_natt_vid_narvaro_och_hemma_av
+          - entity: automation.badrumsbelysning_vid_andring_till_hemma_pa
         title: Badrumsbelysning
         show_header_toggle: true
         state_color: true

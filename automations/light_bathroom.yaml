@@ -39,202 +39,169 @@
 #                                                     #
 #######################################################
 
-
-# --------------------------------------------
-# SLÄCK BADRUMSBELYSNING I FÖNSTRET VID BORTA
-# --------------------------------------------
-- alias: Badrumsbelysning av när borta
-  id: 'bathroom_light_off_when_away'
+- alias: Badrumsbelysning – samlad automation
+  id: bathroom_light_all_in_one
   description: >
-    Släcker badrumsbelysning när borta.
+    Samlad automation för badrumsbelysning baserat på närvaro,
+    ljusnivå och hemstatus.
   mode: single
+
   trigger:
+    # Hemstatus
     - platform: state
       entity_id: input_select.home_status
-      to: 'Borta'
-  condition:
-    - condition: state
-      entity_id: light.fonster_spott
-      state: 'on'
-  action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.light_bathroom
-        option: Släckt
 
+    # Närvaro
+    - platform: state
+      entity_id: binary_sensor.motion_sensor
+      to: 'on'
 
-# ------------------------------------------------------
-# SLÄCK BADRUMSBELYSNING I FÖNSTRET NÄR DET ÄR FÖR LJUST
-# ------------------------------------------------------
-- alias: Badrumsbelysning i fönster av när det är för ljust
-  id: 'bathroom_light_off_to_light'
-  description: >
-    Släcker badrumsbelysning i fönstret när det är för ljust.
-  mode: single
-  trigger:
+    # Närvaro timeout
+    - platform: state
+      entity_id: binary_sensor.motion_sensor
+      to: 'off'
+      for:
+        seconds: 60
+
+    # Ljusnivå – mörkt
+    - platform: numeric_state
+      entity_id: sensor.kokets_ljusniva
+      below: 100
+
+    # Ljusnivå – för ljust
     - platform: numeric_state
       entity_id: sensor.kokets_ljusniva
       above: 150
-  condition:
-    - condition: state
-      entity_id: light.fonster_spott
-      state: 'on'
+
   action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.light_bathroom
-        option: Släckt
+    - choose:
 
+        # --------------------------------------------------
+        # SLÄCK VID BORTA OCH HEMMA AV
+        # --------------------------------------------------
+        - conditions:
+            - condition: state
+              entity_id: input_select.home_status
+              state:
+                - 'Borta'
+                - 'Hemma av'
+          sequence:
+            - service: input_select.select_option
+              data:
+                entity_id: input_select.light_bathroom
+                option: Släckt
 
-# --------------------------------------------------------
-# TÄND NATT BELYSNING VID NÄRVARO I BADRUMMET VID HEMMA AV
-# --------------------------------------------------------
-- alias: Badrumsbelysning natt vid närvaro och hemma av
-  id: 'bathroom_light_night_presence'
-  description: >
-    Sätter badrumsbelysning i fönstret till natt läge (motion_sensor = on)
-    och home_status är 'Hemma av'.
-  mode: single
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.motion_sensor
-      to: 'on'
-  condition:
-    - condition: state
-      entity_id: input_select.home_status
-      state: 'Hemma av'
-    - condition: numeric_state
-      entity_id: sensor.kokets_ljusniva
-      below: 100
-    - condition: state
-      entity_id: light.fonster_spott
-      state: 'off'
-  action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.light_bathroom
-        option: Natt närvaro
+        # --------------------------------------------------
+        # SLÄCK NÄR DET ÄR FÖR LJUST
+        # --------------------------------------------------
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.kokets_ljusniva
+              above: 150
+          sequence:
+            - service: input_select.select_option
+              data:
+                entity_id: input_select.light_bathroom
+                option: Släckt
 
+        # --------------------------------------------------
+        # NATT – NÄRVARO + HEMMA AV + MÖRKT
+        # --------------------------------------------------
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.motion_sensor
+              state: 'on'
+            - condition: state
+              entity_id: input_select.home_status
+              state: 'Hemma av'
+            - condition: numeric_state
+              entity_id: sensor.kokets_ljusniva
+              below: 100
+          sequence:
+            - service: input_select.select_option
+              data:
+                entity_id: input_select.light_bathroom
+                option: Natt närvaro
 
-# ------------------------------------------
-# BADRUMSBELYSNING FRÅN NATT NÄRVARO TILL SLÄCKT
-# ------------------------------------------
-- alias: Badrumsbelysning från natt närvaro till släckt
-  id: 'bathroom_light_night_presence_to_off'
-  description: >
-    Släcker badrumsbelysning efter natt närvaro timeout
-  mode: single
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.motion_sensor
-      to: 'off'
-      for:
-        seconds: 60
-  condition:
-    - condition: state
-      entity_id: input_select.light_bathroom
-      state: 'Natt närvaro'
-  action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.light_bathroom
-        option: Släckt
+        # --------------------------------------------------
+        # NATT NÄRVARO → SLÄCKT (timeout)
+        # --------------------------------------------------
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.motion_sensor
+              state: 'off'
+            - condition: state
+              entity_id: input_select.light_bathroom
+              state: 'Natt närvaro'
+          sequence:
+            - service: input_select.select_option
+              data:
+                entity_id: input_select.light_bathroom
+                option: Släckt
 
+        # --------------------------------------------------
+        # DAG – HEMMA PÅ + MÖRKT
+        # --------------------------------------------------
+        - conditions:
+            - condition: state
+              entity_id: input_select.home_status
+              state: 'Hemma på'
+            - condition: numeric_state
+              entity_id: sensor.kokets_ljusniva
+              below: 100
+            - condition: state
+              entity_id: binary_sensor.motion_sensor
+              state: 'off'
+          sequence:
+            - service: input_select.select_option
+              data:
+                entity_id: input_select.light_bathroom
+                option: Dag
 
-# -------------------------------------------
-# TÄND DAG BELYSNING I BADRUMMET VID HEMMA PÅ
-# -------------------------------------------
-- alias: Badrumsbelysning dag vid hemma på
-  id: 'bathroom_light_day'
-  description: >
-    Sätter badrumsbelysning i fönstret till dag läge
-    och home_status är 'Hemma på'.
-  mode: single
-  trigger:
-    - platform: numeric_state
-      entity_id: sensor.kokets_ljusniva
-      below: 100
-  condition:
-    - condition: state
-      entity_id: input_select.home_status
-      state: 'Hemma på'
-    - condition: state
-      entity_id: light.fonster_spott
-      state: 'off'
-  action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.light_bathroom
-        option: Dag
+        # --------------------------------------------------
+        # DAG → DAG NÄRVARO
+        # --------------------------------------------------
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.motion_sensor
+              state: 'on'
+            - condition: state
+              entity_id: input_select.light_bathroom
+              state: 'Dag'
+          sequence:
+            - service: input_select.select_option
+              data:
+                entity_id: input_select.light_bathroom
+                option: Dag närvaro
 
+        # --------------------------------------------------
+        # DAG NÄRVARO → DAG (timeout)
+        # --------------------------------------------------
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.motion_sensor
+              state: 'off'
+            - condition: state
+              entity_id: input_select.light_bathroom
+              state: 'Dag närvaro'
+          sequence:
+            - service: input_select.select_option
+              data:
+                entity_id: input_select.light_bathroom
+                option: Dag
 
-# -------------------------------------------------------
-# TÄND DAG BELYSNING I BADRUMMET VID NÄRVARO OCH HEMMA PÅ
-# -------------------------------------------------------
-- alias: Badrumsbelysning dag vid närvaro och hemma på
-  id: 'bathroom_light_day_presence_home_on'
-  description: >
-    Sätter badrumsbelysning i fönstret till närvaro läge
-    och home_status är 'Hemma på'.
-  mode: single
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.motion_sensor
-      to: 'on'
-  condition:
-    - condition: state
-      entity_id: input_select.light_bathroom
-      state: 'Dag'
-  action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.light_bathroom
-        option: Dag närvaro
-
-
-# ------------------------------------------
-# BADRUMSBELYSNING FRÅN DAG NÄRVARO TILL DAG
-# ------------------------------------------
-- alias: Badrumsbelysning från dag närvaro till dag
-  id: 'bathroom_light_day_presence_to_day'
-  description: >
-    Sätter badrumsbelysning i fönstret till dag efter att ha varit i dag närvaro
-  mode: single
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.motion_sensor
-      to: 'off'
-      for:
-        seconds: 60
-  condition:
-    - condition: state
-      entity_id: input_select.light_bathroom
-      state: 'Dag närvaro'
-  action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.light_bathroom
-        option: Dag
-
-
-# ------------------------------------------
-# BADRUMSBELYSNING VID ÄNDRING TILL HEMMA PÅ
-# ------------------------------------------
-- alias: Badrumsbelysning vid ändring till hemma på
-  id: 'bathroom_light_home_status_to_home_on'
-  description: >
-    Uppdaterar badrumsbelysning när hemstatus ändras till Hemma på från Natt närvaro
-  mode: single
-  trigger:
-    - platform: state
-      entity_id: input_select.home_status
-      to: 'Hemma på'
-  condition:
-    - condition: state
-      entity_id: input_select.light_bathroom
-      state: 'Natt närvaro'
-  action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.light_bathroom
-        option: Dag närvaro
+        # --------------------------------------------------
+        # HEMMA AV → HEMMA PÅ (NATT → DAG NÄRVARO)
+        # --------------------------------------------------
+        - conditions:
+            - condition: state
+              entity_id: input_select.home_status
+              state: 'Hemma på'
+            - condition: state
+              entity_id: input_select.light_bathroom
+              state: 'Natt närvaro'
+          sequence:
+            - service: input_select.select_option
+              data:
+                entity_id: input_select.light_bathroom
+                option: Dag närvaro

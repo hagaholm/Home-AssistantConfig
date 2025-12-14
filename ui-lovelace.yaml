@@ -484,6 +484,12 @@ views:
           title: Bortabelysning
           show_header_toggle: true
           state_color: true
+      - type: entities
+        entities:
+          - light.badrum
+        title: Badrum
+        show_header_toggle: false
+        state_color: true
       - type: conditional
         conditions:
           - entity: input_boolean.christmas_light

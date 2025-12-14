@@ -480,6 +480,12 @@ light:
       - light.uterum_julstjarnor #jul
       - light.uterum_fotogenlampa
 
+  - platform: group
+    name: Badrum
+    entities:
+      - light.tak_spottar
+      - light.fonster_spott
+
 ####################################################
 #                                                  #
 #                     SWITCH                       #

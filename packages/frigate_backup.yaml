@@ -17,7 +17,7 @@ automation:
   - alias: "Update sanitized Frigate template"
     trigger:
       - platform: time
-        at: "22:27:00"
+        at: "22:30:00"
     action:
       - service: shell_command.sanitize_frigate_config
 

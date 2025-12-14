@@ -8,7 +8,7 @@ automation:
     trigger:
       - platform: time
 #        at: "03:00:00"
-        at: "09:24:00"
+        at: "09:36:00"
       - platform: state
         entity_id: addon.ccab4aaf_frigate
         to: "on"
@@ -24,7 +24,7 @@ automation:
     trigger:
       - platform: time
 #        at: "03:05:00"
-        at: "09:25:00"
+        at: "09:37:00"
     action:
       - service: shell_command.sanitize_frigate_config
 

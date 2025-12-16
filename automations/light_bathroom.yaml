@@ -5,7 +5,10 @@
 #######################################################
 #
 # BESKRIVNING:
-# Automatiserat belysningssystem för badrummet som styrs av närvarosensor och hemstatus.
+# Samlad automation för badrumsbelysning som styrs av
+# närvaro, ljusnivå och hemstatus.
+# Logiken är uppbyggd som en state machine via
+# input_select.light_bathroom.
 #
 # HÅRDVARA:
 # - Närvarosensor: binary_sensor.motion_sensor
@@ -13,24 +16,48 @@
 # - Belysning: light.fonster_spott
 #
 # TILLSTÅND (input_select.light_bathroom):
-# - Släckt: Ingen belysning
-# - Dag: Dagsljus när hemma på och mörkt
-# - Dag närvaro: Dagsljus med närvaro
-# - Natt närvaro: Nattljus vid närvaro och hemma av
+# - Släckt:
+#   Ingen belysning. Används vid hemstatus Borta
+#   eller när det är för ljust.
+#
+# - Dag:
+#   Dagsljus när det är mörkt, hemstatus är Hemma på
+#   och ingen närvaro detekteras.
+#
+# - Dag närvaro:
+#   Dagsljus med närvaro när hemstatus är Hemma på.
+#
+# - Natt närvaro:
+#   Dämpat nattljus vid närvaro när hemstatus är Hemma av
+#   och det är mörkt.
 #
 # ÖVERGÅNGAR:
-# - Släckt → Dag: När mörkt och hemma på
-# - Släckt → Natt närvaro: När närvaro och hemma av och mörkt
-# - Dag → Dag närvaro: När närvaro detekteras
-# - Dag → Släckt: När ljust eller borta
-# - Dag närvaro → Dag: När närvaro försvinner (60s timeout)
-# - Natt närvaro → Släckt: När närvaro försvinner (60s timeout)
-# - * → Släckt: När borta
+# - Släckt → Dag:
+#   När det är mörkt och hemstatus är Hemma på.
+#
+# - Släckt → Natt närvaro:
+#   När närvaro detekteras, hemstatus är Hemma av
+#   och det är mörkt.
+#
+# - Dag → Dag närvaro:
+#   När närvaro detekteras.
+#
+# - Dag → Släckt:
+#   När det blir för ljust eller hemstatus ändras till Borta.
+#
+# - Dag närvaro → Dag:
+#   När närvaro försvinner (60 s timeout).
+#
+# - Natt närvaro → Släckt:
+#   När närvaro försvinner (60 s timeout).
+#
+# - * → Släckt:
+#   När hemstatus ändras till Borta.
 #
 # INTEGRATION:
-# - Styrs via input_select.light_bathroom
-# - Hemstatus från input_select.home_status
-####################################################
+# - Logik och tillstånd styrs via input_select.light_bathroom
+# - Hemstatus hämtas från input_select.home_status
+#######################################################
 
 
 #######################################################

@@ -1,0 +1,56 @@
+  ##########################
+  ### Hall taklampor OFF ###
+  ##########################
+  hall_taklampor_off:
+    alias: Hall taklampor off
+    mode: single
+    sequence:
+      - service: light.turn_off
+        target:
+          entity_id: light.hall_tak
+        data:
+          transition: 3
+
+  hall_taklampor_1_procent:
+    alias: Hall taklampor 1 procent
+    mode: single
+    sequence:
+      - service: light.turn_on
+        target:
+          entity_id: light.hall_tak
+        data:
+          brightness_pct: 1
+          transition: 3
+
+  hall_taklampor_10_procent:
+    alias: Hall taklampor 10 procent
+    mode: single
+    sequence:
+      - service: light.turn_on
+        target:
+          entity_id: light.hall_tak
+        data:
+          brightness_pct: 10
+          transition: 3
+
+  hall_taklampor_50_procent:
+    alias: Hall taklampor 50 procent
+    mode: single
+    sequence:
+      - service: light.turn_on
+        target:
+          entity_id: light.hall_tak
+        data:
+          brightness_pct: 50
+          transition: 3
+
+  hall_taklampor_100_procent:
+    alias: Hall taklampor 100 procent
+    mode: single
+    sequence:
+      - service: light.turn_on
+        target:
+          entity_id: light.hall_tak
+        data:
+          brightness_pct: 100
+          transition: 3

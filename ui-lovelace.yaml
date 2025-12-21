@@ -169,6 +169,16 @@ views:
         show_header_toggle: false
       - type: entities
         entities:
+          - script.hall_taklampor_off
+          - script.hall_taklampor_1_procent
+          - script.hall_taklampor_10_procent
+          - script.hall_taklampor_50_procent
+          - script.hall_taklampor_100_procent
+        title: Hall takbelysning
+        show_header_toggle: false
+        state_color: true
+      - type: entities
+        entities:
           - script.goodnight
           - script.goodnight_10_min
           - script.goodnight_all

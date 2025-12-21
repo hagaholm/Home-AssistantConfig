@@ -1,0 +1,23 @@
+alias: "Hall: släck om ej Dagbelysning eller fasad släckt"
+description: "Kör script.hall_taklampor_off om light.hall_tak är på och (input_select.light_inside != Dagbelysning eller input_select.facade_lights == Släckt)"
+trigger:
+  - platform: state
+    entity_id: input_select.light_inside
+  - platform: state
+    entity_id: input_select.facade_lights
+  - platform: state
+    entity_id: light.hall_tak
+condition:
+  - condition: state
+    entity_id: light.hall_tak
+    state: 'on'
+  - condition: or
+    conditions:
+      - condition: template
+        value_template: "{{ states('input_select.light_inside') != 'Dagbelysning' }}"
+      - condition: state
+        entity_id: input_select.facade_lights
+        state: 'Släckt'
+action:
+  - service: script.hall_taklampor_off
+mode: single

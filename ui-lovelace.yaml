@@ -232,12 +232,14 @@ views:
         entities:
           - sensor.uterum_temperatur # Uterum
           - sensor.hall_temperatur # Hall
+          - sensor.timmerflotte_temp_hmd_sensor_temperatur_4
           - sensor.vardagsrum_temperatur # Vardagsrum
           - sensor.sovrum
           - sensor.louise_rum_temperature
           - sensor.andreas_rum_temperature
           - sensor.tvattstuga_temperature
           - sensor.badrum_temperatur   # Badrum
+          - sensor.timmerflotte_temp_hmd_sensor_temperatur_3
         title: Inomhus temperatur
         show_header_toggle: false
         state_color: true
@@ -245,10 +247,12 @@ views:
         entities:
           - sensor.uterum_luftfuktighet # Uterum
           - sensor.hall_luftfuktighet # Hall
+          - sensor.timmerflotte_temp_hmd_sensor_luftfuktighet_4
           - sensor.vardagsrum_luftfuktighet # Vardagsrum
           - sensor.louise_rum_humidity
           - sensor.tvattstuga_humidity
           - sensor.badrum_luftfuktighet   # Badrum
+          - sensor.timmerflotte_temp_hmd_sensor_luftfuktighet_3
           - sensor.fukt_badrumsfonster
         title: Inomhus luftfuktighet
         show_header_toggle: false
@@ -264,9 +268,13 @@ views:
         entities:
           - sensor.friggebod_temperature
           - sensor.friggebod_humidity
+          - sensor.timmerflotte_temp_hmd_sensor_temperatur_2
+          - sensor.timmerflotte_temp_hmd_sensor_luftfuktighet_2
           - sensor.forrad_temperature
           - sensor.garage_temperature
           - sensor.garage_humidity
+          - sensor.timmerflotte_temp_hmd_sensor_temperatur
+          - sensor.timmerflotte_temp_hmd_sensor_luftfuktighet
           - sensor.pa_vinden
           - sensor.husvagn_temperature
           - sensor.husvagn_humidity

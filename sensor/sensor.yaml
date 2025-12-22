@@ -20,6 +20,8 @@
           {% set light = states.light.stralkastare_husgavel %}
           {% if light.state == 'off' and (as_timestamp(now()) - as_timestamp(light.last_changed)) > 30 %}
             {{ states('sensor.Ljusstyrka_measured') }}
+          {% else %}
+            unknown
           {% endif %}
 
 #############

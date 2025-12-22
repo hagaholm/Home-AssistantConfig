@@ -334,12 +334,12 @@ automation:
           title: >
             "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           message: >
-            Camera 5, 6 or 8 has detected. lux: {{ states('sensor.ljusstyrka') | int }}:
-            - Bear:     {{ states('sensor.cam5_bear_count') | int }} {{ states('sensor.cam6_bear_count') | int }} {{ states('sensor.cam8_bear_count') | int }}
-            - Cow:      {{ states('sensor.cam5_cat_count') | int }} {{ states('sensor.cam6_cat_count') | int }} {{ states('sensor.cam8_cat_count') | int }}
-            - Dog:      {{ states('sensor.cam5_dog_count') | int }} {{ states('sensor.cam6_dog_count') | int }} {{ states('sensor.cam8_dog_count') | int }}
-            - Horse:    {{ states('sensor.cam5_horse_count') | int }} {{ states('sensor.cam6_horse_count') | int }} {{ states('sensor.cam8_horse_count') | int }}
-            - Sheep:    {{ states('sensor.cam5_sheep_count') | int }} {{ states('sensor.cam6_sheep_count') | int }} {{ states('sensor.cam8_sheep_count') | int }}
+            Camera 5, 6 or 8 has detected. lux: {{ states('sensor.ljusstyrka') | int(0) }}:
+            - Bear:     {{ states('sensor.cam5_bear_count') | int(0) }} {{ states('sensor.cam6_bear_count') | int(0) }} {{ states('sensor.cam8_bear_count') | int(0) }}
+            - Cow:      {{ states('sensor.cam5_cat_count') | int(0) }} {{ states('sensor.cam6_cat_count') | int(0) }} {{ states('sensor.cam8_cat_count') | int(0) }}
+            - Dog:      {{ states('sensor.cam5_dog_count') | int(0) }} {{ states('sensor.cam6_dog_count') | int(0) }} {{ states('sensor.cam8_dog_count') | int(0) }}
+            - Horse:    {{ states('sensor.cam5_horse_count') | int(0) }} {{ states('sensor.cam6_horse_count') | int(0) }} {{ states('sensor.cam8_horse_count') | int(0) }}
+            - Sheep:    {{ states('sensor.cam5_sheep_count') | int(0) }} {{ states('sensor.cam6_sheep_count') | int(0) }} {{ states('sensor.cam8_sheep_count') | int(0) }}
 
   ####################################
   ### Blink Light Animal Detcected ###

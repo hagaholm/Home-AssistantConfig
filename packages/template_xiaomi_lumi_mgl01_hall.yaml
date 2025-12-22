@@ -8,7 +8,7 @@ template:
       # Type: Illuminance (lux) sensor
       - name: "Hall ljusnivå"
         unique_id: hall_illuminance
-        state: "{{ states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2') | int }}"
+        state: "{{ states('sensor.xiaomi_lumi_sen_ill_mgl01_illuminance_2') | int(0) }}"
         unit_of_measurement: "lx"
         device_class: illuminance
         state_class: measurement

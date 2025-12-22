@@ -6,7 +6,7 @@ template:
       # Type: Illuminance (lux) sensor
       - name: "Kökets ljusnivå"
         unique_id: kitchen_illuminance
-        state: "{{ states('sensor.presence_sensor_fp2_9a29_light_sensor_light_level') | int }}"
+        state: "{{ states('sensor.presence_sensor_fp2_9a29_light_sensor_light_level') | int(0) }}"
         unit_of_measurement: "lx"
         device_class: illuminance
         state_class: measurement

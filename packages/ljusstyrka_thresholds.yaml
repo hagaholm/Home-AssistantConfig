@@ -563,7 +563,7 @@ script:
         data:
           title: "Ljusnivåer. {{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           message: |
-            Utomhus    {{ states('sensor.ljusstyrka') | int }} lx
-            Kökets     {{ states('sensor.kokets_ljusniva') | int }} lx
-            Hall       {{ states('sensor.hall_ljusniva') | int }} lx
-            Vardagsrum {{ states('sensor.vardagsrum_ljusniva') | int }} lx
+            Utomhus    {{ states('sensor.ljusstyrka') | int(0) }} lx
+            Kökets     {{ states('sensor.kokets_ljusniva') | int(0) }} lx
+            Hall       {{ states('sensor.hall_ljusniva') | int(0) }} lx
+            Vardagsrum {{ states('sensor.vardagsrum_ljusniva') | int(0) }} lx

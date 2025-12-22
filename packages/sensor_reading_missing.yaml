@@ -31,7 +31,7 @@ sensor:
         friendly_name: Frys temp senast uppdaterad
         value_template: >-
           {% if state_attr('sensor.frys_temperature', 'last_updated') == None %} 
-            0 
+            '' 
           {% else %} 
             {{ states.sensor.frys_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
           {% endif %}
@@ -49,7 +49,7 @@ sensor:
         friendly_name: Kyl temp senast uppdaterad
         value_template: >-
           {% if state_attr('sensor.kyl_temperature', 'last_updated') == None %} 
-            0 
+            '' 
           {% else %} 
             {{ states.sensor.kyl_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
           {% endif %}
@@ -67,7 +67,7 @@ sensor:
         friendly_name: Badrum temp senast uppdaterad
         value_template: >-
           {% if state_attr('sensor.lumi_lumi_sensor_ht_agl02_temperatur', 'last_updated') == None %} 
-            0 
+            '' 
           {% else %} 
             {{ states.sensor.lumi_lumi_sensor_ht_agl02_temperatur.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
           {% endif %}
@@ -85,7 +85,7 @@ sensor:
         friendly_name: Badrum fukt senast uppdaterad
         value_template: >-
           {% if state_attr('sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet', 'last_updated') == None %} 
-            0 
+            '' 
           {% else %} 
             {{ states.sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
           {% endif %}
@@ -103,7 +103,7 @@ sensor:
         friendly_name: Tvättstuga temp senast uppdaterad
         value_template: >-
           {% if state_attr('sensor.tvattstuga_temperature', 'last_updated') == None %} 
-            0 
+            '' 
           {% else %} 
             {{ states.sensor.tvattstuga_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
           {% endif %}
@@ -121,7 +121,7 @@ sensor:
         friendly_name: Tvättstuga fukt senast uppdaterad
         value_template: >-
           {% if state_attr('sensor.tvattstuga_humidity', 'last_updated') == None %} 
-            0 
+            '' 
           {% else %} 
             {{ states.sensor.tvattstuga_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
           {% endif %}
@@ -139,7 +139,7 @@ sensor:
         friendly_name: Värmepump temp senast uppdaterad
         value_template: >-
           {% if state_attr('sensor.varmepump_temperature', 'last_updated') == None %} 
-            0 
+            '' 
           {% else %} 
             {{ states.sensor.varmepump_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
           {% endif %}
@@ -157,7 +157,7 @@ sensor:
         friendly_name: Vardagsum temp senast uppdaterad
         value_template: >-
           {% if state_attr('sensor.lumi_lumi_sensor_ht_agl02_temperatur', 'last_updated') == None %} 
-            0 
+            '' 
           {% else %} 
             {{ states.sensor.lumi_lumi_sensor_ht_agl02_temperatur.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
           {% endif %}
@@ -175,7 +175,7 @@ sensor:
         friendly_name: Hall temp senast uppdaterad
         value_template: >-
           {% if state_attr('sensor.lumi_lumi_sensor_ht_agl02_temperatur_2', 'last_updated') == None %} 
-            0 
+            '' 
           {% else %} 
             {{ states.sensor.lumi_lumi_sensor_ht_agl02_temperatur_2.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
           {% endif %}
@@ -193,7 +193,7 @@ sensor:
         friendly_name: Hall fukt senast uppdaterad
         value_template: >-
           {% if state_attr('sensor.lumi_lumi_weather_humidity_2', 'last_updated') == None %} 
-            0 
+            '' 
           {% else %} 
             {{ states.sensor.lumi_lumi_weather_humidity_2.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
           {% endif %}
@@ -211,7 +211,7 @@ sensor:
         friendly_name: Garage temp senast uppdaterad
         value_template: >-
           {% if state_attr('sensor.garage_temperature', 'last_updated') == None %} 
-            0 
+            '' 
           {% else %} 
             {{ states.sensor.garage_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
           {% endif %}
@@ -229,7 +229,7 @@ sensor:
         friendly_name: Garage fukt senast uppdaterad
         value_template: >-
           {% if state_attr('sensor.garage_humidity', 'last_updated') == None %} 
-            0 
+            '' 
           {% else %} 
             {{ states.sensor.garage_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
           {% endif %}
@@ -247,7 +247,7 @@ sensor:
         friendly_name: Förråd temp senast uppdaterad
         value_template: >-
           {% if state_attr('sensor.forrad_temperature', 'last_updated') == None %} 
-            0 
+            '' 
           {% else %} 
             {{ states.sensor.forrad_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
           {% endif %}
@@ -265,7 +265,7 @@ sensor:
         friendly_name: Friggebod temp senast uppdaterad
         value_template: >-
           {% if state_attr('sensor.friggebod_temperature', 'last_updated') == None %} 
-            0 
+            '' 
           {% else %} 
             {{ states.sensor.friggebod_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
           {% endif %}
@@ -283,7 +283,7 @@ sensor:
         friendly_name: Friggebod fukt senast uppdaterad
         value_template: >-
           {% if state_attr('sensor.friggebod_humidity', 'last_updated') == None %} 
-            0 
+            '' 
           {% else %} 
             {{ states.sensor.friggebod_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
           {% endif %}
@@ -301,7 +301,7 @@ sensor:
         friendly_name: Ute friggebod temp senast uppdaterad
         value_template: >-
           {% if state_attr('sensor.ute_friggebod_temperature', 'last_updated') == None %} 
-            0 
+            '' 
           {% else %} 
             {{ states.sensor.ute_friggebod_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
           {% endif %}
@@ -319,7 +319,7 @@ sensor:
         friendly_name: Ute friggebod fukt senast uppdaterad
         value_template: >-
           {% if state_attr('sensor.ute_friggebod_humidity', 'last_updated') == None %} 
-            0 
+            '' 
           {% else %} 
             {{ states.sensor.ute_friggebod_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
           {% endif %}
@@ -337,7 +337,7 @@ sensor:
         friendly_name: Aqara Multi Sensor 3 temp senast uppdaterad
         value_template: >-
           {% if state_attr('sensor.aqara_multi_sensor_3_temperature', 'last_updated') == None %} 
-            0 
+            '' 
           {% else %} 
             {{ states.sensor.aqara_multi_sensor_3_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
           {% endif %}
@@ -355,7 +355,7 @@ sensor:
         friendly_name: Aqara Multi Sensor 3 fukt senast uppdaterad
         value_template: >-
           {% if state_attr('sensor.aqara_multi_sensor_3_humidity', 'last_updated') == None %} 
-            0 
+            '' 
           {% else %} 
             {{ states.sensor.aqara_multi_sensor_3_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
           {% endif %}
@@ -373,7 +373,7 @@ sensor:
         friendly_name: Aqara Multi Sensor 4 temp senast uppdaterad
         value_template: >-
           {% if state_attr('sensor.aqara_multi_sensor_4_temperature', 'last_updated') == None %} 
-            0 
+            '' 
           {% else %} 
             {{ states.sensor.aqara_multi_sensor_4_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
           {% endif %}
@@ -391,7 +391,7 @@ sensor:
         friendly_name: Aqara Multi Sensor 4 fukt senast uppdaterad
         value_template: >-
           {% if state_attr('sensor.aqara_multi_sensor_4_humidity', 'last_updated') == None %} 
-            0 
+            '' 
           {% else %} 
             {{ states.sensor.aqara_multi_sensor_4_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }} 
           {% endif %}

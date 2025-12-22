@@ -16,9 +16,8 @@
     mode: single
 
     trigger:
-      - platform: numeric_state
-        entity_id: sensor.forrad_temperature
-        above: 11
+      - platform: template
+        value_template: "{{ states('sensor.forrad_temperature') not in ['unknown','unavailable',''] and (states('sensor.forrad_temperature')|float) > 11 }}"
         for: "00:10:00"
 
     condition:
@@ -50,9 +49,8 @@
     mode: single
 
     trigger:
-      - platform: numeric_state
-        entity_id: sensor.forrad_temperature
-        below: 4
+      - platform: template
+        value_template: "{{ states('sensor.forrad_temperature') not in ['unknown','unavailable',''] and (states('sensor.forrad_temperature')|float) < 4 }}"
         for: "00:10:00"
 
     condition:

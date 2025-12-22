@@ -8,9 +8,8 @@
   id: '0673019039872' 
 
   trigger:
-    platform: numeric_state
-    entity_id: sensor.garage_humidity
-    above: '66'
+    - platform: template
+      value_template: "{{ states('sensor.garage_humidity') not in ['unknown','unavailable',''] and (states('sensor.garage_humidity')|float) > 66 }}"
 
   condition:
     condition: and
@@ -35,9 +34,8 @@
   id: '8624685283999' 
 
   trigger:
-    platform: numeric_state
-    entity_id: sensor.garage_humidity
-    below: '64'
+    - platform: template
+      value_template: "{{ states('sensor.garage_humidity') not in ['unknown','unavailable',''] and (states('sensor.garage_humidity')|float) < 64 }}"
 
   condition:
     condition: and

@@ -83,10 +83,10 @@
                     - service: script.turn_on
                       target:
                         entity_id: script.hall_taklampor_1_procent
-                - default:
-                    - service: script.turn_on
-                      target:
-                        entity_id: script.hall_taklampor_1_procent
+              default:
+                - service: script.turn_on
+                  target:
+                    entity_id: script.hall_taklampor_1_procent
         - conditions:
             - condition: template
               value_template: "{{ trigger.to_state.state == '1' }}"
@@ -118,8 +118,8 @@
                     - service: script.turn_on
                       target:
                         entity_id: script.hall_taklampor_100_procent
-                - default:
-                    - service: script.turn_on
-                      target:
-                        entity_id: script.hall_taklampor_100_procent
-      default: []
+              default:
+                - service: script.turn_on
+                  target:
+                    entity_id: script.hall_taklampor_100_procent
+      default: []}

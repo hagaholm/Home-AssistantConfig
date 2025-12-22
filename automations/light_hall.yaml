@@ -1,0 +1,125 @@
+################################################################################
+### Fil: light_hall.yaml
+### Innehåll: Automatiseringar för hallbelysning — släckning och fjärrkontroll
+### Syfte: - Släcka halltaklampor när villkor uppfylls
+###        - Styr taklampor via `switch.fjarrkontroll_hall` (växla Off/1%/100%)
+### Viktiga enheter: light.hall_tak, switch.fjarrkontroll_hall,
+###                  input_select.light_inside, input_select.facade_lights
+### Viktiga skript: script.hall_taklampor_off, script.hall_taklampor_1_procent,
+###                 script.hall_taklampor_100_procent
+################################################################################
+
+- alias: "Hall släck belysning"
+  description: "Kör script.hall_taklampor_off om light.hall_tak är på och (input_select.light_inside != Dagbelysning eller input_select.facade_lights == Släckt)"
+  id: hall_slack_belysning
+  mode: single
+  trigger:
+    - platform: state
+      entity_id: input_select.light_inside
+  condition:
+    - condition: and
+      conditions:
+        - condition: template
+          value_template: "{{ states('input_select.light_inside') != 'Dagbelysning' }}"
+  action:
+    - service: script.hall_taklampor_off
+
+# Toggle logic for `switch.fjarrkontroll_hall` (accurate behavior):
+# - '0' (remote sends 0): toggles Off <-> 1%
+#     * If light is OFF -> run `script.hall_taklampor_1_procent` (set to ~1%)
+#     * If brightness <= 5 (≈1%) -> run `script.hall_taklampor_off` (turn OFF)
+#     * If brightness >= 240 (≈100%) -> run `script.hall_taklampor_1_procent` (go to 1%)
+#     * Default fallback -> set to 1%
+# - '1' (remote sends 1): toggles Off <-> 100%
+#     * If light is OFF -> run `script.hall_taklampor_100_procent` (set to 100%)
+#     * If brightness >= 240 (≈100%) -> run `script.hall_taklampor_off` (turn OFF)
+#     * If brightness <= 5 (≈1%) -> run `script.hall_taklampor_100_procent` (go to 100%)
+#     * Default fallback -> set to 100%
+- alias: Hall fjärrkontroll
+  id: 'hall_remote_light_control'
+  description: >
+    Styr halltaklampor med switch.fjarrkontroll_hall:
+    - "0": växlar Off <-> 1%
+    - "1": växlar Off <-> 100%
+    (Om t.ex. 1% och '1' triggas -> 100%, om 100% och '0' triggas -> 1%)
+  mode: single
+  trigger:
+    - platform: state
+      entity_id: switch.fjarrkontroll_hall
+      to: '0'
+    - platform: state
+      entity_id: switch.fjarrkontroll_hall
+      to: '1'
+  action:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.to_state.state == '0' }}"
+          sequence:
+            - choose:
+                - conditions:
+                    - condition: state
+                      entity_id: light.hall_tak
+                      state: 'off'
+                  sequence:
+                    - service: script.turn_on
+                      target:
+                        entity_id: script.hall_taklampor_1_procent
+                - conditions:
+                    - condition: template
+                      value_template: >
+                        {% set b = state_attr('light.hall_tak','brightness')|int(0) %}
+                        {{ b > 0 and b <= 5 }}
+                  sequence:
+                    - service: script.turn_on
+                      target:
+                        entity_id: script.hall_taklampor_off
+                - conditions:
+                    - condition: template
+                      value_template: >
+                        {% set b = state_attr('light.hall_tak','brightness')|int(0) %}
+                        {{ b >= 240 }}
+                  sequence:
+                    - service: script.turn_on
+                      target:
+                        entity_id: script.hall_taklampor_1_procent
+                - default:
+                    - service: script.turn_on
+                      target:
+                        entity_id: script.hall_taklampor_1_procent
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.to_state.state == '1' }}"
+          sequence:
+            - choose:
+                - conditions:
+                    - condition: state
+                      entity_id: light.hall_tak
+                      state: 'off'
+                  sequence:
+                    - service: script.turn_on
+                      target:
+                        entity_id: script.hall_taklampor_100_procent
+                - conditions:
+                    - condition: template
+                      value_template: >
+                        {% set b = state_attr('light.hall_tak','brightness')|int(0) %}
+                        {{ b >= 240 }}
+                  sequence:
+                    - service: script.turn_on
+                      target:
+                        entity_id: script.hall_taklampor_off
+                - conditions:
+                    - condition: template
+                      value_template: >
+                        {% set b = state_attr('light.hall_tak','brightness')|int(0) %}
+                        {{ b > 0 and b <= 5 }}
+                  sequence:
+                    - service: script.turn_on
+                      target:
+                        entity_id: script.hall_taklampor_100_procent
+                - default:
+                    - service: script.turn_on
+                      target:
+                        entity_id: script.hall_taklampor_100_procent
+      default: []

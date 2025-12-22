@@ -279,6 +279,13 @@ views:
         title: Badrumsbelysning
         show_header_toggle: true
         state_color: true
+      - type: entities
+        entities:
+          - entity: automation.hall_fjarrkontroll
+          - entity: automation.hall_slack_belysning
+        title: Hallbelysning
+        show_header_toggle: true
+        state_color: true
   - path: ventilation
     title: Ventilation
     badges: []

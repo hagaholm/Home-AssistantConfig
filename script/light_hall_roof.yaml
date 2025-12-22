@@ -9,7 +9,7 @@
         target:
           entity_id: light.hall_tak
         data:
-          transition: 3
+          transition: 10
 
   hall_taklampor_1_procent:
     alias: Hall taklampor 1 procent
@@ -20,7 +20,7 @@
           entity_id: light.hall_tak
         data:
           brightness_pct: 1
-          transition: 3
+          transition: 5
 
   hall_taklampor_10_procent:
     alias: Hall taklampor 10 procent
@@ -31,7 +31,7 @@
           entity_id: light.hall_tak
         data:
           brightness_pct: 10
-          transition: 3
+          transition: 5
 
   hall_taklampor_50_procent:
     alias: Hall taklampor 50 procent
@@ -42,7 +42,7 @@
           entity_id: light.hall_tak
         data:
           brightness_pct: 50
-          transition: 3
+          transition: 5
 
   hall_taklampor_100_procent:
     alias: Hall taklampor 100 procent
@@ -53,4 +53,4 @@
           entity_id: light.hall_tak
         data:
           brightness_pct: 100
-          transition: 3
+          transition: 5

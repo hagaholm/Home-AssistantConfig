@@ -1,7 +1,0 @@
-# Modern template sensor for Volvo XC60 (ykg498)
-template:
-  - sensor:
-      - name: "Volvo XC60"
-        default_entity_id: sensor.volvo_ykg498
-        state: >-
-          {{ 'Home' if is_state('device_tracker.ykg498', 'home') else 'Away' }}

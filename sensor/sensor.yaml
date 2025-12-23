@@ -6,23 +6,9 @@
 # https://home-assistant.io/components/sensor/
 
 
-# Filtered ljusstyrka: exposes `sensor.Ljusstyrka_measured` but only when the
-# main outside floodlight (`light.stralkastare_husgavel`) is OFF and has been
-# in the OFF state for at least 30 seconds. This prevents the template from
-# reading values that are temporarily affected by the lamp immediately after
-# it turns off.
-  - platform: template
-    sensors:
-      ljusstyrka:
-        friendly_name: "Ljusstyrka"
-        unit_of_measurement: 'lx'
-        value_template: >-
-          {% set light = states.light.stralkastare_husgavel %}
-          {% if light.state == 'off' and (as_timestamp(now()) - as_timestamp(light.last_changed)) > 30 %}
-            {{ states('sensor.Ljusstyrka_measured') }}
-          {% else %}
-            unknown
-          {% endif %}
+# Ljusstyrka (migrated)
+# Original template sensor migrated to the modern `template:` platform.
+# See `packages/template_ljusstyrka.yaml` for the new definition.
 
 #############
 # Tellstick #

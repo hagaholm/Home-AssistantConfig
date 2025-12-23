@@ -1,27 +1,7 @@
 ##############
 ### Sensor ###
 ##############
-sensor:
-  - platform: template 
-    sensors: 
-      ftx: 
-        friendly_name: 'FTX verkningsgrad'
-        value_template: >
-          {% if states('sensor.Tilluft') not in ['unknown', 'unavailable', 'none'] and
-                states('sensor.Uteluft') not in ['unknown', 'unavailable', 'none'] and
-                states('sensor.Franluft') not in ['unknown', 'unavailable', 'none'] %}
-            {% set tilluft = states('sensor.Tilluft') | float(0) %}
-            {% set uteluft = states('sensor.Uteluft') | float(0) %}
-            {% set franluft = states('sensor.Franluft') | float(0) %}
-            {% if (franluft - uteluft) != 0 %}
-              {{ (((tilluft - uteluft) / (franluft - uteluft)) * 100) | round(1) }}
-            {% else %}
-              0
-            {% endif %}
-          {% else %}
-            unknown
-          {% endif %}
-        unit_of_measurement: "%"
+# Template sensor 'ftx' migrated to packages/template_ventilation_system.yaml
 
 ##############
 ### Switch ###

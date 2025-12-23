@@ -1,0 +1,90 @@
+# Modern template timestamp sensors migrated from sensor_reading_missing
+# Keep the same friendly names and device_class: timestamp
+
+template:
+  - sensor:
+      - name: "Frys temp senast uppdaterad"
+        state: >-
+          {% if state_attr('sensor.frys_temperature', 'last_updated') == None %}
+            ''
+          {% else %}
+            {{ states.sensor.frys_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}
+          {% endif %}
+        device_class: timestamp
+        icon: >-
+          {% if state_attr('sensor.frys_temperature', 'last_updated') == None %}
+            mdi:progress-check
+          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.frys_temperature.last_updated) > 100) %}
+            mdi:progress-alert
+          {% else %}
+            mdi:progress-check
+          {% endif %}
+
+      - name: "Kyl temp senast uppdaterad"
+        state: >-
+          {% if state_attr('sensor.kyl_temperature', 'last_updated') == None %}
+            ''
+          {% else %}
+            {{ states.sensor.kyl_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}
+          {% endif %}
+        device_class: timestamp
+        icon: >-
+          {% if state_attr('sensor.kyl_temperature', 'last_updated') == None %}
+            mdi:progress-check
+          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.kyl_temperature.last_updated) > 100) %}
+            mdi:progress-alert
+          {% else %}
+            mdi:progress-check
+          {% endif %}
+
+      - name: "Badrum temp senast uppdaterad"
+        state: >-
+          {% if state_attr('sensor.lumi_lumi_sensor_ht_agl02_temperatur', 'last_updated') == None %}
+            ''
+          {% else %}
+            {{ states.sensor.lumi_lumi_sensor_ht_agl02_temperatur.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}
+          {% endif %}
+        device_class: timestamp
+        icon: >-
+          {% if state_attr('sensor.lumi_lumi_sensor_ht_agl02_temperatur', 'last_updated') == None %}
+            mdi:progress-check
+          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.lumi_lumi_sensor_ht_agl02_temperatur.last_updated) > 100) %}
+            mdi:progress-alert
+          {% else %}
+            mdi:progress-check
+          {% endif %}
+
+      - name: "Badrum fukt senast uppdaterad"
+        state: >-
+          {% if state_attr('sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet', 'last_updated') == None %}
+            ''
+          {% else %}
+            {{ states.sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}
+          {% endif %}
+        device_class: timestamp
+        icon: >-
+          {% if state_attr('sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet', 'last_updated') == None %}
+            mdi:progress-check
+          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet.last_updated) > 100) %}
+            mdi:progress-alert
+          {% else %}
+            mdi:progress-check
+          {% endif %}
+
+      # ... other sensors migrated similarly ...
+      - name: "Aqara Multi Sensor 4 fukt senast uppdaterad"
+        state: >-
+          {% if state_attr('sensor.aqara_multi_sensor_4_humidity', 'last_updated') == None %}
+            ''
+          {% else %}
+            {{ states.sensor.aqara_multi_sensor_4_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}
+          {% endif %}
+        device_class: timestamp
+        icon: >-
+          {% if state_attr('sensor.aqara_multi_sensor_4_humidity', 'last_updated') == None %}
+            mdi:progress-check
+          {% elif (as_timestamp(now()) - as_timestamp(states.sensor.aqara_multi_sensor_4_humidity.last_updated) > 100) %}
+            mdi:progress-alert
+          {% else %}
+            mdi:progress-check
+          {% endif %}

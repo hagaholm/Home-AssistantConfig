@@ -1,21 +1,4 @@
-sensor:
-  - platform: template
-    sensors:
-      harmony_current:
-        value_template: "{{ state_attr('remote.harmony_hub', 'current_activity') }}"
-        friendly_name: "Aktuell aktivitet"
-
-  - platform: template
-    sensors:
-      yamaha_volume_level:
-        value_template: >
-          {% if state_attr('media_player.yamaha_receiver', 'volume_level') == None %} 
-            0 
-          {% else %} 
-            {{state_attr('media_player.yamaha_receiver', 'volume_level')}}
-          {% endif %}
-        unit_of_measurement: '%'
-        friendly_name: "Yamaha volym"
+# Template sensors for Harmony Hub migrated to packages/template_harmony_hub.yaml
 
 script:
   harmony_off:

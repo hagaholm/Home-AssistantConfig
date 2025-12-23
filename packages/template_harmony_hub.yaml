@@ -1,0 +1,14 @@
+# Modern template sensors for Harmony Hub
+
+template:
+  - sensor:
+      - name: "Aktuell aktivitet"
+        state: "{{ state_attr('remote.harmony_hub', 'current_activity') }}"
+      - name: "Yamaha volym"
+        state: >-
+          {% if state_attr('media_player.yamaha_receiver', 'volume_level') == None %}
+            0
+          {% else %}
+            {{state_attr('media_player.yamaha_receiver', 'volume_level') }}
+          {% endif %}
+        unit_of_measurement: '%'

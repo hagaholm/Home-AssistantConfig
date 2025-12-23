@@ -1,0 +1,11 @@
+# Modern template sensor for Ljusstyrka
+template:
+  - sensor:
+      - name: "Ljusstyrka"
+        unit_of_measurement: "lx"
+        default_entity_id: sensor.ljusstyrka
+        state: >-
+          {% set light = states.light.stralkastare_husgavel %}
+          {% if light.state == 'off' and (as_timestamp(now()) - as_timestamp(light.last_changed)) > 30 %}
+            {{ states('sensor.Ljusstyrka_measured') }}
+          {% endif %}

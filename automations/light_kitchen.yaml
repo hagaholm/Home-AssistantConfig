@@ -61,14 +61,24 @@
       entity_id: binary_sensor.presence_sensor_fp2_9a29_presence_sensor_1
       to: 'off'
       for:
-        {% if states('input_select.light_kitchen') == '25%' %}
-          seconds: 30
-        {% else %}
-          minutes: 1
-        {% endif %}
+        seconds: 30
+      id: delay_30s
+      # Trigger for 25%
+      # Only fires if input_select.light_kitchen is 25%
+    - platform: state
+      entity_id: binary_sensor.presence_sensor_fp2_9a29_presence_sensor_1
+      to: 'off'
+      for:
+        minutes: 1
+      id: delay_1min
+      # Trigger for all other states
   condition:
     - condition: template
-      value_template: "{{ states('input_select.light_kitchen') != 'Släckt' }}"
+      value_template: >
+        {{
+          (trigger.id == 'delay_30s' and states('input_select.light_kitchen') == '25%') or
+          (trigger.id == 'delay_1min' and states('input_select.light_kitchen') != '25%' and states('input_select.light_kitchen') != 'Släckt')
+        }}
   action:
     - service: input_select.select_option
       target:

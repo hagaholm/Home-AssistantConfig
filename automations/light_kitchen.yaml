@@ -18,6 +18,7 @@
 # 1. SLÄCK BELYSNING:
 #    - Om ingen närvaro i hela köket (sensor_1 = off):
 #      * Sätter input_select.light_kitchen till 'Släckt' om den inte redan är det.
+#      * Fördröjning: 1 minut innan släckning, utom när input_select.light_kitchen är 25%, då är fördröjningen 30 sekunder.
 # 2. TÄND 25%:
 #    - Om närvaro i hela köket (sensor_1 = on) och home_status = 'Hemma av':
 #      * Sätter input_select.light_kitchen till 25%.
@@ -60,7 +61,11 @@
       entity_id: binary_sensor.presence_sensor_fp2_9a29_presence_sensor_1
       to: 'off'
       for:
-        seconds: 30
+        {% if states('input_select.light_kitchen') == '25%' %}
+          seconds: 30
+        {% else %}
+          minutes: 1
+        {% endif %}
   condition:
     - condition: template
       value_template: "{{ states('input_select.light_kitchen') != 'Släckt' }}"

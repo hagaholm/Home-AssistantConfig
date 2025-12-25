@@ -1056,90 +1056,58 @@ views:
         state_color: true
       - type: entities
         entities:
-          - entity: binary_sensor.volvo_v60_tailgate
-            name: Baklucka
-          - entity: sensor.volvo_v60_batteri
-            name: Batteri
-          - entity: binary_sensor.volvo_v60_brake_fluid
-            name: Bromsvätska
-          - entity: sensor.volvo_v60_charging_connection_status
-            name: Charging connection status
-          - entity: sensor.volvo_v60_charging_power
-            name: Charging power
-          - entity: sensor.volvo_v60_charging_power_status
-            name: Charging power status
-          - entity: sensor.volvo_v60_charging_status
-            name: Charging status
-          - entity: sensor.volvo_v60_charging_type
-            name: Charging type
-          - entity: sensor.volvo_v60_distance_to_empty_battery
-            name: Distance to empty battery
-          - entity: sensor.volvo_v60_distance_to_empty_tank
-            name: Distance to empty tank
-          - entity: sensor.volvo_v60_distance_to_service
-            name: Distance to service
-          - entity: binary_sensor.volvo_v60_tire_rear_right
-            name: Däck höger bak
-          - entity: binary_sensor.volvo_v60_tire_front_right
-            name: Däck höger fram
-          - entity: binary_sensor.volvo_v60_tire_rear_left
-            name: Däck vänster bak
-          - entity: binary_sensor.volvo_v60_tire_front_left
-            name: Däck vänster fram
-          - entity: binary_sensor.volvo_v60_door_rear_right
-            name: Dörr höger bak
-          - entity: binary_sensor.volvo_v60_door_front_right
-            name: Dörr höger fram
-          - entity: binary_sensor.volvo_v60_door_rear_left
-            name: Dörr vänster bak
-          - entity: binary_sensor.volvo_v60_door_front_left
-            name: Dörr vänster fram
-          - entity: sensor.volvo_v60_estimated_charging_time
-            name: Estimated charging time
-          - entity: sensor.volvo_v60_fuel_amount
-            name: Fuel amount
-          - entity: binary_sensor.volvo_v60_window_rear_right
-            name: Fönster höger bakdörr
-          - entity: binary_sensor.volvo_v60_window_front_right
-            name: Fönster höger framdörr
-          - entity: binary_sensor.volvo_v60_window_rear_left
-            name: Fönster vänster bakdörr
-          - entity: binary_sensor.volvo_v60_window_front_left
-            name: Fönster vänster framdörr
-          - entity: binary_sensor.volvo_v60_coolant_level
-            name: Kylvätskenivå
-          - entity: binary_sensor.volvo_v60_hood
-            name: Motorhuv
-          - entity: binary_sensor.volvo_v60_engine_status
-            name: Motorstatus
-          - entity: sensor.volvo_v60_matarstallning
-            name: Mätarställning
-          - entity: binary_sensor.volvo_v60_oil_level
-            name: Oljenivå
-          - entity: sensor.volvo_v60_riktning
-            name: Riktning
-          - entity: sensor.volvo_v60_service
-            name: Service
-          - entity: binary_sensor.volvo_v60_washer_fluid
-            name: Spolarvätska
-          - entity: binary_sensor.volvo_v60_sunroof
-            name: Taklucka
-          - entity: binary_sensor.volvo_v60_tank_lid
-            name: Tanklock
-          - entity: sensor.volvo_v60_target_battery_charge_level
-            name: Target battery charge level
-          - entity: sensor.volvo_v60_time_to_engine_service
-            name: Time to engine service
-          - entity: sensor.volvo_v60_time_to_service
-            name: Time to service
-          - entity: sensor.volvo_v60_trip_automatic_distance
-            name: Trip automatic distance
-          - entity: sensor.volvo_v60_trip_manual_average_fuel_consumption
-            name: Trip manual average fuel consumption
-          - entity: sensor.volvo_v60_trip_manual_average_speed
-            name: Trip manual average speed
-          - entity: sensor.volvo_v60_trip_manual_distance
-            name: Trip manual distance
+          - entity: binary_sensor.volvo_v60_reverse_lights
+            name: Backljus
+          - entity: sensor.volvo_v60_battery_capacity
+            name: Battery capacity
+          - entity: binary_sensor.volvo_v60_registration_plate_light
+            name: Belysning för registreringsskylt
+          - entity: sensor.volvo_v60_bilanslutning
+            name: Bilanslutning
+          - entity: binary_sensor.volvo_v60_turn_indication_rear_left
+            name: Blinker bak vänster
+          - entity: binary_sensor.volvo_v60_turn_indication_front_right
+            name: Blinker fram höger
+          - entity: binary_sensor.volvo_v60_turn_indication_front_left
+            name: Blinker fram vänster
+          - entity: binary_sensor.volvo_v60_turn_indication_rear_right
+            name: Blinkers bak höger
+          - entity: binary_sensor.volvo_v60_brake_light_right
+            name: Bromsljus höger
+          - entity: binary_sensor.volvo_v60_brake_light_center
+            name: Bromsljus mitten
+          - entity: binary_sensor.volvo_v60_brake_light_left
+            name: Bromsljus vänster
+          - entity: binary_sensor.volvo_v60_fog_light_rear
+            name: Dimljus bak
+          - entity: binary_sensor.volvo_v60_fog_light_front
+            name: Dimljus fram
+          - entity: binary_sensor.volvo_v60_low_beam_right
+            name: Halvljus höger
+          - entity: binary_sensor.volvo_v60_low_beam_left
+            name: Halvljus vänster
+          - entity: binary_sensor.volvo_v60_high_beam_right
+            name: Helljus höger
+          - entity: binary_sensor.volvo_v60_high_beam_left
+            name: Helljus vänster
+          - entity: device_tracker.volvo_v60_plats
+            name: Plats
+          - entity: binary_sensor.volvo_v60_position_light_rear_right
+            name: Positionsljus bak höger
+          - entity: binary_sensor.volvo_v60_position_light_rear_left
+            name: Positionsljus bak vänster
+          - entity: binary_sensor.volvo_v60_position_light_front_right
+            name: Positionsljus fram höger
+          - entity: binary_sensor.volvo_v60_position_light_front_left
+            name: Positionsljus fram vänster
+          - entity: binary_sensor.volvo_v60_side_mark_lights
+            name: Sidomarkeringsljus
+          - entity: binary_sensor.volvo_v60_hazard_lights
+            name: Varningsblinkers
+          - entity: binary_sensor.volvo_v60_daytime_running_light_right
+            name: Varselljus höger
+          - entity: binary_sensor.volvo_v60_daytime_running_light_left
+            name: Varselljus vänster
         title: Volvo V60 diagnostik
         show_header_toggle: false
         state_color: true

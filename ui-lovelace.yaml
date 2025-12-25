@@ -1042,8 +1042,8 @@ views:
     cards:
       - type: entities
         entities:
-          - sensor.mickes_laptop
-          - sensor.mickes_work_laptop
+          - sensor.mickes_dator
+          - sensor.mickes_jobb_dator
           - sensor.louise_dator
           - sensor.herberts_dator
         title: Dator status
@@ -1052,30 +1052,29 @@ views:
       - type: entities
         entities:
           - sensor.harmony_hub
-          - sensor.yamaha
-          - sensor.classic
-          - sensor.samsung_tv
+          - sensor.yamaha_rx_a1030
+          - sensor.tv_samsung
           - sensor.canal_digital
           - sensor.chromecast
-          - sensor.chromecast_2
+          - sensor.chromecast_wifi
           - sensor.chromecast_ultra
           - sensor.google_home_mini
-          - sensor.dns320
+          - sensor.dnas_dns_320
           - sensor.apple_tv
         title: Mediaspelare status
         show_header_toggle: true
         state_color: true
       - type: entities
         entities:
-          - sensor.mobil_louise
-          - sensor.mobil_annelie
-          - sensor.mobil_annelie_5g
-          - sensor.mobil_annelie_jobb
-          - sensor.mobil_micke
-          - sensor.mobil_andreas
-          - sensor.mobil_margareta
-          - sensor.mobil_herbert
-          - sensor.mobil_erik
+          - sensor.louise
+          - sensor.annelie
+          - sensor.annelie_5g
+          - sensor.annelie_jobb
+          - sensor.micke
+          - sensor.andreas
+          - sensor.margareta
+          - sensor.herbert
+          - sensor.erik
         title: Mobil status
         show_header_toggle: true
         state_color: true
@@ -1092,22 +1091,22 @@ views:
       - type: entities
         entities:
           - sensor.tradfri_gateway
-          - sensor.rockrobo
-          - sensor.camera1
-          - sensor.camera2
-          - sensor.camera3
-          - sensor.camera4
-          - sensor.camera5
-          - sensor.camera6
-          - sensor.camera7
-          - sensor.camera8
+          - sensor.xiaomi_roborock_s5
+          - sensor.kamera_1
+          - sensor.kamera_2
+          - sensor.kamera_3
+          - sensor.kamera_4
+          - sensor.kamera_5
+          - sensor.kamera_6
+          - sensor.kamera_7
+          - sensor.kamera_8
           - sensor.garmin_fenix_5_plus
         title: Övrigt status
         show_header_toggle: true
         state_color: true
       - type: entities
         entities:
-          - sensor.raspberry_pi_b_plus
+          - sensor.raspberry_pi_b_1_wire
         title: Raspberry Pi B+ (1-Wire)
         show_header_toggle: true
         state_color: true
@@ -1119,7 +1118,7 @@ views:
 #        state_color: true
       - type: entities
         entities:
-          - sensor.raspberry_pi_3b_2
+          - sensor.raspberry_pi_3b_lux
         title: Raspberry Pi 3B (Lux)
         show_header_toggle: true
         state_color: true

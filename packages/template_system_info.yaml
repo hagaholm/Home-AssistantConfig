@@ -27,8 +27,6 @@ template:
         state: "{{ 'Online' if is_state('device_tracker.forrad', 'home') else 'Offline' }}"
       - name: "Trådfri Gateway"
         state: "{{ 'Online' if is_state('device_tracker.gw_a0c9a0d8bf11', 'home') else 'Offline' }}"
-      - name: "Xiaomi Roborock S5"
-        state: "{{ 'Online' if is_state('device_tracker.rockrobo', 'home') else 'Offline' }}"
       - name: "Kamera 1"
         state: "{{ 'Online' if is_state('device_tracker.kamera1', 'home') else 'Offline' }}"
       - name: "Kamera 2"

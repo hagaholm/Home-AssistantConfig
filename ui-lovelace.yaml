@@ -284,11 +284,12 @@ views:
       - type: entities
         entities:
           - sensor.varmepump_temperature
-          - sensor.ftx
-          - sensor.uteluft
-          - sensor.tilluft
-          - sensor.franluft
-          - sensor.avluft
+# Removed sensors related to ventilation system
+#          - sensor.ftx
+#          - sensor.uteluft
+#          - sensor.tilluft
+#          - sensor.franluft
+#          - sensor.avluft
           - switch.shelly1_c45bbe77099d
           - switch.ventilationsaggregat
         title: Värmepump/Ventilation
@@ -735,57 +736,6 @@ views:
         title: Ventilation
         show_header_toggle: false
         state_color: true
-  - path: cleaner_view
-    title: Dammsugare
-    badges: []
-    cards:
-      - type: entities
-        entities:
-          - entity: script.vacuum_house
-            name: Huset
-          - entity: script.vacuum_daily
-            name: Dagligen
-          - entity: script.vacuum_kitchen
-            name: Köket
-          - entity: script.vacuum_kitchen_carpet
-            name: Köksmattan
-          - entity: script.vacuum_hall
-            name: Hallen
-          - entity: script.vacuum_laundry
-            name: Tvättstugan
-          - entity: script.vacuum_laundry_carpet
-            name: Mattan i tvättstugan
-          - entity: script.vacuum_sovrum
-            name: Sovrummet
-          - entity: script.vacuum_louise_rum
-            name: Louise rum
-          - entity: script.vacuum_andreas_rum
-            name: Andreas rum
-          - entity: script.vacuum_vardagsrum
-            name: Vardagsrum
-          - entity: script.vacuum_toalett
-            name: Toalett
-        title: Dammsug
-        show_header_toggle: false
-        state_color: true
-      - type: entities
-        entities:
-          - vacuum.xiaomi_vacuum_cleaner
-          - sensor.vacuum_status
-          - sensor.vacuum_fan_speed
-          - sensor.vacuum_battery
-          - sensor.vacuum_cleaning_time
-          - sensor.vacuum_cleaned_area
-          - sensor.vacuum_cleanmainbrush
-          - sensor.vacuum_cleansidebrush
-          - sensor.vacuum_cleanfilter
-          - sensor.vacuum_sensordirtyleft
-          - sensor.vacuum_do_not_disturb
-          - sensor.vacuum_operation
-          - sensor.vacuum_accessories
-        title: Xiaomi S50
-        show_header_toggle: false
-        state_color: true
   - path: camera_view
     title: Kamera
     badges: []
@@ -1091,7 +1041,6 @@ views:
       - type: entities
         entities:
           - sensor.tradfri_gateway
-          - sensor.xiaomi_roborock_s5
           - sensor.kamera_1
           - sensor.kamera_2
           - sensor.kamera_3

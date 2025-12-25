@@ -741,35 +741,30 @@ views:
     badges: []
     cards:
       - type: picture-entity
-        entity: camera.kamera1_main
-        show_state: true
-        show_name: true
-        camera_view: auto
-      - type: picture-entity
-        entity: camera.kamera2_main
-        show_state: true
-        show_name: true
-        camera_view: auto
-      - type: picture-entity
         entity: camera.kamera3_main
         show_state: true
         show_name: true
         camera_view: auto
       - type: picture-entity
-        entity: camera.kamera6_clear
+        entity: camera.kamera5_clear
         show_state: true
         show_name: true
         camera_view: auto
-      - type: entities
-        entities:
-#          - binary_sensor.lumi_lumi_sensor_motion_aq2_rorelse
-#          - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_2
-          - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_3
-          - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_4
-#          - binary_sensor.motion_sensor # Köksgolv
-        title: Rörelsedetektorer inne
-        show_header_toggle: false
-        state_color: true
+      - type: picture-entity
+        entity: camera.kamera6_main
+        show_state: true
+        show_name: true
+        camera_view: auto
+      - type: picture-entity
+        entity: camera.kamera7_clear
+        show_state: true
+        show_name: true
+        camera_view: auto
+      - type: picture-entity
+        entity: camera.kamera8_lag_klarhet
+        show_state: true
+        show_name: true
+        camera_view: auto
   - path: extra_view
     title: Extra
     badges: []

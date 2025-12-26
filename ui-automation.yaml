@@ -266,9 +266,9 @@ views:
       - type: entities
         entities:
           - automation.friggebod_belysning_on_1
-          - automation.friggebod_ute_on_sensor_on_40
-          - automation.friggebod_ute_on_40
-          - automation.friggebod_ute_off_60
+          - automation.friggebod_ute_on_sensor_on_500
+          - automation.friggebod_ute_on_500
+          - automation.friggebod_ute_off_600
           - automation.spabelysning_on_5
           - automation.utebelysning_off_22_00_00_borta
           - automation.utebelysning_off_22_00_00_hemma_vardag
@@ -399,14 +399,14 @@ views:
         state_color: true
       - type: entities
         entities:
-          - automation.vent_off_60_borta_ute_24_c_inne_23_c
-          - automation.vent_off_borta_ute_24_c_60_inne_23_c
-          - automation.vent_off_inne_23_c_borta_60_ute_24_c
-          - automation.vent_off_ute_24_c_borta_60_inne_23_c
+          - automation.vent_off_60_borta_ute_24degc_inne_23degc
+          - automation.vent_off_borta_ute_24_deg_c_60_inne_23_degc
+          - automation.vent_off_inne_23_c_borta_60_ute_24_degc
+          - automation.vent_off_ute_24_c_borta_60_inne_23_degc
           - automation.vent_on_60_off
           - automation.vent_on_hemma_off
-          - automation.vent_on_inne_23_c_off
-          - automation.vent_on_ute_22_c_off
+          - automation.vent_on_inne_23_degc_off
+          - automation.vent_on_ute_22_degc_off
         title: Ventilation On/Off
         show_header_toggle: true
         state_color: true
@@ -433,10 +433,10 @@ views:
           - automation.satt_pa_mediaspelare_vid_listen_to_spotify
           - automation.satt_pa_mediaspelare_vid_watch_chromecast_ultra
           - automation.satt_pa_mediaspelare_vid_listen_to_chromecast_ultra
-          - automation.satt_pa_subbas_vid_poweron
-          - automation.stang_av_subbas_vid_poweroff
-          - automation.satt_pa_subbas_vid_hog_volym
-          - automation.stang_av_subbas_vid_lag_volym
+          - automation.satt_pa_subbasar_vid_poweron
+          - automation.stang_av_subbasar_vid_poweroff
+          - automation.satt_pa_subbasar_vid_hog_volym
+          - automation.stang_av_subbasar_vid_lag_volym
           - automation.satt_pa_tv_bank_vid_rorelse
           - automation.sank_ljuset_vid_hog_volym_pa_tv
           - automation.aterstall_ljuset_vid_lag_volym_pa_tv

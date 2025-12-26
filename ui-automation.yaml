@@ -8,7 +8,7 @@ views:
         entities:
           - automation.ringklocka_tvattstuga
           - automation.ringklocka_hall
-          - automation.blinka_med_lyset_nar_ringklocka_ringer
+          - automation.blinka_med_lyset_nar_ringklocka_ringer_2
           - automation.ringklocka_on_off
         title: Ringklocka
         show_header_toggle: true
@@ -69,7 +69,7 @@ views:
         entities:
           - automation.animal_detection_notify
           - automation.animal_motion_light_control
-          - automation.animal_motion_radio_control_backside
+          - automation.animal_motion_radio_control_backside_eastside
           - automation.blink_light_animal_detcected
           - automation.blink_light_person_detected
           - automation.person_detection_notify_immediate
@@ -265,11 +265,11 @@ views:
         state_color: true
       - type: entities
         entities:
-          - automation.friggebod_belysning_on_ljusstyrka_1
-          - automation.friggebod_ute_on_sensor_on_ljusstyrka_40
-          - automation.friggebod_ute_on_ljusstyrka_40
-          - automation.friggebod_ute_off_ljusstyrka_60
-          - automation.spabelysning_on_ljusstyrka_5
+          - automation.friggebod_belysning_on_1
+          - automation.friggebod_ute_on_sensor_on_40
+          - automation.friggebod_ute_on_40
+          - automation.friggebod_ute_off_60
+          - automation.spabelysning_on_5
           - automation.utebelysning_off_22_00_00_borta
           - automation.utebelysning_off_22_00_00_hemma_vardag
           - automation.utebelysning_off_all_off_hemma_helg
@@ -291,10 +291,10 @@ views:
       - type: entities
         entities:
           - entity: automation.tradgardsbelysning_off
-          - entity: automation.tradgardsbelysning_on_away_ljusstyrka_40
-          - entity: automation.tradgardsbelysning_on_home_ljusstyrka_40
-          - entity: automation.tradgardsbelysning_on_sensor_on_ljusstyrka_40
-          - entity: automation.tradgardsbelysning_off_ljusstyrka_60
+          - entity: automation.tradgardsbelysning_on_away_40
+          - entity: automation.tradgardsbelysning_on_home_40
+          - entity: automation.tradgardsbelysning_on_sensor_on_40
+          - entity: automation.tradgardsbelysning_off_60
         title: Trädgårdsbelysning
         show_header_toggle: true
         state_color: true

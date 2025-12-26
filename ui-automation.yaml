@@ -8,7 +8,7 @@ views:
         entities:
           - automation.ringklocka_tvattstuga
           - automation.ringklocka_hall
-          - automation.blinka_med_lyset_nar_ringklocka_ringer_2
+          - automation.blinka_med_lyset_nar_ringklocka_ringer
           - automation.ringklocka_on_off
         title: Ringklocka
         show_header_toggle: true
@@ -57,6 +57,51 @@ views:
         title: Garage Zwift
         show_header_toggle: true
         state_color: true
+      - type: entities
+        entities:
+          - automation.aktivera_borta_mode
+          - automation.aktivera_hemma_pa_mode
+          - automation.aktivera_hemma_pa_mode_vid_rorelse
+        title: Hemma/Borta
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.animal_detection_notify
+          - automation.animal_motion_light_control
+          - automation.animal_motion_radio_control_backside
+          - automation.blink_light_animal_detcected
+          - automation.blink_light_person_detected
+          - automation.person_detection_notify_immediate
+          - automation.person_detection_notify_delayed
+          - automation.test_motion_light_control
+          - automation.test_motion_radio_control_backside
+          - automation.turn_off_radio_after_10_minutes
+        title: Frigate
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.mqtt_publish_filtered_outside_lux
+          - automation.mqtt_publish_outside_temperature
+        title: MQTT publicering
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.blinka_med_lyset_vid_jobba_hemifran
+          - automation.tand_skrivbordsbelysning
+          - automation.slack_skrivbordsbelysning
+          - automation.tand_ovrig_belysning_i_rummet
+        title: Jobba hemifrån
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.godnatt
+        title: Google
+        show_header_toggle: true
+        state_color: true
     icon: 'mdi:home-automation'
   - path: alarm
     title: Larm
@@ -102,10 +147,7 @@ views:
       - type: entities
         entities:
           - automation.raspberry_pi_b_1_wire_offline
-#          - automation.raspberry_pi_3b_hagaholm_offline
           - automation.raspberry_pi_3b_lux_offline
-#          - automation.raspberry_pi_3b_offline
-#          - automation.raspberry_pi_4b_hassbian_offline
         title: Larm Raspberry Pi
         show_header_toggle: true
         state_color: true
@@ -223,14 +265,11 @@ views:
         state_color: true
       - type: entities
         entities:
-          - automation.friggebod_belysning_on_1
-          - automation.friggebod_ute_on_sensor_on_500
-          - automation.friggebod_ute_on_500
-          - automation.friggebod_ute_off_600
-          - automation.spabelysning_on_5
-          - automation.trackdack_ute_on_sensor_on_500
-#          - automation.tradack_ute_on_40
-#          - automation.tradack_ute_off_60
+          - automation.friggebod_belysning_on_ljusstyrka_1
+          - automation.friggebod_ute_on_sensor_on_ljusstyrka_40
+          - automation.friggebod_ute_on_ljusstyrka_40
+          - automation.friggebod_ute_off_ljusstyrka_60
+          - automation.spabelysning_on_ljusstyrka_5
           - automation.utebelysning_off_22_00_00_borta
           - automation.utebelysning_off_22_00_00_hemma_vardag
           - automation.utebelysning_off_all_off_hemma_helg
@@ -252,11 +291,76 @@ views:
       - type: entities
         entities:
           - entity: automation.tradgardsbelysning_off
-          - entity: automation.tradgardsbelysning_on_away_40
-          - entity: automation.tradgardsbelysning_on_home_40
-          - entity: automation.tradgardsbelysning_on_sensor_on_40
-          - entity: automation.tradgardsbelysning_off_60
+          - entity: automation.tradgardsbelysning_on_away_ljusstyrka_40
+          - entity: automation.tradgardsbelysning_on_home_ljusstyrka_40
+          - entity: automation.tradgardsbelysning_on_sensor_on_ljusstyrka_40
+          - entity: automation.tradgardsbelysning_off_ljusstyrka_60
         title: Trädgårdsbelysning
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.slack_kok
+          - automation.tand_kok_25
+          - automation.tand_kok_50
+          - automation.tand_kok_100
+        title: Input select - Kök
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.slack_badrum
+          - automation.tand_badrum_dag
+          - automation.tand_badrum_dag_narvaro
+          - automation.tand_badrum_natt_narvaro
+        title: Input select - Badrum
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.slack_tradgardsbelysning
+          - automation.tand_tradgardsbelysning
+        title: Input select - Trädgård
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.slacker_innebelysning
+          - automation.tand_morgonbelysning
+          - automation.tand_dagbelysning
+          - automation.tand_kvallsbelysning
+          - automation.tand_nattbelysning
+          - automation.tand_bortabelysning
+          - automation.tand_fonsterbelysning
+        title: Input select - Innebelysning
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.slack_uterumsbelysning
+          - automation.tand_uterumsbelysning
+        title: Input select - Uterum
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.morning_light_on_inside
+          - automation.morning_light_on_outside
+          - automation.morning_light_off_inside
+          - automation.morning_light_off_outside
+          - automation.daylight_on_inside
+          - automation.daylight_on_outside
+          - automation.daylight_off_inside
+          - automation.daylight_off_outside
+          - automation.awaylight_on_inside
+          - automation.awaylight_on_outside
+          - automation.awaylight_off_inside
+          - automation.awaylight_off_outside
+          - automation.kitchen_light_on_inside
+          - automation.kitchen_light_on_outside
+          - automation.kitchen_light_off_inside
+          - automation.kitchen_light_off_outside
+        title: Ljusstyrka trösklar
         show_header_toggle: true
         state_color: true
       - type: entities
@@ -281,8 +385,9 @@ views:
           - automation.forcerad_snabbt_okande_fukt
           - automation.forcerad_badrumsfonster_hog_fukt
           - automation.normal_badrumsfonster_lag_fukt
-          - automation.normal_badrumsfonster_stabiliserad_fukt 
-          - automation.normal_hog_fukt_i_huset 
+          - automation.normal_vid_stabiliserad_fukt
+          - automation.normal_hog_fukt_i_huset
+          - automation.normal_efter_maxtid
         title: Ventilation Low/High
         show_header_toggle: true
         state_color: true
@@ -294,15 +399,25 @@ views:
         state_color: true
       - type: entities
         entities:
-          - automation.ventilation_off_60_borta_ute_24degc_inne_23degc
-          - automation.ventilation_off_borta_ute_24degc_60_inne_23degc
-          - automation.ventilation_off_inne_23degc_borta_60_ute_24degc
-          - automation.ventilation_off_ute_24degc_borta_60_inne_23degc
-          - automation.ventilation_on_60_off
-          - automation.ventilation_on_hemma_off
-          - automation.ventilation_on_inne_23degc_off
-          - automation.ventilation_on_ute_22degc_off
+          - automation.vent_off_60_borta_ute_24_c_inne_23_c
+          - automation.vent_off_borta_ute_24_c_60_inne_23_c
+          - automation.vent_off_inne_23_c_borta_60_ute_24_c
+          - automation.vent_off_ute_24_c_borta_60_inne_23_c
+          - automation.vent_on_60_off
+          - automation.vent_on_hemma_off
+          - automation.vent_on_inne_23_c_off
+          - automation.vent_on_ute_22_c_off
         title: Ventilation On/Off
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
+          - automation.startar_max_timer_badrum
+          - automation.restart_timer_badrum
+          - automation.reset_timer_nar_vent_satts_till_normal
+          - automation.satt_larm_for_vent
+          - automation.turn_off_max_speed_when_available_again
+        title: Ventilation timers
         show_header_toggle: true
         state_color: true
   - path: mediaplayer

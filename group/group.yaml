@@ -11,17 +11,16 @@
 # - Aggregate presence sources to simplify conditions
 # - Used by home/away automations as a single entity
 # - Mirrors devices mapped in packages/person.yaml
-#
-group:
-  track_for_home_devices:
-    name: Enheter för kontroll om hemma
-    entities:
-      - device_tracker.galaxy_a52s_5g # Mickes mobil
-      - device_tracker.mikaels_a52s  # Mickes mobil
-      - device_tracker.mobil_annelie # Annelies mobil
-      - device_tracker.mobil_annelie_5g # Annelies mobil
-      - device_tracker.annelies_galaxy_a71 # Annelies mobil
-      - device_tracker.louises_a54 # mobil_louise
-      - device_tracker.mobil_louise
-      - device_tracker.62_57_81_af_f2_a1 # Andreas mobil (ny)
-      - device_tracker.mobil_erik
+
+track_for_home_devices:
+  name: Enheter för kontroll om hemma
+  entities:
+    - device_tracker.galaxy_a52s_5g # Mickes mobil
+    - device_tracker.mikaels_a52s  # Mickes mobil
+    - device_tracker.mobil_annelie # Annelies mobil
+    - device_tracker.mobil_annelie_5g # Annelies mobil
+    - device_tracker.annelies_galaxy_a71 # Annelies mobil
+    - device_tracker.louises_a54 # mobil_louise
+    - device_tracker.mobil_louise
+    - device_tracker.62_57_81_af_f2_a1 # Andreas mobil (ny)
+    - device_tracker.mobil_erik

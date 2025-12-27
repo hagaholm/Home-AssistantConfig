@@ -11,106 +11,105 @@
 # - Exclude noisy sensors and internal automations
 ####################################################
 
-logbook:
-  include:
-    domains:
-      - automation
-      - light
-      - media_player
-      - sensor
-#      - switch
+include:
+  domains:
+    - automation
+    - light
+    - media_player
+    - sensor
+#    - switch
 
-  exclude:
-    domains:
-      - switch
-      - image_processing
+exclude:
+  domains:
+    - switch
+    - image_processing
 
-    entities:
-      - sensor.since_last_boot 
-      - sensor.since_last_boot_templated
-      - automation.startar_timers_1
-      - automation.startar_timers_2
-      - sensor.synligt_ljus
-      - sensor.fullt_spectrum_ljus
-      - sensor.infrarott_ljus
-      - sensor.ljusstyrka
-      - sensor.ljusstyrka2
-      - sensor.ljusstyrka_flacksta
-      - sensor.badrum_fukt_lastupdated
-      - sensor.badrum_temp_lastupdated
-      - sensor.forrad_temp_lastupdated
-      - sensor.friggebod_fukt_lastupdated
-      - sensor.friggebod_temp_lastupdated
-      - sensor.ute_friggebod_fukt_lastupdated
-      - sensor.ute_friggebod_temp_lastupdated
-      - sensor.frys_temp_lastupdated
-      - sensor.garage_fukt_lastupdated
-      - sensor.garage_temp_lastupdated
-      - sensor.hall_fukt_lastupdated
-      - sensor.hall_temp_lastupdated
-      - sensor.kyl_temp_lastupdated
-      - sensor.tvattstuga_fukt_lastupdated
-      - sensor.tvattstuga_temp_lastupdated
-      - sensor.vardagsrum_temp_lastupdated
-      - sensor.varmepump_temp_lastupdated
+  entities:
+    - sensor.since_last_boot 
+    - sensor.since_last_boot_templated
+    - automation.startar_timers_1
+    - automation.startar_timers_2
+    - sensor.synligt_ljus
+    - sensor.fullt_spectrum_ljus
+    - sensor.infrarott_ljus
+    - sensor.ljusstyrka
+    - sensor.ljusstyrka2
+    - sensor.ljusstyrka_flacksta
+    - sensor.badrum_fukt_lastupdated
+    - sensor.badrum_temp_lastupdated
+    - sensor.forrad_temp_lastupdated
+    - sensor.friggebod_fukt_lastupdated
+    - sensor.friggebod_temp_lastupdated
+    - sensor.ute_friggebod_fukt_lastupdated
+    - sensor.ute_friggebod_temp_lastupdated
+    - sensor.frys_temp_lastupdated
+    - sensor.garage_fukt_lastupdated
+    - sensor.garage_temp_lastupdated
+    - sensor.hall_fukt_lastupdated
+    - sensor.hall_temp_lastupdated
+    - sensor.kyl_temp_lastupdated
+    - sensor.tvattstuga_fukt_lastupdated
+    - sensor.tvattstuga_temp_lastupdated
+    - sensor.vardagsrum_temp_lastupdated
+    - sensor.varmepump_temp_lastupdated
 
-      - sensor.tradfri_gateway
+    - sensor.tradfri_gateway
 
-      - automation.startar_timers_kok
-      - automation.camera_1_folder_watcher_activated
-      - automation.camera_2_folder_watcher_activated
-      - automation.camera_3_folder_watcher_activated
+    - automation.startar_timers_kok
+    - automation.camera_1_folder_watcher_activated
+    - automation.camera_2_folder_watcher_activated
+    - automation.camera_3_folder_watcher_activated
 
-      - automation.camera_1_light_control_on
-      - automation.camera_2_light_control_on
-      - automation.camera_3_light_control_on
+    - automation.camera_1_light_control_on
+    - automation.camera_2_light_control_on
+    - automation.camera_3_light_control_on
 
-      - automation.kok_100_morgon_sensor_on_2500
-      - automation.kok_100_sensor_on_150_2500
-      - automation.kok_100_sensor_on_0_150
-      - automation.kok_100_sensor_on_borta_0_150
-      - automation.kok_25_sensor_on_hemma_0_150
+    - automation.kok_100_morgon_sensor_on_2500
+    - automation.kok_100_sensor_on_150_2500
+    - automation.kok_100_sensor_on_0_150
+    - automation.kok_100_sensor_on_borta_0_150
+    - automation.kok_25_sensor_on_hemma_0_150
 
-      - automation.mqtt_publish_outside_temperature
+    - automation.mqtt_publish_outside_temperature
 
-      - sensor.aqara_multi_sensor_3_temp_lastupdated
-      - sensor.aqara_multi_sensor_3_fukt_lastupdated
-      - sensor.aqara_multi_sensor_4_temp_lastupdated
-      - sensor.aqara_multi_sensor_4_fukt_lastupdated
+    - sensor.aqara_multi_sensor_3_temp_lastupdated
+    - sensor.aqara_multi_sensor_3_fukt_lastupdated
+    - sensor.aqara_multi_sensor_4_temp_lastupdated
+    - sensor.aqara_multi_sensor_4_fukt_lastupdated
 
-      - automation.camera_motion_set_duration_time
-      - automation.camera_motion_reset_duration_time
+    - automation.camera_motion_set_duration_time
+    - automation.camera_motion_reset_duration_time
 
-      - sensor.samsung_tv
-      - media_player.samsung_q80_series_65
+    - sensor.samsung_tv
+    - media_player.samsung_q80_series_65
 
-      - sensor.load_1m
-      - sensor.load_5m
-      - sensor.load_15m
+    - sensor.load_1m
+    - sensor.load_5m
+    - sensor.load_15m
 
-      - automation.updated_home_assistant_log
-      - sensor.home_assistant_log
+    - automation.updated_home_assistant_log
+    - sensor.home_assistant_log
 
-      - media_player.googlehome7285
-      - sensor.rt_ac86u_c158_external_ip
-      - sensor.rt_ac86u_c158_wan_status
+    - media_player.googlehome7285
+    - sensor.rt_ac86u_c158_external_ip
+    - sensor.rt_ac86u_c158_wan_status
 
-      - automation.cpu_temp_below_58_0
-      - automation.cpu_temp_58_0
-      - automation.cpu_temp_58_5
-      - automation.cpu_temp_59_0
-      - automation.cpu_temp_59_5
-      - automation.cpu_temp_above_59_5
-      
-      - automation.stanger_av_rorelsedetektor_kok_reset
+    - automation.cpu_temp_below_58_0
+    - automation.cpu_temp_58_0
+    - automation.cpu_temp_58_5
+    - automation.cpu_temp_59_0
+    - automation.cpu_temp_59_5
+    - automation.cpu_temp_above_59_5
+    
+    - automation.stanger_av_rorelsedetektor_kok_reset
 
-      - automation.camera_1_image_processing
-      - automation.camera_2_image_processing
-      - automation.camera_3_image_processing
-      - automation.camera_4_image_processing
-      - automation.camera_5_image_processing
-      - automation.camera_6_image_processing
-      - automation.camera_7_image_processing
+    - automation.camera_1_image_processing
+    - automation.camera_2_image_processing
+    - automation.camera_3_image_processing
+    - automation.camera_4_image_processing
+    - automation.camera_5_image_processing
+    - automation.camera_6_image_processing
+    - automation.camera_7_image_processing
 
-      - automation.mqtt_publish_filtered_outside_lux
+    - automation.mqtt_publish_filtered_outside_lux
       

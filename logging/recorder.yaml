@@ -10,27 +10,26 @@
 # - Purge old history to keep DB small (7 days retention)
 # - Exclude noisy domains/entities to reduce DB writes
 #
-recorder:
-  purge_keep_days: 7
-  exclude:
-    domains:
-      - camera
-      - media_player
-      - sun
-      - calendar
-      - update
-    entity_globs:
-      - sensor.kajplats_*_last_seen
-      - sensor.ljusstyrka2
-      - sensor.infrared*
-      - sensor.visible*
-      - sensor.full*spectrum*
-      - sensor.*_last_seen
-      - sensor.*_linkquality
-      - sensor.*_rssi
-      - sensor.*_uptime
-      - sensor.*_wifi_signal
-      - sensor.*_battery
-    entities:
-      - binary_sensor.updater
+purge_keep_days: 7
+exclude:
+  domains:
+    - camera
+    - media_player
+    - sun
+    - calendar
+    - update
+  entity_globs:
+    - sensor.kajplats_*_last_seen
+    - sensor.ljusstyrka2
+    - sensor.infrared*
+    - sensor.visible*
+    - sensor.full*spectrum*
+    - sensor.*_last_seen
+    - sensor.*_linkquality
+    - sensor.*_rssi
+    - sensor.*_uptime
+    - sensor.*_wifi_signal
+    - sensor.*_battery
+  entities:
+    - binary_sensor.updater
 

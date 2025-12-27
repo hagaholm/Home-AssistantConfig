@@ -39,34 +39,13 @@ homeassistant:
 #                                                  #
 ####################################################
 api:
-
-# https://www.home-assistant.io/components/system_health/
 system_health:
-
-#---------------------------------------------------
-# Show links to resources in log and frontend
-#introduction:
-
-#---------------------------------------------------
-# Enables the frontend
 frontend:
-
-#---------------------------------------------------
-# Enables configuration UI
-# https://home-assistant.io/components/config/
 config:
-
-#---------------------------------------------------
-# http
 http:
-
-#---------------------------------------------------
-# Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
-
-#---------------------------------------------------
-# Track the sun
 sun:
+python_script:
 
 ####################################################
 #                                                  #
@@ -132,109 +111,10 @@ lovelace:
 #      LINKS TO INDIVUAL CONFIGURATION FILES       #
 #                                                  #
 ####################################################
-
-# https://home-assistant.io/docs/configuration/splitting_configuration/
-
-#---------------------------------------------------
 automation: !include_dir_merge_list automations/
-#---------------------------------------------------
-# device_tracker: !include device_trackers.yaml
-#---------------------------------------------------
 sensor: !include_dir_merge_list sensor
-#---------------------------------------------------
 group: !include_dir_merge_named group
-#---------------------------------------------------
 script: !include_dir_merge_named script
-#---------------------------------------------------
-
-####################################################
-#                                                  #
-#                  PYTHON_SCRIPT                   #
-#                                                  #
-####################################################
-python_script:
-
-####################################################
-#                                                  #
-#                     INPUT_NUMBER                 #
-#                                                  #
-####################################################
-# input_number:
-  # facade_light_on:
-    # name: Fasad belysning on
-    # initial: 40
-    # min: 1
-    # max: 100
-    # step: 1
-    # mode: box
-  # facade_light_off:
-    # name: Fasad belysning off
-    # initial: 60
-    # min: 1
-    # max: 100
-    # step: 1
-    # mode: box
-
-####################################################
-#                                                  #
-#                       ASUSWRT                    #
-#                                                  #
-####################################################
-#asuswrt:
-#    host: 192.168.1.1
-#    username: admin
-#    password: !secret asuswrt_password
-##    ssh_key: /config/ssh/asuswrt
-##    sensors:
-##    - upload
-##    - download
-##    - upload_speed
-##    - download_speed
-
-####################################################
-#                                                  #
-#                       MQTT                       #
-#                                                  #
-####################################################
-# MQTT configuration moved to packages/integrations/mqtt.yaml
-# https://www.home-assistant.io/docs/mqtt/broker/
-
-####################################################
-#                                                  #
-#                  VOLVO ON CALL                   #
-#                                                  #
-####################################################
-# https://www.home-assistant.io/integrations/volvooncall/
-#volvooncall:
-#  username: !secret voc_username
-#  password: !secret voc_password
-
-####################################################
-#                                                  #
-#                   COMMAND LINE                   #
-#                                                  #
-####################################################
-command_line:
-  - sensor:
-        name: Acpitz 0 Temperature
-        command: "cat /sys/class/thermal/thermal_zone0/temp"
-        # If errors occur, remove degree symbol below
-        unit_of_measurement: "°C"
-        value_template: '{{ value | multiply(0.001) | round(1) | int(85) }}'
-
-  - sensor:
-        name: Acpitz 1 Temperature
-        command: "cat /sys/class/thermal/thermal_zone1/temp"
-        # If errors occur, remove degree symbol below
-        unit_of_measurement: "°C"
-        value_template: '{{ value | multiply(0.001) | round(1) | int(85) }}'
-
-  - sensor:
-        name: CPU Temperature
-        command: "cat /sys/class/thermal/thermal_zone2/temp"
-        # If errors occur, remove degree symbol below
-        unit_of_measurement: "°C"
-        value_template: '{{ value | multiply(0.001) | round(1) | int(85) }}'
 
 ####################################################
 #                                                  #

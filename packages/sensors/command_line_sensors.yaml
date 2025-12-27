@@ -1,0 +1,29 @@
+####################################################
+#                                                  #
+#              COMMAND LINE SENSORS                #
+#                                                  #
+####################################################
+# System temperature monitoring via command line sensors
+# https://www.home-assistant.io/integrations/command_line/
+
+command_line:
+  - sensor:
+        name: Acpitz 0 Temperature
+        command: "cat /sys/class/thermal/thermal_zone0/temp"
+        unit_of_measurement: "°C"
+        value_template: '{{ value | multiply(0.001) | round(1) | int(85) }}'
+        scan_interval: 60
+
+  - sensor:
+        name: Acpitz 1 Temperature
+        command: "cat /sys/class/thermal/thermal_zone1/temp"
+        unit_of_measurement: "°C"
+        value_template: '{{ value | multiply(0.001) | round(1) | int(85) }}'
+        scan_interval: 60
+
+  - sensor:
+        name: CPU Temperature
+        command: "cat /sys/class/thermal/thermal_zone2/temp"
+        unit_of_measurement: "°C"
+        value_template: '{{ value | multiply(0.001) | round(1) | int(85) }}'
+        scan_interval: 60

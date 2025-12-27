@@ -6,8 +6,8 @@ template:
         unique_id: sensor_ljusstyrka_calibrated
         state: >-
           {% set light = states('light.stralkastare_husgavel') %}
-          {% set light_changed = state_attr('light.stralkastare_husgavel', 'last_changed') %}
-          {% if light == 'off' and (as_timestamp(now()) - as_timestamp(light_changed)) > 30 %}
+          {% set light_obj = states.light.stralkastare_husgavel %}
+          {% if light == 'off' and light_obj != none and (as_timestamp(now()) - as_timestamp(light_obj.last_changed, 0)) > 30 %}
             {{ (states('sensor.ljusstyrka_measured') | float(0)) | round(0) }}
           {% else %}
             {{ (states('sensor.ljusstyrka_measured') | float(0)) | round(0) }}

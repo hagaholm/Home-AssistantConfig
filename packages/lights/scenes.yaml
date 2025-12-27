@@ -1,0 +1,19 @@
+####################################################
+#                                                  #
+#                   LIGHT SCENES                   #
+#                                                  #
+####################################################
+# Simple scenes to toggle between standard and Christmas lighting modes
+# These scenes primarily flip the christmas_light boolean and can be
+# extended later to include specific groups if desired.
+
+scene:
+  - name: Lighting Standard Mode
+    icon: mdi:lightbulb-outline
+    entities:
+      input_boolean.christmas_light: off
+
+  - name: Lighting Christmas Mode
+    icon: mdi:string-lights
+    entities:
+      input_boolean.christmas_light: on

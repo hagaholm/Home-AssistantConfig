@@ -1,12 +1,25 @@
 ####################################################
 #                                                  #
-#                  INPUT HELPERS                   #
+#                  INPUT BOOLEANS                  #
 #                                                  #
 ####################################################
-# Input boolean helpers
-# https://www.home-assistant.io/integrations/input_boolean/
+# Input boolean helpers for toggle-based home automation
+# Used for scene selection, feature flags, and conditional logic
+# Documentation: https://www.home-assistant.io/integrations/input_boolean/
+#
+# Usage:
+# - Triggered by automations and UI interactions
+# - Used in conditional templates and scenes
+# - Persisted across Home Assistant restarts
+#
+####################################################
 
 input_boolean:
   christmas_light:
     name: Använd julbelysning
     icon: mdi:pine-tree
+    # Controls whether to use Christmas lighting scenes or standard scenes
+    # When ON: Christmas-themed lighting modes active
+    # When OFF: Standard seasonal lighting active
+    # Updated by: light_day, light_evening, light_morning automations
+    # Referenced by: Templates, lighting scenes

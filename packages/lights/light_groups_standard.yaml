@@ -1,15 +1,33 @@
 ####################################################
 #                                                  #
-#              LIGHT GROUPS - STANDARD             #
+#            LIGHT GROUPS - STANDARD MODE          #
 #                                                  #
 ####################################################
-# Standard (non-seasonal) light groups
-# https://www.home-assistant.io/integrations/light.group/
+# Standard (non-seasonal) light groups for scene automation
+# Provides logical groupings for controlling lights by room or usage
+# Documentation: https://www.home-assistant.io/integrations/light.group/
+#
+# Group Categories:
+# - Daily Scenarios: Lighting modes for time-of-day automation
+#   (Morgon, Dag, Kväll, Natt, Borta = Morning, Day, Evening, Night, Away)
+# - Room Groups: All lights in specific rooms for bulk control
+# - Feature Groups: Specific functions (Kitchen under-cabinet, facade, etc)
+#
+# Design Pattern:
+# - Used by automation scripts to control multiple lights with one action
+# - Individual lights can be turned on/off or dimmed via group
+# - Groups simplify lighting automation logic
+#
+####################################################
 
 light:
-  # Daily lighting scenarios
+  # Daily Lighting Scenarios - Times of day
   - platform: group
+    id: light_group_dagbelysning
     name: Dagbelysning
+    # Day mode lighting (maximum brightness general illumination)
+    # Used by: light_day script for daytime ambiance
+    # Includes: Window lights, cabinet accent lights, and room illumination
     entities:
       - light.kok_stora_fonstret
       - light.kok_lilla_fonstret
@@ -27,14 +45,22 @@ light:
       - light.uterum_fonster
 
   - platform: group
+    id: light_group_koksbelysning
     name: Köksbelysning
+    # Kitchen-specific lighting (task and ambient)
+    # Used by: light_kitchen script for brightness adjustment
+    # Includes: Under-cabinet work lights and cabinet accent lighting
     entities:
       - light.kok_underskap_bank
       - light.kok_underskap_diskbank
       - light.kok_vitrinskap
 
   - platform: group
+    id: light_group_morgonbelysning
     name: Morgonbelysning
+    # Morning/breakfast lighting (soft, focused)
+    # Used by: light_morning script for gentle wake-up lighting
+    # Includes: Kitchen windows and main living areas
     entities:
       - light.kok_stora_fonstret
       - light.kok_lilla_fonstret
@@ -43,7 +69,11 @@ light:
       - light.uterum_fonster
 
   - platform: group
+    id: light_group_nattbelysning
     name: Nattbelysning
+    # Night/bedroom lighting (very low brightness)
+    # Used by: light_night script for sleeping mode
+    # Includes: Minimal lighting for safe movement without waking
     entities:
       - light.kok_lilla_fonstret
       - light.kok_stora_fonstret    
@@ -51,7 +81,11 @@ light:
       - light.vardagsrum_fonster
 
   - platform: group
+    id: light_group_fasadbelysning
     name: Fasadbelysning
+    # House exterior facade lighting (decorative accents)
+    # Used by: light_outside_facade script for evening/security lighting
+    # Includes: Front entrance, laundry room, storage, garden shed accents
     entities:
       - light.huvudentre2
       - light.tvattstuga_fasad
@@ -59,7 +93,11 @@ light:
       - light.friggebod_fasad
 
   - platform: group
+    id: light_group_utebelysning
     name: Utebelysning
+    # Exterior outdoor lighting (gardens and entertainment areas)
+    # Used by: light_outside script for outdoor entertaining
+    # Includes: Hot tub area lighting (multiple fixtures)
     entities:
       - light.friggebod_ute_2
       - light.spabad_v
@@ -67,7 +105,11 @@ light:
       - light.spabad_h
 
   - platform: group
+    id: light_group_bortabelysning
     name: Bortabelysning
+    # Away mode lighting (security simulation)
+    # Used by: light_away script to simulate occupancy
+    # Includes: Key visible windows and entry lighting
     entities:
       - light.kok_stora_fonstret
       - light.kok_lilla_fonstret
@@ -77,21 +119,33 @@ light:
       - light.louise_fonster
       - light.uterum_fonster
 
-  # Room-based lighting groups
+  # Room-based Lighting Groups
   - platform: group
+    id: light_group_sovrum
     name: Sovrum
+    # Master bedroom all lights
+    # Used by: Room-specific automation and scene control
+    # Includes: Bedside lamp and window accent
     entities:
       - light.sovrum_sangbord
       - light.sovrum_fonster
 
   - platform: group
+    id: light_group_hall
     name: Hall
+    # Hallway and entryway lights
+    # Used by: Motion-activated hallway lighting
+    # Includes: Hallway furniture accents
     entities:
       - light.hall_byra
       - light.hall_skap
 
   - platform: group
+    id: light_group_vardagsrum
     name: Vardagsrum
+    # Living room all lights
+    # Used by: Main living area scene activation
+    # Includes: Window lights, furniture, cabinet lighting, Christmas tree
     entities:
       - light.vardagsrum_fonster
       - light.vardagsrum_skank
@@ -100,23 +154,36 @@ light:
       - light.vardagsrum_gran
 
   - platform: group
+    id: light_group_kok
     name: Kök
+    # Kitchen general lighting (windows)
+    # Used by: Kitchen automation scenes
+    # Includes: Window candle lights
     entities:
       - light.kok_stora_fonstret
       - light.kok_lilla_fonstret
 
   - platform: group
+    id: light_group_louise_room
     name: Louise rum
+    # Louise's bedroom lights
+    # Used by: Child's room automation (bedtime, morning)
+    # Includes: Window light, floor lamp
     entities:
       - light.louise_fonster
       - light.louise_golvlampa
 
   - platform: group
+    id: light_group_andreas_room
     name: Andreas rum
+    # Andreas's bedroom lights
+    # Used by: Child's room automation (bedtime, morning)
+    # Includes: Window light
     entities:
       - light.andreas_fonster_2
 
   - platform: group
+    id: light_group_uterum
     name: Uterum
     entities:
       - light.uterum_led

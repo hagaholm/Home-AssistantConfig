@@ -3,12 +3,25 @@
 #                  INPUT SELECTS                   #
 #                                                  #
 ####################################################
-# Input select helpers for lighting and home status
-# https://www.home-assistant.io/integrations/input_select/
+# Input select helpers for multi-state controls
+# Used for lighting modes, home status, and scene selection
+# Documentation: https://www.home-assistant.io/integrations/input_select/
+#
+# Design Pattern:
+# - Each select helper represents a mode or state
+# - Updated by automations based on time, occupancy, and triggers
+# - Used as conditions and parameters in scripts
+# - UI controls allow manual override of automatic selection
+#
+####################################################
 
 input_select:
   light_inside:
     name: Innebelysning
+    # Lighting mode for interior lights (living room, kitchen, bedrooms)
+    # Options represent different lighting scenes for various times of day
+    # Updated by: Automations (time-based, occupancy, mode changes)
+    # Used by: light_morning, light_day, light_evening, light_night scripts
     options:
      - Släckt
      - Morgonbelysning
@@ -23,6 +36,10 @@ input_select:
 
   light_kitchen:
     name: Köksbelysning
+    # Kitchen brightness control with 4 levels
+    # Allows fine-grained control of brightness in kitchen work areas
+    # Updated by: Kitchen automation and manual overrides
+    # Used by: light_kitchen script for brightness adjustment
     options:
      - Släckt
      - 25%
@@ -32,6 +49,9 @@ input_select:
 
   light_uterum:
     name: Uterumsbelysing
+    # Conservatory/sunroom simple on/off control
+    # Controls accent lighting and decorative lights in conservatory
+    # Used by: Garden room automation sequences
     options:
      - Släckt
      - Tänt
@@ -39,6 +59,9 @@ input_select:
 
   facade_lights: 
     name: Fasadbelysning 
+    # Facade and exterior accent lighting control
+    # Four modes: Off, On, Night mode (dimmed), Maximum (full brightness)
+    # Used by: Exterior lighting automation and evening/night scenes
     options: 
      - Släckt 
      - Tänt
@@ -48,6 +71,9 @@ input_select:
      
   light_garden: 
     name: Trädgårdsbelysning 
+    # Garden/patio lighting simple on/off
+    # Controls deck lights and ground-level garden accent lights
+    # Updated by: Outdoor activity sensors
     options: 
      - Släckt 
      - Tänt 
@@ -55,6 +81,9 @@ input_select:
 
   light_outside:
     name: Utebelysning
+    # Exterior house lighting (porch, driveway, entrance)
+    # Simple on/off for motion-detected exterior lighting
+    # Updated by: PIR sensors and dusk/dawn automations
     options:
      - Släckt
      - Tänt
@@ -62,6 +91,9 @@ input_select:
 
   light_bathroom:
     name: Badrumsbelysning
+    # Bathroom lighting with occupancy-aware modes
+    # Four modes: Off, Day (full), Day with presence, Night with presence
+    # Used by: Bathroom automation for motion-sensitive lighting
     options: 
      - Släckt
      - Dag
@@ -71,6 +103,12 @@ input_select:
 
   home_status:
     name: Hemma status
+    # Primary home occupancy state machine
+    # Borta (Away) = Nobody home, security mode active
+    # Hemma på (Home active) = Occupants present and awake
+    # Hemma av (Home inactive) = Occupants present but sleeping/idle
+    # Updated by: Person presence detection and manual overrides
+    # Used by: All conditional automations as primary state indicator
     options:
      - Borta
      - Hemma på

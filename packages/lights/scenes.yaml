@@ -3,17 +3,39 @@
 #                   LIGHT SCENES                   #
 #                                                  #
 ####################################################
-# Simple scenes to toggle between standard and Christmas lighting modes
-# These scenes primarily flip the christmas_light boolean and can be
-# extended later to include specific groups if desired.
+# Lighting mode scenes for quick scene activation
+# These scenes toggle between standard and Christmas/holiday lighting
+# Documentation: https://www.home-assistant.io/integrations/scene/
+#
+# Design Pattern:
+# - Each scene sets input_boolean.christmas_light state
+# - Automations respond to boolean state changes
+# - Allows manual UI override of automatic lighting mode
+# - Can be called from automation triggers or UI controls
+#
+# Usage Examples:
+# - scene.activate via UI card or button press
+# - Triggered by seasonal automations or manual selection
+# - Works with light_day, light_evening, light_morning scripts
+#
+####################################################
 
 scene:
-  - name: Lighting Standard Mode
+  - id: lighting_standard_mode
+    name: Lighting Standard Mode
     icon: mdi:lightbulb-outline
+    # Activates standard seasonal lighting
+    # Sets christmas_light OFF to disable holiday decorations
+    # Used in: Manual mode selection, off-season automation resets
     entities:
       input_boolean.christmas_light: off
 
-  - name: Lighting Christmas Mode
+  - id: lighting_christmas_mode
+    name: Lighting Christmas Mode
     icon: mdi:string-lights
+    # Activates Christmas/holiday lighting mode
+    # Sets christmas_light ON to enable seasonal decorations
+    # Includes: Christmas tree lights, facade lights, LED decorations
+    # Used in: November-January holiday season, manual festive mode
     entities:
       input_boolean.christmas_light: on

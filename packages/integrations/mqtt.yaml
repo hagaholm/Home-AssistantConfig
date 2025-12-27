@@ -3,79 +3,116 @@
 #                       MQTT                       #
 #                                                  #
 ####################################################
-# MQTT Sensors from Raspberry Pi 3B
-# Includes: Light sensors (TSL2591), Temperature sensors (1-Wire)
-# https://www.home-assistant.io/docs/mqtt/broker/
+# MQTT sensors from Raspberry Pi 3B monitoring system
+# Provides environmental monitoring data via MQTT protocol
+# Documentation: https://www.home-assistant.io/docs/mqtt/broker/
+#
+# Hardware Setup:
+# - Publisher: Raspberry Pi 3B (hostname: hassbian)
+# - Light sensor: Adafruit TSL2591 (high dynamic range lux meter)
+# - Temperature sensors: Multiple 1-Wire DS18B20 probes
+#
+# Sensor Categories:
+# - Light Sensors: Ambient light detection for automation triggers
+# - Temperature Sensors: Indoor/outdoor climate monitoring
+# - Server Health: CPU temperature of monitoring server
+#
+# Usage:
+# - Light levels trigger lighting automation (dusk/dawn detection)
+# - Temperature readings used for HVAC and heater control
+# - Server health monitoring for availability alerts
+#
+# Safety Notes:
+# - Unique IDs prevent entity duplication
+# - State topics follow hassbian/<subsystem>/<sensor> pattern
+# - No retain flag to avoid stale data
+#
+####################################################
 
 mqtt:
   sensor:
-    # Light Sensors (TSL2591)
+    # Light Sensors (TSL2591 - High Dynamic Range)
     - state_topic: "hassbian/tsl2591/lux_calibrated"
       name: Ljusstyrka_measured
       unit_of_measurement: "lx"
       unique_id: mqtt_ljusstyrka_measured
+      # Calibrated lux reading for automation triggers
+      # Used by: Dusk/dawn detection, automatic lighting control
       
     - state_topic: "hassbian/tsl2591/lux_5"
       name: Ljusstyrka2
       unit_of_measurement: "lx"
       unique_id: mqtt_ljusstyrka2
+      # Alternative lux reading (5-second average)
       
     - state_topic: "hassbian/tsl2591/infrared"
       name: Infrarött ljus
       unit_of_measurement: ""
       unique_id: mqtt_infrared
+      # IR spectrum light level (raw sensor value)
       
     - state_topic: "hassbian/tsl2591/visible"
       name: Synligt ljus
       unit_of_measurement: ""
       unique_id: mqtt_visible
+      # Visible spectrum light level (raw sensor value)
       
     - state_topic: "hassbian/tsl2591/full_spectrum"
       name: Fullt spectrum ljus
       unit_of_measurement: ""
       unique_id: mqtt_full_spectrum
+      # Full spectrum light level (IR + visible combined)
 
-    # Server Sensors
+    # Server Health Monitoring
     - state_topic: "hassbian/lux_server/cpu_temp"
       name: Lux Server CPU Temp
       unit_of_measurement: "°C"
       unique_id: mqtt_lux_server_cpu_temp
+      # Raspberry Pi 3B CPU temperature
+      # Used by: System health monitoring, overheat alerts
 
-    # Temperature Sensors (1-Wire)
+    # Temperature Sensors (1-Wire DS18B20 Probes)
     - state_topic: "hassbian/1wire/ute"
       name: Ute
       unit_of_measurement: "°C"
       unique_id: mqtt_temp_ute
+      # Outdoor temperature (exterior facade probe)
       
     - state_topic: "hassbian/1wire/vinden"
       name: På vinden
       unit_of_measurement: "°C"
       unique_id: mqtt_temp_vinden
+      # Attic temperature monitoring
       
     - state_topic: "hassbian/1wire/uterum"
       name: Uterum
       unit_of_measurement: "°C"
       unique_id: mqtt_temp_uterum
+      # Conservatory/sunroom temperature
       
     - state_topic: "hassbian/1wire/sovrum"
       name: Sovrum
       unit_of_measurement: "°C"
       unique_id: mqtt_temp_sovrum
+      # Master bedroom temperature
       
     - state_topic: "hassbian/1wire/uteluft"
       name: Uteluft
       unit_of_measurement: "°C"
       unique_id: mqtt_temp_uteluft
+      # Ventilation system: outdoor intake air temperature
       
     - state_topic: "hassbian/1wire/avluft"
       name: Avluft
       unit_of_measurement: "°C"
       unique_id: mqtt_temp_avluft
+      # Ventilation system: exhaust air temperature
       
     - state_topic: "hassbian/1wire/tilluft"
       name: Tilluft
       unit_of_measurement: "°C"
       unique_id: mqtt_temp_tilluft
+      # Ventilation system: supply air temperature (post-heat-exchanger)
       
     - state_topic: "hassbian/1wire/franluft"
       name: Frånluft

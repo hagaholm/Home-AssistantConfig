@@ -1,72 +1,109 @@
 ####################################################
 #                                                  #
-#                     LIGHT                        #
+#                   LIGHT ENTITIES                 #
 #                                                  #
 ####################################################
 # Light platform definitions for switch-based lights
-# https://www.home-assistant.io/integrations/light.switch/
+# Provides light interface for simple on/off switches
+# Documentation: https://www.home-assistant.io/integrations/light.switch/
+#
+# Platform Overview:
+# - Tellstick: Wireless ZigBee lights (kitchen, hallway, bedrooms)
+# - Switch-based: Relay switches converted to light entities
+#
+# Switch Categories:
+# - Window/exterior lights: Decorative accent lights (candles, stars, trees)
+# - Furniture lights: Desk lamps, lamp tables, shelving (vitrines)
+# - Room accents: LED strips, pendant lights
+# - Holiday lights: Facade, tree, and seasonal decorations
+#
+# Safety Notes:
+# - All switch entities use ON/OFF control only (no brightness dimming)
+# - Transitions handled at automation level
+# - Availability checked before use in multi-step sequences
+#
+####################################################
 
 light:
-  # Tellstick Platform
+  # Tellstick Platform - Wireless ZigBee lights (controllable brightness/color)
   - platform: tellstick
+    # Kitchen ceiling light, hallway lights, bedroom ceiling lights
+    # Integrated Tellstick devices with dimming support
 
-  # Switch-based Lights (Window lights and accent lighting)
+  # Switch-based Lights - Relay switches (simple on/off only)
+  # Window lights and accent lighting - no brightness control at device level
+  
   - platform: switch
     name: Louise skrivbord
     entity_id: switch.louise_skrivbord
+    # Desk lamp in Louise's room (chandelier-style)
     
   - platform: switch
     name: Andreas fönster
     entity_id: switch.andreas_fonster
+    # Window candle light in Andreas's room
     
   - platform: switch
     name: Friggebod ute
     entity_id: switch.shellyplug_s_4022d8831053
+    # Garden shed exterior light (Shelly plug smart switch)
     
   - platform: switch
     name: trädäck ute
     entity_id: switch.smart_kontakt_7
+    # Deck/patio lights (outdoor ground lighting)
     
   - platform: switch
     name: Kök lilla fönstret
     entity_id: switch.kok_lilla_fonstret
+    # Kitchen window candle light (small window)
     
   - platform: switch
     name: Kök stora fönstret ljusstake
     entity_id: switch.kok_stora_fonstret_ljusstake
+    # Kitchen window candle light (large window)
     
   - platform: switch
     name: Sovrum sängbord
     entity_id: switch.sovrum_sangbord
+    # Bedroom bedside table lamp
     
   - platform: switch
     name: Uterum fotogenlampa
     entity_id: switch.uterum_fotogenlampa
+    # Conservatory paraffin oil lamp (decorative)
     
   - platform: switch
     name: Uterum led
     entity_id: switch.uterum_led
+    # Conservatory LED strip accent lighting
     
   - platform: switch
     name: Vardagsrum vitrinskåp
     entity_id: switch.vardagsrum_vitrinskap2
+    # Living room display cabinet interior lighting
     
   - platform: switch
     name: Vardagsrum gran
     entity_id: switch.vardagsrum_gran
+    # Living room Christmas tree lights (seasonal)
 
   - platform: switch
     name: Vardagsrum fönster ljusstake
     entity_id: switch.vardagsrum_fonster_ljusstake
+    # Living room window candle lights
     
   - platform: switch
     name: Uterum julstjärnor
     entity_id: switch.uterum_julstjarnor
+    # Conservatory Christmas star lights (seasonal)
 
   - platform: switch 
     name: Strålkastare husgavel 
     entity_id: switch.smart_kontakt_6 
+    # House gable/roofline spotlight (external facade lighting)
 
   - platform: switch 
     name: Hall jullampa 
     entity_id: switch.hall_jullampa
+    # Hallway Christmas lamp (seasonal)

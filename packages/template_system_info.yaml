@@ -1,73 +1,201 @@
+####################################################
+#                                                  #
+#         TEMPLATE SENSORS - SYSTEM INFO          #
+#                                                  #
+####################################################
+# Device presence and availability template sensors
+# Converts device_tracker states to Online/Offline status
+# Documentation: https://www.home-assistant.io/integrations/template/
+#
+# Purpose:
+# - Monitor network device connectivity
+# - Display friendly Online/Offline status in UI
+# - Trigger alerts when critical devices go offline
+#
+# Device Categories:
+# - Network Infrastructure: Router, NAS, Raspberry Pi servers
+# - Entertainment: Harmony Hub, Chromecast, TV, receiver
+# - Smart Home: Trådfri Gateway, cameras, sensors
+# - People: Family member phones and computers
+#
+# Usage:
+# - UI dashboard: System health monitoring
+# - Automations: Device availability checks
+# - Alerts: Notify when critical devices offline
+#
+####################################################
+
 # Modern template sensors migrated from packages/system_info.yaml
 template:
   - sensor:
+      # Network Infrastructure
       - name: "Asus RT-AC86U"
+        unique_id: system_router_status
         state: "{{ 'Online' if is_state('device_tracker.24_4b_fe_be_c1_58', 'home') else 'Offline' }}"
-      - name: "Harmony Hub"
-        state: "{{ 'Online' if is_state('device_tracker.harmonyhub', 'home') else 'Offline' }}"
-      - name: "Canal Digital"
-        state: "{{ 'Online' if is_state('device_tracker.68_63_59_44_5a_17', 'home') else 'Offline' }}"
-      - name: "SqueezeBox Classic"
-        state: "{{ 'Online' if is_state('device_tracker.classic', 'home') else 'Offline' }}"
-      - name: "Yamaha RX-A1030"
-        state: "{{ 'Online' if is_state('device_tracker.00_a0_de_a4_7c_f6', 'home') else 'Offline' }}"
-      - name: "Chromecast"
-        state: "{{ 'Online' if is_state('device_tracker.chromecast', 'home') else 'Offline' }}"
-      - name: "Chromecast Wifi"
-        state: "{{ 'Online' if is_state('device_tracker.chromecast_2', 'home') else 'Offline' }}"
-      - name: "Chromecast ultra"
-        state: "{{ 'Online' if is_state('device_tracker.chromecast_ultra', 'home') else 'Offline' }}"
-      - name: "Tv Samsung"
-        state: "{{ 'Online' if is_state('device_tracker.samsung', 'home') else 'Offline' }}"
-      - name: "Google Home Mini"
-        state: "{{ 'Online' if is_state('device_tracker.google_home_mini', 'home') else 'Offline' }}"
+        # Primary WiFi router and network gateway
+        
       - name: "Nas DNS-320"
+        unique_id: system_nas_status
         state: "{{ 'Online' if is_state('device_tracker.dns320', 'home') else 'Offline' }}"
+        # Network attached storage (file server)
+
+      # Entertainment System Devices
+      - name: "Harmony Hub"
+        unique_id: system_harmony_status
+        state: "{{ 'Online' if is_state('device_tracker.harmonyhub', 'home') else 'Offline' }}"
+        # Logitech Harmony Hub IR control system
+        
+      - name: "Canal Digital"
+        unique_id: system_sat_receiver_status
+        state: "{{ 'Online' if is_state('device_tracker.68_63_59_44_5a_17', 'home') else 'Offline' }}"
+        # Satellite TV receiver
+        
+      - name: "SqueezeBox Classic"
+        unique_id: system_squeezebox_status
+        state: "{{ 'Online' if is_state('device_tracker.classic', 'home') else 'Offline' }}"
+        # Logitech SqueezeBox audio streaming player
+        
+      - name: "Yamaha RX-A1030"
+        unique_id: system_receiver_status
+        state: "{{ 'Online' if is_state('device_tracker.00_a0_de_a4_7c_f6', 'home') else 'Offline' }}"
+        # AV receiver for home theater audio
+        
+      - name: "Chromecast"
+        unique_id: system_chromecast_status
+        state: "{{ 'Online' if is_state('device_tracker.chromecast', 'home') else 'Offline' }}"
+        # Chromecast streaming device (original)
+        
+      - name: "Chromecast Wifi"
+        unique_id: system_chromecast_wifi_status
+        state: "{{ 'Online' if is_state('device_tracker.chromecast_2', 'home') else 'Offline' }}"
+        # Chromecast WiFi connection status
+        
+      - name: "Chromecast ultra"
+        unique_id: system_chromecast_ultra_status
+        state: "{{ 'Online' if is_state('device_tracker.chromecast_ultra', 'home') else 'Offline' }}"
+        # Chromecast Ultra 4K streaming device
+        
+      - name: "Tv Samsung"
+        unique_id: system_tv_samsung_status
+        state: "{{ 'Online' if is_state('device_tracker.samsung', 'home') else 'Offline' }}"
+        # Samsung TV network connectivity
+        
       - name: "Apple Tv"
+        unique_id: system_apple_tv_status
         state: "{{ 'Online' if is_state('device_tracker.forrad', 'home') else 'Offline' }}"
+        # Apple TV streaming device
+
+      # Voice Assistant
+      - name: "Google Home Mini"
+        unique_id: system_google_home_status
+        state: "{{ 'Online' if is_state('device_tracker.google_home_mini', 'home') else 'Offline' }}"
+        # Google Assistant smart speaker
+
+      # Smart Home Infrastructure
       - name: "Trådfri Gateway"
+        unique_id: system_tradfri_gateway_status
         state: "{{ 'Online' if is_state('device_tracker.gw_a0c9a0d8bf11', 'home') else 'Offline' }}"
+        # IKEA Trådfri ZigBee gateway for smart lights
+        
+      - name: "Raspberry Pi B+ (1-Wire)"
+        unique_id: system_rpi_1wire_status
+        state: "{{ 'Online' if is_state('device_tracker.raspberrypi', 'home') else 'Offline' }}"
+        # Raspberry Pi running 1-Wire temperature monitoring
+        
+      - name: "Raspberry Pi 3B (Lux)"
+        unique_id: system_rpi_lux_status
+        state: "{{ 'Online' if is_state('device_tracker.raspberrypi3b', 'home') else 'Offline' }}"
+        # Raspberry Pi 3B running TSL2591 lux sensor monitoring
+
+      # Security Cameras
       - name: "Kamera 1"
+        unique_id: system_camera_1_status
         state: "{{ 'Online' if is_state('device_tracker.kamera1', 'home') else 'Offline' }}"
       - name: "Kamera 2"
+        unique_id: system_camera_2_status
         state: "{{ 'Online' if is_state('device_tracker.kamera2', 'home') else 'Offline' }}"
       - name: "Kamera 3"
+        unique_id: system_camera_3_status
         state: "{{ 'Online' if is_state('device_tracker.kamera3', 'home') else 'Offline' }}"
       - name: "Kamera 4"
+        unique_id: system_camera_4_status
         state: "{{ 'Online' if is_state('device_tracker.kamera4', 'home') else 'Offline' }}"
       - name: "Kamera 5"
+        unique_id: system_camera_5_status
         state: "{{ 'Online' if is_state('device_tracker.kamera5', 'home') else 'Offline' }}"
       - name: "Kamera 6"
+        unique_id: system_camera_6_status
         state: "{{ 'Online' if is_state('device_tracker.kamera6', 'home') else 'Offline' }}"
-      - name: "Garmin Fenix 5 Plus"
-        state: "{{ 'Online' if is_state('device_tracker.GarminFenix5Plus', 'home') else 'Offline' }}"
-      - name: "Raspberry Pi B+ (1-Wire)"
-        state: "{{ 'Online' if is_state('device_tracker.raspberrypi', 'home') else 'Offline' }}"
-      - name: "Raspberry Pi 3B (Lux)"
-        state: "{{ 'Online' if is_state('device_tracker.raspberrypi3b', 'home') else 'Offline' }}"
+
+      # Family Member Devices - Phones
       - name: "Louise"
+        unique_id: person_louise_phone_status
         state: "{{ 'Online' if is_state('device_tracker.louises_a52s', 'home') else 'Offline' }}"
+        # Louise's Samsung A52s mobile phone
+        
       - name: "Annelie"
+        unique_id: person_annelie_phone_status
         state: "{{ 'Online' if is_state('device_tracker.annelies_galaxy_a71', 'home') else 'Offline' }}"
+        # Annelie's Samsung Galaxy A71 phone
+        
       - name: "Annelie 5G"
+        unique_id: person_annelie_phone_5g_status
         state: "{{ 'Online' if is_state('device_tracker.mobil_annelie_5g', 'home') else 'Offline' }}"
+        # Annelie's 5G mobile connection
+        
       - name: "Annelie jobb"
+        unique_id: person_annelie_work_phone_status
         state: "{{ 'Online' if is_state('device_tracker.6a_39_76_15_04_d9', 'home') else 'Offline' }}"
+        # Annelie's work mobile phone
+        
       - name: "Micke"
+        unique_id: person_micke_phone_status
         state: "{{ 'Online' if is_state('device_tracker.galaxy_a52s_5g', 'home') else 'Offline' }}"
+        # Micke's Samsung Galaxy A52s 5G phone
+        
       - name: "Andreas"
+        unique_id: person_andreas_phone_status
         state: "{{ 'Online' if is_state('device_tracker.ee_34_12_e0_64_4e', 'home') else 'Offline' }}"
+        # Andreas's mobile device
+        
       - name: "Margareta"
+        unique_id: person_margareta_phone_status
         state: "{{ 'Online' if is_state('device_tracker.galaxy_a71', 'home') else 'Offline' }}"
+        # Margareta's Samsung Galaxy A71 phone
+        
       - name: "Herbert"
+        unique_id: person_herbert_phone_status
         state: "{{ 'Online' if is_state('device_tracker.42_88_c9_e7_5e_3d', 'home') else 'Offline' }}"
+        # Herbert's mobile device
+        
       - name: "Erik"
+        unique_id: person_erik_phone_status
         state: "{{ 'Online' if is_state('device_tracker.mobil_erik', 'home') else 'Offline' }}"
+        # Erik's mobile phone
+
+      # Family Member Devices - Computers
       - name: "Mickes dator"
+        unique_id: person_micke_computer_status
         state: "{{ 'Online' if is_state('device_tracker.laptop_664qq6s0', 'home') else 'Offline' }}"
+        # Micke's personal laptop
+        
       - name: "Mickes jobb dator"
+        unique_id: person_micke_work_computer_status
         state: "{{ 'Online' if is_state('device_tracker.seeskwjcpc8g3', 'home') or is_state('device_tracker.seeskwjcpc8g3_2', 'home') else 'Offline' }}"
+        # Micke's work computer (multiple network interfaces)
+        
       - name: "Louise dator"
+        unique_id: person_louise_computer_status
         state: "{{ 'Online' if is_state('device_tracker.louise_dator', 'home') else 'Offline' }}"
+        # Louise's personal computer
+        
       - name: "Herberts dator"
+        unique_id: person_herbert_computer_status
         state: "{{ 'Online' if is_state('device_tracker.herberts_dator', 'home') else 'Offline' }}"
+        # Herbert's personal computer
+
+      # Wearables
+      - name: "Garmin Fenix 5 Plus"
+        unique_id: person_garmin_watch_status
+        state: "{{ 'Online' if is_state('device_tracker.GarminFenix5Plus', 'home') else 'Offline' }}"
+        # Garmin Fenix 5 Plus smartwatch

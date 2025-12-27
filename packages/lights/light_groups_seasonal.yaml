@@ -1,16 +1,35 @@
 ####################################################
 #                                                  #
-#           LIGHT GROUPS - SEASONAL (CHRISTMAS)   #
+#       LIGHT GROUPS - SEASONAL (CHRISTMAS)       #
 #                                                  #
 ####################################################
-# Seasonal light groups for Christmas mode
-# Toggled via input_boolean.christmas_light
-# https://www.home-assistant.io/integrations/light.group/
+# Seasonal light groups for Christmas/holiday mode
+# Activated when input_boolean.christmas_light = ON
+# Documentation: https://www.home-assistant.io/integrations/light.group/
+#
+# Design Pattern:
+# - Parallels standard groups but includes seasonal lights
+# - Christmas tree lights, candle lights, star decorations
+# - Activated automatically November-January
+# - Can be manually toggled via scene.activate controls
+# - Integrates with light_day, light_morning, light_evening scripts
+#
+# Holiday Lighting Categories:
+# - Decorative candles: Window and mantle candle lights
+# - Tree lights: Christmas tree and festive decorations
+# - Star decorations: Outdoor seasonal accents
+# - Facade lights: Holiday house exterior lighting
+#
+####################################################
 
 light:
   # Christmas variants of daily lighting scenarios
   - platform: group
+    id: light_group_dagbelysning_jul
     name: Dagbelysning jul
+    # Day mode lighting during Christmas season
+    # Used by: light_day script when christmas_light boolean is ON
+    # Adds: Window candles (ljusstake), Christmas tree, holiday stars
     entities:
       - light.kok_stora_fonstret_ljusstake
       - light.kok_lilla_fonstret
@@ -30,7 +49,11 @@ light:
       - light.uterum_julstjarnor
 
   - platform: group
+    id: light_group_morgonbelysning_jul
     name: Morgonbelysning jul
+    # Morning mode lighting during holiday season
+    # Used by: light_morning script when christmas_light boolean is ON
+    # Softer holiday lighting for breakfast and morning routines
     entities:
       - light.kok_stora_fonstret_ljusstake
       - light.kok_lilla_fonstret
@@ -41,7 +64,11 @@ light:
       - light.uterum_julstjarnor
 
   - platform: group
+    id: light_group_nattbelysning_jul
     name: Nattbelysning jul
+    # Night mode lighting during holiday season
+    # Used by: light_night script when christmas_light boolean is ON
+    # Minimal holiday lighting for sleeping mode
     entities:
       - light.kok_lilla_fonstret
       - light.kok_stora_fonstret_ljusstake
@@ -49,7 +76,11 @@ light:
       - light.vardagsrum_fonster_ljusstake_2
 
   - platform: group
+    id: light_group_bortabelysning_jul
     name: Bortabelysning jul
+    # Away mode security lighting during Christmas season
+    # Used by: light_away script when christmas_light boolean is ON
+    # Holiday-themed occupancy simulation
     entities:
       - light.kok_stora_fonstret_ljusstake
       - light.kok_lilla_fonstret
@@ -62,13 +93,21 @@ light:
 
   # Christmas room-based groups
   - platform: group
+    id: light_group_hall_jul
     name: Hall jul
+    # Hallway Christmas lighting
+    # Used by: Room-specific automation during holiday season
+    # Includes: Christmas lamp for festive entryway
     entities:
       - light.hall_jullampa
       - light.hall_skap
 
   - platform: group
+    id: light_group_vardagsrum_jul
     name: Vardagsrum jul
+    # Living room Christmas lighting
+    # Used by: Main room automation during holiday season
+    # Includes: Christmas tree, window candles, and accent lights
     entities:
       - light.vardagsrum_fonster_ljusstake_2
       - light.vardagsrum_skank
@@ -77,18 +116,30 @@ light:
       - light.vardagsrum_gran
 
   - platform: group
+    id: light_group_kok_jul
     name: Kök jul
+    # Kitchen Christmas lighting
+    # Used by: Kitchen automation during holiday season
+    # Includes: Window candle lights (ljusstake)
     entities:
       - light.kok_stora_fonstret_ljusstake
       - light.kok_lilla_fonstret
 
   - platform: group 
+    id: light_group_andreas_room_jul
     name: Andreas rum jul
+    # Andreas's bedroom Christmas lighting
+    # Used by: Child's room automation during holiday season
+    # Includes: Window light with festive variant
     entities:
       - light.andreas_fonster
 
   - platform: group
+    id: light_group_uterum_jul
     name: Uterum jul 
+    # Conservatory Christmas lighting
+    # Used by: Sunroom automation during holiday season
+    # Includes: Christmas stars, LED strips, festive decorations
     entities:
       - light.uterum_led
       - light.uterum_fonster

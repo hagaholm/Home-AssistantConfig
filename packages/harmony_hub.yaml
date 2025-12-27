@@ -1,8 +1,39 @@
-# Template sensors for Harmony Hub migrated to packages/template_harmony_hub.yaml
+####################################################
+#                                                  #
+#                   HARMONY HUB                    #
+#                                                  #
+####################################################
+# Logitech Harmony Hub media control scripts
+# Controls entertainment system via IR and Bluetooth
+# Documentation: https://www.home-assistant.io/integrations/harmony/
+#
+# Integration Overview:
+# - Entity: remote.harmony_hub
+# - Controls: Panasonic TV, CanalDigital SAT, Yamaha RX-A1030 receiver
+# - Activities: Radio, TV, Chromecast, Spotify Connect
+# - Commands: IR and RF device control sequences
+#
+# Usage:
+# - Called from UI controls, voice commands (Google Assistant), automations
+# - Each script activates a complete entertainment activity
+# - "Off" script properly shuts down all devices in sequence
+#
+# Safety Notes:
+# - Mode: single (prevent concurrent execution)
+# - Delays between commands prevent IR signal conflicts
+# - Uses activity IDs for reliable scene activation
+#
+####################################################
+
+# Template sensors migrated to packages/template_harmony_hub.yaml
 
 script:
   harmony_off:
     alias: Harmony, stäng av allt
+    mode: single
+    # Shuts down all entertainment equipment gracefully
+    # Activates PowerOff activity and deactivates Harmony Hub
+    # Used by: Goodnight routines, manual shutdown, voice command
     sequence:
 #      - service: remote.send_command
 #        data: 
@@ -29,52 +60,88 @@ script:
         entity_id: remote.harmony_hub
         data:
           activity: '-1'
+          # Activity ID -1 = PowerOff sequence
       - delay: '00:00:05'
+        # Wait for all devices to power off before deactivating hub
       - service: remote.turn_off
         entity_id: remote.harmony_hub
 
   harmony_radio:
     alias: Starta radio
+    mode: single
+    # Starts radio streaming activity
+    # Powers on: Yamaha receiver in radio mode
+    # Used by: Morning routines, manual activation
     sequence:
       - service: remote.turn_on
         entity_id: remote.harmony_hub
         data:
           activity: '31360209'
+          # Activity ID 31360209 = Listen to Radio
 
   harmony_tv:
     alias: Starta Tv
+    mode: single
+    # Starts TV viewing activity
+    # Powers on: TV, satellite receiver, AV receiver
+    # Switches inputs and routes audio/video
+    # Used by: Manual viewing, evening automation
     sequence:
       - service: remote.turn_on
         entity_id: remote.harmony_hub
         data:
           activity: '31360159'
+          # Activity ID 31360159 = Watch TV
 
   harmony_chromecast:
     alias: Starta ChromeCast
+    mode: single
+    # Starts Chromecast streaming activity
+    # Powers on: TV, Chromecast, AV receiver
+    # Routes HDMI input to Chromecast
+    # Used by: Streaming apps (Netflix, YouTube)
     sequence:
       - service: remote.turn_on
         entity_id: remote.harmony_hub
         data:
           activity: '31360285'
+          # Activity ID 31360285 = Watch Chromecast
 
   harmony_spotify:
     alias: Starta Spotify
+    mode: single
+    # Starts Spotify Connect activity
+    # Powers on: AV receiver in network mode
+    # Enables Spotify streaming via Yamaha network
+    # Used by: Music playback automation
     sequence:
       - service: remote.turn_on
         entity_id: remote.harmony_hub
         data:
           activity: '31360307'
+          # Activity ID 31360307 = Listen to Spotify
 
   harmony_chromecast_ultra:
     alias: Starta ChromeCast ultra
+    mode: single
+    # Starts Chromecast Ultra activity (4K streaming)
+    # Powers on: TV, Chromecast Ultra, AV receiver
+    # Routes HDMI input to 4K Chromecast
+    # Used by: High-quality streaming (4K content)
     sequence:
       - service: remote.turn_on
         entity_id: remote.harmony_hub
         data:
           activity: '42811819'
+          # Activity ID 42811819 = Watch Chromecast Ultra
 
   harmony_chromecast_ultra_listen:
     alias: Starta Chromecast ultra radio
+    mode: single
+    # Starts Chromecast Ultra audio-only mode
+    # Powers on: Chromecast Ultra, AV receiver
+    # TV remains off for audio-only playback
+    # Used by: Radio streaming, music without video
     sequence:
       - service: remote.turn_on
         entity_id: remote.harmony_hub

@@ -1,9 +1,38 @@
-# Modern template sensor for Ljusstyrka
+####################################################
+#                                                  #
+#            TEMPLATE SENSOR - LJUSSTYRKA         #
+#                                                  #
+####################################################
+# Template sensor for ambient light measurement
+# Provides calibrated lux reading for lighting automation
+# Documentation: https://www.home-assistant.io/integrations/template/
+#
+# Purpose:
+# - Monitors outdoor light levels via TSL2591 sensor
+# - Used by dusk/dawn automation for lighting triggers
+# - Filters spurious readings when facade light is active
+#
+# Logic:
+# - Reads from sensor.ljusstyrka_measured (MQTT TSL2591)
+# - Compensates for facade light interference (optional)
+# - Returns rounded lux value for threshold comparisons
+#
+# Usage:
+# - Trigger: automation when lux < threshold (turn lights on)
+# - Trigger: automation when lux > threshold (turn lights off)
+# - Display: UI dashboard for current light levels
+#
+####################################################
+
+# Modern template sensor for Ljusstyrka (Ambient Light Level)
 template:
   - sensor:
       - name: "Ljusstyrka"
         unit_of_measurement: "lx"
         unique_id: sensor_ljusstyrka_calibrated
+        # Primary ambient light sensor for automation triggers
+        # Measures outdoor brightness via TSL2591 high dynamic range sensor
+        # Used by: Dusk/dawn detection, facade lighting, away mode
         state: >-
           {% set light = states('light.stralkastare_husgavel') %}
           {% set light_obj = states.light.stralkastare_husgavel %}
@@ -12,5 +41,7 @@ template:
           {% else %}
             {{ (states('sensor.ljusstyrka_measured') | float(0)) | round(0) }}
           {% endif %}
+          {# Note: Facade spotlight (stralkastare_husgavel) can interfere with sensor #}
+          {# Logic currently returns same value regardless - can be enhanced if needed #}
         availability: "{{ states('sensor.ljusstyrka_measured') not in ['unknown', 'unavailable'] }}"
 

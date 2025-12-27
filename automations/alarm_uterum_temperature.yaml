@@ -1,15 +1,58 @@
-############################################################
-# Fil: alarm_uterum_temperature.yaml
-# Innehåll: Temperaturlarm för uterum (hög temperatur)
-# Viktiga enheter: sensor.uterum_temperatur
-############################################################
- 
-  ########################################################################
-  ### Uterum - Varnar för hög temperatur
-  ### T: sensor.uterum_temperatur > 35 (for: 00:10:00)
-  ### C: not unknown
-  ### A: notify.mobile_app_sm_a528b (title + templated message)
-  ########################################################################
+#######################################################
+#                                                     #
+#         UTERUM TEMPERATURLARM AUTOMATION           #
+#                                                     #
+#######################################################
+#
+# METADATA:
+# Skapad: [ursprungligt datum]
+# Senast ändrad: 2025-12-27
+# Version: 1.1
+# Författare: Home Assistant Config
+#
+# BESKRIVNING:
+# Automation för temperaturövervakning av uterum.
+# Larmar vid hög temperatur som kan skada möbler/växter.
+# Kan indikera överhettning på sommaren.
+#
+# HÅRDVARA/ENTITETER:
+# - Sensor: sensor.uterum_temperatur
+# - Notification: notify.mobile_app_sm_a528b
+#
+# TRIGGRAR:
+# - Temperatur >35°C i 10 minuter (hög)
+#
+# VILLKOR:
+# - Sensor inte 'unknown' (validering)
+#
+# LOGIK:
+# HÖG TEMP:
+# - Larmar om >35°C (risk för överhettning)
+# - Nivåer: >40°C (Mycket hög), >37°C (Hög), annars (Mild)
+# - Kan indikera stängda fönster på solig dag
+#
+# SÄKERHET:
+# - 10 min fördröjning förhindrar korta toppar
+# - Template validering säkerställer giltig data
+# - Nivåbedömning ger snabb förståelse
+#
+# INTEGRATION:
+# - Skickar notifikationer till mobil
+# - Inkluderar temperatur och enhet
+# - Visar allvarlighetsnivå
+#
+# ÄNDRINGSLOGG:
+# v1.0: Ursprunglig automation
+# v1.1 (2025-12-27): Lade till omfattande dokumentation
+#######################################################
+
+
+#######################################################
+#                                                     #
+#      AUTOMATIONER FÖR UTERUM TEMPERATURLARM       #
+#                                                     #
+#######################################################
+
   - alias: Uterum larm hög temp
     id: '4622609198485'
     mode: single

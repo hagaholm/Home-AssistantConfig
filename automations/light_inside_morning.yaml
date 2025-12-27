@@ -1,74 +1,110 @@
-    ######################################################################
-    ### Tänder lampor på morgonen när home_status ändras till Hemma På ###
-    ### T: input_select.home_status == 'Hemma på'                      ###
-    ### C: input_boolean.morning_light_on == on                        ###
-    ###    05:00:00 - 09:00:00                                         ###
-    ### A: input_select.light_inside = Morgonbelysning                 ###
-    ######################################################################
-  - alias: Morgonbelysning on
-    id: '8041537317477' 
+#######################################################
+#                                                     #
+#       MORNING LIGHTING AUTOMATION                   #
+#                                                     #
+#######################################################
+#
+# METADATA:
+# Skapad: [ursprungligt datum]
+# Senast ändrad: 2025-12-27
+# Version: 2.0
+# Författare: Home Assistant Config
+#
+# BESKRIVNING:
+# Samlad automation för morgonbelysning.
+# Tänder ljus 05:00-09:00 när status blir 'Hemma på'.
+# Släcker när det blir ljust eller när alla åker hemifrån.
+#
+# HÅRDVARA/ENTITETER:
+# - input_select.home_status
+# - input_select.light_inside
+# - input_boolean.morning_light_on
+#
+# TRIGGRAR:
+# - Tänd: home_status -> 'Hemma på'
+# - Släck: morning_light_on -> 'off' ELLER home_status -> 'Borta'
+#
+# VILLKOR:
+# - Tänd: morning_light_on='on' OCH 05:00-09:00
+# - Släck: 05:00-09:00 OCH (light_inside='Morgonbelysning' ELLER 'Dagbelysning')
+#
+# LOGIK:
+# - Aktiveras morgontid (05:00-09:00)
+# - Tänds automatiskt när hemma på
+# - Släcks när dagsljuset räcker eller alla åker
+#
+# KONSOLIDERINGSHISTORIK:
+# - Morgonbelysning on (ID: 8041537317477)
+# - Morgonbelysning off (ID: 9119500181213)
+# Konsoliderad: 2025-12-27
+# Behållet ID: 8041537317477
+#
+# ÄNDRINGSLOGG:
+# v1.0: Ursprungliga separata automationer
+# v2.0 (2025-12-27): Konsoliderade on/off i en automation
+#######################################################
+
+
+  - alias: Morgonbelysning styrning
+    id: '8041537317477'
     mode: queued
 
     trigger:
-      platform: state
-      entity_id: input_select.home_status
-      to: 'Hemma på'
+      # Tänd när hemma på
+      - platform: state
+        entity_id: input_select.home_status
+        to: 'Hemma på'
+        id: turn_on
 
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_boolean.morning_light_on
-          state: 'on'
-        - condition: time
-          after: '05:00:00'
-          before: '09:00:00'
-
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_inside
-          option: Morgonbelysning
-
-    ########################################################################################
-    ### Släcker lampor på förmiddagen när det blir ljust ute eller ingen längre är hemma ###
-    ### T: input_boolean.daylight_on == off                                              ###
-    ### T: input_select.home_status == Borta                                             ###
-    ### C: 05:00:00 - 09:00:00                                                           ###
-    ### C: input_select.light_inside == 'Morgonbelysning'                                ###
-    ### C: input_select.light_inside == 'Dagbelysning'                                   ###
-    ### A: input_select.light_inside = Släckt                                            ###
-    ########################################################################################
-  - alias: Morgonbelysning off
-    id: '9119500181213' 
-    mode: single
-
-    trigger:
+      # Släck när ljust
       - platform: state
         entity_id: input_boolean.morning_light_on
         to: "off"
+        id: turn_off
 
+      # Släck när borta
       - platform: state
         entity_id: input_select.home_status
         to: 'Borta'
-
-    condition:
-      condition: and
-      conditions:
-        - condition: time
-          after: '05:00:00'
-          before: '09:00:00'
-        - condition: or
-          conditions:
-          - condition: state
-            entity_id: input_select.light_inside
-            state: 'Morgonbelysning'
-          - condition: state
-            entity_id: input_select.light_inside
-            state: 'Dagbelysning'
+        id: turn_off
 
     action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_inside
-          option: Släckt
+      - choose:
+          # TÄND MORGONBELYSNING
+          - alias: Tänd morgonbelysning
+            conditions:
+              - condition: trigger
+                id: turn_on
+              - condition: state
+                entity_id: input_boolean.morning_light_on
+                state: 'on'
+              - condition: time
+                after: '05:00:00'
+                before: '09:00:00'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_inside
+                  option: Morgonbelysning
+
+          # SLÄCK MORGONBELYSNING
+          - alias: Släck morgonbelysning
+            conditions:
+              - condition: trigger
+                id: turn_off
+              - condition: time
+                after: '05:00:00'
+                before: '09:00:00'
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity_id: input_select.light_inside
+                    state: 'Morgonbelysning'
+                  - condition: state
+                    entity_id: input_select.light_inside
+                    state: 'Dagbelysning'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_inside
+                  option: Släckt

@@ -1,3 +1,54 @@
+#######################################################
+#                                                     #
+#        OUTSIDE LIGHTING AUTOMATION                  #
+#                                                     #
+#######################################################
+#
+# METADATA:
+# Skapad: [ursprungligt datum]
+# Senast ändrad: 2025-12-27
+# Version: 1.1
+# Författare: Home Assistant Config
+#
+# BESKRIVNING:
+# Automationer för olika utomhusbelysning:
+# - Friggebod fasadbelysning
+# - Späbelysning
+# - Olika tidsbaserade scheman
+#
+# HÅRDVARA/ENTITETER:
+# - light.friggebod_ute_2
+# - light.friggebod_fasad
+# - light.spa_belysning
+# - sensor.ljusstyrka
+# - binary_sensor.kok_narvaro
+# - input_number.ljusstyrka_40/60
+#
+# TRIGGRAR:
+# - Ljusnivå (lux sensorer)
+# - Tid på dygnet
+# - Rörelse i kök (morgon)
+# - Helgstatus
+#
+# LOGIK:
+# Olika automationer för:
+# - Friggebod morgon (05:00-12:00, rörelse + mörkt)
+# - Friggebod eftermiddag (12:00-21:45, mörkt)
+# - Friggebod släckning (ljust eller sent)
+# - Späbelysning tidsbaserad
+# - Helgscheman
+#
+# INTEGRATION:
+# - Använder ljusstyrka trösklar
+# - Integrerad med köksensor för morgonaktivering
+# - Olika scheman för vardag/helg
+#
+# ÄNDRINGSLOGG:
+# v1.0: Ursprungliga separata automationer
+# v1.1 (2025-12-27): Lade till omfattande dokumentation
+#######################################################
+
+
     ############################################################
     ### Tänder friggebod ute på morgonen vid rörelse i köket ###
     ### T: binary_sensor.kok_narvaro == on                   ###
@@ -227,55 +278,38 @@
       - service: script.friggebod_light_on
 
     ##########################################################
-    ### Släcker utebelysning på kvällen när ingen är hemma ###
-    ### T: 22:00:00                                        ###
-    ### C: group.track_for_home_devices == not_home        ###
+    ### Släcker utebelysning på kvällen                     ###
+    ### T: 22:00:00                                         ###
+    ### C: styr efter hemma/borta och arbetsdag            ###
     ### A: service: script.outside_light_off               ###
-    ###    Service: script.uterum_window_light_off         ###
     ##########################################################
-  - alias: Utebelysning off (>22:00:00, borta)
+  - alias: Utebelysning off (22:00)
     id: '2732476617933' 
 
     trigger:
       platform: time
       at: '22:00:00'
 
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'not_home'
-
     action:
-      - service: script.outside_light_off
+      - choose:
+          - alias: Borta
+            conditions:
+              - condition: state
+                entity_id: group.track_for_home_devices
+                state: 'not_home'
+            sequence:
+              - service: script.outside_light_off
 
-    #################################################################
-    ### Släcker utebelysning på vardagskvällar när någon är hemma ###
-    ### T: 22:00:00                                               ###
-    ### C: group.track_for_home_devices == home                   ###
-    ###    workday_tomorrow == on                                 ###
-    ### A: service: script.outside_light_off                      ###
-    #################################################################
-  - alias: Utebelysning off (>22:00:00, hemma, vardag)
-    id: '1560936705769' 
-
-    trigger:
-      platform: time
-      at: '22:00:00'
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'home'
-        - condition: state
-          entity_id: binary_sensor.workday_tomorrow
-          state: 'on'
-
-    action:
-      - service: script.outside_light_off
+          - alias: Hemma vardag
+            conditions:
+              - condition: state
+                entity_id: group.track_for_home_devices
+                state: 'home'
+              - condition: state
+                entity_id: binary_sensor.workday_tomorrow
+                state: 'on'
+            sequence:
+              - service: script.outside_light_off
 
     ##############################################################
     ### Släcker utebelysning på helgkvällar när någon är hemma ###

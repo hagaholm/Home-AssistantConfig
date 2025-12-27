@@ -1,9 +1,0 @@
-command_line:
-  - binary_sensor:
-      name: "Router SSH Status 1"
-      unique_id: router_ssh_status
-      command: !secret router_ip_check_command
-      payload_on: "on"
-      payload_off: "off"
-      scan_interval: 30
-      device_class: connectivity

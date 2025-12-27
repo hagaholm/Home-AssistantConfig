@@ -1,68 +1,77 @@
-    #############################################
-    ### Tänder lampor 100%                    ###
-    ### T: input_select.light_kitchen == 100% ###
-    ### A: script.kitchen_light_100           ###
-    #############################################
-  - alias: Tänd Kök 100%
+#######################################################
+#                                                     #
+#         KÖKSBELYSNING INPUT_SELECT AUTOMATION       #
+#                                                     #
+#######################################################
+#
+# BESKRIVNING:
+# State machine automation för köksbelysning.
+# Lyssnar på input_select ändringar och anropar
+# motsvarande ljusskript.
+#
+# HÅRDVARA:
+# - Styrs via: input_select.light_kitchen
+# - Exekveras av: script.kitchen_light_*
+#
+# TILLSTÅND:
+# - Släckt: Alla lampor av
+# - 25%: Dämpat nattljus
+# - 50%: Morgonljus
+# - 100%: Full belysning
+#
+# LOGIK:
+# När input_select.light_kitchen ändras:
+# - Identifiera nytt tillstånd
+# - Anropa motsvarande script
+# - Scriptet hanterar faktisk ljuskontroll
+#
+# INTEGRATION:
+# - Kopplad till input_select.light_kitchen
+# - Triggar script för faktisk ljuskontroll
+# - Styrs av automationer i light_kitchen.yaml
+#######################################################
+
+
+#######################################################
+#                                                     #
+#       AUTOMATIONER FÖR KÖKSBELYSNING STATE          #
+#                                                     #
+#######################################################
+
+  - alias: Köksbelysning
     id: '5081573772811' 
     mode: single
 
     trigger:
       - platform: state
         entity_id: input_select.light_kitchen
-        to: 100%
 
     action:
-      - service: script.kitchen_light_100
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_kitchen
+                state: '100%'
+            sequence:
+              - service: script.kitchen_light_100
 
-    ############################################
-    ### Tänder lampor 50%                    ###
-    ### T: input_select.light_kitchen == 50% ###
-    ### A: script.kitchen_light_50           ###
-    ############################################
-  - alias: Tänd Kök 50%
-    id: '6010315842911' 
-    mode: single
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_kitchen
+                state: '50%'
+            sequence:
+              - service: script.kitchen_light_50
 
-    trigger:
-      - platform: state
-        entity_id: input_select.light_kitchen
-        to: 50%
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_kitchen
+                state: '25%'
+            sequence:
+              - service: script.kitchen_light_25
 
-    action:
-      - service: script.kitchen_light_50
-
-    ############################################
-    ### Tänder lampor 25%                    ###
-    ### T: input_select.light_kitchen == 25% ###
-    ### A: script.kitchen_light_25           ###
-    ############################################
-  - alias: Tänd Kök 25%
-    id: '6010315842709' 
-    mode: single
-
-    trigger:
-      - platform: state
-        entity_id: input_select.light_kitchen
-        to: 25%
-
-    action:
-      - service: script.kitchen_light_25
-
-    ############################################
-    ### Släcker lampor                       ###
-    ### T: input_select.light_kitchen == Off ###
-    ### A: script.kitchen_light_off          ###
-    ############################################
-
-  - alias: Släck Kök
-    id: '2804096180954' 
-    mode: single
-
-    trigger:
-      - platform: state
-        entity_id: input_select.light_kitchen
-        to: Släckt
-
-    action:
-      - service: script.kitchen_light_off
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_kitchen
+                state: Släckt
+            sequence:
+              - service: script.kitchen_light_off

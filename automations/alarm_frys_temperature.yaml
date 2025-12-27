@@ -1,97 +1,152 @@
-############################################################
-### Fil: alarm_frys_temperature.yaml
-### Innehåll: Frys-larm: varning och larmnivåer för hög/låg temp.
-### Viktiga enheter: sensor.frys_temperature
-############################################################
- 
-  ########################################################################
-  ### Frys - Extra varning för hög temperatur
-  ### T: sensor.frys_temperature > -13 (for: 00:10:00)
-  ### C: not unknown
-  ### A: notify.mobile_app_sm_a528b (title + templated message)
-  ########################################################################
-  - alias: Larm! Varning hög temp i frys
+#######################################################
+#                                                     #
+#          FRYS TEMPERATURLARM AUTOMATION            #
+#                                                     #
+#######################################################
+#
+# METADATA:
+# Skapad: [ursprungligt datum]
+# Senast ändrad: 2025-12-27
+# Version: 2.0
+# Författare: Home Assistant Config
+#
+# BESKRIVNING:
+# Samlad automation för temperaturövervakning av frysen.
+# Larmar vid för hög temperatur (två nivåer) samt för låg temperatur.
+# Skyddar djupfrysta livsmedel och upptäcker felfunktioner.
+#
+# HÅRDVARA/ENTITETER:
+# - Sensor: sensor.frys_temperature
+# - Notification: notify.mobile_app_sm_a528b
+#
+# TRIGGRAR:
+# - Temperatur >-13°C i 10 minuter (varning hög)
+# - Temperatur >-15°C i 10 minuter (larm hög)
+# - Temperatur <-25°C i 10 minuter (larm låg)
+#
+# VILLKOR:
+# - Sensor inte 'unknown' (validering)
+# - Larm hög: endast om <-13°C (mellan -15 och -13)
+#
+# LOGIK:
+# VARNING HÖG TEMP (>-13°C):
+# - Kritiskt högt för frys (risk för upptining)
+# - Ingen ytterligare condition (alltid viktigt)
+#
+# LARM HÖG TEMP (>-15°C men <-13°C):
+# - Högt men inte kritiskt ännu
+# - Indikerar dörr öppen eller felfunktion
+#
+# LARM LÅG TEMP (<-25°C):
+# - För kallt (kan påverka kvalitet eller energiförbrukning)
+# - Möjlig termostatfel
+#
+# SÄKERHET:
+# - Trösklad varning vid -13°C för snabb upptäckt
+# - Mellanliggande larm vid -15°C
+# - 10 min fördröjning förhindrar korta toppar
+# - Template validering säkerställer giltig data
+#
+# INTEGRATION:
+# - Skickar notifikationer till mobil
+# - Varning/Larm nivåer i title
+# - Inkluderar temperatur och enhet
+#
+# KONSOLIDERINGSHISTORIK:
+# Denna automation ersätter följande tidigare automationer:
+# - Larm! Varning hög temp i frys (ID: 1480319093817)
+# - Larm! Hög temp i frys (ID: 1128705003746)
+# - Larm! Låg temp i frys (ID: 4559659707597)
+# 
+# Konsoliderad: 2025-12-27
+# Behållet ID: 1480319093817 (från varning hög temp)
+# Anledning: Enklare underhåll, delad logik, reducerad overhead
+#
+# ÄNDRINGSLOGG:
+# v1.0: Ursprungliga separata automationer
+# v2.0 (2025-12-27): Konsoliderade varning/larm/låg i en automation
+#######################################################
+
+
+#######################################################
+#                                                     #
+#        AUTOMATIONER FÖR FRYS TEMPERATURLARM        #
+#                                                     #
+#######################################################
+
+  - alias: Frys temperaturlarm
     id: '1480319093817'
     mode: single
 
     trigger:
+      # Varning hög temperatur (kritiskt)
       - platform: numeric_state
         entity_id: sensor.frys_temperature
         above: -13
         for: "00:10:00"
+        id: warning_high_temp
 
-    condition:
-      - condition: template
-        value_template: "{{ not is_state('sensor.frys_temperature','unknown') }}"
-
-    action:
-      - service: notify.mobile_app_sm_a528b
-        data:
-          title: "Varning! Frys - hög temperatur"
-          message: >
-            {% set t = states('sensor.frys_temperature')|float(0) %}
-            {% set unit = state_attr('sensor.frys_temperature','unit_of_measurement') %}
-            Varning! Hög temp i frysen: {{ t }} {{ unit }}
-
-  ########################################################################
-  ### Frys - Varnar för hög temperatur (nivå)
-  ### T: sensor.frys_temperature > -15 (for: 00:10:00)
-  ### C: sensor.frys_temperature < -13
-  ### A: notify.mobile_app_sm_a528b (title + templated message)
-  ########################################################################
-  - alias: Larm! Hög temp i frys
-    id: '1128705003746'
-    mode: single
-
-    trigger:
+      # Larm hög temperatur (nivå)
       - platform: numeric_state
         entity_id: sensor.frys_temperature
         above: -15
         for: "00:10:00"
+        id: alarm_high_temp
 
-    condition:
-      condition: and
-      conditions:
-        - condition: template
-          value_template: "{{ not is_state('sensor.frys_temperature','unknown') }}"
-        - condition: numeric_state
-          entity_id: sensor.frys_temperature
-          below: -13
-
-    action:
-      - service: notify.mobile_app_sm_a528b
-        data:
-          title: "Larm! Frys - hög temperatur"
-          message: >
-            {% set t = states('sensor.frys_temperature')|float(0) %}
-            {% set unit = state_attr('sensor.frys_temperature','unit_of_measurement') %}
-            LARM! Hög temp i frysen: {{ t }} {{ unit }}
-
-  ########################################################################
-  ### Frys - Varnar för låg temperatur
-  ### T: sensor.frys_temperature < -25 (for: 00:10:00)
-  ### C: not unknown
-  ### A: notify.mobile_app_sm_a528b (title + templated message)
-  ########################################################################
-  - alias: Larm! Låg temp i frys
-    id: '4559659707597'
-    mode: single
-
-    trigger:
+      # Larm låg temperatur
       - platform: numeric_state
         entity_id: sensor.frys_temperature
         below: -25
         for: "00:10:00"
+        id: alarm_low_temp
 
     condition:
       - condition: template
         value_template: "{{ not is_state('sensor.frys_temperature','unknown') }}"
 
     action:
-      - service: notify.mobile_app_sm_a528b
-        data:
-          title: "Larm! Frys - låg temperatur"
-          message: >
-            {% set t = states('sensor.frys_temperature')|float(0) %}
-            {% set unit = state_attr('sensor.frys_temperature','unit_of_measurement') %}
-            LARM! Låg temp i frysen: {{ t }} {{ unit }}
+      - choose:
+          # VARNING HÖG TEMPERATUR (>-13°C, KRITISKT)
+          - alias: Varning hög temperatur
+            conditions:
+              - condition: trigger
+                id: warning_high_temp
+            sequence:
+              - service: notify.mobile_app_sm_a528b
+                data:
+                  title: "Varning! Frys - hög temperatur"
+                  message: >
+                    {% set t = states('sensor.frys_temperature')|float(0) %}
+                    {% set unit = state_attr('sensor.frys_temperature','unit_of_measurement') %}
+                    Varning! Hög temp i frysen: {{ t }} {{ unit }}
+
+          # LARM HÖG TEMPERATUR (>-15°C men <-13°C)
+          - alias: Larm hög temperatur nivå
+            conditions:
+              - condition: trigger
+                id: alarm_high_temp
+              - condition: numeric_state
+                entity_id: sensor.frys_temperature
+                below: -13
+            sequence:
+              - service: notify.mobile_app_sm_a528b
+                data:
+                  title: "Larm! Frys - hög temperatur"
+                  message: >
+                    {% set t = states('sensor.frys_temperature')|float(0) %}
+                    {% set unit = state_attr('sensor.frys_temperature','unit_of_measurement') %}
+                    LARM! Hög temp i frysen: {{ t }} {{ unit }}
+
+          # LARM LÅG TEMPERATUR (<-25°C)
+          - alias: Larm låg temperatur
+            conditions:
+              - condition: trigger
+                id: alarm_low_temp
+            sequence:
+              - service: notify.mobile_app_sm_a528b
+                data:
+                  title: "Larm! Frys - låg temperatur"
+                  message: >
+                    {% set t = states('sensor.frys_temperature')|float(0) %}
+                    {% set unit = state_attr('sensor.frys_temperature','unit_of_measurement') %}
+                    LARM! Låg temp i frysen: {{ t }} {{ unit }}

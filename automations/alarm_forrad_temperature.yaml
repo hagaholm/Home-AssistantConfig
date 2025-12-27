@@ -1,72 +1,126 @@
-############################################################
-### Fil: alarm_forrad_temperature.yaml
-### Innehåll: Larm/varningar för temperatur i förrådet.
-###           Inkluderar varning för hög och låg temperatur.
-### Viktiga enheter: sensor.forrad_temperature, sensor.ute
-############################################################
- 
-  ########################################################################
-  ### Förråd - Varnar för hög temperatur
-  ### T: sensor.forrad_temperature > 11 (for: 00:10:00)
-  ### C: sensor.ute < 5
-  ### A: notify.mobile_app_sm_a528b (title + templated message)
-  ########################################################################
-  - alias: Förråd larm hög temp
+#######################################################
+#                                                     #
+#          FÖRRÅD TEMPERATURLARM AUTOMATION          #
+#                                                     #
+#######################################################
+#
+# METADATA:
+# Skapad: [ursprungligt datum]
+# Senast ändrad: 2025-12-27
+# Version: 2.0
+# Författare: Home Assistant Config
+#
+# BESKRIVNING:
+# Samlad automation för temperaturövakning i förrådet.
+# Larmar vid både för hög och för låg temperatur med
+# hänsyn till utetemperatur.
+#
+# HÅRDVARA/ENTITETER:
+# - Sensor: sensor.forrad_temperature
+# - Referens: sensor.ute (utetemperatur)
+# - Notification: notify.mobile_app_sm_a528b
+#
+# TRIGGRAR:
+# - Temperatur >11°C i 10 minuter (hög)
+# - Temperatur <4°C i 10 minuter (låg)
+#
+# VILLKOR:
+# - Utetemperatur <5°C (annars naturligt varmt/kallt)
+# - Sensorn inte 'unknown' eller 'unavailable'
+#
+# LOGIK:
+# HÖG TEMP:
+# - Larmar om >11°C och ute <5°C (oväntat varmt)
+# - Nivåer: >13°C (Mycket hög), >12°C (Hög), annars (Mild)
+#
+# LÅG TEMP:
+# - Larmar om <4°C och ute <5°C (risk för frysning)
+# - Nivåer: <0°C (Mycket låg), <2°C (Låg), annars (Mild)
+#
+# SÄKERHET:
+# - 10 minuters fördröjning förhindrar korta toppar
+# - Utetemperaturkontroll undviker falsklarm
+# - Template-validering av sensorvärden
+#
+# INTEGRATION:
+# - Skickar notifikationer till mobil
+# - Inkluderar nivåbedömning i meddelande
+# - Visar både förråds- och utetemperatur
+#
+# KONSOLIDERINGSHISTORIK:
+# Denna automation ersätter följande tidigare automationer:
+# - Förråd larm hög temp (ID: 0720252362419)
+# - Förråd larm låg temp (ID: 6116341527796)
+# 
+# Konsoliderad: 2025-12-27
+# Behållet ID: 0720252362419 (från hög temp)
+# Anledning: Enklare underhåll, delad logik, reducerad overhead
+#
+# ÄNDRINGSLOGG:
+# v1.0: Ursprungliga separata automationer
+# v2.0 (2025-12-27): Konsoliderade hög/låg temp i en automation
+#######################################################
+
+
+#######################################################
+#                                                     #
+#       AUTOMATIONER FÖR FÖRRÅD TEMPERATURLARM       #
+#                                                     #
+#######################################################
+
+  - alias: Förråd temperaturlarm
     id: '0720252362419'
     mode: single
 
     trigger:
+      # Hög temperatur
       - platform: template
         value_template: "{{ states('sensor.forrad_temperature') not in ['unknown','unavailable',''] and (states('sensor.forrad_temperature')|float) > 11 }}"
         for: "00:10:00"
+        id: high_temp
 
-    condition:
-      condition: and
-      conditions:
-        - condition: numeric_state
-          entity_id: sensor.ute
-          below: 5
-
-    action:
-      - service: notify.mobile_app_sm_a528b
-        data:
-          title: "LARM! Förråd - hög temperatur"
-          message: >
-            {% set t = states('sensor.forrad_temperature')|float(0) %}
-            {% set unit = state_attr('sensor.forrad_temperature','unit_of_measurement') %}
-            {% set ute = states('sensor.ute') %}
-            LARM! Hög temp i Förråd: {{ t }} {{ unit }} (ute: {{ ute }})
-            Nivå: {% if t > 13 %}Mycket hög{% elif t > 12 %}Hög{% else %}Mild{% endif %}
-
-  ########################################################################
-  ### Förråd - Varnar för låg temperatur
-  ### T: sensor.forrad_temperature < 4 (for: 00:10:00)
-  ### C: sensor.ute < 5
-  ### A: notify.mobile_app_sm_a528b (title + templated message)
-  ########################################################################
-  - alias: Förråd larm låg temp
-    id: '6116341527796'
-    mode: single
-
-    trigger:
+      # Låg temperatur
       - platform: template
         value_template: "{{ states('sensor.forrad_temperature') not in ['unknown','unavailable',''] and (states('sensor.forrad_temperature')|float) < 4 }}"
         for: "00:10:00"
+        id: low_temp
 
     condition:
-      condition: and
-      conditions:
-        - condition: numeric_state
-          entity_id: sensor.ute
-          below: 5
+      # Endast larm om utetemperatur är låg (annars naturligt)
+      - condition: numeric_state
+        entity_id: sensor.ute
+        below: 5
 
     action:
-      - service: notify.mobile_app_sm_a528b
-        data:
-          title: "LARM! Förråd - låg temperatur"
-          message: >
-            {% set t = states('sensor.forrad_temperature')|float(0) %}
-            {% set unit = state_attr('sensor.forrad_temperature','unit_of_measurement') %}
-            {% set ute = states('sensor.ute') %}
-            LARM! Låg temp i Förråd: {{ t }} {{ unit }} (ute: {{ ute }})
-            Nivå: {% if t < 0 %}Mycket låg{% elif t < 2 %}Låg{% else %}Mild{% endif %}
+      - choose:
+          # HÖG TEMPERATUR
+          - alias: Hög temperatur larm
+            conditions:
+              - condition: trigger
+                id: high_temp
+            sequence:
+              - service: notify.mobile_app_sm_a528b
+                data:
+                  title: "LARM! Förråd - hög temperatur"
+                  message: >
+                    {% set t = states('sensor.forrad_temperature')|float(0) %}
+                    {% set unit = state_attr('sensor.forrad_temperature','unit_of_measurement') %}
+                    {% set ute = states('sensor.ute') %}
+                    LARM! Hög temp i Förråd: {{ t }} {{ unit }} (ute: {{ ute }})
+                    Nivå: {% if t > 13 %}Mycket hög{% elif t > 12 %}Hög{% else %}Mild{% endif %}
+
+          # LÅG TEMPERATUR
+          - alias: Låg temperatur larm
+            conditions:
+              - condition: trigger
+                id: low_temp
+            sequence:
+              - service: notify.mobile_app_sm_a528b
+                data:
+                  title: "LARM! Förråd - låg temperatur"
+                  message: >
+                    {% set t = states('sensor.forrad_temperature')|float(0) %}
+                    {% set unit = state_attr('sensor.forrad_temperature','unit_of_measurement') %}
+                    {% set ute = states('sensor.ute') %}
+                    LARM! Låg temp i Förråd: {{ t }} {{ unit }} (ute: {{ ute }})
+                    Nivå: {% if t < 0 %}Mycket låg{% elif t < 2 %}Låg{% else %}Mild{% endif %}

@@ -6,10 +6,7 @@ views:
     cards:
       - type: entities
         entities:
-          - automation.ringklocka_tvattstuga
-          - automation.ringklocka_hall
-          - automation.blinka_med_lyset_nar_ringklocka_ringer_2
-          - automation.ringklocka_on_off
+          - automation.ringklocka_hantering
         title: Ringklocka
         show_header_toggle: true
         state_color: true
@@ -29,24 +26,19 @@ views:
         state_color: true
       - type: entities
         entities:
-          - automation.starta_avfuktare
-          - automation.stoppa_avfuktare
+          - automation.garage_avfuktare_styrning
         title: Garage avfuktare
         show_header_toggle: true
         state_color: true
       - type: entities
         entities:
-          - automation.starta_elvarme_7_grader
-          - automation.stoppa_elvarme_9_grader
-          - automation.starta_elvarme_12_grader
-          - automation.stoppa_elvarme_14_grader
+          - automation.elvarme_garage
         title: Garage elvärme
         show_header_toggle: true
         state_color: true
       - type: entities
         entities:
-          - automation.starta_elvarme_friggebod_hogfukt
-          - automation.stoppa_elvarme_friggebod_lagfukt
+          - automation.elvarme_friggebod
         title: Friggebod elvärme högfukt
         show_header_toggle: true
         state_color: true
@@ -59,9 +51,7 @@ views:
         state_color: true
       - type: entities
         entities:
-          - automation.aktivera_borta_mode
-          - automation.aktivera_hemma_pa_mode
-          - automation.aktivera_hemma_pa_mode_vid_rorelse
+          - automation.hem_borta_status_styrning
         title: Hemma/Borta
         show_header_toggle: true
         state_color: true
@@ -108,45 +98,37 @@ views:
     cards:
       - type: entities
         entities:
-          - automation.forrad_larm_hog_temp
-          - automation.forrad_larm_lag_temp
+          - automation.forrad_temperaturlarm
         title: Larm förråd
         show_header_toggle: true
         state_color: true
       - type: entities
         entities:
-          - automation.friggebod_frysvakt
-          - automation.friggebod_larm_hog_temp
-          - automation.friggebod_larm_lag_temp
+          - automation.friggebod_temperaturlarm
         title: Larm friggebod
         show_header_toggle: true
         state_color: true
       - type: entities
         entities:
-          - automation.larm_varning_hog_temp_i_frys
-          - automation.larm_hog_temp_i_frys
-          - automation.larm_lag_temp_i_frys
+          - automation.frys_temperaturlarm
         title: Larm frys
         show_header_toggle: true
         state_color: true
       - type: entities
         entities:
-          - automation.lag_temp_ackumulatortank
-          - automation.hog_temp_ackumulatortank
+          - automation.ackumulatortank_temperaturlarm
         title: Larm bergvärme
         show_header_toggle: true
         state_color: true
       - type: entities
         entities:
-          - automation.larm_hog_temp_i_kyl
-          - automation.larm_lag_temp_i_kyl
+          - automation.kyl_temperaturlarm
         title: Larm kyl
         show_header_toggle: true
         state_color: true
       - type: entities
         entities:
-          - automation.raspberry_pi_b_1_wire_offline
-          - automation.raspberry_pi_3b_lux_offline
+          - automation.raspberry_pi_offline_larm
         title: Larm Raspberry Pi
         show_header_toggle: true
         state_color: true
@@ -217,48 +199,31 @@ views:
         state_color: true
       - type: entities
         entities:
-          - automation.morgonbelysning_on
-          - automation.morgonbelysning_off
+          - automation.morgonbelysning_styrning
         title: Morgonbelysning
         show_header_toggle: true
         state_color: true
       - type: entities
         entities:
-          - automation.dagbelysning_on_hemma_pa
-          - automation.dagbelysning_on_morgon
-          - automation.dagbelysning_on_morkt
-          - automation.dagbelysning_on_sovrumsfonster_on
-          - automation.dagbelysning_off_borta
-          - automation.dagbelysning_off_ljust
-          - automation.dagbelysning_kvallsbelysning_sovrumsfonster_off
+          - automation.dagbelysning_styrning
         title: Dagbelysning
         show_header_toggle: true
         state_color: true
       - type: entities
         entities:
-          - automation.nattbelysning_on
-          - automation.nattbelysning_off
+          - automation.nattbelysning_styrning
         title: Nattbelysning
         show_header_toggle: true
         state_color: true
       - type: entities
         entities:
-          - automation.bortabelysning_on_borta
-          - automation.bortabelysning_on_morgon
-          - automation.bortabelysning_on_morkt
-          - automation.bortabelysning_off_kvall
-          - automation.bortabelysning_off_ljust
+          - automation.bortabelysning_styrning
         title: Bortabelysning
         show_header_toggle: true
         state_color: true
       - type: entities
         entities:
-          - automation.uterums_belysning_on_18
-          - automation.uterums_belysning_on_150
-          - automation.uterums_belysning_on_home
-          - automation.uterums_belysning_off_17
-          - automation.uterums_belysning_off_all_off_hemma
-          - automation.uterums_belysning_off_borta
+          - automation.uterums_belysning
         title: Uterumsbelysning
         show_header_toggle: true
         state_color: true
@@ -269,8 +234,7 @@ views:
           - automation.friggebod_ute_on_500
           - automation.friggebod_ute_off_600
           - automation.spabelysning_on_5
-          - automation.utebelysning_off_22_00_00_borta
-          - automation.utebelysning_off_22_00_00_hemma_vardag
+          - automation.utebelysning_off_22_00
           - automation.utebelysning_off_all_off_hemma_helg
         title: Utebelysning
         show_header_toggle: true
@@ -289,29 +253,20 @@ views:
         state_color: true
       - type: entities
         entities:
-          - entity: automation.tradgardsbelysning_off
-          - entity: automation.tradgardsbelysning_on_away_40
-          - entity: automation.tradgardsbelysning_on_home_40
-          - entity: automation.tradgardsbelysning_on_sensor_on_40
+          - entity: automation.tradgardsbelysning
           - entity: automation.tradgardsbelysning_off_60
         title: Trädgårdsbelysning
         show_header_toggle: true
         state_color: true
       - type: entities
         entities:
-          - automation.slack_kok
-          - automation.tand_kok_25
-          - automation.tand_kok_50
-          - automation.tand_kok_100
+          - automation.koksbelysning
         title: Input select - Kök
         show_header_toggle: true
         state_color: true
       - type: entities
         entities:
-          - automation.slack_badrum
-          - automation.tand_badrum_dag
-          - automation.tand_badrum_dag_narvaro
-          - automation.tand_badrum_natt_narvaro
+          - automation.badrumsbelysning
         title: Input select - Badrum
         show_header_toggle: true
         state_color: true
@@ -325,12 +280,7 @@ views:
       - type: entities
         entities:
           - automation.slacker_innebelysning
-          - automation.tand_morgonbelysning
-          - automation.tand_dagbelysning
-          - automation.tand_kvallsbelysning
-          - automation.tand_nattbelysning
-          - automation.tand_bortabelysning
-          - automation.tand_fonsterbelysning
+          - automation.innebelysning
         title: Input select - Innebelysning
         show_header_toggle: true
         state_color: true
@@ -425,7 +375,6 @@ views:
     cards:
       - type: entities
         entities:
-          - automation.mediaspelare_off_borta
           - automation.satt_pa_mediaspelare_vid_watch_tv
           - automation.satt_pa_mediaspelare_vid_listen_to_radio
           - automation.satt_pa_mediaspelare_vid_watch_chromecast

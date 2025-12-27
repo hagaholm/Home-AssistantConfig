@@ -1,98 +1,155 @@
-##############################################################
-### Fil: alarm_friggebod_temperature.yaml
-### Innehåll: Temperaturlarm för friggebod (hög, låg samt frysvakt).
-### Viktiga enheter: sensor.friggebod_temperature, sensor.ute
-##############################################################
- 
-  ########################################################################
-  ### Friggebod - Varnar för hög temperatur
-  ### T: sensor.friggebod_temperature > 23 (for: 00:10:00)
-  ### C: sensor.ute < 15
-  ### A: notify.mobile_app_sm_a528b (title + templated message)
-  ########################################################################
-  - alias: Friggebod larm hög temp
+#######################################################
+#                                                     #
+#        FRIGGEBOD TEMPERATURLARM AUTOMATION          #
+#                                                     #
+#######################################################
+#
+# METADATA:
+# Skapad: [ursprungligt datum]
+# Senast ändrad: 2025-12-27
+# Version: 2.0
+# Författare: Home Assistant Config
+#
+# BESKRIVNING:
+# Samlad automation för temperaturövakning i friggeboden.
+# Larmar vid hög, låg temperatur samt frysvakt.
+# Skyddar lagrade föremål och byggnaden.
+#
+# HÅRDVARA/ENTITETER:
+# - Sensor: sensor.friggebod_temperature
+# - Referens: sensor.ute (utetemperatur)
+# - Notification: notify.mobile_app_sm_a528b
+#
+# TRIGGRAR:
+# - Temperatur >23°C i 10 minuter (hög)
+# - Temperatur <19°C i 10 minuter (låg)
+# - Temperatur <3°C i 5 minuter (frysvakt, akut)
+#
+# VILLKOR:
+# - Hög/låg: Utetemperatur <15°C
+# - Frysvakt: Inget villkor (alltid viktigt)
+#
+# LOGIK:
+# HÖG TEMP:
+# - Larmar om >23°C och ute <15°C
+# - Nivåer: >27°C (Mycket hög), >24°C (Hög), annars (Mild)
+#
+# LÅG TEMP:
+# - Larmar om <19°C och ute <15°C
+# - Nivåer: <0°C (Mycket låg), <17°C (Låg), annars (Mild)
+#
+# FRYSVAKT:
+# - Akut larm om <3°C (risk för skador)
+# - Kortare fördröjning (5 min) för snabb reaktion
+#
+# SÄKERHET:
+# - Frysvakt: Kortare timeout (5 min) för akuta situationer
+# - Normal larm: 10 min förhindrar korta toppar
+# - Utetemperaturkontroll undviker falsklarm
+#
+# INTEGRATION:
+# - Skickar notifikationer till mobil
+# - Inkluderar nivåbedömning i meddelande
+# - Visar både inne- och utetemperatur
+#
+# KONSOLIDERINGSHISTORIK:
+# Denna automation ersätter följande tidigare automationer:
+# - Friggebod larm hög temp (ID: 8904329147725)
+# - Friggebod larm låg temp (ID: 3853132210260)
+# - Friggebod frysvakt (ID: 8790714161214)
+# 
+# Konsoliderad: 2025-12-27
+# Behållet ID: 8904329147725 (från hög temp)
+# Anledning: Enklare underhåll, delad logik, reducerad overhead
+#
+# ÄNDRINGSLOGG:
+# v1.0: Ursprungliga separata automationer
+# v2.0 (2025-12-27): Konsoliderade hög/låg/frysvakt i en automation
+#######################################################
+
+
+#######################################################
+#                                                     #
+#      AUTOMATIONER FÖR FRIGGEBOD TEMPERATURLARM     #
+#                                                     #
+#######################################################
+
+  - alias: Friggebod temperaturlarm
     id: '8904329147725'
     mode: single
 
     trigger:
+      # Hög temperatur
       - platform: numeric_state
         entity_id: sensor.friggebod_temperature
         above: 23
         for: "00:10:00"
+        id: high_temp
 
-    condition:
-      condition: and
-      conditions:
-        - condition: numeric_state
-          entity_id: sensor.ute
-          below: 15
-
-    action:
-      - service: notify.mobile_app_sm_a528b
-        data:
-          title: "LARM! Friggebod - hög temperatur"
-          message: >
-            {% set t = states('sensor.friggebod_temperature')|float(0) %}
-            {% set unit = state_attr('sensor.friggebod_temperature','unit_of_measurement') %}
-            {% set ute = states('sensor.ute') %}
-            LARM! Hög temp i Friggebod: {{ t }} {{ unit }} (ute: {{ ute }})
-            Nivå: {% if t > 27 %}Mycket hög{% elif t > 24 %}Hög{% else %}Mild{% endif %}
-
-  ########################################################################
-  ### Friggebod - Varnar för låg temperatur
-  ### T: sensor.friggebod_temperature < 19 (for: 00:10:00)
-  ### C: sensor.ute < 15
-  ### A: notify.mobile_app_sm_a528b (title + templated message)
-  ########################################################################
-  - alias: Friggebod larm låg temp
-    id: '3853132210260'
-    mode: single
-
-    trigger:
+      # Låg temperatur
       - platform: numeric_state
         entity_id: sensor.friggebod_temperature
         below: 19
         for: "00:10:00"
+        id: low_temp
 
-    condition:
-      condition: and
-      conditions:
-        - condition: numeric_state
-          entity_id: sensor.ute
-          below: 15
-
-    action:
-      - service: notify.mobile_app_sm_a528b
-        data:
-          title: "LARM! Friggebod - låg temperatur"
-          message: >
-            {% set t = states('sensor.friggebod_temperature')|float(0) %}
-            {% set unit = state_attr('sensor.friggebod_temperature','unit_of_measurement') %}
-            {% set ute = states('sensor.ute') %}
-            LARM! Låg temp i Friggebod: {{ t }} {{ unit }} (ute: {{ ute }})
-            Nivå: {% if t < 0 %}Mycket låg{% elif t < 17 %}Låg{% else %}Mild{% endif %}
-
-  ########################################################################
-  ### Friggebod - Frysvakt (larm vid frostrisk)
-  ### T: sensor.friggebod_temperature < 3 (for: 00:05:00)
-  ### C: none
-  ### A: notify.mobile_app_sm_a528b (title + templated message)
-  ########################################################################
-  - alias: Friggebod frysvakt
-    id: '8790714161214'
-    mode: single
-
-    trigger:
+      # Frysvakt (akut)
       - platform: numeric_state
         entity_id: sensor.friggebod_temperature
         below: 3
         for: "00:05:00"
+        id: freeze_alert
 
     action:
-      - service: notify.mobile_app_sm_a528b
-        data:
-          title: "LARM! Frysvakt Friggebod"
-          message: >
-            {% set t = states('sensor.friggebod_temperature')|float(0) %}
-            {% set unit = state_attr('sensor.friggebod_temperature','unit_of_measurement') %}
-            LARM! Frysvakt Friggebod: {{ t }} {{ unit }}
+      - choose:
+          # HÖG TEMPERATUR
+          - alias: Hög temperatur larm
+            conditions:
+              - condition: trigger
+                id: high_temp
+              - condition: numeric_state
+                entity_id: sensor.ute
+                below: 15
+            sequence:
+              - service: notify.mobile_app_sm_a528b
+                data:
+                  title: "LARM! Friggebod - hög temperatur"
+                  message: >
+                    {% set t = states('sensor.friggebod_temperature')|float(0) %}
+                    {% set unit = state_attr('sensor.friggebod_temperature','unit_of_measurement') %}
+                    {% set ute = states('sensor.ute') %}
+                    LARM! Hög temp i Friggebod: {{ t }} {{ unit }} (ute: {{ ute }})
+                    Nivå: {% if t > 27 %}Mycket hög{% elif t > 24 %}Hög{% else %}Mild{% endif %}
+
+          # LÅG TEMPERATUR
+          - alias: Låg temperatur larm
+            conditions:
+              - condition: trigger
+                id: low_temp
+              - condition: numeric_state
+                entity_id: sensor.ute
+                below: 15
+            sequence:
+              - service: notify.mobile_app_sm_a528b
+                data:
+                  title: "LARM! Friggebod - låg temperatur"
+                  message: >
+                    {% set t = states('sensor.friggebod_temperature')|float(0) %}
+                    {% set unit = state_attr('sensor.friggebod_temperature','unit_of_measurement') %}
+                    {% set ute = states('sensor.ute') %}
+                    LARM! Låg temp i Friggebod: {{ t }} {{ unit }} (ute: {{ ute }})
+                    Nivå: {% if t < 0 %}Mycket låg{% elif t < 17 %}Låg{% else %}Mild{% endif %}
+
+          # FRYSVAKT (AKUT)
+          - alias: Frysvakt akut larm
+            conditions:
+              - condition: trigger
+                id: freeze_alert
+            sequence:
+              - service: notify.mobile_app_sm_a528b
+                data:
+                  title: "LARM! Frysvakt Friggebod"
+                  message: >
+                    {% set t = states('sensor.friggebod_temperature')|float(0) %}
+                    {% set unit = state_attr('sensor.friggebod_temperature','unit_of_measurement') %}
+                    LARM! Frysvakt Friggebod: {{ t }} {{ unit }}

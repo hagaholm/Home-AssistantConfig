@@ -1,220 +1,239 @@
-    #####################################################
-    ### Tänder lampor kl 09.00 om det är mörkt        ###
-    ### T: time = '09:00:00'                          ###
-    ### C: input_boolean.daylight_on == on            ###
-    ###    input_select.home_status == 'Hemma på'     ###
-    ### A: input_select.light_inside = Bortabelysning ###
-    #####################################################
-  - alias: Dagbelysning on (morgon)
-    id: '4721523570852' 
+#######################################################
+#                                                     #
+#         DAY LIGHTING AUTOMATION                     #
+#                                                     #
+#######################################################
+#
+# METADATA:
+# Skapad: [ursprungligt datum]
+# Senast ändrad: 2025-12-27
+# Version: 2.0
+# Författare: Home Assistant Config
+#
+# BESKRIVNING:
+# Samlad automation för dagbelysning.
+# Tänder/släcker ljus baserat på tid, ljusnivå och närvaro.
+# Hanterar övergång från morgon till dag och dag till kväll.
+#
+# HÅRDVARA/ENTITETER:
+# - input_select.home_status
+# - input_select.light_inside
+# - input_boolean.daylight_on
+# - input_boolean.christmas_light
+# - light.sovrum_fonster
+# - light.sovrum_sangbord
+#
+# TRIGGRAR:
+# - Tänd morgon: time='09:00:00'
+# - Tänd mörkt: daylight_on -> 'on'
+# - Tänd hemma på: home_status -> 'Hemma på'
+# - Tänd sovrumsfönster: light.sovrum_fonster -> 'on'
+# - Släck ljust: daylight_on -> 'off'
+# - Släck borta: home_status -> 'Borta'
+# - Övergång kväll: light.sovrum_fonster -> 'unavailable'
+#
+# VILLKOR:
+# - Tänd: daylight_on='on' OCH home_status='Hemma på' OCH 09:00-05:00
+# - Släck: Olika beroende på trigger
+#
+# LOGIK:
+# TÄND DAGBELYSNING:
+# 1. Morgon 09:00: Om daylight_on och hemma
+# 2. Mörkt: När det blir mörkt 09:00-05:00
+# 3. Hemma på: När status ändrar till hemma på
+# 4. Sovrumsfönster: Övergång från morgon->dag vid fönster on
+#
+# SLÄCK DAGBELYSNING:
+# 1. Ljust: När det blir ljust -> Släckt eller Fönsterbelysning (jul)
+# 2. Borta: När alla åker -> Släckt
+# 3. Kväll: Sovrum fönster off + sangbord on 21:00-23:00 -> Kvällsbelysning
+#
+# KONSOLIDERINGSHISTORIK:
+# - Dagbelysning on (morgon) (ID: 4721523570852)
+# - Dagbelysning on (mörkt) (ID: 9461363772743)
+# - Dagbelysning on (Hemma på) (ID: 7461985972140)
+# - Dagbelysning on (sovrumsfönster on) (ID: 3561286715847)
+# - Dagbelysning off (ljust) (ID: 9213215294318)
+# - Dagbelysning off (borta) (ID: 5078275630589)
+# - Dagbelysning -> Kvällsbelysning (ID: 3891421696900)
+# Konsoliderad: 2025-12-27
+# Behållet ID: 4721523570852
+#
+# ÄNDRINGSLOGG:
+# v1.0: Ursprungliga separata automationer
+# v2.0 (2025-12-27): Konsoliderade alla on/off i en automation
+#######################################################
+
+
+  - alias: Dagbelysning styrning
+    id: '4721523570852'
+    mode: queued
 
     trigger:
-      platform: time
-      at: '09:00:00'
+      # Tänd morgon kl 09:00
+      - platform: time
+        at: '09:00:00'
+        id: turn_on_morning
 
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_boolean.daylight_on
-          state: "on"
-        - condition: state
-          entity_id: input_select.home_status
-          state: 'Hemma på'
-
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_inside
-          option: Dagbelysning
-
-    ########################################################
-    ### Tänder lampor när det blir mörkt fram till 22:00 ###
-    ### T: input_boolean.daylight_on == on               ###
-    ### C: input_select.home_status == 'Hemma på'        ###
-    ###    09:00:00 - 22:00:00                           ###
-    ### A: input_select.light_inside = Dagbelysning      ###
-    ########################################################
-  - alias: Dagbelysning on (mörkt)
-    id: '9461363772743' 
-
-    trigger:
+      # Tänd när mörkt
       - platform: state
         entity_id: input_boolean.daylight_on
         to: "on"
+        id: turn_on_dark
 
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_select.home_status
-          state: 'Hemma på'
-        - condition: time
-          after: '09:00:00'
-          before: '05:00:00'
-
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_inside
-          option: Dagbelysning
-
-    ###################################################
-    ### Tänder lampor när 'Hemma på'                ###
-    ### T: input_select.home_status to 'Hemma på'   ###
-    ### C: input_boolean.day_light_on == on         ###
-    ###    09:00:00 - 05:00:00                      ###
-    ### A: input_select.light_inside = Dagbelysning ###
-    ###################################################
-  - alias: Dagbelysning on (Hemma på)
-    id: '7461985972140' 
-
-    trigger:
+      # Tänd när Hemma på
       - platform: state
         entity_id: input_select.home_status
         to: 'Hemma på'
+        id: turn_on_home
 
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_boolean.daylight_on
-          state: 'on'
-        - condition: time
-          after: '09:00:00'
-          before: '05:00:00'
+      # Tänd vid sovrumsfönster on (morgon->dag övergång)
+      - platform: state
+        entity_id: light.sovrum_fonster
+        to: 'on'
+        id: turn_on_bedroom_window
 
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_inside
-          option: Dagbelysning
-
-    #########################################################
-    ### Tänder lampor när fönsterbelysning i sovrum tänds ###
-    ### T: light.sovrum_fonster to 'on'                   ###
-    ### C: input_select.light_inside == 'Morgonbelysning' ###
-    ###    05:00:00 - 09:00:00                            ###
-    ### A: input_select.light_inside = Dagbelysning       ###
-    #########################################################
-  - alias: Dagbelysning on (sovrumsfönster on)
-    id: '3561286715847' 
-
-    trigger:
-      platform: state
-      entity_id: light.sovrum_fonster
-      to: 'on'
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_select.light_inside
-          state: 'Morgonbelysning'
-        - condition: time
-          after: '05:00:00'
-          before: '09:00:00'
-
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_inside
-          option: Dagbelysning
-
-    #######################################################
-    ### Släcker lampor om det blir för ljust ute        ###
-    ### T: input_boolean.daylight_on == off             ###
-    ### C: input_select.home_status == 'Hemma på'       ###
-    ###    09:00:00 - 05:00:00                          ###
-    ### A: input_select.light_inside = Släckt           ###
-    ###    input_select.light_inside = Fönsterbelysning ###
-    #######################################################
-  - alias: Dagbelysning off (ljust)
-    id: '9213215294318' 
-
-    trigger:
+      # Släck när ljust
       - platform: state
         entity_id: input_boolean.daylight_on
         to: "off"
+        id: turn_off_light
 
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_select.home_status
-          state: 'Hemma på'
-        - condition: time
-          after: '09:00:00'
-          before: '05:00:00'
-
-    action:
-      - choose:
-          - conditions: "{{ is_state('input_boolean.christmas_light', 'on') }}"
-            sequence:
-              - service: input_select.select_option
-                entity_id: input_select.light_inside
-                data:
-                  option: Fönsterbelysning
-        default:
-          - service: input_select.select_option
-            entity_id: input_select.light_inside
-            data:
-              option: Släckt
-
-    ##############################################
-    ### Släcker lampor när sista åker hemifrån ###
-    ### T: input_select.home_status to 'Borta' ###
-    ### C: 09:00:00 - 05:00:00                 ###
-    ### A: input_select.light_inside = Släckt  ###
-    ##############################################
-  - alias: Dagbelysning off (borta)
-    id: '5078275630589' 
-
-    trigger:
+      # Släck när borta
       - platform: state
         entity_id: input_select.home_status
         to: 'Borta'
+        id: turn_off_away
 
-    condition:
-      condition: time
-      after: '09:00:00'
-      before: '05:00:00'
-
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_inside
-          option: Släckt
-
-    #######################################################################
-    ### Släcker lampor i sovrummet när fönsterbelysning i sovrum släcks ###
-    ### T: light.sovrum_fonster to 'unavailable'                        ###
-    ### C: light.sovrum_sangbord == on                                  ###
-    ### C: 21:00:00 - 23:00:00                                          ###
-    ### A: light.bedroom = off                                          ###
-    #######################################################################
-  - alias: Dagbelysning -> Kvällsbelysning (sovrumsfönster off)
-    id: '3891421696900' 
-
-    trigger:
-      platform: state
-      entity_id: light.sovrum_fonster
-      to: 'unavailable'
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: light.sovrum_sangbord
-          state: 'on'
-        - condition: time
-          after: '21:00:00'
-          before: '23:00:00'
+      # Övergång till kvällsbelysning
+      - platform: state
+        entity_id: light.sovrum_fonster
+        to: 'unavailable'
+        id: transition_evening
 
     action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_inside
-          option: Kvällsbelysning
+      - choose:
+          # TÄND MORGON (09:00)
+          - alias: Tänd dagbelysning morgon
+            conditions:
+              - condition: trigger
+                id: turn_on_morning
+              - condition: state
+                entity_id: input_boolean.daylight_on
+                state: "on"
+              - condition: state
+                entity_id: input_select.home_status
+                state: 'Hemma på'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_inside
+                  option: Dagbelysning
 
-          transition: 2
+          # TÄND NÄR MÖRKT
+          - alias: Tänd dagbelysning när mörkt
+            conditions:
+              - condition: trigger
+                id: turn_on_dark
+              - condition: state
+                entity_id: input_select.home_status
+                state: 'Hemma på'
+              - condition: time
+                after: '09:00:00'
+                before: '05:00:00'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_inside
+                  option: Dagbelysning
+
+          # TÄND NÄR HEMMA PÅ
+          - alias: Tänd dagbelysning när hemma på
+            conditions:
+              - condition: trigger
+                id: turn_on_home
+              - condition: state
+                entity_id: input_boolean.daylight_on
+                state: 'on'
+              - condition: time
+                after: '09:00:00'
+                before: '05:00:00'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_inside
+                  option: Dagbelysning
+
+          # TÄND VID SOVRUMSFÖNSTER (MORGON->DAG)
+          - alias: Tänd dagbelysning vid sovrumsfönster
+            conditions:
+              - condition: trigger
+                id: turn_on_bedroom_window
+              - condition: state
+                entity_id: input_select.light_inside
+                state: 'Morgonbelysning'
+              - condition: time
+                after: '05:00:00'
+                before: '09:00:00'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_inside
+                  option: Dagbelysning
+
+          # SLÄCK NÄR LJUST
+          - alias: Släck dagbelysning när ljust
+            conditions:
+              - condition: trigger
+                id: turn_off_light
+              - condition: state
+                entity_id: input_select.home_status
+                state: 'Hemma på'
+              - condition: time
+                after: '09:00:00'
+                before: '05:00:00'
+            sequence:
+              - choose:
+                  - conditions: "{{ is_state('input_boolean.christmas_light', 'on') }}"
+                    sequence:
+                      - service: input_select.select_option
+                        entity_id: input_select.light_inside
+                        data:
+                          option: Fönsterbelysning
+                default:
+                  - service: input_select.select_option
+                    entity_id: input_select.light_inside
+                    data:
+                      option: Släckt
+
+          # SLÄCK NÄR BORTA
+          - alias: Släck dagbelysning när borta
+            conditions:
+              - condition: trigger
+                id: turn_off_away
+              - condition: time
+                after: '09:00:00'
+                before: '05:00:00'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_inside
+                  option: Släckt
+
+          # ÖVERGÅNG TILL KVÄLLSBELYSNING
+          - alias: Övergång dag till kvällsbelysning
+            conditions:
+              - condition: trigger
+                id: transition_evening
+              - condition: state
+                entity_id: light.sovrum_sangbord
+                state: 'on'
+              - condition: time
+                after: '21:00:00'
+                before: '23:00:00'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_inside
+                  option: Kvällsbelysning
+                  transition: 2

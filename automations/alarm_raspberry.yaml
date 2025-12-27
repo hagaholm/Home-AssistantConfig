@@ -1,89 +1,117 @@
-    #####################################################
-    ### Raspberry Pi B+ (1-Wire) - Offline            ###
-    ### T: group.track_for_home_devices to 'not_home' ###
-    ### A: notify.mobile_app_sm_a528b                 ###
-    #####################################################
-  - alias: Raspberry Pi B+ (1-Wire) - Offline
-    id: '3286196096527' 
+#######################################################
+#                                                     #
+#       RASPBERRY PI OFFLINE LARM AUTOMATION         #
+#                                                     #
+#######################################################
+#
+# METADATA:
+# Skapad: [ursprungligt datum]
+# Senast ändrad: 2025-12-27
+# Version: 2.0
+# Författare: Home Assistant Config
+#
+# BESKRIVNING:
+# Samlad automation för övervakning av Raspberry Pi enheter.
+# Larmar när enheter går offline (state: not_home).
+# Viktigt för systemdrift och sensorövervakning.
+#
+# HÅRDVARA/ENTITETER:
+# Aktiva enheter:
+# - device_tracker.raspberry_pi_b_plus (1-Wire sensor hub)
+# - device_tracker.raspberry_pi_3b_2 (Lux mätning)
+#
+# Inaktiverade enheter (kommenterade):
+# - device_tracker.raspberry_pi_3b_1 (Hagaholm)
+# - device_tracker.raspberry_pi_3b_plus
+# - device_tracker.raspberry_pi_4b (Hassbian)
+#
+# Notification: notify.mobile_app_sm_a528b
+#
+# TRIGGRAR:
+# - Raspberry Pi B+ state ändrar till 'not_home'
+# - Raspberry Pi 3B (Lux) state ändrar till 'not_home'
+#
+# VILLKOR:
+# - Inga (alltid larm vid offline)
+#
+# LOGIK:
+# Varje enhet har egen trigger ID och choose block:
+# - Enkel meddelande med enhetens namn
+# - Snabb upptäckt av offline status
+# - Ingen fördröjning (omedelbara larm)
+#
+# SÄKERHET:
+# - Ingen fördröjning för snabb upptäckt
+# - Kritiskt för sensordrift (1-Wire och Lux)
+# - Offline = ingen data från sensorer
+#
+# INTEGRATION:
+# - Skickar notifikationer till mobil
+# - Enkla meddelanden med enhetsnamn
+# - Ingen template (statiskt meddelande)
+#
+# KONSOLIDERINGSHISTORIK:
+# Denna automation ersätter följande tidigare automationer:
+# - Raspberry Pi B+ (1-Wire) - Offline (ID: 3286196096527)
+# - Raspberry Pi 3B (Lux) Offline (ID: 6331068671219)
+# 
+# Inaktiverade (kommenterade):
+# - Raspberry Pi 3B (Hagaholm) Offline (ID: 4476180256489)
+# - Raspberry Pi 3B+ Offline (ID: 5793834656757)
+# - Raspberry Pi 4B (Hassbian) Offline (ID: 3302518344852)
+#
+# Konsoliderad: 2025-12-27
+# Behållet ID: 3286196096527 (från Pi B+)
+# Anledning: Enklare underhåll, delad logik, enkel aktivering/inaktivering
+#
+# ÄNDRINGSLOGG:
+# v1.0: Ursprungliga separata automationer
+# v2.0 (2025-12-27): Konsoliderade aktiva larm i en automation
+#######################################################
+
+
+#######################################################
+#                                                     #
+#     AUTOMATIONER FÖR RASPBERRY PI OFFLINE LARM     #
+#                                                     #
+#######################################################
+
+  - alias: Raspberry Pi offline larm
+    id: '3286196096527'
+    mode: queued
+    max: 5
 
     trigger:
-      platform: state
-      entity_id: device_tracker.raspberry_pi_b_plus
-      to: 'not_home'
+      # Raspberry Pi B+ (1-Wire)
+      - platform: state
+        entity_id: device_tracker.raspberry_pi_b_plus
+        to: 'not_home'
+        id: pi_b_plus
+
+      # Raspberry Pi 3B (Lux)
+      - platform: state
+        entity_id: device_tracker.raspberry_pi_3b_2
+        to: 'not_home'
+        id: pi_3b_lux
 
     action:
-      - service: notify.mobile_app_sm_a528b
-        data:
-          message: "Raspberry Pi B+ (1-Wire) - Offline"
+      - choose:
+          # RASPBERRY PI B+ (1-WIRE)
+          - alias: Pi B+ offline
+            conditions:
+              - condition: trigger
+                id: pi_b_plus
+            sequence:
+              - service: notify.mobile_app_sm_a528b
+                data:
+                  message: "Raspberry Pi B+ (1-Wire) - Offline"
 
-    #####################################################
-    ### Raspberry Pi 3B (Hagaholm) - Offline          ###
-    ### T: group.track_for_home_devices to 'not_home' ###
-    ### A: notify.mobile_app_sm_a528b                 ###
-    #####################################################
-#  - alias: Raspberry Pi 3B (Hagaholm) Offline
-#    id: '4476180256489' 
-
-#    trigger:
-#      platform: state
-#      entity_id: device_tracker.raspberry_pi_3b_1
-#      to: 'not_home'
-
-#    action:
-#      - service: notify.mobile_app_sm_a528b
-#        data:
-#          message: "Raspberry Pi 3B (Hagaholm) - Offline"
-
-    #####################################################
-    ### Raspberry Pi 3B (Lux) - Offline               ###
-    ### T: group.track_for_home_devices to 'not_home' ###
-    ### A: notify.mobile_app_sm_a528b                 ###
-    #####################################################
-  - alias: Raspberry Pi 3B (Lux) Offline
-    id: '6331068671219' 
-
-    trigger:
-      platform: state
-      entity_id: device_tracker.raspberry_pi_3b_2
-      to: 'not_home'
-
-    action:
-      - service: notify.mobile_app_sm_a528b
-        data:
-          message: "Raspberry Pi 3B (Lux) - Offline"
-
-    #####################################################
-    ### Raspberry Pi 3B+ - Offline                    ###
-    ### T: group.track_for_home_devices to 'not_home' ###
-    ### A: notify.mobile_app_sm_a528b                 ###
-    #####################################################
-#  - alias: Raspberry Pi 3B+ Offline
-#    id: '5793834656757' 
-
-#    trigger:
-#      platform: state
-#      entity_id: device_tracker.raspberry_pi_3b_plus
-#      to: 'not_home'
-
-#    action:
-#      - service: notify.mobile_app_sm_a528b
-#        data:
-#          message: "Raspberry Pi 3B+ - Offline"
-
-    #####################################################
-    ### Raspberry Pi 4B (Hassbian) - Offline          ###
-    ### T: group.track_for_home_devices to 'not_home' ###
-    ### A: notify.mobile_app_sm_a528b                 ###
-    #####################################################
-#  - alias: Raspberry Pi 4B (Hassbian) Offline
-#    id: '3302518344852' 
-
-#    trigger:
-#      platform: state
-#      entity_id: device_tracker.raspberry_pi_4b
-#      to: 'not_home'
-
-#    action:
-#      - service: notify.mobile_app_sm_a528b
-#        data:
-#          message: "Raspberry Pi 4B (Hassbian) - Offline"
+          # RASPBERRY PI 3B (LUX)
+          - alias: Pi 3B Lux offline
+            conditions:
+              - condition: trigger
+                id: pi_3b_lux
+            sequence:
+              - service: notify.mobile_app_sm_a528b
+                data:
+                  message: "Raspberry Pi 3B (Lux) - Offline"

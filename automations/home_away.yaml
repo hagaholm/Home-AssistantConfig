@@ -1,102 +1,170 @@
-    #####################################################
-    ### Aktivera Borta mode                           ###
-    ### T: group.track_for_home_devices to 'not_home' ###
-    ### A: input_select.home_status = Borta           ###
-    #####################################################
-  - alias: Aktivera borta mode
-    id: '9332529339727' 
+#######################################################
+#                                                     #
+#          HOME/AWAY STATUS AUTOMATION               #
+#                                                     #
+#######################################################
+#
+# METADATA:
+# Skapad: [ursprungligt datum]
+# Senast ändrad: 2025-12-27
+# Version: 2.0
+# Författare: Home Assistant Config
+#
+# BESKRIVNING:
+# Samlad automation för hantering av hem/borta status.
+# Aktiverar rätt läge baserat på närvaro och rörelse.
+# Styr belysning, media och andra system.
+#
+# HÅRDVARA/ENTITETER:
+# - group.track_for_home_devices (enhetssparar grupp)
+# - group.persons (persongrupp)
+# - binary_sensor.kok_narvaro (kök närvarosensor)
+# - input_select.home_status (Hemma på/Hemma av/Borta)
+# - remote.harmony_hub (mediaspelare)
+#
+# TRIGGRAR:
+# - Borta: home_devices/persons -> 'not_home'
+# - Hemma på: home_devices/persons -> 'home'
+# - Hemma på (rörelse): kök närvaro -> 'on'
+# - Media off: home_devices -> 'not_home'
+#
+# VILLKOR:
+# - Hemma på vid rörelse: home, 05:00-21:00, status='Hemma av'
+#
+# LOGIK:
+# BORTA MODE:
+# - När alla enheter/personer borta
+# - Sätter input_select till 'Borta'
+#
+# HEMMA PÅ MODE:
+# - När någon kommer hem
+# - Sätter input_select till 'Hemma på'
+#
+# HEMMA PÅ MODE (RÖRELSE):
+# - Rörelse i kök mellan 05:00-21:00
+# - Endast om status 'Hemma av' och någon hemma
+# - Ändrar till 'Hemma på'
+#
+# MEDIASPELARE OFF:
+# - När alla åker hemifrån
+# - Stänger av Harmony Hub
+#
+# SÄKERHET:
+# - Dubbla triggers (devices + persons) för redundans
+# - Tidsvillkor förhindrar aktivering nattetid
+# - State check för rörelseaktivering
+#
+# INTEGRATION:
+# - input_select.select_option för statusbyte
+# - remote.turn_off för media
+# - Triggar andra automationer via home_status
+#
+# KONSOLIDERINGSHISTORIK:
+# Denna automation ersätter följande tidigare automationer:
+# - Aktivera borta mode (ID: 9332529339727)
+# - Aktivera Hemma på mode (ID: 4877699058462)
+# - Aktivera Hemma på mode vid rörelse (ID: 8016198182454)
+# - Mediaspelare off (-> borta) (ID: 4088468088280)
+# 
+# Konsoliderad: 2025-12-27
+# Behållet ID: 9332529339727 (från borta mode)
+# Anledning: Enklare underhåll, delad logik, samlad statushantering
+#
+# ÄNDRINGSLOGG:
+# v1.0: Ursprungliga separata automationer
+# v2.0 (2025-12-27): Konsoliderade alla hem/borta lägen i en automation
+#######################################################
+
+
+#######################################################
+#                                                     #
+#      AUTOMATIONER FÖR HOME/AWAY STATUS STYRNING    #
+#                                                     #
+#######################################################
+
+  - alias: Hem borta status styrning
+    id: '9332529339727'
+    mode: queued
+    max: 5
 
     trigger:
+      # Aktivera Borta (devices)
       - platform: state
         entity_id: group.track_for_home_devices
         to: 'not_home'
+        id: activate_away
+
+      # Aktivera Borta (persons)
       - platform: state
         entity_id: group.persons
         to: 'not_home'
+        id: activate_away
 
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.home_status
-          option: Borta
-
-    #################################################
-    ### Aktivera Hemma på mode                    ###
-    ### T: group.track_for_home_devices to 'home' ###
-    ### A: input_select.home_status = Hemma på    ###
-    #################################################
-  - alias: Aktivera Hemma på mode
-    id: '4877699058462' 
-
-    trigger:
+      # Aktivera Hemma på (devices)
       - platform: state
         entity_id: group.track_for_home_devices
         to: 'home'
+        id: activate_home_on
+
+      # Aktivera Hemma på (persons)
       - platform: state
         entity_id: group.persons
         to: 'home'
+        id: activate_home_on
 
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.home_status
-          option: Hemma på
-
-    ##############################################
-    ### Aktivera Hemma på mode vid rörelse     ###
-    ### T: binary_sensor.kok_narvaro to 'on'   ###
-    ### C: group.track_for_home_devices = on   ###
-    ###    time before: '21:00:00'             ###
-    ###    time after: '05:00:00'              ###
-    ###    input_select.home_status = Hemma av ###
-    ### A: input_select.home_status = Hemma på ###
-    ##############################################
-  - alias: Aktivera Hemma på mode vid rörelse
-    id: '8016198182454' 
-
-    trigger:
+      # Aktivera Hemma på vid rörelse
       - platform: state
         entity_id: binary_sensor.kok_narvaro
         to: 'on'
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'home'
-        - condition: time
-          before: '21:00:00'
-        - condition: time
-          after: '05:00:00'
-        - condition: state
-          entity_id: input_select.home_status
-          state: 'Hemma av'
+        id: activate_home_on_motion
 
     action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.home_status
-          option: Hemma på
+      - choose:
+          # AKTIVERA BORTA MODE
+          - alias: Aktivera borta läge och stäng av media
+            conditions:
+              - condition: trigger
+                id: activate_away
+            sequence:
+              # Sätt status till Borta
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.home_status
+                  option: Borta
+              # Stäng av mediaspelare
+              - service: remote.turn_off
+                entity_id: remote.harmony_hub
 
-    #######################################################
-    ### Stänger av mediaspelare när sista åker hemifrån ###
-    ### T: group.track_for_home_devices to 'not_home'   ###
-    ### A: remote.harmony_hub = off                     ###
-    ###    switch.vardagsrum_stereobank                 ###
-    ###    switch.vardagsrum_tv                         ###
-    #######################################################
-  - alias: Mediaspelare off (-> borta)
-    id: '4088468088280' 
+          # AKTIVERA HEMMA PÅ MODE
+          - alias: Aktivera hemma på läge
+            conditions:
+              - condition: trigger
+                id: activate_home_on
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.home_status
+                  option: Hemma på
 
-    trigger:
-      platform: state
-      entity_id: group.track_for_home_devices
-      to: 'not_home'
-
-    action:
-      - service: remote.turn_off
-        entity_id: remote.harmony_hub
+          # AKTIVERA HEMMA PÅ MODE VID RÖRELSE
+          - alias: Aktivera hemma på vid rörelse i kök
+            conditions:
+              - condition: trigger
+                id: activate_home_on_motion
+              - condition: state
+                entity_id: group.track_for_home_devices
+                state: 'home'
+              - condition: time
+                before: '21:00:00'
+                after: '05:00:00'
+              - condition: state
+                entity_id: input_select.home_status
+                state: 'Hemma av'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.home_status
+                  option: Hemma på
       - delay: '00:00:15'
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_stereobank

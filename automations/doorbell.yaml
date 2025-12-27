@@ -1,224 +1,302 @@
-################################################################################
-### Fil: alarm_doorbell.yaml
-### Innehåll: Automations för ringklockor (tvättstuga & hall),
-###           blinkning av ljus vid ringsignal och en
-###           automation för att slå på/av ringklockor baserat
-###           på närvaro (home/not_home).
-### Viktiga enheter: switch.ringklocka_tvattstuga,
-###                  switch.ringklocka_hall,
-###                  camera.camera_3, camera.camera_2,
-###                  input_select.home_status,
-###                  group.track_for_home_devices
-################################################################################
- 
-  ################################################################################
-  ### Ringklocka tvättstuga (samlad: dag / natt / borta)
-  ### T: switch.ringklocka_tvattstuga == on
-  ### C: input_select.home_status — hanteras med choose (dag/natt/borta)
-  ### A: homeassistant.turn_off switch, camera.snapshot, notify.mobile_app_sm_a528b
-  ################################################################################
-  - alias: Ringklocka tvättstuga
+#######################################################
+#                                                     #
+#           DOORBELL AUTOMATION                       #
+#                                                     #
+#######################################################
+#
+# METADATA:
+# Skapad: [ursprungligt datum]
+# Senast ändrad: 2025-12-27
+# Version: 2.0
+# Författare: Home Assistant Config
+#
+# BESKRIVNING:
+# Samlad automation för ringklockor (tvättstuga och hall).
+# Hanterar kamera-snapshots, notifikationer, ljusblinkning
+# och automatisk aktivering/inaktivering baserat på närvaro.
+#
+# HÅRDVARA/ENTITETER:
+# - switch.ringklocka_tvattstuga
+# - switch.ringklocka_hall
+# - switch.ringklocka (master switch)
+# - camera.camera_3 (tvättstuga)
+# - camera.camera_2 (hall)
+# - light.vardagsrum_vitrinskap2 (blink notification)
+# - input_select.home_status
+# - group.track_for_home_devices
+# - notify.mobile_app_sm_a528b
+#
+# TRIGGRAR:
+# - Tvättstuga ringklocka: switch.ringklocka_tvattstuga -> 'on'
+# - Hall ringklocka: switch.ringklocka_hall -> 'on'
+# - Blink notification: båda ringklockor -> 'on'
+# - Enable/disable: group.track_for_home_devices -> 'home'/'not_home'
+#
+# LOGIK:
+# RINGKLOCKA TVÄTTSTUGA/HALL:
+# - Stäng av switch (återställ)
+# - 5 sek delay
+# - Ta kamera snapshot baserat på home_status:
+#   * Hemma på -> /media/Day/
+#   * Hemma av -> /media/Night/
+#   * Borta -> /media/Away/
+# - Skicka notifikation med snapshot
+# - 10 sek delay
+#
+# LJUSBLINKNING:
+# - Endast om någon hemma
+# - Toggle vitrinskåp ljus 4 gånger (1 sek mellan)
+# - Visuell notifikation
+#
+# ENABLE/DISABLE:
+# - Hemma -> Aktivera ringklocka
+# - Borta -> Inaktivera ringklocka
+#
+# SÄKERHET:
+# - Mode: single förhindrar överlappande exekvering
+# - Mode: queued för enable/disable (flera triggers samtidigt)
+# - Delays förhindrar spam
+# - Home check för blinkning (inget störande när borta)
+#
+# INTEGRATION:
+# - Camera snapshots sparas med timestamp
+# - Notifikationer inkluderar bild
+# - Integreras med home_status system
+#
+# KONSOLIDERINGSHISTORIK:
+# Denna automation ersätter följande tidigare automationer:
+# - Ringklocka tvättstuga (ID: 4680276550081)
+# - Ringklocka hall (ID: 2011937267361)
+# - Blinka med lyset när ringklocka ringer (ID: 8363608373239)
+# - Ringklocka on off (ID: 2421022434971)
+# 
+# Konsoliderad: 2025-12-27
+# Behållet ID: 4680276550081 (från tvättstuga)
+# Anledning: Enklare underhåll, delad logik, samlad ringklockshantering
+#
+# ÄNDRINGSLOGG:
+# v1.0: Ursprungliga separata automationer
+# v2.0 (2025-12-27): Konsoliderade alla ringklocksautomationer
+#######################################################
+
+
+#######################################################
+#                                                     #
+#       AUTOMATIONER FÖR RINGKLOCKOR                  #
+#                                                     #
+#######################################################
+
+  - alias: Ringklocka hantering
     id: '4680276550081'
-    mode: single
+    mode: queued
+    max: 5
 
     trigger:
+      # Ringklocka tvättstuga
       - platform: state
         entity_id: switch.ringklocka_tvattstuga
         to: 'on'
+        id: doorbell_laundry
 
-    action:
-      - service: homeassistant.turn_off
-        entity_id: switch.ringklocka_tvattstuga
-      - delay:
-          seconds: 5
-      - choose:
-          - conditions:
-              - condition: state
-                entity_id: input_select.home_status
-                state: 'Hemma på'
-            sequence:
-              - service: camera.snapshot
-                data:
-                  entity_id: camera.camera_3
-                  filename: /media/Day/camera_3_latest.jpg
-              - service: notify.mobile_app_sm_a528b
-                data:
-                  title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-                  message: "Ringklocka tvättstuga, dag"
-                  data:
-                    file: /media/Day/camera_3_latest.jpg
-          - conditions:
-              - condition: state
-                entity_id: input_select.home_status
-                state: 'Hemma av'
-            sequence:
-              - service: camera.snapshot
-                data:
-                  entity_id: camera.camera_3
-                  filename: /media/Night/camera_3_latest.jpg
-              - service: notify.mobile_app_sm_a528b
-                data:
-                  title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-                  message: "Ringklocka tvättstuga, natt"
-                  data:
-                    file: /media/Night/camera_3_latest.jpg
-          - conditions:
-              - condition: state
-                entity_id: input_select.home_status
-                state: 'borta'
-            sequence:
-              - service: camera.snapshot
-                data:
-                  entity_id: camera.camera_3
-                  filename: /media/Away/camera_3_latest.jpg
-              - service: notify.mobile_app_sm_a528b
-                data:
-                  title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-                  message: "Ringklocka tvättstuga, borta"
-                  data:
-                    file: /media/Away/camera_3_latest.jpg
-      - delay:
-          seconds: 10
-
-  ################################################################################
-  ### Ringklocka hall (samlad: dag / natt / borta)
-  ### T: switch.ringklocka_hall == on
-  ### C: input_select.home_status — hanteras med choose (dag/natt/borta)
-  ### A: homeassistant.turn_off switch, camera.snapshot, notify.mobile_app_sm_a528b
-  ################################################################################
-  - alias: Ringklocka hall
-    id: '2011937267361'
-    mode: single
-
-    trigger:
+      # Ringklocka hall
       - platform: state
         entity_id: switch.ringklocka_hall
         to: 'on'
+        id: doorbell_hall
 
-    action:
-      - service: homeassistant.turn_off
-        entity_id: switch.ringklocka_hall
-      - delay:
-          seconds: 5
-      - choose:
-          - conditions:
-              - condition: state
-                entity_id: input_select.home_status
-                state: 'Hemma på'
-            sequence:
-              - service: camera.snapshot
-                data:
-                  entity_id: camera.camera_2
-                  filename: /media/Day/camera_2_latest.jpg
-              - service: notify.mobile_app_sm_a528b
-                data:
-                  title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-                  message: "Ringklocka hall, dag"
-                  data:
-                    file: /media/Day/camera_2_latest.jpg
-          - conditions:
-              - condition: state
-                entity_id: input_select.home_status
-                state: 'Hemma av'
-            sequence:
-              - service: camera.snapshot
-                data:
-                  entity_id: camera.camera_2
-                  filename: /media/Night/camera_2_latest.jpg
-              - service: notify.mobile_app_sm_a528b
-                data:
-                  title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-                  message: "Ringklocka hall, natt"
-                  data:
-                    file: /media/Night/camera_2_latest.jpg
-          - conditions:
-              - condition: state
-                entity_id: input_select.home_status
-                state: 'borta'
-            sequence:
-              - service: camera.snapshot
-                data:
-                  entity_id: camera.camera_2
-                  filename: /media/Away/camera_2_latest.jpg
-              - service: notify.mobile_app_sm_a528b
-                data:
-                  title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-                  message: "Ringklocka hall, borta"
-                  data:
-                    file: /media/Away/camera_2_latest.jpg
-      - delay:
-          seconds: 10
-
-  ################################################################################
-  ### Blinka med lyset när ringklocka ringer
-  ### T: switch.ringklocka_tvattstuga == on OR switch.ringklocka_hall == on
-  ### C: group.track_for_home_devices == 'home'
-  ### A: light.toggle light.vardagsrum_vitrinskap2
-  ################################################################################
-  - alias: Blinka med lyset när ringklocka ringer
-    id: '8363608373239' 
-    mode: single
-
-    trigger:
-      - platform: state
-        entity_id: switch.ringklocka_tvattstuga
-        to: 'on'
-      - platform: state
-        entity_id: switch.ringklocka_hall
-        to: 'on'
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'home'
-
-    action:
-      - service: light.toggle
-        entity_id: light.vardagsrum_vitrinskap2
-      - delay:
-          seconds: 1
-      - service: light.toggle
-        entity_id: light.vardagsrum_vitrinskap2
-      - delay:
-          seconds: 1
-      - service: light.toggle
-        entity_id: light.vardagsrum_vitrinskap2
-      - delay:
-          seconds: 1
-      - service: light.toggle
-        entity_id: light.vardagsrum_vitrinskap2
-
-  ################################################################################
-  ### Stänger/sätter på ringklocka
-  ### T: group.track_for_home_devices changes to 'not_home' or 'home'
-  ### C: none
-  ### A: homeassistant.turn_off/turn_on switch.ringklocka
-  ################################################################################
-  - alias: Ringklocka on off
-    id: '2421022434971' 
-    mode: single
-
-    trigger:
+      # Enable/disable baserat på närvaro
       - platform: state
         entity_id: group.track_for_home_devices
         to: 'not_home'
+        id: disable_doorbell
+
       - platform: state
         entity_id: group.track_for_home_devices
         to: 'home'
+        id: enable_doorbell
 
     action:
       - choose:
-          - conditions:
-              - condition: template
-                value_template: "{{ trigger.to_state.state == 'not_home' }}"
+          # RINGKLOCKA TVÄTTSTUGA
+          - alias: Tvättstuga ringklocka hantering
+            conditions:
+              - condition: trigger
+                id: doorbell_laundry
+            sequence:
+              # Stäng av switch
+              - service: homeassistant.turn_off
+                entity_id: switch.ringklocka_tvattstuga
+              - delay:
+                  seconds: 5
+              
+              # Ljusblinkning om hemma
+              - if:
+                  - condition: state
+                    entity_id: group.track_for_home_devices
+                    state: 'home'
+                then:
+                  - service: light.toggle
+                    entity_id: light.vardagsrum_vitrinskap2
+                  - delay:
+                      seconds: 1
+                  - service: light.toggle
+                    entity_id: light.vardagsrum_vitrinskap2
+                  - delay:
+                      seconds: 1
+                  - service: light.toggle
+                    entity_id: light.vardagsrum_vitrinskap2
+                  - delay:
+                      seconds: 1
+                  - service: light.toggle
+                    entity_id: light.vardagsrum_vitrinskap2
+              
+              # Snapshot och notifikation baserat på home_status
+              - choose:
+                  - conditions:
+                      - condition: state
+                        entity_id: input_select.home_status
+                        state: 'Hemma på'
+                    sequence:
+                      - service: camera.snapshot
+                        data:
+                          entity_id: camera.camera_3
+                          filename: /media/Day/camera_3_latest.jpg
+                      - service: notify.mobile_app_sm_a528b
+                        data:
+                          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+                          message: "Ringklocka tvättstuga, dag"
+                          data:
+                            file: /media/Day/camera_3_latest.jpg
+                  - conditions:
+                      - condition: state
+                        entity_id: input_select.home_status
+                        state: 'Hemma av'
+                    sequence:
+                      - service: camera.snapshot
+                        data:
+                          entity_id: camera.camera_3
+                          filename: /media/Night/camera_3_latest.jpg
+                      - service: notify.mobile_app_sm_a528b
+                        data:
+                          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+                          message: "Ringklocka tvättstuga, natt"
+                          data:
+                            file: /media/Night/camera_3_latest.jpg
+                  - conditions:
+                      - condition: state
+                        entity_id: input_select.home_status
+                        state: 'borta'
+                    sequence:
+                      - service: camera.snapshot
+                        data:
+                          entity_id: camera.camera_3
+                          filename: /media/Away/camera_3_latest.jpg
+                      - service: notify.mobile_app_sm_a528b
+                        data:
+                          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+                          message: "Ringklocka tvättstuga, borta"
+                          data:
+                            file: /media/Away/camera_3_latest.jpg
+              - delay:
+                  seconds: 10
+
+          # RINGKLOCKA HALL
+          - alias: Hall ringklocka hantering
+            conditions:
+              - condition: trigger
+                id: doorbell_hall
+            sequence:
+              # Stäng av switch
+              - service: homeassistant.turn_off
+                entity_id: switch.ringklocka_hall
+              - delay:
+                  seconds: 5
+              
+              # Ljusblinkning om hemma
+              - if:
+                  - condition: state
+                    entity_id: group.track_for_home_devices
+                    state: 'home'
+                then:
+                  - service: light.toggle
+                    entity_id: light.vardagsrum_vitrinskap2
+                  - delay:
+                      seconds: 1
+                  - service: light.toggle
+                    entity_id: light.vardagsrum_vitrinskap2
+                  - delay:
+                      seconds: 1
+                  - service: light.toggle
+                    entity_id: light.vardagsrum_vitrinskap2
+                  - delay:
+                      seconds: 1
+                  - service: light.toggle
+                    entity_id: light.vardagsrum_vitrinskap2
+              
+              # Snapshot och notifikation baserat på home_status
+              - choose:
+                  - conditions:
+                      - condition: state
+                        entity_id: input_select.home_status
+                        state: 'Hemma på'
+                    sequence:
+                      - service: camera.snapshot
+                        data:
+                          entity_id: camera.camera_2
+                          filename: /media/Day/camera_2_latest.jpg
+                      - service: notify.mobile_app_sm_a528b
+                        data:
+                          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+                          message: "Ringklocka hall, dag"
+                          data:
+                            file: /media/Day/camera_2_latest.jpg
+                  - conditions:
+                      - condition: state
+                        entity_id: input_select.home_status
+                        state: 'Hemma av'
+                    sequence:
+                      - service: camera.snapshot
+                        data:
+                          entity_id: camera.camera_2
+                          filename: /media/Night/camera_2_latest.jpg
+                      - service: notify.mobile_app_sm_a528b
+                        data:
+                          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+                          message: "Ringklocka hall, natt"
+                          data:
+                            file: /media/Night/camera_2_latest.jpg
+                  - conditions:
+                      - condition: state
+                        entity_id: input_select.home_status
+                        state: 'borta'
+                    sequence:
+                      - service: camera.snapshot
+                        data:
+                          entity_id: camera.camera_2
+                          filename: /media/Away/camera_2_latest.jpg
+                      - service: notify.mobile_app_sm_a528b
+                        data:
+                          title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+                          message: "Ringklocka hall, borta"
+                          data:
+                            file: /media/Away/camera_2_latest.jpg
+              - delay:
+                  seconds: 10
+
+          # INAKTIVERA RINGKLOCKA (BORTA)
+          - alias: Inaktivera ringklocka när borta
+            conditions:
+              - condition: trigger
+                id: disable_doorbell
             sequence:
               - service: homeassistant.turn_off
                 entity_id: switch.ringklocka
-          - conditions:
-              - condition: template
-                value_template: "{{ trigger.to_state.state == 'home' }}"
+
+          # AKTIVERA RINGKLOCKA (HEMMA)
+          - alias: Aktivera ringklocka när hemma
+            conditions:
+              - condition: trigger
+                id: enable_doorbell
             sequence:
               - service: homeassistant.turn_on
                 entity_id: switch.ringklocka

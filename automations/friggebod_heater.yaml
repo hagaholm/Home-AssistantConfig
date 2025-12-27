@@ -1,12 +1,52 @@
-  ############################################
-  ### Starta elvärme friggebod högfukt     ###
-  ### T: sensor.friggebod_humidity > 58    ###
-  ### C: sensor.friggebod_temperature < 15 ###
-  ### A: switch.friggebod_elvarme = on     ###
-  ############################################
-- alias: Starta elvärme friggebod högfukt
+#######################################################
+#                                                     #
+#           FRIGGEBOD ELVÄRME AUTOMATION              #
+#                                                     #
+#######################################################
+#
+# BESKRIVNING:
+# Samlad automation för friggebodets elvärmare baserat på
+# fuktighetsnivå och temperatur.
+# Förhindrar mögel och fuktskador genom automatisk uppvärmning.
+#
+# HÅRDVARA:
+# - Fuktsensor: sensor.friggebod_humidity
+# - Temperatursensor: sensor.friggebod_temperature
+# - Värmeelement: switch.friggebod_elvarme
+#
+# TRIGGRAR:
+# - Fuktighet över 58% (för högt)
+# - Fuktighet under 56% (normalt)
+#
+# LOGIK:
+# TÄND:
+# - När fuktighet >58% OCH temperatur <15°C
+# - Värmen sänker fuktighetsnivån
+#
+# SLÄCK:
+# - När fuktighet <56%
+# - Hysteresis (56-58%) förhindrar flackering
+#
+# SÄKERHET:
+# - Endast värmning vid låg temperatur (<15°C)
+# - Förhindrar onödig energiförbrukning
+# - Skyddar mot mögel och fukt
+#
+# INTEGRATION:
+# - Styrs direkt via switch.friggebod_elvarme
+# - Arbetar oberoende av andra system
+#######################################################
+
+
+#######################################################
+#                                                     #
+#         AUTOMATIONER FÖR FRIGGEBOD ELVÄRME          #
+#                                                     #
+#######################################################
+
+- alias: Elvärme friggebod
   id: '8788687721121' 
-  mode: queued
+  mode: single
 
   trigger:
     - platform: numeric_state
@@ -14,54 +54,27 @@
       above: '58'
     - platform: numeric_state
       entity_id: sensor.friggebod_humidity
-      above: '59'
-    - platform: numeric_state
-      entity_id: sensor.friggebod_humidity
-      above: '60'
-    - platform: numeric_state
-      entity_id: sensor.friggebod_humidity
-      above: '61'
-    - platform: numeric_state
-      entity_id: sensor.friggebod_humidity
-      above: '62'
-      
-  condition:
-    condition: and
-    conditions:
-      - condition: numeric_state
-        entity_id: sensor.friggebod_temperature
-        below: 15
-
-  action:
-    - service: homeassistant.turn_on
-      entity_id: switch.friggebod_elvarme
-
-  #########################################
-  ### Stoppa elvärme friggebod lågfukt  ###
-  ### T: sensor.friggebod_humidity < 56 ###
-  ### A: switch.friggebod_elvarme = off ###
-  #########################################
-- alias: Stoppa elvärme friggebod lågfukt
-  id: '2942381691966' 
-  mode: queued
-
-  trigger:
-    - platform: numeric_state
-      entity_id: sensor.friggebod_humidity
       below: '56'
-    - platform: numeric_state
-      entity_id: sensor.friggebod_humidity
-      below: '55'
-    - platform: numeric_state
-      entity_id: sensor.friggebod_humidity
-      below: '54'
-    - platform: numeric_state
-      entity_id: sensor.friggebod_humidity
-      below: '53'
-    - platform: numeric_state
-      entity_id: sensor.friggebod_humidity
-      below: '52'
-      
+
   action:
-    - service: homeassistant.turn_off
-      entity_id: switch.friggebod_elvarme
+    - choose:
+        # TÄND - Hög fukt
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.friggebod_humidity
+              above: 58
+            - condition: numeric_state
+              entity_id: sensor.friggebod_temperature
+              below: 15
+          sequence:
+            - service: homeassistant.turn_on
+              entity_id: switch.friggebod_elvarme
+
+        # SLÄCK - Låg fukt
+        - conditions:
+            - condition: numeric_state
+              entity_id: sensor.friggebod_humidity
+              below: 56
+          sequence:
+            - service: homeassistant.turn_off
+              entity_id: switch.friggebod_elvarme

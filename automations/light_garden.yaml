@@ -1,172 +1,160 @@
-    ##########################
-    ### Trädgårdsbelysning ###
-    ##########################
-    #################################################################
-    ### Tänder trädgårdsbelysning på morgonen vid rörelse i köket ###
-    ### T: input_select.home_status == Hemma på                   ###
-    ### C: sensor.ljusstyrka < ljusstyrka_40                      ###
-    ###    05:00:00 - 12:00:00                                    ###
-    ### A: input_select.light_garden = Tänt                       ###
-    #################################################################
-  - alias: Trädgårdsbelysning on (sensor on, <ljusstyrka_40)
-    id: '3424915007859' 
+#######################################################
+#                                                     #
+#            TRÄDGÅRDSBELYSNING AUTOMATION            #
+#                                                     #
+#######################################################
+#
+# BESKRIVNING:
+# Samlad automation för trädgårdsbelysning baserat på
+# ljusnivå, tid på dygnet och hemstatus.
+# Hanterar både tändning och släckning i samma automation.
+#
+# HÅRDVARA:
+# - Ljussensor: sensor.ljusstyrka
+# - Trädgårdsswitch: switch.tradgard
+# - Hemstatus: input_select.home_status
+# - Innebelysning: light.kok_lilla_fonstret
+#
+# TRIGGRAR:
+# - Hemstatus ändras till 'Hemma på'
+# - Ljusnivå under 40 lux (mörkt)
+# - Ljusnivå över 60 lux (ljust)
+# - Innebelysning släcks
+#
+# LOGIK:
+# TÄND:
+# - Morgon (05:00-12:00): När hemma på och mörkt
+# - Eftermiddag/kväll (12:00-05:00): När hemma på och mörkt
+# - Borta (12:00-05:00): När borta och mörkt (säkerhet)
+#
+# SLÄCK:
+# - När det blir ljust (>60 lux)
+# - Kväll (21:00-06:00): När inne släcks och hemma
+#
+# INTEGRATION:
+# - Styrs via input_select.light_garden
+# - Samordnas med innebelysning
+#######################################################
+
+
+#######################################################
+#                                                     #
+#        AUTOMATIONER FÖR TRÄDGÅRDSBELYSNING          #
+#                                                     #
+#######################################################
+
+  - alias: Trädgårdsbelysning
+    id: '3424915007859'
+    mode: single
 
     trigger:
       - platform: state
         entity_id: input_select.home_status
         to: 'Hemma på'
-
-    condition:
-      condition: and
-      conditions:
-        - condition: numeric_state
-          entity_id: sensor.ljusstyrka
-          below: input_number.ljusstyrka_40
-        - condition: state
-          entity_id: switch.tradgard
-          state: 'off'
-        - condition: time
-          after: '05:00:00'
-          before: '12:00:00'
+      - platform: numeric_state
+        entity_id: sensor.ljusstyrka
+        below: input_number.ljusstyrka_40
+      - platform: numeric_state
+        entity_id: sensor.ljusstyrka
+        above: input_number.ljusstyrka_60
+      - platform: state
+        entity_id: light.kok_lilla_fonstret
+        to: 'off'
 
     action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_garden
-          option: Tänt
+      - choose:
+          # Turn ON scenarios
+          - alias: Tänd - Morgon när någon är hemma
+            conditions:
+              - condition: state
+                entity_id: input_select.home_status
+                state: 'Hemma på'
+              - condition: time
+                after: '05:00:00'
+                before: '12:00:00'
+              - condition: numeric_state
+                entity_id: sensor.ljusstyrka
+                below: input_number.ljusstyrka_40
+              - condition: state
+                entity_id: switch.tradgard
+                state: 'off'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_garden
+                  option: Tänt
 
-    ####################################################
-    ### Tänder trädgårdsbelysning när det blir mörkt ###
-    ### T: sensor.ljusstyrka < ljusstyrka_40         ###
-    ### C: group.track_for_home_devices == 'home'    ###
-    ###    input_select.home_status == 'Hemma på'    ###
-    ###    time: 12:00 - 05:00                       ###
-    ###    switch.tradgard == off                    ###
-    ### A: input_select.light_garden = Tänt          ###
-    ####################################################
-  - alias: Trädgårdsbelysning on (home, <ljusstyrka_40)
-    id: '2659740649379' 
+          - alias: Tänd - Hemma eftermiddag och kväll
+            conditions:
+              - condition: time
+                after: '12:00:00'
+                before: '05:00:00'
+              - condition: numeric_state
+                entity_id: sensor.ljusstyrka
+                below: input_number.ljusstyrka_40
+              - condition: state
+                entity_id: group.track_for_home_devices
+                state: 'home'
+              - condition: state
+                entity_id: input_select.home_status
+                state: 'Hemma på'
+              - condition: state
+                entity_id: switch.tradgard
+                state: 'off'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_garden
+                  option: Tänt
 
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.ljusstyrka
-      below: input_number.ljusstyrka_40
+          - alias: Tänd - Borta eftermiddag och kväll
+            conditions:
+              - condition: time
+                after: '12:00:00'
+                before: '05:00:00'
+              - condition: numeric_state
+                entity_id: sensor.ljusstyrka
+                below: input_number.ljusstyrka_40
+              - condition: state
+                entity_id: group.track_for_home_devices
+                state: 'not_home'
+              - condition: state
+                entity_id: switch.tradgard
+                state: 'off'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_garden
+                  option: Tänt
 
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'home'
-        - condition: state
-          entity_id: input_select.home_status
-          state: 'Hemma på'
-        - condition: time
-          after: '12:00:00'
-          before: '05:00:00'
-        - condition: state
-          entity_id: switch.tradgard
-          state: 'off'
+          # Turn OFF scenarios
+          - alias: Släck - Ljust ute
+            conditions:
+              - condition: numeric_state
+                entity_id: sensor.ljusstyrka
+                above: input_number.ljusstyrka_60
+              - condition: state
+                entity_id: switch.tradgard
+                state: 'on'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_garden
+                  option: Släckt
 
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_garden
-          option: Tänt
-
-    #######################################################################
-    ### Tänder trädgårdsbelysning när det blir mörkt och ingen är hemma ###
-    ### T: sensor.ljusstyrka < ljusstyrka_40                            ###
-    ### C: group.track_for_home_devices == not_home'                    ###
-    ### C: time: 12:00 - 05:00                                          ###
-    ###    switch.tradgard == off                                       ###
-    ### A: input_select.light_garden = Tänt                             ###
-    #######################################################################
-  - alias: Trädgårdsbelysning on (away, <ljusstyrka_40)
-    id: '7481459097506' 
-
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.ljusstyrka
-      below: input_number.ljusstyrka_40
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'not_home'
-        - condition: time
-          after: '12:00:00'
-          before: '05:00:00'
-        - condition: state
-          entity_id: switch.tradgard
-          state: 'off'
-
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_garden
-          option: Tänt
-
-    #####################################################
-    ### Släcker trädgårdsbelysning när det blir ljust ###
-    ### T: sensor.ljusstyrka > ljusstyrka_60          ###
-    ### C: switch.tradgard == on                      ###
-    ### A: input_select.light_garden = Släckt         ###
-    #####################################################
-  - alias: Trädgårdsbelysning off (>ljusstyrka_60)
-    id: '1417486230078' 
-
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.ljusstyrka
-      above: input_number.ljusstyrka_60
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: switch.tradgard
-          state: 'on'
-
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_garden
-          option: Släckt
-
-    ######################################################
-    ### Släcker trädgårdsbelysning när det släcks inne ###
-    ### T: light.kok_lilla_fonstret == off             ###
-    ### C: time: 21:00 - 06:00                         ###
-    ###    group.track_for_home_devices = 'home'       ###
-    ###    switch.tradgard == on                       ###
-    ### A: input_select.light_garden = Släckt          ###
-    ######################################################
-  - alias: Trädgårdsbelysning off
-    id: '6466592087797' 
-
-    trigger:
-      platform: state
-      entity_id: light.kok_lilla_fonstret
-      to: 'off'
-
-    condition:
-      condition: and
-      conditions:
-        - condition: time
-          after: '21:00:00'
-          before: '06:00:00'
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'home'
-        - condition: state
-          entity_id: switch.tradgard
-          state: 'on'
-
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_garden
-          option: Släckt
+          - alias: Släck - Inne släcks på kvällen
+            conditions:
+              - condition: time
+                after: '21:00:00'
+                before: '06:00:00'
+              - condition: state
+                entity_id: group.track_for_home_devices
+                state: 'home'
+              - condition: state
+                entity_id: switch.tradgard
+                state: 'on'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_garden
+                  option: Släckt

@@ -1,3 +1,45 @@
+#######################################################
+#                                                     #
+#    TRÄDGÅRDSBELYSNING INPUT_SELECT AUTOMATION       #
+#                                                     #
+#######################################################
+#
+# METADATA:
+# Skapad: [ursprungligt datum]
+# Senast ändrad: 2025-12-27
+# Version: 1.1
+# Författare: Home Assistant Config
+#
+# BESKRIVNING:
+# State machine automation för trädgårdsbelysning.
+# Lyssnar på input_select ändringar och anropar
+# motsvarande belysningsskript.
+#
+# HÅRDVARA/ENTITETER:
+# - input_select.light_garden (Tänt/Släckt)
+# - script.tradgards_belysning_on
+# - script.tradgards_belysning_off
+#
+# TRIGGRAR:
+# - input_select.light_garden -> 'Tänt'
+# - input_select.light_garden -> 'Släckt'
+#
+# LOGIK:
+# När input_select.light_garden ändras:
+# - Tänt -> Anropar script.tradgards_belysning_on
+# - Släckt -> Anropar script.tradgards_belysning_off
+#
+# INTEGRATION:
+# - Kopplad till input_select.light_garden
+# - Styrs av automation i light_garden.yaml
+# - Scriptet hanterar faktisk ljuskontroll
+#
+# ÄNDRINGSLOGG:
+# v1.0: Ursprungliga automationer
+# v1.1 (2025-12-27): Lade till omfattande dokumentation
+#######################################################
+
+
     ############################################
     ### Tänder trädgårdsbelysning            ###
     ### T: input_select.light_garden == Tänt ###

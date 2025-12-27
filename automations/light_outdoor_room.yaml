@@ -1,175 +1,129 @@
-    ######################################################
-    ### Tänder belysning i uterum när någon kommer hem ###
-    ### T: group.track_for_home_devices == home        ###
-    ### C: 12:00:00 - 21:45:00                         ###
-    ###    sensor.ljusstyrka < 150                     ###
-    ###    sensor.uterum_temperatur > 18               ###
-    ### A: input_select.light_uterum = Tänt            ###
-    ######################################################
-  - alias: Uterums belysning on (home)
-    id: '6999561468534' 
+#######################################################
+#                                                     #
+#            UTERUMSBELYSNING AUTOMATION              #
+#                                                     #
+#######################################################
+#
+# BESKRIVNING:
+# Samlad automation för uterumsbelysning baserat på
+# temperatur, ljusnivå, hemstatus och tid.
+# Automatisk tänd/släck med säkerhetskontroller.
+#
+# HÅRDVARA:
+# - Temperatursensor: sensor.uterum_temperatur
+# - Ljussensor: sensor.ljusstyrka
+# - Hemspårning: group.track_for_home_devices
+# - Innebelysning: light.kok_lilla_fonstret
+#
+# TRIGGRAR:
+# - Någon kommer hem
+# - Temperatur över 18°C (varmt nog)
+# - Ljusnivå under 150 lux (mörkt)
+# - Temperatur under 17°C (för kallt)
+# - Alla lämnar hemmet
+# - Innebelysning släcks
+#
+# LOGIK:
+# TÄND:
+# - Mellan 12:00-21:45
+# - När ljus <150 lux OCH temp >18°C OCH hemma
+#
+# SLÄCK:
+# - Temperatur <17°C (för kallt att sitta ute)
+# - När alla lämnar hemmet
+# - När innebelysning släcks (hemma, kväll)
+#
+# INTEGRATION:
+# - Styrs via input_select.light_uterum
+# - Samordnas med innebelysning och hemstatus
+#######################################################
+
+
+#######################################################
+#                                                     #
+#          AUTOMATIONER FÖR UTERUMSBELYSNING          #
+#                                                     #
+#######################################################
+
+  - alias: Uterums belysning
+    id: '6999561468534'
+    mode: single
 
     trigger:
-      platform: state
-      entity_id: group.track_for_home_devices
-      from: 'not_home'
-      to: 'home'
-
-    condition:
-      condition: and
-      conditions:
-        - condition: time
-          after: '12:00:00'
-          before: '21:45:00' 
-        - condition: numeric_state
-          entity_id: sensor.ljusstyrka
-          below: input_number.ljusstyrka_150
-        - condition: numeric_state
-          entity_id: sensor.uterum_temperatur
-          above: 18
-
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_uterum
-          option: Tänt
-
-    ####################################################
-    ### Tänder belysning i uterum när det blir varmt ###
-    ### T: sensor.uterum_temperatur > 18             ###
-    ### C: 12:00:00 - 21:45:00                       ###
-    ###    sensor.ljusstyrka < 150                   ###
-    ###    group.track_for_home_devices == home      ###
-    ### A: input_select.light_uterum = Tänt          ###
-    ####################################################
-  - alias: Uterums belysning on (>18)
-    id: '1408755934938' 
-
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.uterum_temperatur
-      above: 18
-
-    condition:
-      condition: and
-      conditions:
-        - condition: time
-          after: '12:00:00'
-          before: '21:45:00' 
-        - condition: numeric_state
-          entity_id: sensor.ljusstyrka
-          below: input_number.ljusstyrka_150
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'home'
+      - platform: state
+        entity_id: group.track_for_home_devices
+        from: 'not_home'
+        to: 'home'
+      - platform: numeric_state
+        entity_id: sensor.uterum_temperatur
+        above: 18
+      - platform: numeric_state
+        entity_id: sensor.ljusstyrka
+        below: input_number.ljusstyrka_150
+      - platform: numeric_state
+        entity_id: sensor.uterum_temperatur
+        below: 17
+      - platform: state
+        entity_id: group.track_for_home_devices
+        from: 'home'
+        to: 'not_home'
+      - platform: state
+        entity_id: light.kok_lilla_fonstret
+        to: 'off'
 
     action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_uterum
-          option: Tänt
+      - choose:
+          # Turn ON scenarios
+          - alias: Tänd - Rätt förutsättningar
+            conditions:
+              - condition: time
+                after: '12:00:00'
+                before: '21:45:00'
+              - condition: numeric_state
+                entity_id: sensor.ljusstyrka
+                below: input_number.ljusstyrka_150
+              - condition: numeric_state
+                entity_id: sensor.uterum_temperatur
+                above: 18
+              - condition: state
+                entity_id: group.track_for_home_devices
+                state: 'home'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_uterum
+                  option: Tänt
 
-    ####################################################
-    ### Tänder belysning i uterum när det blir mörkt ###
-    ### T: sensor.ljusstyrka < 150                   ###
-    ### C: 12:00:00 - 21:45:00                       ###
-    ###    sensor.uterum_temperatur > 18             ###
-    ###    group.track_for_home_devices == home      ###
-    ### A: input_select.light_uterum = Tänt          ###
-    ####################################################
-  - alias: Uterums belysning on (<150)
-    id: '7936072355711' 
+          # Turn OFF scenarios
+          - alias: Släck - För kallt
+            conditions:
+              - condition: numeric_state
+                entity_id: sensor.uterum_temperatur
+                below: 17
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_uterum
+                  option: Släckt
 
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.ljusstyrka
-      below: input_number.ljusstyrka_150
+          - alias: Släck - Hemma ingen längre hemma
+            conditions:
+              - condition: state
+                entity_id: group.track_for_home_devices
+                state: 'not_home'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_uterum
+                  option: Släckt
 
-    condition:
-      condition: and
-      conditions:
-        - condition: time
-          after: '12:00:00'
-          before: '21:45:00' 
-        - condition: numeric_state
-          entity_id: sensor.uterum_temperatur
-          above: '18'
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'home'
-
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_uterum
-          option: Tänt
-
-    ##########################################################################
-    ### Släcker uterums belysning på kvällen när allt släcks inne av någon ###
-    ### T: light.kok_lilla_fonstret == off                                 ###
-    ### C: group.track_for_home_devices == home                            ###
-    ### A: input_select.light_uterum = Släckt                              ###
-    ##########################################################################
-  - alias: Uterums belysning off (All off, hemma)
-    id: '2608066300315' 
-
-    trigger:
-      platform: state
-      entity_id: light.kok_lilla_fonstret
-      to: 'off'
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: group.track_for_home_devices
-          state: 'home'
-
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_uterum
-          option: Släckt
-
-    ###############################################################
-    ### Släcker uterums belysning på kvällen när ingen är hemma ###
-    ### T: group.track_for_home_devices == not_home             ###
-    ### A: input_select.light_uterum = Släckt                   ###
-    ###############################################################
-  - alias: Uterums belysning off (Borta)
-    id: '4019232760768' 
-
-    trigger:
-      platform: state
-      entity_id: group.track_for_home_devices
-      from: 'home'
-      to: 'not_home'
-
-    condition:
-
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_uterum
-          option: Släckt
-
-    ########################################################
-    ### Släcker uterums belysning när det blir för kallt ###
-    ### T: sensor.uterum_temperatur < 17                 ###
-    ### A: input_select.light_uterum = Släckt            ###
-    ########################################################
-  - alias: Uterums belysning off (<17)
-    id: '0933491069649' 
-
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.uterum_temperatur
-      below: 17
-
-    condition:
-
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_uterum
-          option: Släckt
+          - alias: Släck - Inne släcks på kvällen
+            conditions:
+              - condition: state
+                entity_id: group.track_for_home_devices
+                state: 'home'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_uterum
+                  option: Släckt

@@ -1,102 +1,96 @@
-    #######################################################
-    ### Tänder morgonbelysning                          ###
-    ### T: input_select.light_inside == Morgonbelysning ###
-    ### A: script.morninglight_on                       ###
-    #######################################################
-  - alias: Tänd morgonbelysning
+#######################################################
+#                                                     #
+#        INNEBELYSNING INPUT_SELECT AUTOMATION        #
+#                                                     #
+#######################################################
+#
+# BESKRIVNING:
+# State machine automation för innebelysning.
+# Lyssnar på input_select ändringar och anropar
+# motsvarande belysningsskript.
+#
+# HÅRDVARA:
+# - Styrs via: input_select.light_inside
+# - Exekveras av: script.*_lights_on
+#
+# TILLSTÅND:
+# - Morgonbelysning: Mjukt morgonljus (05:00-09:00)
+# - Dagbelysning: Normalt dagsljus
+# - Kvällsbelysning: Dämpat kvällsljus
+# - Nattbelysning: Minimalt nattljus (vid rörelse)
+# - Bortabelysning: Simulerar närvaro när borta
+# - Fönsterbelysning: Julbelysning i fönster
+#
+# LOGIK:
+# När input_select.light_inside ändras:
+# - Identifiera nytt tillstånd
+# - Anropa motsvarande script
+# - Scriptet hanterar faktisk ljuskontroll för alla rum
+#
+# INTEGRATION:
+# - Kopplad till input_select.light_inside
+# - Triggar centrala belysningsskript
+# - Styrs av automationer i light_inside_*.yaml
+#######################################################
+
+
+#######################################################
+#                                                     #
+#      AUTOMATIONER FÖR INNEBELYSNING STATE           #
+#                                                     #
+#######################################################
+
+  - alias: Innebelysning
     id: '6907390770110' 
     mode: single
 
     trigger:
       - platform: state
         entity_id: input_select.light_inside
-        to: Morgonbelysning
 
     action:
-      - service: script.morning_lights_on
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_inside
+                state: Morgonbelysning
+            sequence:
+              - service: script.morning_lights_on
 
-    ####################################################
-    ### Tänder dagbelysning                          ###
-    ### T: input_select.light_inside == Dagbelysning ###
-    ### A: script.daylights_on                       ###
-    ####################################################
-  - alias: Tänd dagbelysning
-    id: '9546352897058' 
-    mode: single
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_inside
+                state: Dagbelysning
+            sequence:
+              - service: script.daylights_on
 
-    trigger:
-      - platform: state
-        entity_id: input_select.light_inside
-        to: Dagbelysning
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_inside
+                state: Kvällsbelysning
+            sequence:
+              - service: script.eveninglights_on
 
-    action:
-      - service: script.daylights_on
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_inside
+                state: Nattbelysning
+            sequence:
+              - service: script.night_light
 
-    #######################################################
-    ### Tänder kvällsbelysning                          ###
-    ### T: input_select.light_inside == Kvällsbelysning ###
-    ### A: script.eveninglights_on                      ###
-    #######################################################
-  - alias: Tänd kvällsbelysning
-    id: '7859573227635' 
-    mode: single
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_inside
+                state: Bortabelysning
+            sequence:
+              - service: script.away_lights_on
 
-    trigger:
-      - platform: state
-        entity_id: input_select.light_inside
-        to: Kvällsbelysning
-
-    action:
-      - service: script.eveninglights_on
-
-    #####################################################
-    ### Tänder nattbelysning                          ###
-    ### T: input_select.light_inside == Nattbelysning ###
-    ### A: script.night_light                         ###
-    #####################################################
-  - alias: Tänd nattbelysning
-    id: '8371346094202' 
-    mode: single
-
-    trigger:
-      - platform: state
-        entity_id: input_select.light_inside
-        to: Nattbelysning
-
-    action:
-      - service: script.night_light
-
-    ######################################################
-    ### Tänder bortabelysning                          ###
-    ### T: input_select.light_inside == Bortabelysning ###
-    ### A: script.away_lights_on                       ###
-    ######################################################
-  - alias: Tänd bortabelysning
-    id: '8101959319180' 
-    mode: single
-
-    trigger:
-      - platform: state
-        entity_id: input_select.light_inside
-        to: Bortabelysning
-
-    action:
-      - service: script.away_lights_on
-
-    ###################################################################
-    ### Tänder fönterbelysning                                      ###
-    ### För att julbelysning ska vara tänd även om det är ljust ute ###
-    ### T: input_select.light_inside == Fönsterbelysning            ###
-    ### A: script.christmas_lights_on                               ###
-    ###################################################################
-  - alias: Tänd fönsterbelysning
-    id: '9050937919698' 
-    mode: single
-
-    trigger:
-      - platform: state
-        entity_id: input_select.light_inside
-        to: Fönsterbelysning
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_inside
+                state: Fönsterbelysning
+            sequence:
+              - service: script.christmas_lights_on
 
     action:
       - service: script.window_lights_on

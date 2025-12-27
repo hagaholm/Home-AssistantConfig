@@ -1,3 +1,45 @@
+#######################################################
+#                                                     #
+#     UTERUMSBELYSNING INPUT_SELECT AUTOMATION        #
+#                                                     #
+#######################################################
+#
+# METADATA:
+# Skapad: [ursprungligt datum]
+# Senast ändrad: 2025-12-27
+# Version: 1.1
+# Författare: Home Assistant Config
+#
+# BESKRIVNING:
+# State machine automation för uterumsbelysning.
+# Lyssnar på input_select ändringar och anropar
+# motsvarande belysningsskript.
+#
+# HÅRDVARA/ENTITETER:
+# - input_select.light_uterum (Tänt/Släckt)
+# - script.outdoor_room_light_on
+# - script.outdoor_room_light_off
+#
+# TRIGGRAR:
+# - input_select.light_uterum -> 'Tänt'
+# - input_select.light_uterum -> 'Släckt'
+#
+# LOGIK:
+# När input_select.light_uterum ändras:
+# - Tänt -> Anropar script.outdoor_room_light_on
+# - Släckt -> Anropar script.outdoor_room_light_off
+#
+# INTEGRATION:
+# - Kopplad till input_select.light_uterum
+# - Styrs av automation i light_outdoor_room.yaml
+# - Scriptet hanterar faktisk ljuskontroll
+#
+# ÄNDRINGSLOGG:
+# v1.0: Ursprungliga automationer
+# v1.1 (2025-12-27): Lade till omfattande dokumentation
+#######################################################
+
+
     ############################################
     ### Tänder uterumsbelysning              ###
     ### T: input_select.light_uterum == Tänt ###

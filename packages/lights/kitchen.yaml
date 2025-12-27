@@ -1,0 +1,441 @@
+####################################################
+#                                                  #
+#              KÖKSBELYSNING PACKAGE               #
+#                                                  #
+####################################################
+# Samlar all köksbelysningslogik i ett paket:
+# - Input select för ljusnivåer
+# - Automations för närvaro- och state-machine-styrning
+# - Scripts för faktiska ljusnivåer
+#
+# Källor:
+# - automations/light_kitchen.yaml
+# - automations/input_select_light_kitchen.yaml
+# - script/light_kitchen.yaml
+# - helpers/input_selects.yaml (light_kitchen)
+#
+# Hårdvara/Entiteter:
+# - Aqara FP2 närvarosensor (3 zoner)
+# - input_select.light_kitchen (Släckt/25%/50%/100%)
+# - input_boolean.kitchen_light_on, input_boolean.morning_light_on
+# - Scripts: script.kitchen_light_{25,50,100,off}
+#
+# Säkerhet:
+# - IDs och alias bibehållna för bakåtkompatibilitet
+# - Mode single/queued enligt original
+####################################################
+
+#######################
+### Input Select(s) ###
+#######################
+input_select:
+  light_kitchen:
+    name: Köksbelysning
+    # Kitchen brightness control with 4 levels
+    # Allows fine-grained control of brightness in kitchen work areas
+    # Updated by: Kitchen automation and manual overrides
+    # Used by: light_kitchen script for brightness adjustment
+    options:
+     - Släckt
+     - 25%
+     - 50%
+     - 100%
+    icon: mdi:lightbulb
+
+##################
+### Automation ###
+##################
+automation:
+
+####################################################
+#                                                  #
+#                KÖKSBELYSNING AUTOMATION          #
+#                                                  #
+####################################################
+#
+# BESKRIVNING:
+# Automatiserat belysningssystem för köket som styrs av Aqara FP2-närvarosensorer och hemstatus.
+#
+# HÅRDVARA:
+# - Aqara FP2 närvarosensor med 3 zoner:
+#   * Zone 1 (sensor_1): Övergripande köksnärvaro
+#   * Zone 2 (sensor_2): Köksbord
+#   * Zone 3 (sensor_3): Köksbänk
+#
+# FUNKTIONALITET:
+# 1. SLÄCK BELYSNING:
+#    - Om ingen närvaro i hela köket (sensor_1 = off):
+#      * Sätter input_select.light_kitchen till 'Släckt' om den inte redan är det.
+#      * Fördröjning: 1 minut innan släckning, utom när input_select.light_kitchen är 25%, då är fördröjningen 30 sekunder.
+# 2. TÄND 25%:
+#    - Om närvaro i hela köket (sensor_1 = on) och home_status = 'Hemma av':
+#      * Sätter input_select.light_kitchen till 25%.
+# 3. TÄND 50%:
+#    - Om närvaro i hela köket (sensor_1 = on) och home_status är 'Hemma på' eller 'Borta' samt input_boolean.morning_light_on är på:
+#      * Sätter input_select.light_kitchen till 50%.
+# 4. TÄND 100%:
+#    - Om närvaro vid köksbord (sensor_2) eller köksbänk (sensor_3) och home_status är 'Hemma på' eller 'Borta' samt input_boolean.kitchen_light_on är på:
+#      * Sätter input_select.light_kitchen till 100%.
+#
+# SÄKERHETSKONTROLLER:
+# - Kontroll av att lampor inte redan är släckta innan släckning.
+# - Kontroll av hemstatus och kitchen_light_on innan tändning.
+#
+# INTEGRATION:
+# - Styrs via input_select.light_kitchen (Släckt/25%/100%)
+# - Aktiveras/inaktiveras via input_boolean.kitchen_light_on
+# - Hemstatus från input_select.home_status
+####################################################
+
+  # ------------------------------------------------
+  # SLÄCK KÖKSBELYSNING VID INGEN NÄRVARO           #
+  # ------------------------------------------------
+  - alias: Kök belysning av (ingen närvaro)
+    id: 'kitchen_light_off_no_presence'
+    description: >
+      Släcker köksbelysning när ingen närvaro i hela köket (sensor_1 = off).
+      Sätter input_select.light_kitchen till 'Släckt' om den inte redan är det.
+    mode: single
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.presence_sensor_fp2_9a29_presence_sensor_1
+        to: 'off'
+        for:
+          seconds: 30
+        id: delay_30s
+      - platform: state
+        entity_id: binary_sensor.presence_sensor_fp2_9a29_presence_sensor_1
+        to: 'off'
+        for:
+          minutes: 1
+        id: delay_1min
+    condition:
+      - condition: template
+        value_template: >
+          {{
+            (trigger.id == 'delay_30s' and states('input_select.light_kitchen') == '25%') or
+            (trigger.id == 'delay_1min' and states('input_select.light_kitchen') != '25%' and states('input_select.light_kitchen') != 'Släckt')
+          }}
+    action:
+      - service: input_select.select_option
+        target:
+          entity_id: input_select.light_kitchen
+        data:
+          option: Släckt
+
+  # ------------------------------------------------
+  # TÄND 25% VID NÄRVARO I HELA KÖKET VID HEMMA AV     #
+  # ------------------------------------------------
+  - alias: Kök belysning 25% (närvaro hela köket)
+    id: 'kitchen_light_25_presence_all'
+    description: >
+      Sätter köksbelysning till 25% om närvaro i hela köket (sensor_1 = on)
+      och home_status är 'Hemma av'.
+    mode: single
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.presence_sensor_fp2_9a29_presence_sensor_1
+        to: 'on'
+    condition:
+      - condition: state
+        entity_id: input_select.home_status
+        state: 'Hemma av'
+      - condition: state
+        entity_id: input_select.light_kitchen
+        state: 'Släckt'
+    action:
+      - service: input_select.select_option
+        target:
+          entity_id: input_select.light_kitchen
+        data:
+          option: 25%
+
+  # ------------------------------------------------
+  # TÄND 50% VID NÄRVARO I HELA KÖKET (HEMMA PÅ ELLER BORTA)
+  # ------------------------------------------------
+  - alias: Kök belysning 50% (närvaro hela köket)
+    id: 'kitchen_light_50_presence_all'
+    description: >
+      Sätter köksbelysning till 50% om närvaro i hela köket (sensor_1 = on)
+      och home_status är 'Hemma på' eller 'Borta' samt input_boolean.morning_light_on är på.
+    mode: single
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.presence_sensor_fp2_9a29_presence_sensor_1
+        to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.morning_light_on
+          state: 'on'
+        - condition: or
+          conditions:
+            - condition: state
+              entity_id: input_select.home_status
+              state: 'Hemma på'
+            - condition: state
+              entity_id: input_select.home_status
+              state: 'Borta'
+        - condition: state
+          entity_id: input_select.light_kitchen
+          state: 'Släckt'
+    action:
+      - service: input_select.select_option
+        target:
+          entity_id: input_select.light_kitchen
+        data:
+          option: 50%
+
+  # ------------------------------------------------
+  # TÄND 100% VID NÄRVARO VID KÖKSBORD/BÄNK (HEMMA PÅ ELLER BORTA)
+  # ------------------------------------------------
+  - alias: Kök belysning 100% (närvaro zon 2/3)
+    id: 'kitchen_light_100_presence_2_3'
+    description: >
+      Sätter köksbelysning till 100% om närvaro vid köksbord (sensor_2) eller köksbänk (sensor_3)
+      och home_status är 'Hemma på' eller 'Borta' samt input_boolean.kitchen_light_on är på.
+    mode: queued
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.presence_sensor_fp2_9a29_presence_sensor_2
+        to: 'on'
+      - platform: state
+        entity_id: binary_sensor.presence_sensor_fp2_9a29_presence_sensor_3
+        to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_boolean.kitchen_light_on
+          state: 'on'
+        - condition: or
+          conditions:
+            - condition: state
+              entity_id: input_select.home_status
+              state: 'Hemma på'
+            - condition: state
+              entity_id: input_select.home_status
+              state: 'Borta'
+    action:
+      - service: input_select.select_option
+        target:
+          entity_id: input_select.light_kitchen
+        data:
+          option: 100%
+
+#######################################################
+#                                                     #
+#         KÖKSBELYSNING INPUT_SELECT AUTOMATION       #
+#                                                     #
+#######################################################
+#
+# BESKRIVNING:
+# State machine automation för köksbelysning.
+# Lyssnar på input_select ändringar och anropar
+# motsvarande ljusskript.
+#
+# HÅRDVARA:
+# - Styrs via: input_select.light_kitchen
+# - Exekveras av: script.kitchen_light_*
+#
+# TILLSTÅND:
+# - Släckt: Alla lampor av
+# - 25%: Dämpat nattljus
+# - 50%: Morgonljus
+# - 100%: Full belysning
+#
+# LOGIK:
+# När input_select.light_kitchen ändras:
+# - Identifiera nytt tillstånd
+# - Anropa motsvarande script
+# - Scriptet hanterar faktisk ljuskontroll
+#
+# INTEGRATION:
+# - Kopplad till input_select.light_kitchen
+# - Triggar script för faktisk ljuskontroll
+# - Styrs av automationer i light_kitchen.yaml
+#######################################################
+
+  - alias: Köksbelysning
+    id: '1735304100019'
+    mode: single
+    trigger:
+      - platform: state
+        entity_id: input_select.light_kitchen
+    action:
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_kitchen
+                state: '100%'
+            sequence:
+              - service: script.kitchen_light_100
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_kitchen
+                state: '50%'
+            sequence:
+              - service: script.kitchen_light_50
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_kitchen
+                state: '25%'
+            sequence:
+              - service: script.kitchen_light_25
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_kitchen
+                state: Släckt
+            sequence:
+              - service: script.kitchen_light_off
+
+##############
+### Script ###
+##############
+script:
+#######################################################
+#                                                     #
+#              KÖKSBELYSNING SCRIPTS                  #
+#                                                     #
+#######################################################
+#
+# BESKRIVNING:
+# Styr köksbelysning med 4 ljusnivåer (100%, 50%, 25%, av).
+# Hanterar tre ljuszoner: underskåp bank, underskåp diskbank,
+# och vitrinskap.
+#
+# HÅRDVARA:
+# - Underskåp bank: light.kok_underskap_bank
+# - Underskåp diskbank: light.kok_underskap_diskbank
+# - Vitrinskap: light.kok_vitrinskap
+#
+# SCRIPTS:
+# - kitchen_light_100: Full belysning (90%/90%/100%)
+# - kitchen_light_50: Halvljus (50%/50%/80%)
+# - kitchen_light_25: Dämpat ljus (10%/10%/25%)
+# - kitchen_light_off: Släcker all köksbelysning
+#
+# SÄKERHET:
+# - Mode: restart - stoppar tidigare körning vid ny trigger
+# - Tillgänglighetskontroll av alla lampor
+# - Mjuka övergångar (2s) för ögonkomfort
+# - Intelligent kontroll - ändrar endast om ljus är tillgängligt
+#
+# ANVÄNDNING:
+# Anropas från input_select_light_kitchen.yaml automation
+# och köksbelysning automation baserat på närvaro.
+#######################################################
+
+  ##########################
+  ### Köksbelysning 100% ###
+  ##########################
+  kitchen_light_100:
+    alias: Köksbelysning 100%
+    mode: restart
+    sequence:
+      - condition: template
+        value_template: "{{ states('light.kok_underskap_bank') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.kok_underskap_bank
+          brightness_pct: 90
+          transition: 2
+      - condition: template
+        value_template: "{{ states('light.kok_underskap_diskbank') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.kok_underskap_diskbank
+          brightness_pct: 90
+          transition: 2
+      - condition: template
+        value_template: "{{ states('light.kok_vitrinskap') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.kok_vitrinskap
+          brightness_pct: 100
+          transition: 2
+
+  #########################
+  ### Köksbelysning 50% ###
+  #########################
+  kitchen_light_50:
+    alias: Köksbelysning 50%
+    mode: restart
+    sequence:
+      - condition: template
+        value_template: "{{ states('light.kok_underskap_bank') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.kok_underskap_bank
+          brightness_pct: 50
+          transition: 2
+      - condition: template
+        value_template: "{{ states('light.kok_underskap_diskbank') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.kok_underskap_diskbank
+          brightness_pct: 50
+          transition: 2
+      - condition: template
+        value_template: "{{ states('light.kok_vitrinskap') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.kok_vitrinskap
+          brightness_pct: 80
+          transition: 2
+
+  #########################
+  ### Köksbelysning 25% ###
+  #########################
+  kitchen_light_25:
+    alias: Köksbelysning 25%
+    mode: restart
+    sequence:
+      - condition: template
+        value_template: "{{ states('light.kok_underskap_bank') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.kok_underskap_bank
+          brightness_pct: 10
+          transition: 2
+      - condition: template
+        value_template: "{{ states('light.kok_underskap_diskbank') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.kok_underskap_diskbank
+          brightness_pct: 10
+          transition: 2
+      - condition: template
+        value_template: "{{ states('light.kok_vitrinskap') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.kok_vitrinskap
+          brightness_pct: 25
+          transition: 2
+
+  #########################
+  ### Köksbelysning off ###
+  #########################
+  kitchen_light_off:
+    alias: Köksbelysning off
+    mode: restart
+    sequence:
+      - condition: template
+        value_template: "{{ states('light.kok_underskap_bank') != 'unavailable' }}"
+      - service: light.turn_off
+        data:
+          entity_id: light.kok_underskap_bank
+          transition: 2
+      - condition: template
+        value_template: "{{ states('light.kok_underskap_diskbank') != 'unavailable' }}"
+      - service: light.turn_off
+        data:
+          entity_id: light.kok_underskap_diskbank
+          transition: 2
+      - condition: template
+        value_template: "{{ states('light.kok_vitrinskap') != 'unavailable' }}"
+      - service: light.turn_off
+        data:
+          entity_id: light.kok_vitrinskap
+          transition: 2

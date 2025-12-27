@@ -92,9 +92,6 @@
             sequence:
               - service: script.christmas_lights_on
 
-    action:
-      - service: script.window_lights_on
-
     ##############################################
     ### Släcker innebelysning                  ###
     ### T: input_select.light_inside == Släckt ###

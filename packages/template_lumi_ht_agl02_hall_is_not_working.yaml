@@ -17,10 +17,11 @@ template:
 
       - name: "Hall Luftfuktighet"
         unique_id: hall_lumi_weather_luftfuktighet
-        state: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet') }}"
+        state: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet') | float(0) }}"
         unit_of_measurement: "%"
         device_class: humidity
         state_class: measurement
+        availability: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet') not in ['unknown', 'unavailable'] }}"
         attributes:
           source_sensor: sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet
           icon: mdi:water-percent
@@ -28,10 +29,11 @@ template:
 
       - name: "Hall Lufttryck"
         unique_id: hall_lumi_weather_tryck
-        state: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_tryck') }}"
+        state: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_tryck') | float(0) }}"
         unit_of_measurement: "hPa"
         device_class: pressure
         state_class: measurement
+        availability: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_tryck') not in ['unknown', 'unavailable'] }}"
         attributes:
           source_sensor: sensor.lumi_lumi_sensor_ht_agl02_tryck
           icon: mdi:gauge

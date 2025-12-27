@@ -6,7 +6,7 @@ template:
       - name: "Frys temp senast uppdaterad"
         state: >-
           {% if state_attr('sensor.frys_temperature', 'last_updated') == None %}
-            ''
+            unavailable
           {% else %}
             {{ states.sensor.frys_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}
           {% endif %}
@@ -23,7 +23,7 @@ template:
       - name: "Kyl temp senast uppdaterad"
         state: >-
           {% if state_attr('sensor.kyl_temperature', 'last_updated') == None %}
-            ''
+            unavailable
           {% else %}
             {{ states.sensor.kyl_temperature.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}
           {% endif %}
@@ -40,7 +40,7 @@ template:
       - name: "Badrum temp senast uppdaterad"
         state: >-
           {% if state_attr('sensor.lumi_lumi_sensor_ht_agl02_temperatur', 'last_updated') == None %}
-            ''
+            unavailable
           {% else %}
             {{ states.sensor.lumi_lumi_sensor_ht_agl02_temperatur.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}
           {% endif %}
@@ -57,7 +57,7 @@ template:
       - name: "Badrum fukt senast uppdaterad"
         state: >-
           {% if state_attr('sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet', 'last_updated') == None %}
-            ''
+            unavailable
           {% else %}
             {{ states.sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}
           {% endif %}
@@ -75,7 +75,7 @@ template:
       - name: "Aqara Multi Sensor 4 fukt senast uppdaterad"
         state: >-
           {% if state_attr('sensor.aqara_multi_sensor_4_humidity', 'last_updated') == None %}
-            ''
+            unavailable
           {% else %}
             {{ states.sensor.aqara_multi_sensor_4_humidity.last_updated.strftime('%Y-%m-%dT%H:%M:%S') }}
           {% endif %}

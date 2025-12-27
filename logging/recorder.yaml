@@ -12,6 +12,12 @@
       - sensor.infrared*
       - sensor.visible*
       - sensor.full*spectrum*
+      - sensor.*_last_seen
+      - sensor.*_linkquality
+      - sensor.*_rssi
+      - sensor.*_uptime
+      - sensor.*_wifi_signal
+      - sensor.*_battery
     entities:
       - binary_sensor.updater
 

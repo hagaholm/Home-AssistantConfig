@@ -1,0 +1,96 @@
+####################################################
+#                                                  #
+#           LIGHT GROUPS - SEASONAL (CHRISTMAS)   #
+#                                                  #
+####################################################
+# Seasonal light groups for Christmas mode
+# Toggled via input_boolean.christmas_light
+# https://www.home-assistant.io/integrations/light.group/
+
+light:
+  # Christmas variants of daily lighting scenarios
+  - platform: group
+    name: Dagbelysning jul
+    entities:
+      - light.kok_stora_fonstret_ljusstake
+      - light.kok_lilla_fonstret
+      - light.hall_jullampa
+      - light.hall_skap
+      - light.vardagsrum_fonster_ljusstake_2
+      - light.vardagsrum_skank
+      - light.vardagsrum_vagn
+      - light.vardagsrum_vitrinskap2
+      - light.vardagsrum_gran
+      - light.sovrum_fonster
+      - light.sovrum_sangbord
+      - light.andreas_fonster
+      - light.louise_fonster
+      - light.louise_golvlampa
+      - light.uterum_fonster
+      - light.uterum_julstjarnor
+
+  - platform: group
+    name: Morgonbelysning jul
+    entities:
+      - light.kok_stora_fonstret_ljusstake
+      - light.kok_lilla_fonstret
+      - light.hall_jullampa
+      - light.vardagsrum_fonster_ljusstake_2
+      - light.vardagsrum_gran
+      - light.uterum_fonster
+      - light.uterum_julstjarnor
+
+  - platform: group
+    name: Nattbelysning jul
+    entities:
+      - light.kok_lilla_fonstret
+      - light.kok_stora_fonstret_ljusstake
+      - light.hall_jullampa
+      - light.vardagsrum_fonster_ljusstake_2
+
+  - platform: group
+    name: Bortabelysning jul
+    entities:
+      - light.kok_stora_fonstret_ljusstake
+      - light.kok_lilla_fonstret
+      - light.hall_jullampa
+      - light.vardagsrum_fonster_ljusstake_2
+      - light.sovrum_sangbord
+      - light.louise_fonster
+      - light.uterum_fonster
+      - light.uterum_julstjarnor
+
+  # Christmas room-based groups
+  - platform: group
+    name: Hall jul
+    entities:
+      - light.hall_jullampa
+      - light.hall_skap
+
+  - platform: group
+    name: Vardagsrum jul
+    entities:
+      - light.vardagsrum_fonster_ljusstake_2
+      - light.vardagsrum_skank
+      - light.vardagsrum_vagn
+      - light.vardagsrum_vitrinskap2
+      - light.vardagsrum_gran
+
+  - platform: group
+    name: Kök jul
+    entities:
+      - light.kok_stora_fonstret_ljusstake
+      - light.kok_lilla_fonstret
+
+  - platform: group 
+    name: Andreas rum jul
+    entities:
+      - light.andreas_fonster
+
+  - platform: group
+    name: Uterum jul 
+    entities:
+      - light.uterum_led
+      - light.uterum_fonster
+      - light.uterum_julstjarnor
+      - light.uterum_fotogenlampa

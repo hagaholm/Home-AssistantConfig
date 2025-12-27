@@ -1,0 +1,72 @@
+####################################################
+#                                                  #
+#                     LIGHT                        #
+#                                                  #
+####################################################
+# Light platform definitions for switch-based lights
+# https://www.home-assistant.io/integrations/light.switch/
+
+light:
+  # Tellstick Platform
+  - platform: tellstick
+
+  # Switch-based Lights (Window lights and accent lighting)
+  - platform: switch
+    name: Louise skrivbord
+    entity_id: switch.louise_skrivbord
+    
+  - platform: switch
+    name: Andreas fönster
+    entity_id: switch.andreas_fonster
+    
+  - platform: switch
+    name: Friggebod ute
+    entity_id: switch.shellyplug_s_4022d8831053
+    
+  - platform: switch
+    name: trädäck ute
+    entity_id: switch.smart_kontakt_7
+    
+  - platform: switch
+    name: Kök lilla fönstret
+    entity_id: switch.kok_lilla_fonstret
+    
+  - platform: switch
+    name: Kök stora fönstret ljusstake
+    entity_id: switch.kok_stora_fonstret_ljusstake
+    
+  - platform: switch
+    name: Sovrum sängbord
+    entity_id: switch.sovrum_sangbord
+    
+  - platform: switch
+    name: Uterum fotogenlampa
+    entity_id: switch.uterum_fotogenlampa
+    
+  - platform: switch
+    name: Uterum led
+    entity_id: switch.uterum_led
+    
+  - platform: switch
+    name: Vardagsrum vitrinskåp
+    entity_id: switch.vardagsrum_vitrinskap2
+    
+  - platform: switch
+    name: Vardagsrum gran
+    entity_id: switch.vardagsrum_gran
+
+  - platform: switch
+    name: Vardagsrum fönster ljusstake
+    entity_id: switch.vardagsrum_fonster_ljusstake
+    
+  - platform: switch
+    name: Uterum julstjärnor
+    entity_id: switch.uterum_julstjarnor
+
+  - platform: switch 
+    name: Strålkastare husgavel 
+    entity_id: switch.smart_kontakt_6 
+
+  - platform: switch 
+    name: Hall jullampa 
+    entity_id: switch.hall_jullampa

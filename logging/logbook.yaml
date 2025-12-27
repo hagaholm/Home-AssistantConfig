@@ -1,6 +1,17 @@
-#---------------------------------------------------
-# View all events in a logbook
-#---------------------------------------------------
+####################################################
+#                                                  #
+#                     LOGBOOK                      #
+#                                                  #
+####################################################
+# Logbook filtering configuration
+# Documentation: https://www.home-assistant.io/integrations/logbook/
+#
+# Purpose:
+# - Include key domains for human-readable timeline
+# - Exclude noisy sensors and internal automations
+####################################################
+
+logbook:
   include:
     domains:
       - automation

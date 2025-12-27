@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
-#  Recursively generate index.html files for
-#  all subdirectories in a directory tree
+# Utility: Recursively generate index.html files for all subdirectories
+# Use manually from repo root to produce a browsable directory listing.
+# No Home Assistant runtime side effects; safe to keep alongside configs.
 
 import argparse
 import fnmatch

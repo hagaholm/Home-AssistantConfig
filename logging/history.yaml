@@ -1,8 +1,16 @@
-#-------------------------------------------------------
-# Enables support for tracking state changes over time
-# https://home-assistant.io/components/history/
-#-------------------------------------------------------
-# Note: The 'include' and 'exclude' options are deprecated
-# Modern Home Assistant automatically tracks all entities
-# No specific configuration needed - history component is enabled by default
+####################################################
+#                                                  #
+#                     HISTORY                      #
+#                                                  #
+####################################################
+# State history tracking configuration
+# Documentation: https://www.home-assistant.io/integrations/history/
+#
+# Notes:
+# - History component is enabled by default
+# - 'include'/'exclude' options are deprecated
+# - Leave empty to use default behavior
+####################################################
+
+history:
 

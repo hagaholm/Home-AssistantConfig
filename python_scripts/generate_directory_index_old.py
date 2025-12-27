@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
-#  Recursively generate index.html files for
-#  all subdirectories in a directory tree
+# Legacy utility: recursively generate index.html files for all subdirectories.
+# Kept for reference; prefer generate_directory_index.py for current usage.
+# No Home Assistant runtime side effects.
 
 #import argparse
 #import fnmatch

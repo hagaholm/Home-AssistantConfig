@@ -3,8 +3,14 @@
 #                     SENSOR                       #
 #                                                  #
 ####################################################
-# https://home-assistant.io/components/sensor/
-
+# Core sensor platform definitions (Tellstick RF sensors)
+# Documentation: https://www.home-assistant.io/integrations/sensor/
+#
+# Notes:
+# - Ljusstyrka template migrated to packages/template_ljusstyrka.yaml
+# - File is included via include_dir_merge_list; keep list-style entries
+# - Tellstick sensors define temperature/humidity probes by ID
+####################################################
 
 # Ljusstyrka (migrated)
 # Original template sensor migrated to the modern `template:` platform.

@@ -1,3 +1,16 @@
+####################################################
+#                                                  #
+#                    RECORDER                      #
+#                                                  #
+####################################################
+# Database recorder settings for Home Assistant
+# Documentation: https://www.home-assistant.io/integrations/recorder/
+#
+# Purpose:
+# - Purge old history to keep DB small (7 days retention)
+# - Exclude noisy domains/entities to reduce DB writes
+#
+recorder:
   purge_keep_days: 7
   exclude:
     domains:

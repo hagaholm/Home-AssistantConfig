@@ -3,7 +3,16 @@
 #                       GROUP                      #
 #                                                  #
 ####################################################
-
+# Device tracker grouping for home/away detection
+# Combines multiple device trackers used by person entities
+# Documentation: https://www.home-assistant.io/integrations/group/
+#
+# Purpose:
+# - Aggregate presence sources to simplify conditions
+# - Used by home/away automations as a single entity
+# - Mirrors devices mapped in packages/person.yaml
+#
+group:
   track_for_home_devices:
     name: Enheter för kontroll om hemma
     entities:

@@ -1,8 +1,17 @@
-#----------------------------------------------------------------------------
-# https://home-assistant.io/components/logger/
-# Log Severities: notset, debug, info, warn, warning, error, fatal, critical
-#----------------------------------------------------------------------------
+####################################################
+#                                                  #
+#                     LOGGER                       #
+#                                                  #
+####################################################
+# Logging configuration for Home Assistant
+# Documentation: https://www.home-assistant.io/integrations/logger/
+#
+# Log Levels: notset, debug, info, warn, warning, error, fatal, critical
+# Default set to warn to reduce noise while retaining warnings/errors.
+# Uncomment log overrides below when troubleshooting specific components.
+####################################################
 
+logger:
   default: warn
 
 #  logs:

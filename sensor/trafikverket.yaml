@@ -1,3 +1,16 @@
+####################################################
+#                                                  #
+#          TRAFIKVERKET WEATHER STATIONS          #
+#                                                  #
+####################################################
+# Public road weather station sensors
+# Data from Trafikverket API (Swedish Transport Administration)
+# Documentation: https://www.home-assistant.io/integrations/trafikverket_weatherstation/
+#
+# Purpose:
+# - Monitor road and air temperature for local conditions
+# - Use in automations for winter safety and climate control
+#
 sensor:
   - platform: trafikverket_weatherstation
     name: Trafikverket Gröndal

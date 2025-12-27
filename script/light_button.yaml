@@ -1,20 +1,38 @@
+#######################################################
+#                                                     #
+#                 KNAPPGENVÄGAR LJUS                  #
+#                                                     #
+#######################################################
+#
+# BESKRIVNING:
+# Två enkla knapp-scripts som växlar till fördefinierade
+# lägen: Dagbelysning och Godnatt.
+#
+# SÄKERHET:
+# - Mode: restart (förhindrar överlapp om knappen trycks snabbt)
+#
+# ANVÄNDNING:
+# - button_daylight: "Tänd allt" → sätter inside-läge Dagbelysning
+# - button_goodnight: "Godnatt" → kör full Godnatt-sekvens
+#######################################################
+
   ##################################
-  ### swtich to Dagbelysning on  ###
-  ### Used by button "Tänd allt" ###
+  ### Växla till Dagbelysning    ###
   ##################################
   button_daylight:
     alias: Dagbelysning
+    mode: restart
     sequence:
       - service: input_select.select_option
         data:
           entity_id: input_select.light_inside
           option: Dagbelysning
 
-  ################################
-  ### swtich to Godnatt        ###
-  ### Used by button "Godnatt" ###
-  ################################
+  ###############################
+  ### Växla till Godnatt       ###
+  ###############################
   button_goodnight:
     alias: Godnatt
+    mode: restart
     sequence:
       - service: script.goodnight_all

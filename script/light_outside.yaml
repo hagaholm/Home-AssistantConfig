@@ -1,28 +1,63 @@
+#######################################################
+#                                                     #
+#                 UTEBELYSNING SCRIPTS                #
+#                                                     #
+#######################################################
+#
+# BESKRIVNING:
+# Styr spa-lampor, friggebod-fönster och utebelysning.
+#
+# HÅRDVARA:
+# - light.spabad_v / _m / _h
+# - switch.friggebod_fonster
+# - light.friggebod_ute_2
+#
+# SÄKERHET:
+# - Mode: restart – avbryter tidigare körning vid ny trigger
+# - Tillgänglighetskontroll per enhet
+# - Mjuka övergångar (2s) på ljus
+#######################################################
+
   #######################
   ### Spabelysning on ###
   #######################
   spa_light_on:
     alias: Spabelysning on
+    mode: restart
     sequence:
+      - condition: template
+        value_template: "{{ states('light.spabad_v') != 'unavailable' }}"
       - service: light.turn_on
         data:
           entity_id: light.spabad_v
           brightness_pct: 40
+          transition: 2
+
+      - condition: template
+        value_template: "{{ states('light.spabad_m') != 'unavailable' }}"
       - service: light.turn_on
         data:
           entity_id: light.spabad_m
           brightness_pct: 40
+          transition: 2
+
+      - condition: template
+        value_template: "{{ states('light.spabad_h') != 'unavailable' }}"
       - service: light.turn_on
         data:
           entity_id: light.spabad_h
           brightness_pct: 40
+          transition: 2
 
   ##############################
   ### Friggebod belysning on ###
   ##############################
   friggebod_light_on:
     alias: Friggebod belysning on
+    mode: restart
     sequence:
+      - condition: template
+        value_template: "{{ states('switch.friggebod_fonster') != 'unavailable' }}"
       - service: switch.turn_on
         entity_id: switch.friggebod_fonster
 
@@ -31,22 +66,41 @@
   ########################
   outside_light_off:
     alias: Utebelysning off
+    mode: restart
     sequence:
+      - condition: template
+        value_template: "{{ states('switch.friggebod_fonster') != 'unavailable' }}"
       - service: switch.turn_off
         data:
           entity_id: switch.friggebod_fonster
+
+      - condition: template
+        value_template: "{{ states('light.spabad_v') != 'unavailable' }}"
       - service: light.turn_off
         data:
           entity_id: light.spabad_v
+          transition: 2
+
+      - condition: template
+        value_template: "{{ states('light.spabad_m') != 'unavailable' }}"
       - service: light.turn_off
         data:
           entity_id: light.spabad_m
+          transition: 2
+
+      - condition: template
+        value_template: "{{ states('light.spabad_h') != 'unavailable' }}"
       - service: light.turn_off
         data:
           entity_id: light.spabad_h
+          transition: 2
 
 #      - service: light.turn_off
 #        entity_id: light.tradack_ute
 
+      - condition: template
+        value_template: "{{ states('light.friggebod_ute_2') != 'unavailable' }}"
       - service: light.turn_off
-        entity_id: light.friggebod_ute_2
+        data:
+          entity_id: light.friggebod_ute_2
+          transition: 2

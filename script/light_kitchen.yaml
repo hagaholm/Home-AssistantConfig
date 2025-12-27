@@ -1,27 +1,64 @@
+#######################################################
+#                                                     #
+#              KÖKSBELYSNING SCRIPTS                  #
+#                                                     #
+#######################################################
+#
+# BESKRIVNING:
+# Styr köksbelysning med 4 ljusnivåer (100%, 50%, 25%, av).
+# Hanterar tre ljuszoner: underskåp bank, underskåp diskbank, 
+# och vitrinskap.
+#
+# HÅRDVARA:
+# - Underskåp bank: light.kok_underskap_bank
+# - Underskåp diskbank: light.kok_underskap_diskbank
+# - Vitrinskap: light.kok_vitrinskap
+#
+# SCRIPTS:
+# - kitchen_light_100: Full belysning (90%/90%/100%)
+# - kitchen_light_50: Halvljus (50%/50%/80%)
+# - kitchen_light_25: Dämpat ljus (10%/10%/25%)
+# - kitchen_light_off: Släcker all köksbelysning
+#
+# SÄKERHET:
+# - Mode: restart - stoppar tidigare körning vid ny trigger
+# - Tillgänglighetskontroll av alla lampor
+# - Mjuka övergångar (2s) för ögonkomfort
+# - Intelligent kontroll - ändrar endast om ljus är tillgängligt
+#
+# ANVÄNDNING:
+# Anropas från input_select_light_kitchen.yaml automation
+# och köksbelysning automation baserat på närvaro.
+#######################################################
+
   ##########################
   ### Köksbelysning 100% ###
   ##########################
   kitchen_light_100:
     alias: Köksbelysning 100%
+    mode: restart
     sequence:
-      - choose:
-        - conditions: "{{ not is_state('light.kok_underskap_bank', '100%') }}"
-          sequence:
-            - service: light.turn_on
-              data:
-                entity_id: light.kok_underskap_bank
-                brightness_pct: 90
-                transition: 2
+      # Underskåp bank - 90%
+      - condition: template
+        value_template: "{{ states('light.kok_underskap_bank') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.kok_underskap_bank
+          brightness_pct: 90
+          transition: 2
 
-      - choose:
-        - conditions: "{{ not is_state('light.kok_underskap_diskbank', '100%') }}"
-          sequence:
-            - service: light.turn_on
-              data:
-                entity_id: light.kok_underskap_diskbank
-                brightness_pct: 90
-                transition: 2
+      # Underskåp diskbank - 90%
+      - condition: template
+        value_template: "{{ states('light.kok_underskap_diskbank') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.kok_underskap_diskbank
+          brightness_pct: 90
+          transition: 2
 
+      # Vitrinskap - 100%
+      - condition: template
+        value_template: "{{ states('light.kok_vitrinskap') != 'unavailable' }}"
       - service: light.turn_on
         data:
           entity_id: light.kok_vitrinskap
@@ -33,25 +70,29 @@
   #########################
   kitchen_light_50:
     alias: Köksbelysning 50%
+    mode: restart
     sequence:
-      - choose:
-        - conditions: "{{ not is_state('light.kok_underskap_bank', '50%') }}"
-          sequence:
-            - service: light.turn_on
-              data:
-                entity_id: light.kok_underskap_bank
-                brightness_pct: 50
-                transition: 2
+      # Underskåp bank - 50%
+      - condition: template
+        value_template: "{{ states('light.kok_underskap_bank') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.kok_underskap_bank
+          brightness_pct: 50
+          transition: 2
 
-      - choose:
-        - conditions: "{{ not is_state('light.kok_underskap_diskbank', '50%') }}"
-          sequence:
-            - service: light.turn_on
-              data:
-                entity_id: light.kok_underskap_diskbank
-                brightness_pct: 50
-                transition: 2
+      # Underskåp diskbank - 50%
+      - condition: template
+        value_template: "{{ states('light.kok_underskap_diskbank') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.kok_underskap_diskbank
+          brightness_pct: 50
+          transition: 2
 
+      # Vitrinskap - 80%
+      - condition: template
+        value_template: "{{ states('light.kok_vitrinskap') != 'unavailable' }}"
       - service: light.turn_on
         data:
           entity_id: light.kok_vitrinskap
@@ -63,25 +104,29 @@
   #########################
   kitchen_light_25:
     alias: Köksbelysning 25%
+    mode: restart
     sequence:
-      - choose:
-        - conditions: "{{ not is_state('light.kok_underskap_bank', '25%') }}"
-          sequence:
-            - service: light.turn_on
-              data:
-                entity_id: light.kok_underskap_bank
-                brightness_pct: 10
-                transition: 2
+      # Underskåp bank - 10%
+      - condition: template
+        value_template: "{{ states('light.kok_underskap_bank') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.kok_underskap_bank
+          brightness_pct: 10
+          transition: 2
 
-      - choose:
-        - conditions: "{{ not is_state('light.kok_underskap_diskbank', '25%') }}"
-          sequence:
-            - service: light.turn_on
-              data:
-                entity_id: light.kok_underskap_diskbank
-                brightness_pct: 10
-                transition: 2
+      # Underskåp diskbank - 10%
+      - condition: template
+        value_template: "{{ states('light.kok_underskap_diskbank') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.kok_underskap_diskbank
+          brightness_pct: 10
+          transition: 2
 
+      # Vitrinskap - 25%
+      - condition: template
+        value_template: "{{ states('light.kok_vitrinskap') != 'unavailable' }}"
       - service: light.turn_on
         data:
           entity_id: light.kok_vitrinskap
@@ -93,15 +138,25 @@
   #########################
   kitchen_light_off:
     alias: Köksbelysning off
+    mode: restart
     sequence:
+      # Släck alla lampor med mjuk övergång
+      - condition: template
+        value_template: "{{ states('light.kok_underskap_bank') != 'unavailable' }}"
       - service: light.turn_off
         data:
           entity_id: light.kok_underskap_bank
           transition: 2
+
+      - condition: template
+        value_template: "{{ states('light.kok_underskap_diskbank') != 'unavailable' }}"
       - service: light.turn_off
         data:
           entity_id: light.kok_underskap_diskbank
           transition: 2
+
+      - condition: template
+        value_template: "{{ states('light.kok_vitrinskap') != 'unavailable' }}"
       - service: light.turn_off
         data:
           entity_id: light.kok_vitrinskap

@@ -1,10 +1,40 @@
+#######################################################
+#                                                     #
+#          BORTABELYSNING SCRIPTS (simulering)        #
+#                                                     #
+#######################################################
+#
+# BESKRIVNING:
+# Ljussimulering när hemma är borta (08:00-22:30).
+# Gör det verka som om någon är hemma genom slumpvis
+# belysning. Stöder både vanligt läge och julmodus.
+#
+# HÅRDVARA:
+# - IKEA/Tellstick lampor över huset
+# - Julbelysning (villkor: input_boolean.christmas_light)
+#
+# SCRIPTS:
+# - away_lights_on: Huvudscript (släcker då tänder igen)
+# - away_lights_default_on: Normalt borta-läge
+# - away_lights_christmas_on: Jul-simulering
+# - away_lights_off / away_daylights_default_off: Slutning
+#
+# SÄKERHET:
+# - Mode: restart – ny trigger avbryter tidigare
+# - Tänder före slockning för kontinuitet
+#
+# ANVÄNDNING:
+# Anropas från automationer när hemma = Borta.
+#######################################################
+
   #########################
   ### Bortabelysning on ###
   #########################
   away_lights_on:
     alias: Bortabelysning on
+    mode: restart
     sequence:
-        # Turn off before turn on
+        # Släck tidigare ljus innan ny körning
       - service: script.turn_on
         data_template:
           entity_id: >
@@ -23,14 +53,13 @@
               script.away_lights_default_on
             {% endif %}
 
-  ### ------------------------- ###
-  ### Bortabelysning default on ###
-  ### ------------------------- ###
+  ### ============================= ###
+  ### Bortabelysning default on    ###
+  ### ============================= ###
   away_lights_default_on:
     alias: Bortabelysning default on
+    mode: restart
     sequence:
-
-# IKEA
       - service: light.turn_on
         data:
           entity_id: light.kok_stora_fonstret

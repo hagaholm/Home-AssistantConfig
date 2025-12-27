@@ -1,8 +1,32 @@
+#######################################################
+#                                                     #
+#            KVÄLLSBELYSNING SCRIPTS (18:00-22:00)    #
+#                                                     #
+#######################################################
+#
+# BESKRIVNING:
+# Dämpad kvällsbelysning för avslappning när solen går ned.
+# Stöder både vanligt läge och julmodus.
+#
+# HÅRDVARA:
+# - IKEA ljusgrupper (15-25% nivåer)
+# - Tellstick-lampor
+# - Julbelysning (villkor: input_boolean.christmas_light)
+#
+# SÄKERHET:
+# - Mode: restart – ny trigger avbryter tidigare kör
+# - Mjuka övergångar (2s)
+#
+# ANVÄNDNING:
+# Anropas från ljusstyrka-automation 18:00-22:00.
+#######################################################
+
   ##########################
   ### Kvällsbelysning on ###
   ##########################
   eveninglights_on:
     alias: Kvällsbelysning on
+    mode: restart
     sequence:
       - service: input_select.select_option
         data:
@@ -18,13 +42,14 @@
               script.eveninglights_default_on
             {% endif %}
 
-  ### -------------------------- ###
+  ### ========================== ###
   ### Kvällsbelysning default on ###
-  ### -------------------------- ###
+  ### ========================== ###
   eveninglights_default_on:
     alias: Kvällsbelysning default on
+    mode: restart
     sequence:
-# IKEA
+      # IKEA - Dämpad kvällsnivå (15-40%)
       - service: light.turn_on
         data:
           entity_id: light.kok_stora_fonstret

@@ -1,8 +1,31 @@
+#######################################################
+#                                                     #
+#             NATTBELYSNING SCRIPTS (22:00-05:00)     #
+#                                                     #
+#######################################################
+#
+# BESKRIVNING:
+# Minimalt nattljus för sovmiljö och orientering.
+# Stöder både vanligt läge och julmodus.
+#
+# HÅRDVARA:
+# - IKEA lampor (1-10% nivåer)
+# - Tellstick Julbelysning
+#
+# SÄKERHET:
+# - Mode: restart – ny trigger avbryter tidigare
+# - Mjuka övergångar (5s för minimal störning)
+#
+# ANVÄNDNING:
+# Anropas från ljusstyrka-automation 22:00-05:00.
+#######################################################
+
   ########################
   ### Nattbelysning on ###
   ########################
   night_light:
     alias: Nattbelysning
+    mode: restart
     sequence:
       - service: script.turn_on
         data_template:
@@ -18,37 +41,39 @@
   ################################
   night_light_default_on:
     alias: Nattbelysning default
+    mode: restart
     sequence:
-
-# IKEA
+      # IKEA - 1% minimal nattljus
       - service: light.turn_on
         data:
           entity_id: light.kok_stora_fonstret
           brightness_pct: 1
+          transition: 5
       - service: light.turn_on
         data:
           entity_id: light.hall_byra
           brightness_pct: 1
+          transition: 5
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_fonster
           brightness_pct: 1
+          transition: 5
 
-# Tellstick
+      # Tellstick
       - service: light.turn_on
-        entity_id: light.kok_lilla_fonstret
+        data:
+          entity_id: light.kok_lilla_fonstret
+          transition: 5
 
   ##################################
   ### Nattbelysning christmas on ###
   ##################################
   night_light_christmas_on:
     alias: Nattjulbelysning
+    mode: restart
     sequence:
-
-# IKEA
-
-
-# Tellstick
+      # Tellstick Jul (10% nivå)
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_fonster_ljusstake_2
@@ -56,16 +81,21 @@
           transition: 5
 
       - service: light.turn_on
-        entity_id: light.hall_jullampa
+        data:
+          entity_id: light.hall_jullampa
+          transition: 5
 
       - service: light.turn_on
-        entity_id: light.kok_lilla_fonstret
+        data:
+          entity_id: light.kok_lilla_fonstret
+          transition: 5
 
   #########################
   ### Nattbelysning off ###
   #########################
   night_light_off:
     alias: Nattbelysning off
+    mode: restart
     sequence:
       - service: script.turn_on
         data_template:
@@ -74,10 +104,11 @@
               script.night_light_christmas_off
             {% else %}
               script.night_light_default_off
-            {% endif %}  
+            {% endif %}
 
   night_light_default_off:
     alias: Nattbelysning default off
+    mode: restart
     sequence:
       - service: light.turn_off
         data:
@@ -86,6 +117,7 @@
 
   night_light_christmas_off:
     alias: Nattjulbelysning off
+    mode: restart
     sequence:
       - service: light.turn_off
         data:

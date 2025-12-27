@@ -1,8 +1,39 @@
+#######################################################
+#                                                     #
+#             DAGBELYSNING SCRIPTS (09:00-18:00)      #
+#                                                     #
+#######################################################
+#
+# BESKRIVNING:
+# Fullt normalt dagsljus för aktiv användardag.
+# Stöder både vanligt läge och julmodus.
+#
+# HÅRDVARA:
+# - IKEA ljusgrupper (kök/hall/vardagsrum/sovrum/etc)
+# - Tellstick-lampor
+# - Julbelysning (villkor: input_boolean.christmas_light)
+#
+# SCRIPTS:
+# - daylights_on: Huvudscript (växlar mellan jul/vanligt)
+# - daylights_default_on: Normalt dagsläge (40-80%)
+# - daylights_christmas_on: Julbelysning
+# - daylights_on_morning: Morgon-variant av dagsläge
+# - inside_lights_off: Slutlig släckning innebelysning
+#
+# SÄKERHET:
+# - Mode: restart – ny trigger avbryter tidigare kör
+# - Mjuka övergångar (2s)
+#
+# ANVÄNDNING:
+# Anropas från ljusstyrka-automation 09:00-18:00.
+#######################################################
+
   #######################
   ### Dagbelysning on ###
   #######################
   daylights_on:
     alias: Dagbelysning on
+    mode: restart
     sequence:
       - service: input_select.select_option
         data:
@@ -18,13 +49,14 @@
               script.daylights_default_on
             {% endif %}
 
-  ### ----------------------- ###
-  ### Dagbelysning default on ###
-  ### ----------------------- ###
+  ### ==================== ###
+  ### Dagbelysning default on
+  ### ==================== ###
   daylights_default_on:
     alias: Dagbelysning default on
+    mode: restart
     sequence:
-# IKEA
+      # IKEA - Normalt dagsljus (40-80%)
       - service: light.turn_on
         data:
           entity_id: light.kok_stora_fonstret

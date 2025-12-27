@@ -1,9 +1,27 @@
+#######################################################
+#                                                     #
+#             SLÄCK RUM VISA SCRIPTS                  #
+#                                                     #
+#######################################################
+#
+# BESKRIVNING:
+# Släcker individuella rum: Sovrum, Andreas rum, Louise rum.
+#
+# SÄKERHET:
+# - Mode: restart – avbryter pågående sekvens
+# - Tillgänglighetskontroll per ljus
+# - Mjuka övergångar (2s)
+#######################################################
+
   #########################
   ### Släck i sovrummet ###
   #########################
   bedroom_off:
     alias: Släck i sovrummet
+    mode: restart
     sequence:
+      - condition: template
+        value_template: "{{ states('light.sovrum') != 'unavailable' }}"
       - service: light.turn_off
         data:
           entity_id: light.sovrum
@@ -14,12 +32,17 @@
   ###########################
   andreas_room_off:
     alias: Släck i Andreas rum
+    mode: restart
     sequence:
+      - condition: template
+        value_template: "{{ states('light.andreas_rum') != 'unavailable' }}"
       - service: light.turn_off
         data:
           entity_id: light.andreas_rum
           transition: 2
 
+      - condition: template
+        value_template: "{{ states('light.andreas_rum_julstjarna') != 'unavailable' }}"
       - service: light.turn_off
         entity_id: light.andreas_rum_julstjarna
 
@@ -28,7 +51,10 @@
   ##########################
   louise_room_off:
     alias: Släck i Louise rum
+    mode: restart
     sequence:
+      - condition: template
+        value_template: "{{ states('light.louise_rum') != 'unavailable' }}"
       - service: light.turn_off
         data:
           entity_id: light.louise_rum

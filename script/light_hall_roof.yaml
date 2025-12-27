@@ -1,3 +1,17 @@
+#######################################################
+#                                                     #
+#              HALL TAKLAMPOR SCRIPTS                 #
+#                                                     #
+#######################################################
+#
+# BESKRIVNING:
+# Förinställda nivåer för halltak (off/1/10/50/100%).
+#
+# SÄKERHET:
+# - Mode: single (för att undvika samtidiga dim-ändringar)
+# - Tillgänglighetskontroll för light.hall_tak
+#######################################################
+
   ##########################
   ### Hall taklampor OFF ###
   ##########################
@@ -5,6 +19,8 @@
     alias: Hall taklampor off
     mode: single
     sequence:
+      - condition: template
+        value_template: "{{ states('light.hall_tak') != 'unavailable' }}"
       - service: light.turn_off
         target:
           entity_id: light.hall_tak
@@ -15,6 +31,8 @@
     alias: Hall taklampor 1 procent
     mode: single
     sequence:
+      - condition: template
+        value_template: "{{ states('light.hall_tak') != 'unavailable' }}"
       - service: light.turn_on
         target:
           entity_id: light.hall_tak
@@ -26,6 +44,8 @@
     alias: Hall taklampor 10 procent
     mode: single
     sequence:
+      - condition: template
+        value_template: "{{ states('light.hall_tak') != 'unavailable' }}"
       - service: light.turn_on
         target:
           entity_id: light.hall_tak
@@ -37,6 +57,8 @@
     alias: Hall taklampor 50 procent
     mode: single
     sequence:
+      - condition: template
+        value_template: "{{ states('light.hall_tak') != 'unavailable' }}"
       - service: light.turn_on
         target:
           entity_id: light.hall_tak
@@ -48,6 +70,8 @@
     alias: Hall taklampor 100 procent
     mode: single
     sequence:
+      - condition: template
+        value_template: "{{ states('light.hall_tak') != 'unavailable' }}"
       - service: light.turn_on
         target:
           entity_id: light.hall_tak

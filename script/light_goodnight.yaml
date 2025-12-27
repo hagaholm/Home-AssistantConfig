@@ -1,10 +1,36 @@
+#######################################################
+#                                                     #
+#           GODNATT SCRIPTS (sovning/avstängning)     #
+#                                                     #
+#######################################################
+#
+# BESKRIVNING:
+# Två varianter av Godnatt-sekvenser för sovning och
+# full avstängning av hemmet (systemkväll).
+#
+# SCRIPTS:
+# - goodnight: Släcker ljus, ställer hemma av
+# - goodnight_10_min: Samma men med 10 min försening
+# - goodnight_all: Full avstängning av alls (TV, stereor, etc)
+# - goodnight_all_10_min: Med 10 min försening
+#
+# SÄKERHET:
+# - Mode: restart – ny trigger avbryter tidigare
+# - Ställer hemma-läge för säkerhet
+# - Delay används för tidsintervall
+#
+# ANVÄNDNING:
+# Anropas från UI-knapp eller Goodnight-automation.
+#######################################################
+
   #############################
   ### Godnatt, släcker allt ###
   #############################
   goodnight:
     alias: Godnatt, släcker allt
+    mode: restart
     sequence:
-# Set home off mode
+      # Ställ hemma av
       - service: input_select.select_option
         data:
           entity_id: input_select.home_status
@@ -50,9 +76,10 @@
   ###########################################
   goodnight_10_min:
     alias: Godnatt, släcker allt om 10 minuter
+    mode: restart
     sequence:
       - delay: '00:10:00'
-# Set home off mode
+      # Ställ hemma av
       - service: input_select.select_option
         data:
           entity_id: input_select.home_status
@@ -98,8 +125,9 @@
   ################################
   goodnight_all:
     alias: Godnatt, stänger av allt
+    mode: restart
     sequence:
-# Set home off mode
+      # Ställ hemma av
       - service: input_select.select_option
         data:
           entity_id: input_select.home_status
@@ -156,9 +184,10 @@
   ##############################################
   goodnight_all_10_min:
     alias: Godnatt, stänger av allt om 10 minuter
+    mode: restart
     sequence:
       - delay: '00:10:00'
-# Set home off mode
+      # Ställ hemma av
       - service: input_select.select_option
         data:
           entity_id: input_select.home_status

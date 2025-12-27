@@ -1,8 +1,29 @@
+#######################################################
+#                                                     #
+#               STÄDBELYSNING SCRIPTS                 #
+#                                                     #
+#######################################################
+#
+# BESKRIVNING:
+# Tänder maximalt städ-/arbetsljus i alla rum.
+#
+# HÅRDVARA:
+# - IKEA/Tellstick lampor listade i sekvensen
+#
+# SÄKERHET:
+# - Mode: restart – avbryter tidigare körning vid ny trigger
+# - Mjuka övergångar (2s) för komfort
+#
+# ANVÄNDNING:
+# Anropas från städläge automationer eller manuellt via UI.
+#######################################################
+
   ########################
   ### Städbelysning on ###
   ########################
   cleaning_lights_on:
     alias: Städbelysning on
+    mode: restart
     sequence:
 
 # IKEA
@@ -10,51 +31,68 @@
         data:
           entity_id: light.kok_stora_fonstret
           brightness_pct: 100
+          transition: 2
       - service: light.turn_on
         data:
           entity_id: light.andreas_fonster_2
           brightness_pct: 100
+          transition: 2
       - service: light.turn_on
         data:
           entity_id: light.louise_fonster
           brightness_pct: 100
+          transition: 2
       - service: light.turn_on
         data:
           entity_id: light.louise_golvlampa
           brightness_pct: 100
+          transition: 2
       - service: light.turn_on
         data:
           entity_id: light.hall_byra
           brightness_pct: 100
+          transition: 2
       - service: light.turn_on
         data:
           entity_id: light.hall_skap
           brightness_pct: 100
+          transition: 2
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_fonster
           brightness_pct: 100
+          transition: 2
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_skank
           brightness_pct: 100
+          transition: 2
       - service: light.turn_on
         data:
           entity_id: light.vardagsrum_vagn
           brightness_pct: 100
+          transition: 2
       - service: light.turn_on
         data:
           entity_id: light.sovrum_fonster
           brightness_pct: 100
+          transition: 2
       - service: light.turn_on
         data:
           entity_id: light.uterum_fonster
           brightness_pct: 100
+          transition: 2
       - service: light.turn_on
-        entity_id: light.vardagsrum_vitrinskap
+        data:
+          entity_id: light.vardagsrum_vitrinskap
+          transition: 2
 
 # Tellstick
       - service: light.turn_on
-        entity_id: light.kok_lilla_fonstret
+        data:
+          entity_id: light.kok_lilla_fonstret
+          transition: 2
       - service: light.turn_on
-        entity_id: light.sovrum_sangbord
+        data:
+          entity_id: light.sovrum_sangbord
+          transition: 2

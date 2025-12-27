@@ -23,7 +23,6 @@
 light:
   # Daily Lighting Scenarios - Times of day
   - platform: group
-    id: light_group_dagbelysning
     name: Dagbelysning
     # Day mode lighting (maximum brightness general illumination)
     # Used by: light_day script for daytime ambiance
@@ -45,7 +44,6 @@ light:
       - light.uterum_fonster
 
   - platform: group
-    id: light_group_koksbelysning
     name: Köksbelysning
     # Kitchen-specific lighting (task and ambient)
     # Used by: light_kitchen script for brightness adjustment
@@ -56,7 +54,6 @@ light:
       - light.kok_vitrinskap
 
   - platform: group
-    id: light_group_morgonbelysning
     name: Morgonbelysning
     # Morning/breakfast lighting (soft, focused)
     # Used by: light_morning script for gentle wake-up lighting
@@ -69,7 +66,6 @@ light:
       - light.uterum_fonster
 
   - platform: group
-    id: light_group_nattbelysning
     name: Nattbelysning
     # Night/bedroom lighting (very low brightness)
     # Used by: light_night script for sleeping mode
@@ -81,7 +77,6 @@ light:
       - light.vardagsrum_fonster
 
   - platform: group
-    id: light_group_fasadbelysning
     name: Fasadbelysning
     # House exterior facade lighting (decorative accents)
     # Used by: light_outside_facade script for evening/security lighting
@@ -93,7 +88,6 @@ light:
       - light.friggebod_fasad
 
   - platform: group
-    id: light_group_utebelysning
     name: Utebelysning
     # Exterior outdoor lighting (gardens and entertainment areas)
     # Used by: light_outside script for outdoor entertaining
@@ -105,7 +99,6 @@ light:
       - light.spabad_h
 
   - platform: group
-    id: light_group_bortabelysning
     name: Bortabelysning
     # Away mode lighting (security simulation)
     # Used by: light_away script to simulate occupancy
@@ -121,7 +114,6 @@ light:
 
   # Room-based Lighting Groups
   - platform: group
-    id: light_group_sovrum
     name: Sovrum
     # Master bedroom all lights
     # Used by: Room-specific automation and scene control
@@ -131,7 +123,6 @@ light:
       - light.sovrum_fonster
 
   - platform: group
-    id: light_group_hall
     name: Hall
     # Hallway and entryway lights
     # Used by: Motion-activated hallway lighting
@@ -141,7 +132,6 @@ light:
       - light.hall_skap
 
   - platform: group
-    id: light_group_vardagsrum
     name: Vardagsrum
     # Living room all lights
     # Used by: Main living area scene activation
@@ -154,7 +144,6 @@ light:
       - light.vardagsrum_gran
 
   - platform: group
-    id: light_group_kok
     name: Kök
     # Kitchen general lighting (windows)
     # Used by: Kitchen automation scenes
@@ -164,7 +153,6 @@ light:
       - light.kok_lilla_fonstret
 
   - platform: group
-    id: light_group_louise_room
     name: Louise rum
     # Louise's bedroom lights
     # Used by: Child's room automation (bedtime, morning)
@@ -174,7 +162,6 @@ light:
       - light.louise_golvlampa
 
   - platform: group
-    id: light_group_andreas_room
     name: Andreas rum
     # Andreas's bedroom lights
     # Used by: Child's room automation (bedtime, morning)
@@ -183,7 +170,6 @@ light:
       - light.andreas_fonster_2
 
   - platform: group
-    id: light_group_uterum
     name: Uterum
     entities:
       - light.uterum_led

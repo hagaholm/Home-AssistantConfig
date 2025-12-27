@@ -25,7 +25,6 @@
 light:
   # Christmas variants of daily lighting scenarios
   - platform: group
-    id: light_group_dagbelysning_jul
     name: Dagbelysning jul
     # Day mode lighting during Christmas season
     # Used by: light_day script when christmas_light boolean is ON
@@ -49,7 +48,6 @@ light:
       - light.uterum_julstjarnor
 
   - platform: group
-    id: light_group_morgonbelysning_jul
     name: Morgonbelysning jul
     # Morning mode lighting during holiday season
     # Used by: light_morning script when christmas_light boolean is ON
@@ -64,7 +62,6 @@ light:
       - light.uterum_julstjarnor
 
   - platform: group
-    id: light_group_nattbelysning_jul
     name: Nattbelysning jul
     # Night mode lighting during holiday season
     # Used by: light_night script when christmas_light boolean is ON
@@ -76,7 +73,6 @@ light:
       - light.vardagsrum_fonster_ljusstake_2
 
   - platform: group
-    id: light_group_bortabelysning_jul
     name: Bortabelysning jul
     # Away mode security lighting during Christmas season
     # Used by: light_away script when christmas_light boolean is ON
@@ -93,7 +89,6 @@ light:
 
   # Christmas room-based groups
   - platform: group
-    id: light_group_hall_jul
     name: Hall jul
     # Hallway Christmas lighting
     # Used by: Room-specific automation during holiday season
@@ -103,7 +98,6 @@ light:
       - light.hall_skap
 
   - platform: group
-    id: light_group_vardagsrum_jul
     name: Vardagsrum jul
     # Living room Christmas lighting
     # Used by: Main room automation during holiday season
@@ -116,7 +110,6 @@ light:
       - light.vardagsrum_gran
 
   - platform: group
-    id: light_group_kok_jul
     name: Kök jul
     # Kitchen Christmas lighting
     # Used by: Kitchen automation during holiday season
@@ -126,7 +119,6 @@ light:
       - light.kok_lilla_fonstret
 
   - platform: group 
-    id: light_group_andreas_room_jul
     name: Andreas rum jul
     # Andreas's bedroom Christmas lighting
     # Used by: Child's room automation during holiday season
@@ -135,7 +127,6 @@ light:
       - light.andreas_fonster
 
   - platform: group
-    id: light_group_uterum_jul
     name: Uterum jul 
     # Conservatory Christmas lighting
     # Used by: Sunroom automation during holiday season

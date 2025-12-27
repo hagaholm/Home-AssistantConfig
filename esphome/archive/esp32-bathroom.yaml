@@ -13,11 +13,11 @@ logger:
 # Enable Home Assistant API
 api:
   encryption:
-    key: "n1a0vCasfOlDw9rkzUefIDQN1WUj6TFdOEWohjU8x5A="
+    key: !secret esp32_bathroom_api_key
 
 ota:
   - platform: esphome
-    password: "a51f47be6a28f2fb7b6c40fa15b1ca7b"
+    password: !secret esp32_bathroom_ota_password
 
 wifi:
   ssid: !secret wifi_ssid
@@ -26,7 +26,7 @@ wifi:
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
     ssid: "Esp32-Bathroom Fallback Hotspot"
-    password: "olRIyUqveehK"
+    password: !secret esp32_bathroom_ap_password
 
 captive_portal:
     

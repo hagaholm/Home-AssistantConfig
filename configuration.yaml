@@ -866,13 +866,6 @@ command_line:
         unit_of_measurement: "°C"
         value_template: '{{ value | multiply(0.001) | round(1) | int(85) }}'
 
-  - sensor:
-        name: X86 PKG Temperature
-        command: "cat /sys/class/thermal/thermal_zone2/temp"
-        # If errors occur, remove degree symbol below
-        unit_of_measurement: "°C"
-        value_template: '{{ value | multiply(0.001) | round(1) | int(85) }}'
-
 ####################################################
 #                                                  #
 #            END OF CONFIGURATION FILE             #

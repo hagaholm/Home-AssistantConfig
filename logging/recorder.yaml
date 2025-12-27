@@ -1,15 +1,17 @@
-  purge_keep_days: 14
-  # exclude:
-  #   domains:
-  #     - camera
-  #     - media_player
-  #     - sun.sun
-  #     - calendar
-  #     - sensor
+  purge_keep_days: 7
+  exclude:
+    domains:
+      - camera
+      - media_player
+      - sun
+      - calendar
+      - update
+    entity_globs:
+      - sensor.kajplats_*_last_seen
+      - sensor.ljusstyrka2
+      - sensor.infrared*
+      - sensor.visible*
+      - sensor.full*spectrum*
+    entities:
+      - binary_sensor.updater
 
-  # include:
-  #   domains:
-  #     - light
-  #     - binary_sensor
-  #   entities:
-  #     - sensor.ute

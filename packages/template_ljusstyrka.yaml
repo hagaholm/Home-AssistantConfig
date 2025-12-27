@@ -3,9 +3,14 @@ template:
   - sensor:
       - name: "Ljusstyrka"
         unit_of_measurement: "lx"
-        default_entity_id: sensor.ljusstyrka
+        unique_id: sensor_ljusstyrka_calibrated
         state: >-
-          {% set light = states.light.stralkastare_husgavel %}
-          {% if light.state == 'off' and (as_timestamp(now()) - as_timestamp(light.last_changed)) > 30 %}
-            {{ states('sensor.Ljusstyrka_measured') }}
+          {% set light = states('light.stralkastare_husgavel') %}
+          {% set light_changed = state_attr('light.stralkastare_husgavel', 'last_changed') %}
+          {% if light == 'off' and (as_timestamp(now()) - as_timestamp(light_changed)) > 30 %}
+            {{ (states('sensor.ljusstyrka_measured') | float(0)) | round(0) }}
+          {% else %}
+            {{ (states('sensor.ljusstyrka_measured') | float(0)) | round(0) }}
           {% endif %}
+        availability: "{{ states('sensor.ljusstyrka_measured') not in ['unknown', 'unavailable'] }}"
+

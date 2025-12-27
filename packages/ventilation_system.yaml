@@ -1,3 +1,37 @@
+####################################################
+#                                                  #
+#             VENTILATION SYSTEM (FTX)            #
+#                                                  #
+####################################################
+# Heat recovery ventilation system automation
+# Controls fan speed based on humidity and temperature
+# Template sensors: packages/template_ventilation_system.yaml
+#
+# Hardware:
+# - Switch: Shelly1 relay (entity: switch.shelly1_c45bbe77099d)
+# - Function: Normal / Forced ventilation mode toggle
+# - Sensors: Temperature (4 probes), Humidity (bathroom)
+#
+# Automation Logic:
+# - Bathroom humidity > threshold → Force high speed
+# - Temperature out of range → Force high speed
+# - Max timer (90 min) prevents indefinite forced mode
+# - Stability timer (20 min) prevents rapid cycling
+# - Auto-reset when conditions normalize
+#
+# Safety Features:
+# - Diagnostic input_booleans track alarm conditions
+# - Temperature monitoring (tilluft, franluft thresholds)
+# - Away mode high humidity detection
+# - Auto-recovery when switch becomes available
+#
+# Usage:
+# - Triggered by: Bathroom humidity, temperature sensors
+# - Manual override: Physical switch or UI toggle
+# - Notifications: Alarm conditions logged to input_booleans
+#
+####################################################
+
 ##############
 ### Sensor ###
 ##############

@@ -1,3 +1,39 @@
+####################################################
+#                                                  #
+#          FRIGATE PERSON DETECTION               #
+#                                                  #
+####################################################
+# Person detection notifications from Frigate NVR
+# AI-powered person detection on security cameras
+# Documentation: https://docs.frigate.video/
+#
+# Camera Coverage:
+# - Cam 3: Uppfart (driveway) - Front approach
+# - Cam 5: Baksida (backside) - Rear yard priority
+# - Cam 6: Baksida (backside) - Rear entrance priority
+# - Cam 7: Friggebod (garden shed) - Outbuilding
+# - Cam 8: Entre (entrance) - Main entry
+#
+# Notification Logic:
+# - Immediate alerts: Sleep mode (Hemma av) or Away + Priority cameras
+# - Priority cameras: Cam 5, Cam 6 (backside - vulnerable)
+# - Delayed alerts: Away mode + non-priority cameras (reduce false positives)
+# - Away delay: 2 minutes (allows motion to stabilize)
+#
+# Conditions:
+# - Hemma av (Sleep): Notify on any person detection
+# - Borta (Away) + Priority: Immediate notification
+# - Borta (Away) + Other: 2-minute delay notification
+# - Hemma på (Home active): No notifications
+#
+# Safety Notes:
+# - Mode: single (prevent notification spam)
+# - max_exceeded: silent (drop concurrent triggers)
+# - Detection counts included in notification
+# - Timestamp in notification title
+#
+####################################################
+
 ##################
 ### Automation ###
 ##################

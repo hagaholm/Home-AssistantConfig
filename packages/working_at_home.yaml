@@ -1,9 +1,45 @@
+####################################################
+#                                                  #
+#              WORKING AT HOME                     #
+#                                                  #
+####################################################
+# Work-from-home automation for home office lighting
+# Automatically controls lighting in Louise's room (home office)
+# Triggered by work laptop online/offline status
+#
+# Design Pattern:
+# - Work laptop online detection via network tracker
+# - Conditional on: working_at_home boolean + workday
+# - Automatic desk lamp and ambient lighting control
+# - Camera light notification (doorbell blink warning)
+#
+# Automation Sequences:
+# 1. Laptop Online → Turn on desk lamp (louise_skrivbord)
+# 2. Laptop Online → Turn on ambient lights (fonster, golvlampa)
+# 3. Laptop Offline → Turn off desk lamp
+# 4. Doorbell → Blink lights (camera notification)
+#
+# Conditions:
+# - input_boolean.working_at_home = ON (manual enable)
+# - binary_sensor.workday_today = ON (weekdays only)
+# - sensor.mickes_work_laptop = Online/Offline
+#
+# Safety Notes:
+# - Mode: single (prevent concurrent executions)
+# - Only active on workdays
+# - Manual override via input_boolean
+#
+####################################################
+
 #####################
-### Input boolean ###
+### Input Boolean ###
 #####################
 input_boolean:
   working_at_home:
     name: Jobbar hemifrån
+    # Enable/disable work-from-home automation
+    # When ON: Automatic office lighting based on laptop status
+    # When OFF: Manual lighting control only
 
 ##################
 ### AUTOMATION ###

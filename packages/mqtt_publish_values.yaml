@@ -1,3 +1,34 @@
+####################################################
+#                                                  #
+#             MQTT PUBLISH VALUES                 #
+#                                                  #
+####################################################
+# MQTT value publishing for external integrations
+# Publishes sensor values to MQTT topics for remote consumption
+# Documentation: https://www.home-assistant.io/integrations/mqtt/
+#
+# Purpose:
+# - Share sensor data with external systems
+# - Integration with neighbor's system (Thomas C.)
+# - Real-time sensor value synchronization
+#
+# Published Values:
+# - Outside temperature (sensor.ute) → External MQTT topic
+# - Filtered lux reading (sensor.ljusstyrka) → External MQTT topic
+#
+# Design Pattern:
+# - State change triggers immediate MQTT publish
+# - Mode: single (prevent concurrent publishing)
+# - Topic paths defined in secrets.yaml
+# - Template payload contains current sensor state
+#
+# Usage:
+# - External systems subscribe to published topics
+# - Neighbor system uses temp/lux for their automations
+# - No retention to avoid stale data
+#
+####################################################
+
 ##################
 ### Automation ###
 ##################

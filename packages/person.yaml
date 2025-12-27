@@ -3,6 +3,29 @@
 #                      PERSON                      #
 #                                                  #
 ####################################################
+# Person entities for presence detection and tracking
+# Aggregates multiple device trackers per person
+# Documentation: https://www.home-assistant.io/integrations/person/
+#
+# Design Pattern:
+# - Each person has multiple device trackers (phone, WiFi, BT)
+# - Home Assistant intelligently determines presence
+# - Used by automations for home/away status
+# - Updates input_select.home_status based on occupancy
+#
+# Family Members:
+# - Micke, Annelie: Parents (primary occupants)
+# - Louise, Andreas: Children
+# - Herbert, Margareta, Erik: Extended family
+#
+# Usage:
+# - Home/away automations trigger on person state
+# - Lighting scenes adjust based on occupancy
+# - Security mode activated when all away
+# - Welcome home sequences when arriving
+#
+####################################################
+
 person:
   - name: Micke
     id: micke

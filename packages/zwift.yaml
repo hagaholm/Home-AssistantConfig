@@ -1,9 +1,48 @@
+####################################################
+#                                                  #
+#                     ZWIFT                        #
+#                                                  #
+####################################################
+# Zwift cycling trainer automation for garage climate
+# Controls heater and dehumidifier during training sessions
+# Integration: Apple TV presence detection in storage room
+#
+# Purpose:
+# - Turn off heater when training (prevent overheating)
+# - Turn on dehumidifier during training (remove moisture)
+# - Auto-restore climate control after training
+#
+# Hardware:
+# - Apple TV in garage (Zwift streaming device)
+# - Garage heater: switch.garage_elvarme
+# - Dehumidifier: switch.garage_avfuktare
+#
+# Automation Logic:
+# 1. Apple TV Online → Turn off heater, Turn on dehumidifier
+# 2. Apple TV Offline → Wait 15 min → Turn off dehumidifier
+# 3. Heater remains off until manual re-enable
+#
+# Design Pattern:
+# - Mode: single (prevent concurrent triggers)
+# - 15-minute delay allows cool-down period
+# - Manual heater control (not auto-restored)
+# - Input boolean tracks active Zwift session
+#
+# Safety Notes:
+# - Prevents excessive heat during intense training
+# - Dehumidifier removes perspiration moisture
+# - Delay prevents short-cycling equipment
+#
+####################################################
+
 #####################
-### Input boolean ###
+### Input Boolean ###
 #####################
 input_boolean:
   zwift:
     name: Zwift används
+    # Tracks active Zwift training session
+    # Set automatically by Apple TV Online/Offline status
 
 ##################
 ### AUTOMATION ###

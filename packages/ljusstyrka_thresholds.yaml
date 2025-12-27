@@ -1,4 +1,31 @@
-# Light sensor threshold variables for automations
+####################################################
+#                                                  #
+#           LJUSSTYRKA THRESHOLDS                 #
+#                                                  #
+####################################################
+# Light sensor threshold configuration for automations
+# Defines lux thresholds for automatic lighting control
+# Documentation: https://www.home-assistant.io/integrations/input_number/
+#
+# Purpose:
+# - Configurable thresholds for dusk/dawn detection
+# - Adjustable via UI without automation editing
+# - Separate on/off thresholds prevent lighting flicker
+# - Different thresholds for different lighting modes
+#
+# Threshold Categories:
+# - Inside sensors: Kitchen, morning, day, evening, night
+# - Outside sensors: Facade, garden, outdoor
+# - Hysteresis: On threshold < Off threshold (prevents oscillation)
+#
+# Usage:
+# - Automations compare sensor.ljusstyrka to these thresholds
+# - When lux < threshold_on: Turn lights on
+# - When lux > threshold_off: Turn lights off
+# - UI sliders allow runtime adjustment
+#
+####################################################
+
 ####################
 ### Input Number ###
 ####################

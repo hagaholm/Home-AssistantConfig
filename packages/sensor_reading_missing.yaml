@@ -1,33 +1,38 @@
-#Sensorer:
-#Regnmätare
-# Badrum
-#Ute2
-#Louise rum
-# Frys
-# Kyl
-# Tvättstuga
-# Värmepump
-# Förråd
-# Garage
-# Vardagsrum
-# Friggebod
-#Inne grannen
-# Hall
-#På vinden
-#Ute
-#Uterum
-#Sovrum
-#Uteluft
-#Avluft
-#Tilluft
-#Franluft
-#Ljusstyrka
+####################################################
+#                                                  #
+#           SENSOR READING MISSING                #
+#                                                  #
+####################################################
+# Temperature sensor availability monitoring system
+# Detects when sensors stop reporting and sends alerts
+# Template sensors: packages/template_sensor_reading_missing.yaml
+#
+# Monitored Sensors:
+# - Critical: Frys (freezer), Kyl (refrigerator)
+# - Rooms: Badrum, Hall, Vardagsrum, Louise rum
+# - Climate: Tvättstuga, Värmepump, Uterum, Sovrum
+# - Outdoor: Förråd, Garage, Friggebod, Ute friggebod
+# - Ventilation: Uteluft, Avluft, Tilluft, Franluft
+# - Light: Ljusstyrka sensor
+#
+# Design Pattern:
+# - Time pattern trigger checks every 5 minutes
+# - Template sensors track last_changed timestamp
+# - If sensor unchanged > threshold: Send notification
+# - Input booleans enable/disable alarms per sensor
+#
+# Safety Notes:
+# - Critical sensors (freezer/fridge) have stricter thresholds
+# - Notifications sent via persistent_notification service
+# - Manual alarm enable/disable prevents alert spam
+#
+####################################################
 
 #########################################################
-# Template timestamp sensors migrated to packages/template_sensor_reading_missing.yaml
-
-
+# Template timestamp sensors migrated to:
+# packages/template_sensor_reading_missing.yaml
 #########################################################
+
 input_boolean:
   frys_reading_missing_alarm:
     name: Frys avläsning saknas larm aktiverat

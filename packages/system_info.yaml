@@ -1,3 +1,39 @@
+####################################################
+#                                                  #
+#                  SYSTEM INFO                     #
+#                                                  #
+####################################################
+# System information and version monitoring
+# Command-line sensors for Home Assistant versions
+# Template sensors: packages/template_system_info.yaml
+#
+# Purpose:
+# - Monitor Home Assistant current/installed versions
+# - Track Raspberry Pi server temperatures (commented)
+# - Uptime and system health monitoring
+#
+# Version Sensors:
+# - Current HA Version: Latest available from PyPI
+# - Installed Version: Currently running version
+# - Used for update notifications and tracking
+#
+# Raspberry Pi Monitoring (commented out):
+# - SSH-based temperature monitoring
+# - Multiple Pi servers: B+, 3B (x2), 3B+
+# - Disabled to reduce SSH overhead
+#
+# Design Pattern:
+# - Command-line sensor platform for external queries
+# - Python requests for PyPI version check
+# - File read for local installed version
+#
+# Usage:
+# - UI dashboard: System health monitoring
+# - Automations: Update available notifications
+# - Template sensors provide device Online/Offline status
+#
+####################################################
+
 ################
 # Command Line #
 ################

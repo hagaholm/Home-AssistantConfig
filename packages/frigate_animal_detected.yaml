@@ -1,3 +1,41 @@
+####################################################
+#                                                  #
+#          FRIGATE ANIMAL DETECTION               #
+#                                                  #
+####################################################
+# Animal detection automation from Frigate NVR
+# AI-powered animal detection for outdoor lighting
+# Documentation: https://docs.frigate.video/
+#
+# Purpose:
+# - Automatic backyard lighting when animals detected
+# - Motion-activated deck/patio lighting
+# - Wildlife monitoring and deterrence
+#
+# Detection Zones:
+# - Backside cameras: Cam 5, Cam 6 (rear yard)
+# - Triggers: binary_sensor.cams_animal_backside_active
+#
+# Automation Logic:
+# 1. Animal detected → Wait 15 seconds (stabilization)
+# 2. Still detected + (night OR low lux) → Turn on deck light
+# 3. No detection → Wait 20 seconds → Turn off deck light
+#
+# Conditions:
+# - Time: 20:00-08:00 (night hours) OR
+# - Lux: < 10 (dark conditions)
+# - Motion persistence: 15s delay prevents false triggers
+#
+# Controlled Lights:
+# - light.tradack_ute (deck/patio outdoor light)
+#
+# Safety Notes:
+# - Mode: restart (allows re-triggering during active motion)
+# - Prevents light flickering with delay timers
+# - Light turns off only if motion cleared for 20 seconds
+#
+####################################################
+
 ##################
 ### Automation ###
 ##################

@@ -1,3 +1,40 @@
+####################################################
+#                                                  #
+#                  VOLVO CAR                       #
+#                                                  #
+####################################################
+# Volvo car connectivity and notifications
+# Integration with Volvo On Call (VOC) service
+# Documentation: https://www.home-assistant.io/integrations/volvo/
+#
+# Vehicle:
+# - Entity: binary_sensor.aku93m_engine
+# - Registration: AKU93M
+# - Tracks engine on/off status via VOC
+#
+# Automation Logic:
+# 1. Engine starts → Send notification → Disable automation
+# 2. Engine stops → Send notification → Disable automation
+# 3. Manual re-enable required after each trigger
+#
+# Purpose:
+# - Notify when car is started/stopped
+# - Detect unauthorized vehicle use
+# - Track car usage patterns
+#
+# Design Pattern:
+# - Mode: single (one notification per event)
+# - Self-disabling: Prevents notification spam
+# - Manual re-enable via UI or automation
+# - Notification sent to: mobile_app_sm_a528b
+#
+# Safety Notes:
+# - Requires VOC integration configured
+# - Self-disable prevents battery drain from repeated alerts
+# - Manual enable gives control over notification timing
+#
+####################################################
+
 ##################
 ### AUTOMATION ###
 ##################

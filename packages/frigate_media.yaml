@@ -1,3 +1,37 @@
+####################################################
+#                                                  #
+#            FRIGATE MEDIA MANAGEMENT             #
+#                                                  #
+####################################################
+# Frigate NVR media file cleanup utilities
+# Manages storage by deleting old clips/recordings
+# Documentation: https://docs.frigate.video/
+#
+# Purpose:
+# - Prevent storage exhaustion on Frigate NVR
+# - Clean up old detection clips, exports, recordings
+# - Reset Frigate database if needed
+#
+# Cleanup Process:
+# 1. Stop Frigate addon (ensure no file locks)
+# 2. Delete media files: clips, exports, recordings
+# 3. Delete database files: frigate.db and journals
+# 4. Restart Frigate addon (rebuild database)
+#
+# Storage Paths:
+# - /media/frigate/clips/* (Detection event clips)
+# - /media/frigate/exports/* (Exported video segments)
+# - /media/frigate/recordings/* (Continuous recordings)
+# - /config/frigate.db* (SQLite database and journals)
+#
+# Safety Notes:
+# - DESTRUCTIVE: Permanently deletes all media files
+# - Use only when storage full or troubleshooting
+# - 5-second delays ensure clean shutdown/startup
+# - Frigate will recreate database on restart
+#
+####################################################
+
 shell_command:
   delete_frigate_media_files: "rm -rf /media/frigate/clips/* /media/frigate/exports/* /media/frigate/recordings/*"
   delete_frigate_db_files: "rm /config/frigate.db /config/frigate.db-shm /config/frigate.db-wal"

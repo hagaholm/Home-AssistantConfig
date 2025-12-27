@@ -2,7 +2,7 @@ command_line:
   - binary_sensor:
       name: "Router SSH Status 1"
       unique_id: router_ssh_status
-      command: 'nc -z -w 5 192.168.1.1 22 && echo "on" || echo "off"'
+      command: !secret router_ip_check_command
       payload_on: "on"
       payload_off: "off"
       scan_interval: 30

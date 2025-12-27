@@ -1,0 +1,77 @@
+####################################################
+#                                                  #
+#                  INPUT SELECTS                   #
+#                                                  #
+####################################################
+# Input select helpers for lighting and home status
+# https://www.home-assistant.io/integrations/input_select/
+
+input_select:
+  light_inside:
+    name: Innebelysning
+    options:
+     - Släckt
+     - Morgonbelysning
+     - Förmiddagsbelysning
+     - Dagbelysning
+     - Kvällsbelysning
+     - Nattbelysning
+     - Bortabelysning
+     - Arbetsbelysning
+     - Fönsterbelysning
+    icon: mdi:lightbulb
+
+  light_kitchen:
+    name: Köksbelysning
+    options:
+     - Släckt
+     - 25%
+     - 50%
+     - 100%
+    icon: mdi:lightbulb
+
+  light_uterum:
+    name: Uterumsbelysing
+    options:
+     - Släckt
+     - Tänt
+    icon: mdi:lightbulb
+
+  facade_lights: 
+    name: Fasadbelysning 
+    options: 
+     - Släckt 
+     - Tänt
+     - Natt 
+     - Max
+    icon: mdi:lightbulb 
+     
+  light_garden: 
+    name: Trädgårdsbelysning 
+    options: 
+     - Släckt 
+     - Tänt 
+    icon: mdi:lightbulb 
+
+  light_outside:
+    name: Utebelysning
+    options:
+     - Släckt
+     - Tänt
+    icon: mdi:lightbulb
+
+  light_bathroom:
+    name: Badrumsbelysning
+    options: 
+     - Släckt
+     - Dag
+     - Dag närvaro
+     - Natt närvaro
+    icon: mdi:lightbulb
+
+  home_status:
+    name: Hemma status
+    options:
+     - Borta
+     - Hemma på
+     - Hemma av

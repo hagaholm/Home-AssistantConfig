@@ -1,0 +1,11 @@
+####################################################
+#                                                  #
+#                  MEDIA PLAYER                    #
+#                                                  #
+####################################################
+# Yamaha AV Receiver
+# https://www.home-assistant.io/integrations/yamaha/
+
+media_player:
+  - platform: yamaha
+    host: !secret yamaha_receiver_ip

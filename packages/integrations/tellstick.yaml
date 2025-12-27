@@ -1,0 +1,28 @@
+####################################################
+#                                                  #
+#                     TELLSTICK                    #
+#                                                  #
+####################################################
+# Tellstick integration for switches and covers
+# https://www.home-assistant.io/integrations/tellstick/
+
+tellstick:
+  host: core-tellstick
+  port: [50800, 50801]
+  signal_repetitions: 3
+
+####################################################
+#                                                  #
+#                     SWITCH                       #
+#                                                  #
+####################################################
+switch:
+  - platform: tellstick
+
+####################################################
+#                                                  #
+#                     COVER                        #
+#                                                  #
+####################################################
+cover:
+  - platform: tellstick

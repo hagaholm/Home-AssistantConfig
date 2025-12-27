@@ -722,63 +722,8 @@ input_select:
 #                       MQTT                       #
 #                                                  #
 ####################################################
-# Add broker used on Raspberry Pi 3B used for lux values
+# MQTT configuration moved to packages/integrations/mqtt.yaml
 # https://www.home-assistant.io/docs/mqtt/broker/
-mqtt:
-#  broker: localhost
-#  port: 1883
-#  username: !secret mqtt_broker_username
-#  password: !secret mqtt_broker_password
-
-########
-# mqtt #
-########
-  sensor:
-    - state_topic: "hassbian/tsl2591/lux_calibrated"
-      name: Ljusstyrka_measured
-      unit_of_measurement: "lx"
-    - state_topic: "hassbian/tsl2591/lux_5"
-      name: Ljusstyrka2
-      unit_of_measurement: "lx"
-    - state_topic: "hassbian/tsl2591/infrared"
-      name: Infrarött ljus
-      unit_of_measurement: ""
-    - state_topic: "hassbian/tsl2591/visible"
-      name: Synligt ljus
-      unit_of_measurement: ""
-    - state_topic: "hassbian/tsl2591/full_spectrum"
-      name: Fullt spectrum ljus
-      unit_of_measurement: ""
-
-    - state_topic: "hassbian/lux_server/cpu_temp"
-      name: Lux Server CPU Temp
-      unit_of_measurement: "°C"
-
-
-    - state_topic: "hassbian/1wire/ute"
-      name: Ute
-      unit_of_measurement: "°C"
-    - state_topic: "hassbian/1wire/vinden"
-      name: På vinden
-      unit_of_measurement: "°C"
-    - state_topic: "hassbian/1wire/uterum"
-      name: Uterum
-      unit_of_measurement: "°C"
-    - state_topic: "hassbian/1wire/sovrum"
-      name: Sovrum
-      unit_of_measurement: "°C"
-    - state_topic: "hassbian/1wire/uteluft"
-      name: Uteluft
-      unit_of_measurement: "°C"
-    - state_topic: "hassbian/1wire/avluft"
-      name: Avluft
-      unit_of_measurement: "°C"
-    - state_topic: "hassbian/1wire/tilluft"
-      name: Tilluft
-      unit_of_measurement: "°C"
-    - state_topic: "hassbian/1wire/franluft"
-      name: Frånluft
-      unit_of_measurement: "°C"
 
 ####################################################
 #                                                  #

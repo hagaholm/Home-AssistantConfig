@@ -1,0 +1,83 @@
+####################################################
+#                                                  #
+#                       MQTT                       #
+#                                                  #
+####################################################
+# MQTT Sensors from Raspberry Pi 3B
+# Includes: Light sensors (TSL2591), Temperature sensors (1-Wire)
+# https://www.home-assistant.io/docs/mqtt/broker/
+
+mqtt:
+  sensor:
+    # Light Sensors (TSL2591)
+    - state_topic: "hassbian/tsl2591/lux_calibrated"
+      name: Ljusstyrka_measured
+      unit_of_measurement: "lx"
+      unique_id: mqtt_ljusstyrka_measured
+      
+    - state_topic: "hassbian/tsl2591/lux_5"
+      name: Ljusstyrka2
+      unit_of_measurement: "lx"
+      unique_id: mqtt_ljusstyrka2
+      
+    - state_topic: "hassbian/tsl2591/infrared"
+      name: Infrarött ljus
+      unit_of_measurement: ""
+      unique_id: mqtt_infrared
+      
+    - state_topic: "hassbian/tsl2591/visible"
+      name: Synligt ljus
+      unit_of_measurement: ""
+      unique_id: mqtt_visible
+      
+    - state_topic: "hassbian/tsl2591/full_spectrum"
+      name: Fullt spectrum ljus
+      unit_of_measurement: ""
+      unique_id: mqtt_full_spectrum
+
+    # Server Sensors
+    - state_topic: "hassbian/lux_server/cpu_temp"
+      name: Lux Server CPU Temp
+      unit_of_measurement: "°C"
+      unique_id: mqtt_lux_server_cpu_temp
+
+    # Temperature Sensors (1-Wire)
+    - state_topic: "hassbian/1wire/ute"
+      name: Ute
+      unit_of_measurement: "°C"
+      unique_id: mqtt_temp_ute
+      
+    - state_topic: "hassbian/1wire/vinden"
+      name: På vinden
+      unit_of_measurement: "°C"
+      unique_id: mqtt_temp_vinden
+      
+    - state_topic: "hassbian/1wire/uterum"
+      name: Uterum
+      unit_of_measurement: "°C"
+      unique_id: mqtt_temp_uterum
+      
+    - state_topic: "hassbian/1wire/sovrum"
+      name: Sovrum
+      unit_of_measurement: "°C"
+      unique_id: mqtt_temp_sovrum
+      
+    - state_topic: "hassbian/1wire/uteluft"
+      name: Uteluft
+      unit_of_measurement: "°C"
+      unique_id: mqtt_temp_uteluft
+      
+    - state_topic: "hassbian/1wire/avluft"
+      name: Avluft
+      unit_of_measurement: "°C"
+      unique_id: mqtt_temp_avluft
+      
+    - state_topic: "hassbian/1wire/tilluft"
+      name: Tilluft
+      unit_of_measurement: "°C"
+      unique_id: mqtt_temp_tilluft
+      
+    - state_topic: "hassbian/1wire/franluft"
+      name: Frånluft
+      unit_of_measurement: "°C"
+      unique_id: mqtt_temp_franluft

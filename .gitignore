@@ -58,6 +58,13 @@ ip_bans.yaml
 frigate/config.yaml
 
 # --------------------------------------------------
+#   Archive and temporary files with sensitive data
+# --------------------------------------------------
+esphome/archive/
+*_not_used
+*.temp_not_used
+
+# --------------------------------------------------
 #   Generic excludes
 # --------------------------------------------------
 .uuid

@@ -1,0 +1,357 @@
+####################################################
+#                                                  #
+#           TEMPERATURLARM (ALERTS) PACKAGE         #
+#                                                  #
+####################################################
+# Samlar alla temperatur-larm automationer i ett paket.
+#
+# Källor:
+# - automations/alarm_forrad_temperature.yaml
+# - automations/alarm_friggebod_temperature.yaml
+# - automations/alarm_frys_temperature.yaml
+# - automations/alarm_kyl_temperature.yaml
+# - automations/alarm_uterum_temperature.yaml
+#
+# Säkerhet:
+# - IDs, alias, mode och logik bibehållna
+####################################################
+
+##################
+### Automation ###
+##################
+automation:
+
+#######################################################
+#                                                     #
+#          FÖRRÅD TEMPERATURLARM AUTOMATION          #
+#                                                     #
+#######################################################
+#
+# METADATA:
+# Skapad: [ursprungligt datum]
+# Senast ändrad: 2025-12-27
+# Version: 2.0
+# Författare: Home Assistant Config
+#
+# BESKRIVNING:
+# Samlad automation för temperaturövakning i förrådet.
+# Larmar vid både för hög och för låg temperatur med
+# hänsyn till utetemperatur.
+#######################################################
+
+  - alias: Förråd temperaturlarm
+    id: '1735304100004'
+    mode: single
+
+    trigger:
+      # Hög temperatur
+      - platform: template
+        value_template: "{{ states('sensor.forrad_temperature') not in ['unknown','unavailable',''] and (states('sensor.forrad_temperature')|float) > 11 }}"
+        for: "00:10:00"
+        id: high_temp
+
+      # Låg temperatur
+      - platform: template
+        value_template: "{{ states('sensor.forrad_temperature') not in ['unknown','unavailable',''] and (states('sensor.forrad_temperature')|float) < 4 }}"
+        for: "00:10:00"
+        id: low_temp
+
+    condition:
+      # Endast larm om utetemperatur är låg (annars naturligt)
+      - condition: numeric_state
+        entity_id: sensor.ute
+        below: 5
+
+    action:
+      - choose:
+          # HÖG TEMPERATUR
+          - alias: Hög temperatur larm
+            conditions:
+              - condition: trigger
+                id: high_temp
+            sequence:
+              - service: notify.mobile_app_sm_a528b
+                data:
+                  title: "LARM! Förråd - hög temperatur"
+                  message: >
+                    {% set t = states('sensor.forrad_temperature')|float(0) %}
+                    {% set unit = state_attr('sensor.forrad_temperature','unit_of_measurement') %}
+                    {% set ute = states('sensor.ute') %}
+                    LARM! Hög temp i Förråd: {{ t }} {{ unit }} (ute: {{ ute }})
+                    Nivå: {% if t > 13 %}Mycket hög{% elif t > 12 %}Hög{% else %}Mild{% endif %}
+
+          # LÅG TEMPERATUR
+          - alias: Låg temperatur larm
+            conditions:
+              - condition: trigger
+                id: low_temp
+            sequence:
+              - service: notify.mobile_app_sm_a528b
+                data:
+                  title: "LARM! Förråd - låg temperatur"
+                  message: >
+                    {% set t = states('sensor.forrad_temperature')|float(0) %}
+                    {% set unit = state_attr('sensor.forrad_temperature','unit_of_measurement') %}
+                    {% set ute = states('sensor.ute') %}
+                    LARM! Låg temp i Förråd: {{ t }} {{ unit }} (ute: {{ ute }})
+                    Nivå: {% if t < 0 %}Mycket låg{% elif t < 2 %}Låg{% else %}Mild{% endif %}
+
+#######################################################
+#                                                     #
+#        FRIGGEBOD TEMPERATURLARM AUTOMATION          #
+#                                                     #
+#######################################################
+
+  - alias: Friggebod temperaturlarm
+    id: '1735304100005'
+    mode: single
+
+    trigger:
+      # Hög temperatur
+      - platform: numeric_state
+        entity_id: sensor.friggebod_temperature
+        above: 23
+        for: "00:10:00"
+        id: high_temp
+
+      # Låg temperatur
+      - platform: numeric_state
+        entity_id: sensor.friggebod_temperature
+        below: 19
+        for: "00:10:00"
+        id: low_temp
+
+      # Frysvakt (akut)
+      - platform: numeric_state
+        entity_id: sensor.friggebod_temperature
+        below: 3
+        for: "00:05:00"
+        id: freeze_alert
+
+    action:
+      - choose:
+          # HÖG TEMPERATUR
+          - alias: Hög temperatur larm
+            conditions:
+              - condition: trigger
+                id: high_temp
+              - condition: numeric_state
+                entity_id: sensor.ute
+                below: 15
+            sequence:
+              - service: notify.mobile_app_sm_a528b
+                data:
+                  title: "LARM! Friggebod - hög temperatur"
+                  message: >
+                    {% set t = states('sensor.friggebod_temperature')|float(0) %}
+                    {% set unit = state_attr('sensor.friggebod_temperature','unit_of_measurement') %}
+                    {% set ute = states('sensor.ute') %}
+                    LARM! Hög temp i Friggebod: {{ t }} {{ unit }} (ute: {{ ute }})
+                    Nivå: {% if t > 27 %}Mycket hög{% elif t > 24 %}Hög{% else %}Mild{% endif %}
+
+          # LÅG TEMPERATUR
+          - alias: Låg temperatur larm
+            conditions:
+              - condition: trigger
+                id: low_temp
+              - condition: numeric_state
+                entity_id: sensor.ute
+                below: 15
+            sequence:
+              - service: notify.mobile_app_sm_a528b
+                data:
+                  title: "LARM! Friggebod - låg temperatur"
+                  message: >
+                    {% set t = states('sensor.friggebod_temperature')|float(0) %}
+                    {% set unit = state_attr('sensor.friggebod_temperature','unit_of_measurement') %}
+                    {% set ute = states('sensor.ute') %}
+                    LARM! Låg temp i Friggebod: {{ t }} {{ unit }} (ute: {{ ute }})
+                    Nivå: {% if t < 0 %}Mycket låg{% elif t < 17 %}Låg{% else %}Mild{% endif %}
+
+          # FRYSVAKT (AKUT)
+          - alias: Frysvakt akut larm
+            conditions:
+              - condition: trigger
+                id: freeze_alert
+            sequence:
+              - service: notify.mobile_app_sm_a528b
+                data:
+                  title: "LARM! Frysvakt Friggebod"
+                  message: >
+                    {% set t = states('sensor.friggebod_temperature')|float(0) %}
+                    {% set unit = state_attr('sensor.friggebod_temperature','unit_of_measurement') %}
+                    LARM! Frysvakt Friggebod: {{ t }} {{ unit }}
+
+#######################################################
+#                                                     #
+#          FRYS TEMPERATURLARM AUTOMATION            #
+#                                                     #
+#######################################################
+
+  - alias: Frys temperaturlarm
+    id: '1735304100006'
+    mode: single
+
+    trigger:
+      # Varning hög temperatur (kritiskt)
+      - platform: numeric_state
+        entity_id: sensor.frys_temperature
+        above: -13
+        for: "00:10:00"
+        id: warning_high_temp
+
+      # Larm hög temperatur (nivå)
+      - platform: numeric_state
+        entity_id: sensor.frys_temperature
+        above: -15
+        for: "00:10:00"
+        id: alarm_high_temp
+
+      # Larm låg temperatur
+      - platform: numeric_state
+        entity_id: sensor.frys_temperature
+        below: -25
+        for: "00:10:00"
+        id: alarm_low_temp
+
+    condition:
+      - condition: template
+        value_template: "{{ not is_state('sensor.frys_temperature','unknown') }}"
+
+    action:
+      - choose:
+          # VARNING HÖG TEMPERATUR (>-13°C, KRITISKT)
+          - alias: Varning hög temperatur
+            conditions:
+              - condition: trigger
+                id: warning_high_temp
+            sequence:
+              - service: notify.mobile_app_sm_a528b
+                data:
+                  title: "Varning! Frys - hög temperatur"
+                  message: >
+                    {% set t = states('sensor.frys_temperature')|float(0) %}
+                    {% set unit = state_attr('sensor.frys_temperature','unit_of_measurement') %}
+                    Varning! Hög temp i frysen: {{ t }} {{ unit }}
+
+          # LARM HÖG TEMPERATUR (>-15°C men <-13°C)
+          - alias: Larm hög temperatur nivå
+            conditions:
+              - condition: trigger
+                id: alarm_high_temp
+              - condition: numeric_state
+                entity_id: sensor.frys_temperature
+                below: -13
+            sequence:
+              - service: notify.mobile_app_sm_a528b
+                data:
+                  title: "Larm! Frys - hög temperatur"
+                  message: >
+                    {% set t = states('sensor.frys_temperature')|float(0) %}
+                    {% set unit = state_attr('sensor.frys_temperature','unit_of_measurement') %}
+                    LARM! Hög temp i frysen: {{ t }} {{ unit }}
+
+          # LARM LÅG TEMPERATUR (<-25°C)
+          - alias: Larm låg temperatur
+            conditions:
+              - condition: trigger
+                id: alarm_low_temp
+            sequence:
+              - service: notify.mobile_app_sm_a528b
+                data:
+                  title: "Larm! Frys - låg temperatur"
+                  message: >
+                    {% set t = states('sensor.frys_temperature')|float(0) %}
+                    {% set unit = state_attr('sensor.frys_temperature','unit_of_measurement') %}
+                    LARM! Låg temp i frysen: {{ t }} {{ unit }}
+
+#######################################################
+#                                                     #
+#           KYL TEMPERATURLARM AUTOMATION             #
+#                                                     #
+#######################################################
+
+  - alias: Kyl temperaturlarm
+    id: '1735304100008'
+    mode: single
+
+    trigger:
+      # Hög temperatur
+      - platform: numeric_state
+        entity_id: sensor.kyl_temperature
+        above: 10
+        for: "00:10:00"
+        id: high_temp
+
+      # Låg temperatur
+      - platform: numeric_state
+        entity_id: sensor.kyl_temperature
+        below: 3
+        for: "00:10:00"
+        id: low_temp
+
+    condition:
+      - condition: template
+        value_template: "{{ not is_state('sensor.kyl_temperature','unknown') }}"
+
+    action:
+      - choose:
+          # HÖG TEMPERATUR
+          - alias: Hög temperatur larm
+            conditions:
+              - condition: trigger
+                id: high_temp
+            sequence:
+              - service: notify.mobile_app_sm_a528b
+                data:
+                  title: "LARM! Kyl - hög temperatur"
+                  message: >
+                    {% set t = states('sensor.kyl_temperature')|float(0) %}
+                    {% set unit = state_attr('sensor.kyl_temperature','unit_of_measurement') %}
+                    LARM! Hög temp i kylen: {{ t }} {{ unit }}
+                    Nivå: {% if t > 12 %}Mycket hög{% elif t > 10 %}Hög{% else %}Mild{% endif %}
+
+          # LÅG TEMPERATUR
+          - alias: Låg temperatur larm
+            conditions:
+              - condition: trigger
+                id: low_temp
+            sequence:
+              - service: notify.mobile_app_sm_a528b
+                data:
+                  title: "LARM! Kyl - låg temperatur"
+                  message: >
+                    {% set t = states('sensor.kyl_temperature')|float(0) %}
+                    {% set unit = state_attr('sensor.kyl_temperature','unit_of_measurement') %}
+                    LARM! Låg temp i kylen: {{ t }} {{ unit }}
+                    Nivå: {% if t < 0 %}Mycket låg{% elif t < 2 %}Låg{% else %}Mild{% endif %}
+
+#######################################################
+#                                                     #
+#         UTERUM TEMPERATURLARM AUTOMATION           #
+#                                                     #
+#######################################################
+
+  - alias: Uterum larm hög temp
+    id: '4622609198485'
+    mode: single
+
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.uterum_temperatur
+        above: 35
+        for: "00:10:00"
+
+    condition:
+      - condition: template
+        value_template: "{{ not is_state('sensor.uterum_temperatur','unknown') }}"
+
+    action:
+      - service: notify.mobile_app_sm_a528b
+        data:
+          title: "LARM! Uterum - hög temperatur"
+          message: >
+            {% set t = states('sensor.uterum_temperatur')|float(0) %}
+            {% set unit = state_attr('sensor.uterum_temperatur','unit_of_measurement') %}
+            LARM! Hög temp i Uterum: {{ t }} {{ unit }}
+            Nivå: {% if t > 40 %}Mycket hög{% elif t > 37 %}Hög{% else %}Mild{% endif %}

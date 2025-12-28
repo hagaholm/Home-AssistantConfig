@@ -147,18 +147,6 @@ automation:
     action:
       - choose:
           # --------------------------------------------------
-          # MASTER OFF: INNEBELYSNING SLÄCKT
-          # --------------------------------------------------
-          - conditions:
-              - condition: state
-                entity_id: input_select.light_inside
-                state: 'Släckt'
-            sequence:
-              - service: input_select.select_option
-                data:
-                  entity_id: input_select.light_bathroom
-                  option: Släckt
-          # --------------------------------------------------
           # SLÄCK VID BORTA OCH HEMMA AV
           # --------------------------------------------------
           - conditions:
@@ -201,6 +189,18 @@ automation:
                 data:
                   entity_id: input_select.light_bathroom
                   option: Natt närvaro
+          # --------------------------------------------------
+          # MASTER OFF: INNEBELYSNING SLÄCKT
+          # --------------------------------------------------
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_inside
+                state: 'Släckt'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_bathroom
+                  option: Släckt
           # --------------------------------------------------
           # NATT NÄRVARO → SLÄCKT (timeout)
           # --------------------------------------------------

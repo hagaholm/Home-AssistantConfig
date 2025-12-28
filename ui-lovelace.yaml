@@ -2,6 +2,89 @@ title: Hagaholm
 views:
   - badges: []
     cards:
+      - type: horizontal-stack
+        cards:
+          - type: conditional
+            conditions:
+              - entity: person.micke
+                state: home
+            card:
+              type: tile
+              entity: person.micke
+              state_content:
+                - state
+
+          - type: conditional
+            conditions:
+              - entity: person.annelie
+                state: home
+            card:
+              type: tile
+              entity: person.annelie
+              state_content:
+                - state
+
+          - type: conditional
+            conditions:
+              - entity: person.louise
+                state: home
+            card:
+              type: tile
+              entity: person.louise
+              state_content:
+                - state
+
+          - type: conditional
+            conditions:
+              - entity: person.andreas
+                state: home
+            card:
+              type: tile
+              entity: person.andreas
+              state_content:
+                - state
+
+          - type: conditional
+            conditions:
+              - entity: person.herbert
+                state: home
+            card:
+              type: tile
+              entity: person.herbert
+              state_content:
+                - state
+
+          - type: conditional
+            conditions:
+              - entity: person.margareta
+                state: home
+            card:
+              type: tile
+              entity: person.margareta
+              state_content:
+                - state
+
+          - type: conditional
+            conditions:
+              - entity: person.erik
+                state: home
+            card:
+              type: tile
+              entity: person.erik
+              state_content:
+                - state
+
+          - type: conditional
+            conditions:
+              - entity: input_select.home_status
+                state_not: Borta
+            card:
+              type: tile
+              entity: input_select.home_status
+              name: Hemstatus
+              state_content:
+                - state
+
       - cards:
           - entity: sensor.ute
             graph: line

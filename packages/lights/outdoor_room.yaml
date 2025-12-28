@@ -1,0 +1,308 @@
+####################################################
+#                                                  #
+#           UTERUMSBELYSNING PACKAGE               #
+#                                                  #
+####################################################
+# Samlar all uterumsbelysningslogik i ett paket:
+# - Input select för tänd/släckt
+# - Automations för temperatur-, ljus- och hemstatusstyrning
+# - Scripts för faktisk ljuskontroll
+#
+# Källor:
+# - automations/light_outdoor_room.yaml
+# - automations/input_select_light_outdoor_room.yaml
+# - script/light_outdoor_room.yaml
+# - helpers/input_selects.yaml (light_uterum)
+#
+# Hårdvara/Entiteter:
+# - Temperatursensor: sensor.uterum_temperatur
+# - Ljussensor: sensor.ljusstyrka
+# - Hemspårning: group.track_for_home_devices
+# - Innebelysning: light.kok_lilla_fonstret
+# - Uterumsbelysning: light.uterum_led, light.uterum_fotogenlampa
+# - input_select.light_uterum (Släckt/Tänt)
+#
+# Säkerhet:
+# - IDs och alias bibehållna för bakåtkompatibilitet
+# - Mode single/restart enligt original
+####################################################
+
+#######################
+### Input Select(s) ###
+#######################
+input_select:
+  light_uterum:
+    name: Uterumsbelysing
+    # Conservatory/sunroom simple on/off control
+    # Controls accent lighting and decorative lights in conservatory
+    # Used by: Garden room automation sequences
+    options:
+     - Släckt
+     - Tänt
+    icon: mdi:lightbulb
+
+##################
+### Automation ###
+##################
+automation:
+
+#######################################################
+#                                                     #
+#            UTERUMSBELYSNING AUTOMATION              #
+#                                                     #
+#######################################################
+#
+# BESKRIVNING:
+# Samlad automation för uterumsbelysning baserat på
+# temperatur, ljusnivå, hemstatus och tid.
+# Automatisk tänd/släck med säkerhetskontroller.
+#
+# HÅRDVARA:
+# - Temperatursensor: sensor.uterum_temperatur
+# - Ljussensor: sensor.ljusstyrka
+# - Hemspårning: group.track_for_home_devices
+# - Innebelysning: light.kok_lilla_fonstret
+#
+# TRIGGRAR:
+# - Någon kommer hem
+# - Temperatur över 18°C (varmt nog)
+# - Ljusnivå under 150 lux (mörkt)
+# - Temperatur under 17°C (för kallt)
+# - Alla lämnar hemmet
+# - Innebelysning släcks
+#
+# LOGIK:
+# TÄND:
+# - Mellan 12:00-21:45
+# - När ljus <150 lux OCH temp >18°C OCH hemma
+#
+# SLÄCK:
+# - Temperatur <17°C (för kallt att sitta ute)
+# - När alla lämnar hemmet
+# - När innebelysning släcks (hemma, kväll)
+#
+# INTEGRATION:
+# - Styrs via input_select.light_uterum
+# - Samordnas med innebelysning och hemstatus
+#######################################################
+
+  - alias: Uterums belysning
+    id: '1735304100016'
+    mode: single
+    trigger:
+      - platform: state
+        entity_id: group.track_for_home_devices
+        from: 'not_home'
+        to: 'home'
+      - platform: numeric_state
+        entity_id: sensor.uterum_temperatur
+        above: 18
+      - platform: numeric_state
+        entity_id: sensor.ljusstyrka
+        below: input_number.ljusstyrka_150
+      - platform: numeric_state
+        entity_id: sensor.uterum_temperatur
+        below: 17
+      - platform: state
+        entity_id: group.track_for_home_devices
+        from: 'home'
+        to: 'not_home'
+      - platform: state
+        entity_id: light.kok_lilla_fonstret
+        to: 'off'
+    action:
+      - choose:
+          # Turn ON scenarios
+          - alias: Tänd - Rätt förutsättningar
+            conditions:
+              - condition: time
+                after: '12:00:00'
+                before: '21:45:00'
+              - condition: numeric_state
+                entity_id: sensor.ljusstyrka
+                below: input_number.ljusstyrka_150
+              - condition: numeric_state
+                entity_id: sensor.uterum_temperatur
+                above: 18
+              - condition: state
+                entity_id: group.track_for_home_devices
+                state: 'home'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_uterum
+                  option: Tänt
+          # Turn OFF scenarios
+          - alias: Släck - För kallt
+            conditions:
+              - condition: numeric_state
+                entity_id: sensor.uterum_temperatur
+                below: 17
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_uterum
+                  option: Släckt
+          - alias: Släck - Hemma ingen längre hemma
+            conditions:
+              - condition: state
+                entity_id: group.track_for_home_devices
+                state: 'not_home'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_uterum
+                  option: Släckt
+          - alias: Släck - Inne släcks på kvällen
+            conditions:
+              - condition: state
+                entity_id: group.track_for_home_devices
+                state: 'home'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_uterum
+                  option: Släckt
+
+#######################################################
+#                                                     #
+#     UTERUMSBELYSNING INPUT_SELECT AUTOMATION        #
+#                                                     #
+#######################################################
+#
+# METADATA:
+# Skapad: [ursprungligt datum]
+# Senast ändrad: 2025-12-27
+# Version: 1.1
+# Författare: Home Assistant Config
+#
+# BESKRIVNING:
+# State machine automation för uterumsbelysning.
+# Lyssnar på input_select ändringar och anropar
+# motsvarande belysningsskript.
+#
+# HÅRDVARA/ENTITETER:
+# - input_select.light_uterum (Tänt/Släckt)
+# - script.outdoor_room_light_on
+# - script.outdoor_room_light_off
+#
+# TRIGGRAR:
+# - input_select.light_uterum -> 'Tänt'
+# - input_select.light_uterum -> 'Släckt'
+#
+# LOGIK:
+# När input_select.light_uterum ändras:
+# - Tänt -> Anropar script.outdoor_room_light_on
+# - Släckt -> Anropar script.outdoor_room_light_off
+#
+# INTEGRATION:
+# - Kopplad till input_select.light_uterum
+# - Styrs av automation i light_outdoor_room.yaml
+# - Scriptet hanterar faktisk ljuskontroll
+#
+# ÄNDRINGSLOGG:
+# v1.0: Ursprungliga automationer
+# v1.1 (2025-12-27): Lade till omfattande dokumentation
+#######################################################
+
+  ############################################
+  ### Tänder uterumsbelysning              ###
+  ### T: input_select.light_uterum == Tänt ###
+  ### A: script.outdoor_room_light_on      ###
+  ############################################
+  - alias: Tänd uterumsbelysning
+    id: '4204784871343'
+    mode: single
+    trigger:
+      - platform: state
+        entity_id: input_select.light_uterum
+        to: Tänt
+    action:
+      - service: script.outdoor_room_light_on
+
+  ##############################################
+  ### Släcker uterumsbelysning               ###
+  ### T: input_select.light_uterum == Släckt ###
+  ### A: script.outdoor_room_light_off       ###
+  ##############################################
+  - alias: Släck uterumsbelysning
+    id: '9173164339886'
+    mode: single
+    trigger:
+      - platform: state
+        entity_id: input_select.light_uterum
+        to: Släckt
+    action:
+      - service: script.outdoor_room_light_off
+
+##############
+### Script ###
+##############
+script:
+#######################################################
+#                                                     #
+#             UTERUMS BELYSNING SCRIPTS               #
+#                                                     #
+#######################################################
+#
+# BESKRIVNING:
+# Tänder/släcker uterumsbelysning och uppdaterar state-maskin.
+#
+# HÅRDVARA:
+# - light.uterum_led
+# - light.uterum_fotogenlampa
+# - input_select.light_uterum (state)
+#
+# SÄKERHET:
+# - Mode: restart – hindrar överlappande körningar
+# - Tillgänglighetskontroll för båda lampor
+# - Mjuka övergångar (1s)
+#######################################################
+
+  ############################
+  ### Uterums belysning on ###
+  ############################
+  outdoor_room_light_on:
+    alias: Uterums belysning on
+    mode: restart
+    sequence:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_uterum
+          option: Tänt
+      - condition: template
+        value_template: "{{ states('light.uterum_led') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.uterum_led
+          transition: 1
+      - condition: template
+        value_template: "{{ states('light.uterum_fotogenlampa') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.uterum_fotogenlampa
+          transition: 1
+
+  #############################
+  ### Uterums belysning off ###
+  #############################
+  outdoor_room_light_off:
+    alias: Uterums belysning off
+    mode: restart
+    sequence:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_uterum
+          option: Släckt
+      - condition: template
+        value_template: "{{ states('light.uterum_led') != 'unavailable' }}"
+      - service: light.turn_off
+        data:
+          entity_id: light.uterum_led
+          transition: 1
+      - condition: template
+        value_template: "{{ states('light.uterum_fotogenlampa') != 'unavailable' }}"
+      - service: light.turn_off
+        data:
+          entity_id: light.uterum_fotogenlampa
+          transition: 1

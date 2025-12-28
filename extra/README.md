@@ -55,6 +55,20 @@ If you commit + push directly (no PRs), you can enable the tracked hooks in `git
 - Enable once: `git config core.hooksPath githooks`
 - Disable: `git config --unset core.hooksPath`
 
+## VS Code tasks
+
+This repo includes VS Code tasks under `.vscode/tasks.json`.
+
+How to run:
+
+1) In VS Code open the Command Palette
+2) Run: `Tasks: Run Task`
+3) Pick one:
+	- `HA: Docs + Audit` (recommended)
+	- `HA: Docs Sync`
+	- `HA: Audit`
+	- `HA: Audit (Style)`
+
 ## Files
 
 - `AUTOMATION_TEMPLATE.md` – canonical header/template

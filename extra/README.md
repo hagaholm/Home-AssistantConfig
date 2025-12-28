@@ -37,6 +37,14 @@ Compares `ui-automation.yaml` references (`automation.*`) vs YAML-defined automa
 Run:
 - `py -3 extra/audit_ui_automation.py`
 
+### `ha_condition_indent_audit.py`
+Heuristic scan for common Home Assistant automation validation failures caused by YAML indentation mistakes in condition blocks.
+
+It checks `condition: state` / `condition: numeric_state` blocks for missing required keys and mismatched indentation (e.g. `state:` ending up at the wrong level).
+
+Run:
+- `py -3 extra/ha_condition_indent_audit.py`
+
 ## Docs sync
 
 ### `ha_docs_sync.py`
@@ -75,4 +83,5 @@ How to run:
 - `ha_export_registry.py` – exports sanitized HA registry inventory
 - `ha_inventory_audit.py` – usage audit against the exported inventory
 - `audit_ui_automation.py` – UI automation dashboard reference audit
+- `ha_condition_indent_audit.py` – flags likely YAML indentation mistakes in automation condition blocks
 - `add_id_2_automations.py` – one-off helper (legacy)

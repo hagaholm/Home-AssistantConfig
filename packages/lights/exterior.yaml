@@ -49,11 +49,11 @@ input_select:
     # Facade and exterior accent lighting control
     # Four modes: Off, On, Night mode (dimmed), Maximum (full brightness)
     # Used by: Exterior lighting automation and evening/night scenes
-    options: 
-     - Släckt 
-     - Tänd
-     - Natt 
-     - Max
+    options:
+      - Släckt
+      - Tänd
+      - Natt
+      - Max
     icon: mdi:lightbulb
      
   light_outside:
@@ -62,8 +62,8 @@ input_select:
     # Simple on/off for motion-detected exterior lighting
     # Updated by: PIR sensors and dusk/dawn automations
     options:
-     - Släckt
-     - Tänd
+      - Släckt
+      - Tänd
     icon: mdi:lightbulb
 
 ##################

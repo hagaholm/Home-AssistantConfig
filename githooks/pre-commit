@@ -1,0 +1,23 @@
+#!/bin/sh
+set -e
+
+# Keep docs in sync before each commit.
+# This updates SYSTEM_OVERVIEW.md (auto-generated package inventory block)
+# and stages the result automatically.
+
+REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+
+cd "$REPO_ROOT"
+
+if command -v py >/dev/null 2>&1; then
+  PY=py
+elif command -v python >/dev/null 2>&1; then
+  PY=python
+else
+  echo "pre-commit: Python not found (py/python). Skipping docs sync." >&2
+  exit 0
+fi
+
+$PY extra/ha_docs_sync.py
+
+git add SYSTEM_OVERVIEW.md

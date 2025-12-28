@@ -1,3 +1,4 @@
+import argparse
 import os
 import re
 from collections import defaultdict
@@ -45,6 +46,47 @@ def read_lines(path: str):
             return f.readlines()
 
 
+def style_audit_package_headers(root: str, *, max_list: int = 50):
+    """Best-effort audit for whether package YAMLs appear to follow our header/comment standard.
+
+    This is intentionally heuristic (string checks in the first ~120 lines), since we do not
+    fully parse YAML here.
+    """
+
+    def normalize_rel(path: str) -> str:
+        return os.path.relpath(path, root).replace("\\", "/")
+
+    missing_kallor_beskrivning = []
+    missing_metadata = []
+
+    for path in iter_yaml_files(os.path.join(root, "packages")):
+        lines = read_lines(path)
+        head = "".join(lines[:120])
+
+        # Only apply this check to files that look like they define automation/script/template blocks.
+        if not any(token in head for token in ("automation:", "script:", "template:")):
+            continue
+
+        if ("Källor:" not in head) and ("BESKRIVNING:" not in head):
+            missing_kallor_beskrivning.append(normalize_rel(path))
+
+        if ("METADATA:" not in head) and ("# Skapad:" not in head):
+            missing_metadata.append(normalize_rel(path))
+
+    print("\nStyle/header audit (packages/*):")
+    print(f"- Missing both 'Källor:' and 'BESKRIVNING:' markers: {len(missing_kallor_beskrivning)}")
+    for rel in missing_kallor_beskrivning[:max_list]:
+        print(f"  - {rel}")
+    if len(missing_kallor_beskrivning) > max_list:
+        print("  - ...")
+
+    print(f"- Missing 'METADATA:'/'Skapad' marker: {len(missing_metadata)}")
+    for rel in missing_metadata[:max_list]:
+        print(f"  - {rel}")
+    if len(missing_metadata) > max_list:
+        print("  - ...")
+
+
 def collect_section_keys(lines):
     # indentation-based, but works well for typical HA config.
     active = None
@@ -75,6 +117,20 @@ def collect_section_keys(lines):
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Audit Home Assistant YAML config for duplicates and missing references.")
+    parser.add_argument(
+        "--style",
+        action="store_true",
+        help="Also run a best-effort style/header audit on packages/*.yaml.",
+    )
+    parser.add_argument(
+        "--style-max",
+        type=int,
+        default=50,
+        help="Max files to list per style finding group (default: 50).",
+    )
+    args = parser.parse_args()
+
     yaml_files = list(iter_yaml_files(ROOT))
 
     ids = defaultdict(list)  # id -> list[(relpath, line)]
@@ -171,6 +227,9 @@ def main():
             print(f"- input_boolean.{k} referenced but not defined ({len(missing_in_bool[k])}x). Examples:")
             for rel, line in locs:
                 print(f"  - {rel}:{line}")
+
+    if args.style:
+        style_audit_package_headers(ROOT, max_list=args.style_max)
 
 
 if __name__ == "__main__":

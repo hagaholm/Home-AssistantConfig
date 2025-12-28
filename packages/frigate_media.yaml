@@ -32,6 +32,18 @@
 #
 ####################################################
 
+# Källor:
+# - Frigate NVR (paketfil)
+#
+# BESKRIVNING:
+# Shell/script-verktyg för att rensa Frigate media och databas (destruktivt).
+#
+# METADATA:
+# Skapad: okänt
+# Senast ändrad: 2025-12-28
+# Version: 1.0
+# Författare: Home Assistant Config
+
 shell_command:
   delete_frigate_media_files: "rm -rf /media/frigate/clips/* /media/frigate/exports/* /media/frigate/recordings/*"
   delete_frigate_db_files: "rm /config/frigate.db /config/frigate.db-shm /config/frigate.db-wal"

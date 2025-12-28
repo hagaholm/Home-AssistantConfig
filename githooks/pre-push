@@ -1,0 +1,25 @@
+#!/bin/sh
+set -e
+
+# Gate pushes on basic repo health checks.
+# If this fails, the push is aborted (fix issues, then push again).
+
+REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$REPO_ROOT"
+
+if command -v py >/dev/null 2>&1; then
+  PY=py
+elif command -v python >/dev/null 2>&1; then
+  PY=python
+else
+  echo "pre-push: Python not found (py/python). Cannot run audits." >&2
+  echo "Install Python or disable hooks: git config --unset core.hooksPath" >&2
+  exit 1
+fi
+
+# Ensure docs are synced (should already happen on pre-commit, but safe).
+$PY extra/ha_docs_sync.py --check
+
+# Run YAML audits (duplicates/missing refs + optional style audit).
+$PY extra/ha_audit.py
+$PY extra/ha_audit.py --style

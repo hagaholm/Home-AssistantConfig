@@ -1,8 +1,0 @@
-  ###################
-  # Lux från Thomas #
-  ###################
-sensor:
-  - platform: command_line
-    command: !secret chef_lux
-    name: Ljusstyrka Flacksta
-    unit_of_measurement: "lux"

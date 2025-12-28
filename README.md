@@ -34,18 +34,19 @@ Organized by function for better maintainability:
 - Various template sensors, automations triggers, and integrations
 - See individual files for documentation
 
-### Automations
-`/automations/` - Split by function:
-- **alarm_*.yaml** - Temperature monitoring alerts
-- **light_*.yaml** - Automated lighting scenes
-- **input_select_*.yaml** - Scene selector automations
-- **home_away.yaml** - Presence detection
-- **doorbell.yaml**, **garage_*.yaml**, **friggebod_heater.yaml** - Device automations
+### Automations & Scripts
+Automations and scripts are now primarily managed via `packages/`.
 
-### Scripts
-`/scripts/` - Reusable action sequences:
-- **light_*.yaml** - Lighting scene scripts
-- **fan.yaml** - Ventilation control
+The legacy include folders `automations/` and `script/` are intentionally kept minimal to avoid duplicate loading.
+
+### Standards
+- See `automations.md` for the repo’s automation/package documentation standard.
+- Full template reference: `extra/AUTOMATION_TEMPLATE.md`
+- Helper tools index: `extra/README.md`
+
+## 🧭 Contributing
+
+- Repo contribution guidelines: `CONTRIBUTING.md`
 
 ### Sensors
 `/sensor/` - Additional sensor configurations
@@ -149,6 +150,8 @@ Automated alerts for temperature thresholds in various zones.
 - Light entity names contain numbered variants (_2, etc.)
 
 ## 📚 Documentation Links
+
+- System overview (architecture, flows, and file map): `SYSTEM_OVERVIEW.md`
 
 - [Home Assistant Docs](https://www.home-assistant.io/docs/)
 - [Package Documentation](https://www.home-assistant.io/docs/configuration/packages/)

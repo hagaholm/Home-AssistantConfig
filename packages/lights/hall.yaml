@@ -22,10 +22,82 @@
 # - Mode single enligt original
 ####################################################
 
+#######################
+### Input Select(s) ###
+#######################
+input_select:
+  light_hall:
+    name: Hall takbelysning
+    # Manuell och automatiserad styrning av halltak.
+    # Används av: automation "Hall takbelysning (input_select)".
+    # Synkas även av fjärrkontroll-automationen.
+    options:
+     - Släckt
+     - 1%
+     - 10%
+     - 50%
+     - 100%
+    icon: mdi:lightbulb
+
 ##################
 ### Automation ###
 ##################
 automation:
+
+  #######################################################
+  #                                                     #
+  #     HALL TAKBELYSNING (INPUT_SELECT)                #
+  #                                                     #
+  #######################################################
+  #
+  # BESKRIVNING:
+  # State machine för halltak. När input_select.light_hall ändras
+  # körs motsvarande script för vald ljusnivå.
+  #######################################################
+
+  - alias: Hall takbelysning (input_select)
+    id: '1735304100030'
+    mode: single
+    trigger:
+      - platform: state
+        entity_id: input_select.light_hall
+    action:
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_hall
+                state: Släckt
+            sequence:
+              - service: script.hall_taklampor_off
+
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_hall
+                state: 1%
+            sequence:
+              - service: script.hall_taklampor_1_procent
+
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_hall
+                state: 10%
+            sequence:
+              - service: script.hall_taklampor_10_procent
+
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_hall
+                state: 50%
+            sequence:
+              - service: script.hall_taklampor_50_procent
+
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_hall
+                state: 100%
+            sequence:
+              - service: script.hall_taklampor_100_procent
+        default: []
 
 #######################################################
 #                                                     #
@@ -101,7 +173,10 @@ automation:
           - condition: template
             value_template: "{{ states('input_select.light_inside') != 'Dagbelysning' }}"
     action:
-      - service: script.hall_taklampor_off
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_hall
+          option: Släckt
 
   # Hall fjärrkontroll — enkel logik:
   # - Om `switch.fjarrkontroll_hall` blir 'on' -> kör `script.hall_taklampor_100_procent` (sätt 100%)
@@ -126,16 +201,18 @@ automation:
               - condition: template
                 value_template: "{{ trigger.to_state.state == 'on' }}"
             sequence:
-              - service: script.turn_on
-                target:
-                  entity_id: script.hall_taklampor_100_procent
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_hall
+                  option: 100%
           - conditions:
               - condition: template
                 value_template: "{{ trigger.to_state.state == 'off' }}"
             sequence:
-              - service: script.turn_on
-                target:
-                  entity_id: script.hall_taklampor_off
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_hall
+                  option: Släckt
         default: []
 
 ##############

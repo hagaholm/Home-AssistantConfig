@@ -150,7 +150,7 @@ automation:
               - service: input_select.select_option
                 data:
                   entity_id: input_select.light_garden
-                  option: Tänd
+                  option: Tänt
           - alias: Tänd - Borta eftermiddag och kväll
             conditions:
               - condition: time
@@ -169,7 +169,7 @@ automation:
               - service: input_select.select_option
                 data:
                   entity_id: input_select.light_garden
-                  option: Tänd
+                  option: Tänt
           # Turn OFF scenarios
           - alias: Släck - Ljust ute
             conditions:
@@ -242,35 +242,38 @@ automation:
 # v1.1 (2025-12-27): Lade till omfattande dokumentation
 #######################################################
 
-  ############################################
-  ### Tänder trädgårdsbelysning            ###
-  ### T: input_select.light_garden == Tänt ###
-  ### A: script.tradgards_belysning_on     ###
-  ############################################
-  - alias: Tänd trädgårdsbelysning
+  #######################################################
+  #                                                     #
+  #     TRÄDGÅRDSBELYSNING (INPUT_SELECT)                #
+  #                                                     #
+  #######################################################
+  #
+  # BESKRIVNING:
+  # State machine för trädgårdsbelysning.
+  # När input_select.light_garden ändras körs rätt script.
+  #######################################################
+
+  - alias: Trädgårdsbelysning (input_select)
     id: '6989544174114'
     mode: single
     trigger:
       - platform: state
         entity_id: input_select.light_garden
-        to: Tänt
     action:
-      - service: script.tradgards_belysning_on
-
-  ##############################################
-  ### Släcker trädgårdsbelysning             ###
-  ### T: input_select.light_garden == Släckt ###
-  ### A: script.tradgards_belysning_off      ###
-  ##############################################
-  - alias: Släck trädgårdsbelysning
-    id: '0889746927668'
-    mode: single
-    trigger:
-      - platform: state
-        entity_id: input_select.light_garden
-        to: Släckt
-    action:
-      - service: script.tradgards_belysning_off
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_garden
+                state: Tänt
+            sequence:
+              - service: script.tradgards_belysning_on
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_garden
+                state: Släckt
+            sequence:
+              - service: script.tradgards_belysning_off
+        default: []
 
 ##############
 ### Script ###

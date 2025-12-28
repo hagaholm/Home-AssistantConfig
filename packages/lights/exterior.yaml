@@ -504,7 +504,10 @@ automation:
                 entity_id: group.track_for_home_devices
                 state: 'not_home'
             sequence:
-              - service: script.outside_light_off
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_outside
+                  option: Släckt
           - alias: Hemma vardag
             conditions:
               - condition: state
@@ -514,7 +517,10 @@ automation:
                 entity_id: binary_sensor.workday_tomorrow
                 state: 'on'
             sequence:
-              - service: script.outside_light_off
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_outside
+                  option: Släckt
 
   ##############################################################
   ### Släcker utebelysning på helgkvällar när någon är hemma ###
@@ -540,7 +546,34 @@ automation:
           entity_id: binary_sensor.workday_tomorrow
           state: 'off'
     action:
-      - service: script.outside_light_off
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_outside
+          option: Släckt
+
+  ####################################################
+  #          EXECUTE SCRIPT ON STATE CHANGE          #
+  ####################################################
+  - alias: Utebelysning changed
+    id: 'light_outside_changed'
+    mode: single
+    trigger:
+      - platform: state
+        entity_id: input_select.light_outside
+    action:
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_outside
+                state: 'Släckt'
+            sequence:
+              - service: script.outside_light_off
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_outside
+                state: 'Tänt'
+            sequence:
+              - service: script.outside_light_on
 
 ##############
 ### Script ###
@@ -754,6 +787,22 @@ script:
         value_template: "{{ states('switch.friggebod_fonster') != 'unavailable' }}"
       - service: switch.turn_on
         entity_id: switch.friggebod_fonster
+
+  ########################
+  ### Utebelysning on  ###
+  ########################
+  outside_light_on:
+    alias: Utebelysning on
+    mode: restart
+    sequence:
+      - service: script.friggebod_light_on
+      - service: script.spa_light_on
+      - condition: template
+        value_template: "{{ states('light.friggebod_ute_2') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.friggebod_ute_2
+          transition: 2
 
   ########################
   ### Utebelysning off ###

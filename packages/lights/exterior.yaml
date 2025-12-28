@@ -20,7 +20,7 @@
 # - light.friggebod_fasad, light.forrad_fasad
 # - light.tvattstugan_fasad, light.huvudentre2
 # - binary_sensor.cam3/7/8_person_occupancy
-# - input_select.facade_lights (Släckt/Tänt/Natt/Max)
+# - input_select.facade_lights (Släckt/Tänd/Natt/Max)
 #
 # UTEBELYSNING:
 # - light.friggebod_ute_2
@@ -45,13 +45,13 @@
 #######################
 input_select:
   facade_lights: 
-    name: Fasadbelysning 
+    name: Fasadbelysning
     # Facade and exterior accent lighting control
     # Four modes: Off, On, Night mode (dimmed), Maximum (full brightness)
     # Used by: Exterior lighting automation and evening/night scenes
     options: 
      - Släckt 
-     - Tänt
+     - Tänd
      - Natt 
      - Max
     icon: mdi:lightbulb
@@ -63,7 +63,7 @@ input_select:
     # Updated by: PIR sensors and dusk/dawn automations
     options:
      - Släckt
-     - Tänt
+     - Tänd
     icon: mdi:lightbulb
 
 ##################
@@ -84,7 +84,7 @@ automation:
 #
 # Light States:
 # - Släckt: Off (lux > 60)
-# - Tänt: On (lux < 40, home active)
+# - Tänd: On (lux < 40, home active)
 # - Natt: Night mode (home away)
 # - Max: Maximum brightness (person detected)
 #
@@ -135,12 +135,12 @@ automation:
       conditions:
         - condition: state
           entity_id: input_select.facade_lights
-          state: 'Tänt'
+          state: 'Tänd'
     action:
       - service: input_select.select_option
         data:
           entity_id: input_select.facade_lights
-          option: Tänt
+          option: Tänd
 
   ####################################################
   #              NIGHT MODE ACTIVATION               #
@@ -151,7 +151,7 @@ automation:
     trigger:
       platform: state
       entity_id: input_select.home_status
-      to: "Hemma av"
+      to: "Sover"
     condition:
       condition: and
       conditions:
@@ -189,7 +189,7 @@ automation:
           conditions:
             - condition: state
               entity_id: input_select.facade_lights
-              state: 'Tänt'
+              state: 'Tänd'
             - condition: state
               entity_id: input_select.facade_lights
               state: 'Natt'
@@ -238,7 +238,7 @@ automation:
           - conditions:
               - condition: state
                 entity_id: input_select.home_status
-                state: "Hemma av"
+                state: "Sover"
             sequence:
               - service: input_select.select_option
                 data:
@@ -248,7 +248,7 @@ automation:
           - service: input_select.select_option
             data:
               entity_id: input_select.facade_lights
-              option: Tänt
+              option: Tänd
 
   ####################################################
   #         EXIT NIGHT MODE WHEN HOME ACTIVE         #
@@ -259,7 +259,7 @@ automation:
     trigger:
       platform: state
       entity_id: input_select.home_status
-      to: "Hemma på"
+      to: "Hemma"
     condition:
       condition: and
       conditions:
@@ -270,7 +270,7 @@ automation:
       - service: input_select.select_option
         data:
           entity_id: input_select.facade_lights
-          option: Tänt
+          option: Tänd
 
   ####################################################
   #          EXECUTE SCRIPT ON STATE CHANGE          #
@@ -292,7 +292,7 @@ automation:
           - conditions:
               - condition: state
                 entity_id: input_select.facade_lights
-                state: "Tänt"
+                state: "Tänd"
             sequence:
               - service: script.fasadbelysning_on
           - conditions:
@@ -571,7 +571,7 @@ automation:
           - conditions:
               - condition: state
                 entity_id: input_select.light_outside
-                state: 'Tänt'
+                state: 'Tänd'
             sequence:
               - service: script.outside_light_on
 
@@ -630,7 +630,7 @@ script:
           transition: 1
 
   fasadbelysning_on:
-    alias: Fasadbelysning tänt
+    alias: Fasadbelysning tänd
     mode: restart
     sequence:
       - condition: template

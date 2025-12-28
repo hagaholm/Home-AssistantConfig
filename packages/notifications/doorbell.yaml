@@ -99,7 +99,7 @@ automation:
                   - conditions:
                       - condition: state
                         entity_id: input_select.home_status
-                        state: 'Hemma på'
+                        state: 'Hemma'
                     sequence:
                       - service: camera.snapshot
                         data:
@@ -114,7 +114,7 @@ automation:
                   - conditions:
                       - condition: state
                         entity_id: input_select.home_status
-                        state: 'Hemma av'
+                        state: 'Sover'
                     sequence:
                       - service: camera.snapshot
                         data:
@@ -129,7 +129,7 @@ automation:
                   - conditions:
                       - condition: state
                         entity_id: input_select.home_status
-                        state: 'borta'
+                        state: 'Borta'
                     sequence:
                       - service: camera.snapshot
                         data:
@@ -182,7 +182,7 @@ automation:
                   - conditions:
                       - condition: state
                         entity_id: input_select.home_status
-                        state: 'Hemma på'
+                    state: 'Hemma'
                     sequence:
                       - service: camera.snapshot
                         data:
@@ -197,7 +197,7 @@ automation:
                   - conditions:
                       - condition: state
                         entity_id: input_select.home_status
-                        state: 'Hemma av'
+                        state: 'Sover'
                     sequence:
                       - service: camera.snapshot
                         data:
@@ -212,7 +212,7 @@ automation:
                   - conditions:
                       - condition: state
                         entity_id: input_select.home_status
-                        state: 'borta'
+                        state: 'Borta'
                     sequence:
                       - service: camera.snapshot
                         data:

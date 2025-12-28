@@ -15,16 +15,16 @@
 # - Cam 8: Entre (entrance) - Main entry
 #
 # Notification Logic:
-# - Immediate alerts: Sleep mode (Hemma av) or Away + Priority cameras
+# - Immediate alerts: Sleep mode (Sover) or Away + Priority cameras
 # - Priority cameras: Cam 5, Cam 6 (backside - vulnerable)
 # - Delayed alerts: Away mode + non-priority cameras (reduce false positives)
 # - Away delay: 2 minutes (allows motion to stabilize)
 #
 # Conditions:
-# - Hemma av (Sleep): Notify on any person detection
+# - Sover (Sleep): Notify on any person detection
 # - Borta (Away) + Priority: Immediate notification
 # - Borta (Away) + Other: 2-minute delay notification
-# - Hemma på (Home active): No notifications
+# - Hemma (Home active): No notifications
 #
 # Safety Notes:
 # - Mode: single (prevent notification spam)
@@ -67,7 +67,7 @@ automation:
         conditions:
           - condition: state
             entity_id: input_select.home_status
-            state: 'Hemma av'
+            state: 'Sover'
           - condition: and
             conditions:
               - condition: state
@@ -106,7 +106,7 @@ automation:
           - conditions:
               - condition: state
                 entity_id: input_select.home_status
-                state: 'Hemma av'
+                state: 'Sover'
             sequence:
               - service: notify.mobile_app_sm_a528b
                 data_template:

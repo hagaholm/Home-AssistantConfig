@@ -17,14 +17,14 @@
 
 input_select:
   home_status:
-    name: Hemma status
+    name: Hemstatus
     # Primary home occupancy state machine
     # Borta (Away) = Nobody home, security mode active
-    # Hemma på (Home active) = Occupants present and awake
-    # Hemma av (Home inactive) = Occupants present but sleeping/idle
+    # Hemma (Home active) = Occupants present and awake
+    # Sover (Sleep) = Occupants present but sleeping
     # Updated by: Person presence detection and manual overrides
     # Used by: All conditional automations as primary state indicator
     options:
      - Borta
-     - Hemma på
-     - Hemma av
+     - Hemma
+     - Sover

@@ -188,7 +188,7 @@ automation:
       # Tänd när hemma på
       - platform: state
         entity_id: input_select.home_status
-        to: 'Hemma på'
+        to: 'Hemma'
         id: turn_on
 
       # Släck när ljust
@@ -272,14 +272,14 @@ automation:
 # TRIGGRAR:
 # - Tänd morgon: time='09:00:00'
 # - Tänd mörkt: daylight_on -> 'on'
-# - Tänd hemma på: home_status -> 'Hemma på'
+# - Tänd hemma: home_status -> 'Hemma'
 # - Tänd sovrumsfönster: light.sovrum_fonster -> 'on'
 # - Släck ljust: daylight_on -> 'off'
 # - Släck borta: home_status -> 'Borta'
 # - Övergång kväll: light.sovrum_fonster -> 'unavailable'
 #
 # VILLKOR:
-# - Tänd: daylight_on='on' OCH home_status='Hemma på' OCH 09:00-05:00
+# - Tänd: daylight_on='on' OCH home_status='Hemma' OCH 09:00-05:00
 # - Släck: Olika beroende på trigger
 #######################################################
 
@@ -299,10 +299,10 @@ automation:
         to: "on"
         id: turn_on_dark
 
-      # Tänd när Hemma på
+      # Tänd när Hemma
       - platform: state
         entity_id: input_select.home_status
-        to: 'Hemma på'
+        to: 'Hemma'
         id: turn_on_home
 
       # Tänd vid sovrumsfönster on (morgon->dag övergång)
@@ -341,7 +341,7 @@ automation:
                 state: "on"
               - condition: state
                 entity_id: input_select.home_status
-                state: 'Hemma på'
+                state: 'Hemma'
             sequence:
               - service: input_select.select_option
                 data:
@@ -355,7 +355,7 @@ automation:
                 id: turn_on_dark
               - condition: state
                 entity_id: input_select.home_status
-                state: 'Hemma på'
+                state: 'Hemma'
               - condition: time
                 after: '09:00:00'
                 before: '05:00:00'
@@ -365,8 +365,8 @@ automation:
                   entity_id: input_select.light_inside
                   option: Dagbelysning
 
-          # TÄND NÄR HEMMA PÅ
-          - alias: Tänd dagbelysning när hemma på
+          # TÄND NÄR HEMMA
+          - alias: Tänd dagbelysning när hemma
             conditions:
               - condition: trigger
                 id: turn_on_home
@@ -406,7 +406,7 @@ automation:
                 id: turn_off_light
               - condition: state
                 entity_id: input_select.home_status
-                state: 'Hemma på'
+                state: 'Hemma'
               - condition: time
                 after: '09:00:00'
                 before: '05:00:00'
@@ -471,7 +471,7 @@ automation:
 # BESKRIVNING:
 # Samlad automation för nattbelysning.
 # Tänder/släcker ljus baserat på rörelse i kök
-# när status är 'Hemma av' och dagsljus är på.
+# när status är 'Sover' och dagsljus är på.
 #######################################################
 
   - alias: Nattbelysning styrning
@@ -500,7 +500,7 @@ automation:
                 id: motion_on
               - condition: state
                 entity_id: input_select.home_status
-                state: 'Hemma av'
+                state: 'Sover'
               - condition: state
                 entity_id: input_boolean.daylight_on
                 state: 'on'
@@ -517,7 +517,7 @@ automation:
                 id: motion_off
               - condition: state
                 entity_id: input_select.home_status
-                state: 'Hemma av'
+                state: 'Sover'
             sequence:
               - service: input_select.select_option
                 data:
@@ -927,7 +927,7 @@ script:
       - service: input_select.select_option
         data:
           entity_id: input_select.home_status
-          option: Hemma på
+          option: Hemma
 
       - service: script.turn_on
         data_template:
@@ -1084,7 +1084,7 @@ script:
       - service: input_select.select_option
         data:
           entity_id: input_select.home_status
-          option: Hemma på
+          option: Hemma
 
       - service: script.turn_on
         data_template:
@@ -1118,7 +1118,7 @@ script:
       - service: input_select.select_option
         data:
           entity_id: input_select.home_status
-          option: Hemma på
+          option: Hemma
 
       - service: script.turn_on
         data_template:
@@ -1994,7 +1994,7 @@ script:
       - service: input_select.select_option
         data:
           entity_id: input_select.home_status
-          option: Hemma av
+          option: Sover
 
       - service: script.inside_lights_off
 
@@ -2033,7 +2033,7 @@ script:
       - service: input_select.select_option
         data:
           entity_id: input_select.home_status
-          option: Hemma av
+          option: Sover
 
       - service: script.inside_lights_off
 
@@ -2071,7 +2071,7 @@ script:
       - service: input_select.select_option
         data:
           entity_id: input_select.home_status
-          option: Hemma av
+          option: Sover
 
       - service: input_select.select_option
         data:
@@ -2128,7 +2128,7 @@ script:
       - service: input_select.select_option
         data:
           entity_id: input_select.home_status
-          option: Hemma av
+          option: Sover
 
       - service: input_select.select_option
         data:
@@ -2183,7 +2183,7 @@ script:
       - service: input_select.select_option
         data:
           entity_id: input_select.home_status
-          option: Hemma av
+          option: Sover
 
       - service: input_select.select_option
         data:

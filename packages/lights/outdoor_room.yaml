@@ -20,7 +20,7 @@
 # - Hemspårning: group.track_for_home_devices
 # - Innebelysning: light.kok_lilla_fonstret
 # - Uterumsbelysning: light.uterum_led, light.uterum_fotogenlampa
-# - input_select.light_uterum (Släckt/Tänt)
+# - input_select.light_uterum (Släckt/Tänd)
 #
 # Säkerhet:
 # - IDs och alias bibehållna för bakåtkompatibilitet
@@ -38,13 +38,13 @@
 #######################
 input_select:
   light_uterum:
-    name: Uterumsbelysing
+    name: Uterumsbelysning
     # Conservatory/sunroom simple on/off control
     # Controls accent lighting and decorative lights in conservatory
     # Used by: Garden room automation sequences
     options:
      - Släckt
-     - Tänt
+      - Tänd
     icon: mdi:lightbulb
 
 ##################
@@ -137,7 +137,7 @@ automation:
               - service: input_select.select_option
                 data:
                   entity_id: input_select.light_uterum
-                  option: Tänt
+                  option: Tänd
           # Turn OFF scenarios
           - alias: Släck - För kallt
             conditions:
@@ -188,17 +188,17 @@ automation:
 # motsvarande belysningsskript.
 #
 # HÅRDVARA/ENTITETER:
-# - input_select.light_uterum (Tänt/Släckt)
+# - input_select.light_uterum (Tänd/Släckt)
 # - script.outdoor_room_light_on
 # - script.outdoor_room_light_off
 #
 # TRIGGRAR:
-# - input_select.light_uterum -> 'Tänt'
+# - input_select.light_uterum -> 'Tänd'
 # - input_select.light_uterum -> 'Släckt'
 #
 # LOGIK:
 # När input_select.light_uterum ändras:
-# - Tänt -> Anropar script.outdoor_room_light_on
+# - Tänd -> Anropar script.outdoor_room_light_on
 # - Släckt -> Anropar script.outdoor_room_light_off
 #
 # INTEGRATION:
@@ -233,7 +233,7 @@ automation:
           - conditions:
               - condition: state
                 entity_id: input_select.light_uterum
-                state: Tänt
+                state: Tänd
             sequence:
               - service: script.outdoor_room_light_on
           - conditions:
@@ -278,7 +278,7 @@ script:
       - service: input_select.select_option
         data:
           entity_id: input_select.light_uterum
-          option: Tänt
+          option: Tänd
       - condition: template
         value_template: "{{ states('light.uterum_led') != 'unavailable' }}"
       - service: light.turn_on

@@ -75,22 +75,22 @@ automation:
 #   eller när det är för ljust.
 #
 # - Dag:
-#   Dagsljus när det är mörkt, hemstatus är Hemma på
+#   Dagsljus när det är mörkt, hemstatus är Hemma
 #   och ingen närvaro detekteras.
 #
 # - Dag närvaro:
-#   Dagsljus med närvaro när hemstatus är Hemma på.
+#   Dagsljus med närvaro när hemstatus är Hemma.
 #
 # - Natt närvaro:
-#   Dämpat nattljus vid närvaro när hemstatus är Hemma av
+#   Dämpat nattljus vid närvaro när hemstatus är Sover
 #   och det är mörkt.
 #
 # ÖVERGÅNGAR:
 # - Släckt → Dag:
-#   När det är mörkt och hemstatus är Hemma på.
+#   När det är mörkt och hemstatus är Hemma.
 #
 # - Släckt → Natt närvaro:
-#   När närvaro detekteras, hemstatus är Hemma av
+#   När närvaro detekteras, hemstatus är Sover
 #   och det är mörkt.
 #
 # - Dag → Dag närvaro:
@@ -177,7 +177,7 @@ automation:
                 state: 'on'
               - condition: state
                 entity_id: input_select.home_status
-                state: 'Hemma av'
+                state: 'Sover'
               - condition: numeric_state
                 entity_id: sensor.kokets_ljusniva
                 below: 100
@@ -207,7 +207,7 @@ automation:
           - conditions:
               - condition: state
                 entity_id: input_select.home_status
-                state: 'Hemma på'
+                state: 'Hemma'
               - condition: numeric_state
                 entity_id: sensor.kokets_ljusniva
                 below: 100
@@ -255,7 +255,7 @@ automation:
           - conditions:
               - condition: state
                 entity_id: input_select.home_status
-                state: 'Hemma på'
+                state: 'Hemma'
               - condition: state
                 entity_id: input_select.light_bathroom
                 state: 'Natt närvaro'

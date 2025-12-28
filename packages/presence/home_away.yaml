@@ -46,31 +46,31 @@ automation:
 # - group.track_for_home_devices (enhetssparar grupp)
 # - group.persons (persongrupp)
 # - binary_sensor.kok_narvaro (kök närvarosensor)
-# - input_select.home_status (Hemma på/Hemma av/Borta)
+# - input_select.home_status (Hemma/Sover/Borta)
 # - remote.harmony_hub (mediaspelare)
 #
 # TRIGGRAR:
 # - Borta: home_devices/persons -> 'not_home'
-# - Hemma på: home_devices/persons -> 'home'
-# - Hemma på (rörelse): kök närvaro -> 'on'
+# - Hemma: home_devices/persons -> 'home'
+# - Hemma (rörelse): kök närvaro -> 'on'
 # - Media off: home_devices -> 'not_home'
 #
 # VILLKOR:
-# - Hemma på vid rörelse: home, 05:00-21:00, status='Hemma av'
+# - Hemma vid rörelse: home, 05:00-21:00, status='Sover'
 #
 # LOGIK:
 # BORTA MODE:
 # - När alla enheter/personer borta
 # - Sätter input_select till 'Borta'
 #
-# HEMMA PÅ MODE:
+# HEMMA MODE:
 # - När någon kommer hem
-# - Sätter input_select till 'Hemma på'
+# - Sätter input_select till 'Hemma'
 #
-# HEMMA PÅ MODE (RÖRELSE):
+# HEMMA MODE (RÖRELSE):
 # - Rörelse i kök mellan 05:00-21:00
-# - Endast om status 'Hemma av' och någon hemma
-# - Ändrar till 'Hemma på'
+# - Endast om status 'Sover' och någon hemma
+# - Ändrar till 'Hemma'
 #
 # MEDIASPELARE OFF:
 # - När alla åker hemifrån
@@ -89,8 +89,8 @@ automation:
 # KONSOLIDERINGSHISTORIK:
 # Denna automation ersätter följande tidigare automationer:
 # - Aktivera borta mode (ID: 9332529339727)
-# - Aktivera Hemma på mode (ID: 4877699058462)
-# - Aktivera Hemma på mode vid rörelse (ID: 8016198182454)
+# - Aktivera Hemma mode (ID: 4877699058462)
+# - Aktivera Hemma mode vid rörelse (ID: 8016198182454)
 # - Mediaspelare off (-> borta) (ID: 4088468088280)
 # 
 # Konsoliderad: 2025-12-27
@@ -120,19 +120,19 @@ automation:
         to: 'not_home'
         id: activate_away
 
-      # Aktivera Hemma på (devices)
+      # Aktivera Hemma (devices)
       - platform: state
         entity_id: group.track_for_home_devices
         to: 'home'
         id: activate_home_on
 
-      # Aktivera Hemma på (persons)
+      # Aktivera Hemma (persons)
       - platform: state
         entity_id: group.persons
         to: 'home'
         id: activate_home_on
 
-      # Aktivera Hemma på vid rörelse
+      # Aktivera Hemma vid rörelse
       - platform: state
         entity_id: binary_sensor.kok_narvaro
         to: 'on'
@@ -155,8 +155,8 @@ automation:
               - service: remote.turn_off
                 entity_id: remote.harmony_hub
 
-          # AKTIVERA HEMMA PÅ MODE
-          - alias: Aktivera hemma på läge
+          # AKTIVERA HEMMA MODE
+          - alias: Aktivera hemma läge
             conditions:
               - condition: trigger
                 id: activate_home_on
@@ -164,10 +164,10 @@ automation:
               - service: input_select.select_option
                 data:
                   entity_id: input_select.home_status
-                  option: Hemma på
+                  option: Hemma
 
-          # AKTIVERA HEMMA PÅ MODE VID RÖRELSE
-          - alias: Aktivera hemma på vid rörelse i kök
+          # AKTIVERA HEMMA MODE VID RÖRELSE
+          - alias: Aktivera hemma vid rörelse i kök
             conditions:
               - condition: trigger
                 id: activate_home_on_motion
@@ -179,12 +179,12 @@ automation:
                 after: '05:00:00'
               - condition: state
                 entity_id: input_select.home_status
-                state: 'Hemma av'
+                state: 'Sover'
             sequence:
               - service: input_select.select_option
                 data:
                   entity_id: input_select.home_status
-                  option: Hemma på
+                  option: Hemma
 
       - delay: '00:00:15'
       - service: homeassistant.turn_off

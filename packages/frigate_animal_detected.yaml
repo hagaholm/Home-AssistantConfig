@@ -410,7 +410,7 @@ automation:
       conditions:
         - condition: state
           entity_id: input_select.home_status
-          state: 'Hemma på'
+          state: 'Hemma'
         - condition: numeric_state
           entity_id: sensor.ljusstyrka
           below: 10

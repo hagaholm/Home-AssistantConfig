@@ -27,9 +27,9 @@
 #######################
 input_select:
   light_hall:
-    name: Hall takbelysning
+    name: Halltakbelysning
     # Manuell och automatiserad styrning av halltak.
-    # Används av: automation "Hall takbelysning (input_select)".
+    # Används av: automation "Halltakbelysning (input_select)".
     # Synkas även av fjärrkontroll-automationen.
     options:
      - Släckt
@@ -46,7 +46,7 @@ automation:
 
   #######################################################
   #                                                     #
-  #     HALL TAKBELYSNING (INPUT_SELECT)                #
+  #     HALLTAKBELYSNING (INPUT_SELECT)                #
   #                                                     #
   #######################################################
   #
@@ -55,7 +55,7 @@ automation:
   # körs motsvarande script för vald ljusnivå.
   #######################################################
 
-  - alias: Hall takbelysning (input_select)
+  - alias: Halltakbelysning (input_select)
     id: '1735304100030'
     mode: single
     trigger:

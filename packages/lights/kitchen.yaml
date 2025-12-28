@@ -74,13 +74,13 @@ automation:
 #      * Sätter input_select.light_kitchen till 'Släckt' om den inte redan är det.
 #      * Fördröjning: 1 minut innan släckning, utom när input_select.light_kitchen är 25%, då är fördröjningen 30 sekunder.
 # 2. TÄND 25%:
-#    - Om närvaro i hela köket (sensor_1 = on) och home_status = 'Hemma av':
+#    - Om närvaro i hela köket (sensor_1 = on) och home_status = 'Sover':
 #      * Sätter input_select.light_kitchen till 25%.
 # 3. TÄND 50%:
-#    - Om närvaro i hela köket (sensor_1 = on) och home_status är 'Hemma på' eller 'Borta' samt input_boolean.morning_light_on är på:
+#    - Om närvaro i hela köket (sensor_1 = on) och home_status är 'Hemma' eller 'Borta' samt input_boolean.morning_light_on är på:
 #      * Sätter input_select.light_kitchen till 50%.
 # 4. TÄND 100%:
-#    - Om närvaro vid köksbord (sensor_2) eller köksbänk (sensor_3) och home_status är 'Hemma på' eller 'Borta' samt input_boolean.kitchen_light_on är på:
+#    - Om närvaro vid köksbord (sensor_2) eller köksbänk (sensor_3) och home_status är 'Hemma' eller 'Borta' samt input_boolean.kitchen_light_on är på:
 #      * Sätter input_select.light_kitchen till 100%.
 #
 # SÄKERHETSKONTROLLER:
@@ -136,7 +136,7 @@ automation:
     id: 'kitchen_light_25_presence_all'
     description: >
       Sätter köksbelysning till 25% om närvaro i hela köket (sensor_1 = on)
-      och home_status är 'Hemma av'.
+      och home_status är 'Sover'.
     mode: single
     trigger:
       - platform: state
@@ -145,7 +145,7 @@ automation:
     condition:
       - condition: state
         entity_id: input_select.home_status
-        state: 'Hemma av'
+        state: 'Sover'
       - condition: state
         entity_id: input_select.light_kitchen
         state: 'Släckt'
@@ -163,7 +163,7 @@ automation:
     id: 'kitchen_light_50_presence_all'
     description: >
       Sätter köksbelysning till 50% om närvaro i hela köket (sensor_1 = on)
-      och home_status är 'Hemma på' eller 'Borta' samt input_boolean.morning_light_on är på.
+      och home_status är 'Hemma' eller 'Borta' samt input_boolean.morning_light_on är på.
     mode: single
     trigger:
       - platform: state
@@ -179,7 +179,7 @@ automation:
           conditions:
             - condition: state
               entity_id: input_select.home_status
-              state: 'Hemma på'
+              state: 'Hemma'
             - condition: state
               entity_id: input_select.home_status
               state: 'Borta'
@@ -200,7 +200,7 @@ automation:
     id: 'kitchen_light_100_presence_2_3'
     description: >
       Sätter köksbelysning till 100% om närvaro vid köksbord (sensor_2) eller köksbänk (sensor_3)
-      och home_status är 'Hemma på' eller 'Borta' samt input_boolean.kitchen_light_on är på.
+      och home_status är 'Hemma' eller 'Borta' samt input_boolean.kitchen_light_on är på.
     mode: queued
     trigger:
       - platform: state
@@ -219,7 +219,7 @@ automation:
           conditions:
             - condition: state
               entity_id: input_select.home_status
-              state: 'Hemma på'
+              state: 'Hemma'
             - condition: state
               entity_id: input_select.home_status
               state: 'Borta'

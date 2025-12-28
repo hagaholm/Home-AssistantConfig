@@ -21,7 +21,7 @@
 # - Hemstatus: input_select.home_status
 # - Hemspårning: group.track_for_home_devices
 # - Innebelysning: light.kok_lilla_fonstret
-# - input_select.light_garden (Släckt/Tänt)
+# - input_select.light_garden (Släckt/Tänd)
 #
 # Säkerhet:
 # - IDs och alias bibehållna för bakåtkompatibilitet
@@ -39,13 +39,13 @@
 #######################
 input_select:
   light_garden: 
-    name: Trädgårdsbelysning 
+    name: Trädgårdsbelysning
     # Garden/patio lighting simple on/off
     # Controls deck lights and ground-level garden accent lights
     # Updated by: Outdoor activity sensors
     options: 
      - Släckt 
-     - Tänt 
+      - Tänd 
     icon: mdi:lightbulb
 
 ##################
@@ -71,7 +71,7 @@ automation:
 # - Innebelysning: light.kok_lilla_fonstret
 #
 # TRIGGRAR:
-# - Hemstatus ändras till 'Hemma på'
+# - Hemstatus ändras till 'Hemma'
 # - Ljusnivå under 40 lux (mörkt)
 # - Ljusnivå över 60 lux (ljust)
 # - Innebelysning släcks
@@ -97,7 +97,7 @@ automation:
     trigger:
       - platform: state
         entity_id: input_select.home_status
-        to: 'Hemma på'
+        to: 'Hemma'
       - platform: numeric_state
         entity_id: sensor.ljusstyrka
         below: input_number.ljusstyrka_40
@@ -114,7 +114,7 @@ automation:
             conditions:
               - condition: state
                 entity_id: input_select.home_status
-                state: 'Hemma på'
+                state: 'Hemma'
               - condition: time
                 after: '05:00:00'
                 before: '12:00:00'
@@ -128,7 +128,7 @@ automation:
               - service: input_select.select_option
                 data:
                   entity_id: input_select.light_garden
-                  option: Tänt
+                  option: Tänd
           - alias: Tänd - Hemma eftermiddag och kväll
             conditions:
               - condition: time
@@ -142,7 +142,7 @@ automation:
                 state: 'home'
               - condition: state
                 entity_id: input_select.home_status
-                state: 'Hemma på'
+                state: 'Hemma'
               - condition: state
                 entity_id: switch.tradgard
                 state: 'off'
@@ -150,7 +150,7 @@ automation:
               - service: input_select.select_option
                 data:
                   entity_id: input_select.light_garden
-                  option: Tänt
+                  option: Tänd
           - alias: Tänd - Borta eftermiddag och kväll
             conditions:
               - condition: time
@@ -169,7 +169,7 @@ automation:
               - service: input_select.select_option
                 data:
                   entity_id: input_select.light_garden
-                  option: Tänt
+                  option: Tänd
           # Turn OFF scenarios
           - alias: Släck - Ljust ute
             conditions:
@@ -219,17 +219,17 @@ automation:
 # motsvarande belysningsskript.
 #
 # HÅRDVARA/ENTITETER:
-# - input_select.light_garden (Tänt/Släckt)
+# - input_select.light_garden (Tänd/Släckt)
 # - script.tradgards_belysning_on
 # - script.tradgards_belysning_off
 #
 # TRIGGRAR:
-# - input_select.light_garden -> 'Tänt'
+# - input_select.light_garden -> 'Tänd'
 # - input_select.light_garden -> 'Släckt'
 #
 # LOGIK:
 # När input_select.light_garden ändras:
-# - Tänt -> Anropar script.tradgards_belysning_on
+# - Tänd -> Anropar script.tradgards_belysning_on
 # - Släckt -> Anropar script.tradgards_belysning_off
 #
 # INTEGRATION:
@@ -264,7 +264,7 @@ automation:
           - conditions:
               - condition: state
                 entity_id: input_select.light_garden
-                state: Tänt
+                state: Tänd
             sequence:
               - service: script.tradgards_belysning_on
           - conditions:

@@ -16,24 +16,6 @@
 ####################################################
 
 input_select:
-  light_inside:
-    name: Innebelysning
-    # Lighting mode for interior lights (living room, kitchen, bedrooms)
-    # Options represent different lighting scenes for various times of day
-    # Updated by: Automations (time-based, occupancy, mode changes)
-    # Used by: light_morning, light_day, light_evening, light_night scripts
-    options:
-     - Släckt
-     - Morgonbelysning
-     - Förmiddagsbelysning
-     - Dagbelysning
-     - Kvällsbelysning
-     - Nattbelysning
-     - Bortabelysning
-     - Arbetsbelysning
-     - Fönsterbelysning
-    icon: mdi:lightbulb
-
   home_status:
     name: Hemma status
     # Primary home occupancy state machine

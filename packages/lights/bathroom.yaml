@@ -1,0 +1,418 @@
+####################################################
+#                                                  #
+#            BADRUMSBELYSNING PACKAGE              #
+#                                                  #
+####################################################
+# Samlar all badrumsbelysningslogik i ett paket:
+# - Input select för ljuslägen
+# - Automations för närvaro- och state-machine-styrning
+# - Scripts för faktiska ljusnivåer
+#
+# Källor:
+# - automations/light_bathroom.yaml
+# - automations/input_select_light_bathroom.yaml
+# - script/light_bathroom.yaml
+# - helpers/input_selects.yaml (light_bathroom)
+#
+# Hårdvara/Entiteter:
+# - Närvarosensor: binary_sensor.motion_sensor
+# - Ljussensor: sensor.kokets_ljusniva
+# - Belysning: light.fonster_spott
+# - input_select.light_bathroom (Släckt/Dag/Dag närvaro/Natt närvaro)
+#
+# Säkerhet:
+# - IDs och alias bibehållna för bakåtkompatibilitet
+# - Mode single/restart enligt original
+####################################################
+
+#######################
+### Input Select(s) ###
+#######################
+input_select:
+  light_bathroom:
+    name: Badrumsbelysning
+    # Bathroom lighting with occupancy-aware modes
+    # Four modes: Off, Day (full), Day with presence, Night with presence
+    # Used by: Bathroom automation for motion-sensitive lighting
+    options: 
+     - Släckt
+     - Dag
+     - Dag närvaro
+     - Natt närvaro
+    icon: mdi:lightbulb
+
+##################
+### Automation ###
+##################
+automation:
+
+#######################################################
+#                                                     #
+#                BADRUMSBELYSNING AUTOMATION          #
+#                                                     #
+#######################################################
+#
+# BESKRIVNING:
+# Samlad automation för badrumsbelysning som styrs av
+# närvaro, ljusnivå och hemstatus.
+# Logiken är uppbyggd som en state machine via
+# input_select.light_bathroom.
+#
+# HÅRDVARA:
+# - Närvarosensor: binary_sensor.motion_sensor
+# - Ljussensor: sensor.kokets_ljusniva
+# - Belysning: light.fonster_spott
+#
+# TILLSTÅND (input_select.light_bathroom):
+# - Släckt:
+#   Ingen belysning. Används vid hemstatus Borta
+#   eller när det är för ljust.
+#
+# - Dag:
+#   Dagsljus när det är mörkt, hemstatus är Hemma på
+#   och ingen närvaro detekteras.
+#
+# - Dag närvaro:
+#   Dagsljus med närvaro när hemstatus är Hemma på.
+#
+# - Natt närvaro:
+#   Dämpat nattljus vid närvaro när hemstatus är Hemma av
+#   och det är mörkt.
+#
+# ÖVERGÅNGAR:
+# - Släckt → Dag:
+#   När det är mörkt och hemstatus är Hemma på.
+#
+# - Släckt → Natt närvaro:
+#   När närvaro detekteras, hemstatus är Hemma av
+#   och det är mörkt.
+#
+# - Dag → Dag närvaro:
+#   När närvaro detekteras.
+#
+# - Dag → Släckt:
+#   När det blir för ljust eller hemstatus ändras till Borta.
+#
+# - Dag närvaro → Dag:
+#   När närvaro försvinner (60 s timeout).
+#
+# - Natt närvaro → Släckt:
+#   När närvaro försvinner (60 s timeout).
+#
+# - * → Släckt:
+#   När hemstatus ändras till Borta.
+#
+# INTEGRATION:
+# - Logik och tillstånd styrs via input_select.light_bathroom
+# - Hemstatus hämtas från input_select.home_status
+#######################################################
+
+  - alias: Badrumsbelysning – samlad automation
+    id: bathroom_light_all_in_one
+    description: >
+      Samlad automation för badrumsbelysning baserat på närvaro,
+      ljusnivå och hemstatus.
+    mode: single
+    trigger:
+      # Hemstatus
+      - platform: state
+        entity_id: input_select.home_status
+      # Närvaro
+      - platform: state
+        entity_id: binary_sensor.motion_sensor
+        to: 'on'
+      # Närvaro timeout
+      - platform: state
+        entity_id: binary_sensor.motion_sensor
+        to: 'off'
+        for:
+          seconds: 60
+      # Ljusnivå – mörkt
+      - platform: numeric_state
+        entity_id: sensor.kokets_ljusniva
+        below: 100
+      # Ljusnivå – för ljust
+      - platform: numeric_state
+        entity_id: sensor.kokets_ljusniva
+        above: 150
+    action:
+      - choose:
+          # --------------------------------------------------
+          # SLÄCK VID BORTA OCH HEMMA AV
+          # --------------------------------------------------
+          - conditions:
+              - condition: state
+                entity_id: input_select.home_status
+                state:
+                  - 'Borta'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_bathroom
+                  option: Släckt
+          # --------------------------------------------------
+          # SLÄCK NÄR DET ÄR FÖR LJUST
+          # --------------------------------------------------
+          - conditions:
+              - condition: numeric_state
+                entity_id: sensor.kokets_ljusniva
+                above: 150
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_bathroom
+                  option: Släckt
+          # --------------------------------------------------
+          # NATT – NÄRVARO + HEMMA AV + MÖRKT
+          # --------------------------------------------------
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.motion_sensor
+                state: 'on'
+              - condition: state
+                entity_id: input_select.home_status
+                state: 'Hemma av'
+              - condition: numeric_state
+                entity_id: sensor.kokets_ljusniva
+                below: 100
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_bathroom
+                  option: Natt närvaro
+          # --------------------------------------------------
+          # NATT NÄRVARO → SLÄCKT (timeout)
+          # --------------------------------------------------
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.motion_sensor
+                state: 'off'
+              - condition: state
+                entity_id: input_select.light_bathroom
+                state: 'Natt närvaro'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_bathroom
+                  option: Släckt
+          # --------------------------------------------------
+          # DAG – HEMMA PÅ + MÖRKT
+          # --------------------------------------------------
+          - conditions:
+              - condition: state
+                entity_id: input_select.home_status
+                state: 'Hemma på'
+              - condition: numeric_state
+                entity_id: sensor.kokets_ljusniva
+                below: 100
+              - condition: state
+                entity_id: binary_sensor.motion_sensor
+                state: 'off'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_bathroom
+                  option: Dag
+          # --------------------------------------------------
+          # DAG → DAG NÄRVARO
+          # --------------------------------------------------
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.motion_sensor
+                state: 'on'
+              - condition: state
+                entity_id: input_select.light_bathroom
+                state: 'Dag'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_bathroom
+                  option: Dag närvaro
+          # --------------------------------------------------
+          # DAG NÄRVARO → DAG (timeout)
+          # --------------------------------------------------
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.motion_sensor
+                state: 'off'
+              - condition: state
+                entity_id: input_select.light_bathroom
+                state: 'Dag närvaro'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_bathroom
+                  option: Dag
+          # --------------------------------------------------
+          # HEMMA AV → HEMMA PÅ (NATT → DAG NÄRVARO)
+          # --------------------------------------------------
+          - conditions:
+              - condition: state
+                entity_id: input_select.home_status
+                state: 'Hemma på'
+              - condition: state
+                entity_id: input_select.light_bathroom
+                state: 'Natt närvaro'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_bathroom
+                  option: Dag närvaro
+
+#######################################################
+#                                                     #
+#       BADRUMSBELYSNING INPUT_SELECT AUTOMATION      #
+#                                                     #
+#######################################################
+#
+# BESKRIVNING:
+# State machine automation för badrumsbelysning.
+# Lyssnar på input_select ändringar och anropar
+# motsvarande ljusskript.
+#
+# HÅRDVARA:
+# - Styrs via: input_select.light_bathroom
+# - Exekveras av: script.bathroom_light_*
+#
+# TILLSTÅND:
+# - Släckt: Ingen belysning
+# - Dag: Normalt dagsljus utan närvaro
+# - Dag närvaro: Dagsljus med närvaro
+# - Natt närvaro: Dämpat nattljus vid närvaro
+#
+# LOGIK:
+# När input_select.light_bathroom ändras:
+# - Identifiera nytt tillstånd
+# - Anropa motsvarande script
+# - Scriptet hanterar faktisk ljuskontroll
+#
+# INTEGRATION:
+# - Kopplad till input_select.light_bathroom
+# - Triggar script för faktisk ljuskontroll
+# - Styrs av automation i light_bathroom.yaml
+#######################################################
+
+  - alias: Badrumsbelysning
+    id: '1735304100018'
+    mode: single
+    trigger:
+      - platform: state
+        entity_id: input_select.light_bathroom
+    action:
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_bathroom
+                state: Släckt
+            sequence:
+              - service: script.bathroom_light_off
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_bathroom
+                state: Dag
+            sequence:
+              - service: script.bathroom_light_day
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_bathroom
+                state: Dag närvaro
+            sequence:
+              - service: script.bathroom_light_day_presence
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_bathroom
+                state: Natt närvaro
+            sequence:
+              - service: script.bathroom_light_night_presence
+
+##############
+### Script ###
+##############
+script:
+#######################################################
+#                                                     #
+#            BADRUMSBELYSNING SCRIPTS                 #
+#                                                     #
+#######################################################
+#
+# BESKRIVNING:
+# Styr badrumsbelysning med olika nivåer beroende på
+# tid på dygnet och närvaro.
+#
+# HÅRDVARA:
+# - Fönsterspottar: light.fonster_spott
+#
+# SCRIPTS:
+# - bathroom_light_off: Släcker all belysning
+# - bathroom_light_day: 20% - Mjukt dagsljus
+# - bathroom_light_day_presence: 80% - Fullt dagsljus vid närvaro
+# - bathroom_light_night_presence: 2% - Minimalt nattljus vid närvaro
+#
+# SÄKERHET:
+# - Mode: restart - avbryter tidigare körning vid ny trigger
+# - Tillgänglighetskontroll av ljusenheter
+# - Mjuka övergångar (1s) för att undvika abrupt ljusväxling
+#
+# ANVÄNDNING:
+# Anropas från input_select_light_bathroom.yaml automation
+# baserat på tid och rörelsedetektering.
+#######################################################
+
+  ###############################
+  ### Badrumsbelysning släckt ###
+  ###############################
+  bathroom_light_off:
+    alias: Badrumsbelysning släckt
+    mode: restart
+    sequence:
+      - condition: template
+        value_template: "{{ states('light.fonster_spott') != 'unavailable' }}"
+      - service: light.turn_off
+        data:
+          entity_id: light.fonster_spott
+          transition: 1
+
+  ############################
+  ### Badrumsbelysning dag ###
+  ############################
+  bathroom_light_day:
+    alias: Badrumsbelysning dag
+    mode: restart
+    sequence:
+      - condition: template
+        value_template: "{{ states('light.fonster_spott') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.fonster_spott
+          brightness_pct: 20
+          transition: 1
+
+  ####################################
+  ### Badrumsbelysning dag närvaro ###
+  ####################################
+  bathroom_light_day_presence:
+    alias: Badrumsbelysning dag närvaro
+    mode: restart
+    sequence:
+      - condition: template
+        value_template: "{{ states('light.fonster_spott') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.fonster_spott
+          brightness_pct: 80
+          transition: 1
+
+  #####################################
+  ### Badrumsbelysning natt närvaro ###
+  #####################################
+  bathroom_light_night_presence:
+    alias: Badrumsbelysning natt närvaro
+    mode: restart
+    sequence:
+      - condition: template
+        value_template: "{{ states('light.fonster_spott') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.fonster_spott
+          brightness_pct: 2
+          transition: 2

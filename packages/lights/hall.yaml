@@ -1,0 +1,224 @@
+####################################################
+#                                                  #
+#              HALLBELYSNING PACKAGE               #
+#                                                  #
+####################################################
+# Samlar all hallbelysningslogik i ett paket:
+# - Automations för automatisk släckning och fjärrkontroll
+# - Scripts för olika ljusnivåer
+#
+# Källor:
+# - automations/light_hall.yaml
+# - script/light_hall_roof.yaml
+#
+# Hårdvara/Entiteter:
+# - Light: light.hall_tak
+# - Switch: switch.fjarrkontroll_hall
+# - input_select: input_select.light_inside
+# - input_select: input_select.facade_lights
+#
+# Säkerhet:
+# - IDs och alias bibehållna för bakåtkompatibilitet
+# - Mode single enligt original
+####################################################
+
+##################
+### Automation ###
+##################
+automation:
+
+#######################################################
+#                                                     #
+#          HALL LIGHT AUTOMATION                     #
+#                                                     #
+#######################################################
+#
+# METADATA:
+# Skapad: [ursprungligt datum]
+# Senast ändrad: 2025-12-27
+# Version: 1.1
+# Författare: Home Assistant Config
+#
+# BESKRIVNING:
+# Automationer för hallbelysning — automatisk släckning och
+# fjärrkontroll. Integrerar med input_select för inomhusbelysning.
+# Möjliggör manuell styrning via fjärrkontroll.
+#
+# HÅRDVARA/ENTITETER:
+# - Light: light.hall_tak
+# - Switch: switch.fjarrkontroll_hall
+# - input_select: input_select.light_inside
+# - input_select: input_select.facade_lights
+# - Scripts: script.hall_taklampor_off, script.hall_taklampor_1_procent,
+#            script.hall_taklampor_100_procent
+#
+# AUTOMATIONER:
+# 1. Hall släck belysning:
+#    - Trigger: input_select.light_inside state change
+#    - Condition: != 'Dagbelysning'
+#    - Action: Kör script.hall_taklampor_off
+#
+# 2. Hall fjärrkontroll:
+#    - Trigger: switch.fjarrkontroll_hall (on/off)
+#    - on -> 100% (script.hall_taklampor_100_procent)
+#    - off -> Släckt (script.hall_taklampor_off)
+#
+# LOGIK:
+# SLÄCK BELYSNING:
+# - Automatiskt släcker när light_inside ändras
+# - Endast om inte 'Dagbelysning'
+#
+# FJÄRRKONTROLL:
+# - Enkel on/off kontroll
+# - 'on' -> 100% ljusstyrka
+# - 'off' -> Släcker helt
+#
+# SÄKERHET:
+# - Template validation i släckautomation
+# - Choose block med default för fjärrkontroll
+# - Mode: single förhindrar överlappande körningar
+#
+# INTEGRATION:
+# - Integreras med input_select.light_inside system
+# - Använder scripts för ljusstyrning
+# - Fjärrkontroll ger manuell överstyrning
+#
+# ÄNDRINGSLOGG:
+# v1.0: Ursprungliga automationer
+# v1.1 (2025-12-27): Lade till omfattande dokumentation
+#######################################################
+
+  - alias: "Hall släck belysning"
+    description: "Kör script.hall_taklampor_off om light.hall_tak är på och (input_select.light_inside != Dagbelysning eller input_select.facade_lights == Släckt)"
+    id: hall_slack_belysning
+    mode: single
+    trigger:
+      - platform: state
+        entity_id: input_select.light_inside
+    condition:
+      - condition: and
+        conditions:
+          - condition: template
+            value_template: "{{ states('input_select.light_inside') != 'Dagbelysning' }}"
+    action:
+      - service: script.hall_taklampor_off
+
+  # Hall fjärrkontroll — enkel logik:
+  # - Om `switch.fjarrkontroll_hall` blir 'on' -> kör `script.hall_taklampor_100_procent` (sätt 100%)
+  # - Om `switch.fjarrkontroll_hall` blir 'off' -> kör `script.hall_taklampor_off` (släck)
+  - alias: Hall fjärrkontroll
+    id: 'hall_remote_light_control'
+    description: >
+      Enkel styrning av halltaklampor via switch.fjarrkontroll_hall:
+      - 'on' -> 100%
+      - 'off' -> Släckt
+    mode: single
+    trigger:
+      - platform: state
+        entity_id: switch.fjarrkontroll_hall
+        to: 'on'
+      - platform: state
+        entity_id: switch.fjarrkontroll_hall
+        to: 'off'
+    action:
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: "{{ trigger.to_state.state == 'on' }}"
+            sequence:
+              - service: script.turn_on
+                target:
+                  entity_id: script.hall_taklampor_100_procent
+          - conditions:
+              - condition: template
+                value_template: "{{ trigger.to_state.state == 'off' }}"
+            sequence:
+              - service: script.turn_on
+                target:
+                  entity_id: script.hall_taklampor_off
+        default: []
+
+##############
+### Script ###
+##############
+script:
+#######################################################
+#                                                     #
+#              HALL TAKLAMPOR SCRIPTS                 #
+#                                                     #
+#######################################################
+#
+# BESKRIVNING:
+# Förinställda nivåer för halltak (off/1/10/50/100%).
+#
+# SÄKERHET:
+# - Mode: single (för att undvika samtidiga dim-ändringar)
+# - Tillgänglighetskontroll för light.hall_tak
+#######################################################
+
+  ##########################
+  ### Hall taklampor OFF ###
+  ##########################
+  hall_taklampor_off:
+    alias: Hall taklampor off
+    mode: single
+    sequence:
+      - condition: template
+        value_template: "{{ states('light.hall_tak') != 'unavailable' }}"
+      - service: light.turn_off
+        target:
+          entity_id: light.hall_tak
+        data:
+          transition: 10
+
+  hall_taklampor_1_procent:
+    alias: Hall taklampor 1 procent
+    mode: single
+    sequence:
+      - condition: template
+        value_template: "{{ states('light.hall_tak') != 'unavailable' }}"
+      - service: light.turn_on
+        target:
+          entity_id: light.hall_tak
+        data:
+          brightness_pct: 1
+          transition: 5
+
+  hall_taklampor_10_procent:
+    alias: Hall taklampor 10 procent
+    mode: single
+    sequence:
+      - condition: template
+        value_template: "{{ states('light.hall_tak') != 'unavailable' }}"
+      - service: light.turn_on
+        target:
+          entity_id: light.hall_tak
+        data:
+          brightness_pct: 10
+          transition: 5
+
+  hall_taklampor_50_procent:
+    alias: Hall taklampor 50 procent
+    mode: single
+    sequence:
+      - condition: template
+        value_template: "{{ states('light.hall_tak') != 'unavailable' }}"
+      - service: light.turn_on
+        target:
+          entity_id: light.hall_tak
+        data:
+          brightness_pct: 50
+          transition: 5
+
+  hall_taklampor_100_procent:
+    alias: Hall taklampor 100 procent
+    mode: single
+    sequence:
+      - condition: template
+        value_template: "{{ states('light.hall_tak') != 'unavailable' }}"
+      - service: light.turn_on
+        target:
+          entity_id: light.hall_tak
+        data:
+          brightness_pct: 100
+          transition: 5

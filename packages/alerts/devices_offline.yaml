@@ -1,0 +1,83 @@
+####################################################
+#                                                  #
+#           ENHETER OFFLINE (ALERTS) PACKAGE        #
+#                                                  #
+####################################################
+# Samlar offline-larm för kritiska enheter.
+#
+# Källor:
+# - automations/alarm_raspberry.yaml
+#
+# Säkerhet:
+# - IDs, alias, mode och logik bibehållna
+####################################################
+
+##################
+### Automation ###
+##################
+automation:
+
+#######################################################
+#                                                     #
+#       RASPBERRY PI OFFLINE LARM AUTOMATION         #
+#                                                     #
+#######################################################
+#
+# METADATA:
+# Skapad: [ursprungligt datum]
+# Senast ändrad: 2025-12-27
+# Version: 2.0
+# Författare: Home Assistant Config
+#
+# BESKRIVNING:
+# Samlad automation för övervakning av Raspberry Pi enheter.
+# Larmar när enheter går offline (state: not_home).
+# Viktigt för systemdrift och sensorövervakning.
+#
+# HÅRDVARA/ENTITETER:
+# Aktiva enheter:
+# - device_tracker.raspberry_pi_b_plus (1-Wire sensor hub)
+# - device_tracker.raspberry_pi_3b_2 (Lux mätning)
+#
+# Notification: notify.mobile_app_sm_a528b
+#######################################################
+
+  - alias: Raspberry Pi offline larm
+    id: '1735304100009'
+    mode: queued
+    max: 5
+
+    trigger:
+      # Raspberry Pi B+ (1-Wire)
+      - platform: state
+        entity_id: device_tracker.raspberry_pi_b_plus
+        to: 'not_home'
+        id: pi_b_plus
+
+      # Raspberry Pi 3B (Lux)
+      - platform: state
+        entity_id: device_tracker.raspberry_pi_3b_2
+        to: 'not_home'
+        id: pi_3b_lux
+
+    action:
+      - choose:
+          # RASPBERRY PI B+ (1-WIRE)
+          - alias: Pi B+ offline
+            conditions:
+              - condition: trigger
+                id: pi_b_plus
+            sequence:
+              - service: notify.mobile_app_sm_a528b
+                data:
+                  message: "Raspberry Pi B+ (1-Wire) - Offline"
+
+          # RASPBERRY PI 3B (LUX)
+          - alias: Pi 3B Lux offline
+            conditions:
+              - condition: trigger
+                id: pi_3b_lux
+            sequence:
+              - service: notify.mobile_app_sm_a528b
+                data:
+                  message: "Raspberry Pi 3B (Lux) - Offline"

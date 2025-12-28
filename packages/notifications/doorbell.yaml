@@ -1,3 +1,22 @@
+####################################################
+#                                                  #
+#              DOORBELL (NOTIFICATIONS) PACKAGE     #
+#                                                  #
+####################################################
+# Samlar ringklock-automationer (tvättstuga + hall).
+#
+# Källor:
+# - automations/doorbell.yaml
+#
+# Säkerhet:
+# - IDs, alias, mode och logik bibehållna
+####################################################
+
+##################
+### Automation ###
+##################
+automation:
+
 #######################################################
 #                                                     #
 #           DOORBELL AUTOMATION                       #
@@ -9,81 +28,6 @@
 # Senast ändrad: 2025-12-27
 # Version: 2.0
 # Författare: Home Assistant Config
-#
-# BESKRIVNING:
-# Samlad automation för ringklockor (tvättstuga och hall).
-# Hanterar kamera-snapshots, notifikationer, ljusblinkning
-# och automatisk aktivering/inaktivering baserat på närvaro.
-#
-# HÅRDVARA/ENTITETER:
-# - switch.ringklocka_tvattstuga
-# - switch.ringklocka_hall
-# - switch.ringklocka (master switch)
-# - camera.camera_3 (tvättstuga)
-# - camera.camera_2 (hall)
-# - light.vardagsrum_vitrinskap2 (blink notification)
-# - input_select.home_status
-# - group.track_for_home_devices
-# - notify.mobile_app_sm_a528b
-#
-# TRIGGRAR:
-# - Tvättstuga ringklocka: switch.ringklocka_tvattstuga -> 'on'
-# - Hall ringklocka: switch.ringklocka_hall -> 'on'
-# - Blink notification: båda ringklockor -> 'on'
-# - Enable/disable: group.track_for_home_devices -> 'home'/'not_home'
-#
-# LOGIK:
-# RINGKLOCKA TVÄTTSTUGA/HALL:
-# - Stäng av switch (återställ)
-# - 5 sek delay
-# - Ta kamera snapshot baserat på home_status:
-#   * Hemma på -> /media/Day/
-#   * Hemma av -> /media/Night/
-#   * Borta -> /media/Away/
-# - Skicka notifikation med snapshot
-# - 10 sek delay
-#
-# LJUSBLINKNING:
-# - Endast om någon hemma
-# - Toggle vitrinskåp ljus 4 gånger (1 sek mellan)
-# - Visuell notifikation
-#
-# ENABLE/DISABLE:
-# - Hemma -> Aktivera ringklocka
-# - Borta -> Inaktivera ringklocka
-#
-# SÄKERHET:
-# - Mode: single förhindrar överlappande exekvering
-# - Mode: queued för enable/disable (flera triggers samtidigt)
-# - Delays förhindrar spam
-# - Home check för blinkning (inget störande när borta)
-#
-# INTEGRATION:
-# - Camera snapshots sparas med timestamp
-# - Notifikationer inkluderar bild
-# - Integreras med home_status system
-#
-# KONSOLIDERINGSHISTORIK:
-# Denna automation ersätter följande tidigare automationer:
-# - Ringklocka tvättstuga (ID: 4680276550081)
-# - Ringklocka hall (ID: 2011937267361)
-# - Blinka med lyset när ringklocka ringer (ID: 8363608373239)
-# - Ringklocka on off (ID: 2421022434971)
-# 
-# Konsoliderad: 2025-12-27
-# Behållet ID: 4680276550081 (från tvättstuga)
-# Anledning: Enklare underhåll, delad logik, samlad ringklockshantering
-#
-# ÄNDRINGSLOGG:
-# v1.0: Ursprungliga separata automationer
-# v2.0 (2025-12-27): Konsoliderade alla ringklocksautomationer
-#######################################################
-
-
-#######################################################
-#                                                     #
-#       AUTOMATIONER FÖR RINGKLOCKOR                  #
-#                                                     #
 #######################################################
 
   - alias: Ringklocka hantering
@@ -128,7 +72,7 @@
                 entity_id: switch.ringklocka_tvattstuga
               - delay:
                   seconds: 5
-              
+
               # Ljusblinkning om hemma
               - if:
                   - condition: state
@@ -149,7 +93,7 @@
                       seconds: 1
                   - service: light.toggle
                     entity_id: light.vardagsrum_vitrinskap2
-              
+
               # Snapshot och notifikation baserat på home_status
               - choose:
                   - conditions:
@@ -211,7 +155,7 @@
                 entity_id: switch.ringklocka_hall
               - delay:
                   seconds: 5
-              
+
               # Ljusblinkning om hemma
               - if:
                   - condition: state
@@ -232,7 +176,7 @@
                       seconds: 1
                   - service: light.toggle
                     entity_id: light.vardagsrum_vitrinskap2
-              
+
               # Snapshot och notifikation baserat på home_status
               - choose:
                   - conditions:

@@ -1,0 +1,61 @@
+####################################################
+#                                                  #
+#              FRIGGEBOD (CLIMATE) PACKAGE          #
+#                                                  #
+####################################################
+# Styrning av elvärme i friggebod.
+#
+# Källor:
+# - automations/friggebod_heater.yaml
+####################################################
+
+##################
+### Automation ###
+##################
+automation:
+
+#######################################################
+#                                                     #
+#           FRIGGEBOD ELVÄRME AUTOMATION              #
+#                                                     #
+#######################################################
+#
+# BESKRIVNING:
+# Samlad automation för friggebodets elvärmare baserat på
+# fuktighetsnivå och temperatur.
+#######################################################
+
+  - alias: Elvärme friggebod
+    id: '1735304100015'
+    mode: single
+
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.friggebod_humidity
+        above: '58'
+      - platform: numeric_state
+        entity_id: sensor.friggebod_humidity
+        below: '56'
+
+    action:
+      - choose:
+          # TÄND - Hög fukt
+          - conditions:
+              - condition: numeric_state
+                entity_id: sensor.friggebod_humidity
+                above: 58
+              - condition: numeric_state
+                entity_id: sensor.friggebod_temperature
+                below: 15
+            sequence:
+              - service: homeassistant.turn_on
+                entity_id: switch.friggebod_elvarme
+
+          # SLÄCK - Låg fukt
+          - conditions:
+              - condition: numeric_state
+                entity_id: sensor.friggebod_humidity
+                below: 56
+            sequence:
+              - service: homeassistant.turn_off
+                entity_id: switch.friggebod_elvarme

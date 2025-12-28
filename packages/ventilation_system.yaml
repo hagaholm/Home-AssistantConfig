@@ -185,7 +185,7 @@ automation:
     ###    input_boolean.low_temp_franluft == on              ###
     ###    input_boolean.high_temp_franluft == on             ###
     ###    input_boolean.low_temp_tilluft == on               ###
-    ###    input_boolean.high_temp_tiluft == on               ###
+    ###    input_boolean.high_temp_tilluft == on              ###
     ### C: switch.shelly1_c45bbe77099d == 'on'                ###
     ### A: input_boolean.alarm_ventilation = on               ###
     #############################################################
@@ -206,7 +206,7 @@ automation:
         entity_id: input_boolean.low_temp_tilluft
         to: 'on'
       - platform: state
-        entity_id: input_boolean.high_temp_tiluft
+        entity_id: input_boolean.high_temp_tilluft
         to: 'on'
        
     action:

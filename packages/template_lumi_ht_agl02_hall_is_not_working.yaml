@@ -6,10 +6,11 @@ template:
       # Type: Temperature, Humidity, Pressure sensor
       - name: "Hall Temperatur"
         unique_id: hall_lumi_weather_temperatur
-        state: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_temperatur') }}"
+        state: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_temperatur') | float(0) }}"
         unit_of_measurement: "°C"
         device_class: temperature
         state_class: measurement
+        availability: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_temperatur') not in ['unknown', 'unavailable', ''] }}"
         attributes:
           source_sensor: sensor.lumi_lumi_sensor_ht_agl02_temperatur
           icon: mdi:thermometer

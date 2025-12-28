@@ -31,18 +31,14 @@ automation:
     mode: single
 
     trigger:
-      - platform: numeric_state
-        entity_id: sensor.forrad_temperature
-        below: '12'
-      - platform: numeric_state
-        entity_id: sensor.garage_temperature
-        below: '12'
-      - platform: numeric_state
-        entity_id: sensor.forrad_temperature
-        above: '9'
-      - platform: numeric_state
-        entity_id: sensor.garage_temperature
-        above: '9'
+      - platform: template
+        value_template: "{{ states('sensor.forrad_temperature') not in ['unknown','unavailable',''] and (states('sensor.forrad_temperature')|float) < 12 }}"
+      - platform: template
+        value_template: "{{ states('sensor.garage_temperature') not in ['unknown','unavailable',''] and (states('sensor.garage_temperature')|float) < 12 }}"
+      - platform: template
+        value_template: "{{ states('sensor.forrad_temperature') not in ['unknown','unavailable',''] and (states('sensor.forrad_temperature')|float) > 9 }}"
+      - platform: template
+        value_template: "{{ states('sensor.garage_temperature') not in ['unknown','unavailable',''] and (states('sensor.garage_temperature')|float) > 9 }}"
 
     action:
       - choose:
@@ -50,12 +46,10 @@ automation:
           - conditions:
               - condition: or
                 conditions:
-                  - condition: numeric_state
-                    entity_id: sensor.forrad_temperature
-                    below: 7
-                  - condition: numeric_state
-                    entity_id: sensor.garage_temperature
-                    below: 7
+                  - condition: template
+                    value_template: "{{ states('sensor.forrad_temperature') not in ['unknown','unavailable',''] and (states('sensor.forrad_temperature')|float) < 7 }}"
+                  - condition: template
+                    value_template: "{{ states('sensor.garage_temperature') not in ['unknown','unavailable',''] and (states('sensor.garage_temperature')|float) < 7 }}"
               - condition: numeric_state
                 entity_id: sensor.ute
                 below: 6
@@ -67,12 +61,10 @@ automation:
           - conditions:
               - condition: or
                 conditions:
-                  - condition: numeric_state
-                    entity_id: sensor.forrad_temperature
-                    below: 12
-                  - condition: numeric_state
-                    entity_id: sensor.garage_temperature
-                    below: 12
+                  - condition: template
+                    value_template: "{{ states('sensor.forrad_temperature') not in ['unknown','unavailable',''] and (states('sensor.forrad_temperature')|float) < 12 }}"
+                  - condition: template
+                    value_template: "{{ states('sensor.garage_temperature') not in ['unknown','unavailable',''] and (states('sensor.garage_temperature')|float) < 12 }}"
               - condition: numeric_state
                 entity_id: sensor.ute
                 below: 10
@@ -84,12 +76,10 @@ automation:
           - conditions:
               - condition: and
                 conditions:
-                  - condition: numeric_state
-                    entity_id: sensor.forrad_temperature
-                    above: 14
-                  - condition: numeric_state
-                    entity_id: sensor.garage_temperature
-                    above: 14
+                  - condition: template
+                    value_template: "{{ states('sensor.forrad_temperature') not in ['unknown','unavailable',''] and (states('sensor.forrad_temperature')|float) > 14 }}"
+                  - condition: template
+                    value_template: "{{ states('sensor.garage_temperature') not in ['unknown','unavailable',''] and (states('sensor.garage_temperature')|float) > 14 }}"
             sequence:
               - service: homeassistant.turn_off
                 entity_id: switch.garage_elvarme
@@ -98,12 +88,10 @@ automation:
           - conditions:
               - condition: and
                 conditions:
-                  - condition: numeric_state
-                    entity_id: sensor.forrad_temperature
-                    above: 9
-                  - condition: numeric_state
-                    entity_id: sensor.garage_temperature
-                    above: 9
+                  - condition: template
+                    value_template: "{{ states('sensor.forrad_temperature') not in ['unknown','unavailable',''] and (states('sensor.forrad_temperature')|float) > 9 }}"
+                  - condition: template
+                    value_template: "{{ states('sensor.garage_temperature') not in ['unknown','unavailable',''] and (states('sensor.garage_temperature')|float) > 9 }}"
             sequence:
               - service: homeassistant.turn_off
                 entity_id: switch.garage_elvarme
@@ -146,9 +134,8 @@ automation:
               - condition: state
                 entity_id: switch.garage_avfuktare
                 state: 'off'
-              - condition: numeric_state
-                entity_id: sensor.garage_temperature
-                above: 10
+              - condition: template
+                value_template: "{{ states('sensor.garage_temperature') not in ['unknown','unavailable',''] and (states('sensor.garage_temperature')|float) > 10 }}"
             sequence:
               - service: homeassistant.turn_on
                 entity_id: switch.garage_avfuktare

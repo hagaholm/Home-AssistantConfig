@@ -195,29 +195,26 @@ automation:
 
     trigger:
       # Varning hög temperatur (kritiskt)
-      - platform: numeric_state
-        entity_id: sensor.frys_temperature
-        above: -13
+      - platform: template
+        value_template: "{{ states('sensor.frys_temperature') not in ['unknown','unavailable',''] and (states('sensor.frys_temperature')|float) > -13 }}"
         for: "00:10:00"
         id: warning_high_temp
 
       # Larm hög temperatur (nivå)
-      - platform: numeric_state
-        entity_id: sensor.frys_temperature
-        above: -15
+      - platform: template
+        value_template: "{{ states('sensor.frys_temperature') not in ['unknown','unavailable',''] and (states('sensor.frys_temperature')|float) > -15 }}"
         for: "00:10:00"
         id: alarm_high_temp
 
       # Larm låg temperatur
-      - platform: numeric_state
-        entity_id: sensor.frys_temperature
-        below: -25
+      - platform: template
+        value_template: "{{ states('sensor.frys_temperature') not in ['unknown','unavailable',''] and (states('sensor.frys_temperature')|float) < -25 }}"
         for: "00:10:00"
         id: alarm_low_temp
 
     condition:
       - condition: template
-        value_template: "{{ not is_state('sensor.frys_temperature','unknown') }}"
+        value_template: "{{ states('sensor.frys_temperature') not in ['unknown','unavailable',''] }}"
 
     action:
       - choose:
@@ -240,9 +237,8 @@ automation:
             conditions:
               - condition: trigger
                 id: alarm_high_temp
-              - condition: numeric_state
-                entity_id: sensor.frys_temperature
-                below: -13
+              - condition: template
+                value_template: "{{ states('sensor.frys_temperature') not in ['unknown','unavailable',''] and (states('sensor.frys_temperature')|float) < -13 }}"
             sequence:
               - service: notify.mobile_app_sm_a528b
                 data:
@@ -278,22 +274,20 @@ automation:
 
     trigger:
       # Hög temperatur
-      - platform: numeric_state
-        entity_id: sensor.kyl_temperature
-        above: 10
+      - platform: template
+        value_template: "{{ states('sensor.kyl_temperature') not in ['unknown','unavailable',''] and (states('sensor.kyl_temperature')|float) > 10 }}"
         for: "00:10:00"
         id: high_temp
 
       # Låg temperatur
-      - platform: numeric_state
-        entity_id: sensor.kyl_temperature
-        below: 3
+      - platform: template
+        value_template: "{{ states('sensor.kyl_temperature') not in ['unknown','unavailable',''] and (states('sensor.kyl_temperature')|float) < 3 }}"
         for: "00:10:00"
         id: low_temp
 
     condition:
       - condition: template
-        value_template: "{{ not is_state('sensor.kyl_temperature','unknown') }}"
+        value_template: "{{ states('sensor.kyl_temperature') not in ['unknown','unavailable',''] }}"
 
     action:
       - choose:

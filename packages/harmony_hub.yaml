@@ -501,9 +501,8 @@ automation:
     mode: queued
 
     trigger:
-      platform: numeric_state
-      entity_id: sensor.yamaha_volume_level
-      above: '0.59' # > 40
+      platform: template
+      value_template: "{{ states('sensor.yamaha_volume_level') not in ['unknown','unavailable',''] and (states('sensor.yamaha_volume_level')|float) > 0.59 }}" # > 40
 
     condition:
       condition: and
@@ -524,9 +523,8 @@ automation:
     mode: queued
 
     trigger:
-      platform: numeric_state
-      entity_id: sensor.yamaha_volume_level
-      below: '0.59' # < 40
+      platform: template
+      value_template: "{{ states('sensor.yamaha_volume_level') not in ['unknown','unavailable',''] and (states('sensor.yamaha_volume_level')|float) < 0.59 }}" # < 40
 
     condition:
       condition: and
@@ -575,9 +573,8 @@ automation:
     mode: queued
 
     trigger:
-      platform: numeric_state
-      entity_id: sensor.yamaha_volume_level
-      above: '65' # > 35
+      platform: template
+      value_template: "{{ states('sensor.yamaha_volume_level') not in ['unknown','unavailable',''] and (states('sensor.yamaha_volume_level')|float) > 65 }}" # > 35
 
     condition:
       condition: and
@@ -605,9 +602,8 @@ automation:
     mode: queued
 
     trigger:
-      platform: numeric_state
-      entity_id: sensor.yamaha_volume_level
-      below: '65' # > 35
+      platform: template
+      value_template: "{{ states('sensor.yamaha_volume_level') not in ['unknown','unavailable',''] and (states('sensor.yamaha_volume_level')|float) < 65 }}" # > 35
 
     condition:
       condition: and

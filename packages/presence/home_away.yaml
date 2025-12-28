@@ -1,3 +1,30 @@
+####################################################
+#                                                  #
+#             HOME/AWAY (HEMMASTATUS) PACKAGE       #
+#                                                  #
+####################################################
+# Samlar home/away-statuslogik i ett paket.
+#
+# Källor:
+# - automations/home_away.yaml
+#
+# Entiteter:
+# - group.track_for_home_devices
+# - group.persons
+# - binary_sensor.kok_narvaro
+# - input_select.home_status
+# - remote.harmony_hub
+#
+# Säkerhet:
+# - ID och alias bibehållna
+# - Mode/queued/max enligt original
+####################################################
+
+##################
+### Automation ###
+##################
+automation:
+
 #######################################################
 #                                                     #
 #          HOME/AWAY STATUS AUTOMATION               #
@@ -73,13 +100,6 @@
 # ÄNDRINGSLOGG:
 # v1.0: Ursprungliga separata automationer
 # v2.0 (2025-12-27): Konsoliderade alla hem/borta lägen i en automation
-#######################################################
-
-
-#######################################################
-#                                                     #
-#      AUTOMATIONER FÖR HOME/AWAY STATUS STYRNING    #
-#                                                     #
 #######################################################
 
   - alias: Hem borta status styrning
@@ -165,6 +185,7 @@
                 data:
                   entity_id: input_select.home_status
                   option: Hemma på
+
       - delay: '00:00:15'
       - service: homeassistant.turn_off
         entity_id: switch.vardagsrum_stereobank

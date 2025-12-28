@@ -1,0 +1,59 @@
+#######################################################
+#                                                     #
+#              VENTILATION SCRIPTS (PACKAGE)          #
+#                                                     #
+#######################################################
+#
+# Flyttad från:
+# - script/fan.yaml
+#
+# BESKRIVNING:
+# Styr ventilationsfläkt mellan normal och forcerad drift.
+# Används av automationer för fukt- och temperaturkontroll.
+#
+# HÅRDVARA:
+# - Shelly 1 relay (switch.shelly1_c45bbe77099d)
+#
+# SCRIPTS:
+# - fan_normal: Växlar till normal ventilationshastighet
+# - fan_forced: Växlar till forcerad ventilationshastighet
+#
+# SÄKERHET:
+# - Mode: restart - förhindrar överlappande körningar
+# - Kontrollerar att switch är tillgänglig
+#######################################################
+
+##############
+### Script ###
+##############
+script:
+
+  ##########################
+  ### Fläkt normal drift ###
+  ##########################
+  fan_normal:
+    alias: Fläkt normal
+    mode: restart
+    sequence:
+      # Säkerhetskontroll - verifiera att enheten är tillgänglig
+      - condition: template
+        value_template: "{{ states('switch.shelly1_c45bbe77099d') != 'unavailable' }}"
+
+      # Växla till normal hastighet (av = normal drift)
+      - service: switch.turn_off
+        entity_id: switch.shelly1_c45bbe77099d
+
+  #############################
+  ### Fläkt forcerad drift ###
+  #############################
+  fan_forced:
+    alias: Fläkt forcerad
+    mode: restart
+    sequence:
+      # Säkerhetskontroll - verifiera att enheten är tillgänglig
+      - condition: template
+        value_template: "{{ states('switch.shelly1_c45bbe77099d') != 'unavailable' }}"
+
+      # Växla till forcerad hastighet (på = forcerad drift)
+      - service: switch.turn_on
+        entity_id: switch.shelly1_c45bbe77099d

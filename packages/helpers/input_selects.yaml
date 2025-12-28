@@ -34,28 +34,6 @@ input_select:
      - Fönsterbelysning
     icon: mdi:lightbulb
 
-  facade_lights: 
-    name: Fasadbelysning 
-    # Facade and exterior accent lighting control
-    # Four modes: Off, On, Night mode (dimmed), Maximum (full brightness)
-    # Used by: Exterior lighting automation and evening/night scenes
-    options: 
-     - Släckt 
-     - Tänt
-     - Natt 
-     - Max
-    icon: mdi:lightbulb 
-     
-  light_outside:
-    name: Utebelysning
-    # Exterior house lighting (porch, driveway, entrance)
-    # Simple on/off for motion-detected exterior lighting
-    # Updated by: PIR sensors and dusk/dawn automations
-    options:
-     - Släckt
-     - Tänt
-    icon: mdi:lightbulb
-
   home_status:
     name: Hemma status
     # Primary home occupancy state machine

@@ -84,13 +84,16 @@ automation:
 # - Styrs via: input_select.light_inside
 # - Exekveras av: script.*_lights_on
 #
-# TILLSTÅND:
-# - Morgonbelysning: Mjukt morgonljus (05:00-09:00)
+# TILLSTÅND (input_select.light_inside):
+# - Släckt: Släcker allt inne
+# - Morgonbelysning: Mjukt morgonljus (ca 05:00-09:00)
+# - Förmiddagsbelysning: Övergång till dagläge
 # - Dagbelysning: Normalt dagsljus
 # - Kvällsbelysning: Dämpat kvällsljus
 # - Nattbelysning: Minimalt nattljus (vid rörelse)
 # - Bortabelysning: Simulerar närvaro när borta
-# - Fönsterbelysning: Julbelysning i fönster
+# - Arbetsbelysning: Praktiskt/klart ljus (mappas till städbelysning)
+# - Fönsterbelysning: Fönster/julbelysning
 #
 # LOGIK:
 # När input_select.light_inside ändras:
@@ -99,9 +102,9 @@ automation:
 # - Scriptet hanterar faktisk ljuskontroll för alla rum
 #
 # INTEGRATION:
-# - Kopplad till input_select.light_inside
-# - Triggar centrala belysningsskript
-# - Styrs av automationer i light_inside_*.yaml
+# - Decision-automationer sätter input_select.light_inside (dygn/hemstatus/lux/närvaro)
+# - Denna automation är exekveraren (state machine) och anropar scripts
+# - Scriptlagret sköter faktisk device-kontroll per rum/grupp
 #######################################################
 
   - alias: Innebelysning
@@ -117,9 +120,23 @@ automation:
           - conditions:
               - condition: state
                 entity_id: input_select.light_inside
+                state: Släckt
+            sequence:
+              - service: script.inside_lights_off
+
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_inside
                 state: Morgonbelysning
             sequence:
               - service: script.morning_lights_on
+
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_inside
+                state: Förmiddagsbelysning
+            sequence:
+              - service: script.daylights_on
 
           - conditions:
               - condition: state
@@ -156,58 +173,12 @@ automation:
             sequence:
               - service: script.window_lights_on
 
-    ##############################################
-    ### Släcker innebelysning                  ###
-    ### T: input_select.light_inside == Släckt ###
-    ### A: script.inside_lights_off            ###
-    ##############################################
-  - alias: Släcker innebelysning
-    id: '0733235795384'
-    mode: single
-
-    trigger:
-      - platform: state
-        entity_id: input_select.light_inside
-        to: Släckt
-
-    action:
-      - service: script.inside_lights_off
-
-#######################################################
-#                                                     #
-#       MORNING LIGHTING AUTOMATION                   #
-#                                                     #
-#######################################################
-#
-# METADATA:
-# Skapad: [ursprungligt datum]
-# Senast ändrad: 2025-12-27
-# Version: 2.0
-# Författare: Home Assistant Config
-#
-# BESKRIVNING:
-# Samlad automation för morgonbelysning.
-# Tänder ljus 05:00-09:00 när status blir 'Hemma på'.
-# Släcker när det blir ljust eller när alla åker hemifrån.
-#
-# HÅRDVARA/ENTITETER:
-# - input_select.home_status
-# - input_select.light_inside
-# - input_boolean.morning_light_on
-#
-# TRIGGRAR:
-# - Tänd: home_status -> 'Hemma på'
-# - Släck: morning_light_on -> 'off' ELLER home_status -> 'Borta'
-#
-# VILLKOR:
-# - Tänd: morning_light_on='on' OCH 05:00-09:00
-# - Släck: 05:00-09:00 OCH (light_inside='Morgonbelysning' ELLER 'Dagbelysning')
-#
-# LOGIK:
-# - Aktiveras morgontid (05:00-09:00)
-# - Tänds automatiskt när hemma på
-# - Släcks när dagsljuset räcker eller alla åker
-#######################################################
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_inside
+                state: Arbetsbelysning
+            sequence:
+              - service: script.cleaning_lights_on
 
   - alias: Morgonbelysning styrning
     id: '1735304100010'

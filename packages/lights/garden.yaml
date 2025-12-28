@@ -1,0 +1,321 @@
+####################################################
+#                                                  #
+#          TRÄDGÅRDSBELYSNING PACKAGE              #
+#                                                  #
+####################################################
+# Samlar all trädgårdsbelysningslogik i ett paket:
+# - Input select för tänd/släckt
+# - Automations för ljus-, tid- och hemstatusstyrning
+# - Scripts för faktisk switchkontroll
+#
+# Källor:
+# - automations/light_garden.yaml
+# - automations/input_select_light_garden.yaml
+# - script/light_garden.yaml
+# - helpers/input_selects.yaml (light_garden)
+#
+# Hårdvara/Entiteter:
+# - Ljussensor: sensor.ljusstyrka
+# - Trädgårdsswitch: switch.tradgard
+# - Trädäck: switch.stickpropp_8
+# - Hemstatus: input_select.home_status
+# - Hemspårning: group.track_for_home_devices
+# - Innebelysning: light.kok_lilla_fonstret
+# - input_select.light_garden (Släckt/Tänt)
+#
+# Säkerhet:
+# - IDs och alias bibehållna för bakåtkompatibilitet
+# - Mode single/restart enligt original
+####################################################
+
+#######################
+### Input Select(s) ###
+#######################
+input_select:
+  light_garden: 
+    name: Trädgårdsbelysning 
+    # Garden/patio lighting simple on/off
+    # Controls deck lights and ground-level garden accent lights
+    # Updated by: Outdoor activity sensors
+    options: 
+     - Släckt 
+     - Tänt 
+    icon: mdi:lightbulb
+
+##################
+### Automation ###
+##################
+automation:
+
+#######################################################
+#                                                     #
+#            TRÄDGÅRDSBELYSNING AUTOMATION            #
+#                                                     #
+#######################################################
+#
+# BESKRIVNING:
+# Samlad automation för trädgårdsbelysning baserat på
+# ljusnivå, tid på dygnet och hemstatus.
+# Hanterar både tändning och släckning i samma automation.
+#
+# HÅRDVARA:
+# - Ljussensor: sensor.ljusstyrka
+# - Trädgårdsswitch: switch.tradgard
+# - Hemstatus: input_select.home_status
+# - Innebelysning: light.kok_lilla_fonstret
+#
+# TRIGGRAR:
+# - Hemstatus ändras till 'Hemma på'
+# - Ljusnivå under 40 lux (mörkt)
+# - Ljusnivå över 60 lux (ljust)
+# - Innebelysning släcks
+#
+# LOGIK:
+# TÄND:
+# - Morgon (05:00-12:00): När hemma på och mörkt
+# - Eftermiddag/kväll (12:00-05:00): När hemma på och mörkt
+# - Borta (12:00-05:00): När borta och mörkt (säkerhet)
+#
+# SLÄCK:
+# - När det blir ljust (>60 lux)
+# - Kväll (21:00-06:00): När inne släcks och hemma
+#
+# INTEGRATION:
+# - Styrs via input_select.light_garden
+# - Samordnas med innebelysning
+#######################################################
+
+  - alias: Trädgårdsbelysning
+    id: '1735304100017'
+    mode: single
+    trigger:
+      - platform: state
+        entity_id: input_select.home_status
+        to: 'Hemma på'
+      - platform: numeric_state
+        entity_id: sensor.ljusstyrka
+        below: input_number.ljusstyrka_40
+      - platform: numeric_state
+        entity_id: sensor.ljusstyrka
+        above: input_number.ljusstyrka_60
+      - platform: state
+        entity_id: light.kok_lilla_fonstret
+        to: 'off'
+    action:
+      - choose:
+          # Turn ON scenarios
+          - alias: Tänd - Morgon när någon är hemma
+            conditions:
+              - condition: state
+                entity_id: input_select.home_status
+                state: 'Hemma på'
+              - condition: time
+                after: '05:00:00'
+                before: '12:00:00'
+              - condition: numeric_state
+                entity_id: sensor.ljusstyrka
+                below: input_number.ljusstyrka_40
+              - condition: state
+                entity_id: switch.tradgard
+                state: 'off'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_garden
+                  option: Tänt
+          - alias: Tänd - Hemma eftermiddag och kväll
+            conditions:
+              - condition: time
+                after: '12:00:00'
+                before: '05:00:00'
+              - condition: numeric_state
+                entity_id: sensor.ljusstyrka
+                below: input_number.ljusstyrka_40
+              - condition: state
+                entity_id: group.track_for_home_devices
+                state: 'home'
+              - condition: state
+                entity_id: input_select.home_status
+                state: 'Hemma på'
+              - condition: state
+                entity_id: switch.tradgard
+                state: 'off'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_garden
+                  option: Tänd
+          - alias: Tänd - Borta eftermiddag och kväll
+            conditions:
+              - condition: time
+                after: '12:00:00'
+                before: '05:00:00'
+              - condition: numeric_state
+                entity_id: sensor.ljusstyrka
+                below: input_number.ljusstyrka_40
+              - condition: state
+                entity_id: group.track_for_home_devices
+                state: 'not_home'
+              - condition: state
+                entity_id: switch.tradgard
+                state: 'off'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_garden
+                  option: Tänd
+          # Turn OFF scenarios
+          - alias: Släck - Ljust ute
+            conditions:
+              - condition: numeric_state
+                entity_id: sensor.ljusstyrka
+                above: input_number.ljusstyrka_60
+              - condition: state
+                entity_id: switch.tradgard
+                state: 'on'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_garden
+                  option: Släckt
+          - alias: Släck - Inne släcks på kvällen
+            conditions:
+              - condition: time
+                after: '21:00:00'
+                before: '06:00:00'
+              - condition: state
+                entity_id: group.track_for_home_devices
+                state: 'home'
+              - condition: state
+                entity_id: switch.tradgard
+                state: 'on'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_garden
+                  option: Släckt
+
+#######################################################
+#                                                     #
+#    TRÄDGÅRDSBELYSNING INPUT_SELECT AUTOMATION       #
+#                                                     #
+#######################################################
+#
+# METADATA:
+# Skapad: [ursprungligt datum]
+# Senast ändrad: 2025-12-27
+# Version: 1.1
+# Författare: Home Assistant Config
+#
+# BESKRIVNING:
+# State machine automation för trädgårdsbelysning.
+# Lyssnar på input_select ändringar och anropar
+# motsvarande belysningsskript.
+#
+# HÅRDVARA/ENTITETER:
+# - input_select.light_garden (Tänt/Släckt)
+# - script.tradgards_belysning_on
+# - script.tradgards_belysning_off
+#
+# TRIGGRAR:
+# - input_select.light_garden -> 'Tänt'
+# - input_select.light_garden -> 'Släckt'
+#
+# LOGIK:
+# När input_select.light_garden ändras:
+# - Tänt -> Anropar script.tradgards_belysning_on
+# - Släckt -> Anropar script.tradgards_belysning_off
+#
+# INTEGRATION:
+# - Kopplad till input_select.light_garden
+# - Styrs av automation i light_garden.yaml
+# - Scriptet hanterar faktisk ljuskontroll
+#
+# ÄNDRINGSLOGG:
+# v1.0: Ursprungliga automationer
+# v1.1 (2025-12-27): Lade till omfattande dokumentation
+#######################################################
+
+  ############################################
+  ### Tänder trädgårdsbelysning            ###
+  ### T: input_select.light_garden == Tänt ###
+  ### A: script.tradgards_belysning_on     ###
+  ############################################
+  - alias: Tänd trädgårdsbelysning
+    id: '6989544174114'
+    mode: single
+    trigger:
+      - platform: state
+        entity_id: input_select.light_garden
+        to: Tänt
+    action:
+      - service: script.tradgards_belysning_on
+
+  ##############################################
+  ### Släcker trädgårdsbelysning             ###
+  ### T: input_select.light_garden == Släckt ###
+  ### A: script.tradgards_belysning_off      ###
+  ##############################################
+  - alias: Släck trädgårdsbelysning
+    id: '0889746927668'
+    mode: single
+    trigger:
+      - platform: state
+        entity_id: input_select.light_garden
+        to: Släckt
+    action:
+      - service: script.tradgards_belysning_off
+
+##############
+### Script ###
+##############
+script:
+#######################################################
+#                                                     #
+#              TRÄDGÅRDSBELYSNING SCRIPTS             #
+#                                                     #
+#######################################################
+#
+# BESKRIVNING:
+# Tänder/släcker trädgårdsbelysning och trädäck (uterum).
+#
+# HÅRDVARA:
+# - switch.tradgard
+# - switch.stickpropp_8 (Trädäck uterum)
+#
+# SÄKERHET:
+# - Mode: restart – förhindrar kö-race vid snabba anrop
+# - Tillgänglighetskontroll på båda switchar
+#######################################################
+
+  ##############################
+  ### Trädgårdsbelysning on ###
+  ##############################
+  tradgards_belysning_on:
+    alias: Trädgårdsbelysning on
+    mode: restart
+    sequence:
+      - condition: template
+        value_template: "{{ states('switch.tradgard') != 'unavailable' }}"
+      - service: switch.turn_on
+        entity_id: switch.tradgard
+      - condition: template
+        value_template: "{{ states('switch.stickpropp_8') != 'unavailable' }}"
+      - service: switch.turn_on
+        entity_id: switch.stickpropp_8
+ 
+  ###############################
+  ### Trädgårdsbelysning off ###
+  ###############################
+  tradgards_belysning_off:
+    alias: Trädgårdsbelysning off
+    mode: restart
+    sequence:
+      - condition: template
+        value_template: "{{ states('switch.tradgard') != 'unavailable' }}"
+      - service: switch.turn_off
+        entity_id: switch.tradgard
+      - condition: template
+        value_template: "{{ states('switch.stickpropp_8') != 'unavailable' }}"
+      - service: switch.turn_off
+        entity_id: switch.stickpropp_8

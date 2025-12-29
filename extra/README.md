@@ -45,6 +45,14 @@ It checks `condition: state` / `condition: numeric_state` blocks for missing req
 Run:
 - `py -3 extra/ha_condition_indent_audit.py`
 
+### `ha_options_indent_audit.py`
+Heuristic scan for common YAML list indentation mistakes under `options:` blocks (e.g. one `- <option>` line has the wrong number of spaces).
+
+This helps catch Home Assistant config breakage caused by misindented `input_select` (and similar) option lists.
+
+Run:
+- `py -3 extra/ha_options_indent_audit.py`
+
 ## Docs sync
 
 ### `ha_docs_sync.py`
@@ -84,4 +92,5 @@ How to run:
 - `ha_inventory_audit.py` – usage audit against the exported inventory
 - `audit_ui_automation.py` – UI automation dashboard reference audit
 - `ha_condition_indent_audit.py` – flags likely YAML indentation mistakes in automation condition blocks
+- `ha_options_indent_audit.py` – flags likely YAML indentation mistakes under `options:` lists
 - `add_id_2_automations.py` – one-off helper (legacy)

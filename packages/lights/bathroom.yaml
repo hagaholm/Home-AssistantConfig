@@ -144,13 +144,28 @@ automation:
     action:
       - choose:
           # --------------------------------------------------
-          # SLÄCK VID BORTA OCH HEMMA AV
+          # SLÄCK VID BORTA OCH SOVER
           # --------------------------------------------------
           - conditions:
               - condition: state
                 entity_id: input_select.home_status
                 state:
                   - 'Borta'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_bathroom
+                  option: Släckt
+          # --------------------------------------------------
+          # SLÄCK VID SOVER (OM INGEN NÄRVARO)
+          # --------------------------------------------------
+          - conditions:
+              - condition: state
+                entity_id: input_select.home_status
+                state: 'Sover'
+              - condition: state
+                entity_id: binary_sensor.motion_sensor
+                state: 'off'
             sequence:
               - service: input_select.select_option
                 data:
@@ -169,7 +184,7 @@ automation:
                   entity_id: input_select.light_bathroom
                   option: Släckt
           # --------------------------------------------------
-          # NATT – NÄRVARO + HEMMA AV + MÖRKT
+          # NATT – NÄRVARO + SOVER + MÖRKT
           # --------------------------------------------------
           - conditions:
               - condition: state
@@ -202,7 +217,7 @@ automation:
                   entity_id: input_select.light_bathroom
                   option: Släckt
           # --------------------------------------------------
-          # DAG – HEMMA PÅ + MÖRKT
+          # DAG – HEMMA + MÖRKT
           # --------------------------------------------------
           - conditions:
               - condition: state
@@ -250,7 +265,7 @@ automation:
                   entity_id: input_select.light_bathroom
                   option: Dag
           # --------------------------------------------------
-          # HEMMA AV → HEMMA PÅ (NATT → DAG NÄRVARO)
+          # SOVER → HEMMA (NATT → DAG NÄRVARO)
           # --------------------------------------------------
           - conditions:
               - condition: state

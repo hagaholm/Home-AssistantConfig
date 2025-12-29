@@ -88,8 +88,8 @@ Top level:
 The system uses a helper that acts as a “mode selector” for the household:
 
 - `input_select.home_status` typically has modes like:
-  - `Hemma på` (active home)
-  - `Hemma av` (home but calm/low activity)
+  - `Hemma` (active home)
+  - `Sover` (home but calm/low activity)
   - `Borta` (away)
 
 Presence detection is done via groups like:
@@ -433,7 +433,7 @@ flowchart TD
   M1[binary_sensor.kok_narvaro]
 
   %% Core mode
-  HS[input_select.home_status\n(Hemma på / Hemma av / Borta)]
+  HS[input_select.home_status\n(Hemma / Sover / Borta)]
 
   %% Presence automation
   AHA[packages/presence/home_away.yaml\nAutomation: Hem borta status styrning]

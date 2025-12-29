@@ -72,9 +72,10 @@ automation:
 #
 # TRIGGRAR:
 # - Hemstatus ändras till 'Hemma'
+# - Hemstatus ändras till 'Sover'
 # - Ljusnivå under 40 lux (mörkt)
 # - Ljusnivå över 60 lux (ljust)
-# - Innebelysning släcks
+#
 #
 # LOGIK:
 # TÄND:
@@ -84,7 +85,7 @@ automation:
 #
 # SLÄCK:
 # - När det blir ljust (>60 lux)
-# - Kväll (21:00-06:00): När inne släcks och hemma
+# - Sover: Släck när hemstatus blir 'Sover'
 #
 # INTEGRATION:
 # - Styrs via input_select.light_garden
@@ -98,17 +99,30 @@ automation:
       - platform: state
         entity_id: input_select.home_status
         to: 'Hemma'
+      - platform: state
+        entity_id: input_select.home_status
+        to: 'Sover'
       - platform: numeric_state
         entity_id: sensor.ljusstyrka
         below: input_number.ljusstyrka_40
       - platform: numeric_state
         entity_id: sensor.ljusstyrka
         above: input_number.ljusstyrka_60
-      - platform: state
-        entity_id: light.kok_lilla_fonstret
-        to: 'off'
     action:
       - choose:
+          - alias: Släck - Sover
+            conditions:
+              - condition: state
+                entity_id: input_select.home_status
+                state: 'Sover'
+              - condition: state
+                entity_id: switch.tradgard
+                state: 'on'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_garden
+                  option: Släckt
           # Turn ON scenarios
           - alias: Tänd - Morgon när någon är hemma
             conditions:

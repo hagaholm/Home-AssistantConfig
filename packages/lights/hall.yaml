@@ -14,8 +14,8 @@
 # Hårdvara/Entiteter:
 # - Light: light.hall_tak
 # - Switch: switch.fjarrkontroll_hall
-# - input_select: input_select.light_inside
-# - input_select: input_select.facade_lights
+# - input_select: input_select.light_hall
+# - input_select: input_select.home_status
 #
 # Säkerhet:
 # - IDs och alias bibehållna för bakåtkompatibilitet
@@ -113,22 +113,22 @@ automation:
 #
 # BESKRIVNING:
 # Automationer för hallbelysning — automatisk släckning och
-# fjärrkontroll. Integrerar med input_select för inomhusbelysning.
+# fjärrkontroll. Synkar med hemstatus.
 # Möjliggör manuell styrning via fjärrkontroll.
 #
 # HÅRDVARA/ENTITETER:
 # - Light: light.hall_tak
 # - Switch: switch.fjarrkontroll_hall
-# - input_select: input_select.light_inside
-# - input_select: input_select.facade_lights
+# - input_select: input_select.light_hall
+# - input_select: input_select.home_status
 # - Scripts: script.hall_taklampor_off, script.hall_taklampor_1_procent,
 #            script.hall_taklampor_100_procent
 #
 # AUTOMATIONER:
 # 1. Hall släck belysning:
-#    - Trigger: input_select.light_inside state change
-#    - Condition: != 'Dagbelysning'
-#    - Action: Kör script.hall_taklampor_off
+#    - Trigger: input_select.home_status state change
+#    - Condition: != 'Hemma'
+#    - Action: Sätter input_select.light_hall till 'Släckt'
 #
 # 2. Hall fjärrkontroll:
 #    - Trigger: switch.fjarrkontroll_hall (on/off)
@@ -137,8 +137,7 @@ automation:
 #
 # LOGIK:
 # SLÄCK BELYSNING:
-# - Automatiskt släcker när light_inside ändras
-# - Endast om inte 'Dagbelysning'
+# - Automatiskt släcker när hemstatus inte är 'Hemma'
 #
 # FJÄRRKONTROLL:
 # - Enkel on/off kontroll
@@ -151,7 +150,7 @@ automation:
 # - Mode: single förhindrar överlappande körningar
 #
 # INTEGRATION:
-# - Integreras med input_select.light_inside system
+# - Integreras med input_select.home_status (global hemstatus)
 # - Använder scripts för ljusstyrning
 # - Fjärrkontroll ger manuell överstyrning
 #
@@ -161,17 +160,17 @@ automation:
 #######################################################
 
   - alias: "Hall släck belysning"
-    description: "Kör script.hall_taklampor_off om light.hall_tak är på och (input_select.light_inside != Dagbelysning eller input_select.facade_lights == Släckt)"
+    description: "Kör script.hall_taklampor_off om light.hall_tak är på och (input_select.home_status != Hemma)"
     id: hall_slack_belysning
     mode: single
     trigger:
       - platform: state
-        entity_id: input_select.light_inside
+        entity_id: input_select.home_status
     condition:
       - condition: and
         conditions:
           - condition: template
-            value_template: "{{ states('input_select.light_inside') != 'Dagbelysning' }}"
+            value_template: "{{ states('input_select.home_status') != 'Hemma' }}"
     action:
       - service: input_select.select_option
         data:

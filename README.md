@@ -97,7 +97,7 @@ Automated alerts for temperature thresholds in various zones.
 - `light_inside` - Indoor scenes (9 options)
 - `light_kitchen` - Kitchen brightness (4 levels)
 - `light_bathroom` - Bathroom scenes with presence detection
-- `light_outside` - Outdoor lighting
+- `light_outside` - Spa/outdoor lighting (UI: "Spabad")
 - `facade_lights` - Facade lighting modes
 - `light_garden` - Garden lighting
 - `light_uterum` - Outdoor room lighting

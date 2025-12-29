@@ -1,0 +1,42 @@
+####################################################
+#                                                  #
+#      GLOBAL AUTOMATIONS                          #
+#                                                  #
+####################################################
+# Automations som inte passar in i en specifik
+# light package. Hanterar globala state changes
+# som påverkar flera system.
+#
+# Design:
+# - Scripten (godnatt, scener) ändrar endast
+#   input_select värden
+# - Varje light package hanterar sina egna
+#   input_select ändringar (inside, kitchen, 
+#   garden, etc) via automations i respektive fil
+# - Denna fil hanterar GLOBALA automations
+#
+####################################################
+
+automation:
+
+  ########################################
+  # CLEANUP ON SLEEP MODE
+  ########################################
+
+  - alias: Media och värmekällor av vid Sover
+    id: 'media_off_on_sleep'
+    mode: single
+    trigger:
+      - platform: state
+        entity_id: input_select.home_status
+        to: Sover
+    action:
+      - service: remote.turn_off
+        entity_id: remote.harmony_hub
+      - delay: '00:00:15'
+      - service: homeassistant.turn_off
+        entity_id: switch.vardagsrum_stereobank
+      - service: homeassistant.turn_off
+        entity_id: switch.vardagsrum_tv
+      - service: homeassistant.turn_off
+        entity_id: switch.vardagsrum_subbas

@@ -1,0 +1,180 @@
+####################################################
+#                                                  #
+#         GODNATT (GOODNIGHT) SCRIPTS              #
+#                                                  #
+####################################################
+# Godnatt-rutiner för kvällsläggning
+# 
+# Design: Scripten ställer endast input_select värden.
+# Automations reagerar på dessa ändringar och 
+# hanterar den faktiska ljuskontroll.
+#
+# Entiteter som ändras:
+# - input_select.home_status -> Sover
+# - input_select.light_inside -> Släckt
+# - input_select.light_kitchen -> Släckt
+# - input_select.light_garden -> Släckt
+# - input_select.light_outside -> Släckt
+# - input_select.facade_lights -> Natt
+#
+# Relaterade automations:
+# - packages/automations/input_select_light_control.yaml
+#
+####################################################
+
+script:
+
+  button_goodnight:
+    alias: Godnatt
+    mode: restart
+    sequence:
+      - service: script.goodnight_all
+
+  goodnight:
+    alias: Godnatt, släcker allt
+    mode: restart
+    sequence:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.home_status
+          option: Sover
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_inside
+          option: Släckt
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_kitchen
+          option: Släckt
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_garden
+          option: Släckt
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_outside
+          option: Släckt
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.facade_lights
+          option: Natt
+
+  goodnight_10_min:
+    alias: Godnatt, släcker allt om 10 minuter
+    mode: restart
+    sequence:
+      - delay: '00:10:00'
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.home_status
+          option: Sover
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_inside
+          option: Släckt
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_kitchen
+          option: Släckt
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_garden
+          option: Släckt
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_outside
+          option: Släckt
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.facade_lights
+          option: Natt
+
+  goodnight_all:
+    alias: Godnatt, stänger av allt
+    mode: restart
+    sequence:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.home_status
+          option: Sover
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_inside
+          option: Släckt
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_kitchen
+          option: Släckt
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_garden
+          option: Släckt
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_outside
+          option: Släckt
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.facade_lights
+          option: Natt
+
+  goodnight_all_10_min:
+    alias: Godnatt, stänger av allt om 10 minuter
+    mode: restart
+    sequence:
+      - delay: '00:10:00'
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.home_status
+          option: Sover
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_inside
+          option: Släckt
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_kitchen
+          option: Släckt
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_garden
+          option: Släckt
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_outside
+          option: Släckt
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.facade_lights
+          option: Natt
+
+  goodnight_all_tv_10_min:
+    alias: Godnatt, stänger av allt (tv om 10 minuter)
+    sequence:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.home_status
+          option: Sover
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_inside
+          option: Släckt
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_kitchen
+          option: Släckt
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_garden
+          option: Släckt
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_outside
+          option: Släckt
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.facade_lights
+          option: Natt
+      - delay: '00:10:00'
+      - service: remote.turn_off
+        entity_id: remote.harmony_hub

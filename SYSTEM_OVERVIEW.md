@@ -383,6 +383,8 @@ Run `py extra/ha_docs_sync.py` to refresh it.
 - **packages/alerts/**
   - [packages/alerts/devices_offline.yaml](packages/alerts/devices_offline.yaml)
   - [packages/alerts/temperature.yaml](packages/alerts/temperature.yaml)
+- **packages/automations/**
+  - [packages/automations/input_select_light_control.yaml](packages/automations/input_select_light_control.yaml)
 - **packages/climate/**
   - [packages/climate/friggebod.yaml](packages/climate/friggebod.yaml)
   - [packages/climate/garage.yaml](packages/climate/garage.yaml)
@@ -410,6 +412,8 @@ Run `py extra/ha_docs_sync.py` to refresh it.
   - [packages/notifications/doorbell.yaml](packages/notifications/doorbell.yaml)
 - **packages/presence/**
   - [packages/presence/home_away.yaml](packages/presence/home_away.yaml)
+- **packages/scripts/**
+  - [packages/scripts/godnatt.yaml](packages/scripts/godnatt.yaml)
 - **packages/sensors/**
   - [packages/sensors/command_line_sensors.yaml](packages/sensors/command_line_sensors.yaml)
 - **packages/ventilation/**

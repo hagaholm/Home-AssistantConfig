@@ -14,8 +14,9 @@
 
 template:
   - sensor:
-      - name: "Aktuell aktivitet"
-        state: "{{ state_attr('remote.harmony_hub', 'current_activity') }}"
+      - name: "Harmony current"
+        unique_id: harmony_current
+        state: "{{ state_attr('remote.harmony_hub', 'current_activity') | default('unknown', true) }}"
       - name: "Yamaha volym"
         state: >-
           {% if state_attr('media_player.yamaha_receiver', 'volume_level') == None %}

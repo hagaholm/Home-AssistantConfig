@@ -548,15 +548,19 @@ views:
           state_color: true
       - type: entities
         entities:
+          - switch.tradgard
+          - switch.stickpropp_8 # Trädäck uterum
           - switch.friggebod_fonster
           - light.friggebod_ute_2
+        title: Trädgård
+        show_header_toggle: true
+        state_color: true
+      - type: entities
+        entities:
           - light.spabad_v
           - light.spabad_m
           - light.spabad_h
-#          - light.tradack_ute
-          - switch.tradgard
-          - switch.stickpropp_8 # Trädäck uterum
-        title: Utebelysning
+        title: Spabad
         show_header_toggle: true
         state_color: true
       - type: entities

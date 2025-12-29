@@ -143,7 +143,8 @@ Lighting is further grouped into separate files by area/topic (examples):
 - `packages/lights/kitchen.yaml`
 - `packages/lights/bathroom.yaml`
 - `packages/lights/hall.yaml`
-- `packages/lights/exterior.yaml`
+- `packages/lights/facade.yaml`
+- `packages/lights/spabad.yaml`
 - `packages/lights/garden.yaml`
 - `packages/lights/outdoor_room.yaml`
 
@@ -398,7 +399,7 @@ Run `py extra/ha_docs_sync.py` to refresh it.
   - [packages/integrations/tts.yaml](packages/integrations/tts.yaml)
 - **packages/lights/**
   - [packages/lights/bathroom.yaml](packages/lights/bathroom.yaml)
-  - [packages/lights/exterior.yaml](packages/lights/exterior.yaml)
+  - [packages/lights/facade.yaml](packages/lights/facade.yaml)
   - [packages/lights/garden.yaml](packages/lights/garden.yaml)
   - [packages/lights/hall.yaml](packages/lights/hall.yaml)
   - [packages/lights/inside.yaml](packages/lights/inside.yaml)
@@ -408,6 +409,7 @@ Run `py extra/ha_docs_sync.py` to refresh it.
   - [packages/lights/light_groups_standard.yaml](packages/lights/light_groups_standard.yaml)
   - [packages/lights/outdoor_room.yaml](packages/lights/outdoor_room.yaml)
   - [packages/lights/scenes.yaml](packages/lights/scenes.yaml)
+  - [packages/lights/spabad.yaml](packages/lights/spabad.yaml)
 - **packages/notifications/**
   - [packages/notifications/doorbell.yaml](packages/notifications/doorbell.yaml)
 - **packages/presence/**

@@ -18,6 +18,8 @@
 # - Ljussensor: sensor.ljusstyrka
 # - Trädgårdsswitch: switch.tradgard
 # - Trädäck: switch.stickpropp_8
+# - Friggebod fönster: switch.friggebod_fonster
+# - Friggebod ute: light.friggebod_ute_2
 # - Hemstatus: input_select.home_status
 # - Hemspårning: group.track_for_home_devices
 # - Innebelysning: light.kok_lilla_fonstret
@@ -39,7 +41,7 @@
 #######################
 input_select:
   light_garden: 
-    name: Trädgårdsbelysning
+    name: Trädgård
     # Garden/patio lighting simple on/off
     # Controls deck lights and ground-level garden accent lights
     # Updated by: Outdoor activity sensors
@@ -115,9 +117,20 @@ automation:
               - condition: state
                 entity_id: input_select.home_status
                 state: 'Sover'
-              - condition: state
-                entity_id: switch.tradgard
-                state: 'on'
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity_id: switch.tradgard
+                    state: 'on'
+                  - condition: state
+                    entity_id: switch.stickpropp_8
+                    state: 'on'
+                  - condition: state
+                    entity_id: switch.friggebod_fonster
+                    state: 'on'
+                  - condition: state
+                    entity_id: light.friggebod_ute_2
+                    state: 'on'
             sequence:
               - service: input_select.select_option
                 data:
@@ -190,9 +203,20 @@ automation:
               - condition: numeric_state
                 entity_id: sensor.ljusstyrka
                 above: input_number.ljusstyrka_60
-              - condition: state
-                entity_id: switch.tradgard
-                state: 'on'
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity_id: switch.tradgard
+                    state: 'on'
+                  - condition: state
+                    entity_id: switch.stickpropp_8
+                    state: 'on'
+                  - condition: state
+                    entity_id: switch.friggebod_fonster
+                    state: 'on'
+                  - condition: state
+                    entity_id: light.friggebod_ute_2
+                    state: 'on'
             sequence:
               - service: input_select.select_option
                 data:
@@ -206,9 +230,20 @@ automation:
               - condition: state
                 entity_id: group.track_for_home_devices
                 state: 'home'
-              - condition: state
-                entity_id: switch.tradgard
-                state: 'on'
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity_id: switch.tradgard
+                    state: 'on'
+                  - condition: state
+                    entity_id: switch.stickpropp_8
+                    state: 'on'
+                  - condition: state
+                    entity_id: switch.friggebod_fonster
+                    state: 'on'
+                  - condition: state
+                    entity_id: light.friggebod_ute_2
+                    state: 'on'
             sequence:
               - service: input_select.select_option
                 data:
@@ -305,6 +340,8 @@ script:
 # HÅRDVARA:
 # - switch.tradgard
 # - switch.stickpropp_8 (Trädäck uterum)
+# - switch.friggebod_fonster
+# - light.friggebod_ute_2
 #
 # SÄKERHET:
 # - Mode: restart – förhindrar kö-race vid snabba anrop
@@ -326,6 +363,16 @@ script:
         value_template: "{{ states('switch.stickpropp_8') != 'unavailable' }}"
       - service: switch.turn_on
         entity_id: switch.stickpropp_8
+      - condition: template
+        value_template: "{{ states('switch.friggebod_fonster') != 'unavailable' }}"
+      - service: switch.turn_on
+        entity_id: switch.friggebod_fonster
+      - condition: template
+        value_template: "{{ states('light.friggebod_ute_2') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.friggebod_ute_2
+          transition: 2
  
   ###############################
   ### Trädgårdsbelysning off ###
@@ -342,3 +389,25 @@ script:
         value_template: "{{ states('switch.stickpropp_8') != 'unavailable' }}"
       - service: switch.turn_off
         entity_id: switch.stickpropp_8
+      - condition: template
+        value_template: "{{ states('switch.friggebod_fonster') != 'unavailable' }}"
+      - service: switch.turn_off
+        entity_id: switch.friggebod_fonster
+      - condition: template
+        value_template: "{{ states('light.friggebod_ute_2') != 'unavailable' }}"
+      - service: light.turn_off
+        data:
+          entity_id: light.friggebod_ute_2
+          transition: 2
+
+  ##############################
+  ### Friggebod belysning on ###
+  ##############################
+  friggebod_light_on:
+    alias: Friggebod belysning on
+    mode: restart
+    sequence:
+      - condition: template
+        value_template: "{{ states('switch.friggebod_fonster') != 'unavailable' }}"
+      - service: switch.turn_on
+        entity_id: switch.friggebod_fonster

@@ -3,9 +3,17 @@
 #      GLOBAL AUTOMATIONS                          #
 #                                                  #
 ####################################################
-# Automations som inte passar in i en specifik
-# light package. Hanterar globala state changes
-# som påverkar flera system.
+# METADATA:
+# Skapad: 2025-12-28
+# Senast ändrad: 2025-12-29
+# Version: 1.1
+#
+# BESKRIVNING:
+# Automations som inte passar in i en specifik light-package.
+# Hanterar globala state changes som påverkar flera system.
+#
+# Källor:
+# - packages/scripts/godnatt.yaml
 #
 # Design:
 # - Scripten (godnatt, scener) ändrar endast
@@ -23,7 +31,7 @@ automation:
   # CLEANUP ON SLEEP MODE
   ########################################
 
-  - alias: Media och värmekällor av vid Sover
+  - alias: Media av vid Sover
     id: 'media_off_on_sleep'
     mode: single
     trigger:

@@ -1,0 +1,429 @@
+####################################################
+#                                                  #
+#          FASADBELYSNING PACKAGE                  #
+#                                                  #
+####################################################
+# METADATA:
+# Skapad: 2025-12-29
+# Senast ändrad: 2025-12-29
+# Version: 1.0
+#
+# BESKRIVNING:
+# Samlar all logik för fasadbelysning i ett paket:
+# - input_select.facade_lights (Släckt/Tänd/Natt/Max)
+# - automationer för lux, hemstatus och persondetektering
+# - scripts för faktisk ljuskontroll
+#
+# Källor:
+# - Tidigare: packages/lights/exterior.yaml
+####################################################
+
+#######################
+### Input Select(s) ###
+#######################
+input_select:
+  facade_lights: 
+    name: Fasadbelysning
+    # Facade and exterior accent lighting control
+    # Four modes: Off, On, Night mode (dimmed), Maximum (full brightness)
+    # Used by: Exterior lighting automation and evening/night scenes
+    options:
+      - Släckt
+      - Tänd
+      - Natt
+      - Max
+    icon: mdi:lightbulb
+
+##################
+### Automation ###
+##################
+automation:
+
+####################################################
+#                                                  #
+#            FACADE LIGHT AUTOMATIONS              #
+#                                                  #
+####################################################
+#
+# Manages exterior facade lighting based on:
+# - Ambient light levels (lux sensors)
+# - Home occupancy status
+# - Person detection from cameras
+#
+# Light States:
+# - Släckt: Off (lux > 60)
+# - Tänd: On (lux < 40, home active)
+# - Natt: Night mode (home away)
+# - Max: Maximum brightness (person detected)
+#
+# Related Entities:
+# - sensor.ljusstyrka
+# - input_select.facade_lights
+# - input_select.home_status
+# - binary_sensor.cam3/7/8_person_occupancy
+# - script.fasadbelysning_*
+####################################################
+
+  ####################################################
+  #         LIGHT OFF WHEN BRIGHT OUTSIDE            #
+  ####################################################
+  - alias: Facade Light Off When Bright Outside
+    id: '6820471947302'
+    mode: single
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      above: input_number.ljusstyrka_60
+      for: "00:02:00"
+    condition:
+      condition: not
+      conditions:
+        - condition: state
+          entity_id: input_select.facade_lights
+          state: 'Släckt'
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.facade_lights
+          option: Släckt
+
+  ####################################################
+  #          LIGHT ON WHEN DARK OUTSIDE              #
+  ####################################################
+  - alias: Facade Light On When Dark Outside
+    id: '6820471947303'
+    mode: single
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      below: input_number.ljusstyrka_40
+      for: "00:02:00"
+    condition:
+      condition: not
+      conditions:
+        - condition: state
+          entity_id: input_select.facade_lights
+          state: 'Tänd'
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.facade_lights
+          option: Tänd
+
+  ####################################################
+  #              NIGHT MODE ACTIVATION               #
+  ####################################################
+  - alias: Facade Light Night Mode
+    id: '6820471947304'
+    mode: single
+    trigger:
+      platform: state
+      entity_id: input_select.home_status
+      to: "Sover"
+    condition:
+      condition: and
+      conditions:
+        - condition: not
+          conditions:
+            - condition: state
+              entity_id: input_select.facade_lights
+              state: 'Natt'
+        - condition: numeric_state
+          entity_id: sensor.ljusstyrka
+          below: input_number.ljusstyrka_60
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.facade_lights
+          option: Natt
+
+  ####################################################
+  #         MAX LIGHT WHEN PERSON DETECTED           #
+  ####################################################
+  - alias: Facade Light Max When Person Detected
+    id: '6820471947305'
+    mode: single
+    trigger:
+      platform: state
+      entity_id:
+        - binary_sensor.cam3_person_occupancy
+        - binary_sensor.cam7_person_occupancy
+        - binary_sensor.cam8_person_occupancy
+      to: 'on'
+    condition:
+      condition: and
+      conditions:
+        - condition: or
+          conditions:
+            - condition: state
+              entity_id: input_select.facade_lights
+              state: 'Tänd'
+            - condition: state
+              entity_id: input_select.facade_lights
+              state: 'Natt'
+        - condition: not
+          conditions:
+            - condition: state
+              entity_id: input_select.facade_lights
+              state: 'Max'
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.facade_lights
+          option: Max
+
+  ####################################################
+  #       RETURN TO NORMAL AFTER PERSON LEAVES       #
+  ####################################################
+  - alias: Facade Light On When No Person Detected
+    id: '6820471947306'
+    mode: restart
+    trigger:
+      platform: state
+      entity_id:
+        - binary_sensor.cam3_person_occupancy
+        - binary_sensor.cam7_person_occupancy
+        - binary_sensor.cam8_person_occupancy
+      to: 'off'
+      for: "00:00:30"
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_select.facade_lights
+          state: 'Max'
+        - condition: state
+          entity_id: binary_sensor.cam3_person_occupancy
+          state: 'off'
+        - condition: state
+          entity_id: binary_sensor.cam7_person_occupancy
+          state: 'off'
+        - condition: state
+          entity_id: binary_sensor.cam8_person_occupancy
+          state: 'off'
+    action:
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: input_select.home_status
+                state: "Sover"
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.facade_lights
+                  option: Natt
+        default:
+          - service: input_select.select_option
+            data:
+              entity_id: input_select.facade_lights
+              option: Tänd
+
+  ####################################################
+  #         EXIT NIGHT MODE WHEN HOME ACTIVE         #
+  ####################################################
+  - alias: Facade Light from Night to On
+    id: '6820471947307'
+    mode: single
+    trigger:
+      platform: state
+      entity_id: input_select.home_status
+      to: "Hemma"
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_select.facade_lights
+          state: 'Natt'
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.facade_lights
+          option: Tänd
+
+  ####################################################
+  #          EXECUTE SCRIPT ON STATE CHANGE          #
+  ####################################################
+  - alias: Facade Light changed
+    id: '6820471947308'
+    mode: single
+    trigger:
+      platform: state
+      entity_id: input_select.facade_lights
+    action:
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: input_select.facade_lights
+                state: "Släckt"
+            sequence:
+              - service: script.fasadbelysning_off
+          - conditions:
+              - condition: state
+                entity_id: input_select.facade_lights
+                state: "Tänd"
+            sequence:
+              - service: script.fasadbelysning_on
+          - conditions:
+              - condition: state
+                entity_id: input_select.facade_lights
+                state: "Natt"
+            sequence:
+              - service: script.fasadbelysning_night
+          - conditions:
+              - condition: state
+                entity_id: input_select.facade_lights
+                state: "Max"
+            sequence:
+              - service: script.fasadbelysning_max
+
+##############
+### Script ###
+##############
+script:
+#######################################################
+#                                                     #
+#             FASADBELYSNING SCRIPTS                  #
+#                                                     #
+#######################################################
+#
+# BESKRIVNING:
+# Scenarier för fasadbelysning (på, av, natt, max).
+#
+# HÅRDVARA:
+# - light.friggebod_fasad
+# - light.forrad_fasad
+# - light.tvattstugan_fasad
+# - light.huvudentre2
+#
+# SÄKERHET:
+# - Mode: restart – förhindrar överlapp
+# - Tillgänglighetskontroller per armatur
+# - Mjuka övergångar (1s)
+#######################################################
+
+  fasadbelysning_off:
+    alias: Fasadbelysning släckt
+    mode: restart
+    sequence:
+      - condition: template
+        value_template: "{{ states('light.friggebod_fasad') != 'unavailable' }}"
+      - service: light.turn_off
+        data:
+          entity_id: light.friggebod_fasad
+          transition: 1
+      - condition: template
+        value_template: "{{ states('light.forrad_fasad') != 'unavailable' }}"
+      - service: light.turn_off
+        data:
+          entity_id: light.forrad_fasad
+          transition: 1
+      - condition: template
+        value_template: "{{ states('light.tvattstugan_fasad') != 'unavailable' }}"
+      - service: light.turn_off
+        data:
+          entity_id: light.tvattstugan_fasad
+          transition: 1
+      - condition: template
+        value_template: "{{ states('light.huvudentre2') != 'unavailable' }}"
+      - service: light.turn_off
+        data:
+          entity_id: light.huvudentre2
+          transition: 1
+
+  fasadbelysning_on:
+    alias: Fasadbelysning tänd
+    mode: restart
+    sequence:
+      - condition: template
+        value_template: "{{ states('light.friggebod_fasad') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.friggebod_fasad
+          brightness_pct: 50
+          transition: 1
+      - condition: template
+        value_template: "{{ states('light.forrad_fasad') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.forrad_fasad
+          brightness_pct: 50
+          transition: 1
+      - condition: template
+        value_template: "{{ states('light.tvattstugan_fasad') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.tvattstugan_fasad
+          brightness_pct: 75
+          transition: 1
+      - condition: template
+        value_template: "{{ states('light.huvudentre2') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.huvudentre2
+          brightness_pct: 100
+          transition: 1
+
+  fasadbelysning_night:
+    alias: Fasadbelysning natt
+    mode: restart
+    sequence:
+      - condition: template
+        value_template: "{{ states('light.friggebod_fasad') != 'unavailable' }}"
+      - service: light.turn_off
+        data:
+          entity_id: light.friggebod_fasad
+          transition: 1
+      - condition: template
+        value_template: "{{ states('light.forrad_fasad') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.forrad_fasad
+          brightness_pct: 40
+          transition: 1
+      - condition: template
+        value_template: "{{ states('light.tvattstugan_fasad') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.tvattstugan_fasad
+          brightness_pct: 60
+          transition: 1
+      - condition: template
+        value_template: "{{ states('light.huvudentre2') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.huvudentre2
+          brightness_pct: 50
+          transition: 1
+
+  fasadbelysning_max:
+    alias: Fasadbelysning max
+    mode: restart
+    sequence:
+      - condition: template
+        value_template: "{{ states('light.friggebod_fasad') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.friggebod_fasad
+          brightness_pct: 100
+          transition: 1
+      - condition: template
+        value_template: "{{ states('light.forrad_fasad') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.forrad_fasad
+          brightness_pct: 100
+          transition: 1
+      - condition: template
+        value_template: "{{ states('light.tvattstugan_fasad') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.tvattstugan_fasad
+          brightness_pct: 100
+          transition: 1
+      - condition: template
+        value_template: "{{ states('light.huvudentre2') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.huvudentre2
+          brightness_pct: 100
+          transition: 1

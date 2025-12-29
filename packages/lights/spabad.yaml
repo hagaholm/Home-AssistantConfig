@@ -1,0 +1,230 @@
+####################################################
+#                                                  #
+#               SPABAD PACKAGE                      #
+#                                                  #
+####################################################
+# METADATA:
+# Skapad: 2025-12-29
+# Senast ändrad: 2025-12-29
+# Version: 1.0
+#
+# BESKRIVNING:
+# Samlar all logik för spabad-belysning i ett paket:
+# - input_select.light_outside (Släckt/Tänd) med visningsnamn "Spabad"
+# - automationer för lux/tid/hemstatus
+# - scripts för faktisk ljuskontroll
+#
+# Källor:
+# - Tidigare: packages/lights/exterior.yaml
+####################################################
+
+#######################
+### Input Select(s) ###
+#######################
+input_select:
+  light_outside:
+    name: Spabad
+    # Simple on/off for spa lighting
+    options:
+      - Släckt
+      - Tänd
+    icon: mdi:lightbulb
+
+##################
+### Automation ###
+##################
+automation:
+
+#######################################################
+#                                                     #
+#                 SPABAD AUTOMATION                   #
+#                                                     #
+#######################################################
+
+  ####################################################
+  ### Tänder belysning vid Spabad på eftermiddagen ###
+  ### T: sensor.ljusstyrka < ljusstyrka_5          ###
+  ### C: binary_sensor.workday_tomorrow = off      ###
+  ### C: 12:00:00 - 21:45:00                       ###
+  ### C: light.spabad_v = off                      ###
+  ### C: light.spabad_m = off                      ###
+  ### C: light.spabad_h= off                       ###
+  ### A: script.night_light                        ###
+  ####################################################
+  - alias: Spabelysning on (<ljusstyrka_5)
+    id: '8301399257818'
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ljusstyrka
+      below: input_number.ljusstyrka_5
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: binary_sensor.workday_tomorrow
+          state: 'off'
+        - condition: time
+          after: '12:00:00'
+          before: '21:45:00'
+        - condition: state
+          entity_id: light.spabad_v
+          state: 'off'
+        - condition: state
+          entity_id: light.spabad_m
+          state: 'off'
+        - condition: state
+          entity_id: light.spabad_h
+          state: 'off'
+    action:
+      - service: script.spa_light_on
+
+  ##########################################################
+  ### Släcker utebelysning på kvällen                     ###
+  ### T: 22:00:00                                         ###
+  ### C: styr efter hemma/borta och arbetsdag            ###
+  ### A: service: script.outside_light_off               ###
+  ##########################################################
+  - alias: Utebelysning off (22:00)
+    id: '2732476617933'
+    trigger:
+      platform: time
+      at: '22:00:00'
+    action:
+      - choose:
+          - alias: Borta
+            conditions:
+              - condition: state
+                entity_id: group.track_for_home_devices
+                state: 'not_home'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_outside
+                  option: Släckt
+          - alias: Hemma vardag
+            conditions:
+              - condition: state
+                entity_id: group.track_for_home_devices
+                state: 'home'
+              - condition: state
+                entity_id: binary_sensor.workday_tomorrow
+                state: 'on'
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_outside
+                  option: Släckt
+
+  ##############################################################
+  ### Släcker utebelysning när hemstatus blir Sover          ###
+  ### T: input_select.home_status -> Sover                   ###
+  ##############################################################
+  - alias: Utebelysning off (Sover)
+    id: '5134859503467'
+    trigger:
+      platform: state
+      entity_id: input_select.home_status
+      to: 'Sover'
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_outside
+          option: Släckt
+
+  ####################################################
+  #          EXECUTE SCRIPT ON STATE CHANGE          #
+  ####################################################
+  - alias: Utebelysning changed
+    id: 'light_outside_changed'
+    mode: single
+    trigger:
+      - platform: state
+        entity_id: input_select.light_outside
+    action:
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_outside
+                state: 'Släckt'
+            sequence:
+              - service: script.outside_light_off
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_outside
+                state: 'Tänd'
+            sequence:
+              - service: script.outside_light_on
+
+##############
+### Script ###
+##############
+script:
+#######################################################
+#                                                     #
+#                 SPABAD SCRIPTS                      #
+#                                                     #
+#######################################################
+
+  #######################
+  ### Spabelysning on ###
+  #######################
+  spa_light_on:
+    alias: Spabelysning on
+    mode: restart
+    sequence:
+      - condition: template
+        value_template: "{{ states('light.spabad_v') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.spabad_v
+          brightness_pct: 40
+          transition: 2
+      - condition: template
+        value_template: "{{ states('light.spabad_m') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.spabad_m
+          brightness_pct: 40
+          transition: 2
+      - condition: template
+        value_template: "{{ states('light.spabad_h') != 'unavailable' }}"
+      - service: light.turn_on
+        data:
+          entity_id: light.spabad_h
+          brightness_pct: 40
+          transition: 2
+
+  ########################
+  ### Utebelysning on  ###
+  ########################
+  outside_light_on:
+    alias: Utebelysning on
+    mode: restart
+    sequence:
+      - service: script.spa_light_on
+
+  ########################
+  ### Utebelysning off ###
+  ########################
+  outside_light_off:
+    alias: Utebelysning off
+    mode: restart
+    sequence:
+      - condition: template
+        value_template: "{{ states('light.spabad_v') != 'unavailable' }}"
+      - service: light.turn_off
+        data:
+          entity_id: light.spabad_v
+          transition: 2
+      - condition: template
+        value_template: "{{ states('light.spabad_m') != 'unavailable' }}"
+      - service: light.turn_off
+        data:
+          entity_id: light.spabad_m
+          transition: 2
+      - condition: template
+        value_template: "{{ states('light.spabad_h') != 'unavailable' }}"
+      - service: light.turn_off
+        data:
+          entity_id: light.spabad_h
+          transition: 2

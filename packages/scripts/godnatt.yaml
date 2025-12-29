@@ -3,11 +3,25 @@
 #         GODNATT (GOODNIGHT) SCRIPTS              #
 #                                                  #
 ####################################################
-# Godnatt-rutiner för kvällsläggning
-# 
-# Design: Scripten ställer endast input_select värden.
-# Automations reagerar på dessa ändringar och 
-# hanterar den faktiska ljuskontroll.
+# METADATA:
+# Skapad: 2025-12-28
+# Senast ändrad: 2025-12-29
+# Version: 1.1
+#
+# BESKRIVNING:
+# Godnatt-rutiner för kvällsläggning.
+#
+# Design: Scripten ställer endast input_select-värden.
+# Automations reagerar på dessa ändringar och hanterar
+# den faktiska kontrollen.
+#
+# Källor:
+# - packages/lights/inside.yaml (input_select.light_inside)
+# - packages/lights/kitchen.yaml (input_select.light_kitchen)
+# - packages/lights/garden.yaml (input_select.light_garden)
+# - packages/lights/spabad.yaml (input_select.light_outside)
+# - packages/lights/facade.yaml (input_select.facade_lights)
+# - packages/automations/input_select_light_control.yaml
 #
 # Entiteter som ändras:
 # - input_select.home_status -> Sover

@@ -185,7 +185,7 @@ automation:
     mode: queued
 
     trigger:
-      # Tänd när hemma på
+      # Tänd när HEMMA
       - platform: state
         entity_id: input_select.home_status
         to: 'Hemma'
@@ -1990,7 +1990,7 @@ script:
     alias: Godnatt, släcker allt
     mode: restart
     sequence:
-      # Ställ hemma av
+      # Ställ SOVER
       - service: input_select.select_option
         data:
           entity_id: input_select.home_status
@@ -2029,7 +2029,7 @@ script:
     mode: restart
     sequence:
       - delay: '00:10:00'
-      # Ställ hemma av
+      # Ställ SOVER
       - service: input_select.select_option
         data:
           entity_id: input_select.home_status
@@ -2067,7 +2067,7 @@ script:
     alias: Godnatt, stänger av allt
     mode: restart
     sequence:
-      # Ställ hemma av
+      # Ställ SOVER
       - service: input_select.select_option
         data:
           entity_id: input_select.home_status
@@ -2124,7 +2124,7 @@ script:
     mode: restart
     sequence:
       - delay: '00:10:00'
-      # Ställ hemma av
+      # Ställ SOVER
       - service: input_select.select_option
         data:
           entity_id: input_select.home_status

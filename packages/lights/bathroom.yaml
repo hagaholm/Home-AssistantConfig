@@ -40,11 +40,11 @@ input_select:
     # Bathroom lighting with occupancy-aware modes
     # Four modes: Off, Day (full), Day with presence, Night with presence
     # Used by: Bathroom automation for motion-sensitive lighting
-    options:
-      - Släckt
-      - Dag
-      - Dag närvaro
-      - Natt närvaro
+    options: 
+     - Släckt
+     - Dag
+     - Dag närvaro
+     - Natt närvaro
     icon: mdi:lightbulb
 
 ##################
@@ -120,9 +120,6 @@ automation:
       ljusnivå och hemstatus.
     mode: single
     trigger:
-      # Master innebelysning
-      - platform: state
-        entity_id: input_select.light_inside
       # Hemstatus
       - platform: state
         entity_id: input_select.home_status
@@ -146,18 +143,6 @@ automation:
         above: 150
     action:
       - choose:
-          # --------------------------------------------------
-          # MASTER OFF: INNEBELYSNING SLÄCKT
-          # --------------------------------------------------
-          - conditions:
-              - condition: state
-                entity_id: input_select.light_inside
-                state: 'Släckt'
-            sequence:
-              - service: input_select.select_option
-                data:
-                  entity_id: input_select.light_bathroom
-                  option: Släckt
           # --------------------------------------------------
           # SLÄCK VID BORTA OCH HEMMA AV
           # --------------------------------------------------

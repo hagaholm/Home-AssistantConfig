@@ -172,9 +172,35 @@ template:
           {% set new = [30, [new, 150]|min]|max %}
           {{ new }}
 
+      - name: Ventilation anomaly okänd källa
+        unique_id: ventilation_anomaly_unknown_sources
+        icon: mdi:help-circle-outline
+        state: >-
+          {% set items = [] %}
+          {% set s = states('sensor.fukt_badrumsfonster') %}
+          {% if s in ['unknown','unavailable','None'] %}
+            {% set items = items + ['badrum_fönster_fukt'] %}
+          {% endif %}
+          {% set s = states('sensor.badrum_luftfuktighet') %}
+          {% if s in ['unknown','unavailable','None'] %}
+            {% set items = items + ['badrum_luftfuktighet'] %}
+          {% endif %}
+          {% set s = states('sensor.ute') %}
+          {% if s in ['unknown','unavailable','None'] %}
+            {% set items = items + ['ute_temp'] %}
+          {% endif %}
+
+          {% if items | length == 0 %}
+            ok
+          {% else %}
+            {{ items | join(', ') }}
+          {% endif %}
+
   - binary_sensor:
       - name: Ventilation anomaly sensor okänd
         unique_id: ventilation_anomaly_sensor_unknown
+        delay_on: "00:05:00"
+        delay_off: "00:01:00"
         state: >-
           {% set s1 = states('sensor.fukt_badrumsfonster') %}
           {% set s2 = states('sensor.badrum_luftfuktighet') %}

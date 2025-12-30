@@ -72,13 +72,21 @@ views:
           - entity: sensor.badrum_temperatur
         hours_to_show: 12
       - type: gauge
-        entity: sensor.fukt_badrumsfonster
+        entity: sensor.badrum_luftfuktighet
         severity:
           green: 0
           yellow: 70
           red: 80
         needle: true
         name: Fukt badrum
+      - type: gauge
+        entity: sensor.fukt_badrumsfonster
+        severity:
+          green: 0
+          yellow: 70
+          red: 80
+        needle: true
+        name: Fukt badrum fönster
   - theme: Backend-selected
     title: Inställningar
     path: installningar

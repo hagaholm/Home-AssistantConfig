@@ -124,6 +124,22 @@ views:
           - entity: sensor.ventilation_rekommenderad_stabil_tid
           - entity: sensor.ventilation_rekommenderad_maxtid
           - entity: script.ventilation_tuning_apply_recommended
+      - type: markdown
+        title: Förklaring
+        content: |
+          **Auto-tuning**
+          - **auto-tuning (på)**: aktiverar rådgivaren (förslag skapas vid start och 03:15).
+          - **auto-applicera**: om på, skrivs förslagen direkt till helpers.
+          - **forcerad tid/antal (24h)**: används för att bedöma om systemet forcerar “för ofta”.
+          - **rekommenderad …**: beräknade förslag (små steg inom säkra gränser).
+          - **Applicera…**: kör en engångs-applicering manuellt.
+
+          **Anomaly detection**
+          - Om någon anomaly blir **On** så stängs **auto-applicera** av automatiskt och en notis skapas.
+          - **sensor okänd**: RH/ute-temp saknas (`unknown/unavailable`).
+          - **hysteresis fel**: start ≤ stop (risk för fladder).
+          - **forcerad trots låg RH**: forcerad är på fast RH ligger under stop-tröskeln med marginal.
+          - **fladder**: många korta forceringar (indikerar spikig sensor eller fel trösklar/tider).
       - type: entities
         title: Anomaly detection
         state_color: true

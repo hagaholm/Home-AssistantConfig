@@ -4,13 +4,19 @@ views:
     title: Status
     badges: []
     cards:
-      - type: tile
-        entity: switch.ventilationsaggregat
-      - type: tile
-        entity: switch.shelly1_c45bbe77099d
-        name: Forcerad fläkt
-      - type: tile
-        entity: input_boolean.alarm_ventilation
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: switch.ventilationsaggregat
+            name: Ventilation
+          - type: tile
+            entity: switch.shelly1_c45bbe77099d
+            name: Forcerad fläkt
+          - type: tile
+            entity: input_boolean.alarm_ventilation
+            name: Larm
       - type: entities
         entities:
           - entity: sensor.ftx
@@ -73,6 +79,39 @@ views:
           red: 80
         needle: true
         name: Fukt badrum
+  - theme: Backend-selected
+    title: Inställningar
+    path: installningar
+    badges: []
+    cards:
+      - type: markdown
+        title: Tuning
+        content: |
+          Justera trösklar och timers för forcerad ventilation.
+
+          Tips:
+          - Börja med små ändringar (1–2% eller 5–10 min).
+          - Om forcerad fläkt ofta går i maxtid: sänk maxtid eller höj stop-tröskeln något.
+          - Om den fladdrar: höj stabil tid eller öka hysteresis (skillnad mellan start/stop).
+      - type: tile
+        entity: script.ventilation_tuning_reset_defaults
+        name: Återställ standardvärden
+        icon: mdi:backup-restore
+      - type: entities
+        title: Gränser & timers
+        state_color: true
+        entities:
+          - entity: input_number.ventilation_rh_force_on
+          - entity: input_number.ventilation_rh_force_off
+          - entity: input_number.ventilation_rh_stable_min
+          - entity: input_number.ventilation_rh_stable_max
+          - entity: input_number.ventilation_rh_delta_fast
+          - entity: input_number.ventilation_rh_delta_high
+          - entity: input_number.ventilation_outdoor_temp_min_force
+          - entity: input_number.ventilation_max_runtime_minutes
+          - entity: input_number.ventilation_stable_minutes
+          - entity: input_number.ventilation_house_humidity_diff
+          - entity: input_number.ventilation_sensor_fresh_seconds
   - theme: Backend-selected
     title: Larm
     path: larm

@@ -269,6 +269,8 @@ The idea is to make “raw camera detections” easier to consume by:
 - Creating summary counts (e.g. total persons detected across multiple cameras)
 - Creating summary binary_sensors (e.g. any person active)
 
+Some of these packages also include “reaction” automations (e.g. lighting + notifications) built on top of the summary sensors.
+
 These summary sensors can be used by dashboards, notifications, and other automations.
 
 ---

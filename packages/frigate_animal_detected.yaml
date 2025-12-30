@@ -3,36 +3,44 @@
 #          FRIGATE ANIMAL DETECTION               #
 #                                                  #
 ####################################################
-# Animal detection automation from Frigate NVR
-# AI-powered animal detection for outdoor lighting
-# Documentation: https://docs.frigate.video/
+# Frigate NVR animal detection helpers for the backside (rear yard):
+# lighting, notification, and a reset helper.
 #
-# Purpose:
-# - Automatic backyard lighting when animals detected
-# - Motion-activated deck/patio lighting
-# - Wildlife monitoring and deterrence
+# Primary signals (from packages/frigate_sensors.yaml):
+# - binary_sensor.cams_animal_backside_active  (animal detection summary)
+# - binary_sensor.cams_all_backside_active     (any detection summary)
 #
-# Detection Zones:
-# - Backside cameras: Cam 5, Cam 6 (rear yard)
-# - Triggers: binary_sensor.cams_animal_backside_active
+# Main automations:
+# - Animal Motion Radio Control Backside
+#   - Trigger: cams_animal_backside_active (on/off)
+#   - Turn ON: waits 15s, then turns on deck light if detection persists.
+#     Note: current logic requires low lux (<10) at turn-on time.
+#   - Turn OFF: after 20s with no detection.
 #
-# Automation Logic:
-# 1. Animal detected → Wait 15 seconds (stabilization)
-# 2. Still detected + (night OR low lux) → Turn on deck light
-# 3. No detection → Wait 20 seconds → Turn off deck light
+# - Animal Motion Light Control
+#   - Trigger: cams_animal_backside_active (on/off)
+#   - Turn ON: after 2s delay, turns on floodlights when (night hours OR low lux).
+#   - Turn OFF: after 30s with no detection.
 #
-# Conditions:
-# - Time: 20:00-08:00 (night hours) OR
-# - Lux: < 10 (dark conditions)
-# - Motion persistence: 15s delay prevents false triggers
+# Test automations (using cams_all_backside_active):
+# - Test Motion Light Control (floodlights): on immediately, off after 10s clear.
+# - Test Motion Radio Control Backside (deck light): on immediately, off after 30s clear.
 #
-# Controlled Lights:
-# - light.tradack_ute (deck/patio outdoor light)
+# Notifications:
+# - Animal Detection Notify
+#   - Trigger: cams_animal_backside_active -> on
+#   - Condition: night hours OR home_status is Borta OR low lux
 #
-# Safety Notes:
-# - Mode: restart (allows re-triggering during active motion)
-# - Prevents light flickering with delay timers
-# - Light turns off only if motion cleared for 20 seconds
+# Failsafe:
+# - Turn Off Deck Light After 10 Minutes (failsafe)
+#   - If cams_animal_backside_active stays on for 10 minutes, force deck light off
+#
+# Controlled lights:
+# - light.tradack_ute
+# - light.stralkastare_husgavel
+# - light.kamera5_stralkastare
+# - light.kamera6_stralkastare
+# - light.kamera8_stralkastare
 #
 ####################################################
 
@@ -40,11 +48,15 @@
 # - Frigate NVR (paketfil)
 #
 # BESKRIVNING:
-# Automationer för djur-detektering från Frigate.
+# Automationer för Frigate-detektering (baksidan):
+# - Tänder/släcker belysning (trädäck + strålkastare) vid djurdetektering
+# - Testautomationer kopplade till “all backside active”
+# - Pushnotis vid djurdetektering (med villkor)
+# - Failsafe + reset-script för att nollställa läget
 #
 # METADATA:
 # Skapad: okänt
-# Senast ändrad: 2025-12-28
+# Senast ändrad: 2025-12-30
 # Version: 1.0
 # Författare: Home Assistant Config
 
@@ -164,18 +176,6 @@ automation:
               - service: light.turn_on
                 target:
                   entity_id: light.kamera8_stralkastare
-              - service: light.turn_on
-                data:
-                  entity_id: light.spabad_v
-                  brightness_pct: 100
-              - service: light.turn_on
-                data:
-                  entity_id: light.spabad_m
-                  brightness_pct: 100
-              - service: light.turn_on
-                data:
-                  entity_id: light.spabad_h
-                  brightness_pct: 100
 
           # Turn off light if no motion is detected after 30 seconds
           - conditions:
@@ -203,15 +203,6 @@ automation:
               - service: light.turn_off
                 target:
                   entity_id: light.kamera8_stralkastare
-              - service: light.turn_off
-                target:
-                  entity_id: light.spabad_v
-              - service: light.turn_off
-                target:
-                  entity_id: light.spabad_m
-              - service: light.turn_off
-                target:
-                  entity_id: light.spabad_h
 
   ###################################
   ### Test Motion Light Control ###
@@ -256,18 +247,6 @@ automation:
               - service: light.turn_on
                 target:
                   entity_id: light.kamera8_stralkastare
-              - service: light.turn_on
-                data:
-                  entity_id: light.spabad_v
-                  brightness_pct: 100
-              - service: light.turn_on
-                data:
-                  entity_id: light.spabad_m
-                  brightness_pct: 100
-              - service: light.turn_on
-                data:
-                  entity_id: light.spabad_h
-                  brightness_pct: 100
 
           # Turn off light if no motion is detected after 10 seconds
           - conditions:
@@ -295,15 +274,6 @@ automation:
               - service: light.turn_off
                 target:
                   entity_id: light.kamera8_stralkastare
-              - service: light.turn_off
-                target:
-                  entity_id: light.spabad_v
-              - service: light.turn_off
-                target:
-                  entity_id: light.spabad_m
-              - service: light.turn_off
-                target:
-                  entity_id: light.spabad_h
 
   ##########################################
   ### Test Motion Radio Control Backside ###
@@ -391,50 +361,6 @@ automation:
             - Horse:    {{ states('sensor.cam5_horse_count') | int(0) }} {{ states('sensor.cam6_horse_count') | int(0) }} {{ states('sensor.cam8_horse_count') | int(0) }}
             - Sheep:    {{ states('sensor.cam5_sheep_count') | int(0) }} {{ states('sensor.cam6_sheep_count') | int(0) }} {{ states('sensor.cam8_sheep_count') | int(0) }}
 
-  ####################################
-  ### Blink Light Animal Detcected ###
-  ####################################
-  - alias: Blink Light Animal Detcected
-    id: '81119011512345'
-    mode: single
-
-    trigger:
-      # Triggers for animal detection on backside
-      - platform: state
-        entity_id: 
-          - binary_sensor.cams_animal_backside_active
-        to: 'on'
-
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_select.home_status
-          state: 'Hemma'
-        - condition: numeric_state
-          entity_id: sensor.ljusstyrka
-          below: 10
-
-    action:
-      - variables:
-          blink_delay: '00:00:01'
-
-      - delay: "00:00:30"
-
-      - repeat:
-          while:
-            - condition: numeric_state
-              entity_id: sensor.cams_animal_backside_count
-              above: 0
-          sequence:
-            - service: light.toggle
-              target:
-                entity_id:
-                  - light.sovrum_fonster
-                  - light.hall_byra
-                  - light.vardagsrum_skank
-            - delay: "{{ blink_delay }}"
-
   #######################################
   ### Turn Off Deck Light After 10 Minutes (failsafe) ###
   #######################################
@@ -489,12 +415,6 @@ script:
             - light.kamera5_stralkastare
             - light.kamera6_stralkastare
             - light.kamera8_stralkastare
-            - light.spabad_v
-            - light.spabad_m
-            - light.spabad_h
-            - light.sovrum_fonster
-            - light.hall_byra
-            - light.vardagsrum_skank
 
       # Wait for 30 seconds
       - delay: "00:00:30"

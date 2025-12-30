@@ -404,6 +404,12 @@ views:
         title: Belysningsgrupper
         show_header_toggle: false
         state_color: true
+      - type: button
+        entity: script.inside_set_correct_mode
+        name: Återställ innebelysning (rätt läge)
+        icon: mdi:restore
+        tap_action:
+          action: toggle
       - type: entities
         entities:
           - light.kok_underskap_bank

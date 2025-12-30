@@ -701,6 +701,53 @@ automation:
 ##############
 script:
 
+  inside_set_correct_mode:
+    alias: Återställ innebelysning (sätt korrekt läge)
+    mode: single
+    sequence:
+      - variables:
+          home_status: "{{ states('input_select.home_status') }}"
+          hour: "{{ now().hour }}"
+          is_time_05_09: "{{ 5 <= now().hour < 9 }}"
+          # Crosses midnight: 09:00 -> 05:00
+          is_time_09_05: "{{ now().hour >= 9 or now().hour < 5 }}"
+          is_time_08_22: "{{ 8 <= now().hour < 22 }}"
+
+          morning_on: "{{ is_state('input_boolean.morning_light_on', 'on') }}"
+          daylight_on: "{{ is_state('input_boolean.daylight_on', 'on') }}"
+          awaylight_on: "{{ is_state('input_boolean.awaylight_on', 'on') }}"
+          christmas_on: "{{ is_state('input_boolean.christmas_light', 'on') }}"
+          kitchen_motion: "{{ is_state('binary_sensor.kok_narvaro', 'on') }}"
+
+          # Deterministic priority (only one option wins):
+          # 1) Borta -> Bortabelysning (if active)
+          # 2) Sover -> Nattbelysning (if motion + dark), else Släckt
+          # 3) Hemma -> Morgonbelysning (if morning window), else Dagbelysning (if dark window),
+          #    else Fönsterbelysning (if jul), else Släckt
+          desired_option: >-
+            {% if home_status == 'Borta' and awaylight_on and is_time_08_22 %}
+              Bortabelysning
+            {% elif home_status == 'Sover' %}
+              {% if kitchen_motion and daylight_on %}
+                Nattbelysning
+              {% else %}
+                Släckt
+              {% endif %}
+            {% elif home_status == 'Hemma' and morning_on and is_time_05_09 %}
+              Morgonbelysning
+            {% elif home_status == 'Hemma' and daylight_on and is_time_09_05 %}
+              Dagbelysning
+            {% elif home_status == 'Hemma' and christmas_on and is_time_09_05 %}
+              Fönsterbelysning
+            {% else %}
+              Släckt
+            {% endif %}
+
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_inside
+          option: "{{ desired_option | trim }}"
+
   inside_apply_current_scene:
     alias: Återställ innebelysning (utifrån nuvarande läge)
     mode: restart

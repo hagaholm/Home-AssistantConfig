@@ -110,20 +110,35 @@ views:
         name: Rensa notiser
         icon: mdi:bell-off
       - type: entities
-        title: Auto-tuning
+        title: Auto-tuning (status)
         state_color: true
         entities:
           - entity: input_boolean.ventilation_auto_tuning_enabled
+            name: Auto-tuning (på)
           - entity: input_boolean.ventilation_auto_tuning_auto_apply
+            name: Auto-applicera
           - entity: sensor.ventilation_forcerad_tid_24h
+            name: Forcerad tid (24h)
           - entity: sensor.ventilation_forcerad_antal_24h
+            name: Forcerad antal (24h)
           - entity: sensor.ventilation_fukt_fonster_max_24h
+            name: Max RH fönster (24h)
           - entity: sensor.ventilation_rh_forcerad_medel_24h
+            name: RH medel (forcerad, 24h)
+      - type: entities
+        title: Auto-tuning (rekommendationer)
+        state_color: true
+        entities:
           - entity: sensor.ventilation_rekommenderad_rh_start
+            name: RH start (rekomm)
           - entity: sensor.ventilation_rekommenderad_rh_stop
+            name: RH stop (rekomm)
           - entity: sensor.ventilation_rekommenderad_stabil_tid
+            name: Stabil tid (rekomm)
           - entity: sensor.ventilation_rekommenderad_maxtid
+            name: Maxtid (rekomm)
           - entity: script.ventilation_tuning_apply_recommended
+            name: Applicera rekomm.
       - type: markdown
         title: Förklaring
         content: |
@@ -145,24 +160,39 @@ views:
         state_color: true
         entities:
           - entity: binary_sensor.ventilation_anomaly_sensor_okand
+            name: Sensor okänd
           - entity: binary_sensor.ventilation_anomaly_hysteresis_fel
+            name: Hysteresis fel
           - entity: binary_sensor.ventilation_anomaly_forcerad_trots_lag_rh
+            name: Forcerad trots låg RH
           - entity: binary_sensor.ventilation_anomaly_fladder
+            name: Fladder
       - type: entities
         title: Gränser & timers
         state_color: true
         entities:
           - entity: input_number.ventilation_rh_force_on
+            name: RH start
           - entity: input_number.ventilation_rh_force_off
+            name: RH stop
           - entity: input_number.ventilation_rh_stable_min
+            name: Stabil RH min
           - entity: input_number.ventilation_rh_stable_max
+            name: Stabil RH max
           - entity: input_number.ventilation_rh_delta_fast
+            name: ΔRH snabb
           - entity: input_number.ventilation_rh_delta_high
+            name: ΔRH
           - entity: input_number.ventilation_outdoor_temp_min_force
+            name: Min ute-temp
           - entity: input_number.ventilation_max_runtime_minutes
+            name: Maxtid
           - entity: input_number.ventilation_stable_minutes
+            name: Stabil tid
           - entity: input_number.ventilation_house_humidity_diff
+            name: Diff badrum/v-rum
           - entity: input_number.ventilation_sensor_fresh_seconds
+            name: Sensor-färskhet
   - theme: Backend-selected
     title: Larm
     path: larm

@@ -380,21 +380,20 @@ automation:
 
   - alias: Ventilation anomaly detection
     id: 'ventilation_auto_tuning_anomaly'
+    mode: single
     trigger:
-      - platform: time_pattern
-        minutes: "/10"
-      - platform: homeassistant
-        event: start
       - platform: state
         entity_id:
-          - switch.shelly1_c45bbe77099d
-          - sensor.fukt_badrumsfonster
-          - sensor.badrum_luftfuktighet
-          - sensor.ute
-          - input_number.ventilation_rh_force_on
-          - input_number.ventilation_rh_force_off
-          - input_number.ventilation_stable_minutes
-          - input_number.ventilation_max_runtime_minutes
+          - binary_sensor.ventilation_anomaly_sensor_okand
+          - binary_sensor.ventilation_anomaly_hysteresis_fel
+          - binary_sensor.ventilation_anomaly_forcerad_trots_lag_rh
+          - binary_sensor.ventilation_anomaly_fladder
+        to: 'on'
+
+      # Om auto-applicera slås på medan en anomaly är aktiv: stäng av direkt.
+      - platform: state
+        entity_id: input_boolean.ventilation_auto_tuning_auto_apply
+        to: 'on'
 
     condition:
       - condition: state

@@ -378,6 +378,7 @@ Run `py extra/ha_docs_sync.py` to refresh it.
 - [packages/template_xiaomi_lumi_mgl01_louise_room_is_not_working.yaml](packages/template_xiaomi_lumi_mgl01_louise_room_is_not_working.yaml)
 - [packages/tests.yaml](packages/tests.yaml)
 - [packages/ventilation_system.yaml](packages/ventilation_system.yaml)
+- [packages/ventilation_tuning.yaml](packages/ventilation_tuning.yaml)
 - [packages/volvo.yaml](packages/volvo.yaml)
 - [packages/working_at_home.yaml](packages/working_at_home.yaml)
 - [packages/zwift.yaml](packages/zwift.yaml)

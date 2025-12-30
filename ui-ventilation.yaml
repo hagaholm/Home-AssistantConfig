@@ -106,6 +106,21 @@ views:
         name: Återställ standardvärden
         icon: mdi:backup-restore
       - type: entities
+        title: Auto-tuning
+        state_color: true
+        entities:
+          - entity: input_boolean.ventilation_auto_tuning_enabled
+          - entity: input_boolean.ventilation_auto_tuning_auto_apply
+          - entity: sensor.ventilation_forcerad_tid_24h
+          - entity: sensor.ventilation_forcerad_antal_24h
+          - entity: sensor.ventilation_fukt_fonster_max_24h
+          - entity: sensor.ventilation_rh_forcerad_medel_24h
+          - entity: sensor.ventilation_rekommenderad_rh_start
+          - entity: sensor.ventilation_rekommenderad_rh_stop
+          - entity: sensor.ventilation_rekommenderad_stabil_tid
+          - entity: sensor.ventilation_rekommenderad_maxtid
+          - entity: script.ventilation_tuning_apply_recommended
+      - type: entities
         title: Gränser & timers
         state_color: true
         entities:

@@ -240,11 +240,6 @@ views:
                 action: toggle
               entity: light.kok_jul
               name: Kök
-      - type: button
-        entity: input_boolean.tv_light_mode
-        name: TV-ljusläge
-        tap_action:
-          action: toggle
       - entity: input_select.light_inside
         type: entity
         state_color: true

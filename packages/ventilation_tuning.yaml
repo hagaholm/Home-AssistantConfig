@@ -34,6 +34,36 @@ input_boolean:
     name: Ventilation auto-tuning (auto-applicera)
     initial: off
 
+####################
+### Input Number ###
+####################
+input_number:
+  ventilation_anomaly_flap_count_threshold:
+    name: Ventilation anomaly fladder (antal/24h)
+    min: 5
+    max: 100
+    step: 1
+    mode: box
+    initial: 20
+
+  ventilation_anomaly_flap_avg_minutes_threshold:
+    name: Ventilation anomaly fladder (min medel)
+    min: 1
+    max: 30
+    step: 1
+    unit_of_measurement: 'min'
+    mode: box
+    initial: 5
+
+  ventilation_anomaly_low_rh_margin:
+    name: Ventilation anomaly låg RH-marginal
+    min: 0
+    max: 10
+    step: 1
+    unit_of_measurement: '%'
+    mode: box
+    initial: 2
+
 ################
 ### Template ###
 ################
@@ -142,6 +172,43 @@ template:
           {% set new = [30, [new, 150]|min]|max %}
           {{ new }}
 
+  - binary_sensor:
+      - name: Ventilation anomaly sensor okänd
+        unique_id: ventilation_anomaly_sensor_unknown
+        state: >-
+          {% set s1 = states('sensor.fukt_badrumsfonster') %}
+          {% set s2 = states('sensor.badrum_luftfuktighet') %}
+          {% set s3 = states('sensor.ute') %}
+          {{ s1 in ['unknown','unavailable','None']
+             or s2 in ['unknown','unavailable','None']
+             or s3 in ['unknown','unavailable','None'] }}
+
+      - name: Ventilation anomaly hysteresis fel
+        unique_id: ventilation_anomaly_bad_hysteresis
+        state: >-
+          {% set on = states('input_number.ventilation_rh_force_on')|float(70) %}
+          {% set off = states('input_number.ventilation_rh_force_off')|float(69) %}
+          {{ on <= off }}
+
+      - name: Ventilation anomaly forcerad trots låg RH
+        unique_id: ventilation_anomaly_forced_but_low_rh
+        state: >-
+          {% set forced = is_state('switch.shelly1_c45bbe77099d','on') %}
+          {% set rh = states('sensor.fukt_badrumsfonster')|float(none) %}
+          {% set off = states('input_number.ventilation_rh_force_off')|float(69) %}
+          {% set margin = states('input_number.ventilation_anomaly_low_rh_margin')|float(2) %}
+          {{ forced and rh is not none and rh < (off - margin) }}
+
+      - name: Ventilation anomaly fladder
+        unique_id: ventilation_anomaly_flapping
+        state: >-
+          {% set runtime_h = states('sensor.ventilation_forcerad_tid_24h')|float(0) %}
+          {% set count = states('sensor.ventilation_forcerad_antal_24h')|int(0) %}
+          {% set avg = ((runtime_h * 60) / count) if count > 0 else 0 %}
+          {% set count_t = states('input_number.ventilation_anomaly_flap_count_threshold')|int(20) %}
+          {% set avg_t = states('input_number.ventilation_anomaly_flap_avg_minutes_threshold')|int(5) %}
+          {{ count >= count_t and avg < avg_t }}
+
 ##############
 ### Sensor ###
 ##############
@@ -219,6 +286,16 @@ script:
           entity_id: input_number.ventilation_max_runtime_minutes
         data:
           value: "{{ rec_max }}"
+
+  ventilation_tuning_dismiss_notifications:
+    alias: Rensa ventilation-notiser
+    sequence:
+      - service: persistent_notification.dismiss
+        data:
+          notification_id: ventilation_auto_tuning
+      - service: persistent_notification.dismiss
+        data:
+          notification_id: ventilation_auto_tuning_anomaly
 
 ##############
 ### Automation ###
@@ -300,3 +377,73 @@ automation:
                 Forcerad tid 24h: {{ runtime_h|round(2) }} h
                 Forcerad antal 24h: {{ forced_count }}
                 Max fukt fönster 24h: {{ rh_max|round(0) if rh_max is not none else 'unknown' }} %
+
+  - alias: Ventilation anomaly detection
+    id: 'ventilation_auto_tuning_anomaly'
+    trigger:
+      - platform: time_pattern
+        minutes: "/10"
+      - platform: homeassistant
+        event: start
+      - platform: state
+        entity_id:
+          - switch.shelly1_c45bbe77099d
+          - sensor.fukt_badrumsfonster
+          - sensor.badrum_luftfuktighet
+          - sensor.ute
+          - input_number.ventilation_rh_force_on
+          - input_number.ventilation_rh_force_off
+          - input_number.ventilation_stable_minutes
+          - input_number.ventilation_max_runtime_minutes
+
+    condition:
+      - condition: state
+        entity_id: input_boolean.ventilation_auto_tuning_enabled
+        state: 'on'
+
+    action:
+      - variables:
+          severe_unknown: "{{ is_state('binary_sensor.ventilation_anomaly_sensor_okand','on') }}"
+          severe_hyst: "{{ is_state('binary_sensor.ventilation_anomaly_hysteresis_fel','on') }}"
+          severe_low_rh: "{{ is_state('binary_sensor.ventilation_anomaly_forcerad_trots_lag_rh','on') }}"
+          severe_flap: "{{ is_state('binary_sensor.ventilation_anomaly_fladder','on') }}"
+          auto_apply: "{{ is_state('input_boolean.ventilation_auto_tuning_auto_apply','on') }}"
+          rh: "{{ states('sensor.fukt_badrumsfonster') }}"
+          forced: "{{ states('switch.shelly1_c45bbe77099d') }}"
+          ute: "{{ states('sensor.ute') }}"
+
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: "{{ severe_unknown or severe_hyst or severe_low_rh or severe_flap }}"
+            sequence:
+              - choose:
+                  - conditions:
+                      - condition: template
+                        value_template: "{{ auto_apply }}"
+                    sequence:
+                      - service: input_boolean.turn_off
+                        target:
+                          entity_id: input_boolean.ventilation_auto_tuning_auto_apply
+
+              - service: persistent_notification.create
+                data:
+                  notification_id: ventilation_auto_tuning_anomaly
+                  title: Ventilation auto-tuning (anomaly)
+                  message: >-
+                    Auto-tuning upptäckte något oväntat och har (vid behov) stängt av auto-applicering.
+
+                    Status:
+                    - Forcerad: {{ forced }}
+                    - RH fönster: {{ rh }}
+                    - Ute: {{ ute }}
+
+                    Flaggar:
+                    - Sensor okänd/otillgänglig: {{ severe_unknown }}
+                    - Hysteresis fel (start <= stop): {{ severe_hyst }}
+                    - Forcerad trots låg RH: {{ severe_low_rh }}
+                    - Fladder: {{ severe_flap }}
+
+                    Åtgärd:
+                    - Kontrollera sensorer och värden under Ventilation → Inställningar.
+                    - När det är stabilt igen: slå på auto-applicera manuellt.

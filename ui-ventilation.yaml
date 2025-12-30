@@ -105,6 +105,10 @@ views:
         entity: script.ventilation_tuning_reset_defaults
         name: Återställ standardvärden
         icon: mdi:backup-restore
+      - type: tile
+        entity: script.ventilation_tuning_dismiss_notifications
+        name: Rensa notiser
+        icon: mdi:bell-off
       - type: entities
         title: Auto-tuning
         state_color: true
@@ -120,6 +124,14 @@ views:
           - entity: sensor.ventilation_rekommenderad_stabil_tid
           - entity: sensor.ventilation_rekommenderad_maxtid
           - entity: script.ventilation_tuning_apply_recommended
+      - type: entities
+        title: Anomaly detection
+        state_color: true
+        entities:
+          - entity: binary_sensor.ventilation_anomaly_sensor_okand
+          - entity: binary_sensor.ventilation_anomaly_hysteresis_fel
+          - entity: binary_sensor.ventilation_anomaly_forcerad_trots_lag_rh
+          - entity: binary_sensor.ventilation_anomaly_fladder
       - type: entities
         title: Gränser & timers
         state_color: true

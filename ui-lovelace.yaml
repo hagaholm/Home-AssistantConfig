@@ -13,7 +13,6 @@ views:
               entity: person.micke
               state_content:
                 - state
-
           - type: conditional
             conditions:
               - entity: person.annelie
@@ -23,7 +22,6 @@ views:
               entity: person.annelie
               state_content:
                 - state
-
           - type: conditional
             conditions:
               - entity: person.louise
@@ -33,7 +31,6 @@ views:
               entity: person.louise
               state_content:
                 - state
-
           - type: conditional
             conditions:
               - entity: person.andreas
@@ -43,7 +40,6 @@ views:
               entity: person.andreas
               state_content:
                 - state
-
           - type: conditional
             conditions:
               - entity: person.herbert
@@ -53,7 +49,6 @@ views:
               entity: person.herbert
               state_content:
                 - state
-
           - type: conditional
             conditions:
               - entity: person.margareta
@@ -63,7 +58,6 @@ views:
               entity: person.margareta
               state_content:
                 - state
-
           - type: conditional
             conditions:
               - entity: person.erik
@@ -73,7 +67,6 @@ views:
               entity: person.erik
               state_content:
                 - state
-
           - type: conditional
             conditions:
               - entity: input_select.home_status
@@ -84,7 +77,6 @@ views:
               name: Hemstatus
               state_content:
                 - state
-
       - cards:
           - entity: sensor.ute
             graph: line
@@ -98,30 +90,6 @@ views:
             graph: line
             name: Uterum
             type: sensor
-        type: horizontal-stack
-      - cards:
-          - entity: script.button_daylight
-            icon: 'mdi:lightbulb'
-            name: Tänd allt
-            tap_action:
-              action: toggle
-            type: button
-          - entity: script.cleaning_lights_on
-            icon: 'mdi:lightbulb'
-            name: Städdags
-            show_icon: true
-            show_name: true
-            tap_action:
-              action: toggle
-            type: button
-          - entity: script.button_goodnight
-            hold_action:
-              action: none
-            icon: 'mdi:sleep'
-            name: Godnatt
-            tap_action:
-              action: toggle
-            type: button
         type: horizontal-stack
       - cards:
           - type: button
@@ -161,6 +129,30 @@ views:
         type: grid
         columns: 4
         square: false
+      - cards:
+          - entity: script.button_daylight
+            icon: 'mdi:lightbulb'
+            name: Tänd allt
+            tap_action:
+              action: toggle
+            type: button
+          - entity: script.cleaning_lights_on
+            icon: 'mdi:lightbulb'
+            name: Städdags
+            show_icon: true
+            show_name: true
+            tap_action:
+              action: toggle
+            type: button
+          - entity: script.button_goodnight
+            hold_action:
+              action: none
+            icon: 'mdi:sleep'
+            name: Godnatt
+            tap_action:
+              action: toggle
+            type: button
+        type: horizontal-stack
       - type: conditional
         conditions:
           - entity: input_boolean.christmas_light
@@ -1409,7 +1401,6 @@ views:
             icon: mdi:leaf
             tap_action:
               action: toggle
-
       - type: entities
         title: Quick controls
         show_header_toggle: false

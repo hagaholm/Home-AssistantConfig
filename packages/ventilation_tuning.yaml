@@ -232,7 +232,7 @@ sensor:
   - platform: statistics
     name: Ventilation fukt fönster max (24h)
     entity_id: sensor.fukt_badrumsfonster
-    state_characteristic: max_value
+    state_characteristic: value_max
     max_age:
       hours: 24
 

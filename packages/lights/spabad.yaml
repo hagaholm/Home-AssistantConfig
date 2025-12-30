@@ -11,7 +11,8 @@
 # BESKRIVNING:
 # Samlar all logik för spabad-belysning i ett paket:
 # - input_select.light_outside (Släckt/Tänd) med visningsnamn "Spabad"
-# - automationer för lux/tid/hemstatus
+# - resolver som synkar input_select via script.spabad_set_correct_mode
+# - state machine som exekverar rätt ljusskript
 # - scripts för faktisk ljuskontroll
 #
 # Källor:
@@ -25,6 +26,7 @@ input_select:
   light_outside:
     name: Spabad
     # Simple on/off for spa lighting
+    # Updated by: automation "Spabad resolver" via script.spabad_set_correct_mode (manual override allowed)
     options:
       - Släckt
       - Tänd
@@ -41,95 +43,35 @@ automation:
 #                                                     #
 #######################################################
 
-  ####################################################
-  ### Tänder belysning vid Spabad på eftermiddagen ###
-  ### T: sensor.ljusstyrka < ljusstyrka_5          ###
-  ### C: binary_sensor.workday_tomorrow = off      ###
-  ### C: 12:00:00 - 21:45:00                       ###
-  ### C: light.spabad_v = off                      ###
-  ### C: light.spabad_m = off                      ###
-  ### C: light.spabad_h= off                       ###
-  ### A: script.night_light                        ###
-  ####################################################
-  - alias: Spabelysning on (<ljusstyrka_5)
-    id: '8301399257818'
+  #################################
+  ### Spabad resolver (single)
+  #################################
+  - alias: Spabad resolver
+    id: '1735604100097'
+    mode: restart
     trigger:
-      platform: numeric_state
-      entity_id: sensor.ljusstyrka
-      below: input_number.ljusstyrka_5
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: binary_sensor.workday_tomorrow
-          state: 'off'
-        - condition: time
-          after: '12:00:00'
-          before: '21:45:00'
-        - condition: state
-          entity_id: light.spabad_v
-          state: 'off'
-        - condition: state
-          entity_id: light.spabad_m
-          state: 'off'
-        - condition: state
-          entity_id: light.spabad_h
-          state: 'off'
-    action:
-      - service: script.spa_light_on
+      - platform: homeassistant
+        event: start
 
-  ##########################################################
-  ### Släcker utebelysning på kvällen                     ###
-  ### T: 22:00:00                                         ###
-  ### C: styr efter hemma/borta och arbetsdag            ###
-  ### A: service: script.outside_light_off               ###
-  ##########################################################
-  - alias: Utebelysning off (22:00)
-    id: '2732476617933'
-    trigger:
-      platform: time
-      at: '22:00:00'
-    action:
-      - choose:
-          - alias: Borta
-            conditions:
-              - condition: state
-                entity_id: group.track_for_home_devices
-                state: 'not_home'
-            sequence:
-              - service: input_select.select_option
-                data:
-                  entity_id: input_select.light_outside
-                  option: Släckt
-          - alias: Hemma vardag
-            conditions:
-              - condition: state
-                entity_id: group.track_for_home_devices
-                state: 'home'
-              - condition: state
-                entity_id: binary_sensor.workday_tomorrow
-                state: 'on'
-            sequence:
-              - service: input_select.select_option
-                data:
-                  entity_id: input_select.light_outside
-                  option: Släckt
+      - platform: numeric_state
+        entity_id: sensor.ljusstyrka
+        below: input_number.ljusstyrka_5
 
-  ##############################################################
-  ### Släcker utebelysning när hemstatus blir Sover          ###
-  ### T: input_select.home_status -> Sover                   ###
-  ##############################################################
-  - alias: Utebelysning off (Sover)
-    id: '5134859503467'
-    trigger:
-      platform: state
-      entity_id: input_select.home_status
-      to: 'Sover'
+      - platform: time
+        at: '22:00:00'
+
+      - platform: state
+        entity_id: input_select.home_status
+        to: 'Sover'
+
+      - platform: state
+        entity_id: group.track_for_home_devices
+
+      - platform: state
+        entity_id: binary_sensor.workday_tomorrow
+
     action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_outside
-          option: Släckt
+      - service: script.spabad_set_correct_mode
 
   ####################################################
   #          EXECUTE SCRIPT ON STATE CHANGE          #
@@ -176,12 +118,16 @@ script:
           is_time_after_22: "{{ now().hour >= 22 }}"
           is_dark: "{{ lux is number and lux < lux_5 }}"
 
+          valid_options:
+            - Släckt
+            - Tänd
+
           desired_option: >-
             {% if home_status == 'Sover' %}
               Släckt
             {% elif track_state == 'not_home' %}
               Släckt
-            {% elif is_time_after_22 %}
+            {% elif is_time_after_22 and workday_tomorrow %}
               Släckt
             {% elif is_time_12_2145 and is_dark and (not workday_tomorrow) %}
               Tänd
@@ -189,10 +135,17 @@ script:
               {{ current_option }}
             {% endif %}
 
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_outside
-          option: "{{ desired_option | trim }}"
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: "{{ (desired_option | trim) in valid_options and (desired_option | trim) != (current_option | trim) }}"
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_outside
+                  option: "{{ desired_option | trim }}"
+
+        default: []
 
 #######################################################
 #                                                     #

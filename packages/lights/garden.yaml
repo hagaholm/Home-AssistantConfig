@@ -44,7 +44,7 @@ input_select:
     name: Trädgård
     # Garden/patio lighting simple on/off
     # Controls deck lights and ground-level garden accent lights
-    # Updated by: Outdoor activity sensors
+    # Updated by: automation "Trädgårdsbelysning resolver" via script.garden_set_correct_mode (manual override allowed)
     options:
       - Släckt
       - Tänd
@@ -62,9 +62,12 @@ automation:
 #######################################################
 #
 # BESKRIVNING:
-# Samlad automation för trädgårdsbelysning baserat på
-# ljusnivå, tid på dygnet och hemstatus.
-# Hanterar både tändning och släckning i samma automation.
+# Trädgårdsbelysning är uppbyggd i två lager:
+# - Resolver: triggas av lux/hemstatus/hemspårning och anropar script.garden_set_correct_mode
+# - State machine: input_select.light_garden ändringar exekverar rätt script
+#
+# Beslutslogik (Tänd/Släckt) ligger i script.garden_set_correct_mode som sätter
+# input_select.light_garden vid behov.
 #
 # HÅRDVARA:
 # - Ljussensor: sensor.ljusstyrka
@@ -94,161 +97,35 @@ automation:
 # - Samordnas med innebelysning
 #######################################################
 
-  - alias: Trädgårdsbelysning
-    id: '1735304100017'
-    mode: single
+  ######################################
+  ### Trädgårdsbelysning resolver (single)
+  ######################################
+  - alias: Trädgårdsbelysning resolver
+    id: '1735604100094'
+    description: >
+      Resolver som synkar input_select.light_garden via script.garden_set_correct_mode
+      (en källa till sanning för beslutslogiken).
+    mode: restart
     trigger:
+      - platform: homeassistant
+        event: start
+
       - platform: state
         entity_id: input_select.home_status
-        to: 'Hemma'
+
       - platform: state
-        entity_id: input_select.home_status
-        to: 'Sover'
+        entity_id: group.track_for_home_devices
+
       - platform: numeric_state
         entity_id: sensor.ljusstyrka
         below: input_number.ljusstyrka_40
+
       - platform: numeric_state
         entity_id: sensor.ljusstyrka
         above: input_number.ljusstyrka_60
+
     action:
-      - choose:
-          - alias: Släck - Sover
-            conditions:
-              - condition: state
-                entity_id: input_select.home_status
-                state: 'Sover'
-              - condition: or
-                conditions:
-                  - condition: state
-                    entity_id: switch.tradgard
-                    state: 'on'
-                  - condition: state
-                    entity_id: switch.stickpropp_8
-                    state: 'on'
-                  - condition: state
-                    entity_id: switch.friggebod_fonster
-                    state: 'on'
-                  - condition: state
-                    entity_id: light.friggebod_ute_2
-                    state: 'on'
-            sequence:
-              - service: input_select.select_option
-                data:
-                  entity_id: input_select.light_garden
-                  option: Släckt
-          # Turn ON scenarios
-          - alias: Tänd - Morgon när någon är hemma
-            conditions:
-              - condition: state
-                entity_id: input_select.home_status
-                state: 'Hemma'
-              - condition: time
-                after: '05:00:00'
-                before: '12:00:00'
-              - condition: numeric_state
-                entity_id: sensor.ljusstyrka
-                below: input_number.ljusstyrka_40
-              - condition: state
-                entity_id: switch.tradgard
-                state: 'off'
-            sequence:
-              - service: input_select.select_option
-                data:
-                  entity_id: input_select.light_garden
-                  option: Tänd
-          - alias: Tänd - Hemma eftermiddag och kväll
-            conditions:
-              - condition: time
-                after: '12:00:00'
-                before: '05:00:00'
-              - condition: numeric_state
-                entity_id: sensor.ljusstyrka
-                below: input_number.ljusstyrka_40
-              - condition: state
-                entity_id: group.track_for_home_devices
-                state: 'home'
-              - condition: state
-                entity_id: input_select.home_status
-                state: 'Hemma'
-              - condition: state
-                entity_id: switch.tradgard
-                state: 'off'
-            sequence:
-              - service: input_select.select_option
-                data:
-                  entity_id: input_select.light_garden
-                  option: Tänd
-          - alias: Tänd - Borta eftermiddag och kväll
-            conditions:
-              - condition: time
-                after: '12:00:00'
-                before: '05:00:00'
-              - condition: numeric_state
-                entity_id: sensor.ljusstyrka
-                below: input_number.ljusstyrka_40
-              - condition: state
-                entity_id: group.track_for_home_devices
-                state: 'not_home'
-              - condition: state
-                entity_id: switch.tradgard
-                state: 'off'
-            sequence:
-              - service: input_select.select_option
-                data:
-                  entity_id: input_select.light_garden
-                  option: Tänd
-          # Turn OFF scenarios
-          - alias: Släck - Ljust ute
-            conditions:
-              - condition: numeric_state
-                entity_id: sensor.ljusstyrka
-                above: input_number.ljusstyrka_60
-              - condition: or
-                conditions:
-                  - condition: state
-                    entity_id: switch.tradgard
-                    state: 'on'
-                  - condition: state
-                    entity_id: switch.stickpropp_8
-                    state: 'on'
-                  - condition: state
-                    entity_id: switch.friggebod_fonster
-                    state: 'on'
-                  - condition: state
-                    entity_id: light.friggebod_ute_2
-                    state: 'on'
-            sequence:
-              - service: input_select.select_option
-                data:
-                  entity_id: input_select.light_garden
-                  option: Släckt
-          - alias: Släck - Inne släcks på kvällen
-            conditions:
-              - condition: time
-                after: '21:00:00'
-                before: '06:00:00'
-              - condition: state
-                entity_id: group.track_for_home_devices
-                state: 'home'
-              - condition: or
-                conditions:
-                  - condition: state
-                    entity_id: switch.tradgard
-                    state: 'on'
-                  - condition: state
-                    entity_id: switch.stickpropp_8
-                    state: 'on'
-                  - condition: state
-                    entity_id: switch.friggebod_fonster
-                    state: 'on'
-                  - condition: state
-                    entity_id: light.friggebod_ute_2
-                    state: 'on'
-            sequence:
-              - service: input_select.select_option
-                data:
-                  entity_id: input_select.light_garden
-                  option: Släckt
+      - service: script.garden_set_correct_mode
 
 #######################################################
 #                                                     #
@@ -283,7 +160,7 @@ automation:
 #
 # INTEGRATION:
 # - Kopplad till input_select.light_garden
-# - Styrs av automation i light_garden.yaml
+# - Synkas av automation "Trädgårdsbelysning resolver" via script.garden_set_correct_mode
 # - Scriptet hanterar faktisk ljuskontroll
 #
 # ÄNDRINGSLOGG:
@@ -348,6 +225,10 @@ script:
           is_dark: "{{ lux is number and lux < lux_40 }}"
           is_bright: "{{ lux is number and lux > lux_60 }}"
 
+          valid_options:
+            - Släckt
+            - Tänd
+
           desired_option: >-
             {% if home_status == 'Sover' %}
               Släckt
@@ -365,10 +246,17 @@ script:
               {{ current_option }}
             {% endif %}
 
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_garden
-          option: "{{ desired_option | trim }}"
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: "{{ (desired_option | trim) in valid_options and (desired_option | trim) != (current_option | trim) }}"
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_garden
+                  option: "{{ desired_option | trim }}"
+
+        default: []
 
 #######################################################
 #                                                     #

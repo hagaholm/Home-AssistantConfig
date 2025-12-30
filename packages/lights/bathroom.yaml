@@ -59,10 +59,12 @@ automation:
 #######################################################
 #
 # BESKRIVNING:
-# Samlad automation för badrumsbelysning som styrs av
-# närvaro, ljusnivå och hemstatus.
-# Logiken är uppbyggd som en state machine via
-# input_select.light_bathroom.
+# Badrumsbelysning är uppbyggd i två lager:
+# - Resolver: triggas av sensorer/hemstatus och anropar script.bathroom_set_correct_mode
+# - State machine: input_select.light_bathroom ändringar exekverar rätt ljusskript
+#
+# Beslutslogik (vilket läge som ska gälla) ligger i script.bathroom_set_correct_mode
+# som sätter input_select.light_bathroom vid behov.
 #
 # HÅRDVARA:
 # - Närvarosensor: binary_sensor.motion_sensor
@@ -109,176 +111,46 @@ automation:
 #   När hemstatus ändras till Borta.
 #
 # INTEGRATION:
-# - Logik och tillstånd styrs via input_select.light_bathroom
 # - Hemstatus hämtas från input_select.home_status
+# - Resolvern synkar input_select.light_bathroom via script.bathroom_set_correct_mode
 #######################################################
 
-  - alias: Badrumsbelysning – samlad automation
-    id: bathroom_light_all_in_one
+  ######################################
+  ### Badrumsbelysning resolver (single)
+  ######################################
+  - alias: Badrumsbelysning resolver
+    id: '1735604100093'
     description: >
-      Samlad automation för badrumsbelysning baserat på närvaro,
-      ljusnivå och hemstatus.
-    mode: single
+      Resolver som synkar input_select.light_bathroom via script.bathroom_set_correct_mode
+      (en källa till sanning för beslutslogiken).
+    mode: restart
     trigger:
-      # Hemstatus
+      - platform: homeassistant
+        event: start
+
       - platform: state
         entity_id: input_select.home_status
-      # Närvaro
+
       - platform: state
         entity_id: binary_sensor.motion_sensor
         to: 'on'
-      # Närvaro timeout
+
       - platform: state
         entity_id: binary_sensor.motion_sensor
         to: 'off'
         for:
           seconds: 60
-      # Ljusnivå – mörkt
+
       - platform: numeric_state
         entity_id: sensor.kokets_ljusniva
         below: 100
-      # Ljusnivå – för ljust
+
       - platform: numeric_state
         entity_id: sensor.kokets_ljusniva
         above: 150
+
     action:
-      - choose:
-          # --------------------------------------------------
-          # SLÄCK VID BORTA OCH SOVER
-          # --------------------------------------------------
-          - conditions:
-              - condition: state
-                entity_id: input_select.home_status
-                state:
-                  - 'Borta'
-            sequence:
-              - service: input_select.select_option
-                data:
-                  entity_id: input_select.light_bathroom
-                  option: Släckt
-          # --------------------------------------------------
-          # SLÄCK VID SOVER (OM INGEN NÄRVARO)
-          # --------------------------------------------------
-          - conditions:
-              - condition: state
-                entity_id: input_select.home_status
-                state: 'Sover'
-              - condition: state
-                entity_id: binary_sensor.motion_sensor
-                state: 'off'
-            sequence:
-              - service: input_select.select_option
-                data:
-                  entity_id: input_select.light_bathroom
-                  option: Släckt
-          # --------------------------------------------------
-          # SLÄCK NÄR DET ÄR FÖR LJUST
-          # --------------------------------------------------
-          - conditions:
-              - condition: numeric_state
-                entity_id: sensor.kokets_ljusniva
-                above: 150
-            sequence:
-              - service: input_select.select_option
-                data:
-                  entity_id: input_select.light_bathroom
-                  option: Släckt
-          # --------------------------------------------------
-          # NATT – NÄRVARO + SOVER + MÖRKT
-          # --------------------------------------------------
-          - conditions:
-              - condition: state
-                entity_id: binary_sensor.motion_sensor
-                state: 'on'
-              - condition: state
-                entity_id: input_select.home_status
-                state: 'Sover'
-              - condition: numeric_state
-                entity_id: sensor.kokets_ljusniva
-                below: 100
-            sequence:
-              - service: input_select.select_option
-                data:
-                  entity_id: input_select.light_bathroom
-                  option: Natt närvaro
-          # --------------------------------------------------
-          # NATT NÄRVARO → SLÄCKT (timeout)
-          # --------------------------------------------------
-          - conditions:
-              - condition: state
-                entity_id: binary_sensor.motion_sensor
-                state: 'off'
-              - condition: state
-                entity_id: input_select.light_bathroom
-                state: 'Natt närvaro'
-            sequence:
-              - service: input_select.select_option
-                data:
-                  entity_id: input_select.light_bathroom
-                  option: Släckt
-          # --------------------------------------------------
-          # DAG – HEMMA + MÖRKT
-          # --------------------------------------------------
-          - conditions:
-              - condition: state
-                entity_id: input_select.home_status
-                state: 'Hemma'
-              - condition: numeric_state
-                entity_id: sensor.kokets_ljusniva
-                below: 100
-              - condition: state
-                entity_id: binary_sensor.motion_sensor
-                state: 'off'
-            sequence:
-              - service: input_select.select_option
-                data:
-                  entity_id: input_select.light_bathroom
-                  option: Dag
-          # --------------------------------------------------
-          # DAG → DAG NÄRVARO
-          # --------------------------------------------------
-          - conditions:
-              - condition: state
-                entity_id: binary_sensor.motion_sensor
-                state: 'on'
-              - condition: state
-                entity_id: input_select.light_bathroom
-                state: 'Dag'
-            sequence:
-              - service: input_select.select_option
-                data:
-                  entity_id: input_select.light_bathroom
-                  option: Dag närvaro
-          # --------------------------------------------------
-          # DAG NÄRVARO → DAG (timeout)
-          # --------------------------------------------------
-          - conditions:
-              - condition: state
-                entity_id: binary_sensor.motion_sensor
-                state: 'off'
-              - condition: state
-                entity_id: input_select.light_bathroom
-                state: 'Dag närvaro'
-            sequence:
-              - service: input_select.select_option
-                data:
-                  entity_id: input_select.light_bathroom
-                  option: Dag
-          # --------------------------------------------------
-          # SOVER → HEMMA (NATT → DAG NÄRVARO)
-          # --------------------------------------------------
-          - conditions:
-              - condition: state
-                entity_id: input_select.home_status
-                state: 'Hemma'
-              - condition: state
-                entity_id: input_select.light_bathroom
-                state: 'Natt närvaro'
-            sequence:
-              - service: input_select.select_option
-                data:
-                  entity_id: input_select.light_bathroom
-                  option: Dag närvaro
+      - service: script.bathroom_set_correct_mode
 
 #######################################################
 #                                                     #
@@ -364,6 +236,12 @@ script:
           is_dark: "{{ lux is number and lux < 100 }}"
           is_bright: "{{ lux is number and lux > 150 }}"
 
+          valid_options:
+            - Släckt
+            - Dag
+            - Dag närvaro
+            - Natt närvaro
+
           desired_option: >-
             {% if home_status == 'Borta' %}
               Släckt
@@ -385,10 +263,17 @@ script:
               {{ current_option }}
             {% endif %}
 
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_bathroom
-          option: "{{ desired_option | trim }}"
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: "{{ (desired_option | trim) in valid_options and (desired_option | trim) != (current_option | trim) }}"
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_bathroom
+                  option: "{{ desired_option | trim }}"
+
+        default: []
 
 #######################################################
 #                                                     #

@@ -128,7 +128,7 @@ automation:
 # 1. Hall släck belysning:
 #    - Trigger: input_select.home_status state change
 #    - Condition: != 'Hemma'
-#    - Action: Sätter input_select.light_hall till 'Släckt'
+#    - Action: Kör script.hall_set_correct_mode (som sätter input_select.light_hall vid behov)
 #
 # 2. Hall fjärrkontroll:
 #    - Trigger: switch.fjarrkontroll_hall (on/off)
@@ -172,10 +172,7 @@ automation:
           - condition: template
             value_template: "{{ states('input_select.home_status') != 'Hemma' }}"
     action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_hall
-          option: Släckt
+      - service: script.hall_set_correct_mode
 
   # Hall fjärrkontroll — enkel logik:
   # - Om `switch.fjarrkontroll_hall` blir 'on' -> kör `script.hall_taklampor_100_procent` (sätt 100%)
@@ -233,6 +230,13 @@ script:
             {% else %}
               -1
             {% endif %}
+          current_option: "{{ states('input_select.light_hall') | trim }}"
+          valid_options:
+            - Släckt
+            - 1%
+            - 10%
+            - 50%
+            - 100%
           desired_option: >-
             {% if home_status != 'Hemma' %}
               Släckt
@@ -249,10 +253,18 @@ script:
             {% else %}
               100%
             {% endif %}
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_hall
-          option: "{{ desired_option | trim }}"
+
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: "{{ (desired_option | trim) in valid_options and (desired_option | trim) != current_option }}"
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_hall
+                  option: "{{ desired_option | trim }}"
+
+        default: []
 
 #######################################################
 #                                                     #

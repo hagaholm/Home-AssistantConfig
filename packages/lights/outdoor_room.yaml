@@ -59,9 +59,12 @@ automation:
 #######################################################
 #
 # BESKRIVNING:
-# Samlad automation för uterumsbelysning baserat på
-# temperatur, ljusnivå, hemstatus och tid.
-# Automatisk tänd/släck med säkerhetskontroller.
+# Uterumsbelysning är uppbyggd i två lager:
+# - Resolver: triggas av temperatur/lux/hemstatus/hemspårning och anropar script.uterum_set_correct_mode
+# - State machine: input_select.light_uterum ändringar exekverar rätt script
+#
+# Beslutslogik (Tänd/Släckt) ligger i script.uterum_set_correct_mode som sätter
+# input_select.light_uterum vid behov.
 #
 # HÅRDVARA:
 # - Temperatursensor: sensor.uterum_temperatur
@@ -93,93 +96,39 @@ automation:
 # - Samordnas med innebelysning och hemstatus
 #######################################################
 
-  - alias: Uterums belysning
-    id: '1735304100016'
-    mode: single
+  ####################################
+  ### Uterumsbelysning resolver (single)
+  ####################################
+  - alias: Uterumsbelysning resolver
+    id: '1735604100096'
+    description: >
+      Resolver som synkar input_select.light_uterum via script.uterum_set_correct_mode
+      (en källa till sanning för beslutslogiken).
+    mode: restart
     trigger:
-      - platform: state
-        entity_id: group.track_for_home_devices
-        from: 'not_home'
-        to: 'home'
+      - platform: homeassistant
+        event: start
+
       - platform: state
         entity_id: input_select.home_status
-        to: 'Sover'
+
+      - platform: state
+        entity_id: group.track_for_home_devices
+
       - platform: numeric_state
         entity_id: sensor.uterum_temperatur
         above: 18
-      - platform: numeric_state
-        entity_id: sensor.ljusstyrka
-        below: input_number.ljusstyrka_150
+
       - platform: numeric_state
         entity_id: sensor.uterum_temperatur
         below: 17
-      - platform: state
-        entity_id: group.track_for_home_devices
-        from: 'home'
-        to: 'not_home'
+
+      - platform: numeric_state
+        entity_id: sensor.ljusstyrka
+        below: input_number.ljusstyrka_150
+
     action:
-      - choose:
-          - alias: Släck - Sover
-            conditions:
-              - condition: state
-                entity_id: input_select.home_status
-                state: 'Sover'
-            sequence:
-              - service: input_select.select_option
-                data:
-                  entity_id: input_select.light_uterum
-                  option: Släckt
-          # Turn ON scenarios
-          - alias: Tänd - Rätt förutsättningar
-            conditions:
-              - condition: time
-                after: '12:00:00'
-                before: '21:45:00'
-              - condition: numeric_state
-                entity_id: sensor.ljusstyrka
-                below: input_number.ljusstyrka_150
-              - condition: numeric_state
-                entity_id: sensor.uterum_temperatur
-                above: 18
-              - condition: state
-                entity_id: group.track_for_home_devices
-                state: 'home'
-            sequence:
-              - service: input_select.select_option
-                data:
-                  entity_id: input_select.light_uterum
-                  option: Tänd
-          # Turn OFF scenarios
-          - alias: Släck - För kallt
-            conditions:
-              - condition: numeric_state
-                entity_id: sensor.uterum_temperatur
-                below: 17
-            sequence:
-              - service: input_select.select_option
-                data:
-                  entity_id: input_select.light_uterum
-                  option: Släckt
-          - alias: Släck - Hemma ingen längre hemma
-            conditions:
-              - condition: state
-                entity_id: group.track_for_home_devices
-                state: 'not_home'
-            sequence:
-              - service: input_select.select_option
-                data:
-                  entity_id: input_select.light_uterum
-                  option: Släckt
-          - alias: Släck - Inne släcks på kvällen
-            conditions:
-              - condition: state
-                entity_id: group.track_for_home_devices
-                state: 'home'
-            sequence:
-              - service: input_select.select_option
-                data:
-                  entity_id: input_select.light_uterum
-                  option: Släckt
+      - service: script.uterum_set_correct_mode
 
 #######################################################
 #                                                     #
@@ -277,6 +226,10 @@ script:
           temp_ok: "{{ temp is number and temp > 18 }}"
           temp_too_cold: "{{ temp is number and temp < 17 }}"
 
+          valid_options:
+            - Släckt
+            - Tänd
+
           desired_option: >-
             {% if home_status == 'Sover' %}
               Släckt
@@ -290,10 +243,17 @@ script:
               {{ current_option }}
             {% endif %}
 
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_uterum
-          option: "{{ desired_option | trim }}"
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: "{{ (desired_option | trim) in valid_options and (desired_option | trim) != (current_option | trim) }}"
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_uterum
+                  option: "{{ desired_option | trim }}"
+
+        default: []
 
 #######################################################
 #                                                     #

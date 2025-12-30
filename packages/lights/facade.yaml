@@ -10,8 +10,9 @@
 #
 # BESKRIVNING:
 # Samlar all logik för fasadbelysning i ett paket:
-# - input_select.facade_lights (Släckt/Morgon\/Kväll/Natt/Person upptäckt)
-# - automationer för lux, hemstatus och persondetektering
+# - input_select.facade_lights (läge/scen)
+# - resolver som synkar input_select via script.facade_set_correct_mode
+# - state machine som exekverar rätt ljusskript
 # - scripts för faktisk ljuskontroll
 #
 # Källor:
@@ -97,6 +98,54 @@ automation:
                   entity_id: input_select.facade_lights
                   option: Person upptäckt
         default: []
+
+  ####################################
+  ### Fasadbelysning resolver (single)
+  ####################################
+  - alias: Fasadbelysning resolver
+    id: '1735604100098'
+    description: >
+      Resolver som synkar input_select.facade_lights via script.facade_set_correct_mode
+      (en källa till sanning för beslutslogiken).
+    mode: restart
+    trigger:
+      - platform: homeassistant
+        event: start
+
+      - platform: numeric_state
+        entity_id: sensor.ljusstyrka
+        above: input_number.ljusstyrka_60
+        for: "00:02:00"
+        id: bright_2m
+
+      - platform: numeric_state
+        entity_id: sensor.ljusstyrka
+        below: input_number.ljusstyrka_40
+        for: "00:02:00"
+        id: dark_2m
+
+      - platform: state
+        entity_id: input_select.home_status
+
+      - platform: state
+        entity_id:
+          - binary_sensor.cam3_person_occupancy
+          - binary_sensor.cam7_person_occupancy
+          - binary_sensor.cam8_person_occupancy
+        to: 'on'
+        id: person_on
+
+      - platform: state
+        entity_id:
+          - binary_sensor.cam3_person_occupancy
+          - binary_sensor.cam7_person_occupancy
+          - binary_sensor.cam8_person_occupancy
+        to: 'off'
+        for: "00:00:30"
+        id: person_off_30s
+
+    action:
+      - service: script.facade_set_correct_mode
 #
 # Related Entities:
 # - sensor.ljusstyrka
@@ -106,181 +155,6 @@ automation:
 # - script.fasadbelysning_*
 ####################################################
 
-  ####################################################
-  #         LIGHT OFF WHEN BRIGHT OUTSIDE            #
-  ####################################################
-  - alias: Facade Light Off When Bright Outside
-    id: '6820471947302'
-    mode: single
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.ljusstyrka
-      above: input_number.ljusstyrka_60
-      for: "00:02:00"
-    condition:
-      condition: not
-      conditions:
-        - condition: state
-          entity_id: input_select.facade_lights
-          state: 'Släckt'
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.facade_lights
-          option: Släckt
-
-  ####################################################
-  #          LIGHT ON WHEN DARK OUTSIDE              #
-  ####################################################
-  - alias: Facade Light On When Dark Outside
-    id: '6820471947303'
-    mode: single
-    trigger:
-      platform: numeric_state
-      entity_id: sensor.ljusstyrka
-      below: input_number.ljusstyrka_40
-      for: "00:02:00"
-    condition:
-      condition: not
-      conditions:
-        - condition: state
-          entity_id: input_select.facade_lights
-          state: 'Morgon/Kväll'
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.facade_lights
-          option: Morgon/Kväll
-
-  ####################################################
-  #              NIGHT MODE ACTIVATION               #
-  ####################################################
-  - alias: Facade Light Night Mode
-    id: '6820471947304'
-    mode: single
-    trigger:
-      platform: state
-      entity_id: input_select.home_status
-      to: "Sover"
-    condition:
-      condition: and
-      conditions:
-        - condition: not
-          conditions:
-            - condition: state
-              entity_id: input_select.facade_lights
-              state: 'Natt'
-        - condition: numeric_state
-          entity_id: sensor.ljusstyrka
-          below: input_number.ljusstyrka_60
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.facade_lights
-          option: Natt
-
-  ####################################################
-  #         MAX LIGHT WHEN PERSON DETECTED           #
-  ####################################################
-  - alias: Facade Light Max When Person Detected
-    id: '6820471947305'
-    mode: single
-    trigger:
-      platform: state
-      entity_id:
-        - binary_sensor.cam3_person_occupancy
-        - binary_sensor.cam7_person_occupancy
-        - binary_sensor.cam8_person_occupancy
-      to: 'on'
-    condition:
-      condition: and
-      conditions:
-        - condition: or
-          conditions:
-            - condition: state
-              entity_id: input_select.facade_lights
-              state: 'Morgon/Kväll'
-            - condition: state
-              entity_id: input_select.facade_lights
-              state: 'Natt'
-        - condition: not
-          conditions:
-            - condition: state
-              entity_id: input_select.facade_lights
-              state: 'Person upptäckt'
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.facade_lights
-          option: Person upptäckt
-
-  ####################################################
-  #   RETURN TO MORNING/EVENING AFTER PERSON LEAVES  #
-  ####################################################
-  - alias: Facade Light On When No Person Detected
-    id: '6820471947306'
-    mode: restart
-    trigger:
-      platform: state
-      entity_id:
-        - binary_sensor.cam3_person_occupancy
-        - binary_sensor.cam7_person_occupancy
-        - binary_sensor.cam8_person_occupancy
-      to: 'off'
-      for: "00:00:30"
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_select.facade_lights
-          state: 'Person upptäckt'
-        - condition: state
-          entity_id: binary_sensor.cam3_person_occupancy
-          state: 'off'
-        - condition: state
-          entity_id: binary_sensor.cam7_person_occupancy
-          state: 'off'
-        - condition: state
-          entity_id: binary_sensor.cam8_person_occupancy
-          state: 'off'
-    action:
-      - choose:
-          - conditions:
-              - condition: state
-                entity_id: input_select.home_status
-                state: "Sover"
-            sequence:
-              - service: input_select.select_option
-                data:
-                  entity_id: input_select.facade_lights
-                  option: Natt
-        default:
-          - service: input_select.select_option
-            data:
-              entity_id: input_select.facade_lights
-              option: Morgon/Kväll
-
-  ####################################################
-  #         EXIT NIGHT MODE WHEN HOME ACTIVE         #
-  ####################################################
-  - alias: Facade Light from Night to On
-    id: '6820471947307'
-    mode: single
-    trigger:
-      platform: state
-      entity_id: input_select.home_status
-      to: "Hemma"
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: input_select.facade_lights
-          state: 'Natt'
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.facade_lights
-          option: Morgon/Kväll
 
   ####################################################
   #          EXECUTE SCRIPT ON STATE CHANGE          #
@@ -343,6 +217,12 @@ script:
           is_dark: "{{ lux is number and lux < lux_40 }}"
           is_not_too_bright: "{{ lux is number and lux < lux_60 }}"
 
+          valid_options:
+            - Släckt
+            - Morgon/Kväll
+            - Natt
+            - Person upptäckt
+
           desired_option: >-
             {% if is_bright %}
               Släckt
@@ -356,10 +236,17 @@ script:
               {{ current_option }}
             {% endif %}
 
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.facade_lights
-          option: "{{ desired_option | trim }}"
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: "{{ (desired_option | trim) in valid_options and (desired_option | trim) != (current_option | trim) }}"
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.facade_lights
+                  option: "{{ desired_option | trim }}"
+
+        default: []
 
 #######################################################
 #                                                     #

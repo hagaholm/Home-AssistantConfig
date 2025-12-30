@@ -300,6 +300,39 @@ automation:
 ### Script ###
 ##############
 script:
+
+  kitchen_set_correct_mode:
+    alias: Återställ köksbelysning (sätt korrekt läge)
+    mode: single
+    sequence:
+      - variables:
+          home_status: "{{ states('input_select.home_status') }}"
+          presence_all: "{{ is_state('binary_sensor.presence_sensor_fp2_9a29_presence_sensor_1', 'on') }}"
+          presence_zone_2: "{{ is_state('binary_sensor.presence_sensor_fp2_9a29_presence_sensor_2', 'on') }}"
+          presence_zone_3: "{{ is_state('binary_sensor.presence_sensor_fp2_9a29_presence_sensor_3', 'on') }}"
+          kitchen_light_on: "{{ is_state('input_boolean.kitchen_light_on', 'on') }}"
+          morning_light_on: "{{ is_state('input_boolean.morning_light_on', 'on') }}"
+          current_option: "{{ states('input_select.light_kitchen') }}"
+
+          desired_option: >-
+            {% if not presence_all %}
+              Släckt
+            {% elif home_status == 'Sover' %}
+              25%
+            {% elif home_status in ['Hemma', 'Borta'] and kitchen_light_on and (presence_zone_2 or presence_zone_3) %}
+              100%
+            {% elif home_status in ['Hemma', 'Borta'] and morning_light_on %}
+              50%
+            {% else %}
+              {{ current_option }}
+            {% endif %}
+
+      - service: input_select.select_option
+        target:
+          entity_id: input_select.light_kitchen
+        data:
+          option: "{{ desired_option | trim }}"
+
 #######################################################
 #                                                     #
 #              KÖKSBELYSNING SCRIPTS                  #

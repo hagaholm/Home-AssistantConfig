@@ -405,6 +405,12 @@ views:
         show_header_toggle: false
         state_color: true
       - type: button
+        entity: script.lights_set_correct_modes
+        name: Återställ all belysning (rätt lägen)
+        icon: mdi:restore
+        tap_action:
+          action: toggle
+      - type: button
         entity: script.inside_set_correct_mode
         name: Återställ innebelysning (rätt läge)
         icon: mdi:restore

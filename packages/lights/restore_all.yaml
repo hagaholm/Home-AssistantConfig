@@ -1,0 +1,43 @@
+####################################################
+#                                                  #
+#        ÅTERSTÄLL ALL BELYSNING (SCRIPTS)          #
+#                                                  #
+####################################################
+# METADATA:
+# Skapad: 2025-12-30
+# Senast ändrad: 2025-12-30
+# Version: 1.0
+# Författare: Home Assistant Config
+#
+# BESKRIVNING:
+# Samlar ett master-script för att återställa "rätt" läge för alla
+# belysnings-input_select samtidigt.
+#
+# Källor:
+# - packages/lights/inside.yaml (script.inside_set_correct_mode)
+# - packages/lights/hall.yaml (script.hall_set_correct_mode)
+# - packages/lights/kitchen.yaml (script.kitchen_set_correct_mode)
+# - packages/lights/bathroom.yaml (script.bathroom_set_correct_mode)
+# - packages/lights/garden.yaml (script.garden_set_correct_mode)
+# - packages/lights/outdoor_room.yaml (script.uterum_set_correct_mode)
+# - packages/lights/spabad.yaml (script.spabad_set_correct_mode)
+# - packages/lights/facade.yaml (script.facade_set_correct_mode)
+####################################################
+
+script:
+
+  lights_set_correct_modes:
+    alias: Återställ all belysning (sätt korrekta lägen)
+    mode: single
+    sequence:
+      - service: script.turn_on
+        target:
+          entity_id:
+            - script.inside_set_correct_mode
+            - script.hall_set_correct_mode
+            - script.kitchen_set_correct_mode
+            - script.bathroom_set_correct_mode
+            - script.garden_set_correct_mode
+            - script.uterum_set_correct_mode
+            - script.spabad_set_correct_mode
+            - script.facade_set_correct_mode

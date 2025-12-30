@@ -328,6 +328,48 @@ automation:
 ### Script ###
 ##############
 script:
+
+  garden_set_correct_mode:
+    alias: Återställ trädgårdsbelysning (sätt korrekt läge)
+    mode: single
+    sequence:
+      - variables:
+          home_status: "{{ states('input_select.home_status') }}"
+          track_state: "{{ states('group.track_for_home_devices') }}"
+          lux: "{{ states('sensor.ljusstyrka') | float(none) }}"
+          lux_40: "{{ states('input_number.ljusstyrka_40') | float(40) }}"
+          lux_60: "{{ states('input_number.ljusstyrka_60') | float(60) }}"
+          current_option: "{{ states('input_select.light_garden') }}"
+
+          is_time_05_12: "{{ 5 <= now().hour < 12 }}"
+          is_time_12_05: "{{ now().hour >= 12 or now().hour < 5 }}"
+          is_time_21_06: "{{ now().hour >= 21 or now().hour < 6 }}"
+
+          is_dark: "{{ lux is number and lux < lux_40 }}"
+          is_bright: "{{ lux is number and lux > lux_60 }}"
+
+          desired_option: >-
+            {% if home_status == 'Sover' %}
+              Släckt
+            {% elif is_bright %}
+              Släckt
+            {% elif track_state == 'home' and is_time_21_06 %}
+              Släckt
+            {% elif is_dark and is_time_05_12 and home_status == 'Hemma' %}
+              Tänd
+            {% elif is_dark and is_time_12_05 and track_state == 'home' and home_status == 'Hemma' %}
+              Tänd
+            {% elif is_dark and is_time_12_05 and track_state == 'not_home' %}
+              Tänd
+            {% else %}
+              {{ current_option }}
+            {% endif %}
+
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_garden
+          option: "{{ desired_option | trim }}"
+
 #######################################################
 #                                                     #
 #              TRÄDGÅRDSBELYSNING SCRIPTS             #

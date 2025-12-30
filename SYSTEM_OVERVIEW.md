@@ -411,6 +411,7 @@ Run `py extra/ha_docs_sync.py` to refresh it.
   - [packages/lights/light_groups_seasonal.yaml](packages/lights/light_groups_seasonal.yaml)
   - [packages/lights/light_groups_standard.yaml](packages/lights/light_groups_standard.yaml)
   - [packages/lights/outdoor_room.yaml](packages/lights/outdoor_room.yaml)
+  - [packages/lights/restore_all.yaml](packages/lights/restore_all.yaml)
   - [packages/lights/scenes.yaml](packages/lights/scenes.yaml)
   - [packages/lights/spabad.yaml](packages/lights/spabad.yaml)
 - **packages/notifications/**

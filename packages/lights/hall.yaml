@@ -218,6 +218,42 @@ automation:
 ### Script ###
 ##############
 script:
+
+  hall_set_correct_mode:
+    alias: Återställ hallbelysning (sätt korrekt läge)
+    mode: single
+    sequence:
+      - variables:
+          home_status: "{{ states('input_select.home_status') }}"
+          hall_state: "{{ states('light.hall_tak') }}"
+          bri: "{{ state_attr('light.hall_tak', 'brightness') }}"
+          bri_pct: >-
+            {% if bri is number %}
+              {{ ((bri | float(0)) * 100 / 255) | round(0) | int }}
+            {% else %}
+              -1
+            {% endif %}
+          desired_option: >-
+            {% if home_status != 'Hemma' %}
+              Släckt
+            {% elif hall_state != 'on' %}
+              Släckt
+            {% elif bri_pct < 0 %}
+              100%
+            {% elif bri_pct <= 5 %}
+              1%
+            {% elif bri_pct <= 25 %}
+              10%
+            {% elif bri_pct <= 75 %}
+              50%
+            {% else %}
+              100%
+            {% endif %}
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_hall
+          option: "{{ desired_option | trim }}"
+
 #######################################################
 #                                                     #
 #              HALL TAKLAMPOR SCRIPTS                 #

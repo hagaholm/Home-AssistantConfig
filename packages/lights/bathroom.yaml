@@ -350,6 +350,46 @@ automation:
 ### Script ###
 ##############
 script:
+
+  bathroom_set_correct_mode:
+    alias: Återställ badrumsbelysning (sätt korrekt läge)
+    mode: single
+    sequence:
+      - variables:
+          home_status: "{{ states('input_select.home_status') }}"
+          motion: "{{ is_state('binary_sensor.motion_sensor', 'on') }}"
+          lux: "{{ states('sensor.kokets_ljusniva') | float(none) }}"
+          current_option: "{{ states('input_select.light_bathroom') }}"
+
+          is_dark: "{{ lux is number and lux < 100 }}"
+          is_bright: "{{ lux is number and lux > 150 }}"
+
+          desired_option: >-
+            {% if home_status == 'Borta' %}
+              Släckt
+            {% elif is_bright %}
+              Släckt
+            {% elif home_status == 'Sover' %}
+              {% if motion and is_dark %}
+                Natt närvaro
+              {% else %}
+                Släckt
+              {% endif %}
+            {% elif home_status == 'Hemma' and is_dark %}
+              {% if motion %}
+                Dag närvaro
+              {% else %}
+                Dag
+              {% endif %}
+            {% else %}
+              {{ current_option }}
+            {% endif %}
+
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_bathroom
+          option: "{{ desired_option | trim }}"
+
 #######################################################
 #                                                     #
 #            BADRUMSBELYSNING SCRIPTS                 #

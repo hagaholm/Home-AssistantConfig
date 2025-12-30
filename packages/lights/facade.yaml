@@ -322,6 +322,45 @@ automation:
 ### Script ###
 ##############
 script:
+
+  facade_set_correct_mode:
+    alias: Återställ fasadbelysning (sätt korrekt läge)
+    mode: single
+    sequence:
+      - variables:
+          home_status: "{{ states('input_select.home_status') }}"
+          lux: "{{ states('sensor.ljusstyrka') | float(none) }}"
+          lux_40: "{{ states('input_number.ljusstyrka_40') | float(40) }}"
+          lux_60: "{{ states('input_number.ljusstyrka_60') | float(60) }}"
+
+          person_cam3: "{{ is_state('binary_sensor.cam3_person_occupancy', 'on') }}"
+          person_cam7: "{{ is_state('binary_sensor.cam7_person_occupancy', 'on') }}"
+          person_cam8: "{{ is_state('binary_sensor.cam8_person_occupancy', 'on') }}"
+          person_any: "{{ person_cam3 or person_cam7 or person_cam8 }}"
+
+          current_option: "{{ states('input_select.facade_lights') }}"
+          is_bright: "{{ lux is number and lux > lux_60 }}"
+          is_dark: "{{ lux is number and lux < lux_40 }}"
+          is_not_too_bright: "{{ lux is number and lux < lux_60 }}"
+
+          desired_option: >-
+            {% if is_bright %}
+              Släckt
+            {% elif person_any and is_not_too_bright %}
+              Person upptäckt
+            {% elif home_status == 'Sover' and is_not_too_bright %}
+              Natt
+            {% elif is_dark %}
+              Morgon/Kväll
+            {% else %}
+              {{ current_option }}
+            {% endif %}
+
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.facade_lights
+          option: "{{ desired_option | trim }}"
+
 #######################################################
 #                                                     #
 #             FASADBELYSNING SCRIPTS                  #

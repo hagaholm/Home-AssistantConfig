@@ -124,29 +124,43 @@ views:
             type: button
         type: horizontal-stack
       - cards:
-          - entity: script.harmony_tv
+          - type: button
+            entity: script.harmony_tv
+            name: Starta Tv
             icon: 'mdi:television'
             show_icon: true
-            show_name: true
+            show_name: false
             tap_action:
               action: toggle
-            type: button
-          - entity: script.harmony_radio
+          - type: button
+            entity: script.harmony_radio
+            name: Starta radio
             icon: 'mdi:radio'
             show_icon: true
-            show_name: true
+            show_name: false
             tap_action:
               action: toggle
-            type: button
-          - entity: script.harmony_off
+          - type: button
+            entity: script.harmony_off
+            name: Stäng av
+            icon: 'mdi:television-off'
+            show_icon: true
+            show_name: false
             hold_action:
               action: none
-            icon: 'mdi:television-off'
-            name: Stäng av
             tap_action:
               action: toggle
-            type: button
-        type: horizontal-stack
+          - type: button
+            entity: input_boolean.tv_light_mode
+            name: TV-ljusläge
+            icon: 'mdi:television-ambient-light'
+            show_icon: true
+            show_name: false
+            tap_action:
+              action: toggle
+        type: grid
+        columns: 4
+        square: false
       - type: conditional
         conditions:
           - entity: input_boolean.christmas_light

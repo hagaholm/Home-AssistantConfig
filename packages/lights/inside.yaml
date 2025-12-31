@@ -461,10 +461,12 @@ automation:
                 before: '05:00:00'
             sequence:
               - choose:
-                  - conditions: "{{ is_state('input_boolean.christmas_light', 'on') }}"
-                    - condition: state
-                      entity_id: input_boolean.inside_pause_day_window_transition
-                      state: 'off'
+                  - conditions:
+                      - condition: template
+                        value_template: "{{ is_state('input_boolean.christmas_light', 'on') }}"
+                      - condition: state
+                        entity_id: input_boolean.inside_pause_day_window_transition
+                        state: 'off'
                     sequence:
                       - service: input_select.select_option
                         entity_id: input_select.light_inside

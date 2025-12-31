@@ -76,7 +76,10 @@ automation:
           entity_id: light.spabad_h
           state: 'off'
     action:
-      - service: script.spa_light_on
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.light_outside
+          option: Tänd
 
   ##########################################################
   ### Släcker utebelysning på kvällen                     ###

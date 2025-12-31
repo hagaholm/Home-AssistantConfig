@@ -264,7 +264,7 @@ sensor:
 
   - platform: statistics
     name: Ventilation RH (forcerad) medel (24h)
-    entity_id: sensor.ventilation_rh_when_forced
+    entity_id: sensor.ventilation_rh_forcerad
     state_characteristic: mean
     max_age:
       hours: 24

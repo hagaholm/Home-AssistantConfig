@@ -72,6 +72,11 @@ input_boolean:
     name: TV-ljusläge
     icon: mdi:television-ambient-light
 
+  inside_pause_day_window_transition:
+    name: Innebelysning pausa dag/fönster (09:00)
+    icon: mdi:pause-circle
+    initial: off
+
 ##################
 ### Automation ###
 ##################
@@ -372,6 +377,9 @@ automation:
               - condition: trigger
                 id: turn_on_morning
               - condition: state
+                entity_id: input_boolean.inside_pause_day_window_transition
+                state: 'off'
+              - condition: state
                 entity_id: input_boolean.daylight_on
                 state: "on"
               - condition: state
@@ -389,6 +397,9 @@ automation:
               - condition: trigger
                 id: turn_on_dark
               - condition: state
+                entity_id: input_boolean.inside_pause_day_window_transition
+                state: 'off'
+              - condition: state
                 entity_id: input_select.home_status
                 state: 'Hemma'
               - condition: time
@@ -405,6 +416,9 @@ automation:
             conditions:
               - condition: trigger
                 id: turn_on_home
+              - condition: state
+                entity_id: input_boolean.inside_pause_day_window_transition
+                state: 'off'
               - condition: state
                 entity_id: input_boolean.daylight_on
                 state: 'on'
@@ -448,6 +462,9 @@ automation:
             sequence:
               - choose:
                   - conditions: "{{ is_state('input_boolean.christmas_light', 'on') }}"
+                    - condition: state
+                      entity_id: input_boolean.inside_pause_day_window_transition
+                      state: 'off'
                     sequence:
                       - service: input_select.select_option
                         entity_id: input_select.light_inside
@@ -713,6 +730,9 @@ script:
           is_time_09_05: "{{ now().hour >= 9 or now().hour < 5 }}"
           is_time_08_22: "{{ 8 <= now().hour < 22 }}"
 
+          pause_day_window_transition: "{{ is_state('input_boolean.inside_pause_day_window_transition', 'on') }}"
+          current_option: "{{ states('input_select.light_inside') }}"
+
           morning_on: "{{ is_state('input_boolean.morning_light_on', 'on') }}"
           daylight_on: "{{ is_state('input_boolean.daylight_on', 'on') }}"
           awaylight_on: "{{ is_state('input_boolean.awaylight_on', 'on') }}"
@@ -735,6 +755,8 @@ script:
               {% endif %}
             {% elif home_status == 'Hemma' and morning_on and is_time_05_09 %}
               Morgonbelysning
+            {% elif pause_day_window_transition and home_status == 'Hemma' and is_time_09_05 and (daylight_on or christmas_on) %}
+              {{ current_option }}
             {% elif home_status == 'Hemma' and daylight_on and is_time_09_05 %}
               Dagbelysning
             {% elif home_status == 'Hemma' and christmas_on and is_time_09_05 %}

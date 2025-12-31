@@ -509,9 +509,9 @@ automation:
         - condition: template
           value_template: >-
             {{ trigger.to_state is not none
-               and trigger.from_state is not none
-               and trigger.to_state.state not in ['unknown','unavailable','None']
-               and trigger.from_state.state not in ['unknown','unavailable','None'] }}
+              and trigger.from_state is not none
+              and trigger.to_state.state not in ['unknown','unavailable','None']
+              and trigger.from_state.state not in ['unknown','unavailable','None'] }}
         - condition: template 
           value_template: >-
             {% set to = trigger.to_state.state|float(0) %}
@@ -554,9 +554,9 @@ automation:
         - condition: template
           value_template: >-
             {{ trigger.to_state is not none
-               and trigger.from_state is not none
-               and trigger.to_state.state not in ['unknown','unavailable','None']
-               and trigger.from_state.state not in ['unknown','unavailable','None'] }}
+              and trigger.from_state is not none
+              and trigger.to_state.state not in ['unknown','unavailable','None']
+              and trigger.from_state.state not in ['unknown','unavailable','None'] }}
         - condition: template 
           value_template: >-
             {% set to = trigger.to_state.state|float(0) %}

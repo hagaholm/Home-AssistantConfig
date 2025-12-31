@@ -399,6 +399,7 @@ views:
           - input_select.light_outside
           - input_select.light_garden
           - input_select.facade_lights
+          - input_boolean.inside_pause_day_window_transition
           - input_boolean.christmas_light
           - input_select.home_status
         title: Belysningsgrupper
@@ -1412,4 +1413,5 @@ views:
         show_header_toggle: false
         entities:
           - entity: input_select.home_status
+          - entity: input_boolean.inside_pause_day_window_transition
           - entity: input_boolean.christmas_light

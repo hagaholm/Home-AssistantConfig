@@ -73,6 +73,11 @@ input_boolean:
     name: TV-ljusläge
     icon: mdi:television-ambient-light
 
+  inside_pause_day_window_transition:
+    name: Innebelysning pausa dag/fönster (09:00)
+    icon: mdi:pause-circle
+    initial: off
+
 ##################
 ### Automation ###
 ##################
@@ -247,6 +252,9 @@ template:
           {% set seconds_since_home_status_changed = (as_timestamp(now()) - as_timestamp(home_status_changed)) | int(0) %}
           {% set borta_long_enough = seconds_since_home_status_changed >= 60 %}
 
+          {% set pause_day_window_transition = is_state('input_boolean.inside_pause_day_window_transition', 'on') %}
+          {% set current_option = states('input_select.light_inside') %}
+
           {% set is_time_05_09 = 5 <= now().hour < 9 %}
           {# Crosses midnight: 09:00 -> 05:00 #}
           {% set is_time_09_05 = (now().hour >= 9) or (now().hour < 5) %}
@@ -276,6 +284,8 @@ template:
             {% endif %}
           {% elif home_status == 'Hemma' and morning_on and is_time_05_09 %}
             Morgonbelysning
+          {% elif pause_day_window_transition and home_status == 'Hemma' and is_time_09_05 and (daylight_on or christmas_on) %}
+            {{ current_option | trim }}
           {% elif home_status == 'Hemma' and daylight_on and is_time_09_05 %}
             Dagbelysning
           {% elif home_status == 'Hemma' and christmas_on and is_time_09_05 %}

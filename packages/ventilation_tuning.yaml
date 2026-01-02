@@ -206,8 +206,8 @@ template:
           {% set s2 = states('sensor.badrum_luftfuktighet') %}
           {% set s3 = states('sensor.ute') %}
           {{ s1 in ['unknown','unavailable','None']
-             or s2 in ['unknown','unavailable','None']
-             or s3 in ['unknown','unavailable','None'] }}
+            or s2 in ['unknown','unavailable','None']
+            or s3 in ['unknown','unavailable','None'] }}
 
       - name: Ventilation anomaly hysteresis fel
         unique_id: ventilation_anomaly_bad_hysteresis
@@ -360,9 +360,9 @@ automation:
       - condition: template
         value_template: >-
           {{ (rec_on|round(0) != cur_on|round(0))
-             or (rec_off|round(0) != cur_off|round(0))
-             or (rec_stable|round(0) != cur_stable|round(0))
-             or (rec_max|round(0) != cur_max|round(0)) }}
+            or (rec_off|round(0) != cur_off|round(0))
+            or (rec_stable|round(0) != cur_stable|round(0))
+            or (rec_max|round(0) != cur_max|round(0)) }}
 
       - choose:
           - conditions:

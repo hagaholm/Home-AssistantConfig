@@ -33,6 +33,10 @@ template:
         attributes:
           current_option: "{{ states('input_select.light_inside') | trim }}"
           home_status: "{{ states('input_select.home_status') | trim }}"
+          manual_evening_lock: >-
+            {{ (states('input_select.light_inside') | trim) == 'Kvällsbelysning'
+              and (states('input_select.home_status') | trim) == 'Hemma'
+            }}
           seconds_since_home_status_changed: >-
             {% set home_status_changed = states.input_select.home_status.last_changed %}
             {{ (as_timestamp(now()) - as_timestamp(home_status_changed)) | int(0) }}
@@ -45,12 +49,6 @@ template:
           is_time_05_09: "{{ 5 <= now().hour < 9 }}"
           is_time_09_05: "{{ (now().hour >= 9) or (now().hour < 5) }}"
           is_time_08_22: "{{ 8 <= now().hour < 22 }}"
-          is_evening_transition_window: >-
-            {{ is_state('light.sovrum_sangbord', 'on')
-              and is_state('light.sovrum_fonster', 'unavailable')
-              and is_state('input_select.home_status', 'Hemma')
-              and (21 <= now().hour < 23)
-            }}
           reason: >-
             {% set home_status = states('input_select.home_status') %}
             {% set home_status_changed = states.input_select.home_status.last_changed %}
@@ -66,13 +64,8 @@ template:
             {% set awaylight_on = is_state('input_boolean.awaylight_on', 'on') %}
             {% set christmas_on = is_state('input_boolean.christmas_light', 'on') %}
             {% set kitchen_motion = is_state('binary_sensor.kok_narvaro', 'on') %}
-            {% set is_evening_transition_window = is_state('light.sovrum_sangbord', 'on')
-              and is_state('light.sovrum_fonster', 'unavailable')
-              and is_state('input_select.home_status', 'Hemma')
-              and (21 <= now().hour < 23)
-            %}
-            {% if is_evening_transition_window %}
-              Sovrum-övergångsfönster (kväll)
+            {% if (current_option | trim) == 'Kvällsbelysning' and (home_status | trim) == 'Hemma' %}
+              Manuell Kvällsbelysning (låst)
             {% elif home_status == 'Borta' and awaylight_on and is_time_08_22 and borta_long_enough %}
               Borta + awaylight_on + tid 08-22 + borta>=60s
             {% elif home_status == 'Sover' %}
@@ -106,72 +99,58 @@ template:
             {% set christmas_on = is_state('input_boolean.christmas_light', 'on') %}
             {% set kitchen_motion = is_state('binary_sensor.kok_narvaro', 'on') %}
 
-            {% set is_evening_transition_window = is_state('light.sovrum_sangbord', 'on')
-              and is_state('light.sovrum_fonster', 'unavailable')
-              and is_state('input_select.home_status', 'Hemma')
-              and (21 <= now().hour < 23)
-            %}
-
             {% set lines = [
               'Släckt: ' ~ ('VALD' if desired == 'Släckt' else 'Inte vald (någon regel matchade: ' ~ desired ~ ')'),
               'Morgonbelysning: ' ~ ('VALD' if desired == 'Morgonbelysning' else (
                 'Kräver Hemma + morning_on + tid 05-09' ~ (
-                  '' if (home_status == 'Hemma' and morning_on and is_time_05_09 and not is_evening_transition_window) else
+                  '' if (home_status == 'Hemma' and morning_on and is_time_05_09) else
                   ' (saknas: ' ~ (
                     ('hemstatus!=' ~ home_status) if home_status != 'Hemma' else
                     ('morning_on=off') if not morning_on else
-                    ('tid ej 05-09') if not is_time_05_09 else
-                    ('kvällsövergång')
+                    ('tid ej 05-09') if not is_time_05_09
                   ) ~ ')'
                 )
               )),
               'Dagbelysning: ' ~ ('VALD' if desired == 'Dagbelysning' else (
                 'Kräver Hemma + daylight_on + tid 09-05 + ej pausad' ~ (
-                  '' if (home_status == 'Hemma' and daylight_on and is_time_09_05 and not pause_day_window_transition and not is_evening_transition_window) else
+                  '' if (home_status == 'Hemma' and daylight_on and is_time_09_05 and not pause_day_window_transition) else
                   ' (saknas: ' ~ (
                     ('hemstatus!=' ~ home_status) if home_status != 'Hemma' else
                     ('daylight_on=off') if not daylight_on else
                     ('tid ej 09-05') if not is_time_09_05 else
-                    ('pausad') if pause_day_window_transition else
-                    ('kvällsövergång')
+                    ('pausad') if pause_day_window_transition
                   ) ~ ')'
                 )
               )),
-              'Kvällsbelysning: ' ~ ('VALD' if desired == 'Kvällsbelysning' else (
-                'Kräver kvällsövergångsfönster 21-23' ~ ('' if is_evening_transition_window else ' (false)')
-              )),
               'Nattbelysning: ' ~ ('VALD' if desired == 'Nattbelysning' else (
                 'Kräver Sover + köksrörelse + daylight_on' ~ (
-                  '' if (home_status == 'Sover' and kitchen_motion and daylight_on and not is_evening_transition_window) else
+                  '' if (home_status == 'Sover' and kitchen_motion and daylight_on) else
                   ' (saknas: ' ~ (
                     ('hemstatus!=' ~ home_status) if home_status != 'Sover' else
                     ('köksrörelse=off') if not kitchen_motion else
-                    ('daylight_on=off') if not daylight_on else
-                    ('kvällsövergång')
+                    ('daylight_on=off') if not daylight_on
                   ) ~ ')'
                 )
               )),
               'Bortabelysning: ' ~ ('VALD' if desired == 'Bortabelysning' else (
                 'Kräver Borta + awaylight_on + tid 08-22 + borta>=60s' ~ (
-                  '' if (home_status == 'Borta' and awaylight_on and is_time_08_22 and borta_long_enough and not is_evening_transition_window) else
+                  '' if (home_status == 'Borta' and awaylight_on and is_time_08_22 and borta_long_enough) else
                   ' (saknas: ' ~ (
                     ('hemstatus!=' ~ home_status) if home_status != 'Borta' else
                     ('awaylight_on=off') if not awaylight_on else
                     ('tid ej 08-22') if not is_time_08_22 else
-                    ('borta<60s') if not borta_long_enough else
-                    ('kvällsövergång')
+                    ('borta<60s') if not borta_long_enough
                   ) ~ ')'
                 )
               )),
               'Fönsterbelysning: ' ~ ('VALD' if desired == 'Fönsterbelysning' else (
                 'Kräver Hemma + christmas_on + tid 09-05 + ej pausad' ~ (
-                  '' if (home_status == 'Hemma' and christmas_on and is_time_09_05 and not pause_day_window_transition and not is_evening_transition_window) else
+                  '' if (home_status == 'Hemma' and christmas_on and is_time_09_05 and not pause_day_window_transition) else
                   ' (saknas: ' ~ (
                     ('hemstatus!=' ~ home_status) if home_status != 'Hemma' else
                     ('christmas_on=off') if not christmas_on else
                     ('tid ej 09-05') if not is_time_09_05 else
-                    ('pausad') if pause_day_window_transition else
-                    ('kvällsövergång')
+                    ('pausad') if pause_day_window_transition
                   ) ~ ')'
                 )
               )),

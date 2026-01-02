@@ -266,15 +266,7 @@ template:
           {% set christmas_on = is_state('input_boolean.christmas_light', 'on') %}
           {% set kitchen_motion = is_state('binary_sensor.kok_narvaro', 'on') %}
 
-          {% set is_evening_transition_window = is_state('light.sovrum_sangbord', 'on')
-            and is_state('light.sovrum_fonster', 'unavailable')
-            and is_state('input_select.home_status', 'Hemma')
-            and (21 <= now().hour < 23)
-          %}
-
-          {% if is_evening_transition_window %}
-            Kvällsbelysning
-          {% elif home_status == 'Borta' and awaylight_on and is_time_08_22 and borta_long_enough %}
+          {% if home_status == 'Borta' and awaylight_on and is_time_08_22 and borta_long_enough %}
             Bortabelysning
           {% elif home_status == 'Sover' %}
             {% if kitchen_motion and daylight_on %}
@@ -304,6 +296,7 @@ script:
     mode: single
     sequence:
       - variables:
+          home_status: "{{ states('input_select.home_status') | trim }}"
           desired_option: "{{ states('sensor.light_inside_desired_option') | trim }}"
           current_option: "{{ states('input_select.light_inside') | trim }}"
           valid_options:
@@ -320,7 +313,12 @@ script:
       - choose:
           - conditions:
               - condition: template
-                value_template: "{{ desired_option in valid_options and desired_option != current_option }}"
+                value_template: >-
+                  {{
+                    desired_option in valid_options
+                    and desired_option != current_option
+                    and not (current_option == 'Kvällsbelysning' and home_status == 'Hemma')
+                  }}
             sequence:
               - service: input_select.select_option
                 data:

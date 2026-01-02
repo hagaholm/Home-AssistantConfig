@@ -1,0 +1,529 @@
+####################################################
+#                                                  #
+#             LIGHTS DEBUG (TEMPLATE)              #
+#                                                  #
+####################################################
+# BESKRIVNING:
+# Debug-sensorer som förklarar varför ett visst belysningsläge är valt.
+# Tanken är att UI kan visa:
+# - önskat läge (desired_option)
+# - aktuellt läge (current_option)
+# - vilka villkor som är sanna/falska
+# - en kort text "reason" för vald gren
+#
+# Säkerhet:
+# - Endast läsning (template sensors). Påverkar inte automationer.
+# - Använder float(none) + is number där sensorer kan vara unknown/unavailable.
+#
+# METADATA:
+# Skapad: 2026-01-02
+# Senast ändrad: 2026-01-02
+# Version: 1.0
+# Författare: Home Assistant Config
+####################################################
+
+template:
+  - sensor:
+      # -----------------
+      # INSIDE (Innebelysning)
+      # -----------------
+      - name: lights_debug_inside
+        unique_id: lights_debug_inside
+        state: "{{ states('sensor.light_inside_desired_option') | trim }}"
+        attributes:
+          current_option: "{{ states('input_select.light_inside') | trim }}"
+          home_status: "{{ states('input_select.home_status') | trim }}"
+          seconds_since_home_status_changed: >-
+            {% set home_status_changed = states.input_select.home_status.last_changed %}
+            {{ (as_timestamp(now()) - as_timestamp(home_status_changed)) | int(0) }}
+          pause_day_window_transition: "{{ is_state('input_boolean.inside_pause_day_window_transition', 'on') }}"
+          morning_on: "{{ is_state('input_boolean.morning_light_on', 'on') }}"
+          daylight_on: "{{ is_state('input_boolean.daylight_on', 'on') }}"
+          awaylight_on: "{{ is_state('input_boolean.awaylight_on', 'on') }}"
+          christmas_on: "{{ is_state('input_boolean.christmas_light', 'on') }}"
+          kitchen_motion: "{{ is_state('binary_sensor.kok_narvaro', 'on') }}"
+          is_time_05_09: "{{ 5 <= now().hour < 9 }}"
+          is_time_09_05: "{{ (now().hour >= 9) or (now().hour < 5) }}"
+          is_time_08_22: "{{ 8 <= now().hour < 22 }}"
+          is_evening_transition_window: >-
+            {{ is_state('light.sovrum_sangbord', 'on')
+              and is_state('light.sovrum_fonster', 'unavailable')
+              and is_state('input_select.home_status', 'Hemma')
+              and (21 <= now().hour < 23)
+            }}
+          reason: >-
+            {% set home_status = states('input_select.home_status') %}
+            {% set home_status_changed = states.input_select.home_status.last_changed %}
+            {% set seconds_since = (as_timestamp(now()) - as_timestamp(home_status_changed)) | int(0) %}
+            {% set borta_long_enough = seconds_since >= 60 %}
+            {% set pause_day_window_transition = is_state('input_boolean.inside_pause_day_window_transition', 'on') %}
+            {% set current_option = states('input_select.light_inside') %}
+            {% set is_time_05_09 = 5 <= now().hour < 9 %}
+            {% set is_time_09_05 = (now().hour >= 9) or (now().hour < 5) %}
+            {% set is_time_08_22 = 8 <= now().hour < 22 %}
+            {% set morning_on = is_state('input_boolean.morning_light_on', 'on') %}
+            {% set daylight_on = is_state('input_boolean.daylight_on', 'on') %}
+            {% set awaylight_on = is_state('input_boolean.awaylight_on', 'on') %}
+            {% set christmas_on = is_state('input_boolean.christmas_light', 'on') %}
+            {% set kitchen_motion = is_state('binary_sensor.kok_narvaro', 'on') %}
+            {% set is_evening_transition_window = is_state('light.sovrum_sangbord', 'on')
+              and is_state('light.sovrum_fonster', 'unavailable')
+              and is_state('input_select.home_status', 'Hemma')
+              and (21 <= now().hour < 23)
+            %}
+            {% if is_evening_transition_window %}
+              Sovrum-övergångsfönster (kväll)
+            {% elif home_status == 'Borta' and awaylight_on and is_time_08_22 and borta_long_enough %}
+              Borta + awaylight_on + tid 08-22 + borta>=60s
+            {% elif home_status == 'Sover' %}
+              Sover (nattljus bara om köksrörelse + daylight_on)
+            {% elif home_status == 'Hemma' and morning_on and is_time_05_09 %}
+              Hemma + morning_on + tid 05-09
+            {% elif pause_day_window_transition and home_status == 'Hemma' and is_time_09_05 and (daylight_on or christmas_on) %}
+              Pausad dag/fönster-övergång (behåll nuvarande)
+            {% elif home_status == 'Hemma' and daylight_on and is_time_09_05 %}
+              Hemma + daylight_on + tid 09-05
+            {% elif home_status == 'Hemma' and christmas_on and is_time_09_05 %}
+              Hemma + christmas_on + tid 09-05
+            {% else %}
+              Fallback: Släckt
+            {% endif %}
+
+      # -----------------
+      # KITCHEN
+      # -----------------
+      - name: lights_debug_kitchen
+        unique_id: lights_debug_kitchen
+        state: >-
+          {% set home_status = states('input_select.home_status') %}
+          {% set presence_all = is_state('binary_sensor.presence_sensor_fp2_9a29_presence_sensor_1', 'on') %}
+          {% set presence_zone_2 = is_state('binary_sensor.presence_sensor_fp2_9a29_presence_sensor_2', 'on') %}
+          {% set presence_zone_3 = is_state('binary_sensor.presence_sensor_fp2_9a29_presence_sensor_3', 'on') %}
+          {% set kitchen_light_on = is_state('input_boolean.kitchen_light_on', 'on') %}
+          {% set morning_light_on = is_state('input_boolean.morning_light_on', 'on') %}
+          {% if not presence_all %}
+            Släckt
+          {% elif home_status == 'Sover' %}
+            25%
+          {% elif home_status in ['Hemma', 'Borta'] and kitchen_light_on and (presence_zone_2 or presence_zone_3) %}
+            100%
+          {% elif home_status in ['Hemma', 'Borta'] and morning_light_on %}
+            50%
+          {% else %}
+            {{ states('input_select.light_kitchen') | trim }}
+          {% endif %}
+        attributes:
+          current_option: "{{ states('input_select.light_kitchen') | trim }}"
+          home_status: "{{ states('input_select.home_status') | trim }}"
+          presence_all: "{{ is_state('binary_sensor.presence_sensor_fp2_9a29_presence_sensor_1', 'on') }}"
+          presence_zone_2: "{{ is_state('binary_sensor.presence_sensor_fp2_9a29_presence_sensor_2', 'on') }}"
+          presence_zone_3: "{{ is_state('binary_sensor.presence_sensor_fp2_9a29_presence_sensor_3', 'on') }}"
+          kitchen_light_on: "{{ is_state('input_boolean.kitchen_light_on', 'on') }}"
+          morning_light_on: "{{ is_state('input_boolean.morning_light_on', 'on') }}"
+          reason: >-
+            {% set home_status = states('input_select.home_status') %}
+            {% set presence_all = is_state('binary_sensor.presence_sensor_fp2_9a29_presence_sensor_1', 'on') %}
+            {% set presence_zone_2 = is_state('binary_sensor.presence_sensor_fp2_9a29_presence_sensor_2', 'on') %}
+            {% set presence_zone_3 = is_state('binary_sensor.presence_sensor_fp2_9a29_presence_sensor_3', 'on') %}
+            {% set kitchen_light_on = is_state('input_boolean.kitchen_light_on', 'on') %}
+            {% set morning_light_on = is_state('input_boolean.morning_light_on', 'on') %}
+            {% if not presence_all %}
+              Ingen närvaro (sensor_1=off) => Släckt
+            {% elif home_status == 'Sover' %}
+              Sover => 25%
+            {% elif home_status in ['Hemma', 'Borta'] and kitchen_light_on and (presence_zone_2 or presence_zone_3) %}
+              Z2/Z3 närvaro + kitchen_light_on => 100%
+            {% elif home_status in ['Hemma', 'Borta'] and morning_light_on %}
+              morning_light_on => 50%
+            {% else %}
+              Behåll nuvarande
+            {% endif %}
+
+      # -----------------
+      # BATHROOM
+      # -----------------
+      - name: lights_debug_bathroom
+        unique_id: lights_debug_bathroom
+        state: >-
+          {% set home_status = states('input_select.home_status') %}
+          {% set motion = is_state('binary_sensor.motion_sensor', 'on') %}
+          {% set lux = states('sensor.kokets_ljusniva') | float(none) %}
+          {% set is_dark = lux is number and lux < 100 %}
+          {% set is_bright = lux is number and lux > 150 %}
+          {% if home_status == 'Borta' %}
+            Släckt
+          {% elif is_bright %}
+            Släckt
+          {% elif home_status == 'Sover' %}
+            {% if motion and is_dark %}
+              Natt närvaro
+            {% else %}
+              Släckt
+            {% endif %}
+          {% elif home_status == 'Hemma' and is_dark %}
+            {% if motion %}
+              Dag närvaro
+            {% else %}
+              Dag
+            {% endif %}
+          {% else %}
+            {{ states('input_select.light_bathroom') | trim }}
+          {% endif %}
+        attributes:
+          current_option: "{{ states('input_select.light_bathroom') | trim }}"
+          home_status: "{{ states('input_select.home_status') | trim }}"
+          motion: "{{ is_state('binary_sensor.motion_sensor', 'on') }}"
+          lux: "{{ states('sensor.kokets_ljusniva') }}"
+          is_dark: >-
+            {% set lux = states('sensor.kokets_ljusniva') | float(none) %}
+            {{ lux is number and lux < 100 }}
+          is_bright: >-
+            {% set lux = states('sensor.kokets_ljusniva') | float(none) %}
+            {{ lux is number and lux > 150 }}
+          reason: >-
+            {% set home_status = states('input_select.home_status') %}
+            {% set motion = is_state('binary_sensor.motion_sensor', 'on') %}
+            {% set lux = states('sensor.kokets_ljusniva') | float(none) %}
+            {% set is_dark = lux is number and lux < 100 %}
+            {% set is_bright = lux is number and lux > 150 %}
+            {% if home_status == 'Borta' %}
+              Hemstatus Borta => Släckt
+            {% elif is_bright %}
+              För ljust (lux>150) => Släckt
+            {% elif home_status == 'Sover' %}
+              Sover => Natt närvaro bara om rörelse+mörkt
+            {% elif home_status == 'Hemma' and is_dark %}
+              Hemma+mörkt => Dag (utan rörelse) / Dag närvaro (med rörelse)
+            {% else %}
+              Behåll nuvarande
+            {% endif %}
+
+      # -----------------
+      # GARDEN
+      # -----------------
+      - name: lights_debug_garden
+        unique_id: lights_debug_garden
+        state: >-
+          {% set home_status = states('input_select.home_status') %}
+          {% set track_state = states('group.track_for_home_devices') %}
+          {% set lux = states('sensor.ljusstyrka') | float(none) %}
+          {% set lux_40 = states('input_number.ljusstyrka_40') | float(40) %}
+          {% set lux_60 = states('input_number.ljusstyrka_60') | float(60) %}
+          {% set is_dark = lux is number and lux < lux_40 %}
+          {% set is_bright = lux is number and lux > lux_60 %}
+          {% set is_time_05_12 = 5 <= now().hour < 12 %}
+          {% set is_time_12_05 = (now().hour >= 12) or (now().hour < 5) %}
+          {% set is_time_21_06 = (now().hour >= 21) or (now().hour < 6) %}
+          {% if home_status == 'Sover' %}
+            Släckt
+          {% elif is_bright %}
+            Släckt
+          {% elif track_state == 'home' and is_time_21_06 %}
+            Släckt
+          {% elif is_dark and is_time_05_12 and home_status == 'Hemma' %}
+            Tänd
+          {% elif is_dark and is_time_12_05 and track_state == 'home' and home_status == 'Hemma' %}
+            Tänd
+          {% elif is_dark and is_time_12_05 and track_state == 'not_home' %}
+            Tänd
+          {% else %}
+            {{ states('input_select.light_garden') | trim }}
+          {% endif %}
+        attributes:
+          current_option: "{{ states('input_select.light_garden') | trim }}"
+          home_status: "{{ states('input_select.home_status') | trim }}"
+          track_state: "{{ states('group.track_for_home_devices') | trim }}"
+          lux: "{{ states('sensor.ljusstyrka') }}"
+          lux_40: "{{ states('input_number.ljusstyrka_40') }}"
+          lux_60: "{{ states('input_number.ljusstyrka_60') }}"
+          is_dark: >-
+            {% set lux = states('sensor.ljusstyrka') | float(none) %}
+            {% set lux_40 = states('input_number.ljusstyrka_40') | float(40) %}
+            {{ lux is number and lux < lux_40 }}
+          is_bright: >-
+            {% set lux = states('sensor.ljusstyrka') | float(none) %}
+            {% set lux_60 = states('input_number.ljusstyrka_60') | float(60) %}
+            {{ lux is number and lux > lux_60 }}
+          is_time_05_12: "{{ 5 <= now().hour < 12 }}"
+          is_time_12_05: "{{ (now().hour >= 12) or (now().hour < 5) }}"
+          is_time_21_06: "{{ (now().hour >= 21) or (now().hour < 6) }}"
+          reason: >-
+            {% set home_status = states('input_select.home_status') %}
+            {% set track_state = states('group.track_for_home_devices') %}
+            {% set lux = states('sensor.ljusstyrka') | float(none) %}
+            {% set lux_40 = states('input_number.ljusstyrka_40') | float(40) %}
+            {% set lux_60 = states('input_number.ljusstyrka_60') | float(60) %}
+            {% set is_dark = lux is number and lux < lux_40 %}
+            {% set is_bright = lux is number and lux > lux_60 %}
+            {% set is_time_05_12 = 5 <= now().hour < 12 %}
+            {% set is_time_12_05 = (now().hour >= 12) or (now().hour < 5) %}
+            {% set is_time_21_06 = (now().hour >= 21) or (now().hour < 6) %}
+            {% if home_status == 'Sover' %}
+              Sover => Släckt
+            {% elif is_bright %}
+              För ljust => Släckt
+            {% elif track_state == 'home' and is_time_21_06 %}
+              Hemma natt (21-06) => Släckt
+            {% elif is_dark and is_time_05_12 and home_status == 'Hemma' %}
+              Mörkt + morgon + Hemma => Tänd
+            {% elif is_dark and is_time_12_05 and track_state == 'home' and home_status == 'Hemma' %}
+              Mörkt + eftermiddag/kväll + Hemma => Tänd
+            {% elif is_dark and is_time_12_05 and track_state == 'not_home' %}
+              Mörkt + eftermiddag/kväll + Borta => Tänd (säkerhet)
+            {% else %}
+              Behåll nuvarande
+            {% endif %}
+
+      # -----------------
+      # UTERUM (Outdoor room)
+      # -----------------
+      - name: lights_debug_uterum
+        unique_id: lights_debug_uterum
+        state: >-
+          {% set home_status = states('input_select.home_status') %}
+          {% set track_state = states('group.track_for_home_devices') %}
+          {% set lux = states('sensor.ljusstyrka') | float(none) %}
+          {% set lux_150 = states('input_number.ljusstyrka_150') | float(150) %}
+          {% set temp = states('sensor.uterum_temperatur') | float(none) %}
+          {% set is_time_12_2145 = (now().hour > 12 or (now().hour == 12 and now().minute >= 0)) and (now().hour < 21 or (now().hour == 21 and now().minute <= 45)) %}
+          {% set is_dark = lux is number and lux < lux_150 %}
+          {% set temp_ok = temp is number and temp > 18 %}
+          {% set temp_too_cold = temp is number and temp < 17 %}
+          {% if home_status == 'Sover' %}
+            Släckt
+          {% elif track_state != 'home' %}
+            Släckt
+          {% elif temp_too_cold %}
+            Släckt
+          {% elif is_time_12_2145 and is_dark and temp_ok %}
+            Tänd
+          {% else %}
+            {{ states('input_select.light_uterum') | trim }}
+          {% endif %}
+        attributes:
+          current_option: "{{ states('input_select.light_uterum') | trim }}"
+          home_status: "{{ states('input_select.home_status') | trim }}"
+          track_state: "{{ states('group.track_for_home_devices') | trim }}"
+          lux: "{{ states('sensor.ljusstyrka') }}"
+          lux_150: "{{ states('input_number.ljusstyrka_150') }}"
+          temp: "{{ states('sensor.uterum_temperatur') }}"
+          is_time_12_2145: "{{ (now().hour > 12 or (now().hour == 12 and now().minute >= 0)) and (now().hour < 21 or (now().hour == 21 and now().minute <= 45)) }}"
+          is_dark: >-
+            {% set lux = states('sensor.ljusstyrka') | float(none) %}
+            {% set lux_150 = states('input_number.ljusstyrka_150') | float(150) %}
+            {{ lux is number and lux < lux_150 }}
+          temp_ok: >-
+            {% set temp = states('sensor.uterum_temperatur') | float(none) %}
+            {{ temp is number and temp > 18 }}
+          temp_too_cold: >-
+            {% set temp = states('sensor.uterum_temperatur') | float(none) %}
+            {{ temp is number and temp < 17 }}
+          reason: >-
+            {% set home_status = states('input_select.home_status') %}
+            {% set track_state = states('group.track_for_home_devices') %}
+            {% set lux = states('sensor.ljusstyrka') | float(none) %}
+            {% set lux_150 = states('input_number.ljusstyrka_150') | float(150) %}
+            {% set temp = states('sensor.uterum_temperatur') | float(none) %}
+            {% set is_time_12_2145 = (now().hour > 12 or (now().hour == 12 and now().minute >= 0)) and (now().hour < 21 or (now().hour == 21 and now().minute <= 45)) %}
+            {% set is_dark = lux is number and lux < lux_150 %}
+            {% set temp_ok = temp is number and temp > 18 %}
+            {% set temp_too_cold = temp is number and temp < 17 %}
+            {% if home_status == 'Sover' %}
+              Sover => Släckt
+            {% elif track_state != 'home' %}
+              Ingen hemma (track!=home) => Släckt
+            {% elif temp_too_cold %}
+              För kallt (temp<17) => Släckt
+            {% elif is_time_12_2145 and is_dark and temp_ok %}
+              Tid 12-21:45 + mörkt + varmt => Tänd
+            {% else %}
+              Behåll nuvarande
+            {% endif %}
+
+      # -----------------
+      # SPABAD (light_outside)
+      # -----------------
+      - name: lights_debug_spabad
+        unique_id: lights_debug_spabad
+        state: >-
+          {% set home_status = states('input_select.home_status') %}
+          {% set track_state = states('group.track_for_home_devices') %}
+          {% set workday_tomorrow = is_state('binary_sensor.workday_tomorrow', 'on') %}
+          {% set lux = states('sensor.ljusstyrka') | float(none) %}
+          {% set lux_5 = states('input_number.ljusstyrka_5') | float(5) %}
+          {% set is_time_12_2145 = (now().hour > 12 or (now().hour == 12 and now().minute >= 0)) and (now().hour < 21 or (now().hour == 21 and now().minute <= 45)) %}
+          {% set is_time_after_22 = now().hour >= 22 %}
+          {% set is_dark = lux is number and lux < lux_5 %}
+          {% if home_status == 'Sover' %}
+            Släckt
+          {% elif track_state != 'home' %}
+            Släckt
+          {% elif is_time_after_22 and workday_tomorrow %}
+            Släckt
+          {% elif is_time_12_2145 and is_dark and (not workday_tomorrow) %}
+            Tänd
+          {% else %}
+            {{ states('input_select.light_outside') | trim }}
+          {% endif %}
+        attributes:
+          current_option: "{{ states('input_select.light_outside') | trim }}"
+          home_status: "{{ states('input_select.home_status') | trim }}"
+          track_state: "{{ states('group.track_for_home_devices') | trim }}"
+          workday_tomorrow: "{{ is_state('binary_sensor.workday_tomorrow', 'on') }}"
+          lux: "{{ states('sensor.ljusstyrka') }}"
+          lux_5: "{{ states('input_number.ljusstyrka_5') }}"
+          is_time_12_2145: "{{ (now().hour > 12 or (now().hour == 12 and now().minute >= 0)) and (now().hour < 21 or (now().hour == 21 and now().minute <= 45)) }}"
+          is_time_after_22: "{{ now().hour >= 22 }}"
+          is_dark: >-
+            {% set lux = states('sensor.ljusstyrka') | float(none) %}
+            {% set lux_5 = states('input_number.ljusstyrka_5') | float(5) %}
+            {{ lux is number and lux < lux_5 }}
+          reason: >-
+            {% set home_status = states('input_select.home_status') %}
+            {% set track_state = states('group.track_for_home_devices') %}
+            {% set workday_tomorrow = is_state('binary_sensor.workday_tomorrow', 'on') %}
+            {% set lux = states('sensor.ljusstyrka') | float(none) %}
+            {% set lux_5 = states('input_number.ljusstyrka_5') | float(5) %}
+            {% set is_time_12_2145 = (now().hour > 12 or (now().hour == 12 and now().minute >= 0)) and (now().hour < 21 or (now().hour == 21 and now().minute <= 45)) %}
+            {% set is_time_after_22 = now().hour >= 22 %}
+            {% set is_dark = lux is number and lux < lux_5 %}
+            {% if home_status == 'Sover' %}
+              Sover => Släckt
+            {% elif track_state != 'home' %}
+              Ingen hemma => Släckt
+            {% elif is_time_after_22 and workday_tomorrow %}
+              Efter 22 + arbetsdag imorgon => Släckt
+            {% elif is_time_12_2145 and is_dark and (not workday_tomorrow) %}
+              Tid 12-21:45 + mörkt + ej arbetsdag imorgon => Tänd
+            {% else %}
+              Behåll nuvarande
+            {% endif %}
+
+      # -----------------
+      # FACADE
+      # -----------------
+      - name: lights_debug_facade
+        unique_id: lights_debug_facade
+        state: >-
+          {% set home_status = states('input_select.home_status') %}
+          {% set lux = states('sensor.ljusstyrka') | float(none) %}
+          {% set lux_40 = states('input_number.ljusstyrka_40') | float(40) %}
+          {% set lux_60 = states('input_number.ljusstyrka_60') | float(60) %}
+          {% set person_any = is_state('binary_sensor.cam3_person_occupancy', 'on')
+            or is_state('binary_sensor.cam7_person_occupancy', 'on')
+            or is_state('binary_sensor.cam8_person_occupancy', 'on')
+          %}
+          {% set is_bright = lux is number and lux > lux_60 %}
+          {% set is_dark = lux is number and lux < lux_40 %}
+          {% set is_not_too_bright = lux is number and lux < lux_60 %}
+          {% if is_bright %}
+            Släckt
+          {% elif person_any and is_not_too_bright %}
+            Person upptäckt
+          {% elif home_status == 'Sover' and is_not_too_bright %}
+            Natt
+          {% elif is_dark %}
+            Morgon/Kväll
+          {% else %}
+            {{ states('input_select.facade_lights') | trim }}
+          {% endif %}
+        attributes:
+          current_option: "{{ states('input_select.facade_lights') | trim }}"
+          home_status: "{{ states('input_select.home_status') | trim }}"
+          lux: "{{ states('sensor.ljusstyrka') }}"
+          lux_40: "{{ states('input_number.ljusstyrka_40') }}"
+          lux_60: "{{ states('input_number.ljusstyrka_60') }}"
+          person_any: >-
+            {{ is_state('binary_sensor.cam3_person_occupancy', 'on')
+              or is_state('binary_sensor.cam7_person_occupancy', 'on')
+              or is_state('binary_sensor.cam8_person_occupancy', 'on')
+            }}
+          is_bright: >-
+            {% set lux = states('sensor.ljusstyrka') | float(none) %}
+            {% set lux_60 = states('input_number.ljusstyrka_60') | float(60) %}
+            {{ lux is number and lux > lux_60 }}
+          is_dark: >-
+            {% set lux = states('sensor.ljusstyrka') | float(none) %}
+            {% set lux_40 = states('input_number.ljusstyrka_40') | float(40) %}
+            {{ lux is number and lux < lux_40 }}
+          reason: >-
+            {% set home_status = states('input_select.home_status') %}
+            {% set lux = states('sensor.ljusstyrka') | float(none) %}
+            {% set lux_40 = states('input_number.ljusstyrka_40') | float(40) %}
+            {% set lux_60 = states('input_number.ljusstyrka_60') | float(60) %}
+            {% set person_any = is_state('binary_sensor.cam3_person_occupancy', 'on')
+              or is_state('binary_sensor.cam7_person_occupancy', 'on')
+              or is_state('binary_sensor.cam8_person_occupancy', 'on')
+            %}
+            {% set is_bright = lux is number and lux > lux_60 %}
+            {% set is_dark = lux is number and lux < lux_40 %}
+            {% set is_not_too_bright = lux is number and lux < lux_60 %}
+            {% if is_bright %}
+              För ljust (lux>60) => Släckt
+            {% elif person_any and is_not_too_bright %}
+              Person upptäckt + ej för ljust => Person upptäckt
+            {% elif home_status == 'Sover' and is_not_too_bright %}
+              Sover + ej för ljust => Natt
+            {% elif is_dark %}
+              Mörkt (lux<40) => Morgon/Kväll
+            {% else %}
+              Behåll nuvarande
+            {% endif %}
+
+      # -----------------
+      # HALL
+      # -----------------
+      - name: lights_debug_hall
+        unique_id: lights_debug_hall
+        state: >-
+          {% set home_status = states('input_select.home_status') %}
+          {% set hall_state = states('light.hall_tak') %}
+          {% set bri = state_attr('light.hall_tak', 'brightness') %}
+          {% set bri_pct = ((bri | float(0)) * 100 / 255) | round(0) | int if (bri is number) else -1 %}
+          {% if home_status != 'Hemma' %}
+            Släckt
+          {% elif hall_state != 'on' %}
+            Släckt
+          {% elif bri_pct < 0 %}
+            100%
+          {% elif bri_pct <= 5 %}
+            1%
+          {% elif bri_pct <= 25 %}
+            10%
+          {% elif bri_pct <= 75 %}
+            50%
+          {% else %}
+            100%
+          {% endif %}
+        attributes:
+          current_option: "{{ states('input_select.light_hall') | trim }}"
+          home_status: "{{ states('input_select.home_status') | trim }}"
+          hall_state: "{{ states('light.hall_tak') }}"
+          brightness: "{{ state_attr('light.hall_tak', 'brightness') }}"
+          brightness_pct: >-
+            {% set bri = state_attr('light.hall_tak', 'brightness') %}
+            {% if bri is number %}
+              {{ ((bri | float(0)) * 100 / 255) | round(0) | int }}
+            {% else %}
+              -1
+            {% endif %}
+          reason: >-
+            {% set home_status = states('input_select.home_status') %}
+            {% set hall_state = states('light.hall_tak') %}
+            {% set bri = state_attr('light.hall_tak', 'brightness') %}
+            {% set bri_pct = ((bri | float(0)) * 100 / 255) | round(0) | int if (bri is number) else -1 %}
+            {% if home_status != 'Hemma' %}
+              Hemstatus != Hemma => Släckt
+            {% elif hall_state != 'on' %}
+              Lampan är av => Släckt
+            {% elif bri_pct < 0 %}
+              Okänd brightness => anta 100%
+            {% elif bri_pct <= 5 %}
+              brightness<=5% => 1%
+            {% elif bri_pct <= 25 %}
+              brightness<=25% => 10%
+            {% elif bri_pct <= 75 %}
+              brightness<=75% => 50%
+            {% else %}
+              brightness>75% => 100%
+            {% endif %}

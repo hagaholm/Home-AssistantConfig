@@ -640,6 +640,127 @@ views:
           show_header_toggle: true
           state_color: true
     icon: 'mdi:lightbulb'
+
+  - path: lights_debug
+    title: Lights Debug
+    badges: []
+    cards:
+      - type: markdown
+        content: |
+          ## Lights Debug
+
+          Den här sidan visar *beräknat önskat läge* (state på debug-sensorn) och en kort **reason** samt villkor.
+
+          Tips:
+          - Klicka på en debug-sensor för att se alla attribut (villkor som är true/false).
+          - För full historik: öppna respektive automation (resolver/state machine) och kolla **Trace** i Home Assistant.
+
+      - type: entities
+        title: Innebelysning (Inside)
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - sensor.lights_debug_inside
+          - sensor.light_inside_desired_option
+          - input_select.light_inside
+          - input_select.home_status
+          - input_boolean.morning_light_on
+          - input_boolean.daylight_on
+          - input_boolean.awaylight_on
+          - input_boolean.christmas_light
+          - binary_sensor.kok_narvaro
+
+      - type: entities
+        title: Kök
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - sensor.lights_debug_kitchen
+          - input_select.light_kitchen
+          - input_boolean.kitchen_light_on
+          - input_boolean.morning_light_on
+          - binary_sensor.presence_sensor_fp2_9a29_presence_sensor_1
+          - binary_sensor.presence_sensor_fp2_9a29_presence_sensor_2
+          - binary_sensor.presence_sensor_fp2_9a29_presence_sensor_3
+          - input_select.home_status
+
+      - type: entities
+        title: Badrum
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - sensor.lights_debug_bathroom
+          - input_select.light_bathroom
+          - binary_sensor.motion_sensor
+          - sensor.kokets_ljusniva
+          - input_select.home_status
+
+      - type: entities
+        title: Hall
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - sensor.lights_debug_hall
+          - input_select.light_hall
+          - light.hall_tak
+          - input_select.home_status
+
+      - type: entities
+        title: Trädgård
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - sensor.lights_debug_garden
+          - input_select.light_garden
+          - sensor.ljusstyrka
+          - input_number.ljusstyrka_40
+          - input_number.ljusstyrka_60
+          - group.track_for_home_devices
+          - input_select.home_status
+
+      - type: entities
+        title: Uterum
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - sensor.lights_debug_uterum
+          - input_select.light_uterum
+          - sensor.uterum_temperatur
+          - sensor.ljusstyrka
+          - input_number.ljusstyrka_150
+          - group.track_for_home_devices
+          - input_select.home_status
+
+      - type: entities
+        title: Spabad
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - sensor.lights_debug_spabad
+          - input_select.light_outside
+          - binary_sensor.workday_tomorrow
+          - sensor.ljusstyrka
+          - input_number.ljusstyrka_5
+          - group.track_for_home_devices
+          - input_select.home_status
+
+      - type: entities
+        title: Fasadbelysning
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - sensor.lights_debug_facade
+          - input_select.facade_lights
+          - sensor.ljusstyrka
+          - input_number.ljusstyrka_40
+          - input_number.ljusstyrka_60
+          - binary_sensor.cam3_person_occupancy
+          - binary_sensor.cam7_person_occupancy
+          - binary_sensor.cam8_person_occupancy
+          - input_select.home_status
+
+    icon: 'mdi:bug'
+
   - path: room
     title: Rum
     badges: []

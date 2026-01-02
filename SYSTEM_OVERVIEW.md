@@ -410,6 +410,7 @@ Run `py extra/ha_docs_sync.py` to refresh it.
   - [packages/integrations/tts.yaml](packages/integrations/tts.yaml)
 - **packages/lights/**
   - [packages/lights/bathroom.yaml](packages/lights/bathroom.yaml)
+  - [packages/lights/debug.yaml](packages/lights/debug.yaml)
   - [packages/lights/facade.yaml](packages/lights/facade.yaml)
   - [packages/lights/garden.yaml](packages/lights/garden.yaml)
   - [packages/lights/hall.yaml](packages/lights/hall.yaml)

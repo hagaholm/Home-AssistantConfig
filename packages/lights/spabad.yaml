@@ -76,7 +76,7 @@ automation:
   ####################################################
   #          EXECUTE SCRIPT ON STATE CHANGE          #
   ####################################################
-  - alias: Utebelysning changed
+  - alias: Spabadbelysning (input_select)
     id: 'light_outside_changed'
     mode: single
     trigger:
@@ -125,7 +125,7 @@ script:
           desired_option: >-
             {% if home_status == 'Sover' %}
               Släckt
-            {% elif track_state == 'not_home' %}
+            {% elif track_state != 'home' %}
               Släckt
             {% elif is_time_after_22 and workday_tomorrow %}
               Släckt

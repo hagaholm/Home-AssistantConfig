@@ -1,0 +1,17 @@
+####################################################
+#                                                  #
+#          LIGHTS DEBUG (PACKAGE WRAPPER)          #
+#                                                  #
+####################################################
+# BESKRIVNING:
+# Wrapper som gör att debug-sensorerna i packages/lights/debug.yaml
+# faktiskt laddas via homeassistant.packages (include_dir_named packages).
+#
+# METADATA:
+# Skapad: 2026-01-02
+# Senast ändrad: 2026-01-02
+# Version: 1.0
+# Författare: Home Assistant Config
+####################################################
+
+!include lights/debug.yaml

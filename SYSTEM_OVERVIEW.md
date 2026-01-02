@@ -366,6 +366,7 @@ Run `py extra/ha_docs_sync.py` to refresh it.
 - [packages/google.yaml](packages/google.yaml)
 - [packages/harmony_hub.yaml](packages/harmony_hub.yaml)
 - [packages/light_switch.yaml](packages/light_switch.yaml)
+- [packages/lights_debug.yaml](packages/lights_debug.yaml)
 - [packages/ljusstyrka_thresholds.yaml](packages/ljusstyrka_thresholds.yaml)
 - [packages/mqtt_publish_values.yaml](packages/mqtt_publish_values.yaml)
 - [packages/person.yaml](packages/person.yaml)

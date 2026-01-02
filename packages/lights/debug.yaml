@@ -197,13 +197,14 @@ template:
           {% set presence_zone_3 = is_state('binary_sensor.presence_sensor_fp2_9a29_presence_sensor_3', 'on') %}
           {% set kitchen_light_on = is_state('input_boolean.kitchen_light_on', 'on') %}
           {% set morning_light_on = is_state('input_boolean.morning_light_on', 'on') %}
+          {% set current_option = states('input_select.light_kitchen') | trim %}
           {% if not presence_all %}
             Släckt
           {% elif home_status == 'Sover' %}
             25%
           {% elif home_status in ['Hemma', 'Borta'] and kitchen_light_on and (presence_zone_2 or presence_zone_3) %}
             100%
-          {% elif home_status in ['Hemma', 'Borta'] and morning_light_on %}
+          {% elif home_status in ['Hemma', 'Borta'] and morning_light_on and current_option in ['Släckt'] %}
             50%
           {% else %}
             {{ states('input_select.light_kitchen') | trim }}
@@ -223,14 +224,15 @@ template:
             {% set presence_zone_3 = is_state('binary_sensor.presence_sensor_fp2_9a29_presence_sensor_3', 'on') %}
             {% set kitchen_light_on = is_state('input_boolean.kitchen_light_on', 'on') %}
             {% set morning_light_on = is_state('input_boolean.morning_light_on', 'on') %}
+            {% set current_option = states('input_select.light_kitchen') | trim %}
             {% if not presence_all %}
               Ingen närvaro (sensor_1=off) => Släckt
             {% elif home_status == 'Sover' %}
               Sover => 25%
             {% elif home_status in ['Hemma', 'Borta'] and kitchen_light_on and (presence_zone_2 or presence_zone_3) %}
               Z2/Z3 närvaro + kitchen_light_on => 100%
-            {% elif home_status in ['Hemma', 'Borta'] and morning_light_on %}
-              morning_light_on => 50%
+            {% elif home_status in ['Hemma', 'Borta'] and morning_light_on and current_option in ['Släckt'] %}
+              morning_light_on + current=Släckt => 50%
             {% else %}
               Behåll nuvarande
             {% endif %}
@@ -242,11 +244,12 @@ template:
             {% set presence_zone_3 = is_state('binary_sensor.presence_sensor_fp2_9a29_presence_sensor_3', 'on') %}
             {% set kitchen_light_on = is_state('input_boolean.kitchen_light_on', 'on') %}
             {% set morning_light_on = is_state('input_boolean.morning_light_on', 'on') %}
+            {% set current_option = states('input_select.light_kitchen') | trim %}
 
             {% set lines = [
               'Släckt: ' ~ ('VALD' if desired == 'Släckt' else 'Tvingas bara vid ingen närvaro (sensor_1=off)'),
               '25%: ' ~ ('VALD' if desired == '25%' else ('Kräver Sover + närvaro' ~ ('' if (home_status == 'Sover' and presence_all) else ' (false)'))),
-              '50%: ' ~ ('VALD' if desired == '50%' else ('Kräver morning_light_on + närvaro (och ej 100%-regel)' ~ ('' if (presence_all and home_status in ['Hemma','Borta'] and morning_light_on and not (kitchen_light_on and (presence_zone_2 or presence_zone_3))) else ' (false)'))),
+              '50%: ' ~ ('VALD' if desired == '50%' else ('Kräver morning_light_on + current=Släckt + närvaro (och ej 100%-regel)' ~ ('' if (presence_all and home_status in ['Hemma','Borta'] and morning_light_on and current_option == 'Släckt' and not (kitchen_light_on and (presence_zone_2 or presence_zone_3))) else ' (false)'))),
               '100%: ' ~ ('VALD' if desired == '100%' else ('Kräver kitchen_light_on + Z2/Z3 närvaro' ~ ('' if (presence_all and home_status in ['Hemma','Borta'] and kitchen_light_on and (presence_zone_2 or presence_zone_3)) else ' (false)'))),
             ] %}
 

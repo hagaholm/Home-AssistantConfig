@@ -251,7 +251,7 @@ script:
               25%
             {% elif home_status in ['Hemma', 'Borta'] and kitchen_light_on and (presence_zone_2 or presence_zone_3) %}
               100%
-            {% elif home_status in ['Hemma', 'Borta'] and morning_light_on %}
+            {% elif home_status in ['Hemma', 'Borta'] and morning_light_on and current_option in ['Släckt'] %}
               50%
             {% else %}
               {{ current_option }}

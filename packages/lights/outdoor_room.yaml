@@ -282,10 +282,6 @@ script:
     alias: Uterums belysning on
     mode: restart
     sequence:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_uterum
-          option: Tänd
       - condition: template
         value_template: "{{ states('light.uterum_led') != 'unavailable' }}"
       - service: light.turn_on
@@ -306,10 +302,6 @@ script:
     alias: Uterums belysning off
     mode: restart
     sequence:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.light_uterum
-          option: Släckt
       - condition: template
         value_template: "{{ states('light.uterum_led') != 'unavailable' }}"
       - service: light.turn_off

@@ -20,6 +20,12 @@
 # Säkerhet:
 # - IDs och alias bibehållna för bakåtkompatibilitet
 # - Mode single enligt original
+#
+# METADATA:
+# Skapad: okänt
+# Senast ändrad: 2026-01-02
+# Version: 1.0
+# Författare: Home Assistant Config
 ####################################################
 
 #######################
@@ -43,6 +49,28 @@ input_select:
 ### Automation ###
 ##################
 automation:
+
+  ######################################
+  ### Halltak resolver (single)
+  ######################################
+  - alias: Halltak resolver
+    id: halltak_resolver
+    description: >
+      Resolver som synkar input_select.light_hall via script.hall_set_correct_mode
+      (en källa till sanning för vald nivå).
+    mode: restart
+    trigger:
+      - platform: homeassistant
+        event: start
+
+      - platform: state
+        entity_id: input_select.home_status
+
+      - platform: state
+        entity_id: light.hall_tak
+
+    action:
+      - service: script.hall_set_correct_mode
 
   #######################################################
   #                                                     #

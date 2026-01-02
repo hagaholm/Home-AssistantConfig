@@ -79,19 +79,21 @@ light:
   - platform: group
     name: Fasadbelysning
     # House exterior facade lighting (decorative accents)
-    # Used by: light_outside_facade script for evening/security lighting
+    # Used by: fasadbelysning_* (packages/lights/facade.yaml)
     # Includes: Front entrance, laundry room, storage, garden shed accents
     entities:
       - light.huvudentre2
-      - light.tvattstuga_fasad
+      - light.tvattstugan_fasad
       - light.forrad_fasad
       - light.friggebod_fasad
 
   - platform: group
     name: Utebelysning
     # Exterior outdoor lighting (gardens and entertainment areas)
-    # Used by: light_outside script for outdoor entertaining
-    # Includes: Hot tub area lighting (multiple fixtures)
+    # Used by:
+    # - outside_light_on/off (packages/lights/spabad.yaml) (spabad-lampor)
+    # - tradgards_belysning_on/off (packages/lights/garden.yaml) (friggebod_ute_2)
+    # Includes: Hot tub area lighting + friggebod ute
     entities:
       - light.friggebod_ute_2
       - light.spabad_v

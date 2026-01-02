@@ -111,11 +111,15 @@ This mode is then referenced by many other automations (lighting, doorbell behav
 
 Lighting is intentionally built as **state machines** + **scene scripts**.
 
+For a concise package-by-package checklist (resolver + `*_set_correct_mode` + state machine + restore participation), see:
+
+- `LIGHTS_PACKAGES_STRATEGY_REPORT.md`
+
 ### Key ideas
 
 - Use `input_select` as a “desired scene” (source of truth).
-- Automations set the input_select based on time, presence, and conditions.
-- A central automation listens to input_select changes and calls the correct script.
+- A resolver automation recalculates the correct option and updates the `input_select` via a `*_set_correct_mode` script.
+- A state machine automation listens to `input_select` changes and calls the corresponding “effect” script.
 
 ### Indoor lighting
 
@@ -154,6 +158,10 @@ There are also “infrastructure” files:
 - `packages/lights/light_groups_standard.yaml` – normal group definitions
 - `packages/lights/light_groups_seasonal.yaml` – Christmas variants
 - `packages/lights/scenes.yaml` – scene definitions (if used)
+
+There is also a helper restore script for “fix it now” from the UI:
+
+- `packages/lights/restore_all.yaml` – `script.lights_set_correct_modes` calls all `*_set_correct_mode` scripts
 
 ---
 
@@ -402,6 +410,7 @@ Run `py extra/ha_docs_sync.py` to refresh it.
   - [packages/integrations/tts.yaml](packages/integrations/tts.yaml)
 - **packages/lights/**
   - [packages/lights/bathroom.yaml](packages/lights/bathroom.yaml)
+  - [packages/lights/debug.yaml](packages/lights/debug.yaml)
   - [packages/lights/facade.yaml](packages/lights/facade.yaml)
   - [packages/lights/garden.yaml](packages/lights/garden.yaml)
   - [packages/lights/hall.yaml](packages/lights/hall.yaml)

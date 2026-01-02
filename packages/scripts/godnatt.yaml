@@ -11,9 +11,10 @@
 # BESKRIVNING:
 # Godnatt-rutiner för kvällsläggning.
 #
-# Design: Scripten ställer endast input_select-värden.
-# Automations reagerar på dessa ändringar och hanterar
-# den faktiska kontrollen.
+# Design: Scripten sätter primärt input_select-värden.
+# Som failsafe körs även relevanta off/natt-scripts för att
+# släcka korrekt även när input_select redan står i rätt läge
+# (t.ex. om någon lampa tänds manuellt eller via en direkt-automation).
 #
 # Källor:
 # - packages/lights/inside.yaml (input_select.light_inside)
@@ -73,6 +74,13 @@ script:
           entity_id: input_select.facade_lights
           option: Natt
 
+      # Failsafe: slå av/lås scen även om input_select inte ändras
+      - service: script.inside_lights_off
+      - service: script.kitchen_light_off
+      - service: script.tradgards_belysning_off
+      - service: script.outside_light_off
+      - service: script.fasadbelysning_night
+
   goodnight_10_min:
     alias: Godnatt, släcker allt om 10 minuter
     mode: restart
@@ -103,6 +111,13 @@ script:
           entity_id: input_select.facade_lights
           option: Natt
 
+      # Failsafe: slå av/lås scen även om input_select inte ändras
+      - service: script.inside_lights_off
+      - service: script.kitchen_light_off
+      - service: script.tradgards_belysning_off
+      - service: script.outside_light_off
+      - service: script.fasadbelysning_night
+
   goodnight_all:
     alias: Godnatt, stänger av allt
     mode: restart
@@ -131,6 +146,13 @@ script:
         data:
           entity_id: input_select.facade_lights
           option: Natt
+
+      # Failsafe: slå av/lås scen även om input_select inte ändras
+      - service: script.inside_lights_off
+      - service: script.kitchen_light_off
+      - service: script.tradgards_belysning_off
+      - service: script.outside_light_off
+      - service: script.fasadbelysning_night
 
   goodnight_all_10_min:
     alias: Godnatt, stänger av allt om 10 minuter
@@ -162,6 +184,13 @@ script:
           entity_id: input_select.facade_lights
           option: Natt
 
+      # Failsafe: slå av/lås scen även om input_select inte ändras
+      - service: script.inside_lights_off
+      - service: script.kitchen_light_off
+      - service: script.tradgards_belysning_off
+      - service: script.outside_light_off
+      - service: script.fasadbelysning_night
+
   goodnight_all_tv_10_min:
     alias: Godnatt, stänger av allt (tv om 10 minuter)
     sequence:
@@ -189,6 +218,13 @@ script:
         data:
           entity_id: input_select.facade_lights
           option: Natt
+
+      # Failsafe: slå av/lås scen även om input_select inte ändras
+      - service: script.inside_lights_off
+      - service: script.kitchen_light_off
+      - service: script.tradgards_belysning_off
+      - service: script.outside_light_off
+      - service: script.fasadbelysning_night
       - delay: '00:10:00'
       - service: remote.turn_off
         entity_id: remote.harmony_hub

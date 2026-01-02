@@ -70,3 +70,14 @@ Run:
 
 ## 6) Notes
 - Some integration-focused package files may intentionally be “light” on metadata. For automation-heavy files, prefer the full header standard.
+
+## Appendix: Lighting package convention
+
+Most files under `packages/lights/` follow a consistent pattern:
+
+- **Helper**: an `input_select.*` is the source of truth (manual override allowed).
+- **Resolver**: an automation triggers on relevant state changes and calls a `script.*_set_correct_mode` script.
+- **Decision**: `*_set_correct_mode` is the only place that decides and updates the `input_select`.
+- **State machine**: a separate automation listens to the `input_select` and runs the matching “effect” script.
+
+For UI “restore now”, `packages/lights/restore_all.yaml` provides `script.lights_set_correct_modes` which calls all `*_set_correct_mode` scripts.

@@ -88,6 +88,102 @@ template:
             {% else %}
               Fallback: Släckt
             {% endif %}
+          why_not: >-
+            {% set desired = states('sensor.light_inside_desired_option') | trim %}
+            {% set home_status = states('input_select.home_status') %}
+            {% set home_status_changed = states.input_select.home_status.last_changed %}
+            {% set seconds_since = (as_timestamp(now()) - as_timestamp(home_status_changed)) | int(0) %}
+            {% set borta_long_enough = seconds_since >= 60 %}
+            {% set pause_day_window_transition = is_state('input_boolean.inside_pause_day_window_transition', 'on') %}
+
+            {% set is_time_05_09 = 5 <= now().hour < 9 %}
+            {% set is_time_09_05 = (now().hour >= 9) or (now().hour < 5) %}
+            {% set is_time_08_22 = 8 <= now().hour < 22 %}
+
+            {% set morning_on = is_state('input_boolean.morning_light_on', 'on') %}
+            {% set daylight_on = is_state('input_boolean.daylight_on', 'on') %}
+            {% set awaylight_on = is_state('input_boolean.awaylight_on', 'on') %}
+            {% set christmas_on = is_state('input_boolean.christmas_light', 'on') %}
+            {% set kitchen_motion = is_state('binary_sensor.kok_narvaro', 'on') %}
+
+            {% set is_evening_transition_window = is_state('light.sovrum_sangbord', 'on')
+              and is_state('light.sovrum_fonster', 'unavailable')
+              and is_state('input_select.home_status', 'Hemma')
+              and (21 <= now().hour < 23)
+            %}
+
+            {% set lines = [
+              'Släckt: ' ~ ('VALD' if desired == 'Släckt' else 'Inte vald (någon regel matchade: ' ~ desired ~ ')'),
+              'Morgonbelysning: ' ~ ('VALD' if desired == 'Morgonbelysning' else (
+                'Kräver Hemma + morning_on + tid 05-09' ~ (
+                  '' if (home_status == 'Hemma' and morning_on and is_time_05_09 and not is_evening_transition_window) else
+                  ' (saknas: ' ~ (
+                    ('hemstatus!=' ~ home_status) if home_status != 'Hemma' else
+                    ('morning_on=off') if not morning_on else
+                    ('tid ej 05-09') if not is_time_05_09 else
+                    ('kvällsövergång')
+                  ) ~ ')'
+                )
+              )),
+              'Dagbelysning: ' ~ ('VALD' if desired == 'Dagbelysning' else (
+                'Kräver Hemma + daylight_on + tid 09-05 + ej pausad' ~ (
+                  '' if (home_status == 'Hemma' and daylight_on and is_time_09_05 and not pause_day_window_transition and not is_evening_transition_window) else
+                  ' (saknas: ' ~ (
+                    ('hemstatus!=' ~ home_status) if home_status != 'Hemma' else
+                    ('daylight_on=off') if not daylight_on else
+                    ('tid ej 09-05') if not is_time_09_05 else
+                    ('pausad') if pause_day_window_transition else
+                    ('kvällsövergång')
+                  ) ~ ')'
+                )
+              )),
+              'Kvällsbelysning: ' ~ ('VALD' if desired == 'Kvällsbelysning' else (
+                'Kräver kvällsövergångsfönster 21-23' ~ ('' if is_evening_transition_window else ' (false)')
+              )),
+              'Nattbelysning: ' ~ ('VALD' if desired == 'Nattbelysning' else (
+                'Kräver Sover + köksrörelse + daylight_on' ~ (
+                  '' if (home_status == 'Sover' and kitchen_motion and daylight_on and not is_evening_transition_window) else
+                  ' (saknas: ' ~ (
+                    ('hemstatus!=' ~ home_status) if home_status != 'Sover' else
+                    ('köksrörelse=off') if not kitchen_motion else
+                    ('daylight_on=off') if not daylight_on else
+                    ('kvällsövergång')
+                  ) ~ ')'
+                )
+              )),
+              'Bortabelysning: ' ~ ('VALD' if desired == 'Bortabelysning' else (
+                'Kräver Borta + awaylight_on + tid 08-22 + borta>=60s' ~ (
+                  '' if (home_status == 'Borta' and awaylight_on and is_time_08_22 and borta_long_enough and not is_evening_transition_window) else
+                  ' (saknas: ' ~ (
+                    ('hemstatus!=' ~ home_status) if home_status != 'Borta' else
+                    ('awaylight_on=off') if not awaylight_on else
+                    ('tid ej 08-22') if not is_time_08_22 else
+                    ('borta<60s') if not borta_long_enough else
+                    ('kvällsövergång')
+                  ) ~ ')'
+                )
+              )),
+              'Fönsterbelysning: ' ~ ('VALD' if desired == 'Fönsterbelysning' else (
+                'Kräver Hemma + christmas_on + tid 09-05 + ej pausad' ~ (
+                  '' if (home_status == 'Hemma' and christmas_on and is_time_09_05 and not pause_day_window_transition and not is_evening_transition_window) else
+                  ' (saknas: ' ~ (
+                    ('hemstatus!=' ~ home_status) if home_status != 'Hemma' else
+                    ('christmas_on=off') if not christmas_on else
+                    ('tid ej 09-05') if not is_time_09_05 else
+                    ('pausad') if pause_day_window_transition else
+                    ('kvällsövergång')
+                  ) ~ ')'
+                )
+              )),
+              'Förmiddagsbelysning: ' ~ ('VALD' if desired == 'Förmiddagsbelysning' else 'Väljs normalt inte av resolver (manuell/legacy)'),
+              'Arbetsbelysning: ' ~ ('VALD' if desired == 'Arbetsbelysning' else 'Väljs normalt inte av resolver (manuell)'),
+            ] %}
+
+            {% if pause_day_window_transition and home_status == 'Hemma' and is_time_09_05 and (daylight_on or christmas_on) and desired == states('input_select.light_inside') | trim %}
+              {% set lines = lines + ['OBS: Övergång pausad => behåller nuvarande (' ~ desired ~ ')'] %}
+            {% endif %}
+
+            {{ lines | join('\n') }}
 
       # -----------------
       # KITCHEN
@@ -138,6 +234,27 @@ template:
             {% else %}
               Behåll nuvarande
             {% endif %}
+          why_not: >-
+            {% set desired = (states('sensor.lights_debug_kitchen') | trim) %}
+            {% set home_status = states('input_select.home_status') %}
+            {% set presence_all = is_state('binary_sensor.presence_sensor_fp2_9a29_presence_sensor_1', 'on') %}
+            {% set presence_zone_2 = is_state('binary_sensor.presence_sensor_fp2_9a29_presence_sensor_2', 'on') %}
+            {% set presence_zone_3 = is_state('binary_sensor.presence_sensor_fp2_9a29_presence_sensor_3', 'on') %}
+            {% set kitchen_light_on = is_state('input_boolean.kitchen_light_on', 'on') %}
+            {% set morning_light_on = is_state('input_boolean.morning_light_on', 'on') %}
+
+            {% set lines = [
+              'Släckt: ' ~ ('VALD' if desired == 'Släckt' else 'Tvingas bara vid ingen närvaro (sensor_1=off)'),
+              '25%: ' ~ ('VALD' if desired == '25%' else ('Kräver Sover + närvaro' ~ ('' if (home_status == 'Sover' and presence_all) else ' (false)'))),
+              '50%: ' ~ ('VALD' if desired == '50%' else ('Kräver morning_light_on + närvaro (och ej 100%-regel)' ~ ('' if (presence_all and home_status in ['Hemma','Borta'] and morning_light_on and not (kitchen_light_on and (presence_zone_2 or presence_zone_3))) else ' (false)'))),
+              '100%: ' ~ ('VALD' if desired == '100%' else ('Kräver kitchen_light_on + Z2/Z3 närvaro' ~ ('' if (presence_all and home_status in ['Hemma','Borta'] and kitchen_light_on and (presence_zone_2 or presence_zone_3)) else ' (false)'))),
+            ] %}
+
+            {% if desired == states('input_select.light_kitchen') | trim and presence_all and home_status != 'Sover' and not (kitchen_light_on and (presence_zone_2 or presence_zone_3)) and not morning_light_on %}
+              {% set lines = lines + ['OBS: Ingen regel tvingade ändring => behåller nuvarande (' ~ desired ~ ')'] %}
+            {% endif %}
+
+            {{ lines | join('\n') }}
 
       # -----------------
       # BATHROOM
@@ -197,6 +314,30 @@ template:
             {% else %}
               Behåll nuvarande
             {% endif %}
+          why_not: >-
+            {% set desired = (states('sensor.lights_debug_bathroom') | trim) %}
+            {% set home_status = states('input_select.home_status') %}
+            {% set motion = is_state('binary_sensor.motion_sensor', 'on') %}
+            {% set lux = states('sensor.kokets_ljusniva') | float(none) %}
+            {% set is_dark = lux is number and lux < 100 %}
+            {% set is_bright = lux is number and lux > 150 %}
+
+            {% set lines = [
+              'Släckt: ' ~ ('VALD' if desired == 'Släckt' else 'Tvingas vid Borta eller för ljust eller Sover utan rörelse+mörkt'),
+              'Dag: ' ~ ('VALD' if desired == 'Dag' else ('Kräver Hemma + mörkt + ingen rörelse' ~ ('' if (home_status == 'Hemma' and is_dark and not motion) else ' (false)'))),
+              'Dag närvaro: ' ~ ('VALD' if desired == 'Dag närvaro' else ('Kräver Hemma + mörkt + rörelse' ~ ('' if (home_status == 'Hemma' and is_dark and motion) else ' (false)'))),
+              'Natt närvaro: ' ~ ('VALD' if desired == 'Natt närvaro' else ('Kräver Sover + mörkt + rörelse' ~ ('' if (home_status == 'Sover' and is_dark and motion) else ' (false)'))),
+            ] %}
+
+            {% if home_status == 'Hemma' and not is_dark and desired == states('input_select.light_bathroom') | trim %}
+              {% set lines = lines + ['OBS: Behåller nuvarande (ej mörkt nog för automatik) => ' ~ desired] %}
+            {% endif %}
+
+            {% if is_bright %}
+              {% set lines = lines + ['OBS: För ljust (lux>150) => Släckt prioriteras'] %}
+            {% endif %}
+
+            {{ lines | join('\n') }}
 
       # -----------------
       # GARDEN
@@ -273,6 +414,41 @@ template:
             {% else %}
               Behåll nuvarande
             {% endif %}
+          why_not: >-
+            {% set desired = (states('sensor.lights_debug_garden') | trim) %}
+            {% set home_status = states('input_select.home_status') %}
+            {% set track_state = states('group.track_for_home_devices') %}
+            {% set lux = states('sensor.ljusstyrka') | float(none) %}
+            {% set lux_40 = states('input_number.ljusstyrka_40') | float(40) %}
+            {% set lux_60 = states('input_number.ljusstyrka_60') | float(60) %}
+            {% set is_dark = lux is number and lux < lux_40 %}
+            {% set is_bright = lux is number and lux > lux_60 %}
+            {% set is_time_05_12 = 5 <= now().hour < 12 %}
+            {% set is_time_12_05 = (now().hour >= 12) or (now().hour < 5) %}
+            {% set is_time_21_06 = (now().hour >= 21) or (now().hour < 6) %}
+
+            {% set can_turn_on = (
+              (is_dark and is_time_05_12 and home_status == 'Hemma')
+              or (is_dark and is_time_12_05 and track_state == 'home' and home_status == 'Hemma')
+              or (is_dark and is_time_12_05 and track_state == 'not_home')
+            ) %}
+
+            {% set lines = [
+              'Tänd: ' ~ ('VALD' if desired == 'Tänd' else ('Kräver mörkt + korrekt tidläge + (Hemma eller Borta-säkerhet)' ~ ('' if can_turn_on else ' (false)'))),
+              'Släckt: ' ~ ('VALD' if desired == 'Släckt' else 'Någon tänd-regel matchade'),
+            ] %}
+
+            {% if home_status == 'Sover' %}
+              {% set lines = lines + ['Blocker: Hemstatus Sover => alltid Släckt'] %}
+            {% elif is_bright %}
+              {% set lines = lines + ['Blocker: För ljust => Släckt'] %}
+            {% elif track_state == 'home' and is_time_21_06 %}
+              {% set lines = lines + ['Blocker: Hemma natt (21-06) => Släckt'] %}
+            {% elif not is_dark %}
+              {% set lines = lines + ['Blocker: Inte mörkt (lux>=tröskel)'] %}
+            {% endif %}
+
+            {{ lines | join('\n') }}
 
       # -----------------
       # UTERUM (Outdoor room)
@@ -339,6 +515,39 @@ template:
             {% else %}
               Behåll nuvarande
             {% endif %}
+          why_not: >-
+            {% set desired = (states('sensor.lights_debug_uterum') | trim) %}
+            {% set home_status = states('input_select.home_status') %}
+            {% set track_state = states('group.track_for_home_devices') %}
+            {% set lux = states('sensor.ljusstyrka') | float(none) %}
+            {% set lux_150 = states('input_number.ljusstyrka_150') | float(150) %}
+            {% set temp = states('sensor.uterum_temperatur') | float(none) %}
+            {% set is_time_12_2145 = (now().hour > 12 or (now().hour == 12 and now().minute >= 0)) and (now().hour < 21 or (now().hour == 21 and now().minute <= 45)) %}
+            {% set is_dark = lux is number and lux < lux_150 %}
+            {% set temp_ok = temp is number and temp > 18 %}
+            {% set temp_too_cold = temp is number and temp < 17 %}
+            {% set can_turn_on = (home_status != 'Sover' and track_state == 'home' and (not temp_too_cold) and is_time_12_2145 and is_dark and temp_ok) %}
+
+            {% set lines = [
+              'Tänd: ' ~ ('VALD' if desired == 'Tänd' else ('Kräver hemma + 12-21:45 + mörkt + temp>18' ~ ('' if can_turn_on else ' (false)'))),
+              'Släckt: ' ~ ('VALD' if desired == 'Släckt' else 'Någon tänd-regel matchade'),
+            ] %}
+
+            {% if home_status == 'Sover' %}
+              {% set lines = lines + ['Blocker: Sover => Släckt'] %}
+            {% elif track_state != 'home' %}
+              {% set lines = lines + ['Blocker: Ingen hemma (track!=home) => Släckt'] %}
+            {% elif temp_too_cold %}
+              {% set lines = lines + ['Blocker: För kallt (temp<17) => Släckt'] %}
+            {% elif not is_time_12_2145 %}
+              {% set lines = lines + ['Blocker: Utanför tidsfönster 12-21:45'] %}
+            {% elif not is_dark %}
+              {% set lines = lines + ['Blocker: Inte mörkt (lux>=150)'] %}
+            {% elif not temp_ok %}
+              {% set lines = lines + ['Blocker: Inte varmt nog (temp<=18)'] %}
+            {% endif %}
+
+            {{ lines | join('\n') }}
 
       # -----------------
       # SPABAD (light_outside)
@@ -398,6 +607,38 @@ template:
             {% else %}
               Behåll nuvarande
             {% endif %}
+          why_not: >-
+            {% set desired = (states('sensor.lights_debug_spabad') | trim) %}
+            {% set home_status = states('input_select.home_status') %}
+            {% set track_state = states('group.track_for_home_devices') %}
+            {% set workday_tomorrow = is_state('binary_sensor.workday_tomorrow', 'on') %}
+            {% set lux = states('sensor.ljusstyrka') | float(none) %}
+            {% set lux_5 = states('input_number.ljusstyrka_5') | float(5) %}
+            {% set is_time_12_2145 = (now().hour > 12 or (now().hour == 12 and now().minute >= 0)) and (now().hour < 21 or (now().hour == 21 and now().minute <= 45)) %}
+            {% set is_time_after_22 = now().hour >= 22 %}
+            {% set is_dark = lux is number and lux < lux_5 %}
+            {% set can_turn_on = (home_status != 'Sover' and track_state == 'home' and (not (is_time_after_22 and workday_tomorrow)) and is_time_12_2145 and is_dark and (not workday_tomorrow)) %}
+
+            {% set lines = [
+              'Tänd: ' ~ ('VALD' if desired == 'Tänd' else ('Kräver hemma + 12-21:45 + mörkt + ej arbetsdag imorgon' ~ ('' if can_turn_on else ' (false)'))),
+              'Släckt: ' ~ ('VALD' if desired == 'Släckt' else 'Någon tänd-regel matchade'),
+            ] %}
+
+            {% if home_status == 'Sover' %}
+              {% set lines = lines + ['Blocker: Sover => Släckt'] %}
+            {% elif track_state != 'home' %}
+              {% set lines = lines + ['Blocker: Ingen hemma => Släckt'] %}
+            {% elif is_time_after_22 and workday_tomorrow %}
+              {% set lines = lines + ['Blocker: Efter 22 + arbetsdag imorgon => Släckt'] %}
+            {% elif workday_tomorrow %}
+              {% set lines = lines + ['Blocker: Arbetsdag imorgon => Tänd tillåts inte'] %}
+            {% elif not is_time_12_2145 %}
+              {% set lines = lines + ['Blocker: Utanför tidsfönster 12-21:45'] %}
+            {% elif not is_dark %}
+              {% set lines = lines + ['Blocker: Inte mörkt (lux>=5)'] %}
+            {% endif %}
+
+            {{ lines | join('\n') }}
 
       # -----------------
       # FACADE
@@ -469,6 +710,36 @@ template:
             {% else %}
               Behåll nuvarande
             {% endif %}
+          why_not: >-
+            {% set desired = (states('sensor.lights_debug_facade') | trim) %}
+            {% set home_status = states('input_select.home_status') %}
+            {% set lux = states('sensor.ljusstyrka') | float(none) %}
+            {% set lux_40 = states('input_number.ljusstyrka_40') | float(40) %}
+            {% set lux_60 = states('input_number.ljusstyrka_60') | float(60) %}
+            {% set person_any = is_state('binary_sensor.cam3_person_occupancy', 'on')
+              or is_state('binary_sensor.cam7_person_occupancy', 'on')
+              or is_state('binary_sensor.cam8_person_occupancy', 'on')
+            %}
+            {% set is_bright = lux is number and lux > lux_60 %}
+            {% set is_dark = lux is number and lux < lux_40 %}
+            {% set is_not_too_bright = lux is number and lux < lux_60 %}
+
+            {% set lines = [
+              'Släckt: ' ~ ('VALD' if desired == 'Släckt' else 'Tvingas endast vid för ljust (lux>60)'),
+              'Person upptäckt: ' ~ ('VALD' if desired == 'Person upptäckt' else ('Kräver person_any + lux<60' ~ ('' if (person_any and is_not_too_bright) else ' (false)'))),
+              'Natt: ' ~ ('VALD' if desired == 'Natt' else ('Kräver Sover + lux<60 + ingen person' ~ ('' if (home_status == 'Sover' and is_not_too_bright and not person_any) else ' (false)'))),
+              'Morgon/Kväll: ' ~ ('VALD' if desired == 'Morgon/Kväll' else ('Kräver mörkt (lux<40) + ej Sover + ingen person' ~ ('' if (is_dark and home_status != 'Sover' and not person_any and not is_bright) else ' (false)'))),
+            ] %}
+
+            {% if is_bright %}
+              {% set lines = lines + ['Blocker: För ljust => Släckt prioriteras'] %}
+            {% elif person_any and is_not_too_bright %}
+              {% set lines = lines + ['Prioritet: Person upptäckt går före Natt/Morgon-Kväll'] %}
+            {% elif home_status == 'Sover' and is_not_too_bright %}
+              {% set lines = lines + ['Prioritet: Natt går före Morgon/Kväll vid Sover'] %}
+            {% endif %}
+
+            {{ lines | join('\n') }}
 
       # -----------------
       # HALL
@@ -527,3 +798,25 @@ template:
             {% else %}
               brightness>75% => 100%
             {% endif %}
+          why_not: >-
+            {% set desired = (states('sensor.lights_debug_hall') | trim) %}
+            {% set home_status = states('input_select.home_status') %}
+            {% set hall_state = states('light.hall_tak') %}
+            {% set bri = state_attr('light.hall_tak', 'brightness') %}
+            {% set bri_pct = ((bri | float(0)) * 100 / 255) | round(0) | int if (bri is number) else -1 %}
+
+            {% set lines = [
+              'Släckt: ' ~ ('VALD' if desired == 'Släckt' else 'Kräver hemstatus!=Hemma eller lampan av'),
+              '1%: ' ~ ('VALD' if desired == '1%' else ('Kräver brightness<=5% (och Hemma + lampan på)' ~ ('' if (home_status == 'Hemma' and hall_state == 'on' and bri_pct >= 0 and bri_pct <= 5) else ' (false)'))),
+              '10%: ' ~ ('VALD' if desired == '10%' else ('Kräver 6-25% (och Hemma + lampan på)' ~ ('' if (home_status == 'Hemma' and hall_state == 'on' and bri_pct >= 0 and 5 < bri_pct <= 25) else ' (false)'))),
+              '50%: ' ~ ('VALD' if desired == '50%' else ('Kräver 26-75% (och Hemma + lampan på)' ~ ('' if (home_status == 'Hemma' and hall_state == 'on' and bri_pct >= 0 and 25 < bri_pct <= 75) else ' (false)'))),
+              '100%: ' ~ ('VALD' if desired == '100%' else ('Kräver >75% eller okänd brightness (och Hemma + lampan på)' ~ ('' if (home_status == 'Hemma' and hall_state == 'on' and (bri_pct < 0 or bri_pct > 75)) else ' (false)'))),
+            ] %}
+
+            {% if home_status != 'Hemma' %}
+              {% set lines = lines + ['Blocker: Hemstatus!=' ~ home_status ~ ' => Släckt'] %}
+            {% elif hall_state != 'on' %}
+              {% set lines = lines + ['Blocker: Lampan är av => Släckt'] %}
+            {% endif %}
+
+            {{ lines | join('\n') }}

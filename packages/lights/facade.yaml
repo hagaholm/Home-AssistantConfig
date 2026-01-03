@@ -378,10 +378,9 @@ script:
           transition: 1
       - condition: template
         value_template: "{{ states('light.huvudentre2') != 'unavailable' }}"
-      - service: light.turn_on
+      - service: light.turn_off
         data:
           entity_id: light.huvudentre2
-          brightness_pct: 50
           transition: 1
 
   fasadbelysning_max:

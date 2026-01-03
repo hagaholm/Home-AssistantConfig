@@ -263,7 +263,7 @@ views:
           - script.hall_taklampor_10_procent
           - script.hall_taklampor_50_procent
           - script.hall_taklampor_100_procent
-        title: Halltakbelysning
+        title: Halltak
         show_header_toggle: false
         state_color: true
       - type: entities
@@ -413,7 +413,7 @@ views:
           action: toggle
       - type: button
         entity: script.inside_set_correct_mode
-        name: Återställ innebelysning (rätt läge)
+        name: Återställ inne (rätt läge)
         icon: mdi:restore
         tap_action:
           action: toggle
@@ -426,7 +426,7 @@ views:
           - binary_sensor.koksbord_narvaro
           - binary_sensor.koksbank_narvaro
           - entity: input_boolean.kitchen_light_on
-        title: Köksbelysning
+        title: Kök
         show_header_toggle: true
         state_color: true
       - type: conditional
@@ -588,7 +588,7 @@ views:
           - light.tvattstugan_fasad
           - light.forrad_fasad
           - light.friggebod_fasad
-        title: Fasadbelysning
+        title: Fasad
         show_header_toggle: true
         state_color: true
 
@@ -658,7 +658,7 @@ views:
           If you want an even clearer “why not option X” display, I can extend the debug sensors to include explicit why_not_* fields per option (still read-only), but I kept this first version minimal and consistent with your current decision logic.
 
       - type: entities
-        title: Innebelysning (Inside)
+        title: Inne
         show_header_toggle: false
         state_color: true
         entities:
@@ -803,7 +803,7 @@ views:
           - input_select.home_status
 
       - type: entities
-        title: Fasadbelysning
+        title: Fasad
         show_header_toggle: false
         state_color: true
         entities:

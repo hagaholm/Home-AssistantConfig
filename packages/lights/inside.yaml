@@ -48,7 +48,7 @@
 #######################
 input_select:
   light_inside:
-    name: Innebelysning
+    name: Inne
     # Lighting mode for interior lights (living room, kitchen, bedrooms)
     # Options represent different lighting scenes for various times of day
     # Updated by: sensor.light_inside_desired_option via automation "Innebelysning resolver"
@@ -74,7 +74,7 @@ input_boolean:
     icon: mdi:television-ambient-light
 
   inside_pause_day_window_transition:
-    name: Innebelysning pausa dag/fönster (09:00)
+    name: Inne pausa dag/fönster (09:00)
     icon: mdi:pause-circle
     initial: off
 
@@ -292,7 +292,7 @@ template:
 script:
 
   inside_set_correct_mode:
-    alias: Återställ innebelysning (sätt korrekt läge)
+    alias: Återställ inne (sätt korrekt läge)
     mode: single
     sequence:
       - variables:
@@ -328,7 +328,7 @@ script:
         default: []
 
   inside_apply_current_scene:
-    alias: Återställ innebelysning (utifrån nuvarande läge)
+    alias: Återställ inne (utifrån nuvarande läge)
     mode: restart
     sequence:
       - choose:

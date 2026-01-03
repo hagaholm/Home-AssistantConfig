@@ -32,6 +32,15 @@ input_select:
       - Tänd
     icon: mdi:lightbulb
 
+########################
+### Input Boolean(s) ###
+########################
+input_boolean:
+  lights_auto_spabad:
+    name: Auto Spabad
+    icon: mdi:hot-tub
+    initial: on
+
 ##################
 ### Automation ###
 ##################
@@ -49,6 +58,12 @@ automation:
   - alias: Spabad resolver
     id: '1735604100097'
     mode: restart
+
+    condition:
+      - condition: state
+        entity_id: input_boolean.lights_auto_spabad
+        state: 'on'
+
     trigger:
       - platform: homeassistant
         event: start

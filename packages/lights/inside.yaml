@@ -69,6 +69,11 @@ input_select:
 ### Input Boolean(s) ###
 ########################
 input_boolean:
+  lights_auto_inne:
+    name: Auto Inne
+    icon: mdi:home-lightbulb
+    initial: on
+
   tv_light_mode:
     name: TV-ljusläge
     icon: mdi:television-ambient-light
@@ -228,6 +233,11 @@ automation:
   - alias: Innebelysning resolver
     id: '1735604100091'
     mode: single
+
+    condition:
+      - condition: state
+        entity_id: input_boolean.lights_auto_inne
+        state: 'on'
 
     trigger:
       - platform: homeassistant

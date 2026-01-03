@@ -47,6 +47,15 @@ input_select:
       - Tänd
     icon: mdi:lightbulb
 
+########################
+### Input Boolean(s) ###
+########################
+input_boolean:
+  lights_auto_uterum:
+    name: Auto Uterum
+    icon: mdi:greenhouse
+    initial: on
+
 ##################
 ### Automation ###
 ##################
@@ -105,6 +114,12 @@ automation:
       Resolver som synkar input_select.light_uterum via script.uterum_set_correct_mode
       (en källa till sanning för beslutslogiken).
     mode: restart
+
+    condition:
+      - condition: state
+        entity_id: input_boolean.lights_auto_uterum
+        state: 'on'
+
     trigger:
       - platform: homeassistant
         event: start

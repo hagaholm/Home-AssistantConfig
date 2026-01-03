@@ -405,6 +405,19 @@ views:
         title: Belysningsgrupper
         show_header_toggle: false
         state_color: true
+      - type: entities
+        entities:
+          - input_boolean.lights_auto_inne
+          - input_boolean.lights_auto_halltak
+          - input_boolean.lights_auto_kok
+          - input_boolean.lights_auto_uterum
+          - input_boolean.lights_auto_badrum
+          - input_boolean.lights_auto_tradgard
+          - input_boolean.lights_auto_fasad
+          - input_boolean.lights_auto_spabad
+        title: Auto belysning
+        show_header_toggle: false
+        state_color: true
       - type: button
         entity: script.lights_set_correct_modes
         name: Återställ all belysning (rätt lägen)

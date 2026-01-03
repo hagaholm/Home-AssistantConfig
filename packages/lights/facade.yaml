@@ -35,6 +35,15 @@ input_select:
       - Person upptäckt
     icon: mdi:lightbulb
 
+########################
+### Input Boolean(s) ###
+########################
+input_boolean:
+  lights_auto_fasad:
+    name: Auto Fasad
+    icon: mdi:home-outline
+    initial: on
+
 ##################
 ### Automation ###
 ##################
@@ -63,6 +72,12 @@ automation:
   - alias: Facade Light option migration
     id: 'facade_lights_option_migration'
     mode: single
+
+    condition:
+      - condition: state
+        entity_id: input_boolean.lights_auto_fasad
+        state: 'on'
+
     trigger:
       - platform: homeassistant
         event: start
@@ -108,6 +123,12 @@ automation:
       Resolver som synkar input_select.facade_lights via script.facade_set_correct_mode
       (en källa till sanning för beslutslogiken).
     mode: restart
+
+    condition:
+      - condition: state
+        entity_id: input_boolean.lights_auto_fasad
+        state: 'on'
+
     trigger:
       - platform: homeassistant
         event: start

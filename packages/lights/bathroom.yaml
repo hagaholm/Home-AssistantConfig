@@ -47,6 +47,15 @@ input_select:
       - Natt närvaro
     icon: mdi:lightbulb
 
+########################
+### Input Boolean(s) ###
+########################
+input_boolean:
+  lights_auto_badrum:
+    name: Auto Badrum
+    icon: mdi:shower
+    initial: on
+
 ##################
 ### Automation ###
 ##################
@@ -124,6 +133,12 @@ automation:
       Resolver som synkar input_select.light_bathroom via script.bathroom_set_correct_mode
       (en källa till sanning för beslutslogiken).
     mode: restart
+
+    condition:
+      - condition: state
+        entity_id: input_boolean.lights_auto_badrum
+        state: 'on'
+
     trigger:
       - platform: homeassistant
         event: start

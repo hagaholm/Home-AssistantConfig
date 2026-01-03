@@ -45,6 +45,15 @@ input_select:
       - 100%
     icon: mdi:lightbulb
 
+########################
+### Input Boolean(s) ###
+########################
+input_boolean:
+  lights_auto_halltak:
+    name: Auto Halltak
+    icon: mdi:ceiling-light
+    initial: on
+
 ##################
 ### Automation ###
 ##################
@@ -59,6 +68,12 @@ automation:
       Resolver som synkar input_select.light_hall via script.hall_set_correct_mode
       (en källa till sanning för vald nivå).
     mode: restart
+
+    condition:
+      - condition: state
+        entity_id: input_boolean.lights_auto_halltak
+        state: 'on'
+
     trigger:
       - platform: homeassistant
         event: start

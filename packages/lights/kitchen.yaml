@@ -48,6 +48,15 @@ input_select:
       - 100%
     icon: mdi:lightbulb
 
+########################
+### Input Boolean(s) ###
+########################
+input_boolean:
+  lights_auto_kok:
+    name: Auto Kök
+    icon: mdi:lightbulb
+    initial: on
+
 ##################
 ### Automation ###
 ##################
@@ -98,6 +107,12 @@ automation:
   - alias: Köksbelysning resolver
     id: '1735604100092'
     mode: restart
+
+    condition:
+      - condition: state
+        entity_id: input_boolean.lights_auto_kok
+        state: 'on'
+
     trigger:
       - platform: homeassistant
         event: start

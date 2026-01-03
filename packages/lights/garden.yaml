@@ -50,6 +50,15 @@ input_select:
       - Tänd
     icon: mdi:lightbulb
 
+########################
+### Input Boolean(s) ###
+########################
+input_boolean:
+  lights_auto_tradgard:
+    name: Auto Trädgård
+    icon: mdi:flower
+    initial: on
+
 ##################
 ### Automation ###
 ##################
@@ -106,6 +115,12 @@ automation:
       Resolver som synkar input_select.light_garden via script.garden_set_correct_mode
       (en källa till sanning för beslutslogiken).
     mode: restart
+
+    condition:
+      - condition: state
+        entity_id: input_boolean.lights_auto_tradgard
+        state: 'on'
+
     trigger:
       - platform: homeassistant
         event: start

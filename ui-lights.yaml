@@ -1,0 +1,452 @@
+title: Lights
+views:
+  - path: lights
+    title: Favoriter
+    icon: mdi:lightbulb-on-outline
+    theme: default
+    badges: []
+    cards:
+      - type: heading
+        heading: Belysning
+
+      - type: grid
+        columns: 4
+        square: false
+        cards:
+          - type: tile
+            entity: script.lights_set_correct_modes
+            name: Återställ
+            icon: mdi:restore
+          - type: tile
+            entity: script.button_daylight
+            name: Tänd allt
+            icon: mdi:lightbulb
+          - type: tile
+            entity: script.cleaning_lights_on
+            name: Städdags
+            icon: mdi:vacuum
+          - type: tile
+            entity: script.button_goodnight
+            name: Godnatt
+            icon: mdi:sleep
+
+      - type: heading
+        heading: Lägen & säsong
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: input_select.light_inside
+            name: Inne
+          - type: tile
+            entity: input_select.light_kitchen
+            name: Kök
+          - type: tile
+            entity: input_select.light_hall
+            name: Halltak
+          - type: tile
+            entity: input_select.light_bathroom
+            name: Badrum
+          - type: tile
+            entity: input_select.light_uterum
+            name: Uterum
+          - type: tile
+            entity: input_select.light_garden
+            name: Trädgård
+          - type: tile
+            entity: input_select.light_outside
+            name: Spabad
+          - type: tile
+            entity: input_select.facade_lights
+            name: Fasad
+          - type: tile
+            entity: input_boolean.christmas_light
+            name: Jul
+
+      - type: heading
+        heading: Auto
+
+      - type: grid
+        columns: 4
+        square: false
+        cards:
+          - type: tile
+            entity: input_boolean.lights_auto_inne
+            name: Auto Inne
+          - type: tile
+            entity: input_boolean.lights_auto_kok
+            name: Auto Kök
+          - type: tile
+            entity: input_boolean.lights_auto_halltak
+            name: Auto Halltak
+          - type: tile
+            entity: input_boolean.lights_auto_badrum
+            name: Auto Badrum
+          - type: tile
+            entity: input_boolean.lights_auto_uterum
+            name: Auto Uterum
+          - type: tile
+            entity: input_boolean.lights_auto_tradgard
+            name: Auto Trädgård
+          - type: tile
+            entity: input_boolean.lights_auto_spabad
+            name: Auto Spabad
+          - type: tile
+            entity: input_boolean.lights_auto_fasad
+            name: Auto Fasad
+
+      - type: heading
+        heading: Snabbt – rum
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: light.kok
+            name: Kök
+          - type: tile
+            entity: light.hall
+            name: Hall
+          - type: tile
+            entity: light.vardagsrum
+            name: Vardagsrum
+          - type: tile
+            entity: light.sovrum
+            name: Sovrum
+          - type: tile
+            entity: light.louise_rum
+            name: Louise rum
+          - type: tile
+            entity: light.andreas_rum
+            name: Andreas rum
+
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'off'
+        card:
+          type: entities
+          title: Dagläge (standard)
+          show_header_toggle: false
+          state_color: true
+          entities:
+            - input_boolean.daylight_on
+            - light.dagbelysning
+
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'on'
+        card:
+          type: entities
+          title: Dagläge (jul)
+          show_header_toggle: false
+          state_color: true
+          entities:
+            - input_boolean.daylight_on
+            - light.dagbelysning_jul
+
+  - path: lights-rum
+    title: Rum
+    icon: mdi:sofa-outline
+    theme: Backend-selected
+    badges: []
+    cards:
+      - type: heading
+        heading: Inne
+
+      - type: entities
+        title: Inne (översikt)
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - input_select.light_inside
+          - input_boolean.lights_auto_inne
+          - input_boolean.tv_light_mode
+          - input_boolean.inside_pause_day_window_transition
+          - input_select.home_status
+
+      - type: entities
+        title: Kök
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - input_select.light_kitchen
+          - input_boolean.lights_auto_kok
+          - input_boolean.kitchen_light_on
+          - input_boolean.morning_light_on
+          - light.kok_underskap_bank
+          - light.kok_underskap_diskbank
+          - light.kok_vitrinskap
+          - light.kok_stora_fonstret
+          - light.kok_lilla_fonstret
+
+      - type: entities
+        title: Hall
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - input_select.light_hall
+          - input_boolean.lights_auto_halltak
+          - light.hall_tak
+          - light.hall_byra
+          - light.hall_skap
+
+      - type: entities
+        title: Vardagsrum
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - light.vardagsrum_fonster
+          - light.vardagsrum_skank
+          - light.vardagsrum_vagn
+          - light.vardagsrum_vitrinskap2
+
+      - type: entities
+        title: Sovrum
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - light.sovrum_fonster
+          - light.sovrum_sangbord
+
+      - type: entities
+        title: Louise
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - light.louise_fonster
+          - light.louise_golvlampa
+          - light.louise_skrivbord
+
+      - type: entities
+        title: Andreas
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - light.andreas_fonster_2
+
+      - type: heading
+        heading: Ute
+
+      - type: entities
+        title: Uterum
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - input_select.light_uterum
+          - input_boolean.lights_auto_uterum
+          - light.uterum_led
+          - light.uterum_fonster
+          - light.uterum_fotogenlampa
+
+      - type: entities
+        title: Trädgård
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - input_select.light_garden
+          - input_boolean.lights_auto_tradgard
+          - switch.tradgard
+          - switch.stickpropp_8
+          - switch.friggebod_fonster
+          - light.friggebod_ute_2
+          - light.tradack_ute
+
+      - type: entities
+        title: Spabad
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - input_select.light_outside
+          - input_boolean.lights_auto_spabad
+          - light.spabad_v
+          - light.spabad_m
+          - light.spabad_h
+
+      - type: entities
+        title: Fasad
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - input_select.facade_lights
+          - input_boolean.lights_auto_fasad
+          - light.huvudentre2
+          - light.tvattstugan_fasad
+          - light.forrad_fasad
+          - light.friggebod_fasad
+          - light.stralkastare_husgavel
+
+      - type: conditional
+        conditions:
+          - entity: input_boolean.christmas_light
+            state: 'on'
+        card:
+          type: entities
+          title: Jul (extra)
+          show_header_toggle: false
+          state_color: true
+          entities:
+            - light.kok_stora_fonstret_ljusstake
+            - light.vardagsrum_fonster_ljusstake
+            - light.vardagsrum_fonster_ljusstake_2
+            - light.vardagsrum_gran
+            - light.hall_jullampa
+            - light.uterum_julstjarnor
+            - light.andreas_fonster
+
+  - path: lights-kontroll
+    title: Kontroll
+    icon: mdi:tune
+    theme: default
+    badges: []
+    cards:
+      - type: heading
+        heading: Säsong & scener
+
+      - type: entities
+        title: Säsong
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - input_boolean.christmas_light
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: button
+            entity: scene.lighting_standard_mode
+            name: Standardläge
+            icon: mdi:lightbulb-outline
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              target:
+                entity_id: scene.lighting_standard_mode
+          - type: button
+            entity: scene.lighting_christmas_mode
+            name: Julläge
+            icon: mdi:string-lights
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              target:
+                entity_id: scene.lighting_christmas_mode
+
+      - type: heading
+        heading: Resolvers (återställ)
+
+      - type: entities
+        title: Återställ korrekt läge
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - script.lights_set_correct_modes
+          - script.inside_set_correct_mode
+          - script.kitchen_set_correct_mode
+          - script.hall_set_correct_mode
+          - script.bathroom_set_correct_mode
+          - script.garden_set_correct_mode
+          - script.uterum_set_correct_mode
+          - script.spabad_set_correct_mode
+          - script.facade_set_correct_mode
+
+      - type: heading
+        heading: Manuell snabbkontroll
+
+      - type: entities
+        title: Inne-scripts
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - script.morning_lights_on
+          - script.daylights_on
+          - script.eveninglights_on
+          - script.night_light
+          - script.away_lights_on
+          - script.window_lights_on
+          - script.inside_lights_off
+          - script.cleaning_lights_on
+          - script.tv_light_look_at_tv
+          - script.tv_light_normal
+          - script.tv_light_off
+
+      - type: entities
+        title: Kök/Hall/Badrum
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - script.kitchen_light_100
+          - script.kitchen_light_50
+          - script.kitchen_light_25
+          - script.kitchen_light_off
+          - script.hall_taklampor_100_procent
+          - script.hall_taklampor_50_procent
+          - script.hall_taklampor_10_procent
+          - script.hall_taklampor_1_procent
+          - script.hall_taklampor_off
+          - script.bathroom_light_day
+          - script.bathroom_light_day_presence
+          - script.bathroom_light_night_presence
+          - script.bathroom_light_off
+
+      - type: entities
+        title: Ute-scripts
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - script.tradgards_belysning_on
+          - script.tradgards_belysning_off
+          - script.outdoor_room_light_on
+          - script.outdoor_room_light_off
+          - script.outside_light_on
+          - script.outside_light_off
+          - script.fasadbelysning_on
+          - script.fasadbelysning_night
+          - script.fasadbelysning_max
+          - script.fasadbelysning_off
+
+  - path: lights-debug
+    title: Debug
+    icon: mdi:bug
+    theme: Backend-selected
+    badges: []
+    cards:
+      - type: markdown
+        content: |
+          ## Lights Debug
+
+          Visar beräknat läge (state), en kort **reason** samt villkor/inputs.
+          Klicka på en sensor för att se attribut.
+
+      - type: entities
+        title: Debug-sensorer
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - sensor.lights_debug_inside
+          - sensor.lights_debug_kitchen
+          - sensor.lights_debug_bathroom
+          - sensor.lights_debug_hall
+          - sensor.lights_debug_garden
+          - sensor.lights_debug_uterum
+          - sensor.lights_debug_spabad
+          - sensor.lights_debug_facade
+
+      - type: entities
+        title: Viktiga inputs
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - input_select.home_status
+          - input_boolean.morning_light_on
+          - input_boolean.daylight_on
+          - input_boolean.awaylight_on
+          - input_boolean.christmas_light
+          - sensor.ljusstyrka
+          - sensor.uterum_temperatur
+          - sensor.kokets_ljusniva

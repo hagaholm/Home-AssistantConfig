@@ -133,7 +133,14 @@ template:
           {% elif T < 0 %}
             0
           {% else %}
-            {{ ((RH - mogelrisk_troskel) * 2) | max(0) | min(100) | round(0) }}
+            {% set risk = ((RH - mogelrisk_troskel) * 2) %}
+            {% if risk < 0 %}
+              0
+            {% elif risk > 100 %}
+              100
+            {% else %}
+              {{ risk | round(0) }}
+            {% endif %}
           {% endif %}
 
 ############################################
@@ -226,12 +233,12 @@ automation:
           max_varmetid: 12
           
           # Sensorvärden
-          temp_in: "{{ states('sensor.friggebod_temperature') | float }}"
-          rh_in: "{{ states('sensor.friggebod_humidity') | float }}"
-          abs_in: "{{ states('sensor.friggebod_absolut_fukt_inne') | float }}"
-          abs_out: "{{ states('sensor.utomhus_absolut_fukt') | float }}"
+          temp_in: "{{ states('sensor.friggebod_temperature') | float(0) }}"
+          rh_in: "{{ states('sensor.friggebod_humidity') | float(0) }}"
+          abs_in: "{{ states('sensor.friggebod_absolut_fukt_inne') | float(0) }}"
+          abs_out: "{{ states('sensor.utomhus_absolut_fukt') | float(0) }}"
           delta_abs: "{{ abs_in - abs_out }}"
-          runtime_ok: "{{ states('counter.friggebod_varme_tid') | int < max_varmetid }}"
+          runtime_ok: "{{ states('counter.friggebod_varme_tid') | int(0) < max_varmetid }}"
 
       - choose:
 

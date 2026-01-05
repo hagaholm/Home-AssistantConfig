@@ -241,6 +241,9 @@ automation:
               - service: switch.turn_on
                 target:
                   entity_id: switch.friggebod_elvarme
+              - condition: state
+                entity_id: timer.friggebod_min_runtime
+                state: "idle"
               - service: timer.start
                 target:
                   entity_id: timer.friggebod_min_runtime
@@ -262,6 +265,9 @@ automation:
               - service: switch.turn_on
                 target:
                   entity_id: switch.friggebod_elvarme
+              - condition: state
+                entity_id: timer.friggebod_min_runtime
+                state: "idle"
               - service: timer.start
                 target:
                   entity_id: timer.friggebod_min_runtime

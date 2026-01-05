@@ -121,6 +121,9 @@ template:
       # Vid temperaturer under 0°C är risken 0
       - name: "Friggebod mögelrisk"
         unit_of_measurement: "%"
+        availability: >
+          {{ states('sensor.friggebod_temperature') not in ['unknown', 'unavailable', '']
+             and states('sensor.friggebod_humidity') not in ['unknown', 'unavailable', ''] }}
         state: >
           {% set T = states('sensor.friggebod_temperature') | float(none) %}
           {% set RH = states('sensor.friggebod_humidity') | float(none) %}

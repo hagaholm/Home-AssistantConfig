@@ -82,31 +82,39 @@ template:
       - name: "Friggebod absolut fukt inne"
         unit_of_measurement: "g/m³"
         state: >
-          {% set T = states('sensor.friggebod_temperature') | float %}
-          {% set RH = states('sensor.friggebod_humidity') | float %}
-          {% set magnus_a = 17.67 %}
-          {% set magnus_b = 243.5 %}
-          {% set abs_noll = 273.15 %}
-          {% set ideal_gas = 2.1674 %}
-          {% set magnus_k = 6.112 %}
-          {% set exponent = (magnus_a*T) / (T + magnus_b) %}
-          {% set e = 2.718281828459045 %}
-          {{ (magnus_k * (e ** exponent) * RH * ideal_gas / (abs_noll + T)) | round(2) }}
+          {% set T = states('sensor.friggebod_temperature') | float(none) %}
+          {% set RH = states('sensor.friggebod_humidity') | float(none) %}
+          {% if T is none or RH is none %}
+            unavailable
+          {% else %}
+            {% set magnus_a = 17.67 %}
+            {% set magnus_b = 243.5 %}
+            {% set abs_noll = 273.15 %}
+            {% set ideal_gas = 2.1674 %}
+            {% set magnus_k = 6.112 %}
+            {% set exponent = (magnus_a*T) / (T + magnus_b) %}
+            {% set e = 2.718281828459045 %}
+            {{ (magnus_k * (e ** exponent) * RH * ideal_gas / (abs_noll + T)) | round(2) }}
+          {% endif %}
 
       # Beräknar absolut fukt utomhus (g/m³)
       - name: "Utomhus absolut fukt"
         unit_of_measurement: "g/m³"
         state: >
-          {% set T = states('sensor.ute') | float %}
-          {% set RH = states('sensor.ute_friggebod_humidity') | float %}
-          {% set magnus_a = 17.67 %}
-          {% set magnus_b = 243.5 %}
-          {% set abs_noll = 273.15 %}
-          {% set ideal_gas = 2.1674 %}
-          {% set magnus_k = 6.112 %}
-          {% set exponent = (magnus_a*T) / (T + magnus_b) %}
-          {% set e = 2.718281828459045 %}
-          {{ (magnus_k * (e ** exponent) * RH * ideal_gas / (abs_noll + T)) | round(2) }}
+          {% set T = states('sensor.ute') | float(none) %}
+          {% set RH = states('sensor.ute_friggebod_humidity') | float(none) %}
+          {% if T is none or RH is none %}
+            unavailable
+          {% else %}
+            {% set magnus_a = 17.67 %}
+            {% set magnus_b = 243.5 %}
+            {% set abs_noll = 273.15 %}
+            {% set ideal_gas = 2.1674 %}
+            {% set magnus_k = 6.112 %}
+            {% set exponent = (magnus_a*T) / (T + magnus_b) %}
+            {% set e = 2.718281828459045 %}
+            {{ (magnus_k * (e ** exponent) * RH * ideal_gas / (abs_noll + T)) | round(2) }}
+          {% endif %}
 
       # Beräknar mögelrisk baserat på relativ fuktighet
       # Risk ökar linjärt över 75% RH: Risk = (RH - 75) * 2
@@ -114,10 +122,12 @@ template:
       - name: "Friggebod mögelrisk"
         unit_of_measurement: "%"
         state: >
-          {% set T = states('sensor.friggebod_temperature') | float %}
-          {% set RH = states('sensor.friggebod_humidity') | float %}
+          {% set T = states('sensor.friggebod_temperature') | float(none) %}
+          {% set RH = states('sensor.friggebod_humidity') | float(none) %}
           {% set mogelrisk_troskel = 75 %}
-          {% if T < 0 %}
+          {% if T is none or RH is none %}
+            unavailable
+          {% elif T < 0 %}
             0
           {% else %}
             {{ ((RH - mogelrisk_troskel) * 2) | max(0) | min(100) | round(0) }}

@@ -1,0 +1,329 @@
+title: Klimat
+views:
+  - theme: Backend-selected
+    title: Status
+    badges: []
+    cards:
+      # Ventilation huvudkontroller
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: switch.ventilationsaggregat
+            name: Ventilation
+          - type: tile
+            entity: switch.shelly1_c45bbe77099d
+            name: Forcerad fläkt
+          - type: tile
+            entity: input_boolean.alarm_ventilation
+            name: Larm
+
+      # Luftfuktighet (ventilation)
+      - type: entities
+        title: Luftfuktighet
+        state_color: true
+        entities:
+          - entity: sensor.badrum_luftfuktighet
+          - entity: sensor.fukt_badrumsfonster
+          - entity: sensor.badrum_temperatur
+          - entity: sensor.ute_friggebod_humidity
+
+      # Timers ventilation
+      - type: entities
+        state_color: true
+        entities:
+          - timer.timer_humidity_bathroom_max_time
+          - timer.timer_humidity_bathroom
+
+      # Friggebod styrning
+      - type: vertical-stack
+        cards:
+          - type: entities
+            title: Friggebod – styrning
+            state_color: true
+            entities:
+              - input_boolean.friggebod_varme_auto
+              - switch.friggebod_elvarme
+              - counter.friggebod_varme_tid
+              - timer.friggebod_min_runtime
+
+          - type: glance
+            title: Temperatur & fukt (inne/ute)
+            entities:
+              - sensor.friggebod_temperature
+              - sensor.friggebod_humidity
+              - sensor.ute
+              - sensor.ute_friggebod_humidity
+
+          - type: entities
+            title: Avancerade värden
+            state_color: true
+            entities:
+              - sensor.friggebod_absolut_fukt_inne
+              - sensor.utomhus_absolut_fukt
+              - sensor.friggebod_mogelrisk
+
+          - type: gauge
+            name: Mögelrisk
+            entity: sensor.friggebod_mogelrisk
+            min: 0
+            max: 100
+            severity:
+              green: 0
+              yellow: 50
+              red: 70
+
+      # Garage/Förråd status
+      - type: entities
+        title: Garage/Förråd
+        state_color: true
+        entities:
+          - entity: switch.garage_avfuktare
+            secondary_info: last-changed
+          - entity: switch.garage_elvarme
+            secondary_info: last-changed
+          - entity: sensor.forrad_temperature
+            secondary_info: last-changed
+          - entity: sensor.garage_temperature
+            secondary_info: last-changed
+          - entity: sensor.garage_humidity
+            secondary_info: last-changed
+          - entity: input_boolean.zwift
+
+      # Översikt temperatur & fukt (alla givare)
+      - type: entities
+        title: Temperatur & fukt – översikt
+        state_color: true
+        entities:
+          - entity: sensor.ute
+            name: Ute temp
+          - entity: sensor.ute_friggebod_humidity
+            name: Ute fukt (friggebod)
+          - entity: sensor.friggebod_temperature
+            name: Friggebod temp
+          - entity: sensor.friggebod_humidity
+            name: Friggebod fukt
+          - entity: sensor.forrad_temperature
+            name: Förråd temp
+          - entity: sensor.garage_temperature
+            name: Garage temp
+          - entity: sensor.garage_humidity
+            name: Garage fukt
+          - entity: sensor.badrum_temperatur
+            name: Badrum temp
+          - entity: sensor.badrum_luftfuktighet
+            name: Badrum fukt
+          - entity: sensor.fukt_badrumsfonster
+            name: Badrum fönster fukt
+          - entity: sensor.inne_medel
+            name: Inne medeltemp
+
+  - theme: Backend-selected
+    title: Grafer
+    path: varden
+    badges: []
+    cards:
+      - type: history-graph
+        entities:
+          - entity: switch.ventilationsaggregat
+            name: På/Av
+          - entity: switch.shelly1_c45bbe77099d
+            name: Max
+        hours_to_show: 24
+        refresh_interval: 0
+      - type: history-graph
+        entities:
+          - entity: sensor.ute
+          - entity: sensor.inne_medel
+        hours_to_show: 12
+      - type: history-graph
+        entities:
+          - entity: sensor.badrum_luftfuktighet
+          - entity: sensor.fukt_badrumsfonster
+          - entity: sensor.badrum_temperatur
+        hours_to_show: 12
+      - type: gauge
+        entity: sensor.badrum_luftfuktighet
+        severity:
+          green: 0
+          yellow: 70
+          red: 80
+        needle: true
+        name: Fukt badrum
+      - type: gauge
+        entity: sensor.fukt_badrumsfonster
+        severity:
+          green: 0
+          yellow: 70
+          red: 80
+        needle: true
+        name: Fukt badrum fönster
+
+  - theme: Backend-selected
+    title: Inställningar
+    path: installningar
+    badges: []
+    cards:
+      - type: markdown
+        title: Tuning
+        content: |
+          Justera trösklar och timers för forcerad ventilation.
+
+          Tips:
+          - Börja med små ändringar (1–2% eller 5–10 min).
+          - Om forcerad fläkt ofta går i maxtid: sänk maxtid eller höj stop-tröskeln något.
+          - Om den fladdrar: höj stabil tid eller öka hysteresis (skillnad mellan start/stop).
+      - type: tile
+        entity: script.ventilation_tuning_reset_defaults
+        name: Återställ standardvärden
+        icon: mdi:backup-restore
+      - type: tile
+        entity: script.ventilation_tuning_dismiss_notifications
+        name: Rensa notiser
+        icon: mdi:bell-off
+      - type: entities
+        title: Auto-tuning (status)
+        state_color: true
+        entities:
+          - entity: input_boolean.ventilation_auto_tuning_enabled
+            name: Auto-tuning (på)
+          - entity: input_boolean.ventilation_auto_tuning_auto_apply
+            name: Auto-applicera
+          - entity: sensor.ventilation_forcerad_tid_24h
+            name: Forcerad tid (24h)
+          - entity: sensor.ventilation_forcerad_antal_24h
+            name: Forcerad antal (24h)
+          - entity: sensor.ventilation_fukt_fonster_max_24h
+            name: Max RH fönster (24h)
+          - entity: sensor.ventilation_rh_forcerad_medel_24h
+            name: RH medel (forcerad, 24h)
+      - type: entities
+        title: Auto-tuning (rekommendationer)
+        state_color: true
+        entities:
+          - entity: sensor.ventilation_rekommenderad_rh_start
+            name: RH start (rekomm)
+          - entity: sensor.ventilation_rekommenderad_rh_stop
+            name: RH stop (rekomm)
+          - entity: sensor.ventilation_rekommenderad_stabil_tid
+            name: Stabil tid (rekomm)
+          - entity: sensor.ventilation_rekommenderad_maxtid
+            name: Maxtid (rekomm)
+          - entity: script.ventilation_tuning_apply_recommended
+            name: Applicera rekomm.
+      - type: markdown
+        title: Förklaring
+        content: |
+          **Auto-tuning**
+          - **auto-tuning (på)**: aktiverar rådgivaren (förslag skapas vid start och 03:15).
+          - **auto-applicera**: om på, skrivs förslagen direkt till helpers.
+          - **forcerad tid/antal (24h)**: används för att bedöma om systemet forcerar “för ofta”.
+          - **rekommenderad …**: beräknade förslag (små steg inom säkra gränser).
+          - **Applicera…**: kör en engångs-applicering manuellt.
+
+          **Anomaly detection**
+          - Om någon anomaly blir **On** så stängs **auto-applicera** av automatiskt och en notis skapas.
+          - **sensor okänd**: RH/ute-temp saknas (`unknown/unavailable`).
+          - **hysteresis fel**: start ≤ stop (risk för fladder).
+          - **forcerad trots låg RH**: forcerad är på fast RH ligger under stop-tröskeln med marginal.
+          - **fladder**: många korta forceringar (indikerar spikig sensor eller fel trösklar/tider).
+      - type: entities
+        title: Anomaly detection
+        state_color: true
+        entities:
+          - entity: binary_sensor.ventilation_anomaly_sensor_okand
+            name: Sensor okänd
+          - entity: sensor.ventilation_anomaly_okand_kalla
+            name: Okänd källa
+          - entity: binary_sensor.ventilation_anomaly_hysteresis_fel
+            name: Hysteresis fel
+          - entity: binary_sensor.ventilation_anomaly_forcerad_trots_lag_rh
+            name: Forcerad trots låg RH
+          - entity: binary_sensor.ventilation_anomaly_fladder
+            name: Fladder
+      - type: entities
+        title: Gränser & timers
+        state_color: true
+        entities:
+          - entity: input_number.ventilation_rh_force_on
+            name: RH start
+          - entity: input_number.ventilation_rh_force_off
+            name: RH stop
+          - entity: input_number.ventilation_rh_stable_min
+            name: Stabil RH min
+          - entity: input_number.ventilation_rh_stable_max
+            name: Stabil RH max
+          - entity: input_number.ventilation_rh_delta_fast
+            name: ΔRH snabb
+          - entity: input_number.ventilation_rh_delta_high
+            name: ΔRH
+          - entity: input_number.ventilation_outdoor_temp_min_force
+            name: Min ute-temp
+          - entity: input_number.ventilation_max_runtime_minutes
+            name: Maxtid
+          - entity: input_number.ventilation_stable_minutes
+            name: Stabil tid
+          - entity: input_number.ventilation_house_humidity_diff
+            name: Diff badrum/v-rum
+          - entity: input_number.ventilation_sensor_fresh_seconds
+            name: Sensor-färskhet
+
+  - theme: Backend-selected
+    title: Larm
+    path: larm
+    badges: []
+    cards:
+      - type: entities
+        state_color: true
+        entities:
+          - entity: input_boolean.alarm_ventilation
+          - entity: input_boolean.high_humidity_bathroom_away
+
+  - theme: Backend-selected
+    title: Automationer
+    path: automationer
+    badges: []
+    cards:
+      - type: entities
+        title: Timers - Forcerad till Normal fläkt
+        state_color: true
+        entities:
+          - entity: automation.startar_max_timer_badrum
+          - entity: automation.restart_timer_badrum
+          - entity: automation.reset_timer_nar_vent_satts_till_normal
+      - type: entities
+        title: Larm
+        state_color: true
+        entities:
+          - entity: automation.satt_larm_for_vent
+          - entity: automation.badrumsfonster_hog_fukt_larm
+      - type: entities
+        title: Forcerad fläkt
+        state_color: true
+        entities:
+          - entity: automation.forcerad_badrumsfonster_hog_fukt
+      - type: entities
+        title: Normal fläkt
+        state_color: true
+        entities:
+          - entity: automation.normal_badrumsfonster_lag_fukt
+          - entity: automation.normal_hog_fukt_i_huset
+          - entity: automation.normal_vid_stabiliserad_fukt
+          - entity: automation.normal_efter_maxtid
+      - type: entities
+        title: Ventilation På
+        state_color: true
+        entities:
+          - entity: automation.vent_on_hemma_off
+          - entity: automation.vent_on_ute_22degc_off
+          - entity: automation.vent_on_60_off
+          - entity: automation.vent_on_inne_23degc_off
+      - type: entities
+        title: Ventilation Av
+        state_color: true
+        entities:
+          - entity: automation.vent_off_borta_ute_24degc_60_inne_23degc
+          - entity: automation.vent_off_ute_24degc_borta_60_inne_23degc
+          - entity: automation.vent_off_60_borta_ute_24degc_inne_23degc
+          - entity: automation.vent_off_inne_23degc_borta_60_ute_24degc

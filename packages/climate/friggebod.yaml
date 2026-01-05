@@ -3,65 +3,288 @@
 #              FRIGGEBOD (CLIMATE) PACKAGE          #
 #                                                  #
 ####################################################
-# Styrning av elvärme i friggebod.
+# Styrning av elvärme i friggebod baserat på temperatur och fukt.
+# Systemet skyddar mot frost och hög fuktighet samt räknar värmetid.
 #
 # Källor:
 # - automations/friggebod_heater.yaml
+#
+# Funktioner:
+# - Frostskydd vid låg temperatur
+# - Fuktdriven värmestyrning
+# - Mögelriskberäkning
+# - Automatisk värmetidsräkning
+# - Daglig begränsning av värmekörning
 
 # METADATA:
 # Skapad: okänt
-# Senast ändrad: 2025-12-28
-# Version: 1.0
+# Senast ändrad: 2026-01-05
+# Version: 2.0
 # Författare: Home Assistant Config
 ####################################################
 
-##################
-### Automation ###
-##################
+############################################
+# KONFIGURERBARA VARIABLER
+############################################
+# Temperaturvärden (°C)
+homeassistant:
+  customize:
+    package.node_anchors:
+      # Temperaturvärden
+      temp_frostskydd: &temp_frostskydd 3
+      temp_min_for_fuktvarme: &temp_min_for_fuktvarme 0
+      
+      # Fuktvärden (%)
+      rh_aktivering: &rh_aktivering 60
+      rh_avaktivering: &rh_avaktivering 55
+      
+      # Absolut fukt (g/m³)
+      delta_abs_aktivering: &delta_abs_aktivering 1.0
+      delta_abs_avaktivering: &delta_abs_avaktivering 0.5
+      
+      # Mögelrisk
+      mogelrisk_troskel: &mogelrisk_troskel 75
+      mogelrisk_varning: &mogelrisk_varning 60
+      mogelrisk_varning_tid: &mogelrisk_varning_tid 6  # timmar
+      
+      # Värmestyrning
+      max_varmetid_per_dag: &max_varmetid_per_dag 12  # antal 10-min perioder (= 2h)
+      min_gangtid: &min_gangtid "00:30:00"  # minuter värmen ska köra minst
+      
+      # Övervakningsintervall
+      kontroll_intervall: &kontroll_intervall 5  # minuter
+      varmetid_ratt_intervall: &varmetid_ratt_intervall 10  # minuter
+      
+      # Matematiska konstanter för fuktberäkning
+      magnus_a: &magnus_a 17.67
+      magnus_b: &magnus_b 243.5
+      absolut_noll: &absolut_noll 273.15
+      ideal_gas_konstant: &ideal_gas_konstant 2.1674
+      magnus_konstant: &magnus_konstant 6.112
+
+############################################
+# FRIGGEBOD – SMART FUKT & VÄRMESTYRNING
+############################################
+
+############################################
+# TEMPLATE SENSORER
+############################################
+# Beräknar absolut fukt och mögelrisk baserat på temperatur och relativ fuktighet.
+# Formler:
+# - Absolut fukt: Magnus-Tetens formel för mättnadstryck + idealgas-approximation
+# - Mögelrisk: Linjär funktion baserad på RH över tröskelvärde
+
+template:
+  - sensor:
+      # Beräknar absolut fukt inne i friggeboden (g/m³)
+      # Använder Magnus-Tetens formel: es = 6.112 * exp((17.67*T)/(T+243.5))
+      # Absolut fukt = es * RH * 2.1674 / (273.15 + T)
+      - name: "Friggebod absolut fukt inne"
+        unit_of_measurement: "g/m³"
+        state: >
+          {% set T = states('sensor.friggebod_temperature') | float %}
+          {% set RH = states('sensor.friggebod_humidity') | float %}
+          {% set magnus_a = 17.67 %}
+          {% set magnus_b = 243.5 %}
+          {% set abs_noll = 273.15 %}
+          {% set ideal_gas = 2.1674 %}
+          {% set magnus_k = 6.112 %}
+          {{ (magnus_k * exp((magnus_a*T)/(T+magnus_b)) * RH * ideal_gas / (abs_noll+T)) | round(2) }}
+
+      # Beräknar absolut fukt utomhus (g/m³)
+      - name: "Utomhus absolut fukt"
+        unit_of_measurement: "g/m³"
+        state: >
+          {% set T = states('sensor.ute') | float %}
+          {% set RH = states('sensor.ute_friggebod_humidity') | float %}
+          {% set magnus_a = 17.67 %}
+          {% set magnus_b = 243.5 %}
+          {% set abs_noll = 273.15 %}
+          {% set ideal_gas = 2.1674 %}
+          {% set magnus_k = 6.112 %}
+          {{ (magnus_k * exp((magnus_a*T)/(T+magnus_b)) * RH * ideal_gas / (abs_noll+T)) | round(2) }}
+
+      # Beräknar mögelrisk baserat på relativ fuktighet
+      # Risk ökar linjärt över 75% RH: Risk = (RH - 75) * 2
+      # Vid temperaturer under 0°C är risken 0
+      - name: "Friggebod mögelrisk"
+        unit_of_measurement: "%"
+        state: >
+          {% set T = states('sensor.friggebod_temperaturen') | float %}
+          {% set RH = states('sensor.friggebod_humidity') | float %}
+          {% set mogelrisk_troskel = 75 %}
+          {% if T < 0 %}
+            0
+          {% else %}
+            {{ ((RH - mogelrisk_troskel) * 2) | max(0) | min(100) | round(0) }}
+          {% endif %}
+
+############################################
+# HELPERS
+############################################
+# Input boolean för att aktivera/avaktivera automatisk värmestyrning
+# Timer för minimum gångtid
+# Counter för att räkna värmetid per dag
+
+input_boolean:
+  friggebod_varme_auto:
+    name: Friggebod värme automatik
+    icon: mdi:radiator
+
+timer:
+  friggebod_min_runtime:
+    name: Friggebod min gångtid
+    duration: "00:30:00"  # 30 minuter minimum gångtid
+
+counter:
+  friggebod_varme_tid:
+    name: Friggebod värmetid idag
+    initial: 0
+    step: 1  # Räknar antalet 10-minuters perioder
+
+############################################
+# AUTOMATIONER
+############################################
+
+# Räkna värmetid (körs var 10:e minut)
+# Räknar upp counter för att begränsa total värmetid per dag
 automation:
-
-#######################################################
-#                                                     #
-#           FRIGGEBOD ELVÄRME AUTOMATION              #
-#                                                     #
-#######################################################
-#
-# BESKRIVNING:
-# Samlad automation för friggebodets elvärmare baserat på
-# fuktighetsnivå och temperatur.
-#######################################################
-
-  - alias: Elvärme friggebod
-    id: '1735304100015'
-    mode: single
-
+  - alias: Friggebod – räkna värmetid
+    description: Räknar upp värmetid varje 10:e minut när värmaren är på
     trigger:
-      - platform: numeric_state
-        entity_id: sensor.friggebod_humidity
-        above: '58'
-      - platform: numeric_state
-        entity_id: sensor.friggebod_humidity
-        below: '56'
+      - platform: time_pattern
+        minutes: "/10"  # Var 10:e minut
+    condition:
+      - condition: state
+        entity_id: switch.friggebod_elvarme
+        state: "on"
+    action:
+      - service: counter.increment
+        target:
+          entity_id: counter.friggebod_varme_tid
+
+  # Reset värmetid vid midnatt
+  - alias: Friggebod – reset värmetid
+    description: Nollställer värmetidsräknaren varje midnatt
+    trigger:
+      - platform: time
+        at: "00:00:00"
+    action:
+      - service: counter.reset
+        target:
+          entity_id: counter.friggebod_varme_tid
+
+  # HUVUDLOGIK - Smart värmestyrning
+  # Prioritetsordning:
+  # 1. Frostskydd (högsta prioritet)
+  # 2. Fuktdriven värme (om villkor uppfyllda)
+  # 3. Avaktivering (om villkor inte längre uppfyllda)
+  - alias: Friggebod – komplett smart värmestyrning
+    description: Styr värmaren baserat på temperatur, fukt och daglig körning
+    mode: restart
+    trigger:
+      - platform: time_pattern
+        minutes: "/5"  # Kontrollerar var 5:e minut
+      - platform: state
+        entity_id:
+          - sensor.friggebod_temperature
+          - sensor.friggebod_humidity
+          - sensor.ute
+          - sensor.ute_friggebod_humidity
+
+    condition:
+      - condition: state
+        entity_id: input_boolean.friggebod_varme_auto
+        state: "on"
 
     action:
-      - choose:
-          # TÄND - Hög fukt
-          - conditions:
-              - condition: numeric_state
-                entity_id: sensor.friggebod_humidity
-                above: 58
-              - condition: numeric_state
-                entity_id: sensor.friggebod_temperature
-                below: 15
-            sequence:
-              - service: homeassistant.turn_on
-                entity_id: switch.friggebod_elvarme
+      - variables:
+          # Konfigurerbara värden
+          temp_frostskydd: 3
+          temp_min_for_fuktvarme: 0
+          rh_aktivering: 60
+          rh_avaktivering: 55
+          delta_abs_aktivering: 1.0
+          delta_abs_avaktivering: 0.5
+          max_varmetid: 12
+          
+          # Sensorvärden
+          temp_in: "{{ states('sensor.friggebod_temperature') | float }}"
+          rh_in: "{{ states('sensor.friggebod_humidity') | float }}"
+          abs_in: "{{ states('sensor.friggebod_absolut_fukt_inne') | float }}"
+          abs_out: "{{ states('sensor.utomhus_absolut_fukt') | float }}"
+          delta_abs: "{{ abs_in - abs_out }}"
+          runtime_ok: "{{ states('counter.friggebod_varme_tid') | int < max_varmetid }}"
 
-          # SLÄCK - Låg fukt
+      - choose:
+
+          # PRIORITET 1: FROSTSKYDD
+          # Aktiveras vid låg temperatur för att skydda mot frostskador
           - conditions:
-              - condition: numeric_state
-                entity_id: sensor.friggebod_humidity
-                below: 56
+              - condition: template
+                value_template: "{{ temp_in < temp_frostskydd }}"
             sequence:
-              - service: homeassistant.turn_off
-                entity_id: switch.friggebod_elvarme
+              - service: switch.turn_on
+                target:
+                  entity_id: switch.friggebod_elvarme
+              - service: timer.start
+                target:
+                  entity_id: timer.friggebod_min_runtime
+
+          # PRIORITET 2: FUKTDRIVEN VÄRME
+          # Aktiveras när:
+          # - Relativ fukt > 60%
+          # - Absolut fukt inne > ute + 1.0 g/m³
+          # - Temperatur > 0°C
+          # - Daglig körtid < 12 perioder (2h)
+          - conditions:
+              - condition: template
+                value_template: >
+                  {{ rh_in > rh_aktivering
+                     and delta_abs > delta_abs_aktivering
+                     and temp_in > temp_min_for_fuktvarme
+                     and runtime_ok }}
+            sequence:
+              - service: switch.turn_on
+                target:
+                  entity_id: switch.friggebod_elvarme
+              - service: timer.start
+                target:
+                  entity_id: timer.friggebod_min_runtime
+
+          # PRIORITET 3: STÄNG AV
+          # Avaktiveras när:
+          # - Relativ fukt < 55% ELLER
+          # - Absolut fukt-delta < 0.5 g/m³ ELLER
+          # - Daglig körtid uppnådd
+          # OCH minimum gångtid är över
+          - conditions:
+              - condition: template
+                value_template: >
+                  {{ rh_in < rh_avaktivering or delta_abs < delta_abs_avaktivering or not runtime_ok }}
+              - condition: state
+                entity_id: timer.friggebod_min_runtime
+                state: "idle"
+            sequence:
+              - service: switch.turn_off
+                target:
+                  entity_id: switch.friggebod_elvarme
+
+  # MÖGELVARNING
+  # Skickar notifikation om mögelrisken är hög under längre tid
+  - alias: Friggebod – mögelvarning
+    description: Varnar när mögelrisken är över 60% i mer än 6 timmar
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.friggebod_mogelrisk
+        above: 60  # 60% mögelrisk
+        for:
+          hours: 6  # Under minst 6 timmar
+    action:
+      - service: notify.mobile_app_sm_a528b
+        data:
+          message: >
+            ⚠️ Hög mögelrisk i friggeboden!
+            Temp: {{ states('sensor.friggebod_temperature') }} °C
+            Fukt: {{ states('sensor.friggebod_humidity') }} %
+            Mögelrisk: {{ states('sensor.friggebod_mogelrisk') }} %

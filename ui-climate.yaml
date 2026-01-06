@@ -50,7 +50,7 @@ views:
       - type: vertical-stack
         cards:
           - type: tile
-            entity: switch.friggebod_varme_auto
+            entity: input_boolean.friggebod_varme_auto
             name: Automatisk värmning
             icon: mdi:thermometer
 
@@ -580,9 +580,11 @@ views:
       - type: entities
         state_color: true
         entities:
-          - entity: automation.avlasning_saknas_friggebod
-            name: Läsning saknas
-          - entity: automation.starta_avfuktare
-            name: Starta värmning
-          - entity: automation.starta_elvarme_5_grader
-            name: Frost-skydd
+          - entity: automation.friggebod_räkna_värmetid
+            name: Räkna värmetid
+          - entity: automation.friggebod_reset_värmetid
+            name: Reset värmetid
+          - entity: automation.friggebod_komplett_smart_värmestyrning
+            name: Smart värmestyrning
+          - entity: automation.friggebod_mögelvarning
+            name: Mögelvarning

@@ -4,6 +4,77 @@ views:
   # STATUS VY
   ####################################################
   - theme: Backend-selected
+    title: Information
+    icon: 'mdi:information-outline'
+    badges: []
+    cards:
+# -------------------------------------
+      - type: markdown
+        content: "# 🌬️ Ventilation"
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: switch.ventilationsaggregat
+            name: Ventilation
+          - type: tile
+            entity: switch.shelly1_c45bbe77099d
+            name: Forcerad fläkt
+          - type: tile
+            entity: input_boolean.alarm_ventilation
+            name: Larm
+# -------------------------------------
+      - type: markdown
+        content: "# 🌬️ Badrum"
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: sensor.badrum_temperatur
+            name: Badrum temp
+          - type: tile
+            entity: sensor.badrum_luftfuktighet
+            name: Badrum fukt
+          - type: tile
+            entity: sensor.fukt_badrumsfonster
+            name: Badrum fönster fukt
+# -------------------------------------
+      - type: markdown
+        content: "# 🌬️ Friggebod"
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: sensor.friggebod_temperature
+            name: Friggebod temp
+          - type: tile
+            entity: sensor.friggebod_humidity
+            name: Friggebod fukt
+# -------------------------------------
+      - type: markdown
+        content: "# 🌬️ Garage/Förråd"
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: sensor.garage_temperature
+            name: Garage temp
+          - type: tile
+            entity: sensor.garage_humidity
+            name: Garage fukt
+
+  ####################################################
+  # STATUS VY
+  ####################################################
+  - theme: Backend-selected
     title: Status
     badges: []
     cards:

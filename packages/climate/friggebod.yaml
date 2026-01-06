@@ -101,11 +101,14 @@ template:
         unit_of_measurement: "g/m³"
         state_class: "measurement"
         icon: mdi:water
+        availability: >
+          {{ states('sensor.friggebod_temperature') not in ['unknown', 'unavailable', '']
+             and states('sensor.friggebod_humidity') not in ['unknown', 'unavailable', ''] }}
         state: >
           {% set T = states('sensor.friggebod_temperature') | float(none) %}
           {% set RH = states('sensor.friggebod_humidity') | float(none) %}
           {% if T is none or RH is none %}
-            unavailable
+            {{ none }}
           {% else %}
             {% set a = 17.67 %}
             {% set b = 243.5 %}
@@ -124,11 +127,14 @@ template:
         unit_of_measurement: "g/m³"
         state_class: "measurement"
         icon: mdi:water
+        availability: >
+          {{ states('sensor.ute') not in ['unknown', 'unavailable', '']
+             and states('sensor.ute_friggebod_humidity') not in ['unknown', 'unavailable', ''] }}
         state: >
           {% set T = states('sensor.ute') | float(none) %}
           {% set RH = states('sensor.ute_friggebod_humidity') | float(none) %}
           {% if T is none or RH is none %}
-            unavailable
+            {{ none }}
           {% else %}
             {% set a = 17.67 %}
             {% set b = 243.5 %}

@@ -725,11 +725,12 @@ views:
       - type: entities
         state_color: true
         entities:
-          - entity: automation.friggebod_räkna_värmetid
+          # Home Assistant sluggar bort å/ä/ö → use ascii ids
+          - entity: automation.friggebod_rakna_varmetid
             name: Räkna värmetid
-          - entity: automation.friggebod_reset_värmetid
+          - entity: automation.friggebod_reset_varmetid
             name: Reset värmetid
-          - entity: automation.friggebod_komplett_smart_värmestyrning
+          - entity: automation.friggebod_komplett_smart_varmestyrning
             name: Smart värmestyrning
-          - entity: automation.friggebod_mögelvarning
+          - entity: automation.friggebod_mogelvarning
             name: Mögelvarning

@@ -172,34 +172,6 @@ template:
             {% endif %}
           {% endif %}
 
-############################################
-# ENERGIBERÄKNINGAR & FYSIK
-############################################
-# Beräknar energiförbrukning, värmebehov, U-värde och andra fysiska parametrar
-# Byggnadsdata: 15m² golvyta, 2.2m takhöjd = 33m³ volym
-
-input_number:
-  friggebod_element_effekt:
-    name: Friggebod elementeffekt
-    min: 0
-    max: 2000
-    step: 50
-    unit_of_measurement: "W"
-    icon: mdi:lightning-bolt
-    mode: box
-    initial: 700
-
-  friggebod_elpris:
-    name: Friggebod elpris
-    min: 0
-    max: 10
-    step: 0.1
-    unit_of_measurement: "SEK/kWh"
-    icon: mdi:currency-sek
-    mode: box
-    initial: 1.5
-
-  - sensor:
       # ENERGIFÖRBRUKNING - Aktuell effekt när elementet är på
       - name: "Friggebod aktuell effekt"
         unit_of_measurement: "W"
@@ -234,7 +206,6 @@ input_number:
           {{ (kwh * pris) | round(2) }}
 
       # FYSIK - Värmebehov per grad temperaturskillnad (W/°C)
-      # Uppskattas från aktuell effekt och temperaturdifferens
       - name: "Friggebod värmebehov per grad"
         unit_of_measurement: "W/°C"
         icon: mdi:thermometer-lines
@@ -254,8 +225,6 @@ input_number:
           {% endif %}
 
       # FYSIK - Uppskattat U-värde (W/(m²·K))
-      # Beräknat från värmebehov, area och temperaturskillnad
-      # U = Effekt / (Area × ΔT)
       - name: "Friggebod uppskattat U-värde"
         unit_of_measurement: "W/(m²·K)"
         icon: mdi:home-thermometer
@@ -283,7 +252,6 @@ input_number:
           {{ (effekt / area) | round(1) }}
 
       # FYSIK - Graddagar (°C·dag)
-      # Mäter hur kallt det är över tid
       - name: "Friggebod graddagar idag"
         unit_of_measurement: "°C·dag"
         icon: mdi:thermometer-minus
@@ -295,8 +263,6 @@ input_number:
           {{ (delta_t * runtime_hours / 24) | round(2) }}
 
       # EFFEKTIVITET - COP (Coefficient of Performance)
-      # Teoretisk COP för direktelvärme = 1.0 (100% effektivitet)
-      # Men vi kan jämföra mot värmepump senare
       - name: "Friggebod COP"
         icon: mdi:chart-line
         state: "1.0"
@@ -337,7 +303,6 @@ input_number:
           {{ (varmebehov_per_grad * delta_t) | round(0) }}
 
       # ANALYS - Temperaturfall per timme när värmen är av
-      # (kräver historikdata, placeholder för nu)
       - name: "Friggebod temperaturfall per timme"
         unit_of_measurement: "°C/h"
         icon: mdi:thermometer-chevron-down
@@ -370,6 +335,33 @@ input_number:
           {% else %}
             0
           {% endif %}
+
+############################################
+# ENERGIBERÄKNINGAR & FYSIK
+############################################
+# Beräknar energiförbrukning, värmebehov, U-värde och andra fysiska parametrar
+# Byggnadsdata: 15m² golvyta, 2.2m takhöjd = 33m³ volym
+
+input_number:
+  friggebod_element_effekt:
+    name: Friggebod elementeffekt
+    min: 0
+    max: 2000
+    step: 50
+    unit_of_measurement: "W"
+    icon: mdi:lightning-bolt
+    mode: box
+    initial: 700
+
+  friggebod_elpris:
+    name: Friggebod elpris
+    min: 0
+    max: 10
+    step: 0.1
+    unit_of_measurement: "SEK/kWh"
+    icon: mdi:currency-sek
+    mode: box
+    initial: 1.5
 
 ############################################
 # UTILITY METERS - Daglig/Månatlig statistik

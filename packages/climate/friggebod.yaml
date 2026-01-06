@@ -216,9 +216,8 @@ template:
         unit_of_measurement: "W/°C"
         icon: mdi:thermometer-lines
         availability: >
-          {{ is_state('switch.friggebod_elvarme', 'on')
-             and states('sensor.friggebod_temperature') not in ['unknown', 'unavailable']
-             and states('sensor.ute') not in ['unknown', 'unavailable'] }}
+          {{ states('sensor.friggebod_temperature') not in ['unknown', 'unavailable', '']
+             and states('sensor.ute') not in ['unknown', 'unavailable', ''] }}
         state: >
           {% set t_in = states('sensor.friggebod_temperature') | float(0) %}
           {% set t_out = states('sensor.ute') | float(0) %}
@@ -235,7 +234,8 @@ template:
         unit_of_measurement: "W/(m²·K)"
         icon: mdi:home-thermometer
         availability: >
-          {{ states('sensor.friggebod_varmebehov_per_grad') not in ['unknown', 'unavailable'] }}
+          {{ states('sensor.friggebod_temperature') not in ['unknown', 'unavailable', '']
+             and states('sensor.ute') not in ['unknown', 'unavailable', ''] }}
         state: >
           {% set varmebehov_per_grad = states('sensor.friggebod_varmebehov_per_grad') | float(0) %}
           {% set area_vagg = 15 * 2.2 * 4 %}
@@ -300,7 +300,8 @@ template:
         unit_of_measurement: "W"
         icon: mdi:snowflake-thermometer
         availability: >
-          {{ states('sensor.friggebod_varmebehov_per_grad') not in ['unknown', 'unavailable'] }}
+          {{ states('sensor.friggebod_temperature') not in ['unknown', 'unavailable', '']
+             and states('sensor.ute') not in ['unknown', 'unavailable', ''] }}
         state: >
           {% set t_inne_onskat = 5 %}
           {% set t_ute = -10 %}

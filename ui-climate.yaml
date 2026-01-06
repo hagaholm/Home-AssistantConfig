@@ -502,9 +502,9 @@ views:
         title: Energiförbrukning
         state_color: true
         entities:
-          - entity: sensor.friggebod_energi_daglig
+          - entity: sensor.friggebod_energi_idag
             name: Energi idag
-          - entity: sensor.friggebod_energi_manatlig
+          - entity: sensor.friggebod_energi_denna_manad
             name: Energi denna månad
           - entity: sensor.friggebod_energiforbrukning_total
             name: Total energi (sedan reset)

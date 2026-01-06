@@ -81,6 +81,7 @@ template:
       # Absolut fukt = es * RH * 2.1674 / (273.15 + T)
       - name: "Friggebod absolut fukt inne"
         unit_of_measurement: "g/m³"
+        state_class: "measurement"
         state: >
           {% set T = states('sensor.friggebod_temperature') | float(none) %}
           {% set RH = states('sensor.friggebod_humidity') | float(none) %}
@@ -100,6 +101,7 @@ template:
       # Beräknar absolut fukt utomhus (g/m³)
       - name: "Utomhus absolut fukt"
         unit_of_measurement: "g/m³"
+        state_class: "measurement"
         state: >
           {% set T = states('sensor.ute') | float(none) %}
           {% set RH = states('sensor.ute_friggebod_humidity') | float(none) %}

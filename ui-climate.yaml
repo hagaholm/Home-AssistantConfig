@@ -114,9 +114,9 @@ views:
             entities:
               - entity: sensor.friggebod_aktuell_effekt
                 name: Aktuell effekt
-              - entity: sensor.friggebod_energi_daglig
+              - entity: sensor.friggebod_energi_idag
                 name: Energi idag
-              - entity: sensor.friggebod_kostnad_daglig
+              - entity: sensor.friggebod_kostnad_idag
                 name: Kostnad idag
               - entity: sensor.friggebod_varmebehov_per_grad
                 name: Värmebehov (W/°C)
@@ -256,9 +256,9 @@ views:
       - type: history-graph
         title: Energiförbrukning
         entities:
-          - entity: sensor.friggebod_energi_daglig
+          - entity: sensor.friggebod_energi_idag
             name: Energi (kWh)
-          - entity: sensor.friggebod_kostnad_daglig
+          - entity: sensor.friggebod_kostnad_idag
             name: Kostnad (SEK)
         hours_to_show: 168
 
@@ -513,9 +513,9 @@ views:
         title: Kostnader
         state_color: true
         entities:
-          - entity: sensor.friggebod_kostnad_daglig
+          - entity: sensor.friggebod_kostnad_idag
             name: Kostnad idag
-          - entity: sensor.friggebod_kostnad_manatlig
+          - entity: sensor.friggebod_kostnad_denna_manad
             name: Kostnad denna månad
           - entity: sensor.friggebod_varmekostnad_total
             name: Total kostnad

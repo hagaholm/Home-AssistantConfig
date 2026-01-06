@@ -1,10 +1,15 @@
 title: Klimat
 views:
+  ####################################################
+  # STATUS VY
+  ####################################################
   - theme: Backend-selected
     title: Status
     badges: []
     cards:
-      # Ventilation huvudkontroller
+      - type: markdown
+        content: "# 🌬️ Ventilation"
+
       - type: grid
         columns: 3
         square: false
@@ -19,175 +24,233 @@ views:
             entity: input_boolean.alarm_ventilation
             name: Larm
 
-      # Luftfuktighet (ventilation)
       - type: entities
-        title: Luftfuktighet
+        title: Luftfuktighet & Temperatur
         state_color: true
         entities:
           - entity: sensor.badrum_luftfuktighet
+            name: Badrum fukt
           - entity: sensor.fukt_badrumsfonster
+            name: Badrum fönster fukt
           - entity: sensor.badrum_temperatur
+            name: Badrum temp
           - entity: sensor.ute_friggebod_humidity
+            name: Ute fukt
 
-      # Timers ventilation
       - type: entities
+        title: Timers
         state_color: true
         entities:
           - timer.timer_humidity_bathroom_max_time
           - timer.timer_humidity_bathroom
 
-      # Friggebod styrning
+      - type: markdown
+        content: "# ❄️ Friggebod"
+
       - type: vertical-stack
         cards:
-          - type: entities
-            title: Friggebod – styrning
-            state_color: true
-            entities:
-              - input_boolean.friggebod_varme_auto
-              - switch.friggebod_elvarme
-              - counter.friggebod_varme_tid
-              - timer.friggebod_min_runtime
+          - type: tile
+            entity: switch.friggebod_varme_auto
+            name: Automatisk värmning
+            icon: mdi:thermometer
 
-          - type: glance
-            title: Temperatur & fukt (inne/ute)
-            entities:
-              - sensor.friggebod_temperature
-              - sensor.friggebod_humidity
-              - sensor.ute
-              - sensor.ute_friggebod_humidity
+          - type: grid
+            columns: 2
+            square: false
+            cards:
+              - type: gauge
+                entity: sensor.friggebod_temperature
+                name: Temperatur
+                severity:
+                  green: 5
+                  yellow: 3
+                  red: 0
+              - type: gauge
+                entity: sensor.friggebod_humidity
+                name: Luftfuktighet
+                min: 0
+                max: 100
+                severity:
+                  green: 50
+                  yellow: 60
+                  red: 70
 
           - type: entities
             title: Avancerade värden
             state_color: true
             entities:
-              - sensor.friggebod_absolut_fukt_inne
-              - sensor.utomhus_absolut_fukt
-              - sensor.friggebod_mogelrisk
+              - entity: sensor.friggebod_absolut_fukt_inne
+                name: Absolut fukt inne
+              - entity: sensor.utomhus_absolut_fukt
+                name: Absolut fukt ute
+              - entity: sensor.friggebod_mogelrisk
+                name: Mögelrisk
 
           - type: gauge
-            name: Mögelrisk
             entity: sensor.friggebod_mogelrisk
+            name: Mögelrisk (%)
             min: 0
             max: 100
             severity:
-              green: 0
-              yellow: 50
-              red: 70
+              green: 30
+              yellow: 60
+              red: 75
 
-      # Garage/Förråd status
+      - type: markdown
+        content: "# 🏠 Garage & Förråd"
+
       - type: entities
-        title: Garage/Förråd
+        title: Styrning & Status
         state_color: true
         entities:
-          - entity: switch.garage_avfuktare
-            secondary_info: last-changed
           - entity: switch.garage_elvarme
-            secondary_info: last-changed
-          - entity: sensor.forrad_temperature
-            secondary_info: last-changed
+            name: Elvärme
+          - entity: switch.garage_avfuktare
+            name: Avfuktare
           - entity: sensor.garage_temperature
-            secondary_info: last-changed
+            name: Temperatur
           - entity: sensor.garage_humidity
-            secondary_info: last-changed
-          - entity: input_boolean.zwift
+            name: Luftfuktighet
+          - entity: sensor.forrad_temperature
+            name: Förråd temperatur
 
-      # Översikt temperatur & fukt (alla givare)
+      - type: markdown
+        content: "# 👁️ Översikt – Alla Sensorer"
+
       - type: entities
-        title: Temperatur & fukt – översikt
         state_color: true
         entities:
           - entity: sensor.ute
-            name: Ute temp
-          - entity: sensor.ute_friggebod_humidity
-            name: Ute fukt (friggebod)
-          - entity: sensor.friggebod_temperature
-            name: Friggebod temp
-          - entity: sensor.friggebod_humidity
-            name: Friggebod fukt
-          - entity: sensor.forrad_temperature
-            name: Förråd temp
-          - entity: sensor.garage_temperature
-            name: Garage temp
-          - entity: sensor.garage_humidity
-            name: Garage fukt
-          - entity: sensor.badrum_temperatur
-            name: Badrum temp
-          - entity: sensor.badrum_luftfuktighet
-            name: Badrum fukt
-          - entity: sensor.fukt_badrumsfonster
-            name: Badrum fönster fukt
+            name: "🌡️ Ute temperatur"
           - entity: sensor.inne_medel
-            name: Inne medeltemp
+            name: "🌡️ Inne medel temperatur"
+          - entity: sensor.badrum_temperatur
+            name: "🌡️ Badrum temperatur"
+          - entity: sensor.friggebod_temperature
+            name: "❄️ Friggebod temperatur"
+          - entity: sensor.garage_temperature
+            name: "🏠 Garage temperatur"
+          - entity: sensor.forrad_temperature
+            name: "🏠 Förråd temperatur"
+          - entity: sensor.badrum_luftfuktighet
+            name: "💧 Badrum fukt"
+          - entity: sensor.fukt_badrumsfonster
+            name: "💧 Badrum fönster fukt"
+          - entity: sensor.friggebod_humidity
+            name: "❄️ Friggebod fukt"
+          - entity: sensor.garage_humidity
+            name: "🏠 Garage fukt"
 
+  ####################################################
+  # GRAFER VY
+  ####################################################
   - theme: Backend-selected
     title: Grafer
     path: varden
     badges: []
     cards:
+      - type: markdown
+        content: "# 📈 Grafer"
+
+      - type: markdown
+        content: "## 🌬️ Ventilation"
+
       - type: history-graph
+        title: Ventilation På/Av
         entities:
           - entity: switch.ventilationsaggregat
-            name: På/Av
+            name: Ventilation
           - entity: switch.shelly1_c45bbe77099d
-            name: Max
+            name: Forcerad Fläkt
         hours_to_show: 24
         refresh_interval: 0
+
+      - type: markdown
+        content: "## 🌡️ Temperatur"
+
       - type: history-graph
+        title: Inne/Ute Temperatur
         entities:
           - entity: sensor.ute
+            name: Ute
           - entity: sensor.inne_medel
+            name: Inne Medel
         hours_to_show: 12
+
+      - type: markdown
+        content: "## 💧 Badrum – Fukt & Temperatur"
+
       - type: history-graph
+        title: Badrum Luftfuktighet
         entities:
           - entity: sensor.badrum_luftfuktighet
+            name: Badrum
           - entity: sensor.fukt_badrumsfonster
-          - entity: sensor.badrum_temperatur
+            name: Badrum Fönster
         hours_to_show: 12
+
       - type: gauge
+        title: Badrum Luftfuktighet (aktuell)
         entity: sensor.badrum_luftfuktighet
         severity:
           green: 0
           yellow: 70
           red: 80
         needle: true
-        name: Fukt badrum
+
       - type: gauge
+        title: Badrum Fönster Fukt (aktuell)
         entity: sensor.fukt_badrumsfonster
         severity:
           green: 0
           yellow: 70
           red: 80
         needle: true
-        name: Fukt badrum fönster
 
+      - type: history-graph
+        title: Badrum Temperatur
+        entities:
+          - entity: sensor.badrum_temperatur
+            name: Badrum
+        hours_to_show: 12
+
+  ####################################################
+  # INSTÄLLNINGAR – VENTILATION
+  ####################################################
   - theme: Backend-selected
-    title: Inställningar
-    path: installningar
+    title: Inst. Ventilation
+    path: inst_ventilation
     badges: []
     cards:
       - type: markdown
-        title: Tuning
         content: |
+          # ⚙️ Inställningar – Ventilation
+
           Justera trösklar och timers för forcerad ventilation.
 
-          Tips:
-          - Börja med små ändringar (1–2% eller 5–10 min).
-          - Om forcerad fläkt ofta går i maxtid: sänk maxtid eller höj stop-tröskeln något.
-          - Om den fladdrar: höj stabil tid eller öka hysteresis (skillnad mellan start/stop).
+          **Tips:**
+          - Börja med små ändringar (1–2% eller 5–10 min)
+          - Om forcerad fläkt ofta går i maxtid: sänk maxtid eller höj stop-tröskeln
+          - Om den fladdrar: höj stabil tid eller öka hysteresis
+
       - type: tile
         entity: script.ventilation_tuning_reset_defaults
         name: Återställ standardvärden
         icon: mdi:backup-restore
+
       - type: tile
         entity: script.ventilation_tuning_dismiss_notifications
         name: Rensa notiser
         icon: mdi:bell-off
+
+      - type: markdown
+        content: "## Auto-tuning (Status)"
+
       - type: entities
-        title: Auto-tuning (status)
         state_color: true
         entities:
           - entity: input_boolean.ventilation_auto_tuning_enabled
-            name: Auto-tuning (på)
+            name: Auto-tuning aktiverad
           - entity: input_boolean.ventilation_auto_tuning_auto_apply
             name: Auto-applicera
           - entity: sensor.ventilation_forcerad_tid_24h
@@ -198,8 +261,11 @@ views:
             name: Max RH fönster (24h)
           - entity: sensor.ventilation_rh_forcerad_medel_24h
             name: RH medel (forcerad, 24h)
+
+      - type: markdown
+        content: "## Auto-tuning (Rekommendationer)"
+
       - type: entities
-        title: Auto-tuning (rekommendationer)
         state_color: true
         entities:
           - entity: sensor.ventilation_rekommenderad_rh_start
@@ -211,39 +277,12 @@ views:
           - entity: sensor.ventilation_rekommenderad_maxtid
             name: Maxtid (rekomm)
           - entity: script.ventilation_tuning_apply_recommended
-            name: Applicera rekomm.
-      - type: markdown
-        title: Förklaring
-        content: |
-          **Auto-tuning**
-          - **auto-tuning (på)**: aktiverar rådgivaren (förslag skapas vid start och 03:15).
-          - **auto-applicera**: om på, skrivs förslagen direkt till helpers.
-          - **forcerad tid/antal (24h)**: används för att bedöma om systemet forcerar “för ofta”.
-          - **rekommenderad …**: beräknade förslag (små steg inom säkra gränser).
-          - **Applicera…**: kör en engångs-applicering manuellt.
+            name: Applicera rekommendationer
 
-          **Anomaly detection**
-          - Om någon anomaly blir **On** så stängs **auto-applicera** av automatiskt och en notis skapas.
-          - **sensor okänd**: RH/ute-temp saknas (`unknown/unavailable`).
-          - **hysteresis fel**: start ≤ stop (risk för fladder).
-          - **forcerad trots låg RH**: forcerad är på fast RH ligger under stop-tröskeln med marginal.
-          - **fladder**: många korta forceringar (indikerar spikig sensor eller fel trösklar/tider).
+      - type: markdown
+        content: "## Gränser & Timers"
+
       - type: entities
-        title: Anomaly detection
-        state_color: true
-        entities:
-          - entity: binary_sensor.ventilation_anomaly_sensor_okand
-            name: Sensor okänd
-          - entity: sensor.ventilation_anomaly_okand_kalla
-            name: Okänd källa
-          - entity: binary_sensor.ventilation_anomaly_hysteresis_fel
-            name: Hysteresis fel
-          - entity: binary_sensor.ventilation_anomaly_forcerad_trots_lag_rh
-            name: Forcerad trots låg RH
-          - entity: binary_sensor.ventilation_anomaly_fladder
-            name: Fladder
-      - type: entities
-        title: Gränser & timers
         state_color: true
         entities:
           - entity: input_number.ventilation_rh_force_on
@@ -269,61 +308,271 @@ views:
           - entity: input_number.ventilation_sensor_fresh_seconds
             name: Sensor-färskhet
 
+      - type: markdown
+        content: |
+          ## Anomaly Detection
+
+          Om någon anomaly blir **On** så stängs auto-applicera av automatiskt.
+
+          - **sensor okänd**: RH/ute-temp saknas
+          - **hysteresis fel**: start ≤ stop (risk för fladder)
+          - **forcerad trots låg RH**: forcerad är på fast RH ligger under stop-tröskeln
+          - **fladder**: många korta forceringar
+
+      - type: entities
+        state_color: true
+        entities:
+          - entity: binary_sensor.ventilation_anomaly_sensor_okand
+            name: Sensor okänd
+          - entity: sensor.ventilation_anomaly_okand_kalla
+            name: Okänd källa
+          - entity: binary_sensor.ventilation_anomaly_hysteresis_fel
+            name: Hysteresis fel
+          - entity: binary_sensor.ventilation_anomaly_forcerad_trots_lag_rh
+            name: Forcerad trots låg RH
+          - entity: binary_sensor.ventilation_anomaly_fladder
+            name: Fladder
+
+  ####################################################
+  # INSTÄLLNINGAR – FRIGGEBOD
+  ####################################################
+  - theme: Backend-selected
+    title: Inst. Friggebod
+    path: inst_friggebod
+    badges: []
+    cards:
+      - type: markdown
+        content: |
+          # ⚙️ Inställningar – Friggebod
+
+          Justera värmestyrning, trösklar och mögelriskgränser för friggeboden.
+
+      - type: markdown
+        content: "## Konfigurerbara Värden"
+
+      - type: markdown
+        content: |
+          Dessa värden är definierade i `packages/climate/friggebod.yaml` och kan justeras där.
+
+          **Temperaturvärden (°C):**
+          - `temp_frostskydd`: 3°C (aktiverar värmestyrning)
+          - `temp_min_for_fuktvarme`: 0°C (minsta temp för fuktvärme)
+
+          **Fuktvärden (%):**
+          - `rh_aktivering`: 60% (tänd värmning vid fukt)
+          - `rh_avaktivering`: 55% (släck värme vid fukt)
+
+          **Absolut Fukt (g/m³):**
+          - `delta_abs_aktivering`: 1.0 g/m³ (inne > ute + 1.0)
+          - `delta_abs_avaktivering`: 0.5 g/m³ (inne > ute + 0.5)
+
+          **Mögelrisk:**
+          - `mogelrisk_troskel`: 75% RH
+          - `mogelrisk_varning`: 60% risk för notifiering
+
+          **Värmestyrning:**
+          - `max_varmetid_per_dag`: 12 perioder (= 2h)
+          - `min_gangtid`: 30 minuter
+
+      - type: markdown
+        content: "## Status Sensorer"
+
+      - type: entities
+        state_color: true
+        entities:
+          - entity: sensor.friggebod_temperature
+            name: Temperatur inne
+          - entity: sensor.friggebod_humidity
+            name: Fukt inne
+          - entity: sensor.ute
+            name: Temperatur ute
+          - entity: sensor.ute_friggebod_humidity
+            name: Fukt ute
+          - entity: sensor.friggebod_absolut_fukt_inne
+            name: Absolut fukt inne
+          - entity: sensor.utomhus_absolut_fukt
+            name: Absolut fukt ute
+          - entity: sensor.friggebod_mogelrisk
+            name: Mögelrisk
+
+  ####################################################
+  # INSTÄLLNINGAR – GARAGE & FÖRRÅD
+  ####################################################
+  - theme: Backend-selected
+    title: Inst. Garage
+    path: inst_garage
+    badges: []
+    cards:
+      - type: markdown
+        content: |
+          # ⚙️ Inställningar – Garage & Förråd
+
+          Information om garage/förråd värmning och avfuktning.
+
+      - type: markdown
+        content: "## Elvärme Garage"
+
+      - type: markdown
+        content: |
+          **Automationen styrs efter temperatur i garage och förråd:**
+
+          - **TÄND**: Temp < 7°C (ute < 6°C) ELLER Temp < 12°C (ute < 10°C)
+          - **SLÄCK**: Temp > 14°C (BÅDA lokaler) ELLER Temp > 9°C (BÅDA)
+
+      - type: entities
+        state_color: true
+        entities:
+          - entity: switch.garage_elvarme
+            name: Elvärme status
+          - entity: sensor.garage_temperature
+            name: Garage temperatur
+          - entity: sensor.forrad_temperature
+            name: Förråd temperatur
+          - entity: sensor.ute
+            name: Utomhus temperatur
+
+      - type: markdown
+        content: "## Avfuktare Garage"
+
+      - type: markdown
+        content: |
+          **Automationen styrs efter luftfuktighet:**
+
+          - **TÄND**: RH > 66% (och temp > 10°C)
+          - **SLÄCK**: RH < 64%
+
+      - type: entities
+        state_color: true
+        entities:
+          - entity: switch.garage_avfuktare
+            name: Avfuktare status
+          - entity: sensor.garage_humidity
+            name: Luftfuktighet
+
+  ####################################################
+  # LARM VY
+  ####################################################
   - theme: Backend-selected
     title: Larm
     path: larm
     badges: []
     cards:
+      - type: markdown
+        content: "# 🚨 Larm"
+
+      - type: markdown
+        content: "## 🌬️ Ventilation"
+
       - type: entities
         state_color: true
         entities:
           - entity: input_boolean.alarm_ventilation
+            name: Ventilation larm
           - entity: input_boolean.high_humidity_bathroom_away
+            name: Hög fukt (borta)
 
+      - type: markdown
+        content: "## ❄️ Friggebod"
+
+      - type: entities
+        state_color: true
+        entities:
+          - entity: input_boolean.friggebod_reading_missing_alarm
+            name: Läsning saknas
+
+  ####################################################
+  # AUTOMATIONER VY
+  ####################################################
   - theme: Backend-selected
     title: Automationer
     path: automationer
     badges: []
     cards:
+      - type: markdown
+        content: "# 🤖 Automationer"
+
+      - type: markdown
+        content: "## 🌬️ Ventilation"
+
+      - type: markdown
+        content: "### Timers"
+
       - type: entities
-        title: Timers - Forcerad till Normal fläkt
         state_color: true
         entities:
           - entity: automation.startar_max_timer_badrum
+            name: Startar max-timer
           - entity: automation.restart_timer_badrum
+            name: Restartar timer
           - entity: automation.reset_timer_nar_vent_satts_till_normal
+            name: Resetar timer
+
+      - type: markdown
+        content: "### Forcerad Fläkt"
+
       - type: entities
-        title: Larm
-        state_color: true
-        entities:
-          - entity: automation.satt_larm_for_vent
-          - entity: automation.badrumsfonster_hog_fukt_larm
-      - type: entities
-        title: Forcerad fläkt
         state_color: true
         entities:
           - entity: automation.forcerad_badrumsfonster_hog_fukt
+            name: Hög fukt
+
+      - type: markdown
+        content: "### Normal Fläkt"
+
       - type: entities
-        title: Normal fläkt
         state_color: true
         entities:
           - entity: automation.normal_badrumsfonster_lag_fukt
+            name: Låg fukt
           - entity: automation.normal_hog_fukt_i_huset
+            name: Hög fukt i huset
           - entity: automation.normal_vid_stabiliserad_fukt
+            name: Stabiliserad fukt
           - entity: automation.normal_efter_maxtid
+            name: Efter maxtid
+
+      - type: markdown
+        content: "### Ventilation På"
+
       - type: entities
-        title: Ventilation På
         state_color: true
         entities:
           - entity: automation.vent_on_hemma_off
           - entity: automation.vent_on_ute_22degc_off
           - entity: automation.vent_on_60_off
           - entity: automation.vent_on_inne_23degc_off
+
+      - type: markdown
+        content: "### Ventilation Av"
+
       - type: entities
-        title: Ventilation Av
         state_color: true
         entities:
           - entity: automation.vent_off_borta_ute_24degc_60_inne_23degc
           - entity: automation.vent_off_ute_24degc_borta_60_inne_23degc
           - entity: automation.vent_off_60_borta_ute_24degc_inne_23degc
           - entity: automation.vent_off_inne_23degc_borta_60_ute_24degc
+
+      - type: markdown
+        content: "### Ventilation Larm"
+
+      - type: entities
+        state_color: true
+        entities:
+          - entity: automation.satt_larm_for_vent
+            name: Sätter larm
+          - entity: automation.badrumsfonster_hog_fukt_larm
+            name: Hög fukt larm
+
+      - type: markdown
+        content: "## ❄️ Friggebod"
+
+      - type: entities
+        state_color: true
+        entities:
+          - entity: automation.avlasning_saknas_friggebod
+            name: Läsning saknas
+          - entity: automation.starta_avfuktare
+            name: Starta värmning
+          - entity: automation.starta_elvarme_5_grader
+            name: Frost-skydd

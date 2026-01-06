@@ -54,6 +54,18 @@ views:
             name: Automatisk värmning
             icon: mdi:thermometer
 
+          - type: tile
+            entity: switch.friggebod_elvarme
+            name: Elvärme
+
+          - type: tile
+            entity: counter.friggebod_varme_tid
+            name: Värmetid idag
+
+          - type: tile
+            entity: timer.friggebod_min_runtime
+            name: Min gångtid
+
           - type: grid
             columns: 2
             square: false

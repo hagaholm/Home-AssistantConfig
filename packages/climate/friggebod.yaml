@@ -6,22 +6,38 @@
 # Styrning av elvärme i friggebod baserat på temperatur och fukt.
 # Systemet skyddar mot frost och hög fuktighet samt räknar värmetid.
 #
-# Källor:
-# - automations/friggebod_heater.yaml
+# EXTERNA BEROENDEN (sensorer definierade på annat håll):
+# - sensor.friggebod_temperature (temperatur inne, °C)
+# - sensor.friggebod_humidity (relativ fukt inne, %)
+# - sensor.ute (utomhustemperatur, °C)
+# - sensor.ute_friggebod_humidity (relativ fukt ute, %)
+# - switch.friggebod_elvarme (main power switch för elvärme)
+# - notify.* (notification service, se input_text.friggebod_notification_target)
 #
 # Funktioner:
 # - Frostskydd vid låg temperatur
 # - Fuktdriven värmestyrning
-# - Mögelriskberäkning
-# - Automatisk värmetidsräkning
+# - Mögelriskberäkning (absolut fukt + relativ fukt)
+# - Automatisk värmetidsräkning per dag
 # - Daglig begränsning av värmekörning
+# - Mögelvarning vid högt värde
 
 # METADATA:
 # Skapad: okänt
-# Senast ändrad: 2026-01-05
-# Version: 2.0
+# Senast ändrad: 2026-01-06
+# Version: 2.1
 # Författare: Home Assistant Config
 ####################################################
+
+############################################
+# NOTIFIKATION-KONFIGURATION
+############################################
+# Ändra denna till din notification service (notify.email, notify.ntfy, etc.)
+input_text:
+  friggebod_notification_target:
+    name: Friggebod notifikation-target
+    initial: "notify.mobile_app_sm_a528b"
+    icon: mdi:bell
 
 ############################################
 # KONFIGURERBARA VARIABLER
@@ -77,65 +93,76 @@ homeassistant:
 template:
   - sensor:
       # Beräknar absolut fukt inne i friggeboden (g/m³)
-      # Använder Magnus-Tetens formel: es = 6.112 * exp((17.67*T)/(T+243.5))
-      # Absolut fukt = es * RH * 2.1674 / (273.15 + T)
+      # FORMEL: Magnus-Tetens approximation (gäller -40 till +60°C)
+      # - Mättnadstryck: es = 6.112 * e^((17.67*T)/(T+243.5))
+      # - Absolut fukt: AH = es * RH * 2.1674 / (273.15 + T)
+      # ANVÄNDNING: Jämför inne vs ute för fuktstyrning
       - name: "Friggebod absolut fukt inne"
         unit_of_measurement: "g/m³"
         state_class: "measurement"
+        icon: mdi:water
         state: >
           {% set T = states('sensor.friggebod_temperature') | float(none) %}
           {% set RH = states('sensor.friggebod_humidity') | float(none) %}
           {% if T is none or RH is none %}
             unavailable
           {% else %}
-            {% set magnus_a = 17.67 %}
-            {% set magnus_b = 243.5 %}
-            {% set abs_noll = 273.15 %}
-            {% set ideal_gas = 2.1674 %}
-            {% set magnus_k = 6.112 %}
-            {% set exponent = (magnus_a*T) / (T + magnus_b) %}
+            {% set a = 17.67 %}
+            {% set b = 243.5 %}
+            {% set R_sp = 2.1674 %}
+            {% set T_abs = 273.15 %}
+            {% set K = 6.112 %}
+            {% set exp_val = (a * T) / (T + b) %}
             {% set e = 2.718281828459045 %}
-            {{ (magnus_k * (e ** exponent) * RH * ideal_gas / (abs_noll + T)) | round(2) }}
+            {{ (K * (e ** exp_val) * RH * R_sp / (T_abs + T)) | round(2) }}
           {% endif %}
 
       # Beräknar absolut fukt utomhus (g/m³)
+      # Samma Magnus-Tetens formel, men använder ute-temperaturer.
+      # Används för att beräkna delta_abs = AH_inne - AH_ute
       - name: "Utomhus absolut fukt"
         unit_of_measurement: "g/m³"
         state_class: "measurement"
+        icon: mdi:water
         state: >
           {% set T = states('sensor.ute') | float(none) %}
           {% set RH = states('sensor.ute_friggebod_humidity') | float(none) %}
           {% if T is none or RH is none %}
             unavailable
           {% else %}
-            {% set magnus_a = 17.67 %}
-            {% set magnus_b = 243.5 %}
-            {% set abs_noll = 273.15 %}
-            {% set ideal_gas = 2.1674 %}
-            {% set magnus_k = 6.112 %}
-            {% set exponent = (magnus_a*T) / (T + magnus_b) %}
+            {% set a = 17.67 %}
+            {% set b = 243.5 %}
+            {% set R_sp = 2.1674 %}
+            {% set T_abs = 273.15 %}
+            {% set K = 6.112 %}
+            {% set exp_val = (a * T) / (T + b) %}
             {% set e = 2.718281828459045 %}
-            {{ (magnus_k * (e ** exponent) * RH * ideal_gas / (abs_noll + T)) | round(2) }}
+            {{ (K * (e ** exp_val) * RH * R_sp / (T_abs + T)) | round(2) }}
           {% endif %}
 
       # Beräknar mögelrisk baserat på relativ fuktighet
-      # Risk ökar linjärt över 75% RH: Risk = (RH - 75) * 2
-      # Vid temperaturer under 0°C är risken 0
+      # LOGIK:
+      # - T < 0°C: Risk = 0% (ingen svampväxt i kallt)
+      # - RH < 75%: Risk = 0% (under tröskel)
+      # - RH >= 75%: Risk = (RH - 75) * 2 (linjär ökning)
+      # EXEMPEL: RH=80% => 10%, RH=90% => 30%
       - name: "Friggebod mögelrisk"
         unit_of_measurement: "%"
+        device_class: "humidity"
+        icon: mdi:mushroom
         availability: >
           {{ states('sensor.friggebod_temperature') not in ['unknown', 'unavailable', '']
              and states('sensor.friggebod_humidity') not in ['unknown', 'unavailable', ''] }}
         state: >
           {% set T = states('sensor.friggebod_temperature') | float(none) %}
           {% set RH = states('sensor.friggebod_humidity') | float(none) %}
-          {% set mogelrisk_troskel = 75 %}
+          {% set troskel = 75 %}
           {% if T is none or RH is none %}
             unavailable
           {% elif T < 0 %}
             0
           {% else %}
-            {% set risk = ((RH - mogelrisk_troskel) * 2) %}
+            {% set risk = ((RH - troskel) * 2) %}
             {% if risk < 0 %}
               0
             {% elif risk > 100 %}
@@ -171,8 +198,10 @@ counter:
 ############################################
 # AUTOMATIONER
 ############################################
+# NOTERING: Konfigurerbara värden definieras i node_anchors ovan.
+# De upprepas i automation-variablerna för att vara explicita och lätta att justera.
 
-# Räkna värmetid (körs var 10:e minut)
+# AUTO 1: Räkna värmetid (körs var 10:e minut)
 # Räknar upp counter för att begränsa total värmetid per dag
 automation:
   - alias: Friggebod – räkna värmetid
@@ -189,7 +218,7 @@ automation:
         target:
           entity_id: counter.friggebod_varme_tid
 
-  # Reset värmetid vid midnatt
+  # AUTO 2: Reset värmetid vid midnatt
   - alias: Friggebod – reset värmetid
     description: Nollställer värmetidsräknaren varje midnatt
     trigger:
@@ -200,11 +229,11 @@ automation:
         target:
           entity_id: counter.friggebod_varme_tid
 
-  # HUVUDLOGIK - Smart värmestyrning
+  # AUTO 3: HUVUDLOGIK - Smart värmestyrning
   # Prioritetsordning:
-  # 1. Frostskydd (högsta prioritet)
-  # 2. Fuktdriven värme (om villkor uppfyllda)
-  # 3. Avaktivering (om villkor inte längre uppfyllda)
+  # 1. FROSTSKYDD - Aktiveras vid låg temperatur
+  # 2. FUKTDRIVEN VÄRME - Reglerar för fuktbalans
+  # 3. AVAKTIVERING - Stänger av när villkor inte uppfyllda
   - alias: Friggebod – komplett smart värmestyrning
     description: Styr värmaren baserat på temperatur, fukt och daglig körning
     mode: restart
@@ -302,21 +331,24 @@ automation:
                 target:
                   entity_id: switch.friggebod_elvarme
 
-  # MÖGELVARNING
-  # Skickar notifikation om mögelrisken är hög under längre tid
+  # AUTO 4: MÖGELVARNING
+  # Skickar notifikation om mögelrisken är högt under längre tid.
+  # Notification-target kan ändras via input_text.friggebod_notification_target
   - alias: Friggebod – mögelvarning
     description: Varnar när mögelrisken är över 60% i mer än 6 timmar
     trigger:
       - platform: numeric_state
         entity_id: sensor.friggebod_mogelrisk
-        above: 60  # 60% mögelrisk
+        above: 60
         for:
-          hours: 6  # Under minst 6 timmar
+          hours: 6
     action:
-      - service: notify.mobile_app_sm_a528b
+      - service: "{{ states('input_text.friggebod_notification_target') }}"
         data:
           message: >
             ⚠️ Hög mögelrisk i friggeboden!
-            Temp: {{ states('sensor.friggebod_temperature') }} °C
-            Fukt: {{ states('sensor.friggebod_humidity') }} %
+            Temp: {{ states('sensor.friggebod_temperature') }}°C
+            RH: {{ states('sensor.friggebod_humidity') }}%
+            Mögelrisk: {{ states('sensor.friggebod_mogelrisk') }}%
+            Åtgärd: Öka ventilation eller värmning för att sänka fuktigheten.
             Mögelrisk: {{ states('sensor.friggebod_mogelrisk') }} %

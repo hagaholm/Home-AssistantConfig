@@ -395,6 +395,16 @@ views:
           - entity: sensor.friggebod_mogelrisk
             name: Mögelrisk
 
+      - type: markdown
+        content: "## Notifikation"
+
+      - type: entities
+        title: Mögelvarning-inställning
+        state_color: true
+        entities:
+          - entity: input_text.friggebod_notification_target
+            name: Notifikation target
+
   ####################################################
   # INSTÄLLNINGAR – GARAGE & FÖRRÅD
   ####################################################

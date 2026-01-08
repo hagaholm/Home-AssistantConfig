@@ -663,11 +663,13 @@ views:
           - entity: switch.garage_elvarme
             name: Elvärme status
           - entity: sensor.garage_temperature
+            secondary_info: last-updated
             name: Garage temperatur
           - entity: sensor.forrad_temperature
             name: Förråd temperatur
           - entity: sensor.ute
             name: Utomhus temperatur
+            name: Förråd temperatur
 
       - type: markdown
         content: "## Avfuktare Garage"
@@ -685,6 +687,7 @@ views:
           - entity: switch.garage_avfuktare
             name: Avfuktare status
           - entity: sensor.garage_humidity
+            secondary_info: last-updated
             name: Luftfuktighet
 
   ####################################################

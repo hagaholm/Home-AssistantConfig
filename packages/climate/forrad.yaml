@@ -1,0 +1,325 @@
+####################################################
+#                                                  #
+#           FÖRRÅD (STORAGE) CLIMATE PACKAGE        #
+#                                                  #
+####################################################
+# Styrning av elvärme i förråd för målförvaring.
+# Systemet skyddar mot frost och håller optimal fukt för mållagring.
+#
+# EXTERNA BEROENDEN (sensorer definierade på annat håll):
+# - sensor.forrad_temperature (temperatur förråd, °C)
+# - sensor.garage_temperature (temperatur garage, °C)
+# - sensor.garage_humidity (relativ fukt garage, %)
+# - sensor.ute (utomhustemperatur, °C)
+# - switch.garage_elvarme (main power switch för elvärme)
+#
+# Funktioner:
+# - Frostskydd vid låg temperatur (målskydd)
+# - Energiövervakning
+# - Kostnadsanalys
+
+# METADATA:
+# Skapad: 2026-01-08
+# Version: 1.0
+# Syfte: Mållagring (målkonserver fryser vid 0-5°C)
+####################################################
+
+############################################
+# KONFIGURERBARA VARIABLER
+############################################
+homeassistant:
+  customize:
+    package.node_anchors:
+      # Temperaturvärden för mållagring (°C)
+      temp_frostskydd_forrad: &temp_frostskydd_forrad 5
+      temp_min_drift: &temp_min_drift 0
+      temp_slaeck_high: &temp_slaeck_high 15
+      
+      # Fuktvärden för mållagring (%)
+      rh_optimal_low: &rh_optimal_low 40
+      rh_optimal_high: &rh_optimal_high 60
+      
+      # Värmestyrning
+      max_varmetid_per_dag: &max_varmetid_per_dag 24  # antal 10-min perioder
+      min_gangtid: &min_gangtid "00:20:00"  # minuter värmen ska köra minst
+
+############################################
+# TEMPLATE SENSORER
+############################################
+# Enkla sensorer för övervakad energi- och temperaturdata
+
+template:
+  - sensor:
+      # ENERGIFÖRBRUKNING - Aktuell effekt när elementet är på
+      - name: "Förråd aktuell effekt"
+        unit_of_measurement: "W"
+        device_class: "power"
+        state_class: "measurement"
+        icon: mdi:flash
+        state: >
+          {% if is_state('switch.garage_elvarme', 'on') %}
+            {{ states('input_number.forrad_element_effekt') | float(700) }}
+          {% else %}
+            0
+          {% endif %}
+
+      # ENERGIFÖRBRUKNING - kWh sedan senaste reset
+      - name: "Förråd energiförbrukning total"
+        unit_of_measurement: "kWh"
+        device_class: "energy"
+        state_class: "total_increasing"
+        icon: mdi:lightning-bolt-circle
+        state: >
+          {% set runtime = states('counter.forrad_varme_tid') | int(0) %}
+          {% set effekt_kw = states('input_number.forrad_element_effekt') | float(700) / 1000 %}
+          {{ (runtime * 10 / 60 * effekt_kw) | round(2) }}
+
+      # KOSTNAD - Total kostnad baserat på energiförbrukning
+      - name: "Förråd värmekostnad total"
+        unit_of_measurement: "SEK"
+        icon: mdi:currency-sek
+        state: >
+          {% set kwh = states('sensor.forrad_energiforbrukning_total') | float(0) %}
+          {% set pris = states('input_number.forrad_elpris') | float(1.5) %}
+          {{ (kwh * pris) | round(2) }}
+
+      # FYSIK - Värmebehov per grad temperaturskillnad (W/°C)
+      - name: "Förråd värmebehov per grad"
+        unit_of_measurement: "W/°C"
+        icon: mdi:thermometer-lines
+        availability: >
+          {{ states('sensor.forrad_temperature') not in ['unknown', 'unavailable', '']
+             and states('sensor.ute') not in ['unknown', 'unavailable', ''] }}
+        state: >
+          {% set t_in = states('sensor.forrad_temperature') | float(0) %}
+          {% set t_out = states('sensor.ute') | float(0) %}
+          {% set delta_t = t_in - t_out %}
+          {% set effekt = states('input_number.forrad_element_effekt') | float(700) %}
+          {% if delta_t > 0 %}
+            {{ (effekt / delta_t) | round(1) }}
+          {% else %}
+            unavailable
+          {% endif %}
+
+      # PROGNOS - Uppskattad daglig kostnad vid kontinuerlig drift
+      - name: "Förråd daglig kostnad prognos"
+        unit_of_measurement: "SEK/dag"
+        icon: mdi:cash-clock
+        state: >
+          {% set effekt_kw = states('input_number.forrad_element_effekt') | float(700) / 1000 %}
+          {% set pris = states('input_number.forrad_elpris') | float(1.5) %}
+          {% set max_runtime_hours = 4 %}
+          {{ (effekt_kw * max_runtime_hours * pris) | round(2) }}
+
+      # STATISTIK - Drift-tid i procent idag
+      - name: "Förråd drifttid procent"
+        unit_of_measurement: "%"
+        icon: mdi:percent
+        state: >
+          {% set runtime_periods = states('counter.forrad_varme_tid') | int(0) %}
+          {% set hour = now().hour %}
+          {% set minutes = now().minute %}
+          {% set elapsed_periods = (hour * 60 + minutes) / 10 %}
+          {% if elapsed_periods > 0 %}
+            {{ ((runtime_periods / elapsed_periods) * 100) | round(1) }}
+          {% else %}
+            0
+          {% endif %}
+
+############################################
+# ENERGIBERÄKNINGAR
+############################################
+# Samma element som friggebod/garage
+
+input_number:
+  forrad_element_effekt:
+    name: Förråd elementeffekt
+    min: 0
+    max: 2000
+    step: 50
+    unit_of_measurement: "W"
+    icon: mdi:lightning-bolt
+    mode: box
+    initial: 700
+
+  forrad_elpris:
+    name: Förråd elpris
+    min: 0
+    max: 10
+    step: 0.1
+    unit_of_measurement: "SEK/kWh"
+    icon: mdi:currency-sek
+    mode: box
+    initial: 1.5
+
+############################################
+# UTILITY METERS - Daglig/Månatlig statistik
+############################################
+utility_meter:
+  forrad_energi_daglig:
+    source: sensor.forrad_energiforbrukning_total
+    cycle: daily
+    name: Förråd energi idag
+    
+  forrad_energi_manatlig:
+    source: sensor.forrad_energiforbrukning_total
+    cycle: monthly
+    name: Förråd energi denna månad
+
+  forrad_kostnad_daglig:
+    source: sensor.forrad_varmekostnad_total
+    cycle: daily
+    name: Förråd kostnad idag
+    
+  forrad_kostnad_manatlig:
+    source: sensor.forrad_varmekostnad_total
+    cycle: monthly
+    name: Förråd kostnad denna månad
+
+############################################
+# HELPERS
+############################################
+# Input boolean för att aktivera/avaktivera automatisk värmestyrning
+# Counter för att räkna värmetid per dag
+
+input_boolean:
+  forrad_varme_auto:
+    name: Förråd värme automatik
+    icon: mdi:radiator
+
+timer:
+  forrad_min_runtime:
+    name: Förråd min gångtid
+    duration: "00:20:00"  # 20 minuter minimum gångtid
+
+counter:
+  forrad_varme_tid:
+    name: Förråd värmetid idag
+    initial: 0
+    step: 1  # Räknar antalet 10-minuters perioder
+
+############################################
+# AUTOMATIONER
+############################################
+# ENKELT VÄRMESTYRNING: Enbart frostskydd för mållagring
+
+automation:
+  # AUTO 1: Räkna värmetid (körs var 10:e minut)
+  - alias: Förråd – räkna värmetid
+    description: Räknar upp värmetid varje 10:e minut när värmaren är på
+    trigger:
+      - platform: time_pattern
+        minutes: "/10"  # Var 10:e minut
+    condition:
+      - condition: state
+        entity_id: switch.garage_elvarme
+        state: "on"
+    action:
+      - service: counter.increment
+        target:
+          entity_id: counter.forrad_varme_tid
+
+  # AUTO 2: Reset värmetid vid midnatt
+  - alias: Förråd – reset värmetid
+    description: Nollställer värmetidsräknaren varje midnatt
+    trigger:
+      - platform: time
+        at: "00:00:00"
+    action:
+      - service: counter.reset
+        target:
+          entity_id: counter.forrad_varme_tid
+
+  # AUTO 3: HUVUDLOGIK - Enkel värmestyrning för frostskydd
+  # Prioritetsordning:
+  # 1. FROSTSKYDD - Aktiveras vid låg temperatur (målen fryser vid ~0-5°C)
+  # 2. AVAKTIVERING - Stänger av när temperatur är tillräckligt hög
+  - alias: Förråd – smart värmestyrning
+    description: Styr värmaren baserat på temperatur för mållagring
+    mode: restart
+    trigger:
+      - platform: time_pattern
+        minutes: "/5"  # Kontrollerar var 5:e minut
+      - platform: state
+        entity_id:
+          - sensor.forrad_temperature
+          - sensor.garage_temperature
+          - sensor.ute
+
+    condition:
+      - condition: state
+        entity_id: input_boolean.forrad_varme_auto
+        state: "on"
+
+    action:
+      - variables:
+          # Konfigurerbara värden för mållagring
+          temp_frostskydd: 5           # Målen börjar frysa vid ~0-5°C
+          temp_slaeck: 15              # Släck värme när det väl blir varmt
+          max_varmetid: 24             # Max 240 minuter (4 timmar) per dag
+          
+          # Temperatursensor från förråd (primär) + garage (backup)
+          temp_forrad: "{{ states('sensor.forrad_temperature') | float(none) }}"
+          temp_garage: "{{ states('sensor.garage_temperature') | float(none) }}"
+          temp_in: "{{ [temp_forrad, temp_garage] | select('number') | list | max if temp_forrad is number or temp_garage is number else none }}"
+          runtime_ok: "{{ states('counter.forrad_varme_tid') | int(0) < max_varmetid }}"
+
+      - choose:
+
+          # PRIORITET 1: FROSTSKYDD
+          # Aktiveras när förrådstemperaturen sjunker under 5°C
+          - conditions:
+              - condition: template
+                value_template: "{{ temp_in is number and temp_in < temp_frostskydd }}"
+            sequence:
+              - service: switch.turn_on
+                target:
+                  entity_id: switch.garage_elvarme
+              - condition: state
+                entity_id: timer.forrad_min_runtime
+                state: "idle"
+              - service: timer.start
+                target:
+                  entity_id: timer.forrad_min_runtime
+
+          # PRIORITET 2: STÄNG AV
+          # Avaktiveras när temperaturen stiger över 15°C
+          - conditions:
+              - condition: template
+                value_template: "{{ temp_in is number and temp_in > temp_slaeck }}"
+              - condition: state
+                entity_id: timer.forrad_min_runtime
+                state: "idle"
+            sequence:
+              - service: switch.turn_off
+                target:
+                  entity_id: switch.garage_elvarme
+
+  # AUTO 4: Temperaturvarning om för kallt
+  - alias: Förråd – temperaturvarning
+    description: Varnar om förrådet blir för kallt för mållagring
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.forrad_temperature
+        below: 0
+        for:
+          minutes: 10
+    action:
+      - service: "{{ states('input_text.forrad_notification_target') }}"
+        data:
+          message: >
+            ⚠️ Förråd – FROST! Temperatur under 0°C!
+            Förråd temp: {{ states('sensor.forrad_temperature') }}°C
+            Garage temp: {{ states('sensor.garage_temperature') }}°C
+            Ute temp: {{ states('sensor.ute') }}°C
+            ⚠️ MÅLKONSERVERNA KAN FRYSA OCH SKADAS!
+            Åtgärd: Kontrollera elvärmen!
+
+############################################
+# NOTIFIKATION-KONFIGURATION
+############################################
+input_text:
+  forrad_notification_target:
+    name: Förråd notifikation-target
+    initial: "notify.mobile_app_sm_a528b"
+    icon: mdi:bell

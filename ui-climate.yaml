@@ -70,6 +70,12 @@ views:
           - type: tile
             entity: sensor.garage_humidity
             name: Garage fukt
+          - type: tile
+            entity: sensor.forrad_temperature
+            name: Förråd temp
+          - type: tile
+            entity: sensor.ute
+            name: Ute temp
 
   ####################################################
   # STATUS VY
@@ -193,6 +199,52 @@ views:
                 name: Värmebehov (W/°C)
 
       - type: markdown
+        content: "# 🏠 Förråd (Mållagring)"
+
+      - type: vertical-stack
+        cards:
+          - type: tile
+            entity: input_boolean.forrad_varme_auto
+            name: Automatisk värmning
+            icon: mdi:thermometer
+
+          - type: tile
+            entity: switch.garage_elvarme
+            name: Elvärme (delad)
+
+          - type: tile
+            entity: counter.forrad_varme_tid
+            name: Värmetid idag
+
+          - type: grid
+            columns: 2
+            square: false
+            cards:
+              - type: gauge
+                entity: sensor.forrad_temperature
+                name: Temperatur
+                severity:
+                  green: 8
+                  yellow: 5
+                  red: 0
+              - type: gauge
+                entity: sensor.forrad_drifttid_procent
+                name: Drifttid (%)
+                min: 0
+                max: 100
+
+          - type: entities
+            title: Energi & Kostnader
+            state_color: true
+            entities:
+              - entity: sensor.forrad_aktuell_effekt
+                name: Aktuell effekt
+              - entity: sensor.forrad_energi_idag
+                name: Energi idag
+              - entity: sensor.forrad_kostnad_idag
+                name: Kostnad idag
+
+      - type: markdown
         content: "# 🏠 Garage & Förråd"
 
       - type: entities
@@ -309,6 +361,29 @@ views:
           - entity: sensor.badrum_temperatur
             name: Badrum
         hours_to_show: 12
+
+      - type: markdown
+        content: "## 🏠 Förråd – Temperatur & Energi"
+
+      - type: history-graph
+        title: Temperatur Förråd
+        entities:
+          - entity: sensor.forrad_temperature
+            name: Förråd
+          - entity: sensor.garage_temperature
+            name: Garage
+          - entity: sensor.ute
+            name: Ute
+        hours_to_show: 24
+
+      - type: history-graph
+        title: Energiförbrukning Förråd
+        entities:
+          - entity: sensor.forrad_energi_idag
+            name: Energi (kWh)
+          - entity: sensor.forrad_kostnad_idag
+            name: Kostnad (SEK)
+        hours_to_show: 168
 
       - type: markdown
         content: "## ❄️ Friggebod – Energi & Effekt"
@@ -692,6 +767,140 @@ views:
             name: Luftfuktighet
 
   ####################################################
+  # INSTÄLLNINGAR – FÖRRÅD
+  ####################################################
+  - theme: Backend-selected
+    title: Inst. Förråd
+    path: inst_forrad
+    badges: []
+    cards:
+      - type: markdown
+        content: |
+          # ⚙️ Inställningar – Förråd (Mållagring)
+
+          Värmestyrning för målförvaring. Målen fryser vid ~0-5°C!
+
+      - type: markdown
+        content: "## Konfigurerbara Värden"
+
+      - type: markdown
+        content: |
+          Dessa värden är definierade i `packages/climate/forrad.yaml` och kan justeras där.
+
+          **Temperaturvärden (°C):**
+          - `temp_frostskydd_forrad`: 5°C (målskydd)
+          - `temp_slaeck_high`: 15°C (släck värme)
+
+          **Värmestyrning:**
+          - `max_varmetid_per_dag`: 24 perioder (= 240 min / 4h)
+          - `min_gangtid`: 20 minuter
+
+      - type: markdown
+        content: "## Status Sensorer"
+
+      - type: entities
+        state_color: true
+        entities:
+          - entity: sensor.forrad_temperature
+            secondary_info: last-updated
+            name: Temperatur förråd
+          - entity: sensor.garage_temperature
+            secondary_info: last-updated
+            name: Temperatur garage
+          - entity: sensor.ute
+            secondary_info: last-updated
+            name: Temperatur ute
+
+      - type: markdown
+        content: "## Värmestyrning Status"
+
+      - type: entities
+        state_color: true
+        entities:
+          - entity: input_boolean.forrad_varme_auto
+            name: Automatisk värmning
+          - entity: switch.garage_elvarme
+            name: Elvärme (delad med garage)
+          - entity: counter.forrad_varme_tid
+            name: Värmetid idag
+          - entity: timer.forrad_min_runtime
+            name: Min gångtid
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: gauge
+            entity: sensor.forrad_temperature
+            name: Temperatur
+            severity:
+              green: 8
+              yellow: 5
+              red: 0
+          - type: gauge
+            entity: sensor.forrad_drifttid_procent
+            name: Drifttid idag
+            min: 0
+            max: 100
+            unit: "%"
+            needle: true
+
+      - type: markdown
+        content: "## ⚡ Energi & Effekt"
+
+      - type: entities
+        title: Inställningar
+        state_color: true
+        entities:
+          - entity: input_number.forrad_element_effekt
+            name: Elementeffekt
+          - entity: input_number.forrad_elpris
+            name: Elpris (SEK/kWh)
+
+      - type: entities
+        title: Aktuell effekt
+        state_color: true
+        entities:
+          - entity: sensor.forrad_aktuell_effekt
+            name: Effekt när på
+          - entity: sensor.forrad_varmebehov_per_grad
+            name: Värmebehov (W/°C)
+
+      - type: entities
+        title: Energiförbrukning
+        state_color: true
+        entities:
+          - entity: sensor.forrad_energi_idag
+            name: Energi idag
+          - entity: sensor.forrad_energi_denna_manad
+            name: Energi denna månad
+          - entity: sensor.forrad_energiforbrukning_total
+            name: Total energi (sedan reset)
+
+      - type: entities
+        title: Kostnader
+        state_color: true
+        entities:
+          - entity: sensor.forrad_kostnad_idag
+            name: Kostnad idag
+          - entity: sensor.forrad_kostnad_denna_manad
+            name: Kostnad denna månad
+          - entity: sensor.forrad_varmekostnad_total
+            name: Total kostnad
+          - entity: sensor.forrad_daglig_kostnad_prognos
+            name: Prognos (vid max drift)
+
+      - type: markdown
+        content: "## Notifikation"
+
+      - type: entities
+        title: Notifikation-inställning
+        state_color: true
+        entities:
+          - entity: input_text.forrad_notification_target
+            name: Notifikation target
+
+  ####################################################
   # LARM VY
   ####################################################
   - theme: Backend-selected
@@ -703,7 +912,15 @@ views:
         content: "# 🚨 Larm"
 
       - type: markdown
-        content: "## 🌬️ Ventilation"
+        content: "## � Förråd"
+
+      - type: markdown
+        content: |
+          **Frost-larm:** Aktiveras om temperatur < 0°C i >10 minuter
+          (Målkonserver kan skadas vid frysning)
+
+      - type: markdown
+        content: "## �🌬️ Ventilation"
 
       - type: entities
         state_color: true
@@ -798,12 +1015,26 @@ views:
             name: Hög fukt larm
 
       - type: markdown
+        content: "## 🏠 Förråd"
+
+      - type: entities
+        state_color: true
+        entities:
+          - entity: automation.forrad_rakna_varmetid
+            name: Räkna värmetid
+          - entity: automation.forrad_reset_varmetid
+            name: Reset värmetid
+          - entity: automation.forrad_smart_varmestyrning
+            name: Smart värmestyrning
+          - entity: automation.forrad_temperaturvarning
+            name: Temperaturvarning
+
+      - type: markdown
         content: "## ❄️ Friggebod"
 
       - type: entities
         state_color: true
         entities:
-          # Home Assistant sluggar bort å/ä/ö → use ascii ids
           - entity: automation.friggebod_rakna_varmetid
             name: Räkna värmetid
           - entity: automation.friggebod_reset_varmetid

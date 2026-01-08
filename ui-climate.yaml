@@ -507,14 +507,24 @@ views:
       - type: markdown
         content: "## Status Sensorer"
 
+
+      - type: entities
+        entities:
+          - entity: sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet
+            secondary_info: last-updated
+
+
       - type: entities
         state_color: true
         entities:
           - entity: sensor.friggebod_temperature
+            secondary_info: last-updated
             name: Temperatur inne
           - entity: sensor.friggebod_humidity
+            secondary_info: last-updated
             name: Fukt inne
           - entity: sensor.ute
+            secondary_info: last-updated
             name: Temperatur ute
           - entity: sensor.ute_friggebod_humidity
             name: Fukt ute

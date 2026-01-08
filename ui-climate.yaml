@@ -666,10 +666,11 @@ views:
             secondary_info: last-updated
             name: Garage temperatur
           - entity: sensor.forrad_temperature
+            secondary_info: last-updated
             name: Förråd temperatur
           - entity: sensor.ute
+            secondary_info: last-updated
             name: Utomhus temperatur
-            name: Förråd temperatur
 
       - type: markdown
         content: "## Avfuktare Garage"

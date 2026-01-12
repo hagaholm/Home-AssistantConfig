@@ -72,12 +72,12 @@ template:
               Sover (nattljus bara om köksrörelse + daylight_on)
             {% elif home_status == 'Hemma' and morning_on and is_time_05_09 %}
               Hemma + morning_on + tid 05-09
-            {% elif pause_day_window_transition and home_status == 'Hemma' and is_time_09_05 and (daylight_on or christmas_on) %}
+            {% elif pause_day_window_transition and home_status == 'Hemma' and is_time_09_05 and daylight_on %}
               Pausad dag/fönster-övergång (behåll nuvarande)
             {% elif home_status == 'Hemma' and daylight_on and is_time_09_05 %}
               Hemma + daylight_on + tid 09-05
-            {% elif home_status == 'Hemma' and christmas_on and is_time_09_05 %}
-              Hemma + christmas_on + tid 09-05
+            {% elif home_status == 'Hemma' and is_time_09_05 %}
+              Hemma + tid 09-05
             {% else %}
               Fallback: Släckt
             {% endif %}
@@ -158,7 +158,7 @@ template:
               'Arbetsbelysning: ' ~ ('VALD' if desired == 'Arbetsbelysning' else 'Väljs normalt inte av resolver (manuell)'),
             ] %}
 
-            {% if pause_day_window_transition and home_status == 'Hemma' and is_time_09_05 and (daylight_on or christmas_on) and desired == states('input_select.light_inside') | trim %}
+            {% if pause_day_window_transition and home_status == 'Hemma' and is_time_09_05 and daylight_on and desired == states('input_select.light_inside') | trim %}
               {% set lines = lines + ['OBS: Övergång pausad => behåller nuvarande (' ~ desired ~ ')'] %}
             {% endif %}
 

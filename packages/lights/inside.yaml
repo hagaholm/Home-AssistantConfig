@@ -286,7 +286,7 @@ template:
             {% endif %}
           {% elif home_status == 'Hemma' and morning_on and is_time_05_09 %}
             Morgonbelysning
-          {% elif pause_day_window_transition and home_status == 'Hemma' and is_time_09_05 and daylight_on) %}
+          {% elif pause_day_window_transition and home_status == 'Hemma' and is_time_09_05 and daylight_on %}
             {{ current_option | trim }}
           {% elif home_status == 'Hemma' and daylight_on and is_time_09_05 %}
             Dagbelysning

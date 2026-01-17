@@ -160,12 +160,10 @@ template:
           {{ states('sensor.friggebod_temperature') not in ['unknown', 'unavailable', '']
              and states('sensor.friggebod_humidity') not in ['unknown', 'unavailable', ''] }}
         state: >
-          {% set T = states('sensor.friggebod_temperature') | float(none) %}
-          {% set RH = states('sensor.friggebod_humidity') | float(none) %}
+          {% set T = states('sensor.friggebod_temperature') | float(0) %}
+          {% set RH = states('sensor.friggebod_humidity') | float(0) %}
           {% set troskel = 75 %}
-          {% if T is none or RH is none %}
-            unavailable
-          {% elif T < 0 %}
+          {% if T < 0 %}
             0
           {% else %}
             {% set risk = ((RH - troskel) * 2) %}
@@ -223,10 +221,10 @@ template:
           {% set t_out = states('sensor.ute') | float(0) %}
           {% set delta_t = t_in - t_out %}
           {% set effekt = states('input_number.friggebod_element_effekt') | float(700) %}
-          {% if delta_t > 0 %}
+          {% if delta_t > 0.1 %}
             {{ (effekt / delta_t) | round(1) }}
           {% else %}
-            unavailable
+            0
           {% endif %}
 
       # FYSIK - Uppskattat U-värde (W/(m²·K))

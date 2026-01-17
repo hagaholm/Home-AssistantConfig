@@ -18,7 +18,8 @@ template:
       # Type: Temperature, Humidity, Pressure sensor
       - name: "Vardagsrum Temperatur"
         unique_id: vardagsrum_lumi_sensor_ht_agl02_temperatur_2
-        state: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_temperatur_2') }}"
+        availability: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_temperatur_2') not in ['unknown', 'unavailable', ''] }}"
+        state: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_temperatur_2') | float(0) }}"
         unit_of_measurement: "°C"
         device_class: temperature
         state_class: measurement
@@ -29,7 +30,8 @@ template:
 
       - name: "Vardagsrum Luftfuktighet"
         unique_id: vardagsrum_lumi_sensor_ht_agl02_luftfuktighet_2
-        state: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet_2') }}"
+        availability: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet_2') not in ['unknown', 'unavailable', ''] }}"
+        state: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet_2') | float(0) }}"
         unit_of_measurement: "%"
         device_class: humidity
         state_class: measurement
@@ -40,7 +42,8 @@ template:
 
       - name: "Vardagsrum Lufttryck"
         unique_id: vardagsrum_lumi_sensor_ht_agl02_tryck_2
-        state: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_tryck_2') }}"
+        availability: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_tryck_2') not in ['unknown', 'unavailable', ''] }}"
+        state: "{{ states('sensor.lumi_lumi_sensor_ht_agl02_tryck_2') | float(0) }}"
         unit_of_measurement: "hPa"
         device_class: pressure
         state_class: measurement

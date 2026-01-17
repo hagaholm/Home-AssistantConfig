@@ -18,7 +18,8 @@ template:
       # Type: Temperature, Humidity, Pressure sensor
       - name: "Badrum Temperatur"
         unique_id: badrum_lumi_sensor_ht_agl02_temperatur
-        state: "{{ states('sensor.lumi_lumi_weather_temperatur') }}"
+        availability: "{{ states('sensor.lumi_lumi_weather_temperatur') not in ['unknown', 'unavailable', ''] }}"
+        state: "{{ states('sensor.lumi_lumi_weather_temperatur') | float(0) }}"
         unit_of_measurement: "°C"
         device_class: temperature
         state_class: measurement
@@ -29,7 +30,8 @@ template:
 
       - name: "Badrum Luftfuktighet"
         unique_id: badrum_lumi_sensor_ht_agl02_luftfuktighet
-        state: "{{ states('sensor.lumi_lumi_weather_luftfuktighet') }}"
+        availability: "{{ states('sensor.lumi_lumi_weather_luftfuktighet') not in ['unknown', 'unavailable', ''] }}"
+        state: "{{ states('sensor.lumi_lumi_weather_luftfuktighet') | float(0) }}"
         unit_of_measurement: "%"
         device_class: humidity
         state_class: measurement
@@ -40,7 +42,8 @@ template:
 
       - name: "Badrum Lufttryck"
         unique_id: badrum_lumi_sensor_ht_agl02_tryck
-        state: "{{ states('sensor.lumi_lumi_weather_tryck') }}"
+        availability: "{{ states('sensor.lumi_lumi_weather_tryck') not in ['unknown', 'unavailable', ''] }}"
+        state: "{{ states('sensor.lumi_lumi_weather_tryck') | float(0) }}"
         unit_of_measurement: "hPa"
         device_class: pressure
         state_class: measurement

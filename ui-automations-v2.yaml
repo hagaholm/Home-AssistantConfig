@@ -1,0 +1,645 @@
+#######################################################
+# UI AUTOMATIONS V2 - PROFESSIONAL ORGANIZATION
+#######################################################
+# 
+# This file provides a comprehensive, well-organized view of all automations
+# Organized by functional area for easy maintenance and monitoring
+# Created: 2026-01-17
+# Version: 2.0
+#
+#######################################################
+
+title: Automations V2
+views:
+  #######################################################
+  # OVERVIEW - Quick Status of Key Systems
+  #######################################################
+  - path: overview
+    title: Översikt
+    icon: mdi:view-dashboard-outline
+    badges: []
+    cards:
+      - type: markdown
+        content: |
+          # 🏠 Automations Översikt
+          
+          Välkommen till den nya automationsöversikten!
+          
+          **Organiserat efter funktionsområde:**
+          - 💡 Belysning (Lights)
+          - 🌡️ Klimat & Ventilation (Climate)
+          - 📹 Kameror & Säkerhet (Security)
+          - 🏠 Närvaro & Läge (Presence)
+          - 🚨 Larm & Övervakning (Alerts)
+          - 📱 Mediaspelare (Media)
+          - 🔧 System & Underhåll (System)
+          - 🚗 Fordon & Övrigt (Other)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: input_boolean.lights_auto_inne
+            name: Auto-belysning inne
+          - type: tile
+            entity: input_boolean.lights_auto_tradgard
+            name: Auto-belysning ute
+          - type: tile
+            entity: switch.ventilationsaggregat
+            name: Ventilation
+          - type: tile
+            entity: input_select.home_status
+            name: Hemstatus
+
+  #######################################################
+  # LIGHTS - All lighting automation
+  #######################################################
+  - path: lights
+    title: Belysning
+    icon: mdi:lightbulb-multiple-outline
+    badges: []
+    cards:
+      - type: markdown
+        content: |
+          # 💡 Belysningsautomationer
+          
+          Alla automationer som styr belysning i hemmet
+
+      # Resolvers - Main control logic
+      - type: entities
+        title: 🎯 Huvudstyrning (Resolvers)
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.innebelysning_resolver
+          - automation.koksbelysning_resolver
+          - automation.halltakbelysning_resolver
+          - automation.badrumsbelysning_resolver
+          - automation.uterumsbelysning_resolver
+          - automation.tradgardsbelysning_resolver
+          - automation.spabad_resolver
+          - automation.fasadbelysning_resolver
+
+      # Input Select Handlers
+      - type: entities
+        title: 🎚️ Input Select Hantering
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.innebelysning
+          - automation.koksbelysning
+          - automation.halltakbelysning_input_select
+          - automation.badrumsbelysning
+          - automation.uterumsbelysning_input_select
+          - automation.tradgardsbelysning_input_select
+          - automation.spabadbelysning_input_select
+          - automation.facade_light_changed
+
+      # Light Modes & Scenes
+      - type: entities
+        title: 🌅 Ljuslägen & Scener
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.tv_ljuslage
+          - automation.facade_light_option_migration
+
+      # Hall Special Controls
+      - type: entities
+        title: 🚪 Hall Specifika
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.hall_fjarrkontroll
+          - automation.hall_slack_belysning
+
+      # Light Threshold Automations (Ljusstyrka)
+      - type: entities
+        title: 🌞 Ljusstyrka Trösklar
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.morning_light_on_inside
+          - automation.morning_light_on_outside
+          - automation.morning_light_off_inside
+          - automation.morning_light_off_outside
+          - automation.daylight_on_inside
+          - automation.daylight_on_outside
+          - automation.daylight_off_inside
+          - automation.daylight_off_outside
+          - automation.awaylight_on_inside
+          - automation.awaylight_on_outside
+          - automation.awaylight_off_inside
+          - automation.awaylight_off_outside
+          - automation.kitchen_light_on_inside
+          - automation.kitchen_light_on_outside
+          - automation.kitchen_light_off_inside
+          - automation.kitchen_light_off_outside
+
+  #######################################################
+  # CLIMATE - Temperature, Heating, Ventilation
+  #######################################################
+  - path: climate
+    title: Klimat
+    icon: mdi:thermometer-lines
+    badges: []
+    cards:
+      - type: markdown
+        content: |
+          # 🌡️ Klimatautomationer
+          
+          Styrning av ventilation, värme och luftfuktighet
+
+      # Ventilation - Speed Control
+      - type: entities
+        title: 💨 Ventilation Hastighetsstyrning
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.forcerad_snabbt_okande_fukt
+          - automation.forcerad_badrumsfonster_hog_fukt
+          - automation.normal_badrumsfonster_lag_fukt
+          - automation.normal_vid_stabiliserad_fukt
+          - automation.normal_hog_fukt_i_huset
+          - automation.normal_efter_maxtid
+
+      # Ventilation - On/Off Control
+      - type: entities
+        title: 🔌 Ventilation Av/På
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.vent_off_60_borta_ute_24_c_inne_23_c
+          - automation.vent_off_ute_24_c_borta_60_inne_23_c
+          - automation.vent_off_borta_ute_24_c_60_inne_23_c
+          - automation.vent_off_inne_23_c_borta_60_ute_24_c
+          - automation.vent_on_hemma_off
+          - automation.vent_on_ute_22_c_off
+          - automation.vent_on_60_off
+          - automation.vent_on_inne_23_c_off
+
+      # Ventilation - Timers & Support
+      - type: entities
+        title: ⏲️ Ventilation Timers
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.startar_max_timer_badrum
+          - automation.restart_timer_badrum
+          - automation.reset_timer_nar_vent_satts_till_normal
+          - automation.turn_off_max_speed_when_available_again
+
+      # Ventilation - Optimization
+      - type: entities
+        title: 🎯 Ventilation Optimering
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.ventilation_auto_tuning_advisor
+          - automation.ventilation_anomaly_detection
+
+      # Heating - Garage
+      - type: entities
+        title: 🔥 Garage Värme
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.elvarme_garage
+          - automation.garage_avfuktare_styrning
+
+      # Heating - Friggebod
+      - type: entities
+        title: 🏚️ Friggebod Klimatstyrning
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.friggebod_komplett_smart_varmestyrning
+          - automation.friggebod_rakna_varmetid
+          - automation.friggebod_reset_varmetid
+          - automation.friggebod_mogelvarning
+
+      # Heating - Förråd
+      - type: entities
+        title: 📦 Förråd Klimatstyrning
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.forrad_smart_varmestyrning
+          - automation.forrad_rakna_varmetid
+          - automation.forrad_reset_varmetid
+          - automation.forrad_temperaturvarning
+
+  #######################################################
+  # CAMERAS & SECURITY - Frigate & Detection
+  #######################################################
+  - path: security
+    title: Säkerhet
+    icon: mdi:cctv
+    badges: []
+    cards:
+      - type: markdown
+        content: |
+          # 📹 Kamera & Säkerhetsautomationer
+          
+          Frigate detekteringar och säkerhetsfunktioner
+
+      # Person Detection
+      - type: entities
+        title: 👤 Persondetektering
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.person_detection_notify_immediate
+          - automation.person_detection_notify_delayed
+          - automation.blink_light_person_detected
+
+      # Animal Detection
+      - type: entities
+        title: 🦊 Djurdetektering
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.animal_detection_notify
+          - automation.animal_motion_light_control
+          - automation.animal_motion_radio_control_backside
+          - automation.turn_off_deck_light_after_10_minutes_failsafe
+
+      # Test Automations
+      - type: entities
+        title: 🧪 Test Automationer
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.test_motion_light_control
+          - automation.test_motion_radio_control_backside
+
+      # Doorbell
+      - type: entities
+        title: 🔔 Ringklocka
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.ringklocka_hantering
+
+  #######################################################
+  # PRESENCE & HOME STATUS
+  #######################################################
+  - path: presence
+    title: Närvaro
+    icon: mdi:home-account
+    badges: []
+    cards:
+      - type: markdown
+        content: |
+          # 🏠 Närvaro & Hemstatus
+          
+          Styrning baserat på om folk är hemma eller borta
+
+      - type: entities
+        title: 👥 Hemma/Borta Styrning
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.hem_borta_status_styrning
+
+      - type: entities
+        title: 💼 Jobba Hemifrån
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.tand_skrivbordsbelysning
+          - automation.tand_ovrig_belysning_i_rummet
+          - automation.slack_skrivbordsbelysning
+          - automation.blinka_med_lyset_vid_jobba_hemifran
+
+  #######################################################
+  # ALERTS & MONITORING
+  #######################################################
+  - path: alerts
+    title: Larm
+    icon: mdi:alert-circle-outline
+    badges: []
+    cards:
+      - type: markdown
+        content: |
+          # 🚨 Larm & Övervakningsautomationer
+          
+          Alla larm för temperatur, sensorer och system
+
+      # Temperature Alarms - Critical
+      - type: entities
+        title: ❄️ Temperaturlarm - Kritiska
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.frys_temperaturlarm
+          - automation.kyl_temperaturlarm
+          - automation.forrad_temperaturlarm
+
+      # Temperature Alarms - Building
+      - type: entities
+        title: 🌡️ Temperaturlarm - Byggnader
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.friggebod_temperaturlarm
+          - automation.uterum_larm_hog_temp
+          - automation.ackumulatortank_temperaturlarm
+
+      # Ventilation Alarms
+      - type: entities
+        title: 💨 Ventilationslarm
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.satt_larm_for_vent
+          - automation.badrumsfonster_hog_fukt_larm
+          - automation.lag_temp_franluft
+          - automation.hog_temp_franluft
+          - automation.lag_temp_tilluft
+          - automation.hog_temp_tilluft
+
+      # Sensor Reading Missing
+      - type: entities
+        title: 📡 Avläsningar Saknas
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.avlasning_saknas_frys
+          - automation.avlasning_saknas_kyl
+          - automation.avlasning_saknas_badrum
+          - automation.avlasning_saknas_tvattstuga
+          - automation.avlasning_saknas_varmepump
+          - automation.avlasning_saknas_vardagsrum
+          - automation.avlasning_saknas_hall
+          - automation.avlasning_saknas_forrad
+          - automation.avlasning_saknas_garage
+          - automation.avlasning_saknas_friggebod
+          - automation.avlasning_saknas_ute_friggebod
+
+      # Device Offline Alarms
+      - type: entities
+        title: 🖥️ Enheter Offline
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.raspberry_pi_offline_larm
+
+      # Reading Missing Alarm Flags
+      - type: entities
+        title: 🚩 Larmflaggor (Avläsningar)
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - input_boolean.frys_reading_missing_alarm
+          - input_boolean.kyl_reading_missing_alarm
+          - input_boolean.badrum_reading_missing_alarm
+          - input_boolean.tvattstuga_reading_missing_alarm
+          - input_boolean.varmepump_reading_missing_alarm
+          - input_boolean.vardagsrum_reading_missing_alarm
+          - input_boolean.hall_reading_missing_alarm
+          - input_boolean.forrad_reading_missing_alarm
+          - input_boolean.garage_reading_missing_alarm
+          - input_boolean.friggebod_reading_missing_alarm
+          - input_boolean.ute_friggebod_reading_missing_alarm
+
+  #######################################################
+  # MEDIA PLAYERS - Harmony Hub & Entertainment
+  #######################################################
+  - path: media
+    title: Media
+    icon: mdi:television-play
+    badges: []
+    cards:
+      - type: markdown
+        content: |
+          # 📺 Mediaautomationer
+          
+          Harmony Hub och underhållningssystem
+
+      # Harmony Hub Activities
+      - type: entities
+        title: 🎮 Harmony Hub Aktiviteter
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.satt_pa_mediaspelare_vid_watch_tv
+          - automation.satt_pa_mediaspelare_vid_listen_to_radio
+          - automation.satt_pa_mediaspelare_vid_watch_chromecast
+          - automation.satt_pa_mediaspelare_vid_listen_to_spotify
+          - automation.satt_pa_mediaspelare_vid_watch_chromecast_ultra
+          - automation.satt_pa_mediaspelare_vid_listen_to_chromecast_ultra
+
+      # Subwoofer Control
+      - type: entities
+        title: 🔊 Subwoofer Styrning
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.satt_pa_subbas_vid_poweron
+          - automation.stang_av_subbas_vid_poweroff
+          - automation.satt_pa_subbas_vid_hog_volym
+          - automation.stang_av_subbas_vid_lag_volym
+
+      # Other Media
+      - type: entities
+        title: 📱 Övrigt Media
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.satt_pa_tv_bank_vid_rorelse
+          - automation.media_av_vid_sover
+
+  #######################################################
+  # SYSTEM & MAINTENANCE
+  #######################################################
+  - path: system
+    title: System
+    icon: mdi:cog-outline
+    badges: []
+    cards:
+      - type: markdown
+        content: |
+          # 🔧 System & Underhållsautomationer
+          
+          System, MQTT, Google Assistant och underhåll
+
+      # System Monitoring (Legacy - kept for reference)
+      - type: entities
+        title: 🖥️ System Övervakning
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.hassbian_startad
+          - automation.hassbian_stoppad
+          - automation.hassbian_uppdatering
+          - automation.ny_enhet_hittad
+
+      # MQTT Publishing
+      - type: entities
+        title: 📡 MQTT Publicering
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.mqtt_publish_filtered_outside_lux
+          - automation.mqtt_publish_outside_temperature
+
+      # Google Assistant
+      - type: entities
+        title: 🗣️ Google Assistant
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.godnatt
+
+  #######################################################
+  # VEHICLES & OTHER
+  #######################################################
+  - path: other
+    title: Övrigt
+    icon: mdi:car
+    badges: []
+    cards:
+      - type: markdown
+        content: |
+          # 🚗 Fordon & Övrigt
+          
+          Bil, Zwift och andra automationer
+
+      # Volvo Car
+      - type: entities
+        title: 🚗 Volvo Bil
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.bilen_startar
+          - automation.bilen_stannar
+
+      # Zwift/Apple TV
+      - type: entities
+        title: 🚴 Zwift (Apple TV)
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.apple_tv_i_forrad_startad
+          - automation.apple_tv_i_forrad_stoppad
+
+  #######################################################
+  # AUTOMATION CONTROLS - Master Switches
+  #######################################################
+  - path: controls
+    title: Kontroller
+    icon: mdi:toggle-switch-outline
+    badges: []
+    cards:
+      - type: markdown
+        content: |
+          # 🎛️ Automationskontroller
+          
+          Master-omkopplare och kontroller för automatisering
+
+      # Lighting Auto Controls
+      - type: entities
+        title: 💡 Belysning Auto-lägen
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - input_boolean.lights_auto_inne
+          - input_boolean.lights_auto_kok
+          - input_boolean.lights_auto_halltak
+          - input_boolean.lights_auto_badrum
+          - input_boolean.lights_auto_uterum
+          - input_boolean.lights_auto_tradgard
+          - input_boolean.lights_auto_spabad
+          - input_boolean.lights_auto_fasad
+
+      # Light Mode Triggers
+      - type: entities
+        title: 🌅 Ljuslägestriggers
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - input_boolean.morning_light_on
+          - input_boolean.daylight_on
+          - input_boolean.awaylight_on
+          - input_boolean.kitchen_light_on
+
+      # Other Controls
+      - type: entities
+        title: 🎚️ Övriga Kontroller
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - input_boolean.christmas_light
+          - input_boolean.tv_light_mode
+          - input_boolean.working_at_home
+          - input_boolean.alarm_ventilation
+
+      # Home Status
+      - type: entities
+        title: 🏠 Hemstatus
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - input_select.home_status
+
+  #######################################################
+  # STATISTICS & DEBUG
+  #######################################################
+  - path: debug
+    title: Debug
+    icon: mdi:bug-outline
+    badges: []
+    cards:
+      - type: markdown
+        content: |
+          # 🐛 Debug & Statistik
+          
+          Systemöversikt och felsökningsverktyg
+
+      - type: entities
+        title: 📊 Automation Statistik
+        show_header_toggle: false
+        state_color: false
+        entities:
+          - entity: sensor.automation_count
+            name: Totalt antal automationer
+          - entity: sensor.lights_debug_inside
+            name: Inne Debug
+          - entity: sensor.lights_debug_kitchen
+            name: Kök Debug
+          - entity: sensor.lights_debug_bathroom
+            name: Badrum Debug
+          - entity: sensor.lights_debug_hall
+            name: Hall Debug
+          - entity: sensor.lights_debug_garden
+            name: Trädgård Debug
+          - entity: sensor.lights_debug_uterum
+            name: Uterum Debug
+          - entity: sensor.lights_debug_spabad
+            name: Spabad Debug
+          - entity: sensor.lights_debug_facade
+            name: Fasad Debug
+
+      - type: markdown
+        content: |
+          ## 📝 Dokumentation
+          
+          **Organisationsstruktur:**
+          - Översikt: Snabb status
+          - Belysning: Alla ljusautomationer
+          - Klimat: Ventilation och värme
+          - Säkerhet: Kameror och detektering
+          - Närvaro: Hemma/borta logik
+          - Larm: Alla larmautomationer
+          - Media: Harmony Hub och underhållning
+          - System: MQTT och systemautomationer
+          - Övrigt: Bil och specialautomationer
+          - Kontroller: Master-omkopplare
+          - Debug: Felsökning och statistik
+          
+          **Underhåll:**
+          - Nya automationer läggs till i rätt kategori
+          - Inaktiva automationer markeras eller tas bort
+          - Håll grupperingar logiska och lättförståeliga

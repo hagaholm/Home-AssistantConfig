@@ -132,21 +132,21 @@ views:
             name: Alarm
 
       - type: heading
-        heading: Temperature Control
+        heading: Heating Controls
 
       - type: grid
         columns: 3
         square: false
         cards:
           - type: tile
-            entity: climate.forrad
-            name: Förråd
+            entity: switch.garage_elvarme
+            name: Garageelvärme
           - type: tile
-            entity: climate.friggebod
-            name: Friggebod
+            entity: switch.garage_avfuktare
+            name: Avfuktare
           - type: tile
-            entity: climate.garage
-            name: Garage
+            entity: input_boolean.forrad_varme_auto
+            name: Förråd Auto
 
       - type: heading
         heading: Temperature Readings
@@ -260,9 +260,6 @@ views:
           - type: tile
             entity: script.button_goodnight
             name: Godnatt
-          - type: tile
-            entity: script.harmony_tv
-            name: TV
 
       - type: heading
         heading: Helpers
@@ -288,15 +285,10 @@ views:
     badges: []
     cards:
       - type: heading
-        heading: Entertainment
+        heading: Audio
 
-      - type: grid
-        columns: 2
-        square: false
-        cards:
-          - type: tile
-            entity: script.harmony_tv
-            name: Start TV
+      - type: markdown
+        content: "Media integrations configured in packages/media/"
 
   #################################################################
   # PRESENCE & FAMILY

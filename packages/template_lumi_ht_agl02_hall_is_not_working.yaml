@@ -14,32 +14,32 @@
 # - Migrera från LUMI sensor_ht.agl02 till Timmerflotte Temp & Humidity Sensor 4
 
 # Timmerflotte Temp & Humidity Sensor (Hall)
-template:
-  - sensor:
-      # Source: Timmerflotte Temp & Humidity Sensor 4 (Hall)
-      # Company: Timmerflotte
-      # Type: Temperature, Humidity sensor
-      - name: "Hall Temperatur"
-        unique_id: hall_timmerflotte_temperatur
-        state: "{{ states('sensor.timmerflotte_temp_hmd_sensor_temperatur_4') | float(0) }}"
-        unit_of_measurement: "°C"
-        device_class: temperature
-        state_class: measurement
-        availability: "{{ states('sensor.timmerflotte_temp_hmd_sensor_temperatur_4') not in ['unknown', 'unavailable', ''] }}"
-        attributes:
-          source_sensor: sensor.timmerflotte_temp_hmd_sensor_temperatur_4
-          icon: mdi:thermometer
-          friendly_name: Hall Temperatur
-
-      - name: "Hall Luftfuktighet"
-        unique_id: hall_timmerflotte_luftfuktighet
-        state: "{{ states('sensor.timmerflotte_temp_hmd_sensor_luftfuktighet_4') | float(0) }}"
-        unit_of_measurement: "%"
-        device_class: humidity
-        state_class: measurement
-        availability: "{{ states('sensor.timmerflotte_temp_hmd_sensor_luftfuktighet_4') not in ['unknown', 'unavailable'] }}"
-        attributes:
-          source_sensor: sensor.timmerflotte_temp_hmd_sensor_luftfuktighet_4
-          icon: mdi:water-percent
-          friendly_name: Hall Luftfuktighet
+#template:
+#  - sensor:
+#      # Source: Timmerflotte Temp & Humidity Sensor 4 (Hall)
+#      # Company: Timmerflotte
+#      # Type: Temperature, Humidity sensor
+#      - name: "Hall Temperatur"
+#        unique_id: hall_timmerflotte_temperatur
+#        state: "{{ states('sensor.timmerflotte_temp_hmd_sensor_temperatur_4') | float(0) }}"
+#        unit_of_measurement: "°C"
+#        device_class: temperature
+#        state_class: measurement
+#        availability: "{{ states('sensor.timmerflotte_temp_hmd_sensor_temperatur_4') not in ['unknown', 'unavailable', ''] }}"
+#        attributes:
+#          source_sensor: sensor.timmerflotte_temp_hmd_sensor_temperatur_4
+#          icon: mdi:thermometer
+##          friendly_name: Hall Temperatur
+#
+#      - name: "Hall Luftfuktighet"
+#        unique_id: hall_timmerflotte_luftfuktighet
+#        state: "{{ states('sensor.timmerflotte_temp_hmd_sensor_luftfuktighet_4') | float(0) }}"
+#        unit_of_measurement: "%"
+#        device_class: humidity
+#        state_class: measurement
+#        availability: "{{ states('sensor.timmerflotte_temp_hmd_sensor_luftfuktighet_4') not in ['unknown', 'unavailable'] }}"
+#        attributes:
+#          source_sensor: sensor.timmerflotte_temp_hmd_sensor_luftfuktighet_4
+#          icon: mdi:water-percent
+#          friendly_name: Hall Luftfuktighet
 

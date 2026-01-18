@@ -8,8 +8,10 @@
 # - Scripts för olika ljusnivåer
 #
 # Källor:
-# - automations/light_hall.yaml
-# - script/light_hall_roof.yaml
+# - automations/light_hall.yaml (migrated)
+# - script/light_hall_roof.yaml (migrated)
+# - automations/light_hall_auto_off.yaml (Hall släck belysning automation)
+# - automations/light_hall_remote_control.yaml (Hall fjärrkontroll automation)
 #
 # Hårdvara/Entiteter:
 # - Light: light.hall_tak
@@ -22,9 +24,9 @@
 # - Mode single enligt original
 #
 # METADATA:
-# Skapad: okänt
-# Senast ändrad: 2026-01-02
-# Version: 1.0
+# Skapad: 2025-12-27 (ursprunglig automations)
+# Senast ändrad: 2026-01-18
+# Version: 1.1
 # Författare: Home Assistant Config
 ####################################################
 
@@ -59,9 +61,26 @@ input_boolean:
 ##################
 automation:
 
-  ######################################
-  ### Halltak resolver (single)
-  ######################################
+  #######################################################
+  #                                                     #
+  #          HALLTAK RESOLVER (DECISION MAKER)        #
+  #                                                     #
+  #######################################################
+  #
+  # BESKRIVNING:
+  # Resolver automation som triggas av externa faktorer och bestämmer
+  # önskad ljusnivå för halltak. Anropar script.hall_set_correct_mode
+  # som uppdaterar input_select.light_hall om behövligt.
+  #
+  # TRIGGRAR:
+  # - HA start (initiering av system)
+  # - input_select.home_status ändras (hemstatus shift)
+  # - light.hall_tak state changes (manuell override detection)
+  #
+  # SÄKERHET:
+  # - Mode: restart (förhindrar överlappande körningar)
+  # - Script gated på input_select state changes (undviker oändliga loopar)
+  #######################################################
   - alias: Halltak resolver
     id: halltak_resolver
     description: >

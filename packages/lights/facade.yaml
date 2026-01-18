@@ -5,8 +5,8 @@
 ####################################################
 # METADATA:
 # Skapad: 2025-12-29
-# Senast ändrad: 2025-12-29
-# Version: 1.0
+# Senast ändrad: 2026-01-18
+# Version: 1.1
 #
 # BESKRIVNING:
 # Samlar all logik för fasadbelysning i ett paket:
@@ -66,9 +66,29 @@ automation:
 # - Natt: Night mode (home away)
 # - Person upptäckt: Maximum brightness (person detected)
 
-  ####################################################
-  #        MIGRATE LEGACY OPTION NAMES (SAFE)        #
-  ####################################################
+  #######################################################
+  #                                                     #
+  #     FACADE LEGACY OPTION MIGRATION (INTERNAL)     #
+  #                                                     #
+  #######################################################
+  #
+  # BESKRIVNING:
+  # Migrerar gamla option-namn till nya namn automatiskt.
+  # (Migrated från automations/facade_lights_migration.yaml)
+  #
+  # TRIGGRAR:
+  # - HA start (säkerhetskontroll vid omstart)
+  # - input_select.facade_lights state changes (catches manual sets)
+  #
+  # LOGIK:
+  # - Om state = 'Tänd' → convert to 'Morgon/Kväll' (ny standard)
+  # - Om state = 'Normal' → convert to 'Morgon/Kväll' (ny standard)
+  # - WHY: Säkerställer att gamla konfigurationer inte bryter UI
+  #
+  # SÄKERHET:
+  # - Endast intern migrering, inte synlig för slutanvändare
+  # - Mode: single (förhindrar race conditions)
+  #######################################################
   - alias: Facade Light option migration
     id: 'facade_lights_option_migration'
     mode: single

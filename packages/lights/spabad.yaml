@@ -5,8 +5,8 @@
 ####################################################
 # METADATA:
 # Skapad: 2025-12-29
-# Senast ändrad: 2025-12-29
-# Version: 1.0
+# Senast ändrad: 2026-01-18
+# Version: 1.1
 #
 # BESKRIVNING:
 # Samlar all logik för spabad-belysning i ett paket:
@@ -52,9 +52,34 @@ automation:
 #                                                     #
 #######################################################
 
-  #################################
-  ### Spabad resolver (single)
-  #################################
+  #######################################################
+  #                                                     #
+  #          SPABAD RESOLVER (DECISION MAKER)         #
+  #                                                     #
+  #######################################################
+  #
+  # BESKRIVNING:
+  # Resolver automation som triggas av externa faktorer och bestämmer
+  # önskad ljusstatus. Anropar script.spabad_set_correct_mode som
+  # uppdaterar input_select.light_outside om behövligt.
+  #
+  # TRIGGRAR:
+  # - HA start (initiering av system)
+  # - sensor.ljusstyrka < 5 lux (mörknar - behöver utomhusbelysning)
+  # - Daglig tid 22:00 (kväll → energisparning)
+  # - input_select.home_status ändras (hemstatus shift)
+  # - group.track_for_home_devices ändras (hemspårning)
+  # - binary_sensor.workday_tomorrow ändras (arbetsdagsstatus)
+  #
+  # LOGIK:
+  # - Endast aktiv om input_boolean.lights_auto_spabad = 'on'
+  # - Anropar script.spabad_set_correct_mode för beslutsfattning
+  # - Script uppdaterar input_select endast om önskad nivå skiljer sig
+  #
+  # SÄKERHET:
+  # - Mode: restart (förhindrar överlappande körningar)
+  # - Script gated på input_select state changes (undviker loopar)
+  #######################################################
   - alias: Spabad resolver
     id: '1735604100097'
     mode: restart
@@ -88,9 +113,32 @@ automation:
     action:
       - service: script.spabad_set_correct_mode
 
-  ####################################################
-  #          EXECUTE SCRIPT ON STATE CHANGE          #
-  ####################################################
+  #######################################################
+  #                                                     #
+  #     SPABADBELYSNING (INPUT_SELECT) STATE MACHINE   #
+  #                                                     #
+  #######################################################
+  #
+  # BESKRIVNING:
+  # State machine automation. Triggas när input_select.light_outside
+  # ändras (via resolver script eller manuell override) och exekverar
+  # motsvarande effektskript.
+  #
+  # TRIGGRAR:
+  # - input_select.light_outside state changes
+  #
+  # LOGIK:
+  # - Släckt → anropar script.outside_light_off
+  # - Tänd → anropar script.outside_light_on
+  #
+  # FUNKTIONALITET:
+  # - Mappning mellan input_select states och effect scripts
+  # - Mode: single (förhindrar concurrent körningar)
+  # - Only executes known states (Släckt/Tänd)
+  #
+  # INTEGRATION:
+  # - Tillåter manuell override (om user ändrar input_select direkt)
+  #######################################################
   - alias: Spabadbelysning (input_select)
     id: 'light_outside_changed'
     mode: single
@@ -119,18 +167,29 @@ script:
 
   spabad_set_correct_mode:
     alias: Återställ spabadbelysning (sätt korrekt läge)
+    description: >
+      Decision-making script för spabadbelysning.
+      Läser hemstatus, ljusnivå, tid och arbetsdagsstatus,
+      sedan bestämmer önskad spabadläge och uppdaterar input_select
+      endast om det skiljer sig från aktuell status (undviker loops).
     mode: single
     sequence:
       - variables:
+          # External state reads
           home_status: "{{ states('input_select.home_status') }}"
           track_state: "{{ states('group.track_for_home_devices') }}"
+          # NOTE: unknown/unavailable behaves as False (safe fail-open for manual override)
           workday_tomorrow: "{{ is_state('binary_sensor.workday_tomorrow', 'on') }}"
           lux: "{{ states('sensor.ljusstyrka') | float(none) }}"
           lux_5: "{{ states('input_number.ljusstyrka_5') | float(5) }}"
           current_option: "{{ states('input_select.light_outside') }}"
 
+          # Time boundaries for typical spa usage
+          # 12:00-21:45: typical spa hours (daytime + early evening)
           is_time_12_2145: "{{ (now().hour > 12 or (now().hour == 12 and now().minute >= 0)) and (now().hour < 21 or (now().hour == 21 and now().minute <= 45)) }}"
+          # After 22:00: energy-saving gate (unlikely to use spa late night)
           is_time_after_22: "{{ now().hour >= 22 }}"
+          # Is ambient light low enough to need outdoor lights?
           is_dark: "{{ lux is number and lux < lux_5 }}"
 
           valid_options:

@@ -1,6 +1,549 @@
 title: Home Assistant
 views:
   #################################################################
+  # FRIGATE - Detailed package breakdown
+  #################################################################
+  - path: frigate
+    title: Frigate NVR
+    icon: mdi:cctv
+    theme: default
+    badges: []
+    cards:
+      - type: markdown
+        content: |
+          # 📹 Frigate Package Structure
+          
+          **Files in packages/frigate/:**
+          - frigate_animal_detected.yaml
+          - frigate_media.yaml
+          - frigate_person_detected.yaml
+          - frigate_sensors.yaml
+
+  #################################################################
+  # MEDIA - Detailed package breakdown
+  #################################################################
+  - path: media
+    title: Media
+    icon: mdi:play-circle-outline
+    theme: default
+    badges: []
+    cards:
+      - type: markdown
+        content: |
+          # 🎵 Media Package Structure
+          
+          **Files in packages/media/:**
+          - google.yaml
+          - harmony_hub.yaml
+
+  #################################################################
+  # SYSTEM - Detailed package breakdown
+  #################################################################
+  - path: system
+    title: System Monitoring
+    icon: mdi:cog
+    theme: default
+    badges: []
+    cards:
+      - type: heading
+        heading: 📊 System Info (system_info.yaml)
+
+      - type: markdown
+        content: "System monitoring and information sensors"
+
+      - type: heading
+        heading: ⚠️ Sensor Monitoring (sensor_reading_missing.yaml)
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: input_boolean.frys_reading_missing_alarm
+            name: Frys
+          - type: tile
+            entity: input_boolean.kyl_reading_missing_alarm
+            name: Kyl
+          - type: tile
+            entity: input_boolean.badrum_reading_missing_alarm
+            name: Badrum
+          - type: tile
+            entity: input_boolean.garage_reading_missing_alarm
+            name: Garage
+          - type: tile
+            entity: input_boolean.friggebod_reading_missing_alarm
+            name: Friggebod
+
+  #################################################################
+  # SENSORS - Detailed template sensor breakdown
+  #################################################################
+  - path: sensors
+    title: Sensors & Templates
+    icon: mdi:gauge
+    theme: default
+    badges: []
+    cards:
+      - type: markdown
+        content: |
+          # 🌡️ Sensor Package Structure
+          
+          **Template Sensors (14 files):**
+          - template_aqara_fp2_kitchen.yaml
+          - template_harmony_hub.yaml
+          - template_ljusstyrka.yaml
+          - template_lumi_ht_agl02_hall_is_not_working.yaml
+          - template_lumi_ht_agl02_livingroom.yaml
+          - template_lumi_weather_bathroom.yaml
+          - template_lumi_weather_uterum.yaml
+          - template_sensor_reading_missing.yaml
+          - template_system_info.yaml
+          - template_timmerflotte_temp_hmd_4_hall.yaml
+          - template_ventilation_system.yaml
+          - template_xiaomi_lumi_mgl01_hall.yaml
+          - template_xiaomi_lumi_mgl01_livingroom.yaml
+          - template_xiaomi_lumi_mgl01_louise_room_is_not_working.yaml
+
+      - type: heading
+        heading: Temperature & Humidity Sensors
+
+      - type: grid
+        columns: 4
+        square: false
+        cards:
+          - type: tile
+            entity: sensor.ute
+            name: Ute
+          - type: tile
+            entity: sensor.inne_medel
+            name: Inne medel
+          - type: tile
+            entity: sensor.badrum_temperatur
+            name: Badrum temp
+          - type: tile
+            entity: sensor.badrum_luftfuktighet
+            name: Badrum fukt
+          - type: tile
+            entity: sensor.fukt_badrumsfonster
+            name: Badrum fönster
+          - type: tile
+            entity: sensor.uterum_temperatur
+            name: Uterum
+          - type: tile
+            entity: sensor.friggebod_temperature
+            name: Friggebod temp
+          - type: tile
+            entity: sensor.friggebod_humidity
+            name: Friggebod fukt
+          - type: tile
+            entity: sensor.garage_temperature
+            name: Garage temp
+          - type: tile
+            entity: sensor.garage_humidity
+            name: Garage fukt
+          - type: tile
+            entity: sensor.forrad_temperature
+            name: Förråd temp
+
+  #################################################################
+  # CLIMATE & VENTILATION - Detailed breakdown
+  #################################################################
+  - path: climate
+    title: Climate Control
+    icon: mdi:thermometer
+    theme: default
+    badges: []
+    cards:
+      - type: heading
+        heading: 🌡️ Förråd Climate (climate/forrad.yaml)
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: switch.garage_elvarme
+            name: Elvärme
+          - type: tile
+            entity: input_boolean.forrad_varme_auto
+            name: Auto
+          - type: tile
+            entity: sensor.forrad_temperature
+            name: Temp
+
+      - type: heading
+        heading: 🌡️ Friggebod Climate (climate/friggebod.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: sensor.friggebod_temperature
+            name: Temp
+          - type: tile
+            entity: sensor.friggebod_humidity
+            name: Fukt
+
+      - type: heading
+        heading: 🌡️ Garage Climate (climate/garage.yaml)
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: switch.garage_avfuktare
+            name: Avfuktare
+          - type: tile
+            entity: sensor.garage_temperature
+            name: Temp
+          - type: tile
+            entity: sensor.garage_humidity
+            name: Fukt
+
+      - type: heading
+        heading: 🌬️ Ventilation System (ventilation/ventilation_system.yaml)
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: switch.ventilationsaggregat
+            name: System
+          - type: tile
+            entity: switch.shelly1_c45bbe77099d
+            name: Forcerad fläkt
+          - type: tile
+            entity: input_boolean.alarm_ventilation
+            name: Larm
+
+      - type: heading
+        heading: 🌬️ Ventilation Tuning (ventilation/ventilation_tuning.yaml)
+
+      - type: markdown
+        content: "Auto-tuning för ventilationssystem"
+
+  #################################################################
+  # LIGHTS - Detailed breakdown per file
+  #################################################################
+  - path: lights
+    title: Lighting
+    icon: mdi:lightbulb
+    theme: default
+    badges: []
+    cards:
+      - type: heading
+        heading: 🎮 Light Control (lights/light_entities.yaml)
+
+      - type: grid
+        columns: 4
+        square: false
+        cards:
+          - type: tile
+            entity: script.lights_set_correct_modes
+            name: Återställ
+            icon: mdi:restore
+          - type: tile
+            entity: script.button_daylight
+            name: Tänd allt
+          - type: tile
+            entity: script.cleaning_lights_on
+            name: Städdags
+          - type: tile
+            entity: script.button_goodnight
+            name: Godnatt
+
+      - type: heading
+        heading: 🛏️ Hall (lights/hall.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: light.hall
+            name: Hall
+          - type: tile
+            entity: input_select.light_hall
+            name: Läge
+
+      - type: heading
+        heading: 🚿 Bathroom (lights/bathroom.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: input_select.light_bathroom
+            name: Läge
+
+      - type: heading
+        heading: 🍽️ Kitchen (lights/kitchen.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: light.kok
+            name: Kök
+          - type: tile
+            entity: input_select.light_kitchen
+            name: Läge
+
+      - type: heading
+        heading: 🏠 Inside (lights/inside.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: input_select.light_inside
+            name: Läge
+
+      - type: heading
+        heading: 🏡 Facade (lights/facade.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: input_select.facade_lights
+            name: Fasad
+
+      - type: heading
+        heading: 🌳 Garden & Outdoor (lights/garden.yaml + outdoor_room.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: input_select.light_garden
+            name: Trädgård
+          - type: tile
+            entity: input_select.light_uterum
+            name: Uterum
+
+      - type: heading
+        heading: 📋 Light Package Files
+
+      - type: markdown
+        content: |
+          **14 files in packages/lights/:**
+          - bathroom.yaml
+          - debug.yaml
+          - facade.yaml
+          - garden.yaml
+          - hall.yaml
+          - inside.yaml
+          - kitchen.yaml
+          - light_entities.yaml
+          - light_groups_seasonal.yaml
+          - light_groups_standard.yaml
+          - outdoor_room.yaml
+          - restore_all.yaml
+          - scenes.yaml
+          - spabad.yaml
+
+  #################################################################
+  # INTEGRATIONS - Detailed breakdown
+  #################################################################
+  - path: integrations
+    title: Integrations
+    icon: mdi:puzzle
+    theme: default
+    badges: []
+    cards:
+      - type: markdown
+        content: |
+          # 🔌 Integration Package Structure
+          
+          **Files in packages/integrations/:**
+          - media_player.yaml
+          - mqtt.yaml
+          - mqtt_publish_values.yaml
+          - tellstick.yaml
+          - tts.yaml
+          - volvo.yaml
+          - zwift.yaml
+
+  #################################################################
+  # PRESENCE - Detailed breakdown
+  #################################################################
+  - path: presence
+    title: Presence Tracking
+    icon: mdi:home-account
+    theme: default
+    badges: []
+    cards:
+      - type: heading
+        heading: 🏠 Home Status (presence/home_away.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: input_select.home_status
+            name: Status
+
+      - type: markdown
+        content: |
+          **Files in packages/presence/:**
+          - home_away.yaml
+          - person.yaml
+          - working_at_home.yaml
+
+  #################################################################
+  # HELPERS - Detailed breakdown
+  #################################################################
+  - path: helpers
+    title: Helpers & Input Controls
+    icon: mdi:tune
+    theme: default
+    badges: []
+    cards:
+      - type: heading
+        heading: ✓ Input Booleans (helpers/input_booleans.yaml)
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: input_boolean.alarm_ventilation
+            name: Ventilation Larm
+          - type: tile
+            entity: input_boolean.christmas_light
+            name: Jul
+          - type: tile
+            entity: input_boolean.daylight_on
+            name: Dagbelysning
+          - type: tile
+            entity: input_boolean.forrad_varme_auto
+            name: Förråd Auto
+
+      - type: heading
+        heading: 🎯 Input Selects (helpers/input_selects.yaml)
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: input_select.home_status
+            name: Home Status
+          - type: tile
+            entity: input_select.light_inside
+            name: Inne
+          - type: tile
+            entity: input_select.light_kitchen
+            name: Kök
+          - type: tile
+            entity: input_select.light_hall
+            name: Halltak
+          - type: tile
+            entity: input_select.light_bathroom
+            name: Badrum
+          - type: tile
+            entity: input_select.light_garden
+            name: Trädgård
+
+  #################################################################
+  # AUTOMATIONS - Detailed breakdown
+  #################################################################
+  - path: automations
+    title: Automations
+    icon: mdi:robot
+    theme: default
+    badges: []
+    cards:
+      - type: markdown
+        content: |
+          # 🤖 Automation Package Structure
+          
+          **Files in packages/automations/:**
+          - input_select_light_control.yaml
+
+  #################################################################
+  # SCRIPTS - Detailed breakdown
+  #################################################################
+  - path: scripts
+    title: Scripts
+    icon: mdi:script-text-outline
+    theme: default
+    badges: []
+    cards:
+      - type: markdown
+        content: |
+          # 📜 Scripts Package Structure
+          
+          **Files in packages/scripts/:**
+          - godnatt.yaml
+
+  #################################################################
+  # ALERTS - Detailed breakdown
+  #################################################################
+  - path: alerts
+    title: Alerts & Notifications
+    icon: mdi:bell-alert
+    theme: default
+    badges: []
+    cards:
+      - type: heading
+        heading: ⚠️ Sensor Alarms
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: input_boolean.frys_reading_missing_alarm
+            name: Frys
+          - type: tile
+            entity: input_boolean.kyl_reading_missing_alarm
+            name: Kyl
+          - type: tile
+            entity: input_boolean.badrum_reading_missing_alarm
+            name: Badrum
+          - type: tile
+            entity: input_boolean.garage_reading_missing_alarm
+            name: Garage
+          - type: tile
+            entity: input_boolean.friggebod_reading_missing_alarm
+            name: Friggebod
+          - type: tile
+            entity: input_boolean.alarm_ventilation
+            name: Ventilation
+
+      - type: markdown
+        content: |
+          **Files in packages/alerts/:**
+          - devices_offline.yaml
+          - temperature.yaml
+
+  #################################################################
+  # NOTIFICATIONS - Detailed breakdown
+  #################################################################
+  - path: notifications
+    title: Notifications
+    icon: mdi:bell
+    theme: default
+    badges: []
+    cards:
+      - type: markdown
+        content: |
+          # 🔔 Notifications Package Structure
+          
+          **Files in packages/notifications/:**
+          - doorbell.yaml
+
+  #################################################################
   # FRIGATE - with detailed subsections per file
   #################################################################
   - path: frigate

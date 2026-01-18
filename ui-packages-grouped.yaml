@@ -41,35 +41,23 @@ views:
         square: false
         cards:
           - type: tile
+            entity: light.kok
+            name: Kök
+          - type: tile
             entity: light.hall
             name: Hall
           - type: tile
-            entity: light.kitchen
-            name: Kitchen
+            entity: light.vardagsrum
+            name: Vardagsrum
           - type: tile
-            entity: light.living_room
-            name: Living Room
+            entity: light.sovrum
+            name: Sovrum
           - type: tile
-            entity: light.bedroom
-            name: Bedroom
+            entity: light.louise_rum
+            name: Louise rum
           - type: tile
-            entity: light.bathroom
-            name: Bathroom
-          - type: tile
-            entity: light.garden
-            name: Garden
-          - type: tile
-            entity: light.patio
-            name: Patio
-          - type: tile
-            entity: light.spabad
-            name: Spa Bath
-          - type: tile
-            entity: light.facade
-            name: Facade
-          - type: tile
-            entity: light.inside
-            name: Inside
+            entity: light.andreas_rum
+            name: Andreas rum
 
       - type: heading
         heading: Light Modes
@@ -80,19 +68,28 @@ views:
         cards:
           - type: tile
             entity: input_select.light_inside
-            name: Inside
+            name: Inne
           - type: tile
             entity: input_select.light_kitchen
-            name: Kitchen
+            name: Kök
           - type: tile
             entity: input_select.light_hall
-            name: Hall
+            name: Halltak
           - type: tile
             entity: input_select.light_bathroom
-            name: Bathroom
+            name: Badrum
           - type: tile
-            entity: input_select.light_facade
-            name: Facade
+            entity: input_select.light_uterum
+            name: Uterum
+          - type: tile
+            entity: input_select.light_garden
+            name: Trädgård
+          - type: tile
+            entity: input_select.light_outside
+            name: Spabad
+          - type: tile
+            entity: input_select.facade_lights
+            name: Fasad
 
       - type: heading
         heading: Seasonal Settings
@@ -102,11 +99,11 @@ views:
         square: false
         cards:
           - type: tile
-            entity: input_select.season
-            name: Season
+            entity: input_boolean.christmas_light
+            name: Jul
           - type: tile
-            entity: input_select.light_scene
-            name: Scene
+            entity: light.dagbelysning
+            name: Dagbelysning
 
   #################################################################
   # CLIMATE & VENTILATION
@@ -160,28 +157,25 @@ views:
         cards:
           - type: tile
             entity: sensor.ute
-            name: Outside
+            name: Ute
           - type: tile
             entity: sensor.inne_medel
-            name: Avg Inside
+            name: Inne medel
           - type: tile
             entity: sensor.uterum_temperatur
-            name: Conservatory
+            name: Uterum
           - type: tile
             entity: sensor.badrum_temperatur
-            name: Bathroom
-          - type: tile
-            entity: sensor.hall_is_temperature
-            name: Hall
-          - type: tile
-            entity: sensor.livingroom_temperature
-            name: Living Room
+            name: Badrum
           - type: tile
             entity: sensor.friggebod_temperature
-            name: Shed
+            name: Friggebod
           - type: tile
             entity: sensor.garage_temperature
             name: Garage
+          - type: tile
+            entity: sensor.forrad_temperature
+            name: Förråd
 
       - type: heading
         heading: Humidity
@@ -192,16 +186,13 @@ views:
         cards:
           - type: tile
             entity: sensor.badrum_luftfuktighet
-            name: Bathroom
+            name: Badrum
           - type: tile
-            entity: sensor.hall_is_humidity
-            name: Hall
-          - type: tile
-            entity: sensor.livingroom_humidity
-            name: Living Room
+            entity: sensor.fukt_badrumsfonster
+            name: Badrum fönster
           - type: tile
             entity: sensor.friggebod_humidity
-            name: Shed
+            name: Friggebod
           - type: tile
             entity: sensor.garage_humidity
             name: Garage
@@ -216,49 +207,30 @@ views:
     badges: []
     cards:
       - type: heading
-        heading: System Status
+        heading: Sensor Alarms
 
       - type: grid
         columns: 3
         square: false
         cards:
           - type: tile
-            entity: binary_sensor.sensor_reading_missing
-            name: Sensors Missing
+            entity: input_boolean.frys_reading_missing_alarm
+            name: Frys
           - type: tile
-            entity: binary_sensor.device_offline
-            name: Devices Offline
+            entity: input_boolean.kyl_reading_missing_alarm
+            name: Kyl
           - type: tile
-            entity: binary_sensor.temperature_alert
-            name: Temp Alert
-
-      - type: heading
-        heading: Device Status
-
-      - type: grid
-        columns: 2
-        square: false
-        cards:
+            entity: input_boolean.badrum_reading_missing_alarm
+            name: Badrum
           - type: tile
-            entity: binary_sensor.mqtt_connection
-            name: MQTT
+            entity: input_boolean.garage_reading_missing_alarm
+            name: Garage
           - type: tile
-            entity: binary_sensor.frigate_online
-            name: Frigate
-
-      - type: heading
-        heading: Alerts & Alarms
-
-      - type: grid
-        columns: 2
-        square: false
-        cards:
+            entity: input_boolean.friggebod_reading_missing_alarm
+            name: Friggebod
           - type: tile
             entity: input_boolean.alarm_ventilation
             name: Ventilation
-          - type: tile
-            entity: automation.doorbell_alert
-            name: Doorbell Alerts
 
   #################################################################
   # AUTOMATION & SCRIPTS
@@ -278,30 +250,19 @@ views:
         cards:
           - type: tile
             entity: script.lights_set_correct_modes
-            name: Light Restore
+            name: Återställ
           - type: tile
             entity: script.button_daylight
-            name: Daylight
+            name: Tänd allt
+          - type: tile
+            entity: script.cleaning_lights_on
+            name: Städdags
           - type: tile
             entity: script.button_goodnight
-            name: Goodnight
+            name: Godnatt
           - type: tile
             entity: script.harmony_tv
-            name: TV Start
-          - type: tile
-            entity: script.godnatt
-            name: Night Mode
-
-      - type: heading
-        heading: Automations
-
-      - type: grid
-        columns: 2
-        square: false
-        cards:
-          - type: tile
-            entity: automation.input_select_light_control
-            name: Light Selection
+            name: TV
 
       - type: heading
         heading: Helpers
@@ -311,14 +272,11 @@ views:
         square: false
         cards:
           - type: tile
-            entity: input_boolean.guest_mode
-            name: Guest Mode
-          - type: tile
             entity: input_select.home_status
             name: Home Status
           - type: tile
-            entity: binary_sensor.working_at_home
-            name: Working at Home
+            entity: input_boolean.daylight_on
+            name: Daylight On
 
   #################################################################
   # MEDIA & ENTERTAINMENT
@@ -330,23 +288,6 @@ views:
     badges: []
     cards:
       - type: heading
-        heading: Audio Devices
-
-      - type: grid
-        columns: 2
-        square: false
-        cards:
-          - type: tile
-            entity: media_player.google_home
-            name: Google Home
-          - type: tile
-            entity: media_player.google_nest_hub
-            name: Nest Hub
-          - type: tile
-            entity: media_player.tts
-            name: Text-to-Speech
-
-      - type: heading
         heading: Entertainment
 
       - type: grid
@@ -354,48 +295,8 @@ views:
         square: false
         cards:
           - type: tile
-            entity: media_player.harmony_hub
-            name: Harmony Hub
-          - type: tile
             entity: script.harmony_tv
             name: Start TV
-
-      - type: heading
-        heading: Cameras
-
-      - type: grid
-        columns: 3
-        square: false
-        cards:
-          - type: tile
-            entity: camera.driveway
-            name: Driveway
-          - type: tile
-            entity: camera.garage
-            name: Garage
-          - type: tile
-            entity: camera.patio
-            name: Patio
-          - type: tile
-            entity: camera.front_door
-            name: Front Door
-          - type: tile
-            entity: camera.backyard
-            name: Backyard
-
-      - type: heading
-        heading: Motion Detection
-
-      - type: grid
-        columns: 2
-        square: false
-        cards:
-          - type: tile
-            entity: binary_sensor.frigate_animal_motion
-            name: Animal Motion
-          - type: tile
-            entity: binary_sensor.frigate_person_motion
-            name: Person Motion
 
   #################################################################
   # PRESENCE & FAMILY
@@ -407,35 +308,6 @@ views:
     badges: []
     cards:
       - type: heading
-        heading: Family Members
-
-      - type: grid
-        columns: 3
-        square: false
-        cards:
-          - type: tile
-            entity: person.micke
-            name: Micke
-          - type: tile
-            entity: person.annelie
-            name: Annelie
-          - type: tile
-            entity: person.louise
-            name: Louise
-          - type: tile
-            entity: person.andreas
-            name: Andreas
-          - type: tile
-            entity: person.herbert
-            name: Herbert
-          - type: tile
-            entity: person.margareta
-            name: Margareta
-          - type: tile
-            entity: person.erik
-            name: Erik
-
-      - type: heading
         heading: Home Status
 
       - type: grid
@@ -445,9 +317,6 @@ views:
           - type: tile
             entity: input_select.home_status
             name: Status
-          - type: tile
-            entity: binary_sensor.working_at_home
-            name: Working at Home
 
   #################################################################
   # INTEGRATIONS
@@ -459,21 +328,15 @@ views:
     badges: []
     cards:
       - type: heading
-        heading: Third-Party Services
+        heading: System
 
       - type: grid
         columns: 2
         square: false
         cards:
           - type: tile
-            entity: binary_sensor.mqtt_connection
-            name: MQTT
+            entity: switch.ventilationsaggregat
+            name: Ventilation
           - type: tile
-            entity: binary_sensor.volvo_online
-            name: Volvo
-          - type: tile
-            entity: binary_sensor.zwift_online
-            name: Zwift
-          - type: tile
-            entity: binary_sensor.frigate_online
-            name: Frigate
+            entity: switch.shelly1_c45bbe77099d
+            name: Forcerad fläkt

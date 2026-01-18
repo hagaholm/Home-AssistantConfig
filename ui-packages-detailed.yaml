@@ -1,0 +1,879 @@
+title: Home Assistant
+views:
+  #################################################################
+  # FRIGATE - with detailed subsections per file
+  #################################################################
+  - path: frigate
+    title: Frigate NVR
+    icon: mdi:cctv
+    theme: default
+    badges: []
+    cards:
+      - type: heading
+        heading: 📹 Frigate Sensors (frigate_sensors.yaml)
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: binary_sensor.frigate_recording
+            name: Recording Active
+          - type: tile
+            entity: sensor.frigate_stats_cpu
+            name: CPU Load
+          - type: tile
+            entity: sensor.frigate_stats_memory
+            name: Memory
+
+      - type: heading
+        heading: 🚗 Animal Detection (frigate_animal_detected.yaml)
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: binary_sensor.frigate_animal_motion
+            name: Motion Detected
+          - type: tile
+            entity: counter.frigate_animal_count
+            name: Count
+
+      - type: heading
+        heading: 👤 Person Detection (frigate_person_detected.yaml)
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: binary_sensor.frigate_person_motion
+            name: Motion Detected
+          - type: tile
+            entity: counter.frigate_person_count
+            name: Count
+
+      - type: heading
+        heading: 🎬 Media Management (frigate_media.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: sensor.frigate_storage_usage
+            name: Storage Used
+          - type: tile
+            entity: automation.frigate_media_cleanup
+            name: Auto Cleanup
+
+      - type: heading
+        heading: 📹 Cameras
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: camera.driveway
+            name: Driveway
+          - type: tile
+            entity: camera.garage
+            name: Garage
+          - type: tile
+            entity: camera.patio
+            name: Patio
+          - type: tile
+            entity: camera.front_door
+            name: Front Door
+          - type: tile
+            entity: camera.backyard
+            name: Backyard
+
+  #################################################################
+  # MEDIA - with detailed subsections per file
+  #################################################################
+  - path: media
+    title: Media
+    icon: mdi:play-circle-outline
+    theme: default
+    badges: []
+    cards:
+      - type: heading
+        heading: 🎵 Google Home (google.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: media_player.google_home
+            name: Living Room Speaker
+          - type: tile
+            entity: media_player.google_nest_hub
+            name: Kitchen Display
+
+      - type: heading
+        heading: 🎮 Harmony Hub (harmony_hub.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: media_player.harmony_hub
+            name: Harmony Hub
+          - type: tile
+            entity: script.harmony_tv
+            name: Start TV
+            icon: mdi:television
+          - type: tile
+            entity: remote.harmony_hub
+            name: Remote Control
+
+  #################################################################
+  # SYSTEM - with detailed subsections per file
+  #################################################################
+  - path: system
+    title: System Monitoring
+    icon: mdi:cog
+    theme: default
+    badges: []
+    cards:
+      - type: heading
+        heading: 📊 System Info (system_info.yaml)
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: sensor.system_uptime
+            name: Uptime
+          - type: tile
+            entity: sensor.system_load
+            name: Load
+          - type: tile
+            entity: sensor.disk_free
+            name: Disk Free
+
+      - type: heading
+        heading: ⚠️ Sensor Monitoring (sensor_reading_missing.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: binary_sensor.sensor_reading_missing
+            name: Missing Readings
+          - type: tile
+            entity: automation.sensor_reading_missing_alert
+            name: Missing Alert Automation
+
+  #################################################################
+  # SENSORS - with detailed subsections per template file
+  #################################################################
+  - path: sensors
+    title: Sensors & Templates
+    icon: mdi:gauge
+    theme: default
+    badges: []
+    cards:
+      - type: heading
+        heading: 🌡️ Aqara FP2 Kitchen (template_aqara_fp2_kitchen.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: sensor.kitchen_presence
+            name: Presence
+          - type: tile
+            entity: sensor.kitchen_distance
+            name: Distance
+
+      - type: heading
+        heading: 🎵 Harmony Hub Sensors (template_harmony_hub.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: sensor.harmony_activity
+            name: Current Activity
+
+      - type: heading
+        heading: 💡 Light Brightness (template_ljusstyrka.yaml)
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: sensor.ljusstyrka_current
+            name: Light Level
+          - type: tile
+            entity: sensor.ljusstyrka_threshold
+            name: Threshold
+
+      - type: heading
+        heading: 🌡️ Lumi Humidity Sensors
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: sensor.hall_is_temperature
+            name: Hall Temp
+          - type: tile
+            entity: sensor.hall_is_humidity
+            name: Hall Humidity
+          - type: tile
+            entity: sensor.livingroom_temperature
+            name: Living Room Temp
+          - type: tile
+            entity: sensor.livingroom_humidity
+            name: Living Room Humidity
+          - type: tile
+            entity: sensor.kitchen_temperature
+            name: Kitchen Temp
+          - type: tile
+            entity: sensor.kitchen_humidity
+            name: Kitchen Humidity
+
+      - type: heading
+        heading: ⚠️ Warning Sensors (template_sensor_reading_missing.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: binary_sensor.sensor_reading_missing
+            name: Missing Readings
+
+      - type: heading
+        heading: 📊 System Info Templates (template_system_info.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: sensor.system_load
+            name: System Load
+          - type: tile
+            entity: sensor.system_uptime
+            name: Uptime
+
+      - type: heading
+        heading: 🌬️ Ventilation Sensors (template_ventilation_system.yaml)
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: sensor.ventilation_status
+            name: Status
+          - type: tile
+            entity: sensor.ventilation_efficiency
+            name: Efficiency
+          - type: tile
+            entity: sensor.ventilation_runtime
+            name: Runtime
+
+      - type: heading
+        heading: 🏠 Building Occupancy (template_xiaomi_lumi_mgl01.yaml files)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: binary_sensor.hall_occupancy
+            name: Hall Occupied
+          - type: tile
+            entity: binary_sensor.livingroom_occupancy
+            name: Living Room Occupied
+
+  #################################################################
+  # CLIMATE & VENTILATION - with detailed subsections per file
+  #################################################################
+  - path: climate
+    title: Climate Control
+    icon: mdi:thermometer
+    theme: default
+    badges: []
+    cards:
+      - type: heading
+        heading: 🌡️ Förråd Climate (climate/forrad.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: climate.forrad
+            name: Thermostat
+          - type: tile
+            entity: sensor.forrad_temperature
+            name: Current Temp
+
+      - type: heading
+        heading: 🌡️ Friggebod Climate (climate/friggebod.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: climate.friggebod
+            name: Thermostat
+          - type: tile
+            entity: sensor.friggebod_temperature
+            name: Current Temp
+
+      - type: heading
+        heading: 🌡️ Garage Climate (climate/garage.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: climate.garage
+            name: Thermostat
+          - type: tile
+            entity: sensor.garage_temperature
+            name: Current Temp
+
+      - type: heading
+        heading: 🌬️ Ventilation System (ventilation/ventilation_system.yaml)
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: switch.ventilationsaggregat
+            name: Main System
+          - type: tile
+            entity: sensor.ventilation_runtime
+            name: Runtime
+          - type: tile
+            entity: input_boolean.alarm_ventilation
+            name: Alarm
+
+      - type: heading
+        heading: 🌬️ Ventilation Tuning (ventilation/ventilation_tuning.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: input_number.ventilation_speed
+            name: Speed Setting
+          - type: tile
+            entity: switch.shelly1_c45bbe77099d
+            name: Forced Fan
+
+      - type: heading
+        heading: 🌬️ Ventilation Fan (ventilation/fan.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: fan.ventilation
+            name: Fan Control
+
+  #################################################################
+  # LIGHTS - with detailed subsections per file
+  #################################################################
+  - path: lights
+    title: Lighting
+    icon: mdi:lightbulb
+    theme: default
+    badges: []
+    cards:
+      - type: heading
+        heading: 🎮 Light Control (lights/light_entities.yaml)
+
+      - type: grid
+        columns: 4
+        square: false
+        cards:
+          - type: tile
+            entity: script.lights_set_correct_modes
+            name: Restore
+            icon: mdi:restore
+          - type: tile
+            entity: script.button_daylight
+            name: All On
+          - type: tile
+            entity: script.cleaning_lights_on
+            name: Cleaning
+          - type: tile
+            entity: script.button_goodnight
+            name: Goodnight
+
+      - type: heading
+        heading: 🛏️ Hall (lights/hall.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: light.hall
+            name: Hall Light
+          - type: tile
+            entity: input_select.light_hall
+            name: Mode
+
+      - type: heading
+        heading: 🚿 Bathroom (lights/bathroom.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: light.bathroom
+            name: Bathroom
+          - type: tile
+            entity: input_select.light_bathroom
+            name: Mode
+
+      - type: heading
+        heading: 🍽️ Kitchen (lights/kitchen.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: light.kitchen
+            name: Kitchen
+          - type: tile
+            entity: input_select.light_kitchen
+            name: Mode
+
+      - type: heading
+        heading: 🏠 Inside (lights/inside.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: light.inside
+            name: Inside
+          - type: tile
+            entity: input_select.light_inside
+            name: Mode
+
+      - type: heading
+        heading: 🛁 Spa Bath (lights/spabad.yaml)
+
+      - type: grid
+        columns: 1
+        square: false
+        cards:
+          - type: tile
+            entity: light.spabad
+            name: Spa Bath
+
+      - type: heading
+        heading: 🏡 Facade (lights/facade.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: light.facade
+            name: Facade
+          - type: tile
+            entity: input_select.light_facade
+            name: Mode
+
+      - type: heading
+        heading: 🌳 Garden & Outdoor (lights/garden.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: light.garden
+            name: Garden
+          - type: tile
+            entity: light.patio
+            name: Patio
+
+      - type: heading
+        heading: 🎬 Scenes (lights/scenes.yaml)
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: scene.evening
+            name: Evening
+          - type: tile
+            entity: scene.nighttime
+            name: Nighttime
+          - type: tile
+            entity: scene.daylight
+            name: Daylight
+
+      - type: heading
+        heading: 🔄 Seasonal Groups (lights/light_groups_seasonal.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: light.seasonal_group
+            name: Seasonal
+
+      - type: heading
+        heading: 📅 Standard Groups (lights/light_groups_standard.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: light.standard_group
+            name: Standard Group
+
+  #################################################################
+  # INTEGRATIONS - with detailed subsections per file
+  #################################################################
+  - path: integrations
+    title: Integrations
+    icon: mdi:puzzle
+    theme: default
+    badges: []
+    cards:
+      - type: heading
+        heading: 🔌 MQTT (integrations/mqtt.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: binary_sensor.mqtt_connection
+            name: Status
+          - type: tile
+            entity: sensor.mqtt_stats
+            name: Messages
+
+      - type: heading
+        heading: 📤 MQTT Publishing (integrations/mqtt_publish_values.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: script.mqtt_publish
+            name: Publish Test
+
+      - type: heading
+        heading: 🚗 Volvo (integrations/volvo.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: device_tracker.volvo
+            name: Location
+          - type: tile
+            entity: binary_sensor.volvo_online
+            name: Status
+
+      - type: heading
+        heading: 🚴 Zwift (integrations/zwift.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: sensor.zwift_status
+            name: Status
+          - type: tile
+            entity: binary_sensor.zwift_online
+            name: Online
+
+      - type: heading
+        heading: 📻 Tellstick (integrations/tellstick.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: binary_sensor.tellstick_connection
+            name: Connected
+
+      - type: heading
+        heading: 🔊 Text-to-Speech (integrations/tts.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: media_player.tts
+            name: TTS
+
+      - type: heading
+        heading: 🎮 Media Player (integrations/media_player.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: media_player.harmony_hub
+            name: Harmony
+          - type: tile
+            entity: media_player.google_home
+            name: Google Home
+
+  #################################################################
+  # PRESENCE - with detailed subsections per file
+  #################################################################
+  - path: presence
+    title: Presence Tracking
+    icon: mdi:home-account
+    theme: default
+    badges: []
+    cards:
+      - type: heading
+        heading: 👥 People (presence/person.yaml)
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: person.micke
+            name: Micke
+          - type: tile
+            entity: person.annelie
+            name: Annelie
+          - type: tile
+            entity: person.louise
+            name: Louise
+          - type: tile
+            entity: person.andreas
+            name: Andreas
+          - type: tile
+            entity: person.herbert
+            name: Herbert
+          - type: tile
+            entity: person.margareta
+            name: Margareta
+          - type: tile
+            entity: person.erik
+            name: Erik
+
+      - type: heading
+        heading: 🏠 Home Status (presence/home_away.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: input_select.home_status
+            name: Status
+          - type: tile
+            entity: binary_sensor.someone_home
+            name: Anyone Home
+
+      - type: heading
+        heading: 💼 Working from Home (presence/working_at_home.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: binary_sensor.working_at_home
+            name: Working Status
+
+  #################################################################
+  # HELPERS - with detailed subsections per file
+  #################################################################
+  - path: helpers
+    title: Helpers & Input Controls
+    icon: mdi:tune
+    theme: default
+    badges: []
+    cards:
+      - type: heading
+        heading: ✓ Input Booleans (helpers/input_booleans.yaml)
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: input_boolean.alarm_ventilation
+            name: Ventilation Alarm
+          - type: tile
+            entity: input_boolean.guest_mode
+            name: Guest Mode
+          - type: tile
+            entity: input_boolean.automation_enabled
+            name: Automations
+
+      - type: heading
+        heading: 🎯 Input Selects (helpers/input_selects.yaml)
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: input_select.home_status
+            name: Home Status
+          - type: tile
+            entity: input_select.light_inside
+            name: Inside Light Mode
+          - type: tile
+            entity: input_select.light_kitchen
+            name: Kitchen Light Mode
+          - type: tile
+            entity: input_select.light_hall
+            name: Hall Light Mode
+          - type: tile
+            entity: input_select.light_bathroom
+            name: Bathroom Light Mode
+          - type: tile
+            entity: input_select.season
+            name: Season
+
+  #################################################################
+  # AUTOMATIONS - with detailed subsections per file
+  #################################################################
+  - path: automations
+    title: Automations
+    icon: mdi:robot
+    theme: default
+    badges: []
+    cards:
+      - type: heading
+        heading: 💡 Light Control (automations/input_select_light_control.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: automation.input_select_light_control
+            name: Light Selection Automation
+          - type: tile
+            entity: script.lights_set_correct_modes
+            name: Update Lights
+
+  #################################################################
+  # SCRIPTS - with detailed subsections per file
+  #################################################################
+  - path: scripts
+    title: Scripts
+    icon: mdi:script-text-outline
+    theme: default
+    badges: []
+    cards:
+      - type: heading
+        heading: 🌙 Goodnight Routine (scripts/godnatt.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: script.godnatt
+            name: Start Goodnight
+          - type: tile
+            entity: script.button_goodnight
+            name: Goodnight Quick
+
+  #################################################################
+  # ALERTS - with detailed subsections per file
+  #################################################################
+  - path: alerts
+    title: Alerts & Notifications
+    icon: mdi:bell-alert
+    theme: default
+    badges: []
+    cards:
+      - type: heading
+        heading: 🌡️ Temperature (alerts/temperature.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: binary_sensor.temperature_alert
+            name: Alert Status
+          - type: tile
+            entity: automation.temperature_too_high
+            name: High Temp Automation
+
+      - type: heading
+        heading: 🔌 Device Status (alerts/devices_offline.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: binary_sensor.device_offline
+            name: Devices Down
+          - type: tile
+            entity: automation.device_offline_alert
+            name: Offline Alert Automation
+
+  #################################################################
+  # NOTIFICATIONS - with detailed subsections per file
+  #################################################################
+  - path: notifications
+    title: Notifications
+    icon: mdi:bell
+    theme: default
+    badges: []
+    cards:
+      - type: heading
+        heading: 🚪 Doorbell (notifications/doorbell.yaml)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: automation.doorbell_notification
+            name: Doorbell Alert
+          - type: tile
+            entity: binary_sensor.doorbell_pressed
+            name: Pressed

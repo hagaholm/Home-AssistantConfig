@@ -1,0 +1,479 @@
+title: Home Assistant
+views:
+  #################################################################
+  # LIGHTS
+  #################################################################
+  - path: lights
+    title: Lights
+    icon: mdi:lightbulb
+    theme: default
+    badges: []
+    cards:
+      - type: heading
+        heading: Light Controls
+
+      - type: grid
+        columns: 4
+        square: false
+        cards:
+          - type: tile
+            entity: script.lights_set_correct_modes
+            name: Restore
+            icon: mdi:restore
+          - type: tile
+            entity: script.button_daylight
+            name: All On
+            icon: mdi:lightbulb
+          - type: tile
+            entity: script.cleaning_lights_on
+            name: Cleaning
+            icon: mdi:vacuum
+          - type: tile
+            entity: script.button_goodnight
+            name: Goodnight
+            icon: mdi:sleep
+
+      - type: heading
+        heading: Light Zones
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: light.hall
+            name: Hall
+          - type: tile
+            entity: light.kitchen
+            name: Kitchen
+          - type: tile
+            entity: light.living_room
+            name: Living Room
+          - type: tile
+            entity: light.bedroom
+            name: Bedroom
+          - type: tile
+            entity: light.bathroom
+            name: Bathroom
+          - type: tile
+            entity: light.garden
+            name: Garden
+          - type: tile
+            entity: light.patio
+            name: Patio
+          - type: tile
+            entity: light.spabad
+            name: Spa Bath
+          - type: tile
+            entity: light.facade
+            name: Facade
+          - type: tile
+            entity: light.inside
+            name: Inside
+
+      - type: heading
+        heading: Light Modes
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: input_select.light_inside
+            name: Inside
+          - type: tile
+            entity: input_select.light_kitchen
+            name: Kitchen
+          - type: tile
+            entity: input_select.light_hall
+            name: Hall
+          - type: tile
+            entity: input_select.light_bathroom
+            name: Bathroom
+          - type: tile
+            entity: input_select.light_facade
+            name: Facade
+
+      - type: heading
+        heading: Seasonal Settings
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: input_select.season
+            name: Season
+          - type: tile
+            entity: input_select.light_scene
+            name: Scene
+
+  #################################################################
+  # CLIMATE & VENTILATION
+  #################################################################
+  - path: climate
+    title: Climate & Ventilation
+    icon: mdi:thermometer
+    theme: default
+    badges: []
+    cards:
+      - type: heading
+        heading: Ventilation System
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: switch.ventilationsaggregat
+            name: Main Ventilation
+          - type: tile
+            entity: switch.shelly1_c45bbe77099d
+            name: Forced Fan
+          - type: tile
+            entity: input_boolean.alarm_ventilation
+            name: Alarm
+
+      - type: heading
+        heading: Temperature Control
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: climate.forrad
+            name: Förråd
+          - type: tile
+            entity: climate.friggebod
+            name: Friggebod
+          - type: tile
+            entity: climate.garage
+            name: Garage
+
+      - type: heading
+        heading: Temperature Readings
+
+      - type: grid
+        columns: 4
+        square: false
+        cards:
+          - type: tile
+            entity: sensor.ute
+            name: Outside
+          - type: tile
+            entity: sensor.inne_medel
+            name: Avg Inside
+          - type: tile
+            entity: sensor.uterum_temperatur
+            name: Conservatory
+          - type: tile
+            entity: sensor.badrum_temperatur
+            name: Bathroom
+          - type: tile
+            entity: sensor.hall_is_temperature
+            name: Hall
+          - type: tile
+            entity: sensor.livingroom_temperature
+            name: Living Room
+          - type: tile
+            entity: sensor.friggebod_temperature
+            name: Shed
+          - type: tile
+            entity: sensor.garage_temperature
+            name: Garage
+
+      - type: heading
+        heading: Humidity
+
+      - type: grid
+        columns: 4
+        square: false
+        cards:
+          - type: tile
+            entity: sensor.badrum_luftfuktighet
+            name: Bathroom
+          - type: tile
+            entity: sensor.hall_is_humidity
+            name: Hall
+          - type: tile
+            entity: sensor.livingroom_humidity
+            name: Living Room
+          - type: tile
+            entity: sensor.friggebod_humidity
+            name: Shed
+          - type: tile
+            entity: sensor.garage_humidity
+            name: Garage
+
+  #################################################################
+  # MONITORING & ALERTS
+  #################################################################
+  - path: monitoring
+    title: Monitoring & Alerts
+    icon: mdi:bell-alert
+    theme: default
+    badges: []
+    cards:
+      - type: heading
+        heading: System Status
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: binary_sensor.sensor_reading_missing
+            name: Sensors Missing
+          - type: tile
+            entity: binary_sensor.device_offline
+            name: Devices Offline
+          - type: tile
+            entity: binary_sensor.temperature_alert
+            name: Temp Alert
+
+      - type: heading
+        heading: Device Status
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: binary_sensor.mqtt_connection
+            name: MQTT
+          - type: tile
+            entity: binary_sensor.frigate_online
+            name: Frigate
+
+      - type: heading
+        heading: Alerts & Alarms
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: input_boolean.alarm_ventilation
+            name: Ventilation
+          - type: tile
+            entity: automation.doorbell_alert
+            name: Doorbell Alerts
+
+  #################################################################
+  # AUTOMATION & SCRIPTS
+  #################################################################
+  - path: automation
+    title: Automation & Scripts
+    icon: mdi:automation
+    theme: default
+    badges: []
+    cards:
+      - type: heading
+        heading: Key Scripts
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: script.lights_set_correct_modes
+            name: Light Restore
+          - type: tile
+            entity: script.button_daylight
+            name: Daylight
+          - type: tile
+            entity: script.button_goodnight
+            name: Goodnight
+          - type: tile
+            entity: script.harmony_tv
+            name: TV Start
+          - type: tile
+            entity: script.godnatt
+            name: Night Mode
+
+      - type: heading
+        heading: Automations
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: automation.input_select_light_control
+            name: Light Selection
+
+      - type: heading
+        heading: Helpers
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: input_boolean.guest_mode
+            name: Guest Mode
+          - type: tile
+            entity: input_select.home_status
+            name: Home Status
+          - type: tile
+            entity: binary_sensor.working_at_home
+            name: Working at Home
+
+  #################################################################
+  # MEDIA & ENTERTAINMENT
+  #################################################################
+  - path: media
+    title: Media & Entertainment
+    icon: mdi:play-circle-outline
+    theme: default
+    badges: []
+    cards:
+      - type: heading
+        heading: Audio Devices
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: media_player.google_home
+            name: Google Home
+          - type: tile
+            entity: media_player.google_nest_hub
+            name: Nest Hub
+          - type: tile
+            entity: media_player.tts
+            name: Text-to-Speech
+
+      - type: heading
+        heading: Entertainment
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: media_player.harmony_hub
+            name: Harmony Hub
+          - type: tile
+            entity: script.harmony_tv
+            name: Start TV
+
+      - type: heading
+        heading: Cameras
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: camera.driveway
+            name: Driveway
+          - type: tile
+            entity: camera.garage
+            name: Garage
+          - type: tile
+            entity: camera.patio
+            name: Patio
+          - type: tile
+            entity: camera.front_door
+            name: Front Door
+          - type: tile
+            entity: camera.backyard
+            name: Backyard
+
+      - type: heading
+        heading: Motion Detection
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: binary_sensor.frigate_animal_motion
+            name: Animal Motion
+          - type: tile
+            entity: binary_sensor.frigate_person_motion
+            name: Person Motion
+
+  #################################################################
+  # PRESENCE & FAMILY
+  #################################################################
+  - path: presence
+    title: Presence & Family
+    icon: mdi:home-account
+    theme: default
+    badges: []
+    cards:
+      - type: heading
+        heading: Family Members
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: person.micke
+            name: Micke
+          - type: tile
+            entity: person.annelie
+            name: Annelie
+          - type: tile
+            entity: person.louise
+            name: Louise
+          - type: tile
+            entity: person.andreas
+            name: Andreas
+          - type: tile
+            entity: person.herbert
+            name: Herbert
+          - type: tile
+            entity: person.margareta
+            name: Margareta
+          - type: tile
+            entity: person.erik
+            name: Erik
+
+      - type: heading
+        heading: Home Status
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: input_select.home_status
+            name: Status
+          - type: tile
+            entity: binary_sensor.working_at_home
+            name: Working at Home
+
+  #################################################################
+  # INTEGRATIONS
+  #################################################################
+  - path: integrations
+    title: Integrations
+    icon: mdi:puzzle
+    theme: default
+    badges: []
+    cards:
+      - type: heading
+        heading: Third-Party Services
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: binary_sensor.mqtt_connection
+            name: MQTT
+          - type: tile
+            entity: binary_sensor.volvo_online
+            name: Volvo
+          - type: tile
+            entity: binary_sensor.zwift_online
+            name: Zwift
+          - type: tile
+            entity: binary_sensor.frigate_online
+            name: Frigate

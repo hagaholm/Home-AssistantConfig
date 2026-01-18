@@ -117,6 +117,29 @@ lovelace:
       show_in_sidebar: true
       filename: ui-lights.yaml
 
+    # Packages - Simple (one view per folder)
+    lovelace-packages-simple:
+      mode: yaml
+      title: Packages (Simple)
+      show_in_sidebar: true
+      filename: ui-packages-simple.yaml
+      icon: mdi:folder-multiple
+
+    # Packages - Grouped (domain-focused)
+    lovelace-packages-grouped:
+      mode: yaml
+      title: Packages (Grouped)
+      show_in_sidebar: true
+      filename: ui-packages-grouped.yaml
+      icon: mdi:puzzle-multiple
+
+    # Packages - Detailed (subsections per file)
+    lovelace-packages-detailed:
+      mode: yaml
+      title: Packages (Detailed)
+      show_in_sidebar: true
+      filename: ui-packages-detailed.yaml
+      icon: mdi:file-tree
 
     # Generated
     lovelace-generated: # Needs to contain a hyphen (-)

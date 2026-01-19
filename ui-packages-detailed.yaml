@@ -13,20 +13,17 @@ views:
         heading: 📹 Frigate Package Structure
 
       - type: markdown
-        content: "**Files in packages/frigate/:**"
+        content: |
+          **Package Overview:**
+          Complete NVR solution with AI-powered detection for security monitoring.
 
-      - type: grid
-        columns: 2
-        square: false
-        cards:
-          - type: markdown
-            content: |
-              - frigate_animal_detected.yaml
-              - frigate_media.yaml
-          - type: markdown
-            content: |
-              - frigate_person_detected.yaml
-              - frigate_sensors.yaml
+      - type: markdown
+        content: |
+          **4 Files in packages/frigate/:**
+          📹 frigate_animal_detected.yaml
+          📷 frigate_media.yaml
+          👤 frigate_person_detected.yaml
+          🔧 frigate_sensors.yaml
 
       - type: heading
         heading: 📹 Frigate Sensors (frigate_sensors.yaml)
@@ -123,21 +120,22 @@ views:
         heading: 🎵 Media Package Structure
 
       - type: markdown
-        content: "**Files in packages/media/:**"
+        content: |
+          **Package Overview:**
+          Audio players and entertainment system integrations including smart speakers and media hubs.
 
-      - type: grid
-        columns: 2
-        square: false
-        cards:
-          - type: markdown
-            content: |
-              - google.yaml
-          - type: markdown
-            content: |
-              - harmony_hub.yaml
+      - type: markdown
+        content: |
+          **2 Files in packages/media/:**
+          🔊 google.yaml - Google Home/Nest speakers
+          🎮 harmony_hub.yaml - Harmony Hub remote control
 
       - type: heading
-        heading: 🎵 Google Home (google.yaml)
+        heading: 🔊 Google Home (google.yaml)
+
+      - type: markdown
+        content: |
+          Voice assistants for TTS announcements and voice control. Connected smart speakers throughout home.
 
       - type: grid
         columns: 2
@@ -152,6 +150,10 @@ views:
 
       - type: heading
         heading: 🎮 Harmony Hub (harmony_hub.yaml)
+
+      - type: markdown
+        content: |
+          IR remote control hub for managing TV, receivers, and entertainment devices. Includes activity macros for automating multi-device sequences.
 
       - type: grid
         columns: 2
@@ -233,36 +235,29 @@ views:
         heading: 🌡️ Sensor Package Structure
 
       - type: markdown
-        content: "**Template Sensors - Part 1:**"
-
-      - type: grid
-        columns: 2
-        square: false
-        cards:
-          - type: markdown
-            content: |
-              - template_aqara_fp2_kitchen.yaml
-              - template_harmony_hub.yaml
-              - template_ljusstyrka.yaml
-              - template_lumi_ht_agl02_hall_is_not_working.yaml
-              - template_lumi_ht_agl02_livingroom.yaml
-              - template_lumi_weather_bathroom.yaml
-          - type: markdown
-            content: |
-              - template_lumi_weather_uterum.yaml
-              - template_sensor_reading_missing.yaml
-              - template_system_info.yaml
-              - template_timmerflotte_temp_hmd_4_hall.yaml
-              - template_ventilation_system.yaml
-              - template_xiaomi_lumi_mgl01_hall.yaml
+        content: |
+          **Package Overview:**
+          Custom template sensors for presence detection, environmental monitoring, and device status tracking across the home.
 
       - type: markdown
-        content: "**Continued - Part 2:**"
+        content: "**Template Sensors - Part 1:**"
 
       - type: markdown
         content: |
-          - template_xiaomi_lumi_mgl01_livingroom.yaml
-          - template_xiaomi_lumi_mgl01_louise_room_is_not_working.yaml
+          📍 **aqara_fp2_kitchen** - Aqara presence sensor in kitchen
+          🎮 **harmony_hub** - Harmony Hub status tracking
+          💡 **ljusstyrka** - Light brightness level calculations
+          🌡️ **lumi_ht_agl02_hall** - Temperature/humidity hall sensor
+          🏠 **lumi_ht_agl02_livingroom** - Temp/humidity living room
+          🚿 **lumi_weather_bathroom** - Bathroom conditions
+          🏡 **lumi_weather_uterum** - Outdoor room conditions
+          ⚠️ **sensor_reading_missing** - Alerts for missing sensor data
+          💻 **system_info** - Home Assistant system metrics
+          🌡️ **timmerflotte_temp** - HVAC system temperature
+          🌬️ **ventilation_system** - Ventilation status/control
+          📱 **xiaomi_lumi_mgl01_hall** - Hall motion detection
+          📱 **xiaomi_lumi_mgl01_livingroom** - Living room motion
+          📱 **xiaomi_lumi_mgl01_louise_room** - Louise room motion
 
       - type: heading
         heading: Temperature & Humidity Sensors
@@ -436,6 +431,22 @@ views:
     badges: []
     cards:
       - type: heading
+        heading: 🌡️ Climate Package Structure
+
+      - type: markdown
+        content: |
+          **Package Overview:**
+          HVAC thermostat control and temperature management for multiple zones including storage areas, garage, and ventilation system.
+
+      - type: markdown
+        content: |
+          **4 Files in packages/climate/:**
+          📦 forrad.yaml - Storage room climate control
+          🏠 friggebod.yaml - Cold storage building
+          🚗 garage.yaml - Garage temperature management
+          🌬️ ventilation.yaml - Ventilation system control
+
+      - type: heading
         heading: 🌡️ Förråd Climate (climate/forrad.yaml)
 
       - type: grid
@@ -528,6 +539,22 @@ views:
     theme: default
     badges: []
     cards:
+      - type: heading
+        heading: 💡 Lights Package Structure
+
+      - type: markdown
+        content: |
+          **Package Overview:**
+          Smart lighting system with zone-based control, scene management, and multiple lighting modes for different activities and times of day.
+
+      - type: markdown
+        content: |
+          **14 Files in packages/lights/:**
+          🎮 light_entities.yaml - Light control scripts
+          🛏️ hall.yaml - Hall lighting zone
+          🚿 bathroom.yaml - Bathroom lighting
+          🍽️ kitchen.yaml - Kitchen lighting
+
       - type: heading
         heading: 🎮 Light Control (lights/light_entities.yaml)
 
@@ -722,23 +749,33 @@ views:
         heading: 🔌 Integration Package Structure
 
       - type: markdown
-        content: "**Files in packages/integrations/ - Part 1:**"
+        content: |
+          **Package Overview:**
+          Third-party service integrations including MQTT messaging, vehicle tracking, fitness platforms, and smart home protocols.
 
-      - type: grid
-        columns: 2
-        square: false
-        cards:
-          - type: markdown
-            content: |
-              - media_player.yaml
-              - mqtt.yaml
-              - mqtt_publish_values.yaml
-              - tellstick.yaml
-          - type: markdown
-            content: |
-              - tts.yaml
-              - volvo.yaml
-              - zwift.yaml
+      - type: markdown
+        content: |
+          **7 Files in packages/integrations/:**
+          📡 mqtt.yaml - MQTT message broker
+          📡 mqtt_publish_values.yaml - MQTT publishing
+          🚗 volvo.yaml - Volvo car integration
+          🚴 zwift.yaml - Zwift fitness tracking
+          📻 tellstick.yaml - Tellstick RF devices
+          🔊 tts.yaml - Text-to-speech service
+          🎮 media_player.yaml - Media player control
+
+      - type: markdown
+        content: "**Integration Details:**"
+
+      - type: markdown
+        content: |
+          📡 **MQTT** - Real-time messaging protocol for device communication
+          📤 **MQTT Publishing** - Broadcast sensor data and events
+          🚗 **Volvo** - Vehicle location, status, and battery monitoring
+          🚴 **Zwift** - Cycling fitness platform integration
+          📻 **Tellstick** - RF protocol for wireless devices
+          🔊 **TTS** - Google Home text-to-speech announcements
+          🎮 **Media Player** - Unified media player controls
 
       - type: heading
         heading: 🔌 MQTT (integrations/mqtt.yaml)
@@ -839,6 +876,21 @@ views:
     badges: []
     cards:
       - type: heading
+        heading: 👥 Presence Package Structure
+
+      - type: markdown
+        content: |
+          **Package Overview:**
+          Family member location tracking, home/away status, and presence-based automations and notifications.
+
+      - type: markdown
+        content: |
+          **3 Files in packages/presence/:**
+          👥 person.yaml - Family members tracking
+          🏠 home_away.yaml - Home status control
+          💼 working_at_home.yaml - Work status indicator
+
+      - type: heading
         heading: 👥 People (presence/person.yaml)
 
       - type: grid
@@ -909,6 +961,20 @@ views:
     badges: []
     cards:
       - type: heading
+        heading: ✓ Helpers Package Structure
+
+      - type: markdown
+        content: |
+          **Package Overview:**
+          Input helpers for user controls including toggles, dropdowns, and configuration selectors used throughout automations.
+
+      - type: markdown
+        content: |
+          **2 Files in packages/helpers/:**
+          ✓ input_booleans.yaml - Toggle switches & alarms
+          🎯 input_selects.yaml - Mode selection dropdowns
+
+      - type: heading
         heading: ✓ Input Booleans (helpers/input_booleans.yaml)
 
       - type: grid
@@ -961,6 +1027,19 @@ views:
     badges: []
     cards:
       - type: heading
+        heading: 🤖 Automations Package Structure
+
+      - type: markdown
+        content: |
+          **Package Overview:**
+          Home automation routines including lighting control, presence-based triggers, and scheduled tasks.
+
+      - type: markdown
+        content: |
+          **1 File in packages/automations/:**
+          💡 input_select_light_control.yaml - Lighting mode automation
+
+      - type: heading
         heading: 💡 Light Control (automations/input_select_light_control.yaml)
 
       - type: grid
@@ -989,6 +1068,19 @@ views:
     badges: []
     cards:
       - type: heading
+        heading: 📜 Scripts Package Structure
+
+      - type: markdown
+        content: |
+          **Package Overview:**
+          Reusable automation scripts for common routines like goodnight sequence and light control.
+
+      - type: markdown
+        content: |
+          **1 File in packages/scripts/:**
+          🌙 godnatt.yaml - Bedtime shutdown routine
+
+      - type: heading
         heading: 🌙 Goodnight Routine (scripts/godnatt.yaml)
 
       - type: grid
@@ -1016,6 +1108,20 @@ views:
     theme: default
     badges: []
     cards:
+      - type: heading
+        heading: ⚠️ Alerts Package Structure
+
+      - type: markdown
+        content: |
+          **Package Overview:**
+          Environmental and device monitoring alerts for temperature extremes, offline devices, and system status issues.
+
+      - type: markdown
+        content: |
+          **2 Files in packages/alerts/:**
+          🌡️ temperature.yaml - Extreme temperature warnings
+          🔌 devices_offline.yaml - Device connectivity alerts
+
       - type: heading
         heading: 🌡️ Temperature (alerts/temperature.yaml)
 
@@ -1060,7 +1166,20 @@ views:
     badges: []
     cards:
       - type: heading
-        heading: 🚪 Doorbell (notifications/doorbell.yaml)
+        heading: � Notifications Package Structure
+
+      - type: markdown
+        content: |
+          **Package Overview:**
+          Event-based notifications for user alerts including doorbell, security events, and system notifications.
+
+      - type: markdown
+        content: |
+          **1 File in packages/notifications/:**
+          🚪 doorbell.yaml - Doorbell event notifications
+
+      - type: heading
+        heading: �🚪 Doorbell (notifications/doorbell.yaml)
 
       - type: grid
         columns: 2

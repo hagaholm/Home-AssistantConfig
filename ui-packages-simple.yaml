@@ -9,8 +9,19 @@ views:
     theme: default
     badges: []
     cards:
+      - type: heading
+        heading: Frigate NVR
+
       - type: markdown
-        content: "Frigate configured in packages/frigate/"
+        content: |
+          **Frigate Cameras:**
+          - Driveway, Garage, Patio
+          - Front Door, Backyard
+          
+          **Features:**
+          - Recording & Detection
+          - Animal & Person Alerts
+          - Media Management
 
   #################################################################
   # MEDIA
@@ -21,8 +32,18 @@ views:
     theme: default
     badges: []
     cards:
+      - type: heading
+        heading: Media & Entertainment
+
       - type: markdown
-        content: "Media integrations configured in packages/media/"
+        content: |
+          **Audio Players:**
+          - Google Home / Nest Hub
+          - Harmony Hub / Remote
+          
+          **Features:**
+          - Media playback control
+          - Device integration
 
   #################################################################
   # PRESENCE
@@ -274,31 +295,14 @@ views:
     theme: default
     badges: []
     cards:
-      - type: markdown
-        content: "Integrations configured in packages/integrations/"
-
-  #################################################################
-  # HELPERS & ALERTS
-  #################################################################
-  - path: helpers
-    title: Helpers & Alerts
-    icon: mdi:bell
-    theme: default
-    badges: []
-    cards:
       - type: heading
-        heading: Input Helpers
+        heading: Connected Services
 
-      - type: grid
-        columns: 2
-        square: false
-        cards:
-          - type: tile
-            entity: input_select.home_status
-            name: Home Status
-          - type: tile
-            entity: input_boolean.daylight_on
-            name: Daylight On
-          - type: tile
-            entity: input_boolean.christmas_light
-            name: Jul
+      - type: markdown
+        content: |
+          **Integrations Configured:**
+          - MQTT (publish/subscribe)
+          - Volvo (vehicle tracking)
+          - Zwift (fitness)
+          - Tellstick (automation hub)
+          - Text-to-Speech (audio alerts)

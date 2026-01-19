@@ -288,7 +288,15 @@ views:
         heading: Audio
 
       - type: markdown
-        content: "Media integrations configured in packages/media/"
+        content: |
+          **Google Home Integration:**
+          - Living room speaker
+
+      - type: markdown
+        content: |
+          **Harmony Hub Integration:**
+          - Remote controls
+          - Media player
 
   #################################################################
   # PRESENCE & FAMILY
@@ -310,6 +318,26 @@ views:
             entity: input_select.home_status
             name: Status
 
+      - type: heading
+        heading: Family Members
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: person.micke
+            name: Micke
+          - type: tile
+            entity: person.annelie
+            name: Annelie
+          - type: tile
+            entity: person.louise
+            name: Louise
+          - type: tile
+            entity: person.andreas
+            name: Andreas
+
   #################################################################
   # INTEGRATIONS
   #################################################################
@@ -320,15 +348,14 @@ views:
     badges: []
     cards:
       - type: heading
-        heading: System
+        heading: Integration Summary
 
-      - type: grid
-        columns: 2
-        square: false
-        cards:
-          - type: tile
-            entity: switch.ventilationsaggregat
-            name: Ventilation
-          - type: tile
-            entity: switch.shelly1_c45bbe77099d
-            name: Forcerad fläkt
+      - type: markdown
+        content: |
+          **Active Integrations:**
+          - MQTT (media publishing)
+          - Volvo (vehicle integration)
+          - Zwift (fitness tracking)
+          - Tellstick (home automation hub)
+          - TTS (text to speech)
+          - Media Player controls

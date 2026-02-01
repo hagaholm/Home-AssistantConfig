@@ -128,16 +128,22 @@ template:
         state: "{{ 'Online' if is_state('device_tracker.kamera2', 'home') else 'Offline' }}"
       - name: "Kamera 3"
         unique_id: system_camera_3_status
-        state: "{{ 'Online' if is_state('device_tracker.kamera3', 'home') else 'Offline' }}"
+        state: "{{ 'Online' if is_state('device_tracker.reolink_kamera_3_rlc_1220a', 'home') else 'Offline' }}"
       - name: "Kamera 4"
         unique_id: system_camera_4_status
         state: "{{ 'Online' if is_state('device_tracker.kamera4', 'home') else 'Offline' }}"
       - name: "Kamera 5"
         unique_id: system_camera_5_status
-        state: "{{ 'Online' if is_state('device_tracker.kamera5', 'home') else 'Offline' }}"
+        state: "{{ 'Online' if is_state('device_tracker.reolink_kamera_5_rlc_1224a', 'home') else 'Offline' }}"
       - name: "Kamera 6"
         unique_id: system_camera_6_status
-        state: "{{ 'Online' if is_state('device_tracker.kamera6', 'home') else 'Offline' }}"
+        state: "{{ 'Online' if is_state('device_tracker.reolink_kamera_6_rlc_1224a', 'home') else 'Offline' }}"
+      - name: "Kamera 7"
+        unique_id: system_camera_7_status
+        state: "{{ 'Online' if is_state('device_tracker.reolink_kamera_7_rlc_820a', 'home') else 'Offline' }}"
+      - name: "Kamera 8"
+        unique_id: system_camera_8_status
+        state: "{{ 'Online' if is_state('device_tracker.reolink_kamera_8_rlc_1224a', 'home') else 'Offline' }}"
 
       # Family Member Devices - Phones
       - name: "Louise"

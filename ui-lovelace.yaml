@@ -302,7 +302,7 @@ views:
       - type: entities
         entities:
           - sensor.ute
-          - sensor.ute_friggebod_temperature
+          - sensor.ute_friggebod_temperatur
           - sensor.ute_friggebod_humidity
           - sensor.ljusstyrka
           - sensor.uterum_lufttryck
@@ -353,7 +353,7 @@ views:
         state_color: true
       - type: entities
         entities:
-          - sensor.friggebod_temperature
+          - sensor.friggebod_temperatur
           - sensor.friggebod_humidity
           - sensor.timmerflotte_temp_hmd_sensor_temperatur_2
           - sensor.timmerflotte_temp_hmd_sensor_luftfuktighet_2
@@ -982,7 +982,7 @@ views:
         state_color: true
       - type: entities
         entities:
-          - sensor.friggebod_temperature
+          - sensor.friggebod_temperatur
           - sensor.friggebod_humidity
           - entity: switch.friggebod_fonster
             name: Fönster
@@ -1012,7 +1012,7 @@ views:
       - type: entities
         entities:
           - sensor.ute
-          - sensor.ute_friggebod_temperature
+          - sensor.ute_friggebod_temperatur
           - sensor.ute_friggebod_humidity
           - sensor.ljusstyrka
           - sensor.uterum_lufttryck

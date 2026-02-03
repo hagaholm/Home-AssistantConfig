@@ -51,7 +51,7 @@ views:
         square: false
         cards:
           - type: tile
-            entity: sensor.friggebod_temperature
+            entity: sensor.friggebod_temperatur
             name: Friggebod temp
           - type: tile
             entity: sensor.friggebod_humidity
@@ -148,7 +148,7 @@ views:
             square: false
             cards:
               - type: gauge
-                entity: sensor.friggebod_temperature
+                entity: sensor.friggebod_temperatur
                 name: Temperatur
                 severity:
                   green: 5
@@ -274,7 +274,7 @@ views:
             name: "🌡️ Inne medel temperatur"
           - entity: sensor.badrum_temperatur
             name: "🌡️ Badrum temperatur"
-          - entity: sensor.friggebod_temperature
+          - entity: sensor.friggebod_temperatur
             name: "❄️ Friggebod temperatur"
           - entity: sensor.garage_temperature
             name: "🏠 Garage temperatur"
@@ -393,7 +393,7 @@ views:
         entities:
           - entity: sensor.friggebod_aktuell_effekt
             name: Effekt (W)
-          - entity: sensor.friggebod_temperature
+          - entity: sensor.friggebod_temperatur
             name: Temp inne
           - entity: sensor.ute
             name: Temp ute
@@ -585,7 +585,7 @@ views:
       - type: entities
         state_color: true
         entities:
-          - entity: sensor.friggebod_temperature
+          - entity: sensor.friggebod_temperatur
             secondary_info: last-updated
             name: Temperatur inne
           - entity: sensor.friggebod_humidity

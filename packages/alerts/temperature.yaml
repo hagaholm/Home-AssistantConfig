@@ -7,7 +7,7 @@
 #
 # Källor:
 # - automations/alarm_forrad_temperature.yaml
-# - automations/alarm_friggebod_temperature.yaml
+# - automations/alarm_friggebod_temperatur.yaml
 # - automations/alarm_frys_temperature.yaml
 # - automations/alarm_heater.yaml
 # - automations/alarm_kyl_temperature.yaml
@@ -110,21 +110,21 @@ automation:
     trigger:
       # Hög temperatur
       - platform: numeric_state
-        entity_id: sensor.friggebod_temperature
+        entity_id: sensor.friggebod_temperatur
         above: 23
         for: "00:10:00"
         id: high_temp
 
       # Låg temperatur
       - platform: numeric_state
-        entity_id: sensor.friggebod_temperature
+        entity_id: sensor.friggebod_temperatur
         below: 19
         for: "00:10:00"
         id: low_temp
 
       # Frysvakt (akut)
       - platform: numeric_state
-        entity_id: sensor.friggebod_temperature
+        entity_id: sensor.friggebod_temperatur
         below: 3
         for: "00:05:00"
         id: freeze_alert
@@ -144,8 +144,8 @@ automation:
                 data:
                   title: "LARM! Friggebod - hög temperatur"
                   message: >
-                    {% set t = states('sensor.friggebod_temperature')|float(0) %}
-                    {% set unit = state_attr('sensor.friggebod_temperature','unit_of_measurement') %}
+                    {% set t = states('sensor.friggebod_temperatur')|float(0) %}
+                    {% set unit = state_attr('sensor.friggebod_temperatur','unit_of_measurement') %}
                     {% set ute = states('sensor.ute') %}
                     LARM! Hög temp i Friggebod: {{ t }} {{ unit }} (ute: {{ ute }})
                     Nivå: {% if t > 27 %}Mycket hög{% elif t > 24 %}Hög{% else %}Mild{% endif %}
@@ -163,8 +163,8 @@ automation:
                 data:
                   title: "LARM! Friggebod - låg temperatur"
                   message: >
-                    {% set t = states('sensor.friggebod_temperature')|float(0) %}
-                    {% set unit = state_attr('sensor.friggebod_temperature','unit_of_measurement') %}
+                    {% set t = states('sensor.friggebod_temperatur')|float(0) %}
+                    {% set unit = state_attr('sensor.friggebod_temperatur','unit_of_measurement') %}
                     {% set ute = states('sensor.ute') %}
                     LARM! Låg temp i Friggebod: {{ t }} {{ unit }} (ute: {{ ute }})
                     Nivå: {% if t < 0 %}Mycket låg{% elif t < 17 %}Låg{% else %}Mild{% endif %}
@@ -179,8 +179,8 @@ automation:
                 data:
                   title: "LARM! Frysvakt Friggebod"
                   message: >
-                    {% set t = states('sensor.friggebod_temperature')|float(0) %}
-                    {% set unit = state_attr('sensor.friggebod_temperature','unit_of_measurement') %}
+                    {% set t = states('sensor.friggebod_temperatur')|float(0) %}
+                    {% set unit = state_attr('sensor.friggebod_temperatur','unit_of_measurement') %}
                     LARM! Frysvakt Friggebod: {{ t }} {{ unit }}
 
 #######################################################

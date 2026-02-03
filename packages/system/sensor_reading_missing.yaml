@@ -387,10 +387,10 @@ automation:
           conditions:
             - condition: template
               value_template: > 
-                {% if state_attr('sensor.friggebod_temperature', 'last_updated') == None %} 
+                {% if state_attr('sensor.friggebod_temperatur', 'last_updated') == None %} 
                   0
                 {% else %} 
-                  {{ (as_timestamp(now())-as_timestamp(states.sensor.friggebod_temperature.last_updated)) > 7200 }}
+                  {{ (as_timestamp(now())-as_timestamp(states.sensor.friggebod_temperatur.last_updated)) > 7200 }}
                 {% endif %}
             - condition: template
               value_template: > 
@@ -423,10 +423,10 @@ automation:
           conditions:
             - condition: template
               value_template: > 
-                {% if state_attr('sensor.ute_friggebod_temperature', 'last_updated') == None %} 
+                {% if state_attr('sensor.ute_friggebod_temperatur', 'last_updated') == None %} 
                   0
                 {% else %} 
-                  {{ (as_timestamp(now())-as_timestamp(states.sensor.ute_friggebod_temperature.last_updated)) > 7200 }}
+                  {{ (as_timestamp(now())-as_timestamp(states.sensor.ute_friggebod_temperatur.last_updated)) > 7200 }}
                 {% endif %}
             - condition: template
               value_template: > 

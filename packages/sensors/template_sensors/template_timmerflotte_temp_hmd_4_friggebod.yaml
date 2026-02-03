@@ -1,0 +1,45 @@
+# Källor:
+# - Zigbee/Timmerflotte Temp & Humidity Sensor 4 (Friggebod) (template-"proxy"-sensorer)
+#
+# BESKRIVNING:
+# Template-sensorer för temperatur/fukt i Friggebod baserat på Timmerflotte-sensorn.
+#
+# METADATA:
+# Skapad: okänt
+# Senast ändrad: 2026-01-16
+# Version: 1.1
+# Författare: Home Assistant Config
+#
+# Ändringar v1.1 (2026-01-16):
+# - Migrera från 433 till Timmerflotte Temp & Humidity Sensor 4
+
+# Timmerflotte Temp & Humidity Sensor (Friggebod)
+template:
+  - sensor:
+      # Source: Timmerflotte Temp & Humidity Sensor 4 (Friggebod)
+      # Company: Timmerflotte
+      # Type: Temperature, Humidity sensor
+      - name: "Friggebod Temperatur"
+        unique_id: friggebod_timmerflotte_temperatur
+        state: "{{ states('sensor.timmerflotte_temp_hmd_sensor_temperatur_4') | float(0) }}"
+        unit_of_measurement: "°C"
+        device_class: temperature
+        state_class: measurement
+        availability: "{{ states('sensor.timmerflotte_temp_hmd_sensor_temperatur_4') not in ['unknown', 'unavailable', ''] }}"
+        attributes:
+          source_sensor: sensor.timmerflotte_temp_hmd_sensor_temperatur_4
+          icon: mdi:thermometer
+          friendly_name: Friggebod Temperatur
+
+      - name: "Friggebod Luftfuktighet"
+        unique_id: friggebod_timmerflotte_luftfuktighet
+        state: "{{ states('sensor.timmerflotte_temp_hmd_sensor_luftfuktighet_4') | float(0) }}"
+        unit_of_measurement: "%"
+        device_class: humidity
+        state_class: measurement
+        availability: "{{ states('sensor.timmerflotte_temp_hmd_sensor_luftfuktighet_4') not in ['unknown', 'unavailable'] }}"
+        attributes:
+          source_sensor: sensor.timmerflotte_temp_hmd_sensor_luftfuktighet_4
+          icon: mdi:water-percent
+          friendly_name: Friggebod Luftfuktighet
+

@@ -19,7 +19,7 @@ template:
       # Source: Timmerflotte Temp & Humidity Sensor 4 (Friggebod)
       # Company: Timmerflotte
       # Type: Temperature, Humidity sensor
-      - name: "Friggebod Temperatur"
+      - name: "Friggebod Temperature"
         unique_id: friggebod_timmerflotte_temperatur
         state: "{{ states('sensor.timmerflotte_temp_hmd_sensor_temperatur_4') | float(0) }}"
         unit_of_measurement: "°C"

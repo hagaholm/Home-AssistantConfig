@@ -17,7 +17,7 @@ automation:
 
 #######################################################
 #                                                     #
-#              GARAGE ELVÄRME AUTOMATION              #
+#              FÖRRÅD ELVÄRME AUTOMATION              #
 #                                                     #
 #######################################################
 #
@@ -55,7 +55,7 @@ automation:
                 below: 6
             sequence:
               - service: homeassistant.turn_on
-                entity_id: switch.garage_elvarme
+                entity_id: switch.forrad_elvarme
 
           # TÄND - Temp < 12 grader
           - conditions:
@@ -70,7 +70,7 @@ automation:
                 below: 10
             sequence:
               - service: homeassistant.turn_on
-                entity_id: switch.garage_elvarme
+                entity_id: switch.forrad_elvarme
 
           # SLÄCK - Temp > 14 grader
           - conditions:
@@ -82,7 +82,7 @@ automation:
                     value_template: "{{ states('sensor.garage_temperature') not in ['unknown','unavailable',''] and (states('sensor.garage_temperature')|float) > 14 }}"
             sequence:
               - service: homeassistant.turn_off
-                entity_id: switch.garage_elvarme
+                entity_id: switch.forrad_elvarme
 
           # SLÄCK - Temp > 9 grader
           - conditions:
@@ -94,7 +94,7 @@ automation:
                     value_template: "{{ states('sensor.garage_temperature') not in ['unknown','unavailable',''] and (states('sensor.garage_temperature')|float) > 9 }}"
             sequence:
               - service: homeassistant.turn_off
-                entity_id: switch.garage_elvarme
+                entity_id: switch.forrad_elvarme
 
 #######################################################
 #                                                     #

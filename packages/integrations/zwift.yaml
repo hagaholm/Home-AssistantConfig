@@ -14,7 +14,7 @@
 #
 # Hardware:
 # - Apple TV in garage (Zwift streaming device)
-# - Garage heater: switch.garage_elvarme
+# - Garage heater: switch.forrad_elvarme
 # - Dehumidifier: switch.garage_avfuktare
 #
 # Automation Logic:
@@ -73,7 +73,7 @@ automation:
 
     action:
       - service: homeassistant.turn_off
-        entity_id: switch.garage_elvarme
+        entity_id: switch.forrad_elvarme
       - service: homeassistant.turn_on
         entity_id: switch.garage_avfuktare
  

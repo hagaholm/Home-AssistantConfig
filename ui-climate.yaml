@@ -209,7 +209,7 @@ views:
             icon: mdi:thermometer
 
           - type: tile
-            entity: switch.garage_elvarme
+            entity: switch.forrad_elvarme
             name: Elvärme (delad)
 
           - type: tile
@@ -251,7 +251,7 @@ views:
         title: Styrning & Status
         state_color: true
         entities:
-          - entity: switch.garage_elvarme
+          - entity: switch.forrad_elvarme
             name: Elvärme
           - entity: switch.garage_avfuktare
             name: Avfuktare
@@ -735,7 +735,7 @@ views:
       - type: entities
         state_color: true
         entities:
-          - entity: switch.garage_elvarme
+          - entity: switch.forrad_elvarme
             name: Elvärme status
           - entity: sensor.garage_temperature
             secondary_info: last-updated
@@ -819,7 +819,7 @@ views:
         entities:
           - entity: input_boolean.forrad_varme_auto
             name: Automatisk värmning
-          - entity: switch.garage_elvarme
+          - entity: switch.forrad_elvarme
             name: Elvärme (delad med garage)
           - entity: counter.forrad_varme_tid
             name: Värmetid idag

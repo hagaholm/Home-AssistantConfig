@@ -11,7 +11,7 @@
 # - sensor.garage_temperature (temperatur garage, °C)
 # - sensor.garage_humidity (relativ fukt garage, %)
 # - sensor.ute (utomhustemperatur, °C)
-# - switch.garage_elvarme (main power switch för elvärme)
+# - switch.forrad_elvarme (main power switch för elvärme)
 #
 # Funktioner:
 # - Frostskydd vid låg temperatur (målskydd)
@@ -57,7 +57,7 @@ template:
         state_class: "measurement"
         icon: mdi:flash
         state: >
-          {% if is_state('switch.garage_elvarme', 'on') %}
+          {% if is_state('switch.forrad_elvarme', 'on') %}
             {{ states('input_number.forrad_element_effekt') | float(700) }}
           {% else %}
             0
@@ -212,7 +212,7 @@ automation:
         minutes: "/10"  # Var 10:e minut
     condition:
       - condition: state
-        entity_id: switch.garage_elvarme
+        entity_id: switch.forrad_elvarme
         state: "on"
     action:
       - service: counter.increment
@@ -274,7 +274,7 @@ automation:
             sequence:
               - service: switch.turn_on
                 target:
-                  entity_id: switch.garage_elvarme
+                  entity_id: switch.forrad_elvarme
               - condition: state
                 entity_id: timer.forrad_min_runtime
                 state: "idle"
@@ -293,7 +293,7 @@ automation:
             sequence:
               - service: switch.turn_off
                 target:
-                  entity_id: switch.garage_elvarme
+                  entity_id: switch.forrad_elvarme
 
   # AUTO 4: Temperaturvarning om för kallt
   - alias: Förråd – temperaturvarning

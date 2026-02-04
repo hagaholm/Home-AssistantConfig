@@ -357,9 +357,9 @@ views:
           - sensor.friggebod_luftfuktighet
           - sensor.timmerflotte_temp_hmd_sensor_temperatur_2
           - sensor.timmerflotte_temp_hmd_sensor_luftfuktighet_2
-          - sensor.forrad_temperature
+          - sensor.forrad_temperatur
           - sensor.garage_temperature
-          - sensor.garage_humidity
+          - sensor.forrad_luftfuktighet
           - sensor.timmerflotte_temp_hmd_sensor_temperatur
           - sensor.timmerflotte_temp_hmd_sensor_luftfuktighet
           - sensor.pa_vinden
@@ -1000,9 +1000,9 @@ views:
         state_color: true
       - type: entities
         entities:
-          - sensor.forrad_temperature
+          - sensor.forrad_temperatur
           - sensor.garage_temperature
-          - sensor.garage_humidity
+          - sensor.forrad_luftfuktighet
           - sensor.apple_tv
           - switch.garage_avfuktare
           - switch.forrad_elvarme          

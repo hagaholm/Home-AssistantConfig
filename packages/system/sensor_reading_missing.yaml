@@ -357,10 +357,10 @@ automation:
           state: 'off'
         - condition: template
           value_template: >
-            {% if state_attr('sensor.forrad_temperatur', 'last_updated') == None %} 
+            {% if state_attr('sensor.forrad_temperature', 'last_updated') == None %} 
               0
             {% else %} 
-              {{ (as_timestamp(now())-as_timestamp(states.sensor.forrad_temperatur.last_updated)) > 7200 }}
+              {{ (as_timestamp(now())-as_timestamp(states.sensor.forrad_temperature.last_updated)) > 7200 }}
             {% endif %}
 
     action:

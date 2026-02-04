@@ -71,7 +71,7 @@ views:
             entity: sensor.forrad_luftfuktighet
             name: Garage fukt
           - type: tile
-            entity: sensor.forrad_temperatur
+            entity: sensor.forrad_temperature
             name: Förråd temp
           - type: tile
             entity: sensor.ute
@@ -221,7 +221,7 @@ views:
             square: false
             cards:
               - type: gauge
-                entity: sensor.forrad_temperatur
+                entity: sensor.forrad_temperature
                 name: Temperatur
                 severity:
                   green: 8
@@ -259,7 +259,7 @@ views:
             name: Temperatur
           - entity: sensor.forrad_luftfuktighet
             name: Luftfuktighet
-          - entity: sensor.forrad_temperatur
+          - entity: sensor.forrad_temperature
             name: Förråd temperatur
 
       - type: markdown
@@ -278,7 +278,7 @@ views:
             name: "❄️ Friggebod temperatur"
           - entity: sensor.garage_temperature
             name: "🏠 Garage temperatur"
-          - entity: sensor.forrad_temperatur
+          - entity: sensor.forrad_temperature
             name: "🏠 Förråd temperatur"
           - entity: sensor.badrum_luftfuktighet
             name: "💧 Badrum fukt"
@@ -368,7 +368,7 @@ views:
       - type: history-graph
         title: Temperatur Förråd
         entities:
-          - entity: sensor.forrad_temperatur
+          - entity: sensor.forrad_temperature
             name: Förråd
           - entity: sensor.garage_temperature
             name: Garage
@@ -740,7 +740,7 @@ views:
           - entity: sensor.garage_temperature
             secondary_info: last-updated
             name: Garage temperatur
-          - entity: sensor.forrad_temperatur
+          - entity: sensor.forrad_temperature
             secondary_info: last-updated
             name: Förråd temperatur
           - entity: sensor.ute
@@ -801,7 +801,7 @@ views:
       - type: entities
         state_color: true
         entities:
-          - entity: sensor.forrad_temperatur
+          - entity: sensor.forrad_temperature
             secondary_info: last-updated
             name: Temperatur förråd
           - entity: sensor.garage_temperature
@@ -831,7 +831,7 @@ views:
         square: false
         cards:
           - type: gauge
-            entity: sensor.forrad_temperatur
+            entity: sensor.forrad_temperature
             name: Temperatur
             severity:
               green: 8

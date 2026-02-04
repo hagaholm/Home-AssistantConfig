@@ -7,7 +7,7 @@
 # Systemet skyddar mot frost och håller optimal fukt för mållagring.
 #
 # EXTERNA BEROENDEN (sensorer definierade på annat håll):
-# - sensor.forrad_temperatur (temperatur förråd, °C)
+# - sensor.forrad_temperature (temperatur förråd, °C)
 # - sensor.garage_temperature (temperatur garage, °C)
 # - sensor.forrad_luftfuktighet (relativ fukt garage, %)
 # - sensor.ute (utomhustemperatur, °C)
@@ -88,10 +88,10 @@ template:
         unit_of_measurement: "W/°C"
         icon: mdi:thermometer-lines
         availability: >
-          {{ states('sensor.forrad_temperatur') not in ['unknown', 'unavailable', '']
+          {{ states('sensor.forrad_temperature') not in ['unknown', 'unavailable', '']
              and states('sensor.ute') not in ['unknown', 'unavailable', ''] }}
         state: >
-          {% set t_in = states('sensor.forrad_temperatur') | float(0) %}
+          {% set t_in = states('sensor.forrad_temperature') | float(0) %}
           {% set t_out = states('sensor.ute') | float(0) %}
           {% set delta_t = t_in - t_out %}
           {% set effekt = states('input_number.forrad_element_effekt') | float(750) %}
@@ -242,7 +242,7 @@ automation:
         minutes: "/5"  # Kontrollerar var 5:e minut
       - platform: state
         entity_id:
-          - sensor.forrad_temperatur
+          - sensor.forrad_temperature
           - sensor.garage_temperature
           - sensor.ute
 
@@ -259,7 +259,7 @@ automation:
           max_varmetid: 24             # Max 240 minuter (4 timmar) per dag
           
           # Temperatursensor från förråd (primär) + garage (backup)
-          temp_forrad: "{{ states('sensor.forrad_temperatur') | float(none) }}"
+          temp_forrad: "{{ states('sensor.forrad_temperature') | float(none) }}"
           temp_garage: "{{ states('sensor.garage_temperature') | float(none) }}"
           temp_in: "{{ [temp_forrad, temp_garage] | select('number') | list | max if temp_forrad is number or temp_garage is number else none }}"
           runtime_ok: "{{ states('counter.forrad_varme_tid') | int(0) < max_varmetid }}"
@@ -300,7 +300,7 @@ automation:
     description: Varnar om förrådet blir för kallt för mållagring
     trigger:
       - platform: numeric_state
-        entity_id: sensor.forrad_temperatur
+        entity_id: sensor.forrad_temperature
         below: 0
         for:
           minutes: 10
@@ -309,7 +309,7 @@ automation:
         data:
           message: >
             ⚠️ Förråd – FROST! Temperatur under 0°C!
-            Förråd temp: {{ states('sensor.forrad_temperatur') }}°C
+            Förråd temp: {{ states('sensor.forrad_temperature') }}°C
             Garage temp: {{ states('sensor.garage_temperature') }}°C
             Ute temp: {{ states('sensor.ute') }}°C
             ⚠️ MÅLKONSERVERNA KAN FRYSA OCH SKADAS!

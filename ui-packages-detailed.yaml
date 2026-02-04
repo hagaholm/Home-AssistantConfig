@@ -211,7 +211,7 @@ views:
           💧 `sensor.friggebod_luftfuktighet` - Cold storage humidity
           🚗 `sensor.garage_temperature` - Garage temp
           💧 `sensor.forrad_luftfuktighet` - Garage humidity
-          📦 `sensor.forrad_temperatur` - Storage room temp
+          📦 `sensor.forrad_temperature` - Storage room temp
 
       - type: heading
         heading: 🌡️ Aqara FP2 Kitchen (template_aqara_fp2_kitchen.yaml)
@@ -320,7 +320,7 @@ views:
         content: |
           **Expected Entities:**
           🧱 `climate.forrad` - Thermostat control
-          🌡️ `sensor.forrad_temperatur` - Current temperature
+          🌡️ `sensor.forrad_temperature` - Current temperature
 
       - type: heading
         heading: 🌡️ Friggebod Climate (climate/friggebod.yaml)

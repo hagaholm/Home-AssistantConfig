@@ -47,13 +47,13 @@ automation:
     trigger:
       # Hög temperatur
       - platform: template
-        value_template: "{{ states('sensor.forrad_temperatur') not in ['unknown','unavailable',''] and (states('sensor.forrad_temperatur')|float) > 11 }}"
+        value_template: "{{ states('sensor.forrad_temperature') not in ['unknown','unavailable',''] and (states('sensor.forrad_temperature')|float) > 11 }}"
         for: "00:10:00"
         id: high_temp
 
       # Låg temperatur
       - platform: template
-        value_template: "{{ states('sensor.forrad_temperatur') not in ['unknown','unavailable',''] and (states('sensor.forrad_temperatur')|float) < 4 }}"
+        value_template: "{{ states('sensor.forrad_temperature') not in ['unknown','unavailable',''] and (states('sensor.forrad_temperature')|float) < 4 }}"
         for: "00:10:00"
         id: low_temp
 
@@ -75,8 +75,8 @@ automation:
                 data:
                   title: "LARM! Förråd - hög temperatur"
                   message: >
-                    {% set t = states('sensor.forrad_temperatur')|float(0) %}
-                    {% set unit = state_attr('sensor.forrad_temperatur','unit_of_measurement') %}
+                    {% set t = states('sensor.forrad_temperature')|float(0) %}
+                    {% set unit = state_attr('sensor.forrad_temperature','unit_of_measurement') %}
                     {% set ute = states('sensor.ute') %}
                     LARM! Hög temp i Förråd: {{ t }} {{ unit }} (ute: {{ ute }})
                     Nivå: {% if t > 13 %}Mycket hög{% elif t > 12 %}Hög{% else %}Mild{% endif %}
@@ -91,8 +91,8 @@ automation:
                 data:
                   title: "LARM! Förråd - låg temperatur"
                   message: >
-                    {% set t = states('sensor.forrad_temperatur')|float(0) %}
-                    {% set unit = state_attr('sensor.forrad_temperatur','unit_of_measurement') %}
+                    {% set t = states('sensor.forrad_temperature')|float(0) %}
+                    {% set unit = state_attr('sensor.forrad_temperature','unit_of_measurement') %}
                     {% set ute = states('sensor.ute') %}
                     LARM! Låg temp i Förråd: {{ t }} {{ unit }} (ute: {{ ute }})
                     Nivå: {% if t < 0 %}Mycket låg{% elif t < 2 %}Låg{% else %}Mild{% endif %}

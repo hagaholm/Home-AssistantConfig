@@ -1,0 +1,45 @@
+# Källor:
+# - Zigbee/Timmerflotte Temp & Humidity Sensor (Förråd) (template-"proxy"-sensorer)
+#
+# BESKRIVNING:
+# Template-sensorer för temperatur/fukt i Förråd baserat på Timmerflotte-sensorn.
+#
+# METADATA:
+# Skapad: okänt
+# Senast ändrad: 2026-01-16
+# Version: 1.1
+# Författare: Home Assistant Config
+#
+# Ändringar v1.1 (2026-01-16):
+# - Migrera från 433 till Timmerflotte Temp & Humidity Sensor
+
+# Timmerflotte Temp & Humidity Sensor (Förråd)
+template:
+  - sensor:
+      # Source: Timmerflotte Temp & Humidity Sensor (Förråd)
+      # Company: Timmerflotte
+      # Type: Temperature, Humidity sensor
+      - name: "Förråd Temperature"
+        unique_id: forrad_timmerflotte_temperatur
+        state: "{{ states('sensor.timmerflotte_temp_hmd_sensor_temperatur') | float(0) }}"
+        unit_of_measurement: "°C"
+        device_class: temperature
+        state_class: measurement
+        availability: "{{ states('sensor.timmerflotte_temp_hmd_sensor_temperatur') not in ['unknown', 'unavailable', ''] }}"
+        attributes:
+          source_sensor: sensor.timmerflotte_temp_hmd_sensor_temperatur
+          icon: mdi:thermometer
+          friendly_name: Förråd Temperatur
+
+      - name: "Förråd Luftfuktighet"
+        unique_id: forrad_timmerflotte_luftfuktighet
+        state: "{{ states('sensor.timmerflotte_temp_hmd_sensor_luftfuktighet') | float(0) }}"
+        unit_of_measurement: "%"
+        device_class: humidity
+        state_class: measurement
+        availability: "{{ states('sensor.timmerflotte_temp_hmd_sensor_luftfuktighet') not in ['unknown', 'unavailable'] }}"
+        attributes:
+          source_sensor: sensor.timmerflotte_temp_hmd_sensor_luftfuktighet
+          icon: mdi:water-percent
+          friendly_name: Förråd Luftfuktighet
+

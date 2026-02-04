@@ -10,7 +10,7 @@
 # - sensor.friggebod_temperatur (temperatur inne, °C)
 # - sensor.friggebod_luftfuktighet (relativ fukt inne, %)
 # - sensor.ute (utomhustemperatur, °C)
-# - sensor.ute_friggebod_luftfuktighet (relativ fukt ute, %)
+# - sensor.ute_friggebod_humidity (relativ fukt ute, %)
 # - switch.friggebod_elvarme (main power switch för elvärme)
 # - notify.* (notification service, se input_text.friggebod_notification_target)
 #
@@ -129,10 +129,10 @@ template:
         icon: mdi:water
         availability: >
           {{ states('sensor.ute') not in ['unknown', 'unavailable', '']
-             and states('sensor.ute_friggebod_luftfuktighet') not in ['unknown', 'unavailable', ''] }}
+             and states('sensor.ute_friggebod_humidity') not in ['unknown', 'unavailable', ''] }}
         state: >
           {% set T = states('sensor.ute') | float(none) %}
-          {% set RH = states('sensor.ute_friggebod_luftfuktighet') | float(none) %}
+          {% set RH = states('sensor.ute_friggebod_humidity') | float(none) %}
           {% if T is none or RH is none %}
             {{ none }}
           {% else %}
@@ -465,7 +465,7 @@ automation:
           - sensor.friggebod_temperatur
           - sensor.friggebod_luftfuktighet
           - sensor.ute
-          - sensor.ute_friggebod_luftfuktighet
+          - sensor.ute_friggebod_humidity
 
     condition:
       - condition: state

@@ -111,7 +111,7 @@ views:
             name: Badrum fönster fukt
           - entity: sensor.badrum_temperatur
             name: Badrum temp
-          - entity: sensor.ute_friggebod_luftfuktighet
+          - entity: sensor.ute_friggebod_humidity
             name: Ute fukt
 
       - type: entities
@@ -594,7 +594,7 @@ views:
           - entity: sensor.ute
             secondary_info: last-updated
             name: Temperatur ute
-          - entity: sensor.ute_friggebod_luftfuktighet
+          - entity: sensor.ute_friggebod_humidity
             name: Fukt ute
           - entity: sensor.friggebod_absolut_fukt_inne
             name: Absolut fukt inne

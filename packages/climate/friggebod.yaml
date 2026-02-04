@@ -8,9 +8,9 @@
 #
 # EXTERNA BEROENDEN (sensorer definierade på annat håll):
 # - sensor.friggebod_temperatur (temperatur inne, °C)
-# - sensor.friggebod_humidity (relativ fukt inne, %)
+# - sensor.friggebod_luftfuktighet (relativ fukt inne, %)
 # - sensor.ute (utomhustemperatur, °C)
-# - sensor.ute_friggebod_humidity (relativ fukt ute, %)
+# - sensor.ute_friggebod_luftfuktighet (relativ fukt ute, %)
 # - switch.friggebod_elvarme (main power switch för elvärme)
 # - notify.* (notification service, se input_text.friggebod_notification_target)
 #
@@ -103,10 +103,10 @@ template:
         icon: mdi:water
         availability: >
           {{ states('sensor.friggebod_temperatur') not in ['unknown', 'unavailable', '']
-             and states('sensor.friggebod_humidity') not in ['unknown', 'unavailable', ''] }}
+             and states('sensor.friggebod_luftfuktighet') not in ['unknown', 'unavailable', ''] }}
         state: >
           {% set T = states('sensor.friggebod_temperatur') | float(none) %}
-          {% set RH = states('sensor.friggebod_humidity') | float(none) %}
+          {% set RH = states('sensor.friggebod_luftfuktighet') | float(none) %}
           {% if T is none or RH is none %}
             {{ none }}
           {% else %}
@@ -129,10 +129,10 @@ template:
         icon: mdi:water
         availability: >
           {{ states('sensor.ute') not in ['unknown', 'unavailable', '']
-             and states('sensor.ute_friggebod_humidity') not in ['unknown', 'unavailable', ''] }}
+             and states('sensor.ute_friggebod_luftfuktighet') not in ['unknown', 'unavailable', ''] }}
         state: >
           {% set T = states('sensor.ute') | float(none) %}
-          {% set RH = states('sensor.ute_friggebod_humidity') | float(none) %}
+          {% set RH = states('sensor.ute_friggebod_luftfuktighet') | float(none) %}
           {% if T is none or RH is none %}
             {{ none }}
           {% else %}
@@ -158,10 +158,10 @@ template:
         icon: mdi:mushroom
         availability: >
           {{ states('sensor.friggebod_temperatur') not in ['unknown', 'unavailable', '']
-             and states('sensor.friggebod_humidity') not in ['unknown', 'unavailable', ''] }}
+             and states('sensor.friggebod_luftfuktighet') not in ['unknown', 'unavailable', ''] }}
         state: >
           {% set T = states('sensor.friggebod_temperatur') | float(0) %}
-          {% set RH = states('sensor.friggebod_humidity') | float(0) %}
+          {% set RH = states('sensor.friggebod_luftfuktighet') | float(0) %}
           {% set troskel = 75 %}
           {% if T < 0 %}
             0
@@ -463,9 +463,9 @@ automation:
       - platform: state
         entity_id:
           - sensor.friggebod_temperatur
-          - sensor.friggebod_humidity
+          - sensor.friggebod_luftfuktighet
           - sensor.ute
-          - sensor.ute_friggebod_humidity
+          - sensor.ute_friggebod_luftfuktighet
 
     condition:
       - condition: state
@@ -485,7 +485,7 @@ automation:
           
           # Sensorvärden
           temp_in: "{{ states('sensor.friggebod_temperatur') | float(0) }}"
-          rh_in: "{{ states('sensor.friggebod_humidity') | float(0) }}"
+          rh_in: "{{ states('sensor.friggebod_luftfuktighet') | float(0) }}"
           abs_in: "{{ states('sensor.friggebod_absolut_fukt_inne') | float(0) }}"
           abs_out: "{{ states('sensor.utomhus_absolut_fukt') | float(0) }}"
           delta_abs: "{{ abs_in - abs_out }}"
@@ -568,7 +568,7 @@ automation:
           message: >
             ⚠️ Hög mögelrisk i friggeboden!
             Temp: {{ states('sensor.friggebod_temperatur') }}°C
-            RH: {{ states('sensor.friggebod_humidity') }}%
+            RH: {{ states('sensor.friggebod_luftfuktighet') }}%
             Mögelrisk: {{ states('sensor.friggebod_mogelrisk') }}%
             Åtgärd: Öka ventilation eller värmning för att sänka fuktigheten.
             Mögelrisk: {{ states('sensor.friggebod_mogelrisk') }} %

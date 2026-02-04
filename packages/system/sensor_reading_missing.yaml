@@ -394,10 +394,10 @@ automation:
                 {% endif %}
             - condition: template
               value_template: > 
-                {% if state_attr('sensor.friggebod_humidity', 'last_updated') == None %} 
+                {% if state_attr('sensor.friggebod_luftfuktighet', 'last_updated') == None %} 
                   0
                 {% else %} 
-                  {{ (as_timestamp(now())-as_timestamp(states.sensor.friggebod_humidity.last_updated)) > 7200 }}
+                  {{ (as_timestamp(now())-as_timestamp(states.sensor.friggebod_luftfuktighet.last_updated)) > 7200 }}
                 {% endif %}
 
     action:
@@ -430,10 +430,10 @@ automation:
                 {% endif %}
             - condition: template
               value_template: > 
-                {% if state_attr('sensor.ute_friggebod_humidity', 'last_updated') == None %} 
+                {% if state_attr('sensor.ute_friggebod_luftfuktighet', 'last_updated') == None %} 
                   0
                 {% else %} 
-                  {{ (as_timestamp(now())-as_timestamp(states.sensor.ute_friggebod_humidity.last_updated)) > 7200 }}
+                  {{ (as_timestamp(now())-as_timestamp(states.sensor.ute_friggebod_luftfuktighet.last_updated)) > 7200 }}
                 {% endif %}
 
     action:

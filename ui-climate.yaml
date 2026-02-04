@@ -54,7 +54,7 @@ views:
             entity: sensor.friggebod_temperatur
             name: Friggebod temp
           - type: tile
-            entity: sensor.friggebod_humidity
+            entity: sensor.friggebod_luftfuktighet
             name: Friggebod fukt
 # -------------------------------------
       - type: markdown
@@ -111,7 +111,7 @@ views:
             name: Badrum fönster fukt
           - entity: sensor.badrum_temperatur
             name: Badrum temp
-          - entity: sensor.ute_friggebod_humidity
+          - entity: sensor.ute_friggebod_luftfuktighet
             name: Ute fukt
 
       - type: entities
@@ -155,7 +155,7 @@ views:
                   yellow: 3
                   red: 0
               - type: gauge
-                entity: sensor.friggebod_humidity
+                entity: sensor.friggebod_luftfuktighet
                 name: Luftfuktighet
                 min: 0
                 max: 100
@@ -284,7 +284,7 @@ views:
             name: "💧 Badrum fukt"
           - entity: sensor.fukt_badrumsfonster
             name: "💧 Badrum fönster fukt"
-          - entity: sensor.friggebod_humidity
+          - entity: sensor.friggebod_luftfuktighet
             name: "❄️ Friggebod fukt"
           - entity: sensor.garage_humidity
             name: "🏠 Garage fukt"
@@ -588,13 +588,13 @@ views:
           - entity: sensor.friggebod_temperatur
             secondary_info: last-updated
             name: Temperatur inne
-          - entity: sensor.friggebod_humidity
+          - entity: sensor.friggebod_luftfuktighet
             secondary_info: last-updated
             name: Fukt inne
           - entity: sensor.ute
             secondary_info: last-updated
             name: Temperatur ute
-          - entity: sensor.ute_friggebod_humidity
+          - entity: sensor.ute_friggebod_luftfuktighet
             name: Fukt ute
           - entity: sensor.friggebod_absolut_fukt_inne
             name: Absolut fukt inne

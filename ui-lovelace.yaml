@@ -355,13 +355,8 @@ views:
         entities:
           - sensor.friggebod_temperatur
           - sensor.friggebod_luftfuktighet
-          - sensor.timmerflotte_temp_hmd_sensor_temperatur_2
-          - sensor.timmerflotte_temp_hmd_sensor_luftfuktighet_2
           - sensor.forrad_temperature
-          - sensor.garage_temperature
           - sensor.forrad_luftfuktighet
-          - sensor.timmerflotte_temp_hmd_sensor_temperatur
-          - sensor.timmerflotte_temp_hmd_sensor_luftfuktighet
           - sensor.pa_vinden
           - sensor.husvagn_temperature
           - sensor.husvagn_humidity
@@ -865,8 +860,8 @@ views:
         state_color: true
       - type: entities
         entities:
-          - sensor.lumi_lumi_weather_temperature_2
-          - sensor.lumi_lumi_weather_humidity_2
+          - sensor.hall_temperatur
+          - sensor.lumi_luftfuktighet
           - sensor.hall_ljusniva
           - entity: light.hall_byra
             name: Byrå
@@ -874,7 +869,6 @@ views:
             name: Skåp
           - switch.ringklocka_hall
           - switch.ringklocka
-          - binary_sensor.lumi_lumi_sensor_motion_aq2_motion_3
         title: Hall
         show_header_toggle: false
         state_color: true
@@ -1001,12 +995,10 @@ views:
       - type: entities
         entities:
           - sensor.forrad_temperature
-          - sensor.garage_temperature
           - sensor.forrad_luftfuktighet
           - sensor.apple_tv
-          - switch.garage_avfuktare
           - switch.forrad_elvarme          
-        title: Garage/Förråd
+        title: Förråd
         show_header_toggle: false
         state_color: true
       - type: entities
@@ -1032,10 +1024,10 @@ views:
       - type: entities
         entities:
 #          - sensor.ftx
-          - sensor.uteluft
-          - sensor.tilluft
-          - sensor.franluft
-          - sensor.avluft
+#          - sensor.uteluft
+#          - sensor.tilluft
+#          - sensor.franluft
+#          - sensor.avluft
           - switch.shelly1_c45bbe77099d
           - switch.ventilationsaggregat
         title: Ventilation
@@ -1056,7 +1048,7 @@ views:
         show_name: true
         camera_view: auto
       - type: picture-entity
-        entity: camera.kamera6_main
+        entity: camera.kamera6_clear
         show_state: true
         show_name: true
         camera_view: auto

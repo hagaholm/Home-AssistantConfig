@@ -184,7 +184,7 @@ template:
         icon: mdi:flash
         state: >
           {% if is_state('switch.friggebod_elvarme', 'on') %}
-            {{ states('input_number.friggebod_element_effekt') | float(700) }}
+            {{ states('input_number.friggebod_element_effekt') | float(750) }}
           {% else %}
             0
           {% endif %}
@@ -197,7 +197,7 @@ template:
         icon: mdi:lightning-bolt-circle
         state: >
           {% set runtime = states('counter.friggebod_varme_tid') | int(0) %}
-          {% set effekt_kw = states('input_number.friggebod_element_effekt') | float(700) / 1000 %}
+          {% set effekt_kw = states('input_number.friggebod_element_effekt') | float(750) / 1000 %}
           {{ (runtime * 10 / 60 * effekt_kw) | round(2) }}
 
       # KOSTNAD - Total kostnad baserat på energiförbrukning
@@ -220,7 +220,7 @@ template:
           {% set t_in = states('sensor.friggebod_temperatur') | float(0) %}
           {% set t_out = states('sensor.ute') | float(0) %}
           {% set delta_t = t_in - t_out %}
-          {% set effekt = states('input_number.friggebod_element_effekt') | float(700) %}
+          {% set effekt = states('input_number.friggebod_element_effekt') | float(750) %}
           {% if delta_t > 0.1 %}
             {{ (effekt / delta_t) | round(1) }}
           {% else %}
@@ -288,7 +288,7 @@ template:
         unit_of_measurement: "SEK/dag"
         icon: mdi:cash-clock
         state: >
-          {% set effekt_kw = states('input_number.friggebod_element_effekt') | float(700) / 1000 %}
+          {% set effekt_kw = states('input_number.friggebod_element_effekt') | float(750) / 1000 %}
           {% set pris = states('input_number.friggebod_elpris') | float(1.5) %}
           {% set max_runtime_hours = 2 %}
           {{ (effekt_kw * max_runtime_hours * pris) | round(2) }}
@@ -356,7 +356,7 @@ input_number:
     unit_of_measurement: "W"
     icon: mdi:lightning-bolt
     mode: box
-    initial: 700
+    initial: 750
 
   friggebod_elpris:
     name: Friggebod elpris

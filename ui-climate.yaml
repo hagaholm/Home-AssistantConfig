@@ -58,21 +58,18 @@ views:
             name: Friggebod fukt
 # -------------------------------------
       - type: markdown
-        content: "# 🌬️ Garage/Förråd"
+        content: "# 🌬️ Förråd"
 
       - type: grid
         columns: 2
         square: false
         cards:
           - type: tile
-            entity: sensor.garage_temperature
-            name: Garage temp
-          - type: tile
-            entity: sensor.forrad_luftfuktighet
-            name: Garage fukt
-          - type: tile
             entity: sensor.forrad_temperature
             name: Förråd temp
+          - type: tile
+            entity: sensor.forrad_luftfuktighet
+            name: Förråd fukt
           - type: tile
             entity: sensor.ute
             name: Ute temp
@@ -199,7 +196,7 @@ views:
                 name: Värmebehov (W/°C)
 
       - type: markdown
-        content: "# 🏠 Förråd (Mållagring)"
+        content: "# 🏠 Förråd"
 
       - type: vertical-stack
         cards:
@@ -210,7 +207,7 @@ views:
 
           - type: tile
             entity: switch.forrad_elvarme
-            name: Elvärme (delad)
+            name: Elvärme
 
           - type: tile
             entity: counter.forrad_varme_tid
@@ -245,24 +242,6 @@ views:
                 name: Kostnad idag
 
       - type: markdown
-        content: "# 🏠 Garage & Förråd"
-
-      - type: entities
-        title: Styrning & Status
-        state_color: true
-        entities:
-          - entity: switch.forrad_elvarme
-            name: Elvärme
-          - entity: switch.garage_avfuktare
-            name: Avfuktare
-          - entity: sensor.garage_temperature
-            name: Temperatur
-          - entity: sensor.forrad_luftfuktighet
-            name: Luftfuktighet
-          - entity: sensor.forrad_temperature
-            name: Förråd temperatur
-
-      - type: markdown
         content: "# 👁️ Översikt – Alla Sensorer"
 
       - type: entities
@@ -276,8 +255,6 @@ views:
             name: "🌡️ Badrum temperatur"
           - entity: sensor.friggebod_temperatur
             name: "❄️ Friggebod temperatur"
-          - entity: sensor.garage_temperature
-            name: "🏠 Garage temperatur"
           - entity: sensor.forrad_temperature
             name: "🏠 Förråd temperatur"
           - entity: sensor.badrum_luftfuktighet
@@ -287,7 +264,7 @@ views:
           - entity: sensor.friggebod_luftfuktighet
             name: "❄️ Friggebod fukt"
           - entity: sensor.forrad_luftfuktighet
-            name: "🏠 Garage fukt"
+            name: "🏠 Förråd fukt"
 
   ####################################################
   # GRAFER VY
@@ -370,8 +347,6 @@ views:
         entities:
           - entity: sensor.forrad_temperature
             name: Förråd
-          - entity: sensor.garage_temperature
-            name: Garage
           - entity: sensor.ute
             name: Ute
         hours_to_show: 24
@@ -709,64 +684,6 @@ views:
             name: Effektbehov vid -10°C
 
   ####################################################
-  # INSTÄLLNINGAR – GARAGE & FÖRRÅD
-  ####################################################
-  - theme: Backend-selected
-    title: Inst. Garage
-    path: inst_garage
-    badges: []
-    cards:
-      - type: markdown
-        content: |
-          # ⚙️ Inställningar – Garage & Förråd
-
-          Information om garage/förråd värmning och avfuktning.
-
-      - type: markdown
-        content: "## Elvärme Garage"
-
-      - type: markdown
-        content: |
-          **Automationen styrs efter temperatur i garage och förråd:**
-
-          - **TÄND**: Temp < 7°C (ute < 6°C) ELLER Temp < 12°C (ute < 10°C)
-          - **SLÄCK**: Temp > 14°C (BÅDA lokaler) ELLER Temp > 9°C (BÅDA)
-
-      - type: entities
-        state_color: true
-        entities:
-          - entity: switch.forrad_elvarme
-            name: Elvärme status
-          - entity: sensor.garage_temperature
-            secondary_info: last-updated
-            name: Garage temperatur
-          - entity: sensor.forrad_temperature
-            secondary_info: last-updated
-            name: Förråd temperatur
-          - entity: sensor.ute
-            secondary_info: last-updated
-            name: Utomhus temperatur
-
-      - type: markdown
-        content: "## Avfuktare Garage"
-
-      - type: markdown
-        content: |
-          **Automationen styrs efter luftfuktighet:**
-
-          - **TÄND**: RH > 66% (och temp > 10°C)
-          - **SLÄCK**: RH < 64%
-
-      - type: entities
-        state_color: true
-        entities:
-          - entity: switch.garage_avfuktare
-            name: Avfuktare status
-          - entity: sensor.forrad_luftfuktighet
-            secondary_info: last-updated
-            name: Luftfuktighet
-
-  ####################################################
   # INSTÄLLNINGAR – FÖRRÅD
   ####################################################
   - theme: Backend-selected
@@ -776,9 +693,9 @@ views:
     cards:
       - type: markdown
         content: |
-          # ⚙️ Inställningar – Förråd (Mållagring)
+          # ⚙️ Inställningar – Förråd
 
-          Värmestyrning för målförvaring. Målen fryser vid ~0-5°C!
+          Värmestyrning för förvaring. Frysskydd, helst ej under +5°C!
 
       - type: markdown
         content: "## Konfigurerbara Värden"
@@ -788,7 +705,7 @@ views:
           Dessa värden är definierade i `packages/climate/forrad.yaml` och kan justeras där.
 
           **Temperaturvärden (°C):**
-          - `temp_frostskydd_forrad`: 5°C (målskydd)
+          - `temp_frostskydd_forrad`: 5°C (frysskydd)
           - `temp_slaeck_high`: 15°C (släck värme)
 
           **Värmestyrning:**
@@ -804,9 +721,6 @@ views:
           - entity: sensor.forrad_temperature
             secondary_info: last-updated
             name: Temperatur förråd
-          - entity: sensor.garage_temperature
-            secondary_info: last-updated
-            name: Temperatur garage
           - entity: sensor.ute
             secondary_info: last-updated
             name: Temperatur ute
@@ -820,7 +734,7 @@ views:
           - entity: input_boolean.forrad_varme_auto
             name: Automatisk värmning
           - entity: switch.forrad_elvarme
-            name: Elvärme (delad med garage)
+            name: Elvärme
           - entity: counter.forrad_varme_tid
             name: Värmetid idag
           - entity: timer.forrad_min_runtime

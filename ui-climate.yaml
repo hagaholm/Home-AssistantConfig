@@ -70,9 +70,19 @@ views:
           - type: tile
             entity: sensor.forrad_luftfuktighet
             name: Förråd fukt
+# -------------------------------------
+      - type: markdown
+        content: "# 🌬️ Ute"
+      - type: grid
+        columns: 2
+        square: false
+        cards:
           - type: tile
             entity: sensor.ute
             name: Ute temp
+          - type: tile
+            entity: sensor.ute_friggebod_humidity
+            name: Ute fukt
 
   ####################################################
   # STATUS VY
@@ -213,6 +223,10 @@ views:
             entity: counter.forrad_varme_tid
             name: Värmetid idag
 
+          - type: tile
+            entity: timer.forrad_min_runtime
+            name: Min gångtid
+
           - type: grid
             columns: 2
             square: false
@@ -221,17 +235,42 @@ views:
                 entity: sensor.forrad_temperature
                 name: Temperatur
                 severity:
-                  green: 8
-                  yellow: 5
+                  green: 5
+                  yellow: 3
                   red: 0
               - type: gauge
-                entity: sensor.forrad_drifttid_procent
-                name: Drifttid (%)
+                entity: sensor.forrad_luftfuktighet
+                name: Luftfuktighet
                 min: 0
                 max: 100
+                severity:
+                  green: 50
+                  yellow: 60
+                  red: 70
 
           - type: entities
-            title: Energi & Kostnader
+            title: Avancerade värden
+            state_color: true
+            entities:
+              - entity: sensor.forrad_absolut_fukt_inne
+                name: Absolut fukt inne
+              - entity: sensor.utomhus_absolut_fukt
+                name: Absolut fukt ute
+              - entity: sensor.forrad_mogelrisk
+                name: Mögelrisk
+
+          - type: gauge
+            entity: sensor.forrad_mogelrisk
+            name: Mögelrisk (%)
+            min: 0
+            max: 100
+            severity:
+              green: 30
+              yellow: 60
+              red: 75
+
+          - type: entities
+            title: Energi & Effekt
             state_color: true
             entities:
               - entity: sensor.forrad_aktuell_effekt
@@ -240,6 +279,8 @@ views:
                 name: Energi idag
               - entity: sensor.forrad_kostnad_idag
                 name: Kostnad idag
+              - entity: sensor.forrad_varmebehov_per_grad
+                name: Värmebehov (W/°C)
 
       - type: markdown
         content: "# 👁️ Översikt – Alla Sensorer"
@@ -253,10 +294,12 @@ views:
             name: "🌡️ Inne medel temperatur"
           - entity: sensor.badrum_temperatur
             name: "🌡️ Badrum temperatur"
-          - entity: sensor.friggebod_temperatur
+          - entity: sensor.friggebod_temperature
             name: "❄️ Friggebod temperatur"
           - entity: sensor.forrad_temperature
             name: "🏠 Förråd temperatur"
+          - entity: sensor.ute_friggebod_humidity
+            name: "🌡️ Ute fukt"
           - entity: sensor.badrum_luftfuktighet
             name: "💧 Badrum fukt"
           - entity: sensor.fukt_badrumsfonster
@@ -343,22 +386,35 @@ views:
         content: "## 🏠 Förråd – Temperatur & Energi"
 
       - type: history-graph
-        title: Temperatur Förråd
+        title: Effekt & Temperatur
         entities:
+          - entity: sensor.forrad_aktuell_effekt
+            name: Effekt (W)
           - entity: sensor.forrad_temperature
-            name: Förråd
+            name: Temp inne
           - entity: sensor.ute
-            name: Ute
+            name: Temp ute
         hours_to_show: 24
 
       - type: history-graph
-        title: Energiförbrukning Förråd
+        title: Energiförbrukning
         entities:
           - entity: sensor.forrad_energi_idag
             name: Energi (kWh)
           - entity: sensor.forrad_kostnad_idag
             name: Kostnad (SEK)
         hours_to_show: 168
+
+      - type: history-graph
+        title: Fysiska Värden
+        entities:
+          - entity: sensor.forrad_varmebehov_per_grad
+            name: Värmebehov (W/°C)
+          - entity: sensor.forrad_uppskattat_u_varde
+            name: U-värde
+          - entity: sensor.forrad_drifttid_procent
+            name: Drifttid (%)
+        hours_to_show: 48
 
       - type: markdown
         content: "## ❄️ Friggebod – Energi & Effekt"
@@ -652,10 +708,13 @@ views:
       - type: markdown
         content: |
           **Byggnad:**
+          - Bredd: 3.0 m
+          - Längd: 5.0 m
+          - Takhöjd: 2.0 m
           - Golvyta: 15 m²
-          - Takhöjd: 2.2 m
-          - Volym: 33 m³
-          - Total area (väggar+tak+golv): ~177 m²
+          - Vägg area: 32 m²
+          - Total area (väggar+tak+golv): 62 m²
+          - Volym: 30 m³
 
       - type: entities
         title: Värmeprestanda
@@ -687,7 +746,7 @@ views:
   # INSTÄLLNINGAR – FÖRRÅD
   ####################################################
   - theme: Backend-selected
-    title: Inst. Förråd
+    title: Inst. Förråd    
     path: inst_forrad
     badges: []
     cards:
@@ -695,7 +754,7 @@ views:
         content: |
           # ⚙️ Inställningar – Förråd
 
-          Värmestyrning för förvaring. Frysskydd, helst ej under +5°C!
+          Justera värmestyrning, trösklar och mögelriskgränser för förrådet.
 
       - type: markdown
         content: "## Konfigurerbara Värden"
@@ -705,11 +764,23 @@ views:
           Dessa värden är definierade i `packages/climate/forrad.yaml` och kan justeras där.
 
           **Temperaturvärden (°C):**
-          - `temp_frostskydd_forrad`: 5°C (frysskydd)
-          - `temp_slaeck_high`: 15°C (släck värme)
+          - `temp_frostskydd`: 5°C (aktiverar värmestyrning)
+          - `temp_min_for_fuktvarme`: 0°C (minsta temp för fuktvärme)
+
+          **Fuktvärden (%):**
+          - `rh_aktivering`: 60% (tänd värmning vid fukt)
+          - `rh_avaktivering`: 55% (släck värme vid fukt)
+
+          **Absolut Fukt (g/m³):**
+          - `delta_abs_aktivering`: 1.0 g/m³ (inne > ute + 1.0)
+          - `delta_abs_avaktivering`: 0.5 g/m³ (inne > ute + 0.5)
+
+          **Mögelrisk:**
+          - `mogelrisk_troskel`: 75% RH
+          - `mogelrisk_varning`: 60% risk för notifiering
 
           **Värmestyrning:**
-          - `max_varmetid_per_dag`: 24 perioder (= 240 min / 4h)
+          - `max_varmetid_per_dag`: 12 perioder (= 2h)
           - `min_gangtid`: 20 minuter
 
       - type: markdown
@@ -720,44 +791,31 @@ views:
         entities:
           - entity: sensor.forrad_temperature
             secondary_info: last-updated
-            name: Temperatur förråd
+            name: Temperatur inne
+          - entity: sensor.forrad_luftfuktighet
+            secondary_info: last-updated
+            name: Fukt inne
           - entity: sensor.ute
             secondary_info: last-updated
             name: Temperatur ute
+          - entity: sensor.ute_forrad_humidity
+            name: Fukt ute
+          - entity: sensor.forrad_absolut_fukt_inne
+            name: Absolut fukt inne
+          - entity: sensor.utomhus_absolut_fukt
+            name: Absolut fukt ute
+          - entity: sensor.forrad_mogelrisk
+            name: Mögelrisk
 
       - type: markdown
-        content: "## Värmestyrning Status"
+        content: "## Notifikation"
 
       - type: entities
+        title: Mögelvarning-inställning
         state_color: true
         entities:
-          - entity: input_boolean.forrad_varme_auto
-            name: Automatisk värmning
-          - entity: switch.forrad_elvarme
-            name: Elvärme
-          - entity: counter.forrad_varme_tid
-            name: Värmetid idag
-          - entity: timer.forrad_min_runtime
-            name: Min gångtid
-
-      - type: grid
-        columns: 2
-        square: false
-        cards:
-          - type: gauge
-            entity: sensor.forrad_temperature
-            name: Temperatur
-            severity:
-              green: 8
-              yellow: 5
-              red: 0
-          - type: gauge
-            entity: sensor.forrad_drifttid_procent
-            name: Drifttid idag
-            min: 0
-            max: 100
-            unit: "%"
-            needle: true
+          - entity: input_text.forrad_notification_target
+            name: Notifikation target
 
       - type: markdown
         content: "## ⚡ Energi & Effekt"
@@ -771,14 +829,27 @@ views:
           - entity: input_number.forrad_elpris
             name: Elpris (SEK/kWh)
 
-      - type: entities
-        title: Aktuell effekt
-        state_color: true
-        entities:
-          - entity: sensor.forrad_aktuell_effekt
-            name: Effekt när på
-          - entity: sensor.forrad_varmebehov_per_grad
-            name: Värmebehov (W/°C)
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: gauge
+            entity: sensor.forrad_aktuell_effekt
+            name: Aktuell effekt
+            min: 0
+            max: 2000
+            severity:
+              green: 0
+              yellow: 800
+              red: 1500
+            needle: true
+          - type: gauge
+            entity: sensor.forrad_drifttid_procent
+            name: Drifttid idag
+            min: 0
+            max: 100
+            unit: "%"
+            needle: true
 
       - type: entities
         title: Energiförbrukning
@@ -805,14 +876,44 @@ views:
             name: Prognos (vid max drift)
 
       - type: markdown
-        content: "## Notifikation"
+        content: "## 🏠 Fysiska Egenskaper"
+
+      - type: markdown
+        content: |
+          **Byggnad:**
+          - Bredd: 3.0 m
+          - Längd: 4.0 m
+          - Takhöjd: 2.2 m
+          - Golvyta: 12 m²
+          - Vägg area: 32 m²
+          - Total area (väggar+tak+golv): 54.8 m²
+          - Volym: 26.4 m³
 
       - type: entities
-        title: Notifikation-inställning
+        title: Värmeprestanda
         state_color: true
         entities:
-          - entity: input_text.forrad_notification_target
-            name: Notifikation target
+          - entity: sensor.forrad_varmebehov_per_grad
+            name: Värmebehov per °C
+          - entity: sensor.forrad_uppskattat_u_varde
+            name: Uppskattat U-värde
+          - entity: sensor.forrad_specifik_varmeprestanda
+            name: Specifik prestanda (W/m²)
+          - entity: sensor.forrad_energi_per_volym
+            name: Energi per volym (Wh/m³)
+          - entity: sensor.forrad_cop
+            name: COP (effektivitet)
+
+      - type: entities
+        title: Termisk Analys
+        state_color: true
+        entities:
+          - entity: sensor.forrad_temperaturfall_per_timme
+            name: Temperaturfall (°C/h)
+          - entity: sensor.forrad_graddagar_idag
+            name: Graddagar idag
+          - entity: sensor.forrad_effektbehov_vid_minus_10
+            name: Effektbehov vid -10°C
 
   ####################################################
   # LARM VY
@@ -938,9 +1039,9 @@ views:
             name: Räkna värmetid
           - entity: automation.forrad_reset_varmetid
             name: Reset värmetid
-          - entity: automation.forrad_smart_varmestyrning
+          - entity: automation.forrad_komplett_smart_varmestyrning
             name: Smart värmestyrning
-          - entity: automation.forrad_temperaturvarning
+          - entity: automation.forrad_mogelvarning
             name: Temperaturvarning
 
       - type: markdown

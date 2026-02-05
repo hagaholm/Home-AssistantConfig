@@ -1,54 +1,180 @@
 ####################################################
 #                                                  #
-#           FÖRRÅD (STORAGE) CLIMATE PACKAGE        #
+#           FÖRRÅD (STORAGE) CLIMATE PACKAGE       #
 #                                                  #
 ####################################################
-# Styrning av elvärme i förråd för målförvaring.
-# Systemet skyddar mot frost och håller optimal fukt för mållagring.
+# Styrning av elvärme i förrådet baserat på temperatur och fukt.
+# Systemet skyddar mot frost och hög fuktighet samt räknar värmetid.
 #
 # EXTERNA BEROENDEN (sensorer definierade på annat håll):
 # - sensor.forrad_temperature (temperatur förråd, °C)
 # - sensor.forrad_luftfuktighet (relativ fukt förråd, %)
 # - sensor.ute (utomhustemperatur, °C)
+# - sensor.ute_friggebod_humidity (relativ fukt ute, %)
 # - switch.forrad_elvarme (main power switch för elvärme)
+# - notify.* (notification service, se input_text.forrad_notification_target)
 #
 # Funktioner:
-# - Frostskydd vid låg temperatur (målskydd)
-# - Energiövervakning
-# - Kostnadsanalys
+# - Frostskydd vid låg temperatur
+# - Fuktdriven värmestyrning
+# - Mögelriskberäkning (absolut fukt + relativ fukt)
+# - Automatisk värmetidsräkning per dag
+# - Daglig begränsning av värmekörning
+# - Mögelvarning vid högt värde
 
 # METADATA:
 # Skapad: 2026-01-08
-# Version: 1.0
-# Syfte: Mållagring (målkonserver fryser vid 0-5°C)
+# Senast ändrad: 2026-02-05
+# Version: 2.0
 ####################################################
+
+############################################
+# NOTIFIKATION-KONFIGURATION
+############################################
+# Ändra denna till din notification service (notify.email, notify.ntfy, etc.)
+input_text:
+  forrad_notification_target:
+    name: Förråd notifikation-target
+    initial: "notify.mobile_app_sm_a528b"
+    icon: mdi:bell
 
 ############################################
 # KONFIGURERBARA VARIABLER
 ############################################
+# Temperaturvärden (°C)
 homeassistant:
   customize:
     package.node_anchors:
-      # Temperaturvärden för mållagring (°C)
-      temp_frostskydd_forrad: &temp_frostskydd_forrad 5
-      temp_min_drift: &temp_min_drift 0
-      temp_slaeck_high: &temp_slaeck_high 15
+      # Temperaturvärden
+      temp_frostskydd: &temp_frostskydd 5
+      temp_min_for_fuktvarme: &temp_min_for_fuktvarme 0
       
-      # Fuktvärden för mållagring (%)
-      rh_optimal_low: &rh_optimal_low 40
-      rh_optimal_high: &rh_optimal_high 60
+      # Fuktvärden (%)
+      rh_aktivering: &rh_aktivering 60
+      rh_avaktivering: &rh_avaktivering 55
+      
+      # Absolut fukt (g/m³)
+      delta_abs_aktivering: &delta_abs_aktivering 1.0
+      delta_abs_avaktivering: &delta_abs_avaktivering 0.5
+      
+      # Mögelrisk
+      mogelrisk_troskel: &mogelrisk_troskel 75
+      mogelrisk_varning: &mogelrisk_varning 60
+      mogelrisk_varning_tid: &mogelrisk_varning_tid 6  # timmar
       
       # Värmestyrning
-      max_varmetid_per_dag: &max_varmetid_per_dag 24  # antal 10-min perioder
+      max_varmetid_per_dag: &max_varmetid_per_dag 12  # antal 10-min perioder (= 2h)
       min_gangtid: &min_gangtid "00:20:00"  # minuter värmen ska köra minst
+      
+      # Övervakningsintervall
+      kontroll_intervall: &kontroll_intervall 5  # minuter
+      varmetid_ratt_intervall: &varmetid_ratt_intervall 10  # minuter
+      
+      # Matematiska konstanter för fuktberäkning
+      magnus_a: &magnus_a 17.67
+      magnus_b: &magnus_b 243.5
+      absolut_noll: &absolut_noll 273.15
+      ideal_gas_konstant: &ideal_gas_konstant 2.1674
+      magnus_konstant: &magnus_konstant 6.112
+
+############################################
+# FÖRRÅD – SMART FUKT & VÄRMESTYRNING
+############################################
 
 ############################################
 # TEMPLATE SENSORER
 ############################################
-# Enkla sensorer för övervakad energi- och temperaturdata
+# Beräknar absolut fukt och mögelrisk baserat på temperatur och relativ fuktighet.
+# Formler:
+# - Absolut fukt: Magnus-Tetens formel för mättnadstryck + idealgas-approximation
+# - Mögelrisk: Linjär funktion baserad på RH över tröskelvärde
 
 template:
   - sensor:
+      # Beräknar absolut fukt inne i förrådet (g/m³)
+      # FORMEL: Magnus-Tetens approximation (gäller -40 till +60°C)
+      # - Mättnadstryck: es = 6.112 * e^((17.67*T)/(T+243.5))
+      # - Absolut fukt: AH = es * RH * 2.1674 / (273.15 + T)
+      # ANVÄNDNING: Jämför inne vs ute för fuktstyrning
+      - name: "Förråd absolut fukt inne"
+        unit_of_measurement: "g/m³"
+        state_class: "measurement"
+        icon: mdi:water
+        availability: >
+          {{ states('sensor.forrad_temperature') not in ['unknown', 'unavailable', '']
+             and states('sensor.forrad_luftfuktighet') not in ['unknown', 'unavailable', ''] }}
+        state: >
+          {% set T = states('sensor.forrad_temperature') | float(none) %}
+          {% set RH = states('sensor.forrad_luftfuktighet') | float(none) %}
+          {% if T is none or RH is none %}
+            {{ none }}
+          {% else %}
+            {% set a = 17.67 %}
+            {% set b = 243.5 %}
+            {% set R_sp = 2.1674 %}
+            {% set T_abs = 273.15 %}
+            {% set K = 6.112 %}
+            {% set exp_val = (a * T) / (T + b) %}
+            {% set e = 2.718281828459045 %}
+            {{ (K * (e ** exp_val) * RH * R_sp / (T_abs + T)) | round(2) }}
+          {% endif %}
+
+      # Beräknar absolut fukt utomhus (g/m³)
+      # Samma Magnus-Tetens formel, men använder ute-temperaturer.
+      # Används för att beräkna delta_abs = AH_inne - AH_ute
+      - name: "Utomhus absolut fukt"
+        unit_of_measurement: "g/m³"
+        state_class: "measurement"
+        icon: mdi:water
+        availability: >
+          {{ states('sensor.ute') not in ['unknown', 'unavailable', '']
+             and states('sensor.ute_friggebod_humidity') not in ['unknown', 'unavailable', ''] }}
+        state: >
+          {% set T = states('sensor.ute') | float(none) %}
+          {% set RH = states('sensor.ute_friggebod_humidity') | float(none) %}
+          {% if T is none or RH is none %}
+            {{ none }}
+          {% else %}
+            {% set a = 17.67 %}
+            {% set b = 243.5 %}
+            {% set R_sp = 2.1674 %}
+            {% set T_abs = 273.15 %}
+            {% set K = 6.112 %}
+            {% set exp_val = (a * T) / (T + b) %}
+            {% set e = 2.718281828459045 %}
+            {{ (K * (e ** exp_val) * RH * R_sp / (T_abs + T)) | round(2) }}
+          {% endif %}
+
+      # Beräknar mögelrisk baserat på relativ fuktighet
+      # LOGIK:
+      # - T < 0°C: Risk = 0% (ingen svampväxt i kallt)
+      # - RH < 75%: Risk = 0% (under tröskel)
+      # - RH >= 75%: Risk = (RH - 75) * 2 (linjär ökning)
+      # EXEMPEL: RH=80% => 10%, RH=90% => 30%
+      - name: "Förråd mögelrisk"
+        unit_of_measurement: "%"
+        device_class: "humidity"
+        icon: mdi:mushroom
+        availability: >
+          {{ states('sensor.forrad_temperature') not in ['unknown', 'unavailable', '']
+             and states('sensor.forrad_luftfuktighet') not in ['unknown', 'unavailable', ''] }}
+        state: >
+          {% set T = states('sensor.forrad_temperature') | float(0) %}
+          {% set RH = states('sensor.forrad_luftfuktighet') | float(0) %}
+          {% set troskel = 75 %}
+          {% if T < 0 %}
+            0
+          {% else %}
+            {% set risk = ((RH - troskel) * 2) %}
+            {% if risk < 0 %}
+              0
+            {% elif risk > 100 %}
+              100
+            {% else %}
+              {{ risk | round(0) }}
+            {% endif %}
+          {% endif %}
+
       # ENERGIFÖRBRUKNING - Aktuell effekt när elementet är på
       - name: "Förråd aktuell effekt"
         unit_of_measurement: "W"
@@ -94,11 +220,67 @@ template:
           {% set t_out = states('sensor.ute') | float(0) %}
           {% set delta_t = t_in - t_out %}
           {% set effekt = states('input_number.forrad_element_effekt') | float(750) %}
-          {% if delta_t > 0 %}
+          {% if delta_t > 0.1 %}
             {{ (effekt / delta_t) | round(1) }}
+          {% else %}
+            0
+          {% endif %}
+
+      # FYSIK - Uppskattat U-värde (W/(m²·K))
+      - name: "Förråd uppskattat U-värde"
+        unit_of_measurement: "W/(m²·K)"
+        icon: mdi:home-thermometer
+        availability: >
+          {{ states('sensor.forrad_temperature') not in ['unknown', 'unavailable', '']
+             and states('sensor.ute') not in ['unknown', 'unavailable', ''] }}
+        state: >
+          {% set varmebehov_per_grad = states('sensor.forrad_varmebehov_per_grad') | float(0) %}
+          {% set area_vagg = 32 %}
+          {% set area_tak = 12 %}
+          {% set area_golv = 12 %}
+          {% set total_area = area_vagg + area_tak + area_golv %}
+          {% if total_area > 0 %}
+            {{ (varmebehov_per_grad / total_area) | round(3) }}
           {% else %}
             unavailable
           {% endif %}
+
+      # FYSIK - Specifik värmeprestanda (W/m²)
+      - name: "Förråd specifik värmeprestanda"
+        unit_of_measurement: "W/m²"
+        icon: mdi:home-lightning-bolt
+        state: >
+          {% set effekt = states('sensor.forrad_aktuell_effekt') | float(0) %}
+          {% set area = 12 %}
+          {{ (effekt / area) | round(1) }}
+
+      # FYSIK - Graddagar (°C·dag)
+      - name: "Förråd graddagar idag"
+        unit_of_measurement: "°C·dag"
+        icon: mdi:thermometer-minus
+        state: >
+          {% set t_in = states('sensor.forrad_temperature') | float(0) %}
+          {% set t_out = states('sensor.ute') | float(0) %}
+          {% set delta_t = t_in - t_out %}
+          {% set runtime_hours = states('counter.forrad_varme_tid') | int(0) * 10 / 60 %}
+          {{ (delta_t * runtime_hours / 24) | round(2) }}
+
+      # EFFEKTIVITET - COP (Coefficient of Performance)
+      - name: "Förråd COP"
+        icon: mdi:chart-line
+        state: "1.0"
+        attributes:
+          typ: "Direktelvärme"
+          förklaring: "Direktelvärme har alltid COP=1.0 (100% av elen blir värme)"
+
+      # EFFEKTIVITET - Energi per kubikmeter
+      - name: "Förråd energi per volym"
+        unit_of_measurement: "Wh/m³"
+        icon: mdi:cube-outline
+        state: >
+          {% set effekt = states('sensor.forrad_aktuell_effekt') | float(0) %}
+          {% set volym = 26.4 %}
+          {{ (effekt / volym) | round(1) }}
 
       # PROGNOS - Uppskattad daglig kostnad vid kontinuerlig drift
       - name: "Förråd daglig kostnad prognos"
@@ -107,8 +289,41 @@ template:
         state: >
           {% set effekt_kw = states('input_number.forrad_element_effekt') | float(750) / 1000 %}
           {% set pris = states('input_number.forrad_elpris') | float(1.5) %}
-          {% set max_runtime_hours = 4 %}
+          {% set max_runtime_hours = 2 %}
           {{ (effekt_kw * max_runtime_hours * pris) | round(2) }}
+
+      # PROGNOS - Effektbehov vid -10°C ute (för dimensionering)
+      - name: "Förråd effektbehov vid minus 10"
+        unit_of_measurement: "W"
+        icon: mdi:snowflake-thermometer
+        availability: >
+          {{ states('sensor.forrad_temperature') not in ['unknown', 'unavailable', '']
+             and states('sensor.ute') not in ['unknown', 'unavailable', ''] }}
+        state: >
+          {% set t_inne_onskat = 5 %}
+          {% set t_ute = -10 %}
+          {% set delta_t = t_inne_onskat - t_ute %}
+          {% set varmebehov_per_grad = states('sensor.forrad_varmebehov_per_grad') | float(50) %}
+          {{ (varmebehov_per_grad * delta_t) | round(0) }}
+
+      # ANALYS - Temperaturfall per timme när värmen är av
+      - name: "Förråd temperaturfall per timme"
+        unit_of_measurement: "°C/h"
+        icon: mdi:thermometer-chevron-down
+        state: >
+          {% set t_in = states('sensor.forrad_temperature') | float(0) %}
+          {% set t_out = states('sensor.ute') | float(0) %}
+          {% set u_varde = states('sensor.forrad_uppskattat_u_varde') | float(0.5) %}
+          {% set volym = 26.4 %}
+          {% set luftdensitet = 1.2 %}
+          {% set cp_luft = 1005 %}
+          {% set termisk_massa = volym * luftdensitet * cp_luft %}
+          {% set varmeforlust_w = u_varde * 54.8 * (t_in - t_out) %}
+          {% if termisk_massa > 0 %}
+            {{ (varmeforlust_w * 3600 / termisk_massa) | round(2) }}
+          {% else %}
+            unavailable
+          {% endif %}
 
       # STATISTIK - Drift-tid i procent idag
       - name: "Förråd drifttid procent"
@@ -126,9 +341,10 @@ template:
           {% endif %}
 
 ############################################
-# ENERGIBERÄKNINGAR
+# ENERGIBERÄKNINGAR & FYSIK
 ############################################
-# Likadant element i både friggebod/förråd
+# Beräknar energiförbrukning, värmebehov, U-värde och andra fysiska parametrar
+# Byggnadsdata: 12m² golvyta, 2.2m takhöjd = 26.4m³ volym
 
 input_number:
   forrad_element_effekt:
@@ -179,6 +395,7 @@ utility_meter:
 # HELPERS
 ############################################
 # Input boolean för att aktivera/avaktivera automatisk värmestyrning
+# Timer för minimum gångtid
 # Counter för att räkna värmetid per dag
 
 input_boolean:
@@ -200,10 +417,12 @@ counter:
 ############################################
 # AUTOMATIONER
 ############################################
-# ENKELT VÄRMESTYRNING: Enbart frostskydd för mållagring
+# NOTERING: Konfigurerbara värden definieras i node_anchors ovan.
+# De upprepas i automation-variablerna för att vara explicita och lätta att justera.
 
+# AUTO 1: Räkna värmetid (körs var 10:e minut)
+# Räknar upp counter för att begränsa total värmetid per dag
 automation:
-  # AUTO 1: Räkna värmetid (körs var 10:e minut)
   - alias: Förråd – räkna värmetid
     description: Räknar upp värmetid varje 10:e minut när värmaren är på
     trigger:
@@ -229,12 +448,13 @@ automation:
         target:
           entity_id: counter.forrad_varme_tid
 
-  # AUTO 3: HUVUDLOGIK - Enkel värmestyrning för frostskydd
+  # AUTO 3: HUVUDLOGIK - Smart värmestyrning
   # Prioritetsordning:
-  # 1. FROSTSKYDD - Aktiveras vid låg temperatur (målen fryser vid ~0-5°C)
-  # 2. AVAKTIVERING - Stänger av när temperatur är tillräckligt hög
-  - alias: Förråd – smart värmestyrning
-    description: Styr värmaren baserat på temperatur för mållagring
+  # 1. FROSTSKYDD - Aktiveras vid låg temperatur
+  # 2. FUKTDRIVEN VÄRME - Reglerar för fuktbalans
+  # 3. AVAKTIVERING - Stänger av när villkor inte uppfyllda
+  - alias: Förråd – komplett smart värmestyrning
+    description: Styr värmaren baserat på temperatur, fukt och daglig körning
     mode: restart
     trigger:
       - platform: time_pattern
@@ -242,7 +462,9 @@ automation:
       - platform: state
         entity_id:
           - sensor.forrad_temperature
+          - sensor.forrad_luftfuktighet
           - sensor.ute
+          - sensor.ute_forrad_luftfuktighet
 
     condition:
       - condition: state
@@ -251,22 +473,30 @@ automation:
 
     action:
       - variables:
-          # Konfigurerbara värden för mållagring
-          temp_frostskydd: 5           # Målen börjar frysa vid ~0-5°C
-          temp_slaeck: 15              # Släck värme när det väl blir varmt
-          max_varmetid: 24             # Max 240 minuter (4 timmar) per dag
+          # Konfigurerbara värden
+          temp_frostskydd: 5
+          temp_min_for_fuktvarme: 0
+          rh_aktivering: 60
+          rh_avaktivering: 55
+          delta_abs_aktivering: 1.0
+          delta_abs_avaktivering: 0.5
+          max_varmetid: 12
           
-          # Temperatursensor från förråd
-          temp_forrad: "{{ states('sensor.forrad_temperature') | float(none) }}"
+          # Sensorvärden
+          temp_in: "{{ states('sensor.forrad_temperature') | float(0) }}"
+          rh_in: "{{ states('sensor.forrad_luftfuktighet') | float(0) }}"
+          abs_in: "{{ states('sensor.forrad_absolut_fukt_inne') | float(0) }}"
+          abs_out: "{{ states('sensor.utomhus_absolut_fukt') | float(0) }}"
+          delta_abs: "{{ abs_in - abs_out }}"
           runtime_ok: "{{ states('counter.forrad_varme_tid') | int(0) < max_varmetid }}"
 
       - choose:
 
           # PRIORITET 1: FROSTSKYDD
-          # Aktiveras när förrådstemperaturen sjunker under 5°C
+          # Aktiveras vid låg temperatur för att skydda mot frostskador
           - conditions:
               - condition: template
-                value_template: "{{ temp_forrad is number and temp_forrad < temp_frostskydd }}"
+                value_template: "{{ temp_in < temp_frostskydd }}"
             sequence:
               - service: switch.turn_on
                 target:
@@ -278,11 +508,40 @@ automation:
                 target:
                   entity_id: timer.forrad_min_runtime
 
-          # PRIORITET 2: STÄNG AV
-          # Avaktiveras när temperaturen stiger över 15°C
+          # PRIORITET 2: FUKTDRIVEN VÄRME
+          # Aktiveras när:
+          # - Relativ fukt > 60%
+          # - Absolut fukt inne > ute + 1.0 g/m³
+          # - Temperatur > 0°C
+          # - Daglig körtid < 12 perioder (2h)
           - conditions:
               - condition: template
-                value_template: "{{ temp_forrad is number and temp_forrad > temp_slaeck }}"
+                value_template: >
+                  {{ rh_in > rh_aktivering
+                     and delta_abs > delta_abs_aktivering
+                     and temp_in > temp_min_for_fuktvarme
+                     and runtime_ok }}
+            sequence:
+              - service: switch.turn_on
+                target:
+                  entity_id: switch.forrad_elvarme
+              - condition: state
+                entity_id: timer.forrad_min_runtime
+                state: "idle"
+              - service: timer.start
+                target:
+                  entity_id: timer.forrad_min_runtime
+
+          # PRIORITET 3: STÄNG AV
+          # Avaktiveras när:
+          # - Relativ fukt < 55% ELLER
+          # - Absolut fukt-delta < 0.5 g/m³ ELLER
+          # - Daglig körtid uppnådd
+          # OCH minimum gångtid är över
+          - conditions:
+              - condition: template
+                value_template: >
+                  {{ rh_in < rh_avaktivering or delta_abs < delta_abs_avaktivering or not runtime_ok }}
               - condition: state
                 entity_id: timer.forrad_min_runtime
                 state: "idle"
@@ -291,30 +550,24 @@ automation:
                 target:
                   entity_id: switch.forrad_elvarme
 
-  # AUTO 4: Temperaturvarning om för kallt
-  - alias: Förråd – temperaturvarning
-    description: Varnar om förrådet blir för kallt för mållagring
+  # AUTO 4: MÖGELVARNING
+  # Skickar notifikation om mögelrisken är högt under längre tid.
+  # Notification-target kan ändras via input_text.forrad_notification_target
+  - alias: Förråd – mögelvarning
+    description: Varnar när mögelrisken är över 60% i mer än 6 timmar
     trigger:
       - platform: numeric_state
-        entity_id: sensor.forrad_temperature
-        below: 0
+        entity_id: sensor.forrad_mogelrisk
+        above: 60
         for:
-          minutes: 10
+          hours: 6
     action:
       - service: "{{ states('input_text.forrad_notification_target') }}"
         data:
           message: >
-            ⚠️ Förråd – FROST! Temperatur under 0°C!
-            Förråd temp: {{ states('sensor.forrad_temperature') }}°C
-            Ute temp: {{ states('sensor.ute') }}°C
-            ⚠️ MÅLKONSERVERNA KAN FRYSA OCH SKADAS!
-            Åtgärd: Kontrollera elvärmen!
-
-############################################
-# NOTIFIKATION-KONFIGURATION
-############################################
-input_text:
-  forrad_notification_target:
-    name: Förråd notifikation-target
-    initial: "notify.mobile_app_sm_a528b"
-    icon: mdi:bell
+            ⚠️ Hög mögelrisk i förrådet!
+            Temp: {{ states('sensor.forrad_temperature') }}°C
+            RH: {{ states('sensor.forrad_luftfuktighet') }}%
+            Mögelrisk: {{ states('sensor.forrad_mogelrisk') }}%
+            Åtgärd: Öka ventilation eller värmning för att sänka fuktigheten.
+            Mögelrisk: {{ states('sensor.forrad_mogelrisk') }} %

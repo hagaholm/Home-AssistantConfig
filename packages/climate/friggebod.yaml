@@ -1,6 +1,6 @@
 ####################################################
 #                                                  #
-#              FRIGGEBOD (CLIMATE) PACKAGE          #
+#       FRIGGEBOD (STORAGE) CLIMATE PACKAGE        #
 #                                                  #
 ####################################################
 # Styrning av elvärme i friggebod baserat på temperatur och fukt.
@@ -24,9 +24,8 @@
 
 # METADATA:
 # Skapad: okänt
-# Senast ändrad: 2026-01-06
+# Senast ändrad: 2026-02-05
 # Version: 2.1
-# Författare: Home Assistant Config
 ####################################################
 
 ############################################
@@ -236,7 +235,7 @@ template:
              and states('sensor.ute') not in ['unknown', 'unavailable', ''] }}
         state: >
           {% set varmebehov_per_grad = states('sensor.friggebod_varmebehov_per_grad') | float(0) %}
-          {% set area_vagg = 15 * 2.2 * 4 %}
+          {% set area_vagg = 32 %}
           {% set area_tak = 15 %}
           {% set area_golv = 15 %}
           {% set total_area = area_vagg + area_tak + area_golv %}
@@ -280,7 +279,7 @@ template:
         icon: mdi:cube-outline
         state: >
           {% set effekt = states('sensor.friggebod_aktuell_effekt') | float(0) %}
-          {% set volym = 15 * 2.2 %}
+          {% set volym = 30 %}
           {{ (effekt / volym) | round(1) }}
 
       # PROGNOS - Uppskattad daglig kostnad vid kontinuerlig drift
@@ -315,11 +314,11 @@ template:
           {% set t_in = states('sensor.friggebod_temperatur') | float(0) %}
           {% set t_out = states('sensor.ute') | float(0) %}
           {% set u_varde = states('sensor.friggebod_uppskattat_u_varde') | float(0.5) %}
-          {% set volym = 33 %}
+          {% set volym = 30 %}
           {% set luftdensitet = 1.2 %}
           {% set cp_luft = 1005 %}
           {% set termisk_massa = volym * luftdensitet * cp_luft %}
-          {% set varmeforlust_w = u_varde * 177 * (t_in - t_out) %}
+          {% set varmeforlust_w = u_varde * 62 * (t_in - t_out) %}
           {% if termisk_massa > 0 %}
             {{ (varmeforlust_w * 3600 / termisk_massa) | round(2) }}
           {% else %}

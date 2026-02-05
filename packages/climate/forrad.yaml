@@ -10,7 +10,7 @@
 # - sensor.forrad_temperature (temperatur förråd, °C)
 # - sensor.forrad_luftfuktighet (relativ fukt förråd, %)
 # - sensor.ute (utomhustemperatur, °C)
-# - sensor.ute_forrad_humidity (relativ fukt ute, %)
+# - sensor.ute_friggebod_humidity (relativ fukt ute, %)
 # - switch.forrad_elvarme (main power switch för elvärme)
 # - notify.* (notification service, se input_text.forrad_notification_target)
 #
@@ -128,10 +128,10 @@ template:
         icon: mdi:water
         availability: >
           {{ states('sensor.ute') not in ['unknown', 'unavailable', '']
-             and states('sensor.ute_forrad_humidity') not in ['unknown', 'unavailable', ''] }}
+             and states('sensor.ute_friggebod_humidity') not in ['unknown', 'unavailable', ''] }}
         state: >
           {% set T = states('sensor.ute') | float(none) %}
-          {% set RH = states('sensor.ute_forrad_humidity') | float(none) %}
+          {% set RH = states('sensor.ute_friggebod_humidity') | float(none) %}
           {% if T is none or RH is none %}
             {{ none }}
           {% else %}

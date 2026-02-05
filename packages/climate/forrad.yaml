@@ -46,7 +46,7 @@ homeassistant:
   customize:
     package.node_anchors:
       # Temperaturvärden
-      temp_frostskydd: &temp_frostskydd 3
+      temp_frostskydd: &temp_frostskydd 5
       temp_min_for_fuktvarme: &temp_min_for_fuktvarme 0
       
       # Fuktvärden (%)
@@ -474,7 +474,7 @@ automation:
     action:
       - variables:
           # Konfigurerbara värden
-          temp_frostskydd: 3
+          temp_frostskydd: 5
           temp_min_for_fuktvarme: 0
           rh_aktivering: 60
           rh_avaktivering: 55

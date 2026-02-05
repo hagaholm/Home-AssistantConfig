@@ -15,22 +15,54 @@
 
 # Timmerflotte Temp & Humidity Sensor (Förråd)
 template:
-  - sensor:
-      # Source: Timmerflotte Temp & Humidity Sensor (Förråd)
-      # Company: Timmerflotte
-      # Type: Temperature, Humidity sensor
+  #
+  # Förråd Temperatur – med backup efter 30 minuter
+  #
+  - trigger:
+      - platform: time_pattern
+        minutes: "/1"
+      - platform: state
+        entity_id:
+          - sensor.timmerflotte_temp_hmd_sensor_temperatur
+          - sensor.forrad_backup_temperature
+
+    sensor:
       - name: "Förråd Temperatur"
         unique_id: forrad_timmerflotte_temperatur
-        state: "{{ states('sensor.timmerflotte_temp_hmd_sensor_temperatur') | float(0) }}"
         unit_of_measurement: "°C"
         device_class: temperature
         state_class: measurement
-        availability: "{{ states('sensor.timmerflotte_temp_hmd_sensor_temperatur') not in ['unknown', 'unavailable', ''] }}"
+        state: >
+          {% set primary = states('sensor.timmerflotte_temp_hmd_sensor_temperatur') %}
+          {% set backup = states('sensor.forrad_backup_temperature') %}
+          {% set last = states.sensor.timmerflotte_temp_hmd_sensor_temperatur.last_changed %}
+
+          {% if primary not in ['unknown','unavailable','']
+                and (now() - last).total_seconds() < 1800 %}
+            {{ primary | float }}
+          {% elif backup not in ['unknown','unavailable',''] %}
+            {{ backup | float }}
+          {% else %}
+            unknown
+          {% endif %}
+        availability: >
+          {{ states('sensor.timmerflotte_temp_hmd_sensor_temperatur') not in ['unknown','unavailable','']
+             or states('sensor.forrad_backup_temperature') not in ['unknown','unavailable',''] }}
         attributes:
-          source_sensor: sensor.timmerflotte_temp_hmd_sensor_temperatur
+          source_sensor: >
+            {% if primary not in ['unknown','unavailable','']
+                  and (now() - last).total_seconds() < 1800 %}
+              sensor.timmerflotte_temp_hmd_sensor_temperatur
+            {% else %}
+              sensor.forrad_backup_temperature
+            {% endif %}
           icon: mdi:thermometer
           friendly_name: Förråd Temperatur
 
+  #
+  # Förråd Luftfuktighet – utan backup (oförändrad)
+  #
+  - sensor:
       - name: "Förråd Luftfuktighet"
         unique_id: forrad_timmerflotte_luftfuktighet
         state: "{{ states('sensor.timmerflotte_temp_hmd_sensor_luftfuktighet') | float(0) }}"
@@ -42,4 +74,3 @@ template:
           source_sensor: sensor.timmerflotte_temp_hmd_sensor_luftfuktighet
           icon: mdi:water-percent
           friendly_name: Förråd Luftfuktighet
-

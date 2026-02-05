@@ -15,24 +15,56 @@
 
 # Timmerflotte Temp & Humidity Sensor (Friggebod)
 template:
-  - sensor:
-      # Source: Timmerflotte Temp & Humidity Sensor 4 (Friggebod)
-      # Company: Timmerflotte
-      # Type: Temperature, Humidity sensor
-      - name: "Friggebod Temperature"
-        unique_id: friggebod_timmerflotte_temperatur
-        state: "{{ states('sensor.timmerflotte_temp_hmd_sensor_temperatur_4') | float(0) }}"
+  #
+  # Förråd Temperatur – med backup efter 30 minuter
+  #
+  - trigger:
+      - platform: time_pattern
+        minutes: "/1"
+      - platform: state
+        entity_id:
+          - sensor.timmerflotte_temp_hmd_sensor_temperatur_4
+          - sensor.friggebod_backup_temperature
+
+    sensor:
+      - name: "Friggebod Temperatur"
+        unique_id: friggebod_timmerflotte_temperatur_4
         unit_of_measurement: "°C"
         device_class: temperature
         state_class: measurement
-        availability: "{{ states('sensor.timmerflotte_temp_hmd_sensor_temperatur_4') not in ['unknown', 'unavailable', ''] }}"
+        state: >
+          {% set primary = states('sensor.timmerflotte_temp_hmd_sensor_temperatur_4') %}
+          {% set backup = states('sensor.friggebod_backup_temperature') %}
+          {% set last = states.sensor.timmerflotte_temp_hmd_sensor_temperatur_4.last_changed %}
+
+          {% if primary not in ['unknown','unavailable','']
+                and (now() - last).total_seconds() < 1800 %}
+            {{ primary | float }}
+          {% elif backup not in ['unknown','unavailable',''] %}
+            {{ backup | float }}
+          {% else %}
+            unknown
+          {% endif %}
+        availability: >
+          {{ states('sensor.timmerflotte_temp_hmd_sensor_temperatur_4') not in ['unknown','unavailable','']
+             or states('sensor.friggebod_backup_temperature') not in ['unknown','unavailable',''] }}
         attributes:
-          source_sensor: sensor.timmerflotte_temp_hmd_sensor_temperatur_4
+          source_sensor: >
+            {% if primary not in ['unknown','unavailable','']
+                  and (now() - last).total_seconds() < 1800 %}
+              sensor.timmerflotte_temp_hmd_sensor_temperatur_4
+            {% else %}
+              sensor.friggebod_backup_temperature
+            {% endif %}
           icon: mdi:thermometer
           friendly_name: Friggebod Temperatur
 
+  #
+  # Friggebod Luftfuktighet – utan backup
+  #
+  - sensor:
       - name: "Friggebod Luftfuktighet"
-        unique_id: friggebod_timmerflotte_luftfuktighet
+        unique_id: friggebod_timmerflotte_luftfuktighet_4
         state: "{{ states('sensor.timmerflotte_temp_hmd_sensor_luftfuktighet_4') | float(0) }}"
         unit_of_measurement: "%"
         device_class: humidity
@@ -42,4 +74,3 @@ template:
           source_sensor: sensor.timmerflotte_temp_hmd_sensor_luftfuktighet_4
           icon: mdi:water-percent
           friendly_name: Friggebod Luftfuktighet
-

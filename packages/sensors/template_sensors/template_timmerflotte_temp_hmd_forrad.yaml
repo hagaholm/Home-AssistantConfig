@@ -16,7 +16,7 @@
 # Timmerflotte Temp & Humidity Sensor (Förråd)
 template:
   #
-  # Förråd Temperatur – med backup efter 30 minuter
+  # Förråd Temperatur – med backup efter 30 minuter och logg
   #
   - trigger:
       - platform: time_pattern
@@ -35,10 +35,10 @@ template:
         state: >
           {% set primary = states('sensor.timmerflotte_temp_hmd_sensor_temperatur') %}
           {% set backup = states('sensor.forrad_backup_temperature') %}
-          {% set last = states.sensor.timmerflotte_temp_hmd_sensor_temperatur.last_changed %}
+          {% set primary_last = as_timestamp(states.sensor.timmerflotte_temp_hmd_sensor_temperatur.last_changed) %}
+          {% set now_ts = as_timestamp(now()) %}
 
-          {% if primary not in ['unknown','unavailable','']
-                and (now() - last).total_seconds() < 1800 %}
+          {% if primary not in ['unknown','unavailable',''] and primary_last is not none and (now_ts - primary_last) < 1800 %}
             {{ primary | float }}
           {% elif backup not in ['unknown','unavailable',''] %}
             {{ backup | float }}
@@ -46,15 +46,32 @@ template:
             unknown
           {% endif %}
         availability: >
-          {{ states('sensor.timmerflotte_temp_hmd_sensor_temperatur') not in ['unknown','unavailable','']
-             or states('sensor.forrad_backup_temperature') not in ['unknown','unavailable',''] }}
+          {{ (states('sensor.timmerflotte_temp_hmd_sensor_temperatur') not in ['unknown','unavailable',''])
+             or (states('sensor.forrad_backup_temperature') not in ['unknown','unavailable','']) }}
         attributes:
           source_sensor: >
-            {% if primary not in ['unknown','unavailable','']
-                  and (now() - last).total_seconds() < 1800 %}
+            {% set primary = states('sensor.timmerflotte_temp_hmd_sensor_temperatur') %}
+            {% set primary_last = as_timestamp(states.sensor.timmerflotte_temp_hmd_sensor_temperatur.last_changed) %}
+            {% set now_ts = as_timestamp(now()) %}
+
+            {% if primary not in ['unknown','unavailable',''] and primary_last is not none and (now_ts - primary_last) < 1800 %}
               sensor.timmerflotte_temp_hmd_sensor_temperatur
-            {% else %}
+            {% elif states('sensor.forrad_backup_temperature') not in ['unknown','unavailable',''] %}
               sensor.forrad_backup_temperature
+            {% else %}
+              unknown
+            {% endif %}
+          used_at: >
+            {% set primary = states('sensor.timmerflotte_temp_hmd_sensor_temperatur') %}
+            {% set primary_last = states.sensor.timmerflotte_temp_hmd_sensor_temperatur.last_changed %}
+            {% set backup_last = states.sensor.forrad_backup_temperature.last_changed %}
+
+            {% if primary not in ['unknown','unavailable',''] and primary_last is not none and (as_timestamp(now()) - as_timestamp(primary_last)) < 1800 %}
+              {{ primary_last.isoformat() }}
+            {% elif states('sensor.forrad_backup_temperature') not in ['unknown','unavailable',''] and backup_last is not none %}
+              {{ backup_last.isoformat() }}
+            {% else %}
+              unknown
             {% endif %}
           icon: mdi:thermometer
           friendly_name: Förråd Temperatur

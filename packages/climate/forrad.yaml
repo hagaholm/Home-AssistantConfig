@@ -64,7 +64,7 @@ homeassistant:
       
       # Värmestyrning
       max_varmetid_per_dag: &max_varmetid_per_dag 12  # antal 10-min perioder (= 2h)
-      min_gangtid: &min_gangtid "00:20:00"  # minuter värmen ska köra minst
+      min_gangtid: &min_gangtid "00:30:00"  # minuter värmen ska köra minst
       
       # Övervakningsintervall
       kontroll_intervall: &kontroll_intervall 5  # minuter
@@ -406,7 +406,7 @@ input_boolean:
 timer:
   forrad_min_runtime:
     name: Förråd min gångtid
-    duration: "00:20:00"  # 20 minuter minimum gångtid
+    duration: "00:30:00"  # 30 minuter minimum gångtid
 
 counter:
   forrad_varme_tid:

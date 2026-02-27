@@ -35,41 +35,47 @@ views:
         cards:
           - type: tile
             entity: sensor.badrum_temperatur
-            name: Badrum temp
+            name: Temp
           - type: tile
             entity: sensor.badrum_luftfuktighet
-            name: Badrum fukt
+            name: Fukt
           - type: tile
             entity: sensor.fukt_badrumsfonster
-            name: Badrum fönster fukt
+            name: Fönster fukt
 # -------------------------------------
       - type: markdown
         content: "# 🌬️ Friggebod"
 
       - type: grid
-        columns: 2
+        columns: 3
         square: false
         cards:
           - type: tile
             entity: sensor.friggebod_temperatur
-            name: Friggebod temp
+            name: Temp
           - type: tile
             entity: sensor.friggebod_luftfuktighet
-            name: Friggebod fukt
+            name: Fukt
+          - type: tile
+            entity: switch.friggebod_elvarme
+            name: Elvärme
 # -------------------------------------
       - type: markdown
         content: "# 🌬️ Förråd"
 
       - type: grid
-        columns: 2
+        columns: 3
         square: false
         cards:
           - type: tile
             entity: sensor.forrad_temperature
-            name: Förråd temp
+            name: Temp
           - type: tile
             entity: sensor.forrad_luftfuktighet
-            name: Förråd fukt
+            name: Fukt
+          - type: tile
+            entity: switch.forrad_elvarme
+            name: Elvärme
 # -------------------------------------
       - type: markdown
         content: "# 🌬️ Ute"
@@ -79,10 +85,10 @@ views:
         cards:
           - type: tile
             entity: sensor.ute
-            name: Ute temp
+            name: Temp
           - type: tile
             entity: sensor.ute_friggebod_humidity
-            name: Ute fukt
+            name: Fukt
 
   ####################################################
   # STATUS VY

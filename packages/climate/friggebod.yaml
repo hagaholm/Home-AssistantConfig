@@ -119,12 +119,6 @@ template:
             {{ (K * (e ** exp_val) * RH * R_sp / (T_abs + T)) | round(2) }}
           {% endif %}
 
-      # Beräknar mögelrisk baserat på relativ fuktighet
-      # LOGIK:
-      # - T < 0°C: Risk = 0% (ingen svampväxt i kallt)
-      # - RH < 75%: Risk = 0% (under tröskel)
-      # - RH >= 75%: Risk = (RH - 75) * 2 (linjär ökning)
-      # EXEMPEL: RH=80% => 10%, RH=90% => 30%
       - name: "Friggebod mögelrisk"
         unit_of_measurement: "%"
         device_class: "humidity"
@@ -135,17 +129,23 @@ template:
         state: >
           {% set T = states('sensor.friggebod_temperatur') | float(0) %}
           {% set RH = states('sensor.friggebod_luftfuktighet') | float(0) %}
-          {% set troskel = 75 %}
-          {% if T < 0 %}
+
+          {% if T <= 0 %}
             0
           {% else %}
-            {% set risk = ((RH - troskel) * 2) %}
-            {% if risk < 0 %}
+            {# 1. Beräkna dynamisk fukt-tröskel baserat på temperatur #}
+            {% set troskel = 85 - (T * 0.5) %}
+            
+            {# 2. Håll tröskeln inom rimliga gränser (75% till 95%) #}
+            {% if troskel < 75 %} {% set troskel = 75 %} {% endif %}
+            {% if troskel > 95 %} {% set troskel = 95 %} {% endif %}
+            
+            {# 3. Beräkna risken från 0 till 100% #}
+            {% if RH <= troskel %}
               0
-            {% elif risk > 100 %}
-              100
             {% else %}
-              {{ risk | round(0) }}
+              {% set risk = ((RH - troskel) / (100 - troskel)) * 100 %}
+              {{ [ [risk, 0]|max, 100 ]|min | round(0) }}
             {% endif %}
           {% endif %}
 
@@ -544,4 +544,3 @@ automation:
             RH: {{ states('sensor.friggebod_luftfuktighet') }}%
             Mögelrisk: {{ states('sensor.friggebod_mogelrisk') }}%
             Åtgärd: Öka ventilation eller värmning för att sänka fuktigheten.
-            Mögelrisk: {{ states('sensor.friggebod_mogelrisk') }} %

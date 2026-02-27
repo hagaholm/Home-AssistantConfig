@@ -85,17 +85,23 @@ template:
         state: >
           {% set T = states('sensor.husvagn_temperature') | float(0) %}
           {% set RH = states('sensor.husvagn_humidity') | float(0) %}
-          {% set troskel = 75 %}
-          {% if T < 0 %}
+
+          {% if T <= 0 %}
             0
           {% else %}
-            {% set risk = ((RH - troskel) * 2) %}
-            {% if risk < 0 %}
+            {# 1. Beräkna dynamisk fukt-tröskel baserat på temperatur #}
+            {% set troskel = 85 - (T * 0.5) %}
+            
+            {# 2. Håll tröskeln inom rimliga gränser (75% till 95%) #}
+            {% if troskel < 75 %} {% set troskel = 75 %} {% endif %}
+            {% if troskel > 95 %} {% set troskel = 95 %} {% endif %}
+            
+            {# 3. Beräkna risken från 0 till 100% #}
+            {% if RH <= troskel %}
               0
-            {% elif risk > 100 %}
-              100
             {% else %}
-              {{ risk | round(0) }}
+              {% set risk = ((RH - troskel) / (100 - troskel)) * 100 %}
+              {{ [ [risk, 0]|max, 100 ]|min | round(0) }}
             {% endif %}
           {% endif %}
 

@@ -348,21 +348,21 @@ script:
       - service: light.turn_on
         data:
           entity_id: light.friggebod_fasad
-          brightness_pct: 50
+          brightness_pct: 60
           transition: 1
       - condition: template
         value_template: "{{ states('light.forrad_fasad') != 'unavailable' }}"
       - service: light.turn_on
         data:
           entity_id: light.forrad_fasad
-          brightness_pct: 50
+          brightness_pct: 60
           transition: 1
       - condition: template
         value_template: "{{ states('light.tvattstugan_fasad') != 'unavailable' }}"
       - service: light.turn_on
         data:
           entity_id: light.tvattstugan_fasad
-          brightness_pct: 75
+          brightness_pct: 80
           transition: 1
       - condition: template
         value_template: "{{ states('light.huvudentre2') != 'unavailable' }}"
@@ -387,14 +387,14 @@ script:
       - service: light.turn_on
         data:
           entity_id: light.forrad_fasad
-          brightness_pct: 40
+          brightness_pct: 45
           transition: 1
       - condition: template
         value_template: "{{ states('light.tvattstugan_fasad') != 'unavailable' }}"
       - service: light.turn_on
         data:
           entity_id: light.tvattstugan_fasad
-          brightness_pct: 60
+          brightness_pct: 65
           transition: 1
       - condition: template
         value_template: "{{ states('light.huvudentre2') != 'unavailable' }}"

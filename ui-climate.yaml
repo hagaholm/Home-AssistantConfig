@@ -124,7 +124,7 @@ views:
       - type: markdown
         content: "# 🌬️ Ute"
       - type: grid
-        columns: 2
+        columns: 3
         square: false
         cards:
           - type: tile
@@ -133,6 +133,9 @@ views:
           - type: tile
             entity: sensor.ute_friggebod_humidity
             name: Fukt
+          - type: tile
+            entity: sensor.ute_mogelrisk
+            name: Mögelrisk
 
   ####################################################
   # STATUS VY

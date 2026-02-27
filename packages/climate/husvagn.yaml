@@ -1,0 +1,124 @@
+####################################################
+#                                                  #
+#           HUSVAGN ÖVERVAKNING PACKAGE            #
+#                                                  #
+####################################################
+# Övervakning av klimat i husvagn baserat på temperatur och fukt.
+# Systemet beräknar absolut fuktighet och varnar vid hög mögelrisk.
+#
+# EXTERNA BEROENDEN (sensorer definierade på annat håll):
+# - sensor.husvagn_temperature (temperatur husvagn, °C)
+# - sensor.husvagn_humidity (relativ fukt husvagn, %)
+# - sensor.ute (utomhustemperatur, °C)
+# - sensor.ute_friggebod_humidity (relativ fukt ute, %)
+# - notify.* (notification service, se input_text.husvagn_notification_target)
+#
+# Funktioner:
+# - Mögelriskberäkning (absolut fukt + relativ fukt)
+# - Mögelvarning vid högt värde
+####################################################
+
+############################################
+# NOTIFIKATION-KONFIGURATION
+############################################
+input_text:
+  husvagn_notification_target:
+    name: husvagn notifikation-target
+    initial: "notify.mobile_app_sm_a528b"
+    icon: mdi:bell
+
+############################################
+# KONFIGURERBARA VARIABLER
+############################################
+homeassistant:
+  customize:
+    package.node_anchors:
+      # Mögelrisk
+      mogelrisk_troskel: &mogelrisk_troskel 75
+      mogelrisk_varning: &mogelrisk_varning 60
+      mogelrisk_varning_tid: &mogelrisk_varning_tid 6  # timmar
+      
+      # Matematiska konstanter för fuktberäkning
+      magnus_a: &magnus_a 17.67
+      magnus_b: &magnus_b 243.5
+      absolut_noll: &absolut_noll 273.15
+      ideal_gas_konstant: &ideal_gas_konstant 2.1674
+      magnus_konstant: &magnus_konstant 6.112
+
+############################################
+# TEMPLATE SENSORER
+############################################
+template:
+  - sensor:
+      # Beräknar absolut fukt inne (g/m³)
+      - name: "Husvagn absolut fukt inne"
+        unit_of_measurement: "g/m³"
+        state_class: "measurement"
+        icon: mdi:water
+        availability: >
+          {{ states('sensor.husvagn_temperature') not in ['unknown', 'unavailable', '']
+             and states('sensor.husvagn_humidity') not in ['unknown', 'unavailable', ''] }}
+        state: >
+          {% set T = states('sensor.husvagn_temperature') | float(none) %}
+          {% set RH = states('sensor.husvagn_humidity') | float(none) %}
+          {% if T is none or RH is none %}
+            {{ none }}
+          {% else %}
+            {% set a = 17.67 %}
+            {% set b = 243.5 %}
+            {% set R_sp = 2.1674 %}
+            {% set T_abs = 273.15 %}
+            {% set K = 6.112 %}
+            {% set exp_val = (a * T) / (T + b) %}
+            {% set e = 2.718281828459045 %}
+            {{ (K * (e ** exp_val) * RH * R_sp / (T_abs + T)) | round(2) }}
+          {% endif %}
+
+      # Beräknar mögelrisk baserat på relativ fuktighet
+      - name: "Husvagn mögelrisk"
+        unit_of_measurement: "%"
+        device_class: "humidity"
+        icon: mdi:mushroom
+        availability: >
+          {{ states('sensor.husvagn_temperature') not in ['unknown', 'unavailable', '']
+             and states('sensor.husvagn_humidity') not in ['unknown', 'unavailable', ''] }}
+        state: >
+          {% set T = states('sensor.husvagn_temperature') | float(0) %}
+          {% set RH = states('sensor.husvagn_humidity') | float(0) %}
+          {% set troskel = 75 %}
+          {% if T < 0 %}
+            0
+          {% else %}
+            {% set risk = ((RH - troskel) * 2) %}
+            {% if risk < 0 %}
+              0
+            {% elif risk > 100 %}
+              100
+            {% else %}
+              {{ risk | round(0) }}
+            {% endif %}
+          {% endif %}
+
+############################################
+# AUTOMATIONER
+############################################
+automation:
+  # AUTO: MÖGELVARNING
+  # Skickar notifikation om mögelrisken är högt under längre tid.
+  - alias: Husvagn – mögelvarning
+    description: Varnar när mögelrisken är över 60% i mer än 6 timmar
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.husvagn_mogelrisk
+        above: 60
+        for:
+          hours: 6
+    action:
+      - service: "{{ states('input_text.husvagn_notification_target') }}"
+        data:
+          message: >
+            ⚠️ Hög mögelrisk uppmätt i husvagn!
+            Temp: {{ states('sensor.husvagn_temperature') }}°C
+            RH: {{ states('sensor.husvagn_humidity') }}%
+            Mögelrisk: {{ states('sensor.husvagn_mogelrisk') }}%
+            Åtgärd: Öka ventilationen eller se över miljön för att sänka fuktigheten.

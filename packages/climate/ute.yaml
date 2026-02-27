@@ -1,0 +1,58 @@
+####################################################
+#                                                  #
+#           UTERUM ÖVERVAKNING PACKAGE             #
+#                                                  #
+####################################################
+#
+# EXTERNA BEROENDEN (sensorer definierade på annat håll):
+# - sensor.ute (utomhustemperatur, °C)
+# - sensor.ute_friggebod_humidity (relativ fukt ute, %)
+#
+####################################################
+
+############################################
+# KONFIGURERBARA VARIABLER
+############################################
+homeassistant:
+  customize:
+    package.node_anchors:
+      # Mögelrisk
+      mogelrisk_troskel: &mogelrisk_troskel 75
+      mogelrisk_varning: &mogelrisk_varning 60
+      mogelrisk_varning_tid: &mogelrisk_varning_tid 6  # timmar
+      
+      # Matematiska konstanter för fuktberäkning
+      magnus_a: &magnus_a 17.67
+      magnus_b: &magnus_b 243.5
+      absolut_noll: &absolut_noll 273.15
+      ideal_gas_konstant: &ideal_gas_konstant 2.1674
+      magnus_konstant: &magnus_konstant 6.112
+
+############################################
+# TEMPLATE SENSORER
+############################################
+template:
+  - sensor:
+      # Beräknar absolut fukt utomhus (g/m³)
+      - name: "Utomhus absolut fukt"
+        unit_of_measurement: "g/m³"
+        state_class: "measurement"
+        icon: mdi:water
+        availability: >
+          {{ states('sensor.ute') not in ['unknown', 'unavailable', '']
+             and states('sensor.ute_friggebod_humidity') not in ['unknown', 'unavailable', ''] }}
+        state: >
+          {% set T = states('sensor.ute') | float(none) %}
+          {% set RH = states('sensor.ute_friggebod_humidity') | float(none) %}
+          {% if T is none or RH is none %}
+            {{ none }}
+          {% else %}
+            {% set a = 17.67 %}
+            {% set b = 243.5 %}
+            {% set R_sp = 2.1674 %}
+            {% set T_abs = 273.15 %}
+            {% set K = 6.112 %}
+            {% set exp_val = (a * T) / (T + b) %}
+            {% set e = 2.718281828459045 %}
+            {{ (K * (e ** exp_val) * RH * R_sp / (T_abs + T)) | round(2) }}
+          {% endif %}

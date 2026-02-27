@@ -119,32 +119,6 @@ template:
             {{ (K * (e ** exp_val) * RH * R_sp / (T_abs + T)) | round(2) }}
           {% endif %}
 
-      # Beräknar absolut fukt utomhus (g/m³)
-      # Samma Magnus-Tetens formel, men använder ute-temperaturer.
-      # Används för att beräkna delta_abs = AH_inne - AH_ute
-      - name: "Utomhus absolut fukt"
-        unit_of_measurement: "g/m³"
-        state_class: "measurement"
-        icon: mdi:water
-        availability: >
-          {{ states('sensor.ute') not in ['unknown', 'unavailable', '']
-             and states('sensor.ute_friggebod_humidity') not in ['unknown', 'unavailable', ''] }}
-        state: >
-          {% set T = states('sensor.ute') | float(none) %}
-          {% set RH = states('sensor.ute_friggebod_humidity') | float(none) %}
-          {% if T is none or RH is none %}
-            {{ none }}
-          {% else %}
-            {% set a = 17.67 %}
-            {% set b = 243.5 %}
-            {% set R_sp = 2.1674 %}
-            {% set T_abs = 273.15 %}
-            {% set K = 6.112 %}
-            {% set exp_val = (a * T) / (T + b) %}
-            {% set e = 2.718281828459045 %}
-            {{ (K * (e ** exp_val) * RH * R_sp / (T_abs + T)) | round(2) }}
-          {% endif %}
-
       # Beräknar mögelrisk baserat på relativ fuktighet
       # LOGIK:
       # - T < 0°C: Risk = 0% (ingen svampväxt i kallt)

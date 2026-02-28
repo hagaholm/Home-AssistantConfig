@@ -528,11 +528,11 @@ automation:
   # Skickar notifikation om mögelrisken är högt under längre tid.
   # Notification-target kan ändras via input_text.friggebod_notification_target
   - alias: Friggebod – mögelvarning
-    description: Varnar när mögelrisken är över 60% i mer än 6 timmar
+    description: Varnar när mögelrisken är över 50% i mer än 6 timmar
     trigger:
       - platform: numeric_state
         entity_id: sensor.friggebod_mogelrisk
-        above: 60
+        above: 50
         for:
           hours: 6
     action:

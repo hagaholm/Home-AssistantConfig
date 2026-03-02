@@ -9,11 +9,6 @@
 #                                                     #
 #######################################################
 #
-# METADATA:
-# Skapad: YYYY-MM-DD
-# Senast ändrad: YYYY-MM-DD
-# Version: 1.0
-# Författare: [Ditt namn]
 #
 # BESKRIVNING:
 # [Kort beskrivning av vad automationen gör]

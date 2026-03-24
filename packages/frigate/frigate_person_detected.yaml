@@ -241,7 +241,7 @@ automation:
     action:
       - choose:
 
-          # Wait 15 seconds and check if motion is still detected before turning on the light
+          # Wait 2 seconds and check if motion is still detected before turning on the light
           - conditions:
               - condition: and
                 conditions:
@@ -257,7 +257,7 @@ automation:
                         entity_id: sensor.ljusstyrka
                         below: 10
             sequence:
-              - delay: '00:00:15'
+              - delay: '00:00:'
               - condition: state
                 entity_id: binary_sensor.cams_person_backside_active
                 state: 'on'

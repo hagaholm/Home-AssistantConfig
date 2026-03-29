@@ -17,7 +17,7 @@
 # Hårdvara/Entiteter:
 # - Ljussensor: sensor.ljusstyrka
 # - Trädgårdsswitch: switch.tradgard
-# - Trädäck: switch.stickpropp_8
+# - Trädäck: switch.shellyoutdoorsg3-e4b063f8f840
 # - Friggebod fönster: switch.friggebod_fonster
 # - Friggebod ute: light.friggebod_ute_2
 # - Hemstatus: input_select.home_status
@@ -273,7 +273,7 @@ script:
 #
 # HÅRDVARA:
 # - switch.tradgard
-# - switch.stickpropp_8 (Trädäck uterum)
+# - switch.shellyoutdoorsg3-e4b063f8f840 (Trädäck uterum)
 # - switch.friggebod_fonster
 # - light.friggebod_ute_2
 #
@@ -294,9 +294,9 @@ script:
       - service: switch.turn_on
         entity_id: switch.tradgard
       - condition: template
-        value_template: "{{ states('switch.stickpropp_8') != 'unavailable' }}"
+        value_template: "{{ states('switch.shellyoutdoorsg3-e4b063f8f840') != 'unavailable' }}"
       - service: switch.turn_on
-        entity_id: switch.stickpropp_8
+        entity_id: switch.shellyoutdoorsg3-e4b063f8f840
       - condition: template
         value_template: "{{ states('switch.friggebod_fonster') != 'unavailable' }}"
       - service: switch.turn_on
@@ -320,9 +320,9 @@ script:
       - service: switch.turn_off
         entity_id: switch.tradgard
       - condition: template
-        value_template: "{{ states('switch.stickpropp_8') != 'unavailable' }}"
+        value_template: "{{ states('switch.shellyoutdoorsg3-e4b063f8f840') != 'unavailable' }}"
       - service: switch.turn_off
-        entity_id: switch.stickpropp_8
+        entity_id: switch.shellyoutdoorsg3-e4b063f8f840
       - condition: template
         value_template: "{{ states('switch.friggebod_fonster') != 'unavailable' }}"
       - service: switch.turn_off

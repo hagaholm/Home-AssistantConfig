@@ -234,7 +234,7 @@ automation:
       # Triggers for person detection on backside
       - platform: state
         entity_id: 
-          - binary_sensor.cams_person_backside_active
+          - binary_sensor.cams_person_backside_north_active
 
     condition: []
 
@@ -246,7 +246,7 @@ automation:
               - condition: and
                 conditions:
                   - condition: state
-                    entity_id: binary_sensor.cams_person_backside_active
+                    entity_id: binary_sensor.cams_person_backside_north_active
                     state: 'on'
                   - condition: or
                     conditions:
@@ -259,7 +259,7 @@ automation:
             sequence:
               - delay: '00:00:02'
               - condition: state
-                entity_id: binary_sensor.cams_person_backside_active
+                entity_id: binary_sensor.cams_person_backside_north_active
                 state: 'on'
               - condition: numeric_state
                 entity_id: sensor.ljusstyrka
@@ -271,14 +271,14 @@ automation:
           # Turn off light if no motion is detected after 20 seconds
           - conditions:
               - condition: state
-                entity_id: binary_sensor.cams_person_backside_active
+                entity_id: binary_sensor.cams_person_backside_north_active
                 state: 'off'
             sequence:
               - delay: '00:00:20'
               - condition: and
                 conditions:
                   - condition: state
-                    entity_id: binary_sensor.cams_person_backside_active
+                    entity_id: binary_sensor.cams_person_backside_north_active
                     state: 'off'
               - service: light.turn_off
                 target:
@@ -295,7 +295,7 @@ automation:
       # Triggers for person detection on backside
       - platform: state
         entity_id: 
-          - binary_sensor.cams_person_backside_active
+          - binary_sensor.cams_person_backside_north_active
 
     condition: []
 
@@ -307,7 +307,7 @@ automation:
               - condition: and
                 conditions:
                   - condition: state
-                    entity_id: binary_sensor.cams_person_backside_active
+                    entity_id: binary_sensor.cams_person_backside_north_active
                     state: 'on'
                   - condition: or
                     conditions:
@@ -339,14 +339,14 @@ automation:
           # Turn off light if no motion is detected after 30 seconds
           - conditions:
               - condition: state
-                entity_id: binary_sensor.cams_person_backside_active
+                entity_id: binary_sensor.cams_person_backside_north_active
                 state: 'off'
             sequence:
               - delay: '00:00:30'
               - condition: and
                 conditions:
                   - condition: state
-                    entity_id: binary_sensor.cams_person_backside_active
+                    entity_id: binary_sensor.cams_person_backside_north_active
                     state: 'off'
 
               # Turn off lights as before

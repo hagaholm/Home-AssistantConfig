@@ -26,6 +26,9 @@ template:
       - name: "Cams Person Backside Active"
         state: "{{ states('sensor.cams_person_backside_count')|int(0) > 0 }}"
 
+      - name: "Cams Person Backside North Active"
+        state: "{{ states('sensor.cams_person_backside_north_count')|int(0) > 0 }}"
+
       - name: "Cams Person Frontside Active"
         state: "{{ states('sensor.cams_person_frontside_count')|int(0) > 0 }}"
 ##################################################################################
@@ -102,6 +105,15 @@ template:
             states('sensor.cam6_person_count') | int(0) +
             states('sensor.cam8_person_count') | int(0)
           }}
+
+      - name: "Cams Person Backside North Count"
+        state_class: measurement
+        state: >
+          {{
+            states('sensor.cam5_person_count') | int(0) +
+            states('sensor.cam6_person_count') | int(0)
+          }}
+
 
       - name: "Cams Person Frontside Count"
         state_class: measurement

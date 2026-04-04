@@ -1,0 +1,66 @@
+####################################################
+#                                                  #
+#           FRIGATE FACE DETECTION MQTT            #
+#                                                  #
+####################################################
+# Frigate face recognition support for Home Assistant
+# via MQTT event topics.
+#
+# This package creates a face-detection binary sensor and
+# several helper sensors for the last detected face.
+#
+# Adjust `state_topic` if your Frigate MQTT topic differs.
+# If your event payload uses `data` or `value_json.data`, the
+# templates will also attempt to read those values.
+#
+mqtt:
+  binary_sensor:
+    - name: "Frigate Face Detected"
+      unique_id: frigate_face_detected
+      device_class: motion
+      state_topic: "frigate/events"
+      value_template: >
+        {% set evt = value_json.data if value_json.data is defined else value_json %}
+        {% if (value_json.type == 'face') or (evt.type == 'face') %}on{% else %}off{% endif %}
+      json_attributes_topic: "frigate/events"
+      json_attributes_template: >
+        {% set evt = value_json.data if value_json.data is defined else value_json %}
+        {% if (value_json.type == 'face') or (evt.type == 'face') %}
+          {"camera": "{{ evt.camera | default('unknown') }}", "face_name": "{{ evt.name | default(evt.label | default('unknown')) }}", "face_id": "{{ evt.id | default('unknown') }}", "timestamp": "{{ evt.timestamp | default('') }}"}
+        {% else %}
+          {}
+        {% endif %}
+
+  sensor:
+    - name: "Frigate Face Name"
+      unique_id: frigate_face_name
+      state_topic: "frigate/events"
+      value_template: >
+        {% set evt = value_json.data if value_json.data is defined else value_json %}
+        {% if (value_json.type == 'face') or (evt.type == 'face') %}
+          {{ evt.name | default(evt.label | default('unknown')) }}
+        {% else %}
+          unknown
+        {% endif %}
+
+    - name: "Frigate Face Camera"
+      unique_id: frigate_face_camera
+      state_topic: "frigate/events"
+      value_template: >
+        {% set evt = value_json.data if value_json.data is defined else value_json %}
+        {% if (value_json.type == 'face') or (evt.type == 'face') %}
+          {{ evt.camera | default('unknown') }}
+        {% else %}
+          unknown
+        {% endif %}
+
+    - name: "Frigate Face Timestamp"
+      unique_id: frigate_face_timestamp
+      state_topic: "frigate/events"
+      value_template: >
+        {% set evt = value_json.data if value_json.data is defined else value_json %}
+        {% if (value_json.type == 'face') or (evt.type == 'face') %}
+          {{ evt.timestamp | default('') }}
+        {% else %}
+          unknown
+        {% endif %}

@@ -4,29 +4,27 @@
 #                                                  #
 ####################################################
 # Frigate face recognition support for Home Assistant
-# via MQTT event topics.
+# via MQTT tracked object updates.
 #
 # This package creates a face-detection binary sensor and
-# several helper sensors for the last detected face.
+# helper sensors for the most recent face recognition event.
 #
-# Adjust `state_topic` if your Frigate MQTT topic differs.
-# If your event payload uses `data` or `value_json.data`, the
-# templates will also attempt to read those values.
+# Latest Frigate publishes face recognition updates on
+# `frigate/tracked_object_update` with payload type `face`.
+# Adjust `state_topic` if your MQTT topic prefix is different.
 #
 mqtt:
   binary_sensor:
     - name: "Frigate Face Detected"
       unique_id: frigate_face_detected
       device_class: motion
-      state_topic: "frigate/events"
+      state_topic: "frigate/tracked_object_update"
       value_template: >
-        {% set evt = value_json.data if value_json.data is defined else value_json %}
-        {% if (value_json.type == 'face') or (evt.type == 'face') %}on{% else %}off{% endif %}
-      json_attributes_topic: "frigate/events"
+        {% if value_json.type == 'face' %}on{% else %}off{% endif %}
+      json_attributes_topic: "frigate/tracked_object_update"
       json_attributes_template: >
-        {% set evt = value_json.data if value_json.data is defined else value_json %}
-        {% if (value_json.type == 'face') or (evt.type == 'face') %}
-          {"camera": "{{ evt.camera | default('unknown') }}", "face_name": "{{ evt.name | default(evt.label | default('unknown')) }}", "face_id": "{{ evt.id | default('unknown') }}", "timestamp": "{{ evt.timestamp | default('') }}"}
+        {% if value_json.type == 'face' %}
+          {"camera": "{{ value_json.camera | default('unknown') }}", "face_name": "{{ value_json.name | default('unknown') }}", "face_id": "{{ value_json.id | default('unknown') }}", "face_score": "{{ value_json.score | default('') }}", "timestamp": "{{ value_json.timestamp | default('') }}", "raw_event": "{{ value_json | tojson }}"}
         {% else %}
           {}
         {% endif %}
@@ -34,33 +32,46 @@ mqtt:
   sensor:
     - name: "Frigate Face Name"
       unique_id: frigate_face_name
-      state_topic: "frigate/events"
+      state_topic: "frigate/tracked_object_update"
       value_template: >
-        {% set evt = value_json.data if value_json.data is defined else value_json %}
-        {% if (value_json.type == 'face') or (evt.type == 'face') %}
-          {{ evt.name | default(evt.label | default('unknown')) }}
+        {% if value_json.type == 'face' %}
+          {{ value_json.name | default('unknown') }}
         {% else %}
           unknown
         {% endif %}
 
     - name: "Frigate Face Camera"
       unique_id: frigate_face_camera
-      state_topic: "frigate/events"
+      state_topic: "frigate/tracked_object_update"
       value_template: >
-        {% set evt = value_json.data if value_json.data is defined else value_json %}
-        {% if (value_json.type == 'face') or (evt.type == 'face') %}
-          {{ evt.camera | default('unknown') }}
+        {% if value_json.type == 'face' %}
+          {{ value_json.camera | default('unknown') }}
+        {% else %}
+          unknown
+        {% endif %}
+
+    - name: "Frigate Face Score"
+      unique_id: frigate_face_score
+      state_topic: "frigate/tracked_object_update"
+      unit_of_measurement: ""
+      value_template: >
+        {% if value_json.type == 'face' %}
+          {{ value_json.score | default('') }}
         {% else %}
           unknown
         {% endif %}
 
     - name: "Frigate Face Timestamp"
       unique_id: frigate_face_timestamp
-      state_topic: "frigate/events"
+      state_topic: "frigate/tracked_object_update"
       value_template: >
-        {% set evt = value_json.data if value_json.data is defined else value_json %}
-        {% if (value_json.type == 'face') or (evt.type == 'face') %}
-          {{ evt.timestamp | default('') }}
+        {% if value_json.type == 'face' %}
+          {{ value_json.timestamp | default('') }}
         {% else %}
           unknown
         {% endif %}
+
+    - name: "Frigate Face Event Raw"
+      unique_id: frigate_face_event_raw
+      state_topic: "frigate/tracked_object_update"
+      value_template: "{{ value_json | tojson }}"

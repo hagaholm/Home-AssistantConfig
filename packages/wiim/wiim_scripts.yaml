@@ -1,0 +1,40 @@
+####################################################
+#                                                  #
+#         WIIM - Scripts                           #
+#                                                  #
+####################################################
+
+script:
+  wiim_play_p3:
+    alias: "WiiM - Play Sveriges Radio P3"
+    description: "Select Sveriges Radio P3 on WiiM Mini-F7E6"
+    sequence:
+      # First try with select_source (if the exact name works)
+      - service: media_player.select_source
+        data:
+          entity_id: media_player.wiim_mini_f7e6
+          source: "Sverige Radio P3"
+      
+      # Alternative: Use play_media if the above doesn't work
+      # Uncomment and use the correct media_content_id from browse_media results
+      # - service: media_player.play_media
+      #   data:
+      #     entity_id: media_player.wiim_mini_f7e6
+      #     media_content_type: music
+      #     media_content_id: "REPLACE_WITH_P3_ID_FROM_BROWSE_MEDIA"
+
+  wiim_browse_radio_stations:
+    alias: "WiiM - Browse Radio Stations (Debug)"
+    description: "Browse available radio stations to find correct P3 ID"
+    sequence:
+      - action: media_player.browse_media
+        target:
+          entity_id: media_player.wiim_mini_f7e6
+        data:
+          media_content_type: radio
+          media_content_id: ""
+        response_variable: radio_stations
+      - service: system_log.write
+        data:
+          message: "Available radio stations: {{ radio_stations | tojson }}"
+          level: info

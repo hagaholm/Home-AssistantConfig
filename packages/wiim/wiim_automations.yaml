@@ -1,0 +1,24 @@
+####################################################
+#                                                  #
+#         WIIM AUTOMATIONS                        #
+#                                                  #
+####################################################
+
+# Example automations for WiiM devices
+# Uncomment and customize as needed
+
+# automation:
+#   - alias: "Play P3 on WiiM when living room motion detected"
+#     trigger:
+#       platform: state
+#       entity_id: binary_sensor.living_room_motion
+#       to: "on"
+#     action:
+#       - service: script.wiim_play_p3
+#
+#   - alias: "Play P3 on WiiM at specific time"
+#     trigger:
+#       platform: time
+#       at: "07:00:00"
+#     action:
+#       - service: script.wiim_play_p3

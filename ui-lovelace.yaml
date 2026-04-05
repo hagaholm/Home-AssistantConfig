@@ -1557,6 +1557,125 @@ views:
         show_header_toggle: true
         state_color: true
     icon: 'mdi:lan'
+  - path: frigate_presence
+    title: Frigate Presence
+    badges: []
+    icon: 'mdi:camera-account'
+    cards:
+      # ==========================================
+      # TEMPORARY PRESENCE STATUS
+      # ==========================================
+      - type: vertical-stack
+        cards:
+          - type: heading
+            heading: 'Temporary Presence Status'
+            heading_tag: h3
+          - type: entities
+            title: Current Status
+            show_header_toggle: false
+            entities:
+              - entity: input_select.home_status
+                name: Home Status (Primary)
+              - entity: input_boolean.frigate_temp_presence
+                name: Temp Presence Active
+                icon: mdi:timer
+              - entity: input_datetime.frigate_temp_presence_timeout
+                name: Timeout Expires At
+                icon: mdi:clock-outline
+      
+      # ==========================================
+      # LIVE FACE DETECTION
+      # ==========================================
+      - type: vertical-stack
+        cards:
+          - type: heading
+            heading: 'Live Face Detection'
+            heading_tag: h3
+          - type: entities
+            title: Detection Events
+            show_header_toggle: false
+            state_color: true
+            entities:
+              - entity: binary_sensor.frigate_face_detected
+                name: Face Detected (Binary)
+              - entity: sensor.frigate_face_name
+                name: Detected Person
+                icon: mdi:face-recognition
+              - entity: sensor.frigate_face_camera
+                name: Camera Source
+                icon: mdi:video-camera
+              - entity: sensor.frigate_face_score
+                name: Confidence Score
+                icon: mdi:percent
+              - entity: sensor.frigate_face_timestamp
+                name: Last Detection Time
+                icon: mdi:clock-outline
+      
+      # ==========================================
+      # DEVICE TRACKING (WiFi-based presence)
+      # ==========================================
+      - type: vertical-stack
+        cards:
+          - type: heading
+            heading: 'Device Tracking (WiFi Presence)'
+            heading_tag: h3
+          - type: entities
+            title: Tracked Device Group
+            show_header_toggle: true
+            entities:
+              - entity: group.track_for_home_devices
+                name: All Tracked Devices
+          
+          - type: entities
+            title: Individual Person Status
+            show_header_toggle: false
+            state_color: true
+            entities:
+              - entity: person.micke
+                icon: mdi:account
+              - entity: person.annelie
+                icon: mdi:account
+              - entity: person.louise
+                icon: mdi:account
+              - entity: person.andreas
+                icon: mdi:account
+      
+      # ==========================================
+      # HOW IT WORKS - EXPLANATION
+      # ==========================================
+      - type: markdown
+        content: |
+          ## 🏠 Frigate Temporary Presence System
+          
+          ### What is it?
+          Use Reolink camera face recognition (Frigate) to **instantly detect** when someone arrives home, speeding up presence detection while WiFi connects.
+          
+          ### How it works:
+          1. **Person arrives** → Frigate detects face on entry camera (Uppfart/Entre)
+          2. **Instant trigger** → Status changes to "Hemma" immediately (< 1 second)
+          3. **5-min window** → System waits for WiFi connection to activate
+          4. **WiFi takes over** → If phone connects, WiFi presence takes control
+          5. **Timeout revert** → If no WiFi after 5 min, status reverts to "Borta"
+          
+          ### Cameras monitored:
+          - **Cam 3** (Uppfart) - Front driveway entrance
+          - **Cam 8** (Entre) - Main front entrance
+          
+          ### People detected:
+          - ✅ Micke
+          - ✅ Annelie
+          
+          ### Benefits:
+          | Before | After |
+          |--------|-------|
+          | 30-60s delay (WiFi connection time) | < 1s instant detection |
+          | Lighting changes slowly | Lighting changes immediately |
+          | Less responsive experience | Responsive, feels automatic |
+          
+          ### Manual Override:
+          - Change `Home Status` manually in the UI to override temporarily
+          - Valid statuses: **Borta** (Away), **Hemma** (Home), **Sover** (Sleep)
+
   - path: quick
     title: Quick
     badges:

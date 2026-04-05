@@ -351,6 +351,7 @@ automation:
         entity_id: switch.vardagsrum_tv
       - delay: '00:00:05'
       - service: script.harmony_radio
+      - service: script.wiim_play_p3
 
     ######################################################
     ### Sätt på mediaspelare vid Watch ChromeCast      ###

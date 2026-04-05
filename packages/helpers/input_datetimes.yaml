@@ -1,0 +1,28 @@
+####################################################
+#                                                  #
+#               INPUT DATETIMES                    #
+#                                                  #
+####################################################
+# Input datetime helpers for time-based automation
+# Used for scheduling, timeout tracking, and temporal logic
+# Documentation: https://www.home-assistant.io/integrations/input_datetime/
+#
+# Usage:
+# - Set by automations to track expiration times
+# - Compared against current time for timeout logic
+# - Enables temporal tracking without custom integrations
+#
+####################################################
+
+input_datetime:
+  frigate_temp_presence_timeout:
+    name: Frigate Temp Presence Timeout
+    has_date: true
+    has_time: true
+    icon: mdi:camera-account
+    # Tracks the expiration time for temporary presence from Frigate face detection
+    # Set when face (Micke/Annelie) detected on entry camera (cam3/cam8)
+    # Resets to now() + 5 minutes on each new detection (timer refresh)
+    # Used by: frigate_temp_presence timeout automation
+    # When this timestamp is reached: Reverts status to 'Borta' if WiFi not connected
+    # Purpose: Automatic fallback to away mode if device WiFi connection fails

@@ -23,3 +23,13 @@ input_boolean:
     # When OFF: Standard seasonal lighting active
     # Updated by: light_day, light_evening, light_morning automations
     # Referenced by: Templates, lighting scenes
+
+  frigate_temp_presence:
+    name: Frigate Temporary Presence
+    icon: mdi:camera-account
+    # Indicates when Frigate face detection has triggered temporary presence
+    # When ON: Person detected via camera, temporary home status active
+    # When OFF: Temporary presence inactive, normal WiFi detection
+    # Updated by: frigate_temp_presence automation (face detection trigger)
+    # Used by: Timeout automation to track active temporary presence sessions
+    # Purpose: Brief 5-minute window for WiFi connection after face detection

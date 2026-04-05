@@ -1,0 +1,221 @@
+####################################################
+#                                                  #
+#     FRIGATE TEMPORARY PRESENCE DETECTION         #
+#                                                  #
+####################################################
+# Frigate face detection > Temporary presence for WiFi connection
+# 
+# Purpose:
+# Speed up home presence detection by using Reolink camera face recognition.
+# When Micke or Annelie is detected by Frigate, immediately set home status
+# to 'Hemma' (Home) for 5 minutes. This gives WiFi-based device tracking time
+# to detect the phone connection before reverting to away mode if needed.
+#
+# Problem Solved:
+# - WiFi presence detection has inherent delay (phone needs time to connect)
+# - Without this: User detects -> Lighting changes with 30-60s delay
+# - With this: Face detection -> Immediate status change -> Instant lighting
+#
+# Implementation:
+# 1. Frigate detects face (Micke/Annelie) on entry camera
+# 2. Immediately set home_status = 'Hemma' + 5-min timer
+# 3. If repeated detections: Reset timer (extends window)
+# 4. After 5 min: If WiFi not connected, revert to 'Borta'
+#    (assumes if WiFi was going to connect, it would have by now)
+# 5. If WiFi connects: Existing presence automations maintain 'Hemma' status
+#
+# Cameras Monitored:
+# - cam3: Uppfart (driveway entrance)
+# - cam8: Entre (front entrance)
+# Both are primary entry points where people should be detected
+#
+# Faces Monitored:
+# - Micke
+# - Annelie
+#
+# Safety:
+# - Only activates when home_status is already 'Borta'
+# - Only uses entry cameras (prevents detection from cam5/6/7)
+# - 5-minute timeout ensures system doesn't get stuck
+# - If WiFi connects during 5-min window, no revert happens
+#
+# Status Flow:
+# Borta (away) → [Face Detected] → Hemma (home)
+#              ↓ (5 min timeout & no WiFi)
+#              Borta (away, reverted)
+#              ↑ (or WiFi connects before timeout)
+#              Hemma (home, maintained by WiFi)
+#
+# Integrations:
+# - Requires: frigate MQTT integration + face detection setup
+# - Updates: input_select.home_status (primary status selector)
+# - Tracks: input_boolean.frigate_temp_presence (active flag)
+# - Timeout: input_datetime.frigate_temp_presence_timeout
+#
+# Testing:
+# 1. Ensure you're away: home_status='Borta', group.track_for_home_devices='not_home'
+# 2. Step in front of cam3 or cam8
+# 3. Verify: home_status becomes 'Hemma' + notification sent
+# 4. Don't connect WiFi: status reverts to 'Borta' after 5 min
+# 5. Re-test with WiFi connecting: status stays 'Hemma' (WiFi wins)
+#
+####################################################
+
+automation:
+
+  # ============================================
+  # FRIGATE FACE DETECTION → TEMPORARY PRESENCE
+  # ============================================
+  - alias: Frigate Face Detection Triggers Temporary Presence
+    id: 'frigate_temp_presence_trigger'
+    description: "Set home status to Hemma when face detected at entry cameras"
+    mode: queued
+    max: 10
+
+    trigger:
+      - platform: state
+        entity_id: sensor.frigate_face_name
+        to:
+          - "Micke"
+          - "Annelie"
+
+    condition:
+      # Only activate when currently away
+      - condition: state
+        entity_id: input_select.home_status
+        state: 'Borta'
+      
+      # Only use entry cameras (cam3=Uppfart, cam8=Entre)
+      - condition: template
+        value_template: >
+          {{ states('sensor.frigate_face_camera') in ['cam3', 'cam8'] }}
+      
+      # Sanity check: ensure face name is actually detected
+      - condition: template
+        value_template: >
+          {{ states('sensor.frigate_face_name') in ['Micke', 'Annelie'] }}
+
+    action:
+      # Log the detection event
+      - service: system_log.write
+        data:
+          level: INFO
+          logger: frigate_temp_presence
+          message: >
+            Frigate detected {{ states('sensor.frigate_face_name') }} 
+            on {{ states('sensor.frigate_face_camera') }} 
+            (score: {{ states('sensor.frigate_face_score') }})
+
+      # Set temporary status to home
+      - service: input_select.select_option
+        target:
+          entity_id: input_select.home_status
+        data:
+          option: "Hemma"
+
+      # Activate temporary presence flag
+      - service: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.frigate_temp_presence
+
+      # Set timeout to now + 5 minutes
+      # Using a template to calculate 5 minutes from now
+      - service: input_datetime.set_datetime
+        target:
+          entity_id: input_datetime.frigate_temp_presence_timeout
+        data:
+          datetime: >
+            {% set now = now() %}
+            {% set five_min_later = now.replace(microsecond=0) + timedelta(minutes=5) %}
+            {{ five_min_later.strftime('%Y-%m-%d %H:%M:%S') }}
+
+      # Send notification to user
+      - service: notify.mobile_app_mickes_phone
+        data:
+          title: "🏠 Hemkomst Detekterad"
+          message: >
+            {{ states('sensor.frigate_face_name') }} detekterad vid 
+            {{ states('sensor.frigate_face_camera') | upper }}.
+            Status: Hemma (temp. 5 min). WiFi-anslutning väntas...
+          data:
+            tag: "frigate_presence"
+            priority: "high"
+
+  # ============================================
+  # TEMPORARY PRESENCE TIMEOUT → REVERT TO AWAY
+  # ============================================
+  - alias: Frigate Temporary Presence Timeout Revert
+    id: 'frigate_temp_presence_timeout'
+    description: "Revert to Borta after 5-min timeout if WiFi not connected"
+    mode: single
+    max_exceeded: silent
+
+    trigger:
+      # Use time_pattern to check every minute if timeout is reached
+      - platform: time_pattern
+        minutes: "/1"
+
+    condition:
+      # Only run if temporary presence is active
+      - condition: state
+        entity_id: input_boolean.frigate_temp_presence
+        state: 'on'
+      
+      # Check if current time >= timeout time
+      - condition: template
+        value_template: >
+          {% set timeout_str = states('input_datetime.frigate_temp_presence_timeout') %}
+          {% if timeout_str and timeout_str != 'unknown' %}
+            {% set timeout = strptime(timeout_str, '%Y-%m-%d %H:%M:%S') %}
+            {% set now = now() %}
+            {{ now >= timeout }}
+          {% else %}
+            false
+          {% endif %}
+      
+      # WiFi NOT connected: group.track_for_home_devices is not 'home'
+      # If WiFi connected, we don't revert (WiFi logic takes over)
+      - condition: state
+        entity_id: group.track_for_home_devices
+        state: 'not_home'
+
+    action:
+      # Log timeout event
+      - service: system_log.write
+        data:
+          level: WARNING
+          logger: frigate_temp_presence
+          message: >
+            Frigate temporary presence timeout reached. 
+            WiFi not connected. Reverting to Borta.
+
+      # Revert status to away
+      - service: input_select.select_option
+        target:
+          entity_id: input_select.home_status
+        data:
+          option: "Borta"
+
+      # Deactivate temporary presence flag
+      - service: input_boolean.turn_off
+        target:
+          entity_id: input_boolean.frigate_temp_presence
+
+      # Clear timeout (set to far past)
+      - service: input_datetime.set_datetime
+        target:
+          entity_id: input_datetime.frigate_temp_presence_timeout
+        data:
+          datetime: "2000-01-01 00:00:00"
+
+      # Send notification
+      - service: notify.mobile_app_mickes_phone
+        data:
+          title: "🏠 Hemstatus Revert"
+          message: >
+            WiFi ej ansluten inom 5 min. 
+            Status: Borta (igen). 
+            Försök WiFi-anslutning eller visa upp ansiktet igen.
+          data:
+            tag: "frigate_presence"
+            priority: "normal"

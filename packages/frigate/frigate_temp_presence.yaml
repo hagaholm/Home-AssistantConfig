@@ -73,11 +73,10 @@ automation:
     max: 10
 
     trigger:
+      # Trigger on timestamp change (updates on EVERY detection, not just value changes)
+      # This ensures we catch repeated detections of the same person
       - platform: state
-        entity_id: sensor.frigate_face_name
-        to:
-          - "Micke"
-          - "Annelie"
+        entity_id: sensor.frigate_face_timestamp
 
     condition:
       # Only activate when currently away
@@ -90,7 +89,7 @@ automation:
         value_template: >
           {{ states('sensor.frigate_face_camera') in ['cam3', 'cam8'] }}
       
-      # Sanity check: ensure face name is actually detected
+      # Only trigger for Micke or Annelie
       - condition: template
         value_template: >
           {{ states('sensor.frigate_face_name') in ['Micke', 'Annelie'] }}

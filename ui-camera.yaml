@@ -92,6 +92,11 @@ views:
                   - condition: numeric_state
                     entity: input_number.frigate_cam8_animal_count
                     above: 0
+              - entity: input_number.frigate_cam9_person_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.frigate_cam9_person_count
+                    above: 0
 
       - type: heading
         heading: Reolink Daily Detections
@@ -150,6 +155,11 @@ views:
                 visibility:
                   - condition: numeric_state
                     entity: input_number.reolink_cam8_animal_count
+                    above: 0
+              - entity: input_number.reolink_cam9_person_count
+                visibility:
+                  - condition: numeric_state
+                    entity: input_number.reolink_cam9_person_count
                     above: 0
 
       - type: heading
@@ -453,6 +463,18 @@ views:
                 above: 0
 
       - type: heading
+        heading: Frigate Camera 9 - Home Status
+
+      - type: entities
+        title: Cam9 - Hemma
+        entities:
+          - entity: input_number.frigate_cam9_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam9_person_count
+                above: 0
+
+      - type: heading
         heading: Reolink Camera 3 - Home Status
 
       - type: entities
@@ -677,6 +699,18 @@ views:
                 entity: input_number.reolink_cam8_borta_animal_count
                 above: 0
 
+      - type: heading
+        heading: Reolink Camera 9 - Home Status
+
+      - type: entities
+        title: Cam9 - Hemma
+        entities:
+          - entity: input_number.reolink_cam9_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam9_person_count
+                above: 0
+
   - path: gallery
     title: Gallery
     badges: []
@@ -745,6 +779,7 @@ views:
           - input_number.frigate_cam7_animal_count
           - input_number.frigate_cam8_person_count
           - input_number.frigate_cam8_animal_count
+          - input_number.frigate_cam9_person_count
           - input_number.reolink_cam3_person_count
           - input_number.reolink_cam3_animal_count
           - input_number.reolink_cam5_person_count
@@ -755,6 +790,7 @@ views:
           - input_number.reolink_cam7_animal_count
           - input_number.reolink_cam8_person_count
           - input_number.reolink_cam8_animal_count
+          - input_number.reolink_cam9_person_count
           - input_number.frigate_hemma_pa_person_count
           - input_number.frigate_hemma_pa_animal_count
           - input_number.frigate_hemma_av_person_count

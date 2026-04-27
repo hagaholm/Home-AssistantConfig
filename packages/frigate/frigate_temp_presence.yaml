@@ -27,7 +27,8 @@
 # Cameras Monitored:
 # - cam3: Uppfart (driveway entrance)
 # - cam8: Entre (front entrance)
-# Both are primary entry points where people should be detected
+# - cam9: Garage infront (garage entrance)
+# All are primary entry points where people should be detected
 #
 # Faces Monitored:
 # - Micke
@@ -54,7 +55,7 @@
 #
 # Testing:
 # 1. Ensure you're away: home_status='Borta', group.track_for_home_devices='not_home'
-# 2. Step in front of cam3 or cam8
+# 2. Step in front of cam3, cam8, or cam9
 # 3. Verify: home_status becomes 'Hemma' + notification sent
 # 4. Don't connect WiFi: status reverts to 'Borta' after 5 min
 # 5. Re-test with WiFi connecting: status stays 'Hemma' (WiFi wins)
@@ -84,10 +85,10 @@ automation:
         entity_id: input_select.home_status
         state: 'Borta'
       
-      # Only use entry cameras (cam3=Uppfart, cam8=Entre)
+      # Only use entry cameras (cam3=Uppfart, cam8=Entre, cam9=Garage infront)
       - condition: template
         value_template: >
-          {{ states('sensor.frigate_face_camera') in ['cam3', 'cam8'] }}
+          {{ states('sensor.frigate_face_camera') in ['cam3', 'cam8', 'cam9'] }}
       
       # Only trigger for Micke or Annelie
       - condition: template

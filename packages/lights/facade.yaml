@@ -169,6 +169,7 @@ automation:
           - binary_sensor.cam3_person_occupancy
           - binary_sensor.cam7_person_occupancy
           - binary_sensor.cam8_person_occupancy
+          - binary_sensor.cam9_person_occupancy
         to: 'on'
         id: person_on
 
@@ -177,6 +178,7 @@ automation:
           - binary_sensor.cam3_person_occupancy
           - binary_sensor.cam7_person_occupancy
           - binary_sensor.cam8_person_occupancy
+          - binary_sensor.cam9_person_occupancy
         to: 'off'
         for: "00:00:30"
         id: person_off_30s
@@ -247,7 +249,8 @@ script:
           person_cam3: "{{ is_state('binary_sensor.cam3_person_occupancy', 'on') }}"
           person_cam7: "{{ is_state('binary_sensor.cam7_person_occupancy', 'on') }}"
           person_cam8: "{{ is_state('binary_sensor.cam8_person_occupancy', 'on') }}"
-          person_any: "{{ person_cam3 or person_cam7 or person_cam8 }}"
+          person_cam9: "{{ is_state('binary_sensor.cam9_person_occupancy', 'on') }}"
+          person_any: "{{ person_cam3 or person_cam7 or person_cam8 or person_cam9 }}"
 
           current_option: "{{ states('input_select.facade_lights') }}"
           is_bright: "{{ lux is number and lux > lux_60 }}"

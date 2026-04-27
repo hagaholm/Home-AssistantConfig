@@ -13,6 +13,7 @@
 # - Cam 6: Baksida (backside) - Rear entrance priority
 # - Cam 7: Friggebod (garden shed) - Outbuilding
 # - Cam 8: Entre (entrance) - Main entry
+# - Cam 9: Garage infront - Garage entrance
 #
 # Notification Logic:
 # - Immediate alerts: Sleep mode (Sover) or Away + Priority cameras
@@ -96,6 +97,9 @@ automation:
             {% if states('sensor.cam8_person_count') | int(0) > 0 %}
               {% set detections = detections + ['- Cam 8 Entre: ' + states('sensor.cam8_person_count')] %}
             {% endif %}
+            {% if states('sensor.cam9_person_count') | int(0) > 0 %}
+              {% set detections = detections + ['- Cam 9 Garage: ' + states('sensor.cam9_person_count')] %}
+            {% endif %}
             {{ detections | join('\n') }}
       - choose:
           - conditions:
@@ -168,6 +172,9 @@ automation:
             {% endif %}
             {% if states('sensor.cam8_person_count') | int(0) > 0 %}
               {% set detections = detections + ['- Cam 8 Entre: ' + states('sensor.cam8_person_count')] %}
+            {% endif %}
+            {% if states('sensor.cam9_person_count') | int(0) > 0 %}
+              {% set detections = detections + ['- Cam 9 Garage: ' + states('sensor.cam9_person_count')] %}
             {% endif %}
             {{ detections | join('\n') }}
       # Wait 3 minutes

@@ -399,13 +399,10 @@ automation:
                     conditions:
                       - condition: state
                         entity_id: input_select.home_status
-                        state: 'Hemma'
+                        state: 'Borta'
                       - condition: state
                         entity_id: input_select.home_status
                         state: 'Sover'
-                  - condition: time
-                    after: '20:00:00'
-                    before: '08:00:00'
                   - condition: numeric_state
                     entity_id: sensor.ljusstyrka
                     below: 10
@@ -424,7 +421,7 @@ automation:
                     conditions:
                       - condition: state
                         entity_id: input_select.home_status
-                        state: 'Hemma'
+                        state: 'Borta'
                       - condition: state
                         entity_id: input_select.home_status
                         state: 'Sover'
@@ -435,7 +432,7 @@ automation:
               # Turn on camera 9 light
               - service: light.turn_on
                 target:
-                  entity_id: light.kamer9_stralkastare
+                  entity_id: light.kamera9_stralkastare
 
           # Turn off light if no person is detected after 10 seconds
           - conditions:
@@ -453,4 +450,4 @@ automation:
               # Turn off camera 9 light
               - service: light.turn_off
                 target:
-                  entity_id: light.kamer9_stralkastare
+                  entity_id: light.kamera9_stralkastare

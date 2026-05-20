@@ -121,9 +121,9 @@ template:
       - name: "Kamera 2"
         unique_id: system_camera_2_status
         state: "{{ 'Online' if is_state('device_tracker.kamera2', 'home') else 'Offline' }}"
-      - name: "Kamera 3"
-        unique_id: system_camera_3_status
-        state: "{{ 'Online' if is_state('device_tracker.reolink_kamera_3_rlc_1220a', 'home') else 'Offline' }}"
+      - name: "Kamera 10"
+        unique_id: system_camera_10_status
+        state: "{{ 'Online' if is_state('device_tracker.reolink_kamera_10_rlc_1220a', 'home') else 'Offline' }}"
       - name: "Kamera 4"
         unique_id: system_camera_4_status
         state: "{{ 'Online' if is_state('device_tracker.kamera4', 'home') else 'Offline' }}"

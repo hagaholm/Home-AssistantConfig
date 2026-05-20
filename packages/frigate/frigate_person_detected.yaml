@@ -8,7 +8,7 @@
 # Documentation: https://docs.frigate.video/
 #
 # Camera Coverage:
-# - Cam 3: Uppfart (driveway) - Front approach
+# - Cam 10: Uppfart (driveway) - Front approach
 # - Cam 5: Baksida (backside) - Rear yard priority
 # - Cam 6: Baksida (backside) - Rear entrance priority
 # - Cam 7: Friggebod (garden shed) - Outbuilding
@@ -82,8 +82,8 @@ automation:
       - variables:
           detection_message: >
             {% set detections = [] %}
-            {% if states('sensor.cam3_person_count') | int(0) > 0 %}
-              {% set detections = detections + ['- Cam 3 Uppfart: ' + states('sensor.cam3_person_count')] %}
+            {% if states('sensor.cam10_person_count') | int(0) > 0 %}
+              {% set detections = detections + ['- Cam 10 Uppfart: ' + states('sensor.cam10_person_count')] %}
             {% endif %}
             {% if states('sensor.cam5_person_count') | int(0) > 0 %}
               {% set detections = detections + ['- Cam 5 Baksida: ' + states('sensor.cam5_person_count')] %}
@@ -158,8 +158,8 @@ automation:
           trigger_time: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           detection_message: >
             {% set detections = [] %}
-            {% if states('sensor.cam3_person_count') | int(0) > 0 %}
-              {% set detections = detections + ['- Cam 3 Uppfart: ' + states('sensor.cam3_person_count')] %}
+            {% if states('sensor.cam10_person_count') | int(0) > 0 %}
+              {% set detections = detections + ['- Cam 10 Uppfart: ' + states('sensor.cam10_person_count')] %}
             {% endif %}
             {% if states('sensor.cam5_person_count') | int(0) > 0 %}
               {% set detections = detections + ['- Cam 5 Baksida: ' + states('sensor.cam5_person_count')] %}

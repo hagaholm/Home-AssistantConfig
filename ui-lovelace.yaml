@@ -826,7 +826,7 @@ views:
           - sensor.ljusstyrka
           - input_number.ljusstyrka_40
           - input_number.ljusstyrka_60
-          - binary_sensor.cam3_person_occupancy
+          - binary_sensor.cam10_person_occupancy
           - binary_sensor.cam7_person_occupancy
           - binary_sensor.cam8_person_occupancy
           - binary_sensor.cam9_person_occupancy
@@ -1039,7 +1039,7 @@ views:
     badges: []
     cards:
       - type: picture-entity
-        entity: camera.kamera3_main
+        entity: camera.kamera10_main
         show_state: true
         show_name: true
         camera_view: auto
@@ -1508,7 +1508,7 @@ views:
           - sensor.tradfri_gateway
           - sensor.kamera_1
           - sensor.kamera_2
-          - device_tracker.reolink_kamera_3_rlc_1220a
+          - device_tracker.reolink_kamera_10_rlc_1220a
           - sensor.kamera_4
           - device_tracker.reolink_kamera_5_rlc_1224a
           - device_tracker.reolink_kamera_6_rlc_1224a
@@ -1664,7 +1664,7 @@ views:
           5. **Timeout revert** → If no WiFi after 5 min, status reverts to "Borta"
           
           ### Cameras monitored:
-          - **Cam 3** (Uppfart) - Front driveway entrance
+          - **Cam 10** (Uppfart) - Front driveway entrance
           - **Cam 8** (Entre) - Main front entrance
           
           ### People detected:

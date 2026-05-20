@@ -21,7 +21,7 @@ input_datetime:
     has_time: true
     icon: mdi:camera-account
     # Tracks the expiration time for temporary presence from Frigate face detection
-    # Set when face (Micke/Annelie) detected on entry camera (cam3/cam8)
+    # Set when face (Micke/Annelie) detected on entry camera (cam10/cam8)
     # Resets to now() + 5 minutes on each new detection (timer refresh)
     # Used by: frigate_temp_presence timeout automation
     # When this timestamp is reached: Reverts status to 'Borta' if WiFi not connected

@@ -42,15 +42,15 @@ views:
           - type: entities
             title: Frigate Camera Totals
             entities:
-              - entity: input_number.frigate_cam3_person_count
+              - entity: input_number.frigate_cam10_person_count
                 visibility:
                   - condition: numeric_state
-                    entity: input_number.frigate_cam3_person_count
+                    entity: input_number.frigate_cam10_person_count
                     above: 0
-              - entity: input_number.frigate_cam3_animal_count
+              - entity: input_number.frigate_cam10_animal_count
                 visibility:
                   - condition: numeric_state
-                    entity: input_number.frigate_cam3_animal_count
+                    entity: input_number.frigate_cam10_animal_count
                     above: 0
               - entity: input_number.frigate_cam5_person_count
                 visibility:
@@ -106,15 +106,15 @@ views:
           - type: entities
             title: Reolink Camera Totals
             entities:
-              - entity: input_number.reolink_cam3_person_count
+              - entity: input_number.reolink_cam10_person_count
                 visibility:
                   - condition: numeric_state
-                    entity: input_number.reolink_cam3_person_count
+                    entity: input_number.reolink_cam10_person_count
                     above: 0
-              - entity: input_number.reolink_cam3_animal_count
+              - entity: input_number.reolink_cam10_animal_count
                 visibility:
                   - condition: numeric_state
-                    entity: input_number.reolink_cam3_animal_count
+                    entity: input_number.reolink_cam10_animal_count
                     above: 0
               - entity: input_number.reolink_cam5_person_count
                 visibility:
@@ -238,48 +238,48 @@ views:
                     above: 0
 
       - type: heading
-        heading: Frigate Camera 3 - Home Status
+        heading: Frigate Camera 10 - Home Status
 
       - type: entities
-        title: Cam3 - Hemma
+        title: Cam10 - Hemma
         entities:
-          - entity: input_number.frigate_cam3_hemma_pa_person_count
+          - entity: input_number.frigate_cam10_hemma_pa_person_count
             visibility:
               - condition: numeric_state
-                entity: input_number.frigate_cam3_hemma_pa_person_count
+                entity: input_number.frigate_cam10_hemma_pa_person_count
                 above: 0
-          - entity: input_number.frigate_cam3_hemma_pa_animal_count
+          - entity: input_number.frigate_cam10_hemma_pa_animal_count
             visibility:
               - condition: numeric_state
-                entity: input_number.frigate_cam3_hemma_pa_animal_count
-                above: 0
-
-      - type: entities
-        title: Cam3 - Sover
-        entities:
-          - entity: input_number.frigate_cam3_hemma_av_person_count
-            visibility:
-              - condition: numeric_state
-                entity: input_number.frigate_cam3_hemma_av_person_count
-                above: 0
-          - entity: input_number.frigate_cam3_hemma_av_animal_count
-            visibility:
-              - condition: numeric_state
-                entity: input_number.frigate_cam3_hemma_av_animal_count
+                entity: input_number.frigate_cam10_hemma_pa_animal_count
                 above: 0
 
       - type: entities
-        title: Cam3 - Borta
+        title: Cam10 - Sover
         entities:
-          - entity: input_number.frigate_cam3_borta_person_count
+          - entity: input_number.frigate_cam10_hemma_av_person_count
             visibility:
               - condition: numeric_state
-                entity: input_number.frigate_cam3_borta_person_count
+                entity: input_number.frigate_cam10_hemma_av_person_count
                 above: 0
-          - entity: input_number.frigate_cam3_borta_animal_count
+          - entity: input_number.frigate_cam10_hemma_av_animal_count
             visibility:
               - condition: numeric_state
-                entity: input_number.frigate_cam3_borta_animal_count
+                entity: input_number.frigate_cam10_hemma_av_animal_count
+                above: 0
+
+      - type: entities
+        title: Cam10 - Borta
+        entities:
+          - entity: input_number.frigate_cam10_borta_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam10_borta_person_count
+                above: 0
+          - entity: input_number.frigate_cam10_borta_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.frigate_cam10_borta_animal_count
                 above: 0
 
       - type: heading
@@ -475,48 +475,48 @@ views:
                 above: 0
 
       - type: heading
-        heading: Reolink Camera 3 - Home Status
+        heading: Reolink Camera 10 - Home Status
 
       - type: entities
-        title: Cam3 - Hemma
+        title: Cam10 - Hemma
         entities:
-          - entity: input_number.reolink_cam3_hemma_pa_person_count
+          - entity: input_number.reolink_cam10_hemma_pa_person_count
             visibility:
               - condition: numeric_state
-                entity: input_number.reolink_cam3_hemma_pa_person_count
+                entity: input_number.reolink_cam10_hemma_pa_person_count
                 above: 0
-          - entity: input_number.reolink_cam3_hemma_pa_animal_count
+          - entity: input_number.reolink_cam10_hemma_pa_animal_count
             visibility:
               - condition: numeric_state
-                entity: input_number.reolink_cam3_hemma_pa_animal_count
-                above: 0
-
-      - type: entities
-        title: Cam3 - Sover
-        entities:
-          - entity: input_number.reolink_cam3_hemma_av_person_count
-            visibility:
-              - condition: numeric_state
-                entity: input_number.reolink_cam3_hemma_av_person_count
-                above: 0
-          - entity: input_number.reolink_cam3_hemma_av_animal_count
-            visibility:
-              - condition: numeric_state
-                entity: input_number.reolink_cam3_hemma_av_animal_count
+                entity: input_number.reolink_cam10_hemma_pa_animal_count
                 above: 0
 
       - type: entities
-        title: Cam3 - Borta
+        title: Cam10 - Sover
         entities:
-          - entity: input_number.reolink_cam3_borta_person_count
+          - entity: input_number.reolink_cam10_hemma_av_person_count
             visibility:
               - condition: numeric_state
-                entity: input_number.reolink_cam3_borta_person_count
+                entity: input_number.reolink_cam10_hemma_av_person_count
                 above: 0
-          - entity: input_number.reolink_cam3_borta_animal_count
+          - entity: input_number.reolink_cam10_hemma_av_animal_count
             visibility:
               - condition: numeric_state
-                entity: input_number.reolink_cam3_borta_animal_count
+                entity: input_number.reolink_cam10_hemma_av_animal_count
+                above: 0
+
+      - type: entities
+        title: Cam10 - Borta
+        entities:
+          - entity: input_number.reolink_cam10_borta_person_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam10_borta_person_count
+                above: 0
+          - entity: input_number.reolink_cam10_borta_animal_count
+            visibility:
+              - condition: numeric_state
+                entity: input_number.reolink_cam10_borta_animal_count
                 above: 0
 
       - type: heading
@@ -769,8 +769,8 @@ views:
 
       - type: entities
         entities:
-          - input_number.frigate_cam3_person_count
-          - input_number.frigate_cam3_animal_count
+          - input_number.frigate_cam10_person_count
+          - input_number.frigate_cam10_animal_count
           - input_number.frigate_cam5_person_count
           - input_number.frigate_cam5_animal_count
           - input_number.frigate_cam6_person_count
@@ -780,8 +780,8 @@ views:
           - input_number.frigate_cam8_person_count
           - input_number.frigate_cam8_animal_count
           - input_number.frigate_cam9_person_count
-          - input_number.reolink_cam3_person_count
-          - input_number.reolink_cam3_animal_count
+          - input_number.reolink_cam10_person_count
+          - input_number.reolink_cam10_animal_count
           - input_number.reolink_cam5_person_count
           - input_number.reolink_cam5_animal_count
           - input_number.reolink_cam6_person_count

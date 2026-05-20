@@ -98,14 +98,14 @@ automation:
                     sequence:
                       - service: camera.snapshot
                         data:
-                          entity_id: camera.camera_3
-                          filename: /media/Day/camera_3_latest.jpg
+                          entity_id: camera.camera_10
+                          filename: /media/Day/camera_10_latest.jpg
                       - service: notify.mobile_app_sm_a528b
                         data:
                           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
                           message: "Ringklocka tvättstuga, dag"
                           data:
-                            file: /media/Day/camera_3_latest.jpg
+                            file: /media/Day/camera_10_latest.jpg
                   - conditions:
                       - condition: state
                         entity_id: input_select.home_status
@@ -113,14 +113,14 @@ automation:
                     sequence:
                       - service: camera.snapshot
                         data:
-                          entity_id: camera.camera_3
-                          filename: /media/Night/camera_3_latest.jpg
+                          entity_id: camera.camera_10
+                          filename: /media/Night/camera_10_latest.jpg
                       - service: notify.mobile_app_sm_a528b
                         data:
                           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
                           message: "Ringklocka tvättstuga, natt"
                           data:
-                            file: /media/Night/camera_3_latest.jpg
+                            file: /media/Night/camera_10_latest.jpg
                   - conditions:
                       - condition: state
                         entity_id: input_select.home_status
@@ -128,14 +128,14 @@ automation:
                     sequence:
                       - service: camera.snapshot
                         data:
-                          entity_id: camera.camera_3
-                          filename: /media/Away/camera_3_latest.jpg
+                          entity_id: camera.camera_10
+                          filename: /media/Away/camera_10_latest.jpg
                       - service: notify.mobile_app_sm_a528b
                         data:
                           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
                           message: "Ringklocka tvättstuga, borta"
                           data:
-                            file: /media/Away/camera_3_latest.jpg
+                            file: /media/Away/camera_10_latest.jpg
               - delay:
                   seconds: 10
 

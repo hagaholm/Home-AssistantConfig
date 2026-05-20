@@ -166,7 +166,7 @@ automation:
 
       - platform: state
         entity_id:
-          - binary_sensor.cam3_person_occupancy
+          - binary_sensor.cam10_person_occupancy
           - binary_sensor.cam7_person_occupancy
           - binary_sensor.cam8_person_occupancy
           - binary_sensor.cam9_person_occupancy
@@ -175,7 +175,7 @@ automation:
 
       - platform: state
         entity_id:
-          - binary_sensor.cam3_person_occupancy
+          - binary_sensor.cam10_person_occupancy
           - binary_sensor.cam7_person_occupancy
           - binary_sensor.cam8_person_occupancy
           - binary_sensor.cam9_person_occupancy
@@ -190,7 +190,7 @@ automation:
 # - sensor.ljusstyrka
 # - input_select.facade_lights
 # - input_select.home_status
-# - binary_sensor.cam3/7/8_person_occupancy
+# - binary_sensor.cam10/7/8_person_occupancy
 # - script.fasadbelysning_*
 ####################################################
 
@@ -246,11 +246,11 @@ script:
           lux_40: "{{ states('input_number.ljusstyrka_40') | float(40) }}"
           lux_60: "{{ states('input_number.ljusstyrka_60') | float(60) }}"
 
-          person_cam3: "{{ is_state('binary_sensor.cam3_person_occupancy', 'on') }}"
+          person_cam10: "{{ is_state('binary_sensor.cam10_person_occupancy', 'on') }}"
           person_cam7: "{{ is_state('binary_sensor.cam7_person_occupancy', 'on') }}"
           person_cam8: "{{ is_state('binary_sensor.cam8_person_occupancy', 'on') }}"
           person_cam9: "{{ is_state('binary_sensor.cam9_person_occupancy', 'on') }}"
-          person_any: "{{ person_cam3 or person_cam7 or person_cam8 or person_cam9 }}"
+          person_any: "{{ person_cam10 or person_cam7 or person_cam8 or person_cam9 }}"
 
           current_option: "{{ states('input_select.facade_lights') }}"
           is_bright: "{{ lux is number and lux > lux_60 }}"

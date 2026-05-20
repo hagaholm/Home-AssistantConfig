@@ -627,7 +627,7 @@ template:
           {% set lux = states('sensor.ljusstyrka') | float(none) %}
           {% set lux_40 = states('input_number.ljusstyrka_40') | float(40) %}
           {% set lux_60 = states('input_number.ljusstyrka_60') | float(60) %}
-          {% set person_any = is_state('binary_sensor.cam3_person_occupancy', 'on')
+          {% set person_any = is_state('binary_sensor.cam10_person_occupancy', 'on')
             or is_state('binary_sensor.cam7_person_occupancy', 'on')
             or is_state('binary_sensor.cam8_person_occupancy', 'on')
           %}
@@ -652,7 +652,7 @@ template:
           lux_40: "{{ states('input_number.ljusstyrka_40') }}"
           lux_60: "{{ states('input_number.ljusstyrka_60') }}"
           person_any: >-
-            {{ is_state('binary_sensor.cam3_person_occupancy', 'on')
+            {{ is_state('binary_sensor.cam10_person_occupancy', 'on')
               or is_state('binary_sensor.cam7_person_occupancy', 'on')
               or is_state('binary_sensor.cam8_person_occupancy', 'on')
             }}
@@ -669,7 +669,7 @@ template:
             {% set lux = states('sensor.ljusstyrka') | float(none) %}
             {% set lux_40 = states('input_number.ljusstyrka_40') | float(40) %}
             {% set lux_60 = states('input_number.ljusstyrka_60') | float(60) %}
-            {% set person_any = is_state('binary_sensor.cam3_person_occupancy', 'on')
+            {% set person_any = is_state('binary_sensor.cam10_person_occupancy', 'on')
               or is_state('binary_sensor.cam7_person_occupancy', 'on')
               or is_state('binary_sensor.cam8_person_occupancy', 'on')
             %}
@@ -693,7 +693,7 @@ template:
             {% set lux = states('sensor.ljusstyrka') | float(none) %}
             {% set lux_40 = states('input_number.ljusstyrka_40') | float(40) %}
             {% set lux_60 = states('input_number.ljusstyrka_60') | float(60) %}
-            {% set person_any = is_state('binary_sensor.cam3_person_occupancy', 'on')
+            {% set person_any = is_state('binary_sensor.cam10_person_occupancy', 'on')
               or is_state('binary_sensor.cam7_person_occupancy', 'on')
               or is_state('binary_sensor.cam8_person_occupancy', 'on')
             %}

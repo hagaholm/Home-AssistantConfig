@@ -373,7 +373,7 @@ automation:
   ######################################################################
   ### Person Motion Light Control Frontside (Cam10 + Cam9) ###
   ######################################################################
-  - alias: Person Motion Light Control Frontside
+  - alias: Person Motion Light Control Frontside Cam10 Cam9
     id: '1416857464125'
     mode: restart
 
@@ -596,7 +596,7 @@ automation:
               # Turn off automation
               - service: automation.turn_off
                 target:
-                  entity_id: automation.person_motion_light_control_frontside_test
+                  entity_id: automation.person_motion_light_control_frontside_cam10_cam9
 
           # ========== CAM 9 (Garage) - OFF ==========
           # Turn off light when person is no longer detected on cam9
@@ -614,4 +614,4 @@ automation:
               # Turn off automation
               - service: automation.turn_off
                 target:
-                  entity_id: automation.person_motion_light_control_frontside_test
+                  entity_id: automation.person_motion_light_control_frontside_cam10_cam9

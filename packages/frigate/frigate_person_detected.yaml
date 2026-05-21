@@ -370,17 +370,21 @@ automation:
                 target:
                   entity_id: light.kamera8_stralkastare
 
-  ################################################################
-  ### Person Motion Light Control Frontside Garage (Cam9 Only) ###
-  ################################################################
-  - alias: Person Motion Light Control Frontside Garage
+  ######################################################################
+  ### Person Motion Light Control Frontside (Cam10 + Cam9) ###
+  ######################################################################
+  - alias: Person Motion Light Control Frontside
     id: '1416857464125'
     mode: restart
 
     trigger:
-      # Triggers for person detection at camera 9 (Garage infront)
+      # Triggers for person detection at camera 10 (Uppfart/driveway)
       - platform: state
         entity_id: 
+          - binary_sensor.cam10_person_occupancy
+      # Triggers for person detection at camera 9 (Garage infront)
+      - platform: state
+        entity_id:
           - binary_sensor.cam9_person_occupancy
 
     condition: []
@@ -388,7 +392,73 @@ automation:
     action:
       - choose:
 
-          # Turn on light when person is detected and conditions are met
+          # ========== CAM 10 (Uppfart/Driveway) ==========
+          # Turn on light when person is detected on cam10 and conditions are met
+          - conditions:
+              - condition: and
+                conditions:
+                  - condition: state
+                    entity_id: binary_sensor.cam10_person_occupancy
+                    state: 'on'
+                  - condition: or
+                    conditions:
+                      - condition: state
+                        entity_id: input_select.home_status
+                        state: 'Borta'
+                      - condition: state
+                        entity_id: input_select.home_status
+                        state: 'Sover'
+                  - condition: numeric_state
+                    entity_id: sensor.ljusstyrka
+                    below: 10
+            sequence:
+
+              # Add 2 second delay before turning on light
+              - delay: "00:00:02"
+
+              # Verify conditions still valid after delay
+              - condition: and
+                conditions:
+                  - condition: state
+                    entity_id: binary_sensor.cam10_person_occupancy
+                    state: 'on'
+                  - condition: or
+                    conditions:
+                      - condition: state
+                        entity_id: input_select.home_status
+                        state: 'Borta'
+                      - condition: state
+                        entity_id: input_select.home_status
+                        state: 'Sover'
+                  - condition: numeric_state
+                    entity_id: sensor.ljusstyrka
+                    below: 10
+
+              # Turn on camera 10 light
+              - service: light.turn_on
+                target:
+                  entity_id: light.kamera10_stralkastare
+
+          # Turn off light if no person is detected on cam10 after 10 seconds
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.cam10_person_occupancy
+                state: 'off'
+            sequence:
+              - delay: '00:00:10'
+              - condition: and
+                conditions:
+                  - condition: state
+                    entity_id: binary_sensor.cam10_person_occupancy
+                    state: 'off'
+
+              # Turn off camera 10 light
+              - service: light.turn_off
+                target:
+                  entity_id: light.kamera10_stralkastare
+
+          # ========== CAM 9 (Garage) ==========
+          # Turn on light when person is detected on cam9 and conditions are met
           - conditions:
               - condition: and
                 conditions:
@@ -434,7 +504,7 @@ automation:
                 target:
                   entity_id: light.kamera9_stralkastare
 
-          # Turn off light if no person is detected after 10 seconds
+          # Turn off light if no person is detected on cam9 after 10 seconds
           - conditions:
               - condition: state
                 entity_id: binary_sensor.cam9_person_occupancy
@@ -451,3 +521,97 @@ automation:
               - service: light.turn_off
                 target:
                   entity_id: light.kamera9_stralkastare
+
+  ######################################################################
+  ### Person Motion Light Control Frontside TEST (Cam10 + Cam9) ###
+  ######################################################################
+  - alias: Person Motion Light Control Frontside TEST
+    id: '1416857464126'
+    mode: restart
+
+    trigger:
+      # Triggers for person detection at camera 10 (Uppfart/driveway)
+      - platform: state
+        entity_id: 
+          - binary_sensor.cam10_person_occupancy
+      # Triggers for person detection at camera 9 (Garage infront)
+      - platform: state
+        entity_id:
+          - binary_sensor.cam9_person_occupancy
+
+    condition: []
+
+    action:
+      - choose:
+
+          # ========== CAM 10 (Uppfart/Driveway) ==========
+          # Turn on light when person is detected on cam10
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.cam10_person_occupancy
+                state: 'on'
+            sequence:
+
+              # Turn on camera 10 light
+              - service: light.turn_on
+                target:
+                  entity_id: light.kamera10_stralkastare
+
+              # Turn off automation to prevent re-trigger
+              - service: automation.turn_off
+                target:
+                  entity_id: automation.person_motion_light_control_frontside_test
+
+          # ========== CAM 9 (Garage) ==========
+          # Turn on light when person is detected on cam9
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.cam9_person_occupancy
+                state: 'on'
+            sequence:
+
+              # Turn on camera 9 light
+              - service: light.turn_on
+                target:
+                  entity_id: light.kamera9_stralkastare
+
+              # Turn off automation to prevent re-trigger
+              - service: automation.turn_off
+                target:
+                  entity_id: automation.person_motion_light_control_frontside_test
+
+          # ========== CAM 10 (Uppfart/Driveway) - OFF ==========
+          # Turn off light when person is no longer detected on cam10
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.cam10_person_occupancy
+                state: 'off'
+            sequence:
+
+              # Turn off camera 10 light
+              - service: light.turn_off
+                target:
+                  entity_id: light.kamera10_stralkastare
+
+              # Turn off automation
+              - service: automation.turn_off
+                target:
+                  entity_id: automation.person_motion_light_control_frontside_test
+
+          # ========== CAM 9 (Garage) - OFF ==========
+          # Turn off light when person is no longer detected on cam9
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.cam9_person_occupancy
+                state: 'off'
+            sequence:
+
+              # Turn off camera 9 light
+              - service: light.turn_off
+                target:
+                  entity_id: light.kamera9_stralkastare
+
+              # Turn off automation
+              - service: automation.turn_off
+                target:
+                  entity_id: automation.person_motion_light_control_frontside_test

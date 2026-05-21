@@ -557,11 +557,6 @@ automation:
                 target:
                   entity_id: light.kamera10_stralkastare
 
-              # Turn off automation to prevent re-trigger
-              - service: automation.turn_off
-                target:
-                  entity_id: automation.person_motion_light_control_frontside_test
-
           # ========== CAM 9 (Garage) ==========
           # Turn on light when person is detected on cam9
           - conditions:
@@ -575,43 +570,27 @@ automation:
                 target:
                   entity_id: light.kamera9_stralkastare
 
-              # Turn off automation to prevent re-trigger
+          # ========== BOTH OFF ==========
+          # Turn off lights and automation only when BOTH cameras have no detection
+          - conditions:
+              - condition: and
+                conditions:
+                  - condition: state
+                    entity_id: binary_sensor.cam10_person_occupancy
+                    state: 'off'
+                  - condition: state
+                    entity_id: binary_sensor.cam9_person_occupancy
+                    state: 'off'
+            sequence:
+
+              # Turn off both lights
+              - service: light.turn_off
+                target:
+                  entity_id: 
+                    - light.kamera10_stralkastare
+                    - light.kamera9_stralkastare
+
+              # Turn off automation
               - service: automation.turn_off
                 target:
                   entity_id: automation.person_motion_light_control_frontside_test
-
-          # ========== CAM 10 (Uppfart/Driveway) - OFF ==========
-          # Turn off light when person is no longer detected on cam10
-          - conditions:
-              - condition: state
-                entity_id: binary_sensor.cam10_person_occupancy
-                state: 'off'
-            sequence:
-
-              # Turn off camera 10 light
-              - service: light.turn_off
-                target:
-                  entity_id: light.kamera10_stralkastare
-
-              # Turn off automation
-              - service: automation.turn_off
-                target:
-                  entity_id: automation.person_motion_light_control_frontside_cam10_cam9
-
-          # ========== CAM 9 (Garage) - OFF ==========
-          # Turn off light when person is no longer detected on cam9
-          - conditions:
-              - condition: state
-                entity_id: binary_sensor.cam9_person_occupancy
-                state: 'off'
-            sequence:
-
-              # Turn off camera 9 light
-              - service: light.turn_off
-                target:
-                  entity_id: light.kamera9_stralkastare
-
-              # Turn off automation
-              - service: automation.turn_off
-                target:
-                  entity_id: automation.person_motion_light_control_frontside_cam10_cam9

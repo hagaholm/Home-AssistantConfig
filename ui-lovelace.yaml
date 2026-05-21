@@ -1073,10 +1073,16 @@ views:
         entities:
           - automation.person_motion_light_control_frontside_cam10_cam9
           - automation.person_motion_light_control_frontside_test
-          - light.kamera10_stralkastare
-          - light.kamera9_stralkastare
           - binary_sensor.cam10_person_occupancy
           - binary_sensor.cam9_person_occupancy
+          - light.kamera10_stralkastare
+          - light.kamera9_stralkastare
+          - number.kamera10_stralkastare_ljusstyrka
+          - number.kamera9_stralkastare_ljusstyrka
+          - siren.kamera10_siren
+          - siren.kamera9_siren
+          - number.kamera10_volym
+          - number.kamera9_volym
         show_header_toggle: false
         state_color: true
   - path: extra_view

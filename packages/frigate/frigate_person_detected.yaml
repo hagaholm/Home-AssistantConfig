@@ -544,7 +544,7 @@ automation:
     action:
       - choose:
 
-          # ========== CAM 10 (Uppfart/Driveway) ==========
+          # ========== CAM 10 (Uppfart/Driveway) - ON ==========
           # Turn on light when person is detected on cam10
           - conditions:
               - condition: state
@@ -552,12 +552,52 @@ automation:
                 state: 'on'
             sequence:
 
+              # Set volume to 20
+              - service: number.set_value
+                target:
+                  entity_id: number.kamera10_volym
+                data:
+                  value: 20
+
+              # Activate siren
+              - service: siren.turn_on
+                target:
+                  entity_id: siren.kamera10_siren
+
+              # Wait 1 second
+              - delay: '00:00:01'
+
+              # Deactivate siren
+              - service: siren.turn_off
+                target:
+                  entity_id: siren.kamera10_siren
+
+              # Set volume to 0
+              - service: number.set_value
+                target:
+                  entity_id: number.kamera10_volym
+                data:
+                  value: 0
+
               # Turn on camera 10 light
               - service: light.turn_on
                 target:
                   entity_id: light.kamera10_stralkastare
 
-          # ========== CAM 9 (Garage) ==========
+          # ========== CAM 10 (Uppfart/Driveway) - OFF ==========
+          # Turn off light when person is no longer detected on cam10
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.cam10_person_occupancy
+                state: 'off'
+            sequence:
+
+              # Turn off camera 10 light
+              - service: light.turn_off
+                target:
+                  entity_id: light.kamera10_stralkastare
+
+          # ========== CAM 9 (Garage) - ON ==========
           # Turn on light when person is detected on cam9
           - conditions:
               - condition: state
@@ -565,13 +605,53 @@ automation:
                 state: 'on'
             sequence:
 
+              # Set volume to 20
+              - service: number.set_value
+                target:
+                  entity_id: number.kamera9_volym
+                data:
+                  value: 20
+
+              # Activate siren
+              - service: siren.turn_on
+                target:
+                  entity_id: siren.kamera9_siren
+
+              # Wait 1 second
+              - delay: '00:00:01'
+
+              # Deactivate siren
+              - service: siren.turn_off
+                target:
+                  entity_id: siren.kamera9_siren
+
+              # Set volume to 0
+              - service: number.set_value
+                target:
+                  entity_id: number.kamera9_volym
+                data:
+                  value: 0
+
               # Turn on camera 9 light
               - service: light.turn_on
                 target:
                   entity_id: light.kamera9_stralkastare
 
+          # ========== CAM 9 (Garage) - OFF ==========
+          # Turn off light when person is no longer detected on cam9
+          - conditions:
+              - condition: state
+                entity_id: binary_sensor.cam9_person_occupancy
+                state: 'off'
+            sequence:
+
+              # Turn off camera 9 light
+              - service: light.turn_off
+                target:
+                  entity_id: light.kamera9_stralkastare
+
           # ========== BOTH OFF ==========
-          # Turn off lights and automation only when BOTH cameras have no detection
+          # Disable automation only when BOTH cameras have no detection
           - conditions:
               - condition: and
                 conditions:
@@ -582,13 +662,6 @@ automation:
                     entity_id: binary_sensor.cam9_person_occupancy
                     state: 'off'
             sequence:
-
-              # Turn off both lights
-              - service: light.turn_off
-                target:
-                  entity_id: 
-                    - light.kamera10_stralkastare
-                    - light.kamera9_stralkastare
 
               # Turn off automation
               - service: automation.turn_off

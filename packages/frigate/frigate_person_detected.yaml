@@ -248,14 +248,14 @@ automation:
     action:
       - choose:
 
-          # Wait 2 seconds and check if motion is still detected before turning on the light
+          # Turn on light when motion is detected AND (between 20:00-08:00 AND light < 10 lux)
           - conditions:
               - condition: and
                 conditions:
                   - condition: state
                     entity_id: binary_sensor.cams_person_backside_north_active
                     state: 'on'
-                  - condition: or
+                  - condition: and
                     conditions:
                       - condition: time
                         after: '20:00:00'
@@ -309,14 +309,14 @@ automation:
     action:
       - choose:
 
-          # Turn on light when motion is detected and light level is low
+          # Turn on light when motion is detected AND (between 20:00-08:00 AND light < 10 lux)
           - conditions:
               - condition: and
                 conditions:
                   - condition: state
                     entity_id: binary_sensor.cams_person_backside_north_active
                     state: 'on'
-                  - condition: or
+                  - condition: and
                     conditions:
                       - condition: time
                         after: '20:00:00'

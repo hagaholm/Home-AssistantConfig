@@ -163,7 +163,7 @@ template:
         
       - name: "Micke"
         unique_id: person_micke_phone_status
-        state: "{{ 'Online' if is_state('device_tracker.galaxy_a52s_5g', 'home') else 'Offline' }}"
+        state: "{{ 'Online' if is_state('device_tracker.mikaels_a52s', 'home') else 'Offline' }}"
         # Micke's Samsung Galaxy A52s 5G phone
         
       - name: "Andreas"

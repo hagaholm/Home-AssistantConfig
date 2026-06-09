@@ -1039,7 +1039,17 @@ views:
     badges: []
     cards:
       - type: picture-entity
+        entity: camera.kamera9_main
+        show_state: true
+        show_name: true
+        camera_view: auto
+      - type: picture-entity
         entity: camera.kamera10_main
+        show_state: true
+        show_name: true
+        camera_view: auto
+      - type: picture-entity
+        entity: camera.kamera8_lag_klarhet
         show_state: true
         show_name: true
         camera_view: auto
@@ -1053,36 +1063,21 @@ views:
         show_state: true
         show_name: true
         camera_view: auto
-      - type: picture-entity
-        entity: camera.kamera7_clear
-        show_state: true
-        show_name: true
-        camera_view: auto
-      - type: picture-entity
-        entity: camera.kamera8_lag_klarhet
-        show_state: true
-        show_name: true
-        camera_view: auto
-      - type: picture-entity
-        entity: camera.kamera9_main
-        show_state: true
-        show_name: true
-        camera_view: auto
       - type: entities
         title: Frontside Light Automations
         entities:
           - automation.person_motion_light_control_frontside_cam10_cam9
           - automation.person_motion_light_control_frontside_test
-          - binary_sensor.cam10_person_occupancy
           - binary_sensor.cam9_person_occupancy
-          - light.kamera10_stralkastare
+          - binary_sensor.cam10_person_occupancy
           - light.kamera9_stralkastare
-          - number.kamera10_stralkastare_ljusstyrka
+          - light.kamera10_stralkastare
           - number.kamera9_stralkastare_ljusstyrka
-          - siren.kamera10_siren
+          - number.kamera10_stralkastare_ljusstyrka
           - siren.kamera9_siren
-          - number.kamera10_volym
+          - siren.kamera10_siren
           - number.kamera9_volym
+          - number.kamera10_volym
         show_header_toggle: false
         state_color: true
   - path: extra_view
@@ -1523,15 +1518,13 @@ views:
       - type: entities
         entities:
           - sensor.tradfri_gateway
-          - sensor.kamera_1
-          - sensor.kamera_2
-          - device_tracker.reolink_kamera_10_rlc_1224a
-          - sensor.kamera_4
           - device_tracker.reolink_kamera_5_rlc_1224a
           - device_tracker.reolink_kamera_6_rlc_1224a
           - device_tracker.reolink_kamera_7_rlc_820a
           - device_tracker.reolink_kamera_8_rlc_1224a
-          - sensor.garmin_fenix_5_plus
+          - device_tracker.reolink_kamera_9_rlc_1240a
+          - device_tracker.reolink_kamera_10_rlc_1224a
+          - device_tracker.garmin_fenix_7_pro_4375d09e03d2
         title: Övrigt status
         show_header_toggle: true
         state_color: true

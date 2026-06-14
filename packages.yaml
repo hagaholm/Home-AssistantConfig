@@ -1,0 +1,137 @@
+####################################################
+#                                                  #
+#              PACKAGES MASTER FILE                #
+#                                                  #
+####################################################
+# This file loads all package subdirectories
+# Each subdirectory contains related automations,
+# sensors, scripts, and other configurations
+
+####################
+### Climate/HVAC ###
+####################
+climate_forrad: !include packages/climate/forrad.yaml
+climate_friggebod: !include packages/climate/friggebod.yaml
+climate_garage: !include packages/climate/garage.yaml
+climate_husvagn: !include packages/climate/husvagn.yaml
+climate_ute: !include packages/climate/ute.yaml
+climate_uterum: !include packages/climate/uterum.yaml
+
+####################
+### Alerts       ###
+####################
+alerts_temperature: !include packages/alerts/temperature.yaml
+alerts_devices_offline: !include packages/alerts/devices_offline.yaml
+
+####################
+### Automations  ###
+####################
+automations_input_select: !include packages/automations/input_select_light_control.yaml
+automations_info_panel: !include packages/automations/info_panel.yaml
+
+####################
+### Helpers     ###
+####################
+helpers_input_select: !include packages/helpers/input_select.yaml
+helpers_input_number: !include packages/helpers/input_number.yaml
+helpers_input_boolean: !include packages/helpers/input_boolean.yaml
+
+####################
+### Integrations ###
+####################
+integrations_mqtt: !include packages/integrations/mqtt.yaml
+integrations_mqtt_publish: !include packages/integrations/mqtt_publish_values.yaml
+
+####################
+### Lights      ###
+####################
+lights_spabad: !include packages/lights/spabad.yaml
+lights_scenes: !include packages/lights/scenes.yaml
+lights_restore_all: !include packages/lights/restore_all.yaml
+lights_outdoor_room: !include packages/lights/outdoor_room.yaml
+lights_light_groups_standard: !include packages/lights/light_groups_standard.yaml
+lights_light_groups_seasonal: !include packages/lights/light_groups_seasonal.yaml
+lights_light_entities: !include packages/lights/light_entities.yaml
+lights_kitchen: !include packages/lights/kitchen.yaml
+lights_inside: !include packages/lights/inside.yaml
+lights_hall: !include packages/lights/hall.yaml
+lights_garden: !include packages/lights/garden.yaml
+lights_facade: !include packages/lights/facade.yaml
+lights_debug: !include packages/lights/debug.yaml
+lights_bathroom: !include packages/lights/bathroom.yaml
+
+####################
+### Media       ###
+####################
+media_harmony_hub: !include packages/media/harmony_hub.yaml
+
+####################
+### Notifications ###
+####################
+notifications_notify: !include packages/notifications/notify.yaml
+notifications_persistently_notify: !include packages/notifications/persistently_notify.yaml
+
+####################
+### Presence    ###
+####################
+presence_home_away: !include packages/presence/home_away.yaml
+presence_working_at_home: !include packages/presence/working_at_home.yaml
+
+####################
+### Scripts     ###
+####################
+scripts_godnatt: !include packages/scripts/godnatt.yaml
+scripts_automation_restart: !include packages/scripts/automation_restart.yaml
+scripts_core_restart: !include packages/scripts/core_restart.yaml
+scripts_google_home_notify: !include packages/scripts/google_home_notify.yaml
+scripts_google_home_interrupt: !include packages/scripts/google_home_interrupt.yaml
+
+####################
+### Sensors     ###
+####################
+sensors_command_line: !include packages/sensors/command_line_sensors.yaml
+sensors_ljusstyrka_thresholds: !include packages/sensors/ljusstyrka_thresholds.yaml
+# Template sensors - migrated to template integration
+template_system_info: !include packages/sensors/template_sensors/template_system_info.yaml
+template_ljusstyrka: !include packages/sensors/template_sensors/template_ljusstyrka.yaml
+template_harmony_hub: !include packages/sensors/template_sensors/template_harmony_hub.yaml
+template_aqara_fp2_kitchen: !include packages/sensors/template_sensors/template_aqara_fp2_kitchen.yaml
+template_lumi_ht_agl02_hall: !include packages/sensors/template_sensors/template_lumi_ht_agl02_hall_is_not_working.yaml
+template_lumi_ht_agl02_livingroom: !include packages/sensors/template_sensors/template_lumi_ht_agl02_livingroom.yaml
+template_lumi_weather_bathroom: !include packages/sensors/template_sensors/template_lumi_weather_bathroom.yaml
+template_lumi_weather_uterum: !include packages/sensors/template_sensors/template_lumi_weather_uterum.yaml
+template_sensor_reading_missing: !include packages/sensors/template_sensors/template_sensor_reading_missing.yaml
+template_timmerflotte_temp_hmd_2_hall: !include packages/sensors/template_sensors/template_timmerflotte_temp_hmd_2_hall.yaml
+template_timmerflotte_temp_hmd_4_friggebod: !include packages/sensors/template_sensors/template_timmerflotte_temp_hmd_4_friggebod.yaml
+template_timmerflotte_temp_hmd_forrad: !include packages/sensors/template_sensors/template_timmerflotte_temp_hmd_forrad.yaml
+template_ventilation_system: !include packages/sensors/template_sensors/template_ventilation_system.yaml
+template_xiaomi_lumi_mgl01_hall: !include packages/sensors/template_sensors/template_xiaomi_lumi_mgl01_hall.yaml
+template_xiaomi_lumi_mgl01_livingroom: !include packages/sensors/template_sensors/template_xiaomi_lumi_mgl01_livingroom.yaml
+template_xiaomi_lumi_mgl01_louise_room: !include packages/sensors/template_sensors/template_xiaomi_lumi_mgl01_louise_room_is_not_working.yaml
+
+####################
+### System      ###
+####################
+system_info: !include packages/system/system_info.yaml
+
+####################
+### Ventilation ###
+####################
+ventilation_tuning: !include packages/ventilation/ventilation_tuning.yaml
+ventilation_system: !include packages/ventilation/ventilation_system.yaml
+ventilation_fan: !include packages/ventilation/fan.yaml
+ventilation_flap: !include packages/ventilation/flap.yaml
+
+####################
+### Media       ###
+####################
+wiim_scripts: !include packages/wiim/wiim_scripts.yaml
+wiim_automations: !include packages/wiim/wiim_automations.yaml
+
+####################
+### Frigate     ###
+####################
+frigate_sensors: !include packages/frigate/frigate_sensors.yaml
+frigate_face_detection: !include packages/frigate/frigate_face_detection.yaml
+frigate_animal_detected: !include packages/frigate/frigate_animal_detected.yaml
+frigate_person_detected: !include packages/frigate/frigate_person_detected.yaml

@@ -135,7 +135,7 @@ automation:
             {{ five_min_later.strftime('%Y-%m-%d %H:%M:%S') }}
 
       # Send notification to user
-      - service: notify.mobile_app_mickes_phone
+      - service: notify.mobile_app_sm_a528b
         data:
           title: "🏠 Hemkomst Detekterad"
           message: >
@@ -189,7 +189,7 @@ automation:
       # Log timeout event
       - service: system_log.write
         data:
-          level: WARNING
+          level: info
           logger: frigate_temp_presence
           message: >
             Frigate temporary presence timeout reached. 
@@ -215,7 +215,7 @@ automation:
           datetime: "2000-01-01 00:00:00"
 
       # Send notification
-      - service: notify.mobile_app_mickes_phone
+      - service: notify.mobile_app_sm_a528b
         data:
           title: "🏠 Hemstatus Revert"
           message: >

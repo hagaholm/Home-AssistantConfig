@@ -104,7 +104,7 @@ automation:
     action:
       - service: system_log.write
         data:
-          level: INFO
+          level: info
           logger: frigate_temp_presence
           message: >
             Frigate detected {{ trigger.payload_json.name }}

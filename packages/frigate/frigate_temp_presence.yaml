@@ -74,37 +74,36 @@ automation:
     max: 10
 
     trigger:
-      # Trigger on timestamp change (updates on EVERY detection, not just value changes)
-      # This ensures we catch repeated detections of the same person
-      - platform: state
-        entity_id: sensor.frigate_face_timestamp
+      - platform: mqtt
+        topic: "frigate/tracked_object_update"
 
     condition:
+      # Only face-recognition events
+      - condition: template
+        value_template: "{{ trigger.payload_json.type == 'face' }}"
+
       # Only activate when currently away
       - condition: state
         entity_id: input_select.home_status
         state: 'Borta'
-      
-      # Only use entry cameras (cam10=Uppfart, cam8=Entre, cam9=Garage infront)
+
+      # Only entry cameras
       - condition: template
-        value_template: >
-          {{ states('sensor.frigate_face_camera') in ['cam10', 'cam8', 'cam9'] }}
-      
-      # Only trigger for Micke or Annelie
+        value_template: "{{ trigger.payload_json.camera in ['cam10', 'cam8', 'cam9'] }}"
+
+      # Only Micke or Annelie
       - condition: template
-        value_template: >
-          {{ states('sensor.frigate_face_name') in ['Micke', 'Annelie'] }}
+        value_template: "{{ trigger.payload_json.name in ['Micke', 'Annelie'] }}"
 
     action:
-      # Log the detection event
       - service: system_log.write
         data:
           level: INFO
           logger: frigate_temp_presence
           message: >
-            Frigate detected {{ states('sensor.frigate_face_name') }} 
-            on {{ states('sensor.frigate_face_camera') }} 
-            (score: {{ states('sensor.frigate_face_score') }})
+            Frigate detected {{ trigger.payload_json.name }}
+            on {{ trigger.payload_json.camera }}
+            (score: {{ trigger.payload_json.score | default('') }})
 
       # Set temporary status to home
       - service: input_select.select_option

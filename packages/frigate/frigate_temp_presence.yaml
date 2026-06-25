@@ -95,6 +95,12 @@ automation:
       - condition: template
         value_template: "{{ trigger.payload_json.name in ['Micke', 'Annelie'] }}"
 
+      # Only accept confident recognitions (score present and >= threshold)
+      - condition: template
+        value_template: >
+          {{ trigger.payload_json.score is not none
+             and (trigger.payload_json.score | float(0)) >= 0.7 }}
+
     action:
       - service: system_log.write
         data:
@@ -103,7 +109,7 @@ automation:
           message: >
             Frigate detected {{ trigger.payload_json.name }}
             on {{ trigger.payload_json.camera }}
-            (score: {{ trigger.payload_json.score | default('') }})
+            (score: {{ trigger.payload_json.score }})
 
       # Set temporary status to home
       - service: input_select.select_option
@@ -133,8 +139,9 @@ automation:
         data:
           title: "🏠 Hemkomst Detekterad"
           message: >
-            {{ states('sensor.frigate_face_name') }} detekterad vid 
-            {{ states('sensor.frigate_face_camera') | upper }}.
+            {{ trigger.payload_json.name }} detekterad vid
+            {{ trigger.payload_json.camera | upper }}
+            (score: {{ trigger.payload_json.score }}).
             Status: Hemma (temp. 5 min). WiFi-anslutning väntas...
           data:
             tag: "frigate_presence"

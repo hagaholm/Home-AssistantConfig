@@ -1,0 +1,87 @@
+# Camera 5 intruder alarm automation
+# Separate package for Frigate alarm controls so future cameras can be added consistently.
+
+counter:
+  - name: "Cam5 Intruder Alarm Daily Count"
+    id: intruder_alarm_cam5_daily_count
+    initial: 0
+    step: 1
+    min: 0
+    max: 10
+
+input_datetime:
+  intruder_alarm_cam5_last_trigger:
+    name: "Cam5 Intruder Alarm Last Trigger"
+    has_date: true
+    has_time: true
+
+automation:
+  - alias: Cam5 Person Intruder Alarm
+    id: '81119011564400'
+    mode: single
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.cam5_person_count
+        above: 0
+    condition:
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: input_select.home_status
+            state: 'Borta'
+          - condition: state
+            entity_id: input_select.home_status
+            state: 'Sover'
+      - condition: template
+        value_template: "{{ states('counter.intruder_alarm_cam5_daily_count') | int(0) < 10 }}"
+      - condition: template
+        value_template: >-
+          {% set last = states('input_datetime.intruder_alarm_cam5_last_trigger') %}
+          {% if last in ['unknown', ''] %}
+            true
+          {% else %}
+            {{ (as_timestamp(now()) - as_timestamp(last)) > 60 }}
+          {% endif %}
+    action:
+      - service: number.set_value
+        target:
+          entity_id: number.kamera5_volym
+        data:
+          value: 20
+      - service: siren.turn_on
+        target:
+          entity_id: siren.kamera5_siren
+      - delay: '00:00:03'
+      - service: siren.turn_off
+        target:
+          entity_id: siren.kamera5_siren
+      - service: number.set_value
+        target:
+          entity_id: number.kamera5_volym
+        data:
+          value: 0
+      - service: counter.increment
+        target:
+          entity_id: counter.intruder_alarm_cam5_daily_count
+      - service: input_datetime.set_datetime
+        target:
+          entity_id: input_datetime.intruder_alarm_cam5_last_trigger
+        data:
+          datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+      - service: notify.mobile_app_sm_a528b
+        data:
+          title: "Cam5 Intruder Alarm"
+          message: >-
+            Person detected by Cam5 while {{ states('input_select.home_status') }}.
+            Siren activated for 3 seconds at 20%.
+
+  - alias: Cam5 Intruder Alarm Daily Reset
+    id: '81119011564401'
+    mode: single
+    trigger:
+      - platform: time
+        at: '00:00:00'
+    action:
+      - service: counter.reset
+        target:
+          entity_id: counter.intruder_alarm_cam5_daily_count

@@ -137,7 +137,7 @@ automation:
       # Send notification to user
       - service: notify.mobile_app_sm_a528b
         data:
-          title: "🏠 Hemkomst Detekterad"
+          title: "🏠 Hemkomst Detekterad {{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
           message: >
             {{ trigger.payload_json.name }} detekterad vid
             {{ trigger.payload_json.camera | upper }}

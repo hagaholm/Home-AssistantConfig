@@ -26,7 +26,7 @@ automation:
         conditions:
           - condition: state
             entity_id: input_select.home_status
-            state: 'Borta'
+            state: 'Hemma'
           - condition: state
             entity_id: input_select.home_status
             state: 'Sover'

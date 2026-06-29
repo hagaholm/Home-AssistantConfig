@@ -26,7 +26,7 @@ function ParseCameraConfig {
     param([string]$content)
     
     $cameras = @{}
-    $cameraNames = @('cam10', 'cam5', 'cam6', 'cam7', 'cam8')
+    $cameraNames = @('cam10', 'cam5', 'cam6', 'cam9', 'cam8')
     $contentLines = $content -split "`r?`n"
     
     foreach ($camName in $cameraNames) {
@@ -100,7 +100,7 @@ try {
         $hasChanges = $false
         
         # Compare each camera's settings
-        foreach ($camName in @('cam10', 'cam5', 'cam6', 'cam7', 'cam8')) {
+        foreach ($camName in @('cam10', 'cam5', 'cam6', 'cam9', 'cam8')) {
             $camChanges = @()
             
             foreach ($key in $cameras[$camName].Keys) {
@@ -159,28 +159,28 @@ $changesSectionMarkdown
 
 This table shows all Frigate configuration values for each camera, making it easy to see differences:
 
-| Configuration Parameter | Cam10 | Cam5 | Cam6 | Cam7 | Cam8 |
+| Configuration Parameter | Cam10 | Cam5 | Cam6 | cam9 | Cam8 |
 |---|---|---|---|---|---|
 | **ENABLED** |
-| Camera Enabled | $($cameras['cam10']['enabled']) | $($cameras['cam5']['enabled']) | $($cameras['cam6']['enabled']) | $($cameras['cam7']['enabled']) | $($cameras['cam8']['enabled']) |
+| Camera Enabled | $($cameras['cam10']['enabled']) | $($cameras['cam5']['enabled']) | $($cameras['cam6']['enabled']) | $($cameras['cam9']['enabled']) | $($cameras['cam8']['enabled']) |
 | **DETECTION** |
-| Detection FPS | $($cameras['cam10']['fps']) | $($cameras['cam5']['fps']) | $($cameras['cam6']['fps']) | $($cameras['cam7']['fps']) | $($cameras['cam8']['fps']) |
-| Detection Width | $($cameras['cam10']['width']) | $($cameras['cam5']['width']) | $($cameras['cam6']['width']) | $($cameras['cam7']['width']) | $($cameras['cam8']['width']) |
-| Detection Height | $($cameras['cam10']['height']) | $($cameras['cam5']['height']) | $($cameras['cam6']['height']) | $($cameras['cam7']['height']) | $($cameras['cam8']['height']) |
+| Detection FPS | $($cameras['cam10']['fps']) | $($cameras['cam5']['fps']) | $($cameras['cam6']['fps']) | $($cameras['cam9']['fps']) | $($cameras['cam8']['fps']) |
+| Detection Width | $($cameras['cam10']['width']) | $($cameras['cam5']['width']) | $($cameras['cam6']['width']) | $($cameras['cam9']['width']) | $($cameras['cam8']['width']) |
+| Detection Height | $($cameras['cam10']['height']) | $($cameras['cam5']['height']) | $($cameras['cam6']['height']) | $($cameras['cam9']['height']) | $($cameras['cam8']['height']) |
 | **DETECTION FILTERS - ALL OBJECTS** |
-| Min Area (pixels) | **$($cameras['cam10']['min_area'])** | **$($cameras['cam5']['min_area'])** ⬆️ | **$($cameras['cam6']['min_area'])** ⬇️ | **$($cameras['cam7']['min_area'])** | **$($cameras['cam8']['min_area'])** |
-| Min Score | **$($cameras['cam10']['min_score'])** | **$($cameras['cam5']['min_score'])** | **$($cameras['cam6']['min_score'])** | **$($cameras['cam7']['min_score'])** | **$($cameras['cam8']['min_score'])** |
-| Threshold | **$($cameras['cam10']['threshold'])** | **$($cameras['cam5']['threshold'])** | **$($cameras['cam6']['threshold'])** | **$($cameras['cam7']['threshold'])** | **$($cameras['cam8']['threshold'])** |
+| Min Area (pixels) | **$($cameras['cam10']['min_area'])** | **$($cameras['cam5']['min_area'])** ⬆️ | **$($cameras['cam6']['min_area'])** ⬇️ | **$($cameras['cam9']['min_area'])** | **$($cameras['cam8']['min_area'])** |
+| Min Score | **$($cameras['cam10']['min_score'])** | **$($cameras['cam5']['min_score'])** | **$($cameras['cam6']['min_score'])** | **$($cameras['cam9']['min_score'])** | **$($cameras['cam8']['min_score'])** |
+| Threshold | **$($cameras['cam10']['threshold'])** | **$($cameras['cam5']['threshold'])** | **$($cameras['cam6']['threshold'])** | **$($cameras['cam9']['threshold'])** | **$($cameras['cam8']['threshold'])** |
 | **DETECTION FILTERS - PERSON** |
-| Person Max Ratio | $($cameras['cam10']['person_max_ratio']) | $($cameras['cam5']['person_max_ratio']) | $($cameras['cam6']['person_max_ratio']) | $($cameras['cam7']['person_max_ratio']) | $($cameras['cam8']['person_max_ratio']) |
-| Person Mask | $(if ($cameras['cam10']['person_mask'] -eq 'true') {'✅ Yes'} else {'❌ No'}) | $(if ($cameras['cam5']['person_mask'] -eq 'true') {'✅ Yes'} else {'❌ No'}) | $(if ($cameras['cam6']['person_mask'] -eq 'true') {'✅ Yes'} else {'❌ No'}) | $(if ($cameras['cam7']['person_mask'] -eq 'true') {'✅ Yes'} else {'❌ No'}) | $(if ($cameras['cam8']['person_mask'] -eq 'true') {'✅ Yes'} else {'❌ No'}) |
+| Person Max Ratio | $($cameras['cam10']['person_max_ratio']) | $($cameras['cam5']['person_max_ratio']) | $($cameras['cam6']['person_max_ratio']) | $($cameras['cam9']['person_max_ratio']) | $($cameras['cam8']['person_max_ratio']) |
+| Person Mask | $(if ($cameras['cam10']['person_mask'] -eq 'true') {'✅ Yes'} else {'❌ No'}) | $(if ($cameras['cam5']['person_mask'] -eq 'true') {'✅ Yes'} else {'❌ No'}) | $(if ($cameras['cam6']['person_mask'] -eq 'true') {'✅ Yes'} else {'❌ No'}) | $(if ($cameras['cam9']['person_mask'] -eq 'true') {'✅ Yes'} else {'❌ No'}) | $(if ($cameras['cam8']['person_mask'] -eq 'true') {'✅ Yes'} else {'❌ No'}) |
 | **MOTION DETECTION** |
-| Motion Threshold | **$($cameras['cam10']['motion_threshold'])** | **$($cameras['cam5']['motion_threshold'])** | **$($cameras['cam6']['motion_threshold'])** | **$($cameras['cam7']['motion_threshold'])** | **$($cameras['cam8']['motion_threshold'])** |
-| Motion Contour Area | **$($cameras['cam10']['contour_area'])** | **$($cameras['cam5']['contour_area'])** | **$($cameras['cam6']['contour_area'])** | **$($cameras['cam7']['contour_area'])** | **$($cameras['cam8']['contour_area'])** |
+| Motion Threshold | **$($cameras['cam10']['motion_threshold'])** | **$($cameras['cam5']['motion_threshold'])** | **$($cameras['cam6']['motion_threshold'])** | **$($cameras['cam9']['motion_threshold'])** | **$($cameras['cam8']['motion_threshold'])** |
+| Motion Contour Area | **$($cameras['cam10']['contour_area'])** | **$($cameras['cam5']['contour_area'])** | **$($cameras['cam6']['contour_area'])** | **$($cameras['cam9']['contour_area'])** | **$($cameras['cam8']['contour_area'])** |
 | **SNAPSHOTS** |
-| Clean Copy | $(if ($cameras['cam3']['clean_copy'] -eq 'true') {'✅ Yes'} else {'❌ No'}) | $(if ($cameras['cam5']['clean_copy'] -eq 'true') {'✅ Yes'} else {'❌ No'}) | $(if ($cameras['cam6']['clean_copy'] -eq 'true') {'✅ Yes'} else {'❌ No'}) | $(if ($cameras['cam7']['clean_copy'] -eq 'true') {'✅ Yes'} else {'❌ No'}) | $(if ($cameras['cam8']['clean_copy'] -eq 'true') {'✅ Yes'} else {'❌ No'}) |
+| Clean Copy | $(if ($cameras['cam3']['clean_copy'] -eq 'true') {'✅ Yes'} else {'❌ No'}) | $(if ($cameras['cam5']['clean_copy'] -eq 'true') {'✅ Yes'} else {'❌ No'}) | $(if ($cameras['cam6']['clean_copy'] -eq 'true') {'✅ Yes'} else {'❌ No'}) | $(if ($cameras['cam9']['clean_copy'] -eq 'true') {'✅ Yes'} else {'❌ No'}) | $(if ($cameras['cam8']['clean_copy'] -eq 'true') {'✅ Yes'} else {'❌ No'}) |
 | **ZONES** |
-| Zone Name | $($cameras['cam3']['zone_name']) | $($cameras['cam5']['zone_name']) | $($cameras['cam6']['zone_name']) | $($cameras['cam7']['zone_name']) | $($cameras['cam8']['zone_name']) |
+| Zone Name | $($cameras['cam3']['zone_name']) | $($cameras['cam5']['zone_name']) | $($cameras['cam6']['zone_name']) | $($cameras['cam9']['zone_name']) | $($cameras['cam8']['zone_name']) |
 
 ---
 
@@ -191,7 +191,7 @@ This table shows all Frigate configuration values for each camera, making it eas
 | Setting | Camera | Value | Why? |
 |---------|--------|-------|------|
 | Min Area (smallest) | **Cam6** | $($cameras['cam6']['min_area']) | Rear entrance - needs to catch close-up detections |
-| Min Score (lowest) | **Cam6, Cam7, Cam8** | $($cameras['cam6']['min_score']) | More permissive detection |
+| Min Score (lowest) | **Cam6, cam9, Cam8** | $($cameras['cam6']['min_score']) | More permissive detection |
 
 ### 🟢 Least Sensitive Settings (Highest Thresholds)
 
@@ -207,7 +207,7 @@ This table shows all Frigate configuration values for each camera, making it eas
 | **Cam3** (Driveway) | $($cameras['cam3']['min_area']) | $($cameras['cam3']['min_score']) | $($cameras['cam3']['motion_threshold']) | $($cameras['cam3']['contour_area']) |
 | **Cam5** (Rear Yard) | $($cameras['cam5']['min_area']) | $($cameras['cam5']['min_score']) | $($cameras['cam5']['motion_threshold']) | $($cameras['cam5']['contour_area']) |
 | **Cam6** (Rear Entrance) | $($cameras['cam6']['min_area']) | $($cameras['cam6']['min_score']) | $($cameras['cam6']['motion_threshold']) | $($cameras['cam6']['contour_area']) |
-| **Cam7** (Garden Shed) | $($cameras['cam7']['min_area']) | $($cameras['cam7']['min_score']) | $($cameras['cam7']['motion_threshold']) | $($cameras['cam7']['contour_area']) |
+| **cam9** (Garden Shed) | $($cameras['cam9']['min_area']) | $($cameras['cam9']['min_score']) | $($cameras['cam9']['motion_threshold']) | $($cameras['cam9']['contour_area']) |
 | **Cam8** (Main Entrance) | $($cameras['cam8']['min_area']) | $($cameras['cam8']['min_score']) | $($cameras['cam8']['motion_threshold']) | $($cameras['cam8']['contour_area']) |
 
 ---
@@ -215,10 +215,10 @@ This table shows all Frigate configuration values for each camera, making it eas
 ## Configuration Patterns
 
 ### Pattern: Where Cameras Differ
-❌ **Min Area**: $($cameras['cam10']['min_area']) vs $($cameras['cam5']['min_area']) vs $($cameras['cam6']['min_area']) vs $($cameras['cam7']['min_area']) vs $($cameras['cam8']['min_area'])  
-❌ **Min Score**: $($cameras['cam10']['min_score']) vs $($cameras['cam5']['min_score']) vs $($cameras['cam6']['min_score']) vs $($cameras['cam7']['min_score']) vs $($cameras['cam8']['min_score'])  
-❌ **Motion Threshold**: $($cameras['cam10']['motion_threshold']) vs $($cameras['cam5']['motion_threshold']) vs $($cameras['cam6']['motion_threshold']) vs $($cameras['cam7']['motion_threshold']) vs $($cameras['cam8']['motion_threshold'])  
-❌ **Motion Contour Area**: $($cameras['cam10']['contour_area']) vs $($cameras['cam5']['contour_area']) vs $($cameras['cam6']['contour_area']) vs $($cameras['cam7']['contour_area']) vs $($cameras['cam8']['contour_area'])  
+❌ **Min Area**: $($cameras['cam10']['min_area']) vs $($cameras['cam5']['min_area']) vs $($cameras['cam6']['min_area']) vs $($cameras['cam9']['min_area']) vs $($cameras['cam8']['min_area'])  
+❌ **Min Score**: $($cameras['cam10']['min_score']) vs $($cameras['cam5']['min_score']) vs $($cameras['cam6']['min_score']) vs $($cameras['cam9']['min_score']) vs $($cameras['cam8']['min_score'])  
+❌ **Motion Threshold**: $($cameras['cam10']['motion_threshold']) vs $($cameras['cam5']['motion_threshold']) vs $($cameras['cam6']['motion_threshold']) vs $($cameras['cam9']['motion_threshold']) vs $($cameras['cam8']['motion_threshold'])  
+❌ **Motion Contour Area**: $($cameras['cam10']['contour_area']) vs $($cameras['cam5']['contour_area']) vs $($cameras['cam6']['contour_area']) vs $($cameras['cam9']['contour_area']) vs $($cameras['cam8']['contour_area'])  
 ❌ **Clean Copy**: Cam10 only = $($cameras['cam10']['clean_copy'])  
 ❌ **Person Mask**: Cam10 = $($cameras['cam10']['person_mask']), Cam8 = $($cameras['cam8']['person_mask'])
 

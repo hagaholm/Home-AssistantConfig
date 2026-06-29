@@ -1,4 +1,4 @@
-# Camera 5 intruder alarm automation
+# Camera 5 and 6 intruder alarm automation
 # Separate package for Frigate alarm controls so future cameras can be added consistently.
 
 counter:
@@ -7,9 +7,19 @@ counter:
     initial: 0
     step: 1
 
+  intruder_alarm_cam6_daily_count:
+    name: "Cam6 Intruder Alarm Daily Count"
+    initial: 0
+    step: 1
+
 input_datetime:
   intruder_alarm_cam5_last_trigger:
     name: "Cam5 Intruder Alarm Last Trigger"
+    has_date: true
+    has_time: true
+
+  intruder_alarm_cam6_last_trigger:
+    name: "Cam6 Intruder Alarm Last Trigger"
     has_date: true
     has_time: true
 
@@ -71,7 +81,7 @@ automation:
           title: "Cam5 Intruder Alarm"
           message: >-
             Person detected by Cam5 while {{ states('input_select.home_status') }}.
-            Siren activated for 5 seconds at 70%.
+            Siren activated for 5 seconds at 100%.
 
   - alias: Cam5 Intruder Alarm Daily Reset
     id: '81119011564401'
@@ -83,3 +93,75 @@ automation:
       - service: counter.reset
         target:
           entity_id: counter.intruder_alarm_cam5_daily_count
+
+#########################################################################################
+
+  - alias: Cam6 Person Intruder Alarm
+    id: '81119011564402'
+    mode: single
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.cam6_person_count
+        above: 0
+    condition:
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: input_select.home_status
+            state: 'Borta'
+          - condition: state
+            entity_id: input_select.home_status
+            state: 'Sover'
+      - condition: template
+        value_template: "{{ states('counter.intruder_alarm_cam6_daily_count') | int(0) < 10 }}"
+      - condition: template
+        value_template: >-
+          {% set last = states('input_datetime.intruder_alarm_cam6_last_trigger') %}
+          {% if last in ['unknown', ''] %}
+            true
+          {% else %}
+            {{ (as_timestamp(now()) - as_timestamp(last)) > 20 }}
+          {% endif %}
+    action:
+      - service: number.set_value
+        target:
+          entity_id: number.kamera6_volym
+        data:
+          value: 100
+      - service: siren.turn_on
+        target:
+          entity_id: siren.kamera6_siren
+      - delay: '00:00:05'
+      - service: siren.turn_off
+        target:
+          entity_id: siren.kamera6_siren
+      - service: number.set_value
+        target:
+          entity_id: number.kamera6_volym
+        data:
+          value: 0
+      - service: counter.increment
+        target:
+          entity_id: counter.intruder_alarm_cam6_daily_count
+      - service: input_datetime.set_datetime
+        target:
+          entity_id: input_datetime.intruder_alarm_cam6_last_trigger
+        data:
+          datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+      - service: notify.mobile_app_sm_a528b
+        data:
+          title: "Cam6 Intruder Alarm"
+          message: >-
+            Person detected by Cam6 while {{ states('input_select.home_status') }}.
+            Siren activated for 5 seconds at 100%.
+
+  - alias: Cam6 Intruder Alarm Daily Reset
+    id: '81119011564403'
+    mode: single
+    trigger:
+      - platform: time
+        at: '00:00:00'
+    action:
+      - service: counter.reset
+        target:
+          entity_id: counter.intruder_alarm_cam6_daily_count

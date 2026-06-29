@@ -38,18 +38,18 @@ automation:
           {% if last in ['unknown', ''] %}
             true
           {% else %}
-            {{ (as_timestamp(now()) - as_timestamp(last)) > 60 }}
+            {{ (as_timestamp(now()) - as_timestamp(last)) > 20 }}
           {% endif %}
     action:
       - service: number.set_value
         target:
           entity_id: number.kamera5_volym
         data:
-          value: 20
+          value: 70
       - service: siren.turn_on
         target:
           entity_id: siren.kamera5_siren
-      - delay: '00:00:03'
+      - delay: '00:00:05'
       - service: siren.turn_off
         target:
           entity_id: siren.kamera5_siren
@@ -71,7 +71,7 @@ automation:
           title: "Cam5 Intruder Alarm"
           message: >-
             Person detected by Cam5 while {{ states('input_select.home_status') }}.
-            Siren activated for 3 seconds at 20%.
+            Siren activated for 5 seconds at 70%.
 
   - alias: Cam5 Intruder Alarm Daily Reset
     id: '81119011564401'

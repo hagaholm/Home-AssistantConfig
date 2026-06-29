@@ -2,8 +2,8 @@
 # Separate package for Frigate alarm controls so future cameras can be added consistently.
 
 counter:
-  - name: "Cam5 Intruder Alarm Daily Count"
-    id: intruder_alarm_cam5_daily_count
+  intruder_alarm_cam5_daily_count:
+    name: "Cam5 Intruder Alarm Daily Count"
     initial: 0
     step: 1
     min: 0

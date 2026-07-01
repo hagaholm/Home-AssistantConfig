@@ -1,6 +1,7 @@
 # Camera 5 and 6 intruder alarm automation
 # Separate package for Frigate alarm controls so future cameras can be added consistently.
 
+### counter ###
 counter:
   intruder_alarm_cam5_daily_count:
     name: "Cam5 Intruder Alarm Daily Count"
@@ -12,6 +13,7 @@ counter:
     initial: 0
     step: 1
 
+### input_datetime ###
 input_datetime:
   intruder_alarm_cam5_last_trigger:
     name: "Cam5 Intruder Alarm Last Trigger"
@@ -23,64 +25,200 @@ input_datetime:
     has_date: true
     has_time: true
 
+### automation ###
 automation:
-  - alias: Cam5 Person Intruder Alarm
-    id: '81119011564400'
+#####################################
+  - alias: Cam Siren Reset On HA Start
+    id: "cam_siren_reset_on_ha_start"
     mode: single
     trigger:
-      - platform: numeric_state
-        entity_id: sensor.cam5_person_count
-        above: 0
-    condition:
-      - condition: or
-        conditions:
-          - condition: state
-            entity_id: input_select.home_status
-            state: 'Borta'
-          - condition: state
-            entity_id: input_select.home_status
-            state: 'Sover'
-      - condition: template
-        value_template: "{{ states('counter.intruder_alarm_cam5_daily_count') | int(0) < 10 }}"
-      - condition: template
-        value_template: >-
-          {% set last = states('input_datetime.intruder_alarm_cam5_last_trigger') %}
-          {% if last in ['unknown', ''] %}
-            true
-          {% else %}
-            {{ (as_timestamp(now()) - as_timestamp(last)) > 20 }}
-          {% endif %}
+      - platform: homeassistant
+        event: start
+
     action:
-      - service: number.set_value
-        target:
-          entity_id: number.kamera5_volym
-        data:
-          value: 100
-      - service: siren.turn_on
-        target:
-          entity_id: siren.kamera5_siren
-      - delay: '00:00:05'
       - service: siren.turn_off
         target:
           entity_id: siren.kamera5_siren
+      - service: siren.turn_off
+        target:
+          entity_id: siren.kamera6_siren
+      - service: siren.turn_off
+        target:
+          entity_id: siren.kamera8_siren
+      - service: siren.turn_off
+        target:
+          entity_id: siren.kamera9_siren
+      - service: siren.turn_off
+        target:
+          entity_id: siren.kamera10_siren
+
+      - delay: "00:00:01"
+
       - service: number.set_value
         target:
           entity_id: number.kamera5_volym
         data:
           value: 0
+      - service: number.set_value
+        target:
+          entity_id: number.kamera6_volym
+        data:
+          value: 0
+      - service: number.set_value
+        target:
+          entity_id: number.kamera8_volym
+        data:
+          value: 0
+      - service: number.set_value
+        target:
+          entity_id: number.kamera9_volym
+        data:
+          value: 0
+      - service: number.set_value
+        target:
+          entity_id: number.kamera10_volym
+        data:
+          value: 0
+
+#############
+### cam 5 ###
+#############
+  - alias: Cam5 Person Intruder Alarm
+    id: '81119011564400'
+    mode: single
+    trigger:
+      - platform: mqtt
+        topic: frigate/events
+
+    condition:
+      - condition: template
+        value_template: >
+          {% set p = trigger.payload_json %}
+          {% set a = p.get('after', {}) %}
+          {{ p.get('type') == 'new'
+            and a.get('camera') == 'cam5'
+            and a.get('label') == 'person'
+            and (
+              'Baksidan' in a.get('entered_zones', [])
+               or 'Baksidan' in a.get('current_zones', [])
+            ) }}
+
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: input_select.home_status
+            state: "Borta"
+
+          - condition: state
+            entity_id: input_select.home_status
+            state: "Sover"
+
+      - condition: template
+        value_template: >
+          {{ states('counter.intruder_alarm_cam5_daily_count') | int(0) < 10 }}
+
+      - condition: template
+        value_template: >
+          {% set last = states('input_datetime.intruder_alarm_cam5_last_trigger') %}
+          {% if last in ['unknown', 'unavailable', '', none] %}
+            true
+          {% else %}
+            {{ (as_timestamp(now()) - as_timestamp(last, 0)) > 20 }}
+          {% endif %}
+
+    action:
+      - variables:
+          p: "{{ trigger.payload_json }}"
+          e: "{{ trigger.payload_json.get('after', {}) }}"
+          event_id: "{{ e.get('id', 'n/a') }}"
+          camera: "{{ e.get('camera', 'n/a') }}"
+          label: "{{ e.get('label', 'n/a') }}"
+          score: "{{ e.get('score', 'n/a') }}"
+          top_score: "{{ e.get('top_score', 'n/a') }}"
+          false_positive: "{{ e.get('false_positive', 'n/a') }}"
+          stationary: "{{ e.get('stationary', 'n/a') }}"
+          box: "{{ e.get('box', [0, 0, 0, 0]) }}"
+          region: "{{ e.get('region', 'n/a') }}"
+          entered_zones: >
+            {% set z = e.get('entered_zones', []) %}
+            {% if z %}
+              {{ z | join(', ') }}
+            {% else %}
+              none
+            {% endif %}
+          current_zones: >
+            {% set z = e.get('current_zones', []) %}
+            {% if z %}
+              {{ z | join(', ') }}
+            {% else %}
+              none
+            {% endif %}
+          x: "{{ e.get('box', [0, 0, 0, 0])[0] | int(0) }}"
+          y: "{{ e.get('box', [0, 0, 0, 0])[1] | int(0) }}"
+          w: "{{ e.get('box', [0, 0, 0, 0])[2] | int(0) }}"
+          h: "{{ e.get('box', [0, 0, 0, 0])[3] | int(0) }}"
+          area: >
+            {% set b = e.get('box', [0, 0, 0, 0]) %}
+            {{ (b[2] | int(0)) * (b[3] | int(0)) }}
+          ratio: >
+            {% set b = e.get('box', [0, 0, 0, 0]) %}
+            {% set hh = b[3] | float(0) %}
+            {% if hh > 0 %}
+              {{ ((b[2] | float(0)) / hh) | round(3) }}
+            {% else %}
+              0
+            {% endif %}
+
+      - service: number.set_value
+        target:
+          entity_id: number.kamera5_volym
+        data:
+          value: 100
+
+      - service: siren.turn_on
+        target:
+          entity_id: siren.kamera5_siren
+
+      - delay: "00:00:05"
+
+      - service: siren.turn_off
+        target:
+          entity_id: siren.kamera5_siren
+
+      - delay: "00:00:01"
+
+      - service: number.set_value
+        target:
+          entity_id: number.kamera5_volym
+        data:
+          value: 0
+
       - service: counter.increment
         target:
           entity_id: counter.intruder_alarm_cam5_daily_count
+
       - service: input_datetime.set_datetime
         target:
           entity_id: input_datetime.intruder_alarm_cam5_last_trigger
         data:
           datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+
       - service: notify.mobile_app_sm_a528b
         data:
           title: "Cam5 Intruder Alarm"
           message: >-
             Person detected by Cam5 while {{ states('input_select.home_status') }}.
+            Event ID: {{ event_id }}.
+            Zone entered: {{ entered_zones }}.
+            Current zones: {{ current_zones }}.
+            Score: {{ score }}.
+            Top score: {{ top_score }}.
+            False positive: {{ false_positive }}.
+            Stationary: {{ stationary }}.
+            Box: [{{ x }}, {{ y }}, {{ w }}, {{ h }}].
+            Area: {{ area }}.
+            Ratio W/H: {{ ratio }}.
+            Region: {{ region }}.
             Siren activated for 5 seconds at 100%.
 
   - alias: Cam5 Intruder Alarm Daily Reset
@@ -94,65 +232,173 @@ automation:
         target:
           entity_id: counter.intruder_alarm_cam5_daily_count
 
-#########################################################################################
-
-  - alias: Cam6 Person Intruder Alarm
-    id: '81119011564402'
+  - alias: Cam5 Siren Failsafe Off
+    id: 'cam5_siren_failsafe_off'
     mode: single
     trigger:
-      - platform: numeric_state
-        entity_id: sensor.cam6_person_count
-        above: 0
+      - platform: state
+        entity_id: siren.kamera5_siren
+        to: "on"
+        for: "00:00:06"
+
+    action:
+      - service: siren.turn_off
+        target:
+          entity_id: siren.kamera5_siren
+
+      - delay: "00:00:01"
+
+      - service: number.set_value
+        target:
+          entity_id: number.kamera5_volym
+        data:
+          value: 0
+
+      - service: notify.mobile_app_sm_a528b
+        data:
+          title: "Cam5 Siren Failsafe"
+          message: >-
+            Failsafe turned off Cam5 siren because it remained on for more than 6 seconds.
+
+#############
+### cam 6 ###
+#############
+  - alias: Cam6 Person Intruder Alarm
+    id: "81119011564402"
+    mode: single
+    trigger:
+      - platform: mqtt
+        topic: frigate/events
+
     condition:
+      - condition: template
+        value_template: >
+          {% set p = trigger.payload_json %}
+          {% set a = p.get('after', {}) %}
+          {{ p.get('type') == 'new'
+            and a.get('camera') == 'cam6'
+            and a.get('label') == 'person'
+            and (
+              'Baksidan' in a.get('entered_zones', [])
+               or 'Baksidan' in a.get('current_zones', [])
+            ) }}
+
       - condition: or
         conditions:
           - condition: state
             entity_id: input_select.home_status
-            state: 'Borta'
+            state: "Borta"
+
           - condition: state
             entity_id: input_select.home_status
-            state: 'Sover'
+            state: "Sover"
+
       - condition: template
-        value_template: "{{ states('counter.intruder_alarm_cam6_daily_count') | int(0) < 10 }}"
+        value_template: >
+          {{ states('counter.intruder_alarm_cam6_daily_count') | int(0) < 10 }}
+
       - condition: template
-        value_template: >-
+        value_template: >
           {% set last = states('input_datetime.intruder_alarm_cam6_last_trigger') %}
-          {% if last in ['unknown', ''] %}
+          {% if last in ['unknown', 'unavailable', '', none] %}
             true
           {% else %}
-            {{ (as_timestamp(now()) - as_timestamp(last)) > 20 }}
+            {{ (as_timestamp(now()) - as_timestamp(last, 0)) > 20 }}
           {% endif %}
+
     action:
+      - variables:
+          p: "{{ trigger.payload_json }}"
+          e: "{{ trigger.payload_json.get('after', {}) }}"
+          event_id: "{{ e.get('id', 'n/a') }}"
+          camera: "{{ e.get('camera', 'n/a') }}"
+          label: "{{ e.get('label', 'n/a') }}"
+          score: "{{ e.get('score', 'n/a') }}"
+          top_score: "{{ e.get('top_score', 'n/a') }}"
+          false_positive: "{{ e.get('false_positive', 'n/a') }}"
+          stationary: "{{ e.get('stationary', 'n/a') }}"
+          box: "{{ e.get('box', [0, 0, 0, 0]) }}"
+          region: "{{ e.get('region', 'n/a') }}"
+          entered_zones: >
+            {% set z = e.get('entered_zones', []) %}
+            {% if z %}
+              {{ z | join(', ') }}
+            {% else %}
+              none
+            {% endif %}
+          current_zones: >
+            {% set z = e.get('current_zones', []) %}
+            {% if z %}
+              {{ z | join(', ') }}
+            {% else %}
+              none
+            {% endif %}
+          x: "{{ e.get('box', [0, 0, 0, 0])[0] | int(0) }}"
+          y: "{{ e.get('box', [0, 0, 0, 0])[1] | int(0) }}"
+          w: "{{ e.get('box', [0, 0, 0, 0])[2] | int(0) }}"
+          h: "{{ e.get('box', [0, 0, 0, 0])[3] | int(0) }}"
+          area: >
+            {% set b = e.get('box', [0, 0, 0, 0]) %}
+            {{ (b[2] | int(0)) * (b[3] | int(0)) }}
+          ratio: >
+            {% set b = e.get('box', [0, 0, 0, 0]) %}
+            {% set hh = b[3] | float(0) %}
+            {% if hh > 0 %}
+              {{ ((b[2] | float(0)) / hh) | round(3) }}
+            {% else %}
+              0
+            {% endif %}
+
       - service: number.set_value
         target:
           entity_id: number.kamera6_volym
         data:
           value: 100
+
       - service: siren.turn_on
         target:
           entity_id: siren.kamera6_siren
-      - delay: '00:00:05'
+
+      - delay: "00:00:05"
+
       - service: siren.turn_off
         target:
           entity_id: siren.kamera6_siren
+
+      - delay: "00:00:01"
+
       - service: number.set_value
         target:
           entity_id: number.kamera6_volym
         data:
           value: 0
+
       - service: counter.increment
         target:
           entity_id: counter.intruder_alarm_cam6_daily_count
+
       - service: input_datetime.set_datetime
         target:
           entity_id: input_datetime.intruder_alarm_cam6_last_trigger
         data:
           datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+
       - service: notify.mobile_app_sm_a528b
         data:
           title: "Cam6 Intruder Alarm"
           message: >-
             Person detected by Cam6 while {{ states('input_select.home_status') }}.
+            Event ID: {{ event_id }}.
+            Zone entered: {{ entered_zones }}.
+            Current zones: {{ current_zones }}.
+            Score: {{ score }}.
+            Top score: {{ top_score }}.
+            False positive: {{ false_positive }}.
+            Stationary: {{ stationary }}.
+            Box: [{{ x }}, {{ y }}, {{ w }}, {{ h }}].
+            Area: {{ area }}.
+            Ratio W/H: {{ ratio }}.
+            Region: {{ region }}.
             Siren activated for 5 seconds at 100%.
 
   - alias: Cam6 Intruder Alarm Daily Reset
@@ -165,3 +411,31 @@ automation:
       - service: counter.reset
         target:
           entity_id: counter.intruder_alarm_cam6_daily_count
+
+  - alias: Cam6 Siren Failsafe Off
+    id: "cam6_siren_failsafe_off"
+    mode: single
+    trigger:
+      - platform: state
+        entity_id: siren.kamera6_siren
+        to: "on"
+        for: "00:00:06"
+
+    action:
+      - service: siren.turn_off
+        target:
+          entity_id: siren.kamera6_siren
+
+      - delay: "00:00:01"
+
+      - service: number.set_value
+        target:
+          entity_id: number.kamera6_volym
+        data:
+          value: 0
+
+      - service: notify.mobile_app_sm_a528b
+        data:
+          title: "Cam6 Siren Failsafe"
+          message: >-
+            Failsafe turned off Cam6 siren because it remained on for more than 6 seconds.

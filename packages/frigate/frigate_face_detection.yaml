@@ -14,21 +14,6 @@
 # Adjust `state_topic` if your MQTT topic prefix is different.
 #
 mqtt:
-  binary_sensor:
-    - name: "Frigate Face Detected"
-      unique_id: frigate_face_detected
-      device_class: motion
-      state_topic: "frigate/tracked_object_update"
-      value_template: >
-        {% if value_json.type == 'face' %}on{% else %}off{% endif %}
-      json_attributes_topic: "frigate/tracked_object_update"
-      json_attributes_template: >
-        {% if value_json.type == 'face' %}
-          {"camera": "{{ value_json.camera | default('unknown') }}", "face_name": "{{ value_json.name | default('unknown') }}", "face_id": "{{ value_json.id | default('unknown') }}", "face_score": "{{ value_json.score | default('') }}", "timestamp": "{{ value_json.timestamp | default('') }}", "raw_event": "{{ value_json | tojson }}"}
-        {% else %}
-          {}
-        {% endif %}
-
   sensor:
     - name: "Frigate Face Name"
       unique_id: frigate_face_name

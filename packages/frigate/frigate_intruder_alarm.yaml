@@ -107,11 +107,17 @@ automation:
         conditions:
           - condition: state
             entity_id: input_select.home_status
-            state: "Borta"
-
-          - condition: state
-            entity_id: input_select.home_status
             state: "Sover"
+
+          - condition: and
+            conditions:
+              - condition: state
+                entity_id: input_select.home_status
+                state: "Borta"
+
+              - condition: time
+                after: "18:00:00"
+                before: "09:00:00"
 
       - condition: template
         value_template: >
@@ -287,11 +293,17 @@ automation:
         conditions:
           - condition: state
             entity_id: input_select.home_status
-            state: "Borta"
-
-          - condition: state
-            entity_id: input_select.home_status
             state: "Sover"
+
+          - condition: and
+            conditions:
+              - condition: state
+                entity_id: input_select.home_status
+                state: "Borta"
+
+              - condition: time
+                after: "18:00:00"
+                before: "09:00:00"
 
       - condition: template
         value_template: >

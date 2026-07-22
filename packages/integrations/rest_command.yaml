@@ -1,5 +1,33 @@
-# Add in configuration.yaml:
-# rest_command: !include rest_command.yaml
+rest_command:
+  send_hagaholm_ambient_temperature:
+    url: "https://www.flacksta.com/api/misc/set_data.php"
+    method: POST
+    timeout: 10
+    headers:
+      Content-Type: "application/json"
+    payload: >
+      {% set temp = states('sensor.ute') %}
+      {% set temp_value = none if temp in ['unknown', 'unavailable', ''] else (temp | float(0.0)) %}
+      {{ {
+        "api_key": !secret flacksta_api_key,
+        "type": "hagaholm_amb_temp",
+        "value": temp_value
+      } | tojson }}
+
+  send_hagaholm_ambient_lux:
+    url: "https://www.flacksta.com/api/misc/set_data.php"
+    method: POST
+    timeout: 10
+    headers:
+      Content-Type: "application/json"
+    payload: >
+      {% set lux = states('sensor.ljusstyrka') %}
+      {% set lux_value = none if lux in ['unknown', 'unavailable', ''] else (lux | int(0)) %}
+      {{ {
+        "api_key": !secret flacksta_api_key,
+        "type": "hagaholm_lux",
+        "value": lux_value
+      } | tojson }}
 
 automation:
   - alias: "Skicka utetemp till Flacksta"
@@ -61,35 +89,3 @@ automation:
     action:
       - service: rest_command.send_hagaholm_ambient_lux
       - delay: "00:01:00"
-
-# The API key is currently embedded in the payload for compatibility.
-# For better security, move it to a Home Assistant secret in the target installation.
-send_hagaholm_ambient_temperature:
-  url: "https://www.flacksta.com/api/misc/set_data.php"
-  method: POST
-  timeout: 10
-  headers:
-    Content-Type: "application/json"
-  payload: >
-      {% set temp = states('sensor.ute') %}
-      {% set temp_value = none if temp in ['unknown', 'unavailable', ''] else (temp | float(0.0)) %}
-      {{ {
-        "api_key": !secret flacksta_api_key,
-        "type": "hagaholm_amb_temp",
-        "value": temp_value
-      } | tojson }}
-
-send_hagaholm_ambient_lux:
-  url: "https://www.flacksta.com/api/misc/set_data.php"
-  method: POST
-  timeout: 10
-  headers:
-    Content-Type: "application/json"
-  payload: >
-      {% set lux = states('sensor.ljusstyrka') %}
-      {% set lux_value = none if lux in ['unknown', 'unavailable', ''] else (lux | int(0)) %}
-      {{ {
-        "api_key": !secret flacksta_api_key,
-        "type": "hagaholm_lux",
-        "value": lux_value
-      } | tojson }}

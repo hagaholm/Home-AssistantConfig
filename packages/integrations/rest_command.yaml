@@ -1,0 +1,95 @@
+# Add in configuration.yaml:
+# rest_command: !include rest_command.yaml
+
+automation:
+  - alias: "Skicka utetemp till Flacksta"
+    id: "send_hagaholm_ambient_temperature_on_state_change"
+    trigger:
+      - platform: state
+        entity_id: sensor.ute
+      - platform: homeassistant
+        event: start
+    condition:
+      - condition: template
+        value_template: >
+          {% set new_value = trigger.to_state.state if trigger.platform == 'state' else states('sensor.ute') %}
+          {% set old_value = trigger.from_state.state if trigger.platform == 'state' else none %}
+          {% if new_value in ['unknown', 'unavailable', ''] %}
+            {{ false }}
+          {% elif trigger.platform == 'homeassistant' %}
+            {{ true }}
+          {% else %}
+            {% set new_num = new_value | float(0) %}
+            {% set old_num = old_value | float(0) %}
+            {% if old_num == 0 %}
+              {{ true }}
+            {% else %}
+              {% set change_pct = ((new_num - old_num) / old_num) * 100 | abs %}
+              {{ change_pct >= 2 }}
+            {% endif %}
+          {% endif %}
+    action:
+      - service: rest_command.send_hagaholm_ambient_temperature
+      - delay: "00:01:00"
+
+  - alias: "Skicka ljusstyrka till Flacksta"
+    id: "send_hagaholm_ambient_lux_on_state_change"
+    trigger:
+      - platform: state
+        entity_id: sensor.ljusstyrka
+      - platform: homeassistant
+        event: start
+    condition:
+      - condition: template
+        value_template: >
+          {% set new_value = trigger.to_state.state if trigger.platform == 'state' else states('sensor.ljusstyrka') %}
+          {% set old_value = trigger.from_state.state if trigger.platform == 'state' else none %}
+          {% if new_value in ['unknown', 'unavailable', ''] %}
+            {{ false }}
+          {% elif trigger.platform == 'homeassistant' %}
+            {{ true }}
+          {% else %}
+            {% set new_num = new_value | float(0) %}
+            {% set old_num = old_value | float(0) %}
+            {% if old_num == 0 %}
+              {{ true }}
+            {% else %}
+              {% set change_pct = ((new_num - old_num) / old_num) * 100 | abs %}
+              {{ change_pct >= 5 }}
+            {% endif %}
+          {% endif %}
+    action:
+      - service: rest_command.send_hagaholm_ambient_lux
+      - delay: "00:01:00"
+
+# The API key is currently embedded in the payload for compatibility.
+# For better security, move it to a Home Assistant secret in the target installation.
+send_hagaholm_ambient_temperature:
+  url: "https://www.flacksta.com/api/misc/set_data.php"
+  method: POST
+  timeout: 10
+  headers:
+    Content-Type: "application/json"
+  payload: >
+      {% set temp = states('sensor.ute') %}
+      {% set temp_value = none if temp in ['unknown', 'unavailable', ''] else (temp | float(0.0)) %}
+      {{ {
+        "api_key": !secret flacksta_api_key,
+        "type": "hagaholm_amb_temp",
+        "value": temp_value
+      } | tojson }}
+
+send_hagaholm_ambient_lux:
+  url: "https://www.flacksta.com/api/misc/set_data.php"
+  method: POST
+  timeout: 10
+  headers:
+    Content-Type: "application/json"
+  payload: >
+      {% set lux = states('sensor.ljusstyrka') %}
+      {% set lux_value = none if lux in ['unknown', 'unavailable', ''] else (lux | int(0)) %}
+      {{ {
+        "api_key": !secret flacksta_api_key,
+        "type": "hagaholm_lux",
+        "value": lux_value
+      } | tojson }}

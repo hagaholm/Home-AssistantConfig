@@ -536,9 +536,8 @@ views:
 
       - type: markdown
         content: |
-          **7 Files in packages/integrations/:**
+          **6 Files in packages/integrations/:**
           📡 mqtt.yaml - MQTT message broker
-          📡 mqtt_publish_values.yaml - MQTT publishing
           🚗 volvo.yaml - Volvo car integration
           🚴 zwift.yaml - Zwift fitness tracking
           📻 tellstick.yaml - Tellstick RF devices
@@ -551,8 +550,7 @@ views:
       - type: markdown
         content: |
           📡 **MQTT** - Real-time messaging protocol for device communication
-          📤 **MQTT Publishing** - Broadcast sensor data and events
-          🚗 **Volvo** - Vehicle location, status, and battery monitoring
+           **Volvo** - Vehicle location, status, and battery monitoring
           🚴 **Zwift** - Cycling fitness platform integration
           📻 **Tellstick** - RF protocol for wireless devices
           🔊 **TTS** - Google Home text-to-speech announcements
@@ -568,15 +566,7 @@ views:
           📨 `sensor.mqtt_stats` - Message statistics
 
       - type: heading
-        heading: 📤 MQTT Publishing (integrations/mqtt_publish_values.yaml)
-
-      - type: markdown
-        content: |
-          **Expected Entities:**
-          📨 `script.mqtt_publish` - Publish test script
-
-      - type: heading
-        heading: 🚗 Volvo (integrations/volvo.yaml)
+        heading:  Volvo (integrations/volvo.yaml)
 
       - type: markdown
         content: |

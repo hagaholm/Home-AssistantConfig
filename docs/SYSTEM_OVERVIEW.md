@@ -368,7 +368,6 @@ Run `py extra/ha_docs_sync.py` to refresh it.
 - [packages/light_switch.yaml](packages/light_switch.yaml)
 - [packages/lights_debug.yaml](packages/lights_debug.yaml)
 - [packages/ljusstyrka_thresholds.yaml](packages/ljusstyrka_thresholds.yaml)
-- [packages/mqtt_publish_values.yaml](packages/mqtt_publish_values.yaml)
 - [packages/person.yaml](packages/person.yaml)
 - [packages/sensor_reading_missing.yaml](packages/sensor_reading_missing.yaml)
 - [packages/system_info.yaml](packages/system_info.yaml)

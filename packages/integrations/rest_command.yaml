@@ -55,8 +55,8 @@ automation:
             {% endif %}
           {% endif %}
     action:
-      - service: rest_command.send_hagaholm_ambient_temperature        data:
-          api_key: !secret flacksta_api_key        data:
+      - service: rest_command.send_hagaholm_ambient_temperature
+        data:
           api_key: !secret flacksta_api_key
       - delay: "00:01:00"
 
@@ -88,4 +88,6 @@ automation:
           {% endif %}
     action:
       - service: rest_command.send_hagaholm_ambient_lux
+        data:
+          api_key: !secret flacksta_api_key
       - delay: "00:01:00"

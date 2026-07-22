@@ -9,6 +9,7 @@ rest_command:
       {% set temp = states('sensor.ute') %}
       {% set temp_value = none if temp in ['unknown', 'unavailable', ''] else (temp | float(0.0)) %}
       {{ {
+        "api_key": api_key,
         "type": "hagaholm_amb_temp",
         "value": temp_value
       } | tojson }}
@@ -23,6 +24,7 @@ rest_command:
       {% set lux = states('sensor.ljusstyrka') %}
       {% set lux_value = none if lux in ['unknown', 'unavailable', ''] else (lux | int(0)) %}
       {{ {
+        "api_key": api_key,
         "type": "hagaholm_lux",
         "value": lux_value
       } | tojson }}

@@ -17,12 +17,14 @@
 # - With this: Face detection -> Immediate status change -> Instant lighting
 #
 # Implementation:
-# 1. Frigate detects face (Micke/Annelie) on entry camera (cam10)
-# 2. Immediately set home_status = 'Hemma' + 5-min timer
-# 3. If repeated detections: Reset timer (extends window)
-# 4. After 5 min: If WiFi not connected, revert to 'Borta'
-#    (assumes if WiFi was going to connect, it would have by now)
-# 5. If WiFi connects: Existing presence automations maintain 'Hemma' status
+# 1. Frigate detects a face for Micke/Annelie on entry cameras (cam10, cam8, cam9).
+# 2. Only if home_status is still 'Borta' and the match is strong enough,
+#    the automation starts a temporary 5-minute home window.
+# 3. The automation waits for two matching detections before changing status,
+#    which reduces false positives.
+# 4. Once the temporary window is active, later detections do not extend the timer.
+# 5. After 5 minutes, if WiFi is still not connected, the status reverts to 'Borta'.
+# 6. If WiFi connects before the timeout, the normal presence logic keeps the status 'Hemma'.
 #
 # Cameras Monitored:
 # - cam10: Uppfart (driveway entrance)
@@ -37,11 +39,12 @@
 # Safety:
 # - Only activates when home_status is already 'Borta'
 # - Only uses entry cameras (prevents detection from cam5/6/7)
-# - 5-minute timeout ensures system doesn't get stuck
-# - If WiFi connects during 5-min window, no revert happens
+# - Requires a high-confidence match and two consecutive detections
+# - 5-minute timeout ensures the temporary state does not stay active forever
+# - If WiFi connects during the 5-minute window, no revert happens
 #
 # Status Flow:
-# Borta (away) → [Face Detected] → Hemma (home)
+# Borta (away) → [2 confirmed face detections] → Hemma (home, temporary)
 #              ↓ (5 min timeout & no WiFi)
 #              Borta (away, reverted)
 #              ↑ (or WiFi connects before timeout)
@@ -55,14 +58,34 @@
 #
 # Testing:
 # 1. Ensure you're away: home_status='Borta', group.track_for_home_devices='not_home'
-# 2. Step in front of cam10, cam8, or cam9
+# 2. Step in front of cam10, cam8, or cam9 and let two matching detections occur
 # 3. Verify: home_status becomes 'Hemma' + notification sent
 # 4. Don't connect WiFi: status reverts to 'Borta' after 5 min
 # 5. Re-test with WiFi connecting: status stays 'Hemma' (WiFi wins)
 #
 ####################################################
 
+# Counter used to require two consecutive matching detections
+# before the temporary presence logic changes the home status.
+counter:
+  frigate_temp_presence_confirmation:
+    name: "Frigate Temporary Presence Confirmation"
+    initial: 0
+    step: 1
+
 automation:
+
+  # ============================================
+  # HOW IT WORKS
+  # ============================================
+  # 1. Frigate sends a face event for Micke/Annelie.
+  # 2. If the home status is still Borta, the automation starts
+  #    a temporary 5-minute window that keeps the status at Hemma.
+  # 3. If WiFi presence is not detected within that window,
+  #    the automation reverts the status back to Borta.
+  # 4. If WiFi is detected before the timeout, the normal
+  #    presence logic keeps the status at Hemma.
+  # ============================================
 
   # ============================================
   # FRIGATE FACE DETECTION → TEMPORARY PRESENCE
@@ -91,61 +114,94 @@ automation:
       - condition: template
         value_template: "{{ trigger.payload_json.camera in ['cam10', 'cam8', 'cam9'] }}"
 
-      # Only Micke or Annelie
-      - condition: template
-        value_template: "{{ trigger.payload_json.name in ['Micke', 'Annelie'] }}"
-
-      # Only accept confident recognitions (score present and >= threshold)
+      # Only accept explicitly recognized Micke/Annelie faces
+      # and require a much higher confidence threshold to avoid false positives.
       - condition: template
         value_template: >
-          {{ trigger.payload_json.score is not none
-             and (trigger.payload_json.score | float(0)) >= 0.7 }}
+          {% set face_name = (trigger.payload_json.name
+            | default(trigger.payload_json.sub_label | default(''))
+            | string).strip() %}
+          {% set score = trigger.payload_json.score | default(0) | float(0) %}
+          {{ face_name | lower in ['micke', 'annelie'] and score >= 0.95 }}
 
     action:
-      - service: system_log.write
-        data:
-          level: info
-          logger: frigate_temp_presence
-          message: >
-            Frigate detected {{ trigger.payload_json.name }}
-            on {{ trigger.payload_json.camera }}
-            (score: {{ trigger.payload_json.score }})
+      - variables:
+          temporary_presence_active: "{{ is_state('input_boolean.frigate_temp_presence', 'on') }}"
 
-      # Set temporary status to home
-      - service: input_select.select_option
+      - service: counter.increment
         target:
-          entity_id: input_select.home_status
-        data:
-          option: "Hemma"
+          entity_id: counter.frigate_temp_presence_confirmation
 
-      # Activate temporary presence flag
-      - service: input_boolean.turn_on
-        target:
-          entity_id: input_boolean.frigate_temp_presence
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: "{{ temporary_presence_active }}"
+            sequence:
+              - service: system_log.write
+                data:
+                  level: info
+                  logger: frigate_temp_presence
+                  message: >
+                    Temporary presence already active for this window.
+                    Keeping the existing 5-minute timeout.
 
-      # Set timeout to now + 5 minutes
-      # Using a template to calculate 5 minutes from now
-      - service: input_datetime.set_datetime
-        target:
-          entity_id: input_datetime.frigate_temp_presence_timeout
-        data:
-          datetime: >
-            {% set now = now() %}
-            {% set five_min_later = now.replace(microsecond=0) + timedelta(minutes=5) %}
-            {{ five_min_later.strftime('%Y-%m-%d %H:%M:%S') }}
+              - service: counter.reset
+                target:
+                  entity_id: counter.frigate_temp_presence_confirmation
 
-      # Send notification to user
-      - service: notify.mobile_app_sm_a528b
-        data:
-          title: "🏠 Hemkomst Detekterad {{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
-          message: >
-            {{ trigger.payload_json.name }} detekterad vid
-            {{ trigger.payload_json.camera | upper }}
-            (score: {{ trigger.payload_json.score }}).
-            Status: Hemma (temp. 5 min). WiFi-anslutning väntas...
-          data:
-            tag: "frigate_presence"
-            priority: "high"
+          - conditions:
+              - condition: template
+                value_template: >
+                  {{ states('counter.frigate_temp_presence_confirmation') | int(0) >= 2 }}
+            sequence:
+              - service: system_log.write
+                data:
+                  level: info
+                  logger: frigate_temp_presence
+                  message: >
+                    Frigate detected {{ trigger.payload_json.name }}
+                    on {{ trigger.payload_json.camera }}
+                    (score: {{ trigger.payload_json.score }})
+
+              # Set temporary status to home
+              - service: input_select.select_option
+                target:
+                  entity_id: input_select.home_status
+                data:
+                  option: "Hemma"
+
+              # Activate temporary presence flag
+              - service: input_boolean.turn_on
+                target:
+                  entity_id: input_boolean.frigate_temp_presence
+
+              # Set timeout to now + 5 minutes
+              # Using a template to calculate 5 minutes from now
+              - service: input_datetime.set_datetime
+                target:
+                  entity_id: input_datetime.frigate_temp_presence_timeout
+                data:
+                  datetime: >
+                    {% set now = now() %}
+                    {% set five_min_later = now.replace(microsecond=0) + timedelta(minutes=5) %}
+                    {{ five_min_later.strftime('%Y-%m-%d %H:%M:%S') }}
+
+              # Send notification to user
+              - service: notify.mobile_app_sm_a528b
+                data:
+                  title: "🏠 Hemkomst Detekterad {{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+                  message: >
+                    {{ trigger.payload_json.name }} detekterad vid
+                    {{ trigger.payload_json.camera | upper }}
+                    (score: {{ trigger.payload_json.score }}).
+                    Status: Hemma (temp. 5 min). WiFi-anslutning väntas...
+                  data:
+                    tag: "frigate_presence"
+                    priority: "high"
+
+              - service: counter.reset
+                target:
+                  entity_id: counter.frigate_temp_presence_confirmation
 
   # ============================================
   # TEMPORARY PRESENCE TIMEOUT → REVERT TO AWAY
@@ -171,10 +227,9 @@ automation:
       - condition: template
         value_template: >
           {% set timeout_str = states('input_datetime.frigate_temp_presence_timeout') %}
-          {% if timeout_str and timeout_str != 'unknown' %}
+          {% if timeout_str and timeout_str not in ['unknown', 'unavailable', ''] %}
             {% set timeout = strptime(timeout_str, '%Y-%m-%d %H:%M:%S') %}
-            {% set now = now() %}
-            {{ now >= timeout }}
+            {{ as_timestamp(now()) >= as_timestamp(timeout) }}
           {% else %}
             false
           {% endif %}
@@ -206,6 +261,10 @@ automation:
       - service: input_boolean.turn_off
         target:
           entity_id: input_boolean.frigate_temp_presence
+
+      - service: counter.reset
+        target:
+          entity_id: counter.frigate_temp_presence_confirmation
 
       # Clear timeout (set to far past)
       - service: input_datetime.set_datetime

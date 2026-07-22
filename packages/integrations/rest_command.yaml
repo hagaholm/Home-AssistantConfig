@@ -9,7 +9,6 @@ rest_command:
       {% set temp = states('sensor.ute') %}
       {% set temp_value = none if temp in ['unknown', 'unavailable', ''] else (temp | float(0.0)) %}
       {{ {
-        "api_key": !secret flacksta_api_key,
         "type": "hagaholm_amb_temp",
         "value": temp_value
       } | tojson }}
@@ -24,7 +23,6 @@ rest_command:
       {% set lux = states('sensor.ljusstyrka') %}
       {% set lux_value = none if lux in ['unknown', 'unavailable', ''] else (lux | int(0)) %}
       {{ {
-        "api_key": !secret flacksta_api_key,
         "type": "hagaholm_lux",
         "value": lux_value
       } | tojson }}
@@ -57,7 +55,9 @@ automation:
             {% endif %}
           {% endif %}
     action:
-      - service: rest_command.send_hagaholm_ambient_temperature
+      - service: rest_command.send_hagaholm_ambient_temperature        data:
+          api_key: !secret flacksta_api_key        data:
+          api_key: !secret flacksta_api_key
       - delay: "00:01:00"
 
   - alias: "Skicka ljusstyrka till Flacksta"

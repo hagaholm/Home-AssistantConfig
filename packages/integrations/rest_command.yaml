@@ -42,20 +42,10 @@ automation:
       - condition: template
         value_template: >
           {% set new_value = trigger.to_state.state if trigger.platform == 'state' else states('sensor.ute') %}
-          {% set old_value = trigger.from_state.state if trigger.platform == 'state' else none %}
           {% if new_value in ['unknown', 'unavailable', ''] %}
             {{ false }}
-          {% elif trigger.platform == 'homeassistant' %}
-            {{ true }}
           {% else %}
-            {% set new_num = new_value | float(0) %}
-            {% set old_num = old_value | float(0) %}
-            {% if old_num == 0 %}
-              {{ true }}
-            {% else %}
-              {% set change_pct = ((new_num - old_num) / old_num) * 100 | abs %}
-              {{ change_pct >= 2 }}
-            {% endif %}
+            {{ true }}
           {% endif %}
       - condition: template
         value_template: >
@@ -83,20 +73,10 @@ automation:
       - condition: template
         value_template: >
           {% set new_value = trigger.to_state.state if trigger.platform == 'state' else states('sensor.ljusstyrka') %}
-          {% set old_value = trigger.from_state.state if trigger.platform == 'state' else none %}
           {% if new_value in ['unknown', 'unavailable', ''] %}
             {{ false }}
-          {% elif trigger.platform == 'homeassistant' %}
-            {{ true }}
           {% else %}
-            {% set new_num = new_value | float(0) %}
-            {% set old_num = old_value | float(0) %}
-            {% if old_num == 0 %}
-              {{ true }}
-            {% else %}
-              {% set change_pct = ((new_num - old_num) / old_num) * 100 | abs %}
-              {{ change_pct >= 5 }}
-            {% endif %}
+            {{ true }}
           {% endif %}
       - condition: template
         value_template: >

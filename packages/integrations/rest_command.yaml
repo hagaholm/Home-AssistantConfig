@@ -32,6 +32,7 @@ rest_command:
 automation:
   - alias: "Skicka utetemp till Flacksta"
     id: "send_hagaholm_ambient_temperature_on_state_change"
+    mode: queued
     trigger:
       - platform: state
         entity_id: sensor.ute
@@ -64,6 +65,7 @@ automation:
 
   - alias: "Skicka ljusstyrka till Flacksta"
     id: "send_hagaholm_ambient_lux_on_state_change"
+    mode: queued
     trigger:
       - platform: state
         entity_id: sensor.ljusstyrka

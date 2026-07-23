@@ -32,7 +32,7 @@ rest_command:
 automation:
   - alias: "Skicka utetemp till Flacksta"
     id: "send_hagaholm_ambient_temperature_on_state_change"
-    mode: queued
+    mode: restart
     trigger:
       - platform: state
         entity_id: sensor.ute
@@ -57,6 +57,14 @@ automation:
               {{ change_pct >= 2 }}
             {% endif %}
           {% endif %}
+      - condition: template
+        value_template: >
+          {% set last = state_attr('automation.send_hagaholm_ambient_temperature_on_state_change', 'last_triggered') %}
+          {% if last is none %}
+            true
+          {% else %}
+            {{ (as_timestamp(now()) - as_timestamp(last)) >= 60 }}
+          {% endif %}
     action:
       - service: rest_command.send_hagaholm_ambient_temperature
         data:
@@ -65,7 +73,7 @@ automation:
 
   - alias: "Skicka ljusstyrka till Flacksta"
     id: "send_hagaholm_ambient_lux_on_state_change"
-    mode: queued
+    mode: restart
     trigger:
       - platform: state
         entity_id: sensor.ljusstyrka
@@ -89,6 +97,14 @@ automation:
               {% set change_pct = ((new_num - old_num) / old_num) * 100 | abs %}
               {{ change_pct >= 5 }}
             {% endif %}
+          {% endif %}
+      - condition: template
+        value_template: >
+          {% set last = state_attr('automation.send_hagaholm_ambient_lux_on_state_change', 'last_triggered') %}
+          {% if last is none %}
+            true
+          {% else %}
+            {{ (as_timestamp(now()) - as_timestamp(last)) >= 60 }}
           {% endif %}
     action:
       - service: rest_command.send_hagaholm_ambient_lux

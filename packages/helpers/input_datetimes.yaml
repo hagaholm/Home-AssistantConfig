@@ -26,3 +26,19 @@ input_datetime:
     # Used by: frigate_temp_presence timeout automation
     # When this timestamp is reached: Reverts status to 'Borta' if WiFi not connected
     # Purpose: Automatic fallback to away mode if device WiFi connection fails
+
+  flacksta_ambient_temperature_last_sent:
+    name: Flacksta Ambient Temperature Last Sent
+    has_date: true
+    has_time: true
+    icon: mdi:thermometer
+    # Tracks when the last temperature payload was sent to Flacksta
+    # Used to enforce a minimum 60-second send interval
+
+  flacksta_ambient_lux_last_sent:
+    name: Flacksta Ambient Lux Last Sent
+    has_date: true
+    has_time: true
+    icon: mdi:weather-sunny
+    # Tracks when the last lux payload was sent to Flacksta
+    # Used to enforce a minimum 60-second send interval

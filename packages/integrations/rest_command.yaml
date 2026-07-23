@@ -32,7 +32,7 @@ rest_command:
 automation:
   - alias: "Skicka utetemp till Flacksta"
     id: "send_hagaholm_ambient_temperature_on_state_change"
-    mode: restart
+    mode: single
     trigger:
       - platform: state
         entity_id: sensor.ute
@@ -49,8 +49,8 @@ automation:
           {% endif %}
       - condition: template
         value_template: >
-          {% set last = state_attr('automation.send_hagaholm_ambient_temperature_on_state_change', 'last_triggered') %}
-          {% if last is none %}
+          {% set last = states('input_datetime.flacksta_ambient_temperature_last_sent') %}
+          {% if last in ['unknown', 'unavailable', ''] %}
             true
           {% else %}
             {{ (as_timestamp(now()) - as_timestamp(last)) >= 60 }}
@@ -59,11 +59,16 @@ automation:
       - service: rest_command.send_hagaholm_ambient_temperature
         data:
           api_key: !secret flacksta_api_key
+      - service: input_datetime.set_datetime
+        target:
+          entity_id: input_datetime.flacksta_ambient_temperature_last_sent
+        data:
+          datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
       - delay: "00:01:00"
 
   - alias: "Skicka ljusstyrka till Flacksta"
     id: "send_hagaholm_ambient_lux_on_state_change"
-    mode: restart
+    mode: single
     trigger:
       - platform: state
         entity_id: sensor.ljusstyrka
@@ -80,8 +85,8 @@ automation:
           {% endif %}
       - condition: template
         value_template: >
-          {% set last = state_attr('automation.send_hagaholm_ambient_lux_on_state_change', 'last_triggered') %}
-          {% if last is none %}
+          {% set last = states('input_datetime.flacksta_ambient_lux_last_sent') %}
+          {% if last in ['unknown', 'unavailable', ''] %}
             true
           {% else %}
             {{ (as_timestamp(now()) - as_timestamp(last)) >= 60 }}
@@ -90,4 +95,9 @@ automation:
       - service: rest_command.send_hagaholm_ambient_lux
         data:
           api_key: !secret flacksta_api_key
+      - service: input_datetime.set_datetime
+        target:
+          entity_id: input_datetime.flacksta_ambient_lux_last_sent
+        data:
+          datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
       - delay: "00:01:00"

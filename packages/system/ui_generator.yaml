@@ -1,0 +1,85 @@
+﻿###############################################################################
+#  UI Dashboard Generator
+#
+#  Runs entirely from the HA filesystem -- no PC needed:
+#    1. ha_export_registry.py reads /config/.storage/core.entity_registry
+#       and writes a sanitized inventory JSON (real entity IDs, real names).
+#    2. generate_ui_dashboards.py reads the inventory so entity IDs from
+#       automations/scripts match exactly what HA shows (solves the name
+#       mismatch problem that required a separate export step on the PC).
+#
+#  Requirements on the HA host:
+#    - python3 available as "python3" (standard on HAOS / Container)
+#    - The config repo is at /config
+#
+#  Usage: call script.regenerate_ui_dashboards from any automation, dashboard
+#  button, or Developer Tools -> Services.
+#
+#  After the script finishes, refresh your browser -- HA re-reads YAML
+#  dashboards on every frontend request, no HA restart needed.
+###############################################################################
+
+shell_command:
+  # Step 1: export real entity IDs + original_name from HA own registry
+  export_ha_inventory: >-
+    python3 /config/extra/ha_export_registry.py
+    --storage-dir /config/.storage
+    --out-dir /config/exports/ha_inventory
+
+  # Step 2: generate dashboards using the fresh inventory for correct IDs
+  generate_ui_dashboards: >-
+    python3 /config/extra/generate_ui_dashboards.py
+    --root /config
+    --output-dir /config/generated_ui
+    --inventory-json /config/exports/ha_inventory/ha_inventory.sanitized.json
+
+script:
+  regenerate_ui_dashboards:
+    alias: "Regenerate UI Dashboards"
+    description: >-
+      Exports the HA entity registry, then regenerates the UI dashboards
+      with correct entity IDs. Refresh your browser afterwards.
+    icon: mdi:refresh
+    mode: single
+    sequence:
+      # Step 1: export entity registry
+      - service: shell_command.export_ha_inventory
+        response_variable: export_result
+
+      - if:
+          - condition: template
+            value_template: "{{ export_result.returncode != 0 }}"
+        then:
+          - service: persistent_notification.create
+            data:
+              title: "UI Regen: Registry Export Failed"
+              message: >-
+                Could not read /config/.storage/core.entity_registry.
+                Check the HA logs (search for shell_command).
+              notification_id: ui_regen_err
+          - stop: "Registry export failed"
+
+      # Step 2: generate dashboards
+      - service: shell_command.generate_ui_dashboards
+        response_variable: gen_result
+
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: "{{ gen_result.returncode == 0 }}"
+            sequence:
+              - service: persistent_notification.create
+                data:
+                  title: "UI Dashboards Regenerated"
+                  message: >-
+                    All generated UI dashboards updated with current entity IDs.
+                    Refresh your browser to see the changes.
+                  notification_id: ui_regen_ok
+        default:
+          - service: persistent_notification.create
+            data:
+              title: "UI Regen: Generator Failed"
+              message: >-
+                Registry export succeeded but dashboard generation failed.
+                Check the HA logs (search for shell_command).
+              notification_id: ui_regen_err

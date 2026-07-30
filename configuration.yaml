@@ -117,29 +117,32 @@ lovelace:
       show_in_sidebar: true
       filename: ui-lights.yaml
 
-    # Packages - Simple (one view per folder)
-    lovelace-packages-simple:
+    # Generated - flat (one view per source YAML file)
+    lovelace-generated-flat:
       mode: yaml
-      title: Packages (Simple)
+      filename: generated_ui/ui-generated-flat.yaml
+      title: Generated (Flat)
+      icon: mdi:view-list
       show_in_sidebar: true
-      filename: ui-packages-simple.yaml
-      icon: mdi:folder-multiple
+      require_admin: true
 
-    # Packages - Grouped (domain-focused)
-    lovelace-packages-grouped:
+    # Generated - grouped (one view per category)
+    lovelace-generated-grouped:
       mode: yaml
-      title: Packages (Grouped)
+      filename: generated_ui/ui-generated-grouped.yaml
+      title: Generated (Grouped)
+      icon: mdi:view-grid
       show_in_sidebar: true
-      filename: ui-packages-grouped.yaml
-      icon: mdi:puzzle-multiple
+      require_admin: true
 
-    # Packages - Detailed (subsections per file)
-    lovelace-packages-detailed:
+    # Generated - entity types (one view per entity type)
+    lovelace-generated-entity-types:
       mode: yaml
-      title: Packages (Detailed)
+      filename: generated_ui/ui-generated-entity-types.yaml
+      title: Generated (Entity Types)
+      icon: mdi:shape-outline
       show_in_sidebar: true
-      filename: ui-packages-detailed.yaml
-      icon: mdi:file-tree
+      require_admin: true
 
 
 ####################################################

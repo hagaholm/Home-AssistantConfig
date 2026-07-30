@@ -229,6 +229,57 @@ class GenerateUiDashboardsTests(unittest.TestCase):
             self.assertIn("input_datetime.some_timeout", content)
             self.assertIn("input_select.home_status", content)
 
+    def test_filters_entities_not_present_in_inventory(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            output_dir = root / "out"
+            output_dir.mkdir()
+
+            folder = root / "packages" / "lights"
+            folder.mkdir(parents=True)
+            (folder / "lights.yaml").write_text(
+                "light:\n"
+                "  bedroom:\n"
+                "    name: Bedroom\n"
+                "  kitchen:\n"
+                "    name: Kitchen\n",
+                encoding="utf-8",
+            )
+            inventory_path = root / "inventory.json"
+            inventory_path.write_text(
+                json.dumps({"entities": [{"entity_id": "light.bedroom", "original_name": "Bedroom"}]}),
+                encoding="utf-8",
+            )
+
+            generate_dashboards(root=root, output_dir=output_dir, inventory_json=inventory_path)
+
+            output_path = output_dir / "ui-generated-flat.yaml"
+            self.assertTrue(output_path.exists())
+            content = output_path.read_text(encoding="utf-8")
+            self.assertIn("light.bedroom", content)
+            self.assertNotIn("light.kitchen", content)
+
+    def test_skips_views_with_no_substantive_cards(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            output_dir = root / "out"
+            output_dir.mkdir()
+
+            folder = root / "packages"
+            folder.mkdir()
+            (folder / "empty.yaml").write_text(
+                "sensor: []\n",
+                encoding="utf-8",
+            )
+
+            generate_dashboards(root=root, output_dir=output_dir)
+
+            output_path = output_dir / "ui-generated-flat.yaml"
+            self.assertTrue(output_path.exists())
+            content = output_path.read_text(encoding="utf-8")
+            self.assertNotIn('title: "empty"', content)
+            self.assertNotIn('path: "empty"', content)
+
     def test_generates_single_dashboard_file(self):
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)

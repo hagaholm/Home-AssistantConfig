@@ -246,6 +246,7 @@ def build_cross_reference_map(
     *,
     root: Path,
     name_map: dict[tuple[str, str], str] | None,
+    available_entities: set[str] | None = None,
 ) -> dict[str, list[tuple[str, str]]]:
     """Map entity_id -> [(rel_path, usage_type), ...] across all source files.
 
@@ -255,7 +256,7 @@ def build_cross_reference_map(
     for _folder, path in file_items:
         rel = path.relative_to(root).as_posix()
         file_text = read_text(path)
-        parsed = parse_entities(file_text, name_map=name_map)
+        parsed = parse_entities(file_text, name_map=name_map, available_entities=available_entities)
         for entity_id in parsed.get("referenced", []):
             usage = _classify_usage(file_text, entity_id)
             refs_by_entity.setdefault(entity_id, []).append((rel, usage))
@@ -307,10 +308,11 @@ def is_meaningful_yaml(text: str) -> bool:
     return True
 
 
-def load_inventory_name_map(path: Path) -> dict[tuple[str, str], str]:
+def load_inventory(path: Path) -> tuple[dict[tuple[str, str], str], set[str]]:
     payload = json.loads(path.read_text(encoding="utf-8"))
     entities = payload.get("entities", []) if isinstance(payload, dict) else []
     name_map: dict[tuple[str, str], str] = {}
+    available_entities: set[str] = set()
 
     for entity in entities:
         if not isinstance(entity, dict):
@@ -319,16 +321,32 @@ def load_inventory_name_map(path: Path) -> dict[tuple[str, str], str]:
         original_name = entity.get("original_name")
         if not isinstance(entity_id, str) or "." not in entity_id:
             continue
+        available_entities.add(entity_id)
         if not isinstance(original_name, str) or not original_name.strip():
             continue
 
         domain = entity_id.split(".", 1)[0]
         name_map[(domain, slugify(original_name))] = entity_id
 
+    return name_map, available_entities
+
+
+def load_inventory_name_map(path: Path) -> dict[tuple[str, str], str]:
+    name_map, _ = load_inventory(path)
     return name_map
 
 
-def parse_entities(text: str, *, name_map: dict[tuple[str, str], str] | None = None) -> dict[str, list[str]]:
+def maybe_add_entity(groups: dict[str, list[str]], section: str, entity_id: str, available_entities: set[str] | None = None) -> None:
+    if available_entities is None or entity_id in available_entities:
+        groups[section].append(entity_id)
+
+
+def parse_entities(
+    text: str,
+    *,
+    name_map: dict[tuple[str, str], str] | None = None,
+    available_entities: set[str] | None = None,
+) -> dict[str, list[str]]:
     groups: dict[str, list[str]] = {name: [] for name in SECTION_ORDER}
     groups["referenced"] = []
     lines = text.splitlines()
@@ -350,23 +368,38 @@ def parse_entities(text: str, *, name_map: dict[tuple[str, str], str] | None = N
                 current_item_name = None
                 current_platform = None
                 current_sensor_name = None
+                current_sensor_entity_added = False
                 continue
             if current_section in {"automation", "script"} and indent <= 2:
                 entity_name = stripped[:-1]
                 entity_id = f"{current_section}.{slugify(entity_name)}"
-                groups[current_section].append(entity_id)
+                maybe_add_entity(groups, current_section, entity_id, available_entities)
+                current_item_name = entity_name
+                continue
+            if (
+                current_section in NAME_BASED_ENTITY_SECTIONS
+                and indent > 0
+                and current_section not in {"sensor"}
+                and not stripped.startswith("- ")
+                and stripped[:-1] not in SECTION_ORDER
+            ):
+                entity_name = stripped[:-1]
+                entity_id = (name_map or {}).get((current_section, slugify(entity_name)), f"{current_section}.{slugify(entity_name)}")
+                maybe_add_entity(groups, current_section, entity_id, available_entities)
+                current_sensor_name = entity_name
+                current_sensor_entity_added = True
                 current_item_name = entity_name
                 continue
             if current_section == "rest_command" and indent <= 2:
                 entity_name = stripped[:-1]
                 entity_id = f"rest_command.{slugify(entity_name)}"
-                groups["rest_command"].append(entity_id)
+                maybe_add_entity(groups, "rest_command", entity_id, available_entities)
                 current_item_name = entity_name
                 continue
             if current_section in HELPER_SECTIONS and indent <= 2:
                 entity_name = stripped[:-1]
                 entity_id = f"{current_section}.{slugify(entity_name)}"
-                groups[current_section].append(entity_id)
+                maybe_add_entity(groups, current_section, entity_id, available_entities)
                 current_item_name = entity_name
                 continue
             if current_section in NAME_BASED_ENTITY_SECTIONS and indent > 2:
@@ -399,7 +432,7 @@ def parse_entities(text: str, *, name_map: dict[tuple[str, str], str] | None = N
                 if current_sensor_name and not current_sensor_entity_added:
                     domain = current_section
                     entity_id = (name_map or {}).get((domain, slugify(current_sensor_name)), f"{domain}.{slugify(current_sensor_name)}")
-                    groups[domain].append(entity_id)
+                    maybe_add_entity(groups, domain, entity_id, available_entities)
                     current_sensor_entity_added = True
                 continue
 
@@ -409,14 +442,13 @@ def parse_entities(text: str, *, name_map: dict[tuple[str, str], str] | None = N
         if current_section == "sensor" and current_platform and current_sensor_name and re.match(r"^-\s+([A-Za-z0-9_]+)", stripped):
             condition_name = re.match(r"^-\s+([A-Za-z0-9_]+)", stripped).group(1)
             entity_id = f"sensor.{slugify(f'{current_sensor_name}_{condition_name}') }"
-            groups["sensor"].append(entity_id)
-            continue
+            maybe_add_entity(groups, "sensor", entity_id, available_entities)
 
         if current_section in HELPER_SECTIONS:
             match = re.match(r"^([A-Za-z0-9_]+):\s*$", stripped)
             if match:
                 entity_id = f"{current_section}.{match.group(1)}"
-                groups[current_section].append(entity_id)
+                maybe_add_entity(groups, current_section, entity_id, available_entities)
                 current_item_name = match.group(1)
                 continue
 
@@ -425,7 +457,7 @@ def parse_entities(text: str, *, name_map: dict[tuple[str, str], str] | None = N
             if alias_match:
                 alias = alias_match.group(1)
                 entity_id = (name_map or {}).get(("automation", slugify(alias)), f"automation.{slugify(alias)}")
-                groups["automation"].append(entity_id)
+                maybe_add_entity(groups, "automation", entity_id, available_entities)
                 continue
 
         if current_section == "script":
@@ -433,14 +465,14 @@ def parse_entities(text: str, *, name_map: dict[tuple[str, str], str] | None = N
             if alias_match:
                 alias = alias_match.group(1)
                 entity_id = (name_map or {}).get(("script", slugify(alias)), f"script.{slugify(alias)}")
-                groups["script"].append(entity_id)
+                maybe_add_entity(groups, "script", entity_id, available_entities)
                 continue
 
         if current_section == "template":
             name_match = re.match(r"^- name:\s*(.+)$", stripped)
             if name_match:
                 entity_id = f"sensor.{slugify(name_match.group(1))}"
-                groups["template"].append(entity_id)
+                maybe_add_entity(groups, "template", entity_id, available_entities)
                 continue
 
         for entity in ENTITY_RE.findall(line):
@@ -476,10 +508,15 @@ def build_bullet_markdown(title: str, items: list[str], *, icon: str) -> dict[st
     return build_markdown_card(title, "\n".join(f"- {item}" for item in items), icon=icon)
 
 
-def build_entity_type_catalog(root: Path, *, name_map: dict[tuple[str, str], str] | None = None) -> dict[str, list[dict[str, str]]]:
+def build_entity_type_catalog(
+    root: Path,
+    *,
+    name_map: dict[tuple[str, str], str] | None = None,
+    available_entities: set[str] | None = None,
+) -> dict[str, list[dict[str, str]]]:
     catalog: dict[str, list[dict[str, str]]] = {section: [] for section in SECTION_ORDER}
     for folder, path in collect_source_file_items(root):
-        parsed_entities = parse_entities(read_text(path), name_map=name_map)
+        parsed_entities = parse_entities(read_text(path), name_map=name_map, available_entities=available_entities)
         for section in SECTION_ORDER:
             for entity_id in parsed_entities.get(section, []):
                 catalog[section].append(
@@ -503,9 +540,18 @@ def build_entity_type_catalog(root: Path, *, name_map: dict[tuple[str, str], str
     return catalog
 
 
-def build_view_for_file(folder: Path, path: Path, *, generated_at: str, root: Path, name_map: dict[tuple[str, str], str] | None = None, cross_refs: dict[str, list[tuple[str, str]]] | None = None) -> dict[str, Any]:
+def build_view_for_file(
+    folder: Path,
+    path: Path,
+    *,
+    generated_at: str,
+    root: Path,
+    name_map: dict[tuple[str, str], str] | None = None,
+    cross_refs: dict[str, list[tuple[str, str]]] | None = None,
+    available_entities: set[str] | None = None,
+) -> dict[str, Any] | None:
     text = read_text(path)
-    parsed_entities = parse_entities(text, name_map=name_map)
+    parsed_entities = parse_entities(text, name_map=name_map, available_entities=available_entities)
 
     summary_lines = [
         f"# {path.stem}",
@@ -519,11 +565,13 @@ def build_view_for_file(folder: Path, path: Path, *, generated_at: str, root: Pa
     cards: list[dict[str, Any]] = [
         build_markdown_card("Overview", "\n".join(summary_lines), icon="mdi:file-document-outline"),
     ]
+    has_substantive_content = False
 
     for section in SECTION_ORDER:
         items = parsed_entities.get(section, [])
         if not items:
             continue
+        has_substantive_content = True
         title = SECTION_TITLES[section]
         icon = SECTION_ICONS[section]
         if section == "rest_command":
@@ -546,15 +594,19 @@ def build_view_for_file(folder: Path, path: Path, *, generated_at: str, root: Pa
     external_non_stateful = [entity_id for entity_id in referenced_external if not is_stateful_entity(entity_id)]
 
     if local_stateful:
+        has_substantive_content = True
         cards.append(build_entities_card("Entities defined and used in this file", local_stateful))
 
     if local_non_stateful:
+        has_substantive_content = True
         cards.append(build_bullet_markdown("Non-entity definitions used in this file", local_non_stateful, icon="mdi:source-branch"))
 
     if external_stateful:
+        has_substantive_content = True
         cards.append(build_entities_card("Entities used from other files", external_stateful))
 
     if external_non_stateful:
+        has_substantive_content = True
         cards.append(build_bullet_markdown("Non-entity references from other files", external_non_stateful, icon="mdi:format-list-bulleted"))
 
     if cross_refs is not None:
@@ -567,11 +619,15 @@ def build_view_for_file(folder: Path, path: Path, *, generated_at: str, root: Pa
                     parts = [f"{f} ({ut})" for f, ut in other_usages]
                     used_elsewhere.append(f"- `{entity_id}`: " + ", ".join(parts))
         if used_elsewhere:
+            has_substantive_content = True
             cards.append(build_markdown_card(
                 "Entities from this file used elsewhere",
                 "\n".join(used_elsewhere),
                 icon="mdi:share-variant-outline",
             ))
+
+    if not has_substantive_content:
+        return None
 
     return {
         "path": slugify(f"{folder.relative_to(root).as_posix().replace('/', '-')}-{path.stem}"),
@@ -637,7 +693,13 @@ def write_dashboard(path: Path, dashboard: dict[str, Any]) -> None:
     path.write_text(text, encoding="utf-8")
 
 
-def build_grouped_dashboard(*, root: Path, generated_at: str, name_map: dict[tuple[str, str], str] | None = None) -> dict[str, Any]:
+def build_grouped_dashboard(
+    *,
+    root: Path,
+    generated_at: str,
+    name_map: dict[tuple[str, str], str] | None = None,
+    available_entities: set[str] | None = None,
+) -> dict[str, Any]:
     """Build a dashboard with one view per category.
 
     Each category view contains the full per-file detail (overview + entity
@@ -680,8 +742,16 @@ def build_grouped_dashboard(*, root: Path, generated_at: str, name_map: dict[tup
                     "navigation_path": f"/ui-generated-flat/{flat_view_slug}",
                 },
             })
-            file_view = build_view_for_file(folder, path, generated_at=generated_at, root=root, name_map=name_map)
-            cards.extend(file_view["cards"])
+            file_view = build_view_for_file(
+                folder,
+                path,
+                generated_at=generated_at,
+                root=root,
+                name_map=name_map,
+                available_entities=available_entities,
+            )
+            if file_view is not None:
+                cards.extend(file_view["cards"])
 
         views.append({
             "path": slugify(cat),
@@ -696,8 +766,14 @@ def build_grouped_dashboard(*, root: Path, generated_at: str, name_map: dict[tup
     }
 
 
-def build_entity_type_dashboard(*, root: Path, generated_at: str, name_map: dict[tuple[str, str], str] | None = None) -> dict[str, Any]:
-    catalog = build_entity_type_catalog(root, name_map=name_map)
+def build_entity_type_dashboard(
+    *,
+    root: Path,
+    generated_at: str,
+    name_map: dict[tuple[str, str], str] | None = None,
+    available_entities: set[str] | None = None,
+) -> dict[str, Any]:
+    catalog = build_entity_type_catalog(root, name_map=name_map, available_entities=available_entities)
     views: list[dict[str, Any]] = []
 
     for section in SECTION_ORDER:
@@ -735,20 +811,48 @@ def build_entity_type_dashboard(*, root: Path, generated_at: str, name_map: dict
     }
 
 
-def generate_grouped_dashboard(*, root: Path, output_dir: Path, generated_at: str, name_map: dict[tuple[str, str], str] | None = None) -> Path:
-    dashboard = build_grouped_dashboard(root=root, generated_at=generated_at, name_map=name_map)
+def generate_grouped_dashboard(
+    *,
+    root: Path,
+    output_dir: Path,
+    generated_at: str,
+    name_map: dict[tuple[str, str], str] | None = None,
+    available_entities: set[str] | None = None,
+) -> Path:
+    dashboard = build_grouped_dashboard(
+        root=root,
+        generated_at=generated_at,
+        name_map=name_map,
+        available_entities=available_entities,
+    )
     output_path = output_dir / "ui-generated-grouped.yaml"
     write_dashboard(output_path, dashboard)
     return output_path
 
 
-def generate_single_dashboard(*, root: Path, output_dir: Path, generated_at: str, name_map: dict[tuple[str, str], str] | None = None) -> Path:
+def generate_single_dashboard(
+    *,
+    root: Path,
+    output_dir: Path,
+    generated_at: str,
+    name_map: dict[tuple[str, str], str] | None = None,
+    available_entities: set[str] | None = None,
+) -> Path:
     file_items = collect_source_file_items(root)
-    cross_refs = build_cross_reference_map(file_items, root=root, name_map=name_map)
+    cross_refs = build_cross_reference_map(file_items, root=root, name_map=name_map, available_entities=available_entities)
 
     views = [
-        build_view_for_file(folder, path, generated_at=generated_at, root=root, name_map=name_map, cross_refs=cross_refs)
+        view
         for folder, path in file_items
+        if (view := build_view_for_file(
+            folder,
+            path,
+            generated_at=generated_at,
+            root=root,
+            name_map=name_map,
+            cross_refs=cross_refs,
+            available_entities=available_entities,
+        )) is not None
     ]
 
     dashboard = {
@@ -761,8 +865,20 @@ def generate_single_dashboard(*, root: Path, output_dir: Path, generated_at: str
     return output_path
 
 
-def generate_entity_type_dashboard(*, root: Path, output_dir: Path, generated_at: str, name_map: dict[tuple[str, str], str] | None = None) -> Path:
-    dashboard = build_entity_type_dashboard(root=root, generated_at=generated_at, name_map=name_map)
+def generate_entity_type_dashboard(
+    *,
+    root: Path,
+    output_dir: Path,
+    generated_at: str,
+    name_map: dict[tuple[str, str], str] | None = None,
+    available_entities: set[str] | None = None,
+) -> Path:
+    dashboard = build_entity_type_dashboard(
+        root=root,
+        generated_at=generated_at,
+        name_map=name_map,
+        available_entities=available_entities,
+    )
     output_path = output_dir / "ui-generated-entity-types.yaml"
     write_dashboard(output_path, dashboard)
     return output_path
@@ -777,7 +893,7 @@ def generate_dashboards(
 ) -> list[Path]:
     root_path = (root or ROOT).resolve()
     output_path = (output_dir or (root_path / "generated_ui")).resolve()
-    name_map = load_inventory_name_map(inventory_json.resolve()) if inventory_json else None
+    name_map, available_entities = load_inventory(inventory_json.resolve()) if inventory_json else (None, None)
     if output_path.exists():
         shutil.rmtree(output_path)
     output_path.mkdir(parents=True, exist_ok=True)
@@ -785,12 +901,30 @@ def generate_dashboards(
     generated_at = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
 
     generated_files = [
-        generate_single_dashboard(root=root_path, output_dir=output_path, generated_at=generated_at, name_map=name_map),
-        generate_grouped_dashboard(root=root_path, output_dir=output_path, generated_at=generated_at, name_map=name_map),
+        generate_single_dashboard(
+            root=root_path,
+            output_dir=output_path,
+            generated_at=generated_at,
+            name_map=name_map,
+            available_entities=available_entities,
+        ),
+        generate_grouped_dashboard(
+            root=root_path,
+            output_dir=output_path,
+            generated_at=generated_at,
+            name_map=name_map,
+            available_entities=available_entities,
+        ),
     ]
     if include_entity_type_dashboard:
         generated_files.append(
-            generate_entity_type_dashboard(root=root_path, output_dir=output_path, generated_at=generated_at, name_map=name_map)
+            generate_entity_type_dashboard(
+                root=root_path,
+                output_dir=output_path,
+                generated_at=generated_at,
+                name_map=name_map,
+                available_entities=available_entities,
+            )
         )
     return generated_files
 

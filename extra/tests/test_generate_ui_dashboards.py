@@ -259,6 +259,30 @@ class GenerateUiDashboardsTests(unittest.TestCase):
             self.assertIn("light.bedroom", content)
             self.assertNotIn("light.kitchen", content)
 
+    def test_keeps_helper_entities_when_inventory_has_no_matching_domain(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            output_dir = root / "out"
+            output_dir.mkdir()
+
+            folder = root / "packages" / "helpers"
+            folder.mkdir(parents=True)
+            (folder / "helpers.yaml").write_text(
+                "input_boolean:\n"
+                "  christmas_light:\n"
+                "    name: Christmas\n",
+                encoding="utf-8",
+            )
+            inventory_path = root / "inventory.json"
+            inventory_path.write_text(json.dumps({"entities": []}), encoding="utf-8")
+
+            generate_dashboards(root=root, output_dir=output_dir, inventory_json=inventory_path)
+
+            output_path = output_dir / "ui-generated-flat.yaml"
+            self.assertTrue(output_path.exists())
+            content = output_path.read_text(encoding="utf-8")
+            self.assertIn("input_boolean.christmas_light", content)
+
     def test_skips_views_with_no_substantive_cards(self):
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)

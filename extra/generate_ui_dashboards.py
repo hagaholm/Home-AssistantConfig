@@ -337,7 +337,16 @@ def load_inventory_name_map(path: Path) -> dict[tuple[str, str], str]:
 
 
 def maybe_add_entity(groups: dict[str, list[str]], section: str, entity_id: str, available_entities: set[str] | None = None) -> None:
-    if available_entities is None or entity_id in available_entities:
+    if available_entities is None:
+        groups[section].append(entity_id)
+        return
+
+    domain = entity_id.split(".", 1)[0]
+    if entity_id in available_entities:
+        groups[section].append(entity_id)
+        return
+
+    if section in HELPER_SECTIONS and not any(entity.startswith(f"{domain}.") for entity in available_entities):
         groups[section].append(entity_id)
 
 
@@ -402,6 +411,18 @@ def parse_entities(
                 maybe_add_entity(groups, current_section, entity_id, available_entities)
                 current_item_name = entity_name
                 continue
+            if current_section in HELPER_SECTIONS and indent > 2 and current_item_name is not None:
+                entity_name = stripped[:-1]
+                entity_id = f"{current_section}.{slugify(entity_name)}"
+                maybe_add_entity(groups, current_section, entity_id, available_entities)
+                current_item_name = entity_name
+                continue
+            if current_section in HELPER_SECTIONS and indent == 2:
+                entity_name = stripped[:-1]
+                entity_id = f"{current_section}.{slugify(entity_name)}"
+                maybe_add_entity(groups, current_section, entity_id, available_entities)
+                current_item_name = entity_name
+                continue
             if current_section in NAME_BASED_ENTITY_SECTIONS and indent > 2:
                 continue
             if current_section in HELPER_SECTIONS and indent > 2:
@@ -445,6 +466,14 @@ def parse_entities(
             maybe_add_entity(groups, "sensor", entity_id, available_entities)
 
         if current_section in HELPER_SECTIONS:
+            if current_section in {"input_boolean", "input_text", "input_select", "input_datetime", "input_number", "input_date", "input_time"}:
+                helper_match = re.match(r"^([A-Za-z0-9_]+):\s*$", stripped)
+                if helper_match:
+                    entity_id = f"{current_section}.{helper_match.group(1)}"
+                    maybe_add_entity(groups, current_section, entity_id, available_entities)
+                    current_item_name = helper_match.group(1)
+                    continue
+
             match = re.match(r"^([A-Za-z0-9_]+):\s*$", stripped)
             if match:
                 entity_id = f"{current_section}.{match.group(1)}"

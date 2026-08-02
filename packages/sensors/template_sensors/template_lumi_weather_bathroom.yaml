@@ -13,36 +13,36 @@ template:
       # Type: Temperature, Humidity, Pressure sensor
       - name: "Badrum Temperatur"
         unique_id: badrum_lumi_sensor_ht_agl02_temperatur
-        availability: "{{ states('sensor.lumi_lumi_weather_temperatur') not in ['unknown', 'unavailable', ''] }}"
-        state: "{{ states('sensor.lumi_lumi_weather_temperatur') | float(0) }}"
+        availability: "{{ states('sensor.lumi_lumi_weather_temperature_4') not in ['unknown', 'unavailable', ''] }}"
+        state: "{{ states('sensor.lumi_lumi_weather_temperature_4') | float(0) }}"
         unit_of_measurement: "°C"
         device_class: temperature
         state_class: measurement
         attributes:
-          source_sensor: sensor.lumi_lumi_weather_temperatur
+          source_sensor: sensor.lumi_lumi_weather_temperature_4
           icon: mdi:thermometer
           friendly_name: Badrum Temperatur
 
       - name: "Badrum Luftfuktighet"
         unique_id: badrum_lumi_sensor_ht_agl02_luftfuktighet
-        availability: "{{ states('sensor.lumi_lumi_weather_luftfuktighet') not in ['unknown', 'unavailable', ''] }}"
-        state: "{{ states('sensor.lumi_lumi_weather_luftfuktighet') | float(0) }}"
+        availability: "{{ states('sensor.lumi_lumi_weather_humidity_4') not in ['unknown', 'unavailable', ''] }}"
+        state: "{{ states('sensor.lumi_lumi_weather_humidity_4') | float(0) }}"
         unit_of_measurement: "%"
         device_class: humidity
         state_class: measurement
         attributes:
-          source_sensor: sensor.lumi_lumi_weather_luftfuktighet
+          source_sensor: sensor.lumi_lumi_weather_humidity_4
           icon: mdi:water-percent
           friendly_name: Badrum Luftfuktighet
 
       - name: "Badrum Lufttryck"
         unique_id: badrum_lumi_sensor_ht_agl02_tryck
-        availability: "{{ states('sensor.lumi_lumi_weather_tryck') not in ['unknown', 'unavailable', ''] }}"
-        state: "{{ states('sensor.lumi_lumi_weather_tryck') | float(0) }}"
+        availability: "{{ states('sensor.lumi_lumi_weather_pressure_4') not in ['unknown', 'unavailable', ''] }}"
+        state: "{{ states('sensor.lumi_lumi_weather_pressure_4') | float(0) }}"
         unit_of_measurement: "hPa"
         device_class: pressure
         state_class: measurement
         attributes:
-          source_sensor: sensor.lumi_lumi_weather_tryck
+          source_sensor: sensor.lumi_lumi_weather_pressure_4
           icon: mdi:gauge
           friendly_name: Badrum Lufttryck

@@ -13,36 +13,36 @@ template:
       # Type: Temperature, Humidity, Pressure sensor
       - name: "Uterum Temperatur"
         unique_id: uterum_lumi_weather_temperature_3
-        availability: "{{ states('sensor.lumi_lumi_weather_temperature_4') not in ['unknown', 'unavailable', ''] }}"
-        state: "{{ states('sensor.lumi_lumi_weather_temperature_4') | float(0) }}"
+        availability: "{{ states('sensor.lumi_lumi_weather_temperatur') not in ['unknown', 'unavailable', ''] }}"
+        state: "{{ states('sensor.lumi_lumi_weather_temperatur') | float(0) }}"
         unit_of_measurement: "°C"
         device_class: temperature
         state_class: measurement
         attributes:
-          source_sensor: sensor.lumi_lumi_weather_temperature_4
+          source_sensor: sensor.lumi_lumi_weather_temperatur
           icon: mdi:thermometer
           friendly_name: Uterum Temperatur
 
       - name: "Uterum Luftfuktighet"
         unique_id: uterum_lumi_weather_humidity_3
-        availability: "{{ states('sensor.lumi_lumi_weather_humidity_4') not in ['unknown', 'unavailable', ''] }}"
-        state: "{{ states('sensor.lumi_lumi_weather_humidity_4') | float(0) }}"
+        availability: "{{ states('sensor.lumi_lumi_weather_luftfuktighet') not in ['unknown', 'unavailable', ''] }}"
+        state: "{{ states('sensor.lumi_lumi_weather_luftfuktighet') | float(0) }}"
         unit_of_measurement: "%"
         device_class: humidity
         state_class: measurement
         attributes:
-          source_sensor: sensor.lumi_lumi_weather_humidity_4
+          source_sensor: sensor.lumi_lumi_weather_luftfuktighet
           icon: mdi:water-percent
           friendly_name: Uterum Luftfuktighet
 
       - name: "Uterum Lufttryck"
         unique_id: uterum_lumi_weather_pressure_3
-        availability: "{{ states('sensor.lumi_lumi_weather_pressure_4') not in ['unknown', 'unavailable', ''] }}"
-        state: "{{ states('sensor.lumi_lumi_weather_pressure_4') | float(0) }}"
+        availability: "{{ states('sensor.lumi_lumi_weather_tryck') not in ['unknown', 'unavailable', ''] }}"
+        state: "{{ states('sensor.lumi_lumi_weather_tryck') | float(0) }}"
         unit_of_measurement: "hPa"
         device_class: pressure
         state_class: measurement
         attributes:
-          source_sensor: sensor.lumi_lumi_weather_pressure_4
+          source_sensor: sensor.lumi_lumi_weather_tryck
           icon: mdi:gauge
           friendly_name: Uterum Lufttryck

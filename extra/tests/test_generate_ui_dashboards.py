@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 
 from extra.generate_ui_dashboards import generate_dashboards
+from extra.run_ui_dashboards_compare import run_server_comparison_export
 
 
 class GenerateUiDashboardsTests(unittest.TestCase):

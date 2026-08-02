@@ -284,6 +284,31 @@ class GenerateUiDashboardsTests(unittest.TestCase):
             content = output_path.read_text(encoding="utf-8")
             self.assertIn("input_boolean.christmas_light", content)
 
+    def test_keeps_script_entities_when_inventory_has_no_matching_domain(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            output_dir = root / "out"
+            output_dir.mkdir()
+
+            folder = root / "packages" / "scripts"
+            folder.mkdir(parents=True)
+            (folder / "scripts.yaml").write_text(
+                "script:\n"
+                "  hall_light_on:\n"
+                "    alias: Hall light on\n"
+                "    sequence: []\n",
+                encoding="utf-8",
+            )
+            inventory_path = root / "inventory.json"
+            inventory_path.write_text(json.dumps({"entities": []}), encoding="utf-8")
+
+            generate_dashboards(root=root, output_dir=output_dir, inventory_json=inventory_path)
+
+            entity_type_path = output_dir / "ui-generated-entity-types.yaml"
+            self.assertTrue(entity_type_path.exists())
+            content = entity_type_path.read_text(encoding="utf-8")
+            self.assertIn("script.hall_light_on", content)
+
     def test_skips_views_with_no_substantive_cards(self):
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)

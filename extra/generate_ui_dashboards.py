@@ -58,6 +58,7 @@ HELPER_SECTIONS = {
     "counter",
     "utility_meter",
 }
+YAML_FALLBACK_SECTIONS = HELPER_SECTIONS | {"automation", "script", "rest_command"}
 NAME_BASED_ENTITY_SECTIONS = {
     "sensor",
     "binary_sensor",
@@ -346,7 +347,7 @@ def maybe_add_entity(groups: dict[str, list[str]], section: str, entity_id: str,
         groups[section].append(entity_id)
         return
 
-    if section in HELPER_SECTIONS and not any(entity.startswith(f"{domain}.") for entity in available_entities):
+    if section in YAML_FALLBACK_SECTIONS and not any(entity.startswith(f"{domain}.") for entity in available_entities):
         groups[section].append(entity_id)
 
 

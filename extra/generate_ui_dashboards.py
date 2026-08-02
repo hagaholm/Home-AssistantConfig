@@ -72,6 +72,9 @@ NAME_BASED_ENTITY_SECTIONS = {
     "camera",
     "select",
     "number",
+    "scene",
+    "device_tracker",
+    "image",
 }
 SECTION_ORDER = [
     "input_text",
@@ -100,6 +103,9 @@ SECTION_ORDER = [
     "automation",
     "script",
     "rest_command",
+    "scene",
+    "device_tracker",
+    "image",
 ]
 SECTION_TITLES = {
     "input_text": "Input text",
@@ -128,6 +134,9 @@ SECTION_TITLES = {
     "automation": "Automations",
     "script": "Scripts",
     "rest_command": "Rest commands",
+    "scene": "Scenes",
+    "device_tracker": "Device trackers",
+    "image": "Images",
 }
 SECTION_ICONS = {
     "input_text": "mdi:form-textbox",
@@ -156,6 +165,9 @@ SECTION_ICONS = {
     "automation": "mdi:home-automation",
     "script": "mdi:script-text-outline",
     "rest_command": "mdi:api",
+    "scene": "mdi:palette",
+    "device_tracker": "mdi:map-marker",
+    "image": "mdi:image",
 }
 SERVICE_LIKE_OBJECT_IDS = {
     "turn_on",

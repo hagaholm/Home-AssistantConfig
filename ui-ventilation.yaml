@@ -93,82 +93,15 @@ views:
     badges: []
     cards:
       - type: markdown
-        title: Tuning
+        title: Inställningar
         content: |
           Justera trösklar och timers för forcerad ventilation.
 
-          Tips:
-          - Börja med små ändringar (1–2% eller 5–10 min).
-          - Om forcerad fläkt ofta går i maxtid: sänk maxtid eller höj stop-tröskeln något.
-          - Om den fladdrar: höj stabil tid eller öka hysteresis (skillnad mellan start/stop).
+          Auto-tuning är borttaget; ändra värden direkt nedan.
       - type: tile
         entity: script.ventilation_tuning_reset_defaults
         name: Återställ standardvärden
         icon: mdi:backup-restore
-      - type: tile
-        entity: script.ventilation_tuning_dismiss_notifications
-        name: Rensa notiser
-        icon: mdi:bell-off
-      - type: entities
-        title: Auto-tuning (status)
-        state_color: true
-        entities:
-          - entity: input_boolean.ventilation_auto_tuning_enabled
-            name: Auto-tuning (på)
-          - entity: input_boolean.ventilation_auto_tuning_auto_apply
-            name: Auto-applicera
-          - entity: sensor.ventilation_forcerad_tid_24h
-            name: Forcerad tid (24h)
-          - entity: sensor.ventilation_forcerad_antal_24h
-            name: Forcerad antal (24h)
-          - entity: sensor.ventilation_fukt_fonster_max_24h
-            name: Max RH fönster (24h)
-          - entity: sensor.ventilation_rh_forcerad_medel_24h
-            name: RH medel (forcerad, 24h)
-      - type: entities
-        title: Auto-tuning (rekommendationer)
-        state_color: true
-        entities:
-          - entity: sensor.ventilation_rekommenderad_rh_start
-            name: RH start (rekomm)
-          - entity: sensor.ventilation_rekommenderad_rh_stop
-            name: RH stop (rekomm)
-          - entity: sensor.ventilation_rekommenderad_stabil_tid
-            name: Stabil tid (rekomm)
-          - entity: sensor.ventilation_rekommenderad_maxtid
-            name: Maxtid (rekomm)
-          - entity: script.ventilation_tuning_apply_recommended
-            name: Applicera rekomm.
-      - type: markdown
-        title: Förklaring
-        content: |
-          **Auto-tuning**
-          - **auto-tuning (på)**: aktiverar rådgivaren (förslag skapas vid start och 03:15).
-          - **auto-applicera**: om på, skrivs förslagen direkt till helpers.
-          - **forcerad tid/antal (24h)**: används för att bedöma om systemet forcerar “för ofta”.
-          - **rekommenderad …**: beräknade förslag (små steg inom säkra gränser).
-          - **Applicera…**: kör en engångs-applicering manuellt.
-
-          **Anomaly detection**
-          - Om någon anomaly blir **On** så stängs **auto-applicera** av automatiskt och en notis skapas.
-          - **sensor okänd**: RH/ute-temp saknas (`unknown/unavailable`).
-          - **hysteresis fel**: start ≤ stop (risk för fladder).
-          - **forcerad trots låg RH**: forcerad är på fast RH ligger under stop-tröskeln med marginal.
-          - **fladder**: många korta forceringar (indikerar spikig sensor eller fel trösklar/tider).
-      - type: entities
-        title: Anomaly detection
-        state_color: true
-        entities:
-          - entity: binary_sensor.ventilation_anomaly_sensor_okand
-            name: Sensor okänd
-          - entity: sensor.ventilation_anomaly_okand_kalla
-            name: Okänd källa
-          - entity: binary_sensor.ventilation_anomaly_hysteresis_fel
-            name: Hysteresis fel
-          - entity: binary_sensor.ventilation_anomaly_forcerad_trots_lag_rh
-            name: Forcerad trots låg RH
-          - entity: binary_sensor.ventilation_anomaly_fladder
-            name: Fladder
       - type: entities
         title: Gränser & timers
         state_color: true

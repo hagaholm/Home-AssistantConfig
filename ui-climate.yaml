@@ -527,46 +527,11 @@ views:
         name: Återställ standardvärden
         icon: mdi:backup-restore
 
-      - type: tile
-        entity: script.ventilation_tuning_dismiss_notifications
-        name: Rensa notiser
-        icon: mdi:bell-off
-
       - type: markdown
-        content: "## Auto-tuning (Status)"
+        content: |
+          ## Inställningar
 
-      - type: entities
-        state_color: true
-        entities:
-          - entity: input_boolean.ventilation_auto_tuning_enabled
-            name: Auto-tuning aktiverad
-          - entity: input_boolean.ventilation_auto_tuning_auto_apply
-            name: Auto-applicera
-          - entity: sensor.ventilation_forcerad_tid_24h
-            name: Forcerad tid (24h)
-          - entity: sensor.ventilation_forcerad_antal_24h
-            name: Forcerad antal (24h)
-          - entity: sensor.ventilation_fukt_fonster_max_24h
-            name: Max RH fönster (24h)
-          - entity: sensor.ventilation_rh_forcerad_medel_24h
-            name: RH medel (forcerad, 24h)
-
-      - type: markdown
-        content: "## Auto-tuning (Rekommendationer)"
-
-      - type: entities
-        state_color: true
-        entities:
-          - entity: sensor.ventilation_rekommenderad_rh_start
-            name: RH start (rekomm)
-          - entity: sensor.ventilation_rekommenderad_rh_stop
-            name: RH stop (rekomm)
-          - entity: sensor.ventilation_rekommenderad_stabil_tid
-            name: Stabil tid (rekomm)
-          - entity: sensor.ventilation_rekommenderad_maxtid
-            name: Maxtid (rekomm)
-          - entity: script.ventilation_tuning_apply_recommended
-            name: Applicera rekommendationer
+          Auto-tuning är borttaget. Justera värden direkt nedan.
 
       - type: markdown
         content: "## Gränser & Timers"
@@ -596,31 +561,6 @@ views:
             name: Diff badrum/v-rum
           - entity: input_number.ventilation_sensor_fresh_seconds
             name: Sensor-färskhet
-
-      - type: markdown
-        content: |
-          ## Anomaly Detection
-
-          Om någon anomaly blir **On** så stängs auto-applicera av automatiskt.
-
-          - **sensor okänd**: RH/ute-temp saknas
-          - **hysteresis fel**: start ≤ stop (risk för fladder)
-          - **forcerad trots låg RH**: forcerad är på fast RH ligger under stop-tröskeln
-          - **fladder**: många korta forceringar
-
-      - type: entities
-        state_color: true
-        entities:
-          - entity: binary_sensor.ventilation_anomaly_sensor_okand
-            name: Sensor okänd
-          - entity: sensor.ventilation_anomaly_okand_kalla
-            name: Okänd källa
-          - entity: binary_sensor.ventilation_anomaly_hysteresis_fel
-            name: Hysteresis fel
-          - entity: binary_sensor.ventilation_anomaly_forcerad_trots_lag_rh
-            name: Forcerad trots låg RH
-          - entity: binary_sensor.ventilation_anomaly_fladder
-            name: Fladder
 
   ####################################################
   # INSTÄLLNINGAR – FRIGGEBOD

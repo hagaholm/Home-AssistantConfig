@@ -214,33 +214,6 @@ input_boolean:
 ################
 ### Template ###
 ################
-variables:
-  ventilation_automation_defaults:
-    automation.turn_off_max_speed_when_available_again: on
-    automation.startar_max_timer_badrum: on
-    automation.restart_timer_badrum: on
-    automation.satt_larm_for_vent: on
-    automation.badrumsfonster_hog_fukt_larm: on
-    automation.lag_temp_franluft: on
-    automation.hog_temp_franluft: on
-    automation.lag_temp_tilluft: on
-    automation.hog_temp_tilluft: on
-    automation.forcerad_snabbt_okande_fukt: on
-    automation.forcerad_badrumsfonster_hog_fukt: on
-    automation.normal_badrumsfonster_lag_fukt: on
-    automation.normal_hog_fukt_i_huset: on
-    automation.normal_vid_stabiliserad_fukt: on
-    automation.normal_efter_maxtid: on
-    automation.reset_timer_nar_vent_satts_till_normal: on
-    automation.vent_off_borta_ute_24degc_60_inne_23degc: on
-    automation.vent_off_ute_24degc_borta_60_inne_23degc: on
-    automation.vent_off_60_borta_ute_24degc_inne_23degc: on
-    automation.vent_off_inne_23degc_borta_60_ute_24degc: on
-    automation.vent_on_hemma_off: on
-    automation.vent_on_ute_22degc_off: on
-    automation.vent_on_60_off: on
-    automation.vent_on_inne_23degc_off: on
-
 template:
   - binary_sensor:
       - name: Ventilation standardvärden ändrade
@@ -265,7 +238,32 @@ template:
         unique_id: ventilation_automation_defaults_modified
         icon: mdi:toggle-switch-variant
         state: >-
-          {% set defaults = ventilation_automation_defaults %}
+          {% set defaults = {
+            'automation.turn_off_max_speed_when_available_again': 'on',
+            'automation.startar_max_timer_badrum': 'on',
+            'automation.restart_timer_badrum': 'on',
+            'automation.satt_larm_for_vent': 'on',
+            'automation.badrumsfonster_hog_fukt_larm': 'on',
+            'automation.lag_temp_franluft': 'on',
+            'automation.hog_temp_franluft': 'on',
+            'automation.lag_temp_tilluft': 'on',
+            'automation.hog_temp_tilluft': 'on',
+            'automation.forcerad_snabbt_okande_fukt': 'on',
+            'automation.forcerad_badrumsfonster_hog_fukt': 'on',
+            'automation.normal_badrumsfonster_lag_fukt': 'on',
+            'automation.normal_hog_fukt_i_huset': 'on',
+            'automation.normal_vid_stabiliserad_fukt': 'on',
+            'automation.normal_efter_maxtid': 'on',
+            'automation.reset_timer_nar_vent_satts_till_normal': 'on',
+            'automation.vent_off_borta_ute_24degc_60_inne_23degc': 'on',
+            'automation.vent_off_ute_24degc_borta_60_inne_23degc': 'on',
+            'automation.vent_off_60_borta_ute_24degc_inne_23degc': 'on',
+            'automation.vent_off_inne_23degc_borta_60_ute_24degc': 'on',
+            'automation.vent_on_hemma_off': 'on',
+            'automation.vent_on_ute_22degc_off': 'on',
+            'automation.vent_on_60_off': 'on',
+            'automation.vent_on_inne_23degc_off': 'on'
+          } %}
           {% set changed = [] %}
           {% for entity_id, default_state in defaults.items() %}
             {% set current_state = states(entity_id) %}
@@ -280,7 +278,32 @@ template:
         unique_id: ventilation_automation_defaults_drift
         icon: mdi:toggle-switch-variant
         state: >-
-          {% set defaults = ventilation_automation_defaults %}
+          {% set defaults = {
+            'automation.turn_off_max_speed_when_available_again': 'on',
+            'automation.startar_max_timer_badrum': 'on',
+            'automation.restart_timer_badrum': 'on',
+            'automation.satt_larm_for_vent': 'on',
+            'automation.badrumsfonster_hog_fukt_larm': 'on',
+            'automation.lag_temp_franluft': 'on',
+            'automation.hog_temp_franluft': 'on',
+            'automation.lag_temp_tilluft': 'on',
+            'automation.hog_temp_tilluft': 'on',
+            'automation.forcerad_snabbt_okande_fukt': 'on',
+            'automation.forcerad_badrumsfonster_hog_fukt': 'on',
+            'automation.normal_badrumsfonster_lag_fukt': 'on',
+            'automation.normal_hog_fukt_i_huset': 'on',
+            'automation.normal_vid_stabiliserad_fukt': 'on',
+            'automation.normal_efter_maxtid': 'on',
+            'automation.reset_timer_nar_vent_satts_till_normal': 'on',
+            'automation.vent_off_borta_ute_24degc_60_inne_23degc': 'on',
+            'automation.vent_off_ute_24degc_borta_60_inne_23degc': 'on',
+            'automation.vent_off_60_borta_ute_24degc_inne_23degc': 'on',
+            'automation.vent_off_inne_23degc_borta_60_ute_24degc': 'on',
+            'automation.vent_on_hemma_off': 'on',
+            'automation.vent_on_ute_22degc_off': 'on',
+            'automation.vent_on_60_off': 'on',
+            'automation.vent_on_inne_23degc_off': 'on'
+          } %}
           {% set changed = [] %}
           {% for entity_id, default_state in defaults.items() %}
             {% set current_state = states(entity_id) %}
@@ -1077,10 +1100,32 @@ script:
     alias: Återställ ventilation automatiseringar
     mode: single
     sequence:
-      - variables:
-          automation_entities: "{{ ventilation_automation_defaults.keys() | list }}"
       - repeat:
-          for_each: "{{ automation_entities }}"
+          for_each:
+            - automation.turn_off_max_speed_when_available_again
+            - automation.startar_max_timer_badrum
+            - automation.restart_timer_badrum
+            - automation.satt_larm_for_vent
+            - automation.badrumsfonster_hog_fukt_larm
+            - automation.lag_temp_franluft
+            - automation.hog_temp_franluft
+            - automation.lag_temp_tilluft
+            - automation.hog_temp_tilluft
+            - automation.forcerad_snabbt_okande_fukt
+            - automation.forcerad_badrumsfonster_hog_fukt
+            - automation.normal_badrumsfonster_lag_fukt
+            - automation.normal_hog_fukt_i_huset
+            - automation.normal_vid_stabiliserad_fukt
+            - automation.normal_efter_maxtid
+            - automation.reset_timer_nar_vent_satts_till_normal
+            - automation.vent_off_borta_ute_24degc_60_inne_23degc
+            - automation.vent_off_ute_24degc_borta_60_inne_23degc
+            - automation.vent_off_60_borta_ute_24degc_inne_23degc
+            - automation.vent_off_inne_23degc_borta_60_ute_24degc
+            - automation.vent_on_hemma_off
+            - automation.vent_on_ute_22degc_off
+            - automation.vent_on_60_off
+            - automation.vent_on_inne_23degc_off
           sequence:
             - service: automation.turn_on
               target:

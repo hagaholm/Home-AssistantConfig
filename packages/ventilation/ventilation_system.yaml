@@ -211,6 +211,85 @@ input_boolean:
     name: Högtemp tilluft 
     initial: off
 
+################
+### Template ###
+################
+variables:
+  ventilation_automation_defaults:
+    automation.turn_off_max_speed_when_available_again: on
+    automation.startar_max_timer_badrum: on
+    automation.restart_timer_badrum: on
+    automation.satt_larm_for_vent: on
+    automation.badrumsfonster_hog_fukt_larm: on
+    automation.lag_temp_franluft: on
+    automation.hog_temp_franluft: on
+    automation.lag_temp_tilluft: on
+    automation.hog_temp_tilluft: on
+    automation.forcerad_snabbt_okande_fukt: on
+    automation.forcerad_badrumsfonster_hog_fukt: on
+    automation.normal_badrumsfonster_lag_fukt: on
+    automation.normal_hog_fukt_i_huset: on
+    automation.normal_vid_stabiliserad_fukt: on
+    automation.normal_efter_maxtid: on
+    automation.reset_timer_nar_vent_satts_till_normal: on
+    automation.vent_off_borta_ute_24degc_60_inne_23degc: on
+    automation.vent_off_ute_24degc_borta_60_inne_23degc: on
+    automation.vent_off_60_borta_ute_24degc_inne_23degc: on
+    automation.vent_off_inne_23degc_borta_60_ute_24degc: on
+    automation.vent_on_hemma_off: on
+    automation.vent_on_ute_22degc_off: on
+    automation.vent_on_60_off: on
+    automation.vent_on_inne_23degc_off: on
+
+template:
+  - binary_sensor:
+      - name: Ventilation standardvärden ändrade
+        unique_id: ventilation_defaults_modified
+        icon: mdi:restore-alert
+        state: >-
+          {% set changed = namespace(value=false) %}
+          {% if states('input_number.ventilation_rh_force_on')|float(70) != 70 %}{% set changed.value = true %}{% endif %}
+          {% if states('input_number.ventilation_rh_force_off')|float(69) != 69 %}{% set changed.value = true %}{% endif %}
+          {% if states('input_number.ventilation_rh_stable_min')|float(70) != 70 %}{% set changed.value = true %}{% endif %}
+          {% if states('input_number.ventilation_rh_stable_max')|float(90) != 90 %}{% set changed.value = true %}{% endif %}
+          {% if states('input_number.ventilation_rh_delta_fast')|float(4) != 4 %}{% set changed.value = true %}{% endif %}
+          {% if states('input_number.ventilation_rh_delta_high')|float(2) != 2 %}{% set changed.value = true %}{% endif %}
+          {% if states('input_number.ventilation_outdoor_temp_min_force')|float(-8) != -8 %}{% set changed.value = true %}{% endif %}
+          {% if states('input_number.ventilation_max_runtime_minutes')|float(90) != 90 %}{% set changed.value = true %}{% endif %}
+          {% if states('input_number.ventilation_stable_minutes')|float(20) != 20 %}{% set changed.value = true %}{% endif %}
+          {% if states('input_number.ventilation_house_humidity_diff')|float(8) != 8 %}{% set changed.value = true %}{% endif %}
+          {% if states('input_number.ventilation_sensor_fresh_seconds')|float(600) != 600 %}{% set changed.value = true %}{% endif %}
+          {{ changed.value }}
+
+      - name: Ventilation automatiseringar ändrade
+        unique_id: ventilation_automation_defaults_modified
+        icon: mdi:toggle-switch-variant
+        state: >-
+          {% set defaults = ventilation_automation_defaults %}
+          {% set changed = [] %}
+          {% for entity_id, default_state in defaults.items() %}
+            {% set current_state = states(entity_id) %}
+            {% if current_state not in ['unknown','unavailable','none'] and current_state != default_state %}
+              {% set changed = changed + [entity_id] %}
+            {% endif %}
+          {% endfor %}
+          {{ changed | length > 0 }}
+
+  - sensor:
+      - name: Ventilation automatiseringar avvikande
+        unique_id: ventilation_automation_defaults_drift
+        icon: mdi:toggle-switch-variant
+        state: >-
+          {% set defaults = ventilation_automation_defaults %}
+          {% set changed = [] %}
+          {% for entity_id, default_state in defaults.items() %}
+            {% set current_state = states(entity_id) %}
+            {% if current_state not in ['unknown','unavailable','none'] and current_state != default_state %}
+              {% set changed = changed + [entity_id | replace('automation.', '')] %}
+            {% endif %}
+          {% endfor %}
+          {{ changed | join(', ') if changed | length > 0 else 'inga' }}
+
 ##################
 ### Automation ###
 ##################
@@ -975,24 +1054,37 @@ automation:
 # Script for repeated turn_off or turn_on ventilation
 script:
   ventilation_turn_off_loop:
-    alias: Ventilation Turn Off Loop
+    alias: Ventilation Turn Off
+    mode: single
     sequence:
-      - repeat:
-          count: 7
-          sequence:
-            - service: homeassistant.turn_off
-              entity_id: switch.ventilationsaggregat
-            - delay: '00:00:05'
+      - condition: template
+        value_template: "{{ is_state('switch.ventilationsaggregat', 'on') }}"
+      - service: homeassistant.turn_off
+        target:
+          entity_id: switch.ventilationsaggregat
 
   ventilation_turn_on_loop:
-    alias: Ventilation Turn On Loop
+    alias: Ventilation Turn On
+    mode: single
     sequence:
+      - condition: template
+        value_template: "{{ is_state('switch.ventilationsaggregat', 'off') }}"
+      - service: homeassistant.turn_on
+        target:
+          entity_id: switch.ventilationsaggregat
+
+  ventilation_reset_automation_defaults:
+    alias: Återställ ventilation automatiseringar
+    mode: single
+    sequence:
+      - variables:
+          automation_entities: "{{ ventilation_automation_defaults.keys() | list }}"
       - repeat:
-          count: 7
+          for_each: "{{ automation_entities }}"
           sequence:
-            - service: homeassistant.turn_on
-              entity_id: switch.ventilationsaggregat
-            - delay: '00:00:05'
+            - service: automation.turn_on
+              target:
+                entity_id: "{{ repeat.item }}"
 
   ventilation_tuning_reset_defaults:
     alias: Återställ ventilation standardvärden

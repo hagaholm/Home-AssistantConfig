@@ -102,6 +102,22 @@ views:
         entity: script.ventilation_tuning_reset_defaults
         name: Återställ standardvärden
         icon: mdi:backup-restore
+      - type: tile
+        entity: script.ventilation_reset_automation_defaults
+        name: Återställ automationsstandard
+        icon: mdi:toggle-switch
+      - type: tile
+        entity: binary_sensor.ventilation_automation_defaults_modified
+        name: Automationsstandard ändrad
+        icon: mdi:toggle-switch-variant
+      - type: tile
+        entity: sensor.ventilation_automatiseringar_avvikande
+        name: Automat. avvikande
+        icon: mdi:format-list-bulleted
+      - type: tile
+        entity: binary_sensor.ventilation_defaults_modified
+        name: Standardvärden ändrade
+        icon: mdi:restore-alert
       - type: entities
         title: Gränser & timers
         state_color: true

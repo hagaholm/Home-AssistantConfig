@@ -480,7 +480,7 @@ automation:
 
     trigger:
       platform: numeric_state
-      entity_id: sensor.Franluft
+      entity_id: sensor.franluft
       below: '17'
       
     condition:
@@ -496,7 +496,7 @@ automation:
           entity_id: input_boolean.low_temp_franluft
       - service: notify.mobile_app_sm_a528b
         data:
-          message: "Larm! Låg temp frånluft ventilation: {{ states('sensor.Franluft') }} {{ state_attr('sensor.Franluft', 'unit_of_measurement') }}"
+          message: "Larm! Låg temp frånluft ventilation: {{ states('sensor.franluft') }} {{ state_attr('sensor.franluft', 'unit_of_measurement') }}"
 
     ###########################################
     ### Larm! Hög temp ventilation frånluft ###
@@ -508,7 +508,7 @@ automation:
 
     trigger:
       platform: numeric_state
-      entity_id: sensor.Franluft
+      entity_id: sensor.franluft
       above: '35'
 
     condition:
@@ -524,7 +524,7 @@ automation:
           entity_id: input_boolean.high_temp_franluft
       - service: notify.mobile_app_sm_a528b
         data:
-          message: "Larm! Hög temp frånluft ventilation: {{ states('sensor.Franluft') }} {{ state_attr('sensor.Franluft', 'unit_of_measurement') }}"
+          message: "Larm! Hög temp frånluft ventilation: {{ states('sensor.franluft') }} {{ state_attr('sensor.franluft', 'unit_of_measurement') }}"
 
     ##########################################
     ### Larm! Låg temp ventilation tilluft ###
@@ -536,7 +536,7 @@ automation:
 
     trigger:
       platform: numeric_state
-      entity_id: sensor.Tilluft
+      entity_id: sensor.tilluft
       below: '12'
 
     condition:
@@ -552,7 +552,7 @@ automation:
           entity_id: input_boolean.low_temp_tilluft
       - service: notify.mobile_app_sm_a528b
         data:
-          message: "Larm! Låg temp tilluft ventilation: {{ states('sensor.Tilluft') }} {{ state_attr('sensor.Tilluft', 'unit_of_measurement') }}"
+          message: "Larm! Låg temp tilluft ventilation: {{ states('sensor.tilluft') }} {{ state_attr('sensor.tilluft', 'unit_of_measurement') }}"
 
     ##########################################
     ### Larm! Hög temp ventilation tilluft ###
@@ -564,7 +564,7 @@ automation:
 
     trigger:
       platform: numeric_state
-      entity_id: sensor.Tilluft
+      entity_id: sensor.tilluft
       above: '35'
 
     condition:
@@ -580,7 +580,7 @@ automation:
           entity_id: input_boolean.high_temp_tilluft
       - service: notify.mobile_app_sm_a528b
         data:
-          message: "Larm! Hög temp tilluft ventilation: {{ states('sensor.Tilluft') }} {{ state_attr('sensor.Tilluft', 'unit_of_measurement') }}"
+          message: "Larm! Hög temp tilluft ventilation: {{ states('sensor.tilluft') }} {{ state_attr('sensor.tilluft', 'unit_of_measurement') }}"
 
     ################
     ### Hög fukt ###

@@ -217,6 +217,7 @@ input_boolean:
 template:
   - binary_sensor:
       - name: Ventilation standardvärden ändrade
+        entity_id: binary_sensor.ventilation_defaults_modified
         unique_id: ventilation_defaults_modified
         icon: mdi:restore-alert
         state: >-
@@ -235,6 +236,7 @@ template:
           {{ changed.value }}
 
       - name: Ventilation automatiseringar ändrade
+        entity_id: binary_sensor.ventilation_automation_defaults_modified
         unique_id: ventilation_automation_defaults_modified
         icon: mdi:toggle-switch-variant
         state: >-
@@ -275,6 +277,7 @@ template:
 
   - sensor:
       - name: Ventilation automatiseringar avvikande
+        entity_id: sensor.ventilation_automatiseringar_avvikande
         unique_id: ventilation_automation_defaults_drift
         icon: mdi:toggle-switch-variant
         state: >-

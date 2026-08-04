@@ -1,4 +1,4 @@
-﻿title: Documentation
+title: Documentation
 views:
   - path: system-overview
     title: Home Assistant system overview
@@ -23,44 +23,19 @@ views:
           content: |
             # Home Assistant system overview
 
-            This setup is organized around a few main goals: comfort, safety, convenience, and automation.
+            This setup is organized around comfort, safety, convenience, and automation.
 
             ## Easy version
 
             In simple words, this Home Assistant configuration is a connected system that helps the house behave in a smart way.
+            It handles lighting, climate, presence, notifications, media, and camera intelligence.
 
-            It helps with:
-            - lighting indoors and outdoors
-            - climate and temperature alarms
-            - air quality and ventilation
-            - media control and notifications
-            - cameras and AI-based detection
+            ## More advanced version
 
-            ## How the system is structured
-
-            The configuration uses a package-based structure.
-            That means related automations, helpers, scripts, sensors, and logic are grouped by topic.
-
-            The most important parts are:
-            - configuration.yaml for the main entrypoint
-            - packages/ for the actual logic
-            - dashboards and UI files for the interface
-            - custom_components/ for add-ons and custom integrations
-
-            ## Main subsystems
-
-            The system is split into several practical areas:
-            - Lighting
-            - Climate and alarms
-            - Ventilation
-            - Presence and home modes
-            - Notifications and doorbell
-            - Media and Harmony
-            - Frigate and camera AI
-
-            ## Final summary
-
-            The system is designed to be modular, predictable, and easy to expand.
+            The system is built as a package-based Home Assistant configuration.
+            The main entrypoint is configuration.yaml, while the actual logic is split into packages by area such as lights, climate, ventilation, presence, notifications, media, and frigate.
+            Helpers, templates, scripts, and automations work together so the house can react to state changes in a predictable way.
+            The dashboard files and custom integrations extend the base system with a user-friendly interface and extra integrations.
 
       - type: conditional
         conditions:
@@ -72,44 +47,19 @@ views:
           content: |
             # Översikt över Home Assistant-systemet
 
-            Den här uppsättningen är organiserad kring några huvudmål: komfort, säkerhet, bekvämlighet och automatisering.
+            Den här uppsättningen är organiserad kring komfort, säkerhet, bekvämlighet och automatisering.
 
             ## Enkel version
 
             I enkla ord är denna Home Assistant-konfiguration ett sammankopplat system som hjälper huset att agera på ett smart sätt.
+            Den hanterar belysning, klimat, närvaro, notiser, media och kameraintelligens.
 
-            Det hjälper till med:
-            - belysning inomhus och utomhus
-            - klimat och temperaturlarm
-            - luftkvalitet och ventilation
-            - mediekontroll och notiser
-            - kameror och AI-baserad detektering
+            ## Mer avancerad version
 
-            ## Hur systemet är uppbyggt
-
-            Konfigurationen använder en paketbaserad struktur.
-            Det betyder att relaterad automatisering, hjälpare, skript, sensorer och logik är grupperade efter ämne.
-
-            De viktigaste delarna är:
-            - configuration.yaml för huvudinställningen
-            - packages/ för själva logiken
-            - dashboards och UI-filer för gränssnittet
-            - custom_components/ för tillägg och anpassade integrationer
-
-            ## Huvuddelar
-
-            Systemet är uppdelat i flera praktiska områden:
-            - Belysning
-            - Klimat och larm
-            - Ventilation
-            - Närvaro och hemmalägen
-            - Notiser och ringklocka
-            - Media och Harmony
-            - Frigate och kamera-AI
-
-            ## Sammanfattning
-
-            Systemet är designat för att vara modulärt, förutsägbart och enkelt att utöka.
+            Systemet är byggt som en paketbaserad Home Assistant-konfiguration.
+            Huvudingången är configuration.yaml, medan den egentliga logiken är uppdelad i paket efter område som belysning, klimat, ventilation, närvaro, notiser, media och frigate.
+            Hjälpare, mallar, skript och automatiseringar fungerar tillsammans så att huset kan reagera på tillståndsändringar på ett förutsägbart sätt.
+            Dashboardfilerna och anpassade integrationer bygger ut systemet med ett användarvänligt gränssnitt och extra funktioner.
 
   - path: lighting-docs
     title: Lighting
@@ -134,29 +84,16 @@ views:
           content: |
             # Lighting
 
-            Lighting is one of the largest subsystems in the setup.
-            It includes indoor lighting, outdoor lighting, seasonal behavior, and scene-based logic.
+            ## Easy version
 
-            ## Main ideas
+            Lighting is one of the biggest parts of the house automation.
+            It controls indoor and outdoor lights, seasonal behavior, scenes, and the way light changes depending on time, presence, and home mode.
 
-            The system uses a scene/state-machine approach so the lighting can switch depending on time of day, home mode, and presence.
+            ## More advanced version
 
-            ## Key files
-
-            - packages/lights/inside.yaml
-            - packages/lights/facade.yaml
-            - packages/lights/garden.yaml
-            - packages/lights/hall.yaml
-            - packages/lights/kitchen.yaml
-            - packages/lights/scenes.yaml
-
-            ## What the logic does
-
-            It can:
-            - switch between morning, day, evening, night, away, and window modes
-            - use seasonal light groups
-            - react to presence and home status
-            - restore or reset lights from the UI
+            The lighting logic is organized around scenes, state transitions, and grouped light entities.
+            The configuration uses files such as packages/lights/inside.yaml, facade.yaml, garden.yaml, hall.yaml, kitchen.yaml, and scenes.yaml to define how lights behave in different modes such as morning, day, evening, night, away, and window.
+            In practice, the automations combine time-based triggers, presence data, and home-mode conditions so that lighting can be adjusted in a consistent and layered way.
 
       - type: conditional
         conditions:
@@ -168,29 +105,16 @@ views:
           content: |
             # Belysning
 
-            Belysning är ett av de största delsystemen i uppsättningen.
-            Det omfattar inomhusbelysning, utomhusbelysning, säsongsbeteende och scenbaserad logik.
+            ## Enkel version
 
-            ## Huvudidéer
+            Belysning är en av de största delarna i husautomationen.
+            Den styr inomhus- och utomhusljus, säsongsbeteende, scener och hur ljuset ändras beroende på tid, närvaro och hemmaläge.
 
-            Systemet använder en scen- och tillståndsmodell så att belysningen kan byta beroende på tid på dygnet, hemmaläge och närvaro.
+            ## Mer avancerad version
 
-            ## Viktiga filer
-
-            - packages/lights/inside.yaml
-            - packages/lights/facade.yaml
-            - packages/lights/garden.yaml
-            - packages/lights/hall.yaml
-            - packages/lights/kitchen.yaml
-            - packages/lights/scenes.yaml
-
-            ## Vad logiken gör
-
-            Den kan:
-            - växla mellan morgon-, dag-, kväll-, natt-, borta- och fönstermode
-            - använda säsongsbaserade ljusgrupper
-            - reagera på närvaro och hemmaläge
-            - återställa eller nollställa lampor från UI
+            Belysningslogiken är organiserad kring scener, tillståndsövergångar och grupperade ljusentiteter.
+            Konfigurationen använder filer som packages/lights/inside.yaml, facade.yaml, garden.yaml, hall.yaml, kitchen.yaml och scenes.yaml för att definiera hur lampor ska bete sig i olika lägen som morgon, dag, kväll, natt, borta och fönster.
+            I praktiken kombinerar automatiseringarna tidsbaserade triggar, närvarodata och hemmalägesvillkor så att belysningen kan justeras på ett konsekvent och lagerindelat sätt.
 
   - path: climate-docs
     title: Climate & alarms
@@ -215,22 +139,16 @@ views:
           content: |
             # Climate and alarms
 
-            Temperature and humidity are monitored in important areas such as storage, freezer, fridge, and outdoor spaces.
+            ## Easy version
 
-            ## What this part does
+            This part watches temperature and humidity in important rooms and outdoor spaces.
+            It raises alerts if values move outside acceptable ranges and helps protect sensitive areas.
 
-            It provides alerts when values go out of range and helps protect sensitive areas.
+            ## More advanced version
 
-            ## Key files
-
-            - packages/alerts/temperature.yaml
-            - packages/climate/friggebod.yaml
-            - packages/climate/garage.yaml
-            - packages/climate/ute.yaml
-
-            ## Typical behavior
-
-            The alarms use thresholds, delays, and notifications so they do not react to very short flickers.
+            The climate and alarm logic is built around thresholds, delays, and notification routing.
+            Files such as packages/alerts/temperature.yaml, packages/climate/friggebod.yaml, packages/climate/garage.yaml, and packages/climate/ute.yaml define the monitoring behavior and the conditions for raising alerts.
+            The advanced pattern is to avoid reacting to short flickers, while still giving fast and reliable warnings when a real issue persists.
 
       - type: conditional
         conditions:
@@ -242,22 +160,16 @@ views:
           content: |
             # Klimat och larm
 
-            Temperatur och fuktighet övervakas i viktiga områden som förråd, frys, kyl och uterum.
+            ## Enkel version
 
-            ## Vad den här delen gör
+            Den här delen övervakar temperatur och fuktighet i viktiga rum och utomhusområden.
+            Den skapar larm om värden går utanför acceptabla intervall och hjälper till att skydda känsliga områden.
 
-            Den ger larm när värden går utanför ett acceptabelt intervall och hjälper till att skydda känsliga områden.
+            ## Mer avancerad version
 
-            ## Viktiga filer
-
-            - packages/alerts/temperature.yaml
-            - packages/climate/friggebod.yaml
-            - packages/climate/garage.yaml
-            - packages/climate/ute.yaml
-
-            ## Typiskt beteende
-
-            Larmen använder trösklar, fördröjningar och notiser så att de inte reagerar på korta fluktuationer.
+            Klimat- och larmlogiken är byggd kring trösklar, fördröjningar och notisrouting.
+            Filer som packages/alerts/temperature.yaml, packages/climate/friggebod.yaml, packages/climate/garage.yaml och packages/climate/ute.yaml definierar övervakningsbeteendet och villkoren för att skapa larm.
+            Det avancerade mönstret är att undvika reaktion på korta fluktuationer, samtidigt som man ger snabba och pålitliga varningar när ett verkligt problem kvarstår.
 
   - path: ventilation-docs
     title: Ventilation
@@ -282,21 +194,16 @@ views:
           content: |
             # Ventilation
 
-            The ventilation system is a dedicated subsystem for controlling air flow and fan behavior.
+            ## Easy version
 
-            ## What it does
+            The ventilation part controls air flow and fan speed so the house stays comfortable and healthy.
+            It reacts to humidity, temperature, and time-based conditions.
 
-            It can force high speed based on humidity and temperature, and it uses timers and safety logic to prevent runaway behavior.
+            ## More advanced version
 
-            ## Key files
-
-            - packages/ventilation/ventilation_system.yaml
-            - packages/ventilation/fan.yaml
-            - packages/sensors/template_sensors/template_ventilation_system.yaml
-
-            ## Why it exists
-
-            This part balances comfort, air quality, and safety in a controlled and predictable way.
+            Ventilation is implemented as a control loop with thresholds and safety logic.
+            Files such as packages/ventilation/ventilation_system.yaml, packages/ventilation/fan.yaml, and packages/sensors/template_sensors/template_ventilation_system.yaml define the fan modes and the conditions that force higher speed.
+            The advanced behavior is not just on/off; it uses state transitions, timers, and fallback logic to avoid unstable or overly aggressive behavior.
 
       - type: conditional
         conditions:
@@ -308,21 +215,16 @@ views:
           content: |
             # Ventilation
 
-            Ventilationssystemet är ett separat delsystem för att styra luftflöde och fläktbeteende.
+            ## Enkel version
 
-            ## Vad det gör
+            Ventilationsdelen styr luftflöde och fläkthastighet så att huset blir bekvämt och hälsosamt.
+            Den reagerar på fuktighet, temperatur och tidsbaserade villkor.
 
-            Det kan forcera hög hastighet baserat på fuktighet och temperatur, och det använder timers och säkerhetslogik för att förhindra okontrollerat beteende.
+            ## Mer avancerad version
 
-            ## Viktiga filer
-
-            - packages/ventilation/ventilation_system.yaml
-            - packages/ventilation/fan.yaml
-            - packages/sensors/template_sensors/template_ventilation_system.yaml
-
-            ## Varför det finns
-
-            Den här delen balanserar komfort, luftkvalitet och säkerhet på ett kontrollerat och förutsägbart sätt.
+            Ventilation implementeras som en styrloop med trösklar och säkerhetslogik.
+            Filer som packages/ventilation/ventilation_system.yaml, packages/ventilation/fan.yaml och packages/sensors/template_sensors/template_ventilation_system.yaml definierar fläktlägen och villkoren som tvingar högre hastighet.
+            Det avancerade beteendet handlar inte bara om på/av, utan använder tillståndsövergångar, timers och reservlogik för att undvika instabilt eller för aggressivt beteende.
 
   - path: presence-docs
     title: Presence & modes
@@ -347,22 +249,16 @@ views:
           content: |
             # Presence and modes
 
-            This part is about how the house interprets whether people are home, away, or sleeping.
+            ## Easy version
 
-            ## Main idea
+            This part answers one simple question: is someone home, away, or asleep?
+            That information is reused by many automations.
 
-            Presence is used as a shared input for many other automations.
-            When the mode changes, lighting, notifications, and reactions can behave differently.
+            ## More advanced version
 
-            ## Key files
-
-            - packages/presence/home_away.yaml
-            - packages/presence/person.yaml
-            - packages/presence/working_at_home.yaml
-
-            ## Why it matters
-
-            A single presence model keeps other automations simpler and more consistent.
+            Presence is treated as a shared state layer that influences many other subsystems.
+            Files such as packages/presence/home_away.yaml, packages/presence/person.yaml, and packages/presence/working_at_home.yaml define how the home mode changes and how people are represented.
+            The deeper idea is that one consistent presence model keeps the rest of the automations simpler, because they can rely on a stable state instead of guessing from many individual inputs.
 
       - type: conditional
         conditions:
@@ -374,22 +270,16 @@ views:
           content: |
             # Närvaro och lägen
 
-            Den här delen handlar om hur huset tolkar om människor är hemma, borta eller sover.
+            ## Enkel version
 
-            ## Huvudidé
+            Den här delen svarar på en enkel fråga: är någon hemma, borta eller sover?
+            Den informationen används av många automatiseringar.
 
-            Närvaro används som en gemensam ingång för många andra automatiseringar.
-            När läget ändras kan belysning, notiser och reaktioner uppföra sig annorlunda.
+            ## Mer avancerad version
 
-            ## Viktiga filer
-
-            - packages/presence/home_away.yaml
-            - packages/presence/person.yaml
-            - packages/presence/working_at_home.yaml
-
-            ## Varför det är viktigt
-
-            En enda närvaromodell gör att andra automatiseringar blir enklare och mer konsekventa.
+            Närvaro behandlas som ett gemensamt tillståndslager som påverkar många andra delsystem.
+            Filer som packages/presence/home_away.yaml, packages/presence/person.yaml och packages/presence/working_at_home.yaml definierar hur hemmaläget ändras och hur personer representeras.
+            Den djupare idén är att en konsekvent närvaromodell gör resten av automatiseringarna enklare, eftersom de kan lita på ett stabilt tillstånd istället för att gissa från många individuella ingångar.
 
   - path: notifications-docs
     title: Notifications
@@ -414,22 +304,16 @@ views:
           content: |
             # Notifications and doorbell
 
-            This area handles the doorbell flow, snapshots, and mobile notifications.
+            ## Easy version
 
-            ## What happens
+            This area handles ring events, snapshots, and phone notifications.
+            When the doorbell is pressed, the house can respond with lights, images, and alerts.
 
-            When the doorbell is pressed, the system can:
-            - blink a light
-            - take a snapshot
-            - send a push notification with the image
+            ## More advanced version
 
-            ## Key files
-
-            - packages/notifications/doorbell.yaml
-
-            ## Why it matters
-
-            It connects the hardware input, the camera system, and the phone notifications into one flow.
+            The flow is usually triggered by a hardware event and then passed through one or more automations.
+            The logic in packages/notifications/doorbell.yaml connects the trigger, the camera snapshot, and the notification action into a reliable event chain.
+            The advanced part is not only sending a message but doing so in a context-aware way, depending on the current state of the house and the camera system.
 
       - type: conditional
         conditions:
@@ -441,22 +325,16 @@ views:
           content: |
             # Notiser och ringklocka
 
-            Det här området hanterar ringklockflödet, ögonblicksbilder och mobilnotiser.
+            ## Enkel version
 
-            ## Vad som händer
+            Det här området hanterar ringhändelser, ögonblicksbilder och telefonnotiser.
+            När ringklockan aktiveras kan huset reagera med ljus, bilder och varningar.
 
-            När ringklockan aktiveras kan systemet:
-            - blinka med ett ljus
-            - ta en snapshot
-            - skicka en push-notis med bilden
+            ## Mer avancerad version
 
-            ## Viktiga filer
-
-            - packages/notifications/doorbell.yaml
-
-            ## Varför det är viktigt
-
-            Det kopplar samman hårdvaruinput, kamerasystem och telefonnotiser i ett flöde.
+            Flödet startas vanligtvis av en hårdvaruhändelse och skickas sedan vidare genom en eller flera automatiseringar.
+            Logiken i packages/notifications/doorbell.yaml kopplar ihop utlöser, kamerasnapshot och notifieringsåtgärd till en pålitlig händelsekedja.
+            Den avancerade delen handlar inte bara om att skicka ett meddelande utan att göra det på ett kontextmedvetet sätt, beroende på husets aktuella tillstånd och kamerasystemet.
 
   - path: media-docs
     title: Media
@@ -481,16 +359,16 @@ views:
           content: |
             # Media and Harmony
 
-            The media system controls devices such as TV, radio, Chromecast, and Spotify through Harmony-style automation.
+            ## Easy version
 
-            ## Main idea
+            This part controls media devices such as TV, radio, Chromecast, and Spotify in a consistent way.
+            It connects the media experience to the rest of the house.
 
-            Media behavior is integrated with the rest of the house so that power, activity, and related devices are handled consistently.
+            ## More advanced version
 
-            ## Key files
-
-            - packages/media/harmony_hub.yaml
-            - packages/integrations/media_player.yaml
+            Media behavior is linked to device state, power handling, and activity management.
+            Files such as packages/media/harmony_hub.yaml and packages/integrations/media_player.yaml define how media devices behave when the house changes mode or when a user starts a routine.
+            The advanced design is to treat media as part of the overall house state rather than as an isolated feature.
 
       - type: conditional
         conditions:
@@ -502,16 +380,16 @@ views:
           content: |
             # Media och Harmony
 
-            Mediasystemet styr enheter som TV, radio, Chromecast och Spotify via Harmony-liknande automatisering.
+            ## Enkel version
 
-            ## Huvudidé
+            Den här delen styr medieenheter som TV, radio, Chromecast och Spotify på ett konsekvent sätt.
+            Den kopplar medieupplevelsen till resten av huset.
 
-            Mediebeteende är integrerat med resten av huset så att ström, aktivitet och relaterade enheter hanteras konsekvent.
+            ## Mer avancerad version
 
-            ## Viktiga filer
-
-            - packages/media/harmony_hub.yaml
-            - packages/integrations/media_player.yaml
+            Mediebeteendet är kopplat till enhetsstatus, strömhantering och aktivitetsstyrning.
+            Filer som packages/media/harmony_hub.yaml och packages/integrations/media_player.yaml definierar hur medieenheter beter sig när huset ändrar läge eller när en användare startar en rutin.
+            Den avancerade designen är att behandla media som en del av husets övergripande tillstånd snarare än som en isolerad funktion.
 
   - path: frigate-docs
     title: Frigate
@@ -536,26 +414,16 @@ views:
           content: |
             # Frigate
 
-            Frigate is the camera brain of the setup.
-            It watches camera streams and tries to understand what it sees.
+            ## Easy version
 
-            ## Main areas
+            Frigate watches the cameras, notices movement, and tries to understand what it sees.
+            It can react to people, animals, faces, and other events.
 
-            - person detection
-            - animal detection
-            - intruder alarm logic
-            - face detection
-            - summary sensors and helpers
-            - media cleanup
+            ## More advanced version
 
-            ## Key files
-
-            - packages/frigate/frigate_person_detected.yaml
-            - packages/frigate/frigate_animal_detected.yaml
-            - packages/frigate/frigate_intruder_alarm.yaml
-            - packages/frigate/frigate_face_detection.yaml
-            - packages/frigate/frigate_sensors.yaml
-            - packages/frigate/frigate_media.yaml
+            Frigate is used as the camera analysis layer that feeds Home Assistant with event-based information.
+            The logic in packages/frigate/frigate_person_detected.yaml, frigate_animal_detected.yaml, frigate_intruder_alarm.yaml, frigate_face_detection.yaml, frigate_sensors.yaml, and frigate_media.yaml turns those raw detections into useful automations.
+            The deeper design includes summary sensors, MQTT event handling, state filtering, and cleanup routines so the system can react quickly without becoming noisy or storage-heavy.
 
       - type: conditional
         conditions:
@@ -567,23 +435,13 @@ views:
           content: |
             # Frigate
 
-            Frigate är kamerahjärnan i uppsättningen.
-            Den följer kameraströmmar och försöker förstå vad den ser.
+            ## Enkel version
 
-            ## Huvudområden
+            Frigate bevakar kamerorna, märker rörelse och försöker förstå vad den ser.
+            Den kan reagera på människor, djur, ansikten och andra händelser.
 
-            - persondetektering
-            - djurdetektering
-            - intruder-alarmlogik
-            - ansiktsdetektering
-            - sammanfattningssensorer och hjälpare
-            - mediarensning
+            ## Mer avancerad version
 
-            ## Viktiga filer
-
-            - packages/frigate/frigate_person_detected.yaml
-            - packages/frigate/frigate_animal_detected.yaml
-            - packages/frigate/frigate_intruder_alarm.yaml
-            - packages/frigate/frigate_face_detection.yaml
-            - packages/frigate/frigate_sensors.yaml
-            - packages/frigate/frigate_media.yaml
+            Frigate används som lagret för kameraanalys som matar Home Assistant med händelsebaserad information.
+            Logiken i packages/frigate/frigate_person_detected.yaml, frigate_animal_detected.yaml, frigate_intruder_alarm.yaml, frigate_face_detection.yaml, frigate_sensors.yaml och frigate_media.yaml omvandlar dessa råa detektioner till användbara automatiseringar.
+            Den djupare designen inkluderar sammanfattningssensorer, MQTT-händelsehantering, tillståndsfiltrering och rensningsrutiner så att systemet kan reagera snabbt utan att bli störigt eller lagringsintensivt.

@@ -18,7 +18,7 @@
 # - Temperatursensor: sensor.uterum_temperatur
 # - Ljussensor: sensor.ljusstyrka
 # - Hemspårning: group.track_for_home_devices
-# - Uterumsbelysning: light.uterum_led, light.uterum_fotogenlampa
+# - Uterumsbelysning: light.uterum_led, light.uterum_fotogenlampa, light.uterum_fonster
 # - input_select.light_uterum (Släckt/Tänd)
 #
 # Säkerhet:
@@ -32,12 +32,14 @@
 input_select:
   light_uterum:
     name: Uterum
-    # Conservatory/sunroom simple on/off control
+    # Conservatory/sunroom multi-level control
     # Controls accent lighting and decorative lights in conservatory
     # Used by: Garden room automation sequences
     options:
       - Släckt
-      - Tänd
+      - Låg
+      - Mellan
+      - Hög
     icon: mdi:lightbulb
 
 ########################
@@ -133,6 +135,14 @@ automation:
       - platform: numeric_state
         entity_id: sensor.ljusstyrka
         below: input_number.ljusstyrka_150
+        for: "00:02:00"
+        id: dark
+
+      - platform: numeric_state
+        entity_id: sensor.ljusstyrka
+        above: input_number.ljusstyrka_200
+        for: "00:02:00"
+        id: bright
 
     action:
       - service: script.uterum_set_correct_mode
@@ -195,15 +205,14 @@ automation:
           - conditions:
               - condition: state
                 entity_id: input_select.light_uterum
-                state: Tänd
-            sequence:
-              - service: script.outdoor_room_light_on
-          - conditions:
-              - condition: state
-                entity_id: input_select.light_uterum
                 state: Släckt
             sequence:
               - service: script.outdoor_room_light_off
+          - conditions:
+              - condition: template
+                value_template: "{{ states('input_select.light_uterum') not in ['Släckt'] }}"
+            sequence:
+              - service: script.outdoor_room_light_on
         default: []
 
 ##############
@@ -219,18 +228,22 @@ script:
           home_status: "{{ states('input_select.home_status') }}"
           track_state: "{{ states('group.track_for_home_devices') }}"
           lux: "{{ states('sensor.ljusstyrka') | float(none) }}"
-          lux_150: "{{ states('input_number.ljusstyrka_150') | float(150) }}"
+          lux_on: "{{ states('input_number.ljusstyrka_150') | float(150) }}"
+          lux_off: "{{ states('input_number.ljusstyrka_200') | float(200) }}"
           temp: "{{ states('sensor.uterum_temperatur') | float(none) }}"
           current_option: "{{ states('input_select.light_uterum') }}"
 
-          is_time_12_2145: "{{ (now().hour > 12 or (now().hour == 12 and now().minute >= 0)) and (now().hour < 21 or (now().hour == 21 and now().minute <= 45)) }}"
-          is_dark: "{{ lux is number and lux < lux_150 }}"
+          is_time_window: "{{ (now().hour >= 8) and (now().hour < 22) }}"
+          is_dark: "{{ lux is number and lux < lux_on }}"
+          is_bright: "{{ lux is number and lux > lux_off }}"
           temp_ok: "{{ temp is number and temp > 18 }}"
           temp_too_cold: "{{ temp is number and temp < 17 }}"
 
           valid_options:
             - Släckt
-            - Tänd
+            - Låg
+            - Mellan
+            - Hög
 
           desired_option: >-
             {% if home_status == 'Sover' %}
@@ -239,8 +252,14 @@ script:
               Släckt
             {% elif temp_too_cold %}
               Släckt
-            {% elif is_time_12_2145 and is_dark and temp_ok %}
-              Tänd
+            {% elif is_time_window and is_dark and temp_ok %}
+              {% if now().hour < 18 %}
+                Hög
+              {% else %}
+                Mellan
+              {% endif %}
+            {% elif is_bright %}
+              Släckt
             {% else %}
               {{ current_option }}
             {% endif %}
@@ -284,6 +303,27 @@ script:
     alias: Uterums belysning on
     mode: restart
     sequence:
+      - variables:
+          selected_level: "{{ states('input_select.light_uterum') }}"
+          brightness_pct: >-
+            {% set level = states('input_select.light_uterum') %}
+            {% if level == 'Låg' %}
+              25
+            {% elif level == 'Mellan' %}
+              55
+            {% elif level == 'Hög' %}
+              80
+            {% else %}
+              {% set hour = now().hour %}
+              {% if hour < 9 %}
+                80
+              {% elif hour < 18 %}
+                80
+              {% else %}
+                40
+              {% endif %}
+            {% endif %}
+
       - condition: template
         value_template: "{{ states('light.uterum_led') != 'unavailable' }}"
       - service: light.turn_on
@@ -296,6 +336,30 @@ script:
         data:
           entity_id: light.uterum_fotogenlampa
           transition: 1
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: input_boolean.christmas_light
+                state: 'on'
+            sequence:
+              - condition: template
+                value_template: "{{ states('light.uterum_julstjarnor') != 'unavailable' }}"
+              - service: light.turn_on
+                data:
+                  entity_id: light.uterum_julstjarnor
+                  transition: 1
+          - conditions:
+              - condition: state
+                entity_id: input_boolean.christmas_light
+                state: 'off'
+            sequence:
+              - condition: template
+                value_template: "{{ states('light.uterum_fonster') != 'unavailable' }}"
+              - service: light.turn_on
+                data_template:
+                  entity_id: light.uterum_fonster
+                  brightness_pct: "{{ brightness_pct }}"
+                  transition: 1
 
   #############################
   ### Uterums belysning off ###
@@ -316,3 +380,26 @@ script:
         data:
           entity_id: light.uterum_fotogenlampa
           transition: 1
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: input_boolean.christmas_light
+                state: 'on'
+            sequence:
+              - condition: template
+                value_template: "{{ states('light.uterum_julstjarnor') != 'unavailable' }}"
+              - service: light.turn_off
+                data:
+                  entity_id: light.uterum_julstjarnor
+                  transition: 1
+          - conditions:
+              - condition: state
+                entity_id: input_boolean.christmas_light
+                state: 'off'
+            sequence:
+              - condition: template
+                value_template: "{{ states('light.uterum_fonster') != 'unavailable' }}"
+              - service: light.turn_off
+                data:
+                  entity_id: light.uterum_fonster
+                  transition: 1

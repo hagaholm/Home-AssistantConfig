@@ -119,42 +119,7 @@ automation:
       - platform: state
         entity_id: input_select.light_hall
     action:
-      - choose:
-          - conditions:
-              - condition: state
-                entity_id: input_select.light_hall
-                state: Släckt
-            sequence:
-              - service: script.hall_taklampor_off
-
-          - conditions:
-              - condition: state
-                entity_id: input_select.light_hall
-                state: 1%
-            sequence:
-              - service: script.hall_taklampor_1_procent
-
-          - conditions:
-              - condition: state
-                entity_id: input_select.light_hall
-                state: 10%
-            sequence:
-              - service: script.hall_taklampor_10_procent
-
-          - conditions:
-              - condition: state
-                entity_id: input_select.light_hall
-                state: 50%
-            sequence:
-              - service: script.hall_taklampor_50_procent
-
-          - conditions:
-              - condition: state
-                entity_id: input_select.light_hall
-                state: 100%
-            sequence:
-              - service: script.hall_taklampor_100_procent
-        default: []
+      - service: script.hall_apply_current_scene
 
 #######################################################
 #                                                     #
@@ -316,6 +281,47 @@ script:
                   entity_id: input_select.light_hall
                   option: "{{ desired_option | trim }}"
 
+        default: []
+
+  hall_apply_current_scene:
+    alias: Hallbelysning (utifrån nuvarande läge)
+    mode: restart
+    sequence:
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_hall
+                state: Släckt
+            sequence:
+              - service: script.hall_taklampor_off
+
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_hall
+                state: 1%
+            sequence:
+              - service: script.hall_taklampor_1_procent
+
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_hall
+                state: 10%
+            sequence:
+              - service: script.hall_taklampor_10_procent
+
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_hall
+                state: 50%
+            sequence:
+              - service: script.hall_taklampor_50_procent
+
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_hall
+                state: 100%
+            sequence:
+              - service: script.hall_taklampor_100_procent
         default: []
 
 #######################################################

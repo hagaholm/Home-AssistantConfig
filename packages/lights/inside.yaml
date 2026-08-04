@@ -130,69 +130,7 @@ automation:
         entity_id: input_select.light_inside
 
     action:
-      - choose:
-          - conditions:
-              - condition: state
-                entity_id: input_select.light_inside
-                state: Släckt
-            sequence:
-              - service: script.inside_lights_off
-
-          - conditions:
-              - condition: state
-                entity_id: input_select.light_inside
-                state: Morgonbelysning
-            sequence:
-              - service: script.morning_lights_on
-
-          - conditions:
-              - condition: state
-                entity_id: input_select.light_inside
-                state: Förmiddagsbelysning
-            sequence:
-              - service: script.daylights_on
-
-          - conditions:
-              - condition: state
-                entity_id: input_select.light_inside
-                state: Dagbelysning
-            sequence:
-              - service: script.daylights_on
-
-          - conditions:
-              - condition: state
-                entity_id: input_select.light_inside
-                state: Kvällsbelysning
-            sequence:
-              - service: script.eveninglights_on
-
-          - conditions:
-              - condition: state
-                entity_id: input_select.light_inside
-                state: Nattbelysning
-            sequence:
-              - service: script.night_light
-
-          - conditions:
-              - condition: state
-                entity_id: input_select.light_inside
-                state: Bortabelysning
-            sequence:
-              - service: script.away_lights_on
-
-          - conditions:
-              - condition: state
-                entity_id: input_select.light_inside
-                state: Fönsterbelysning
-            sequence:
-              - service: script.window_lights_on
-
-          - conditions:
-              - condition: state
-                entity_id: input_select.light_inside
-                state: Arbetsbelysning
-            sequence:
-              - service: script.cleaning_lights_on
+      - service: script.inside_apply_current_scene
 
   ################################
   ### TV-ljusläge (manuell UI) ###

@@ -203,31 +203,7 @@ automation:
       - platform: state
         entity_id: input_select.light_kitchen
     action:
-      - choose:
-          - conditions:
-              - condition: state
-                entity_id: input_select.light_kitchen
-                state: '100%'
-            sequence:
-              - service: script.kitchen_light_100
-          - conditions:
-              - condition: state
-                entity_id: input_select.light_kitchen
-                state: '50%'
-            sequence:
-              - service: script.kitchen_light_50
-          - conditions:
-              - condition: state
-                entity_id: input_select.light_kitchen
-                state: '25%'
-            sequence:
-              - service: script.kitchen_light_25
-          - conditions:
-              - condition: state
-                entity_id: input_select.light_kitchen
-                state: Släckt
-            sequence:
-              - service: script.kitchen_light_off
+      - service: script.kitchen_apply_current_scene
 
 ##############
 ### Script ###
@@ -278,6 +254,36 @@ script:
                   option: "{{ desired_option | trim }}"
 
         default: []
+
+  kitchen_apply_current_scene:
+    alias: Köksbelysning (utifrån nuvarande läge)
+    mode: restart
+    sequence:
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_kitchen
+                state: '100%'
+            sequence:
+              - service: script.kitchen_light_100
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_kitchen
+                state: '50%'
+            sequence:
+              - service: script.kitchen_light_50
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_kitchen
+                state: '25%'
+            sequence:
+              - service: script.kitchen_light_25
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_kitchen
+                state: Släckt
+            sequence:
+              - service: script.kitchen_light_off
 
 #######################################################
 #                                                     #

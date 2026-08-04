@@ -194,3 +194,176 @@ views:
             ## Sammanfattning
 
             Frigate följer kamerorna, förstår vad den ser och låter Home Assistant reagera på ett smart sätt.
+
+  - path: system-docs
+    title: System
+    icon: mdi:home-assistant
+    theme: default
+    badges: []
+    cards:
+      - type: entities
+        title: Language
+        entities:
+          - entity: input_boolean.documentation_language_swedish
+            name: Show Swedish text
+            icon: mdi:translate
+
+      - type: conditional
+        conditions:
+          - entity: input_boolean.documentation_language_swedish
+            state: "off"
+        card:
+          type: markdown
+          title: System overview
+          content: |
+            # Home Assistant system overview
+
+            This setup is built around a few main ideas.
+
+            ## Easy version
+
+            In simple words, this Home Assistant setup is meant to make the house feel comfortable, safe, and convenient.
+
+            It helps with:
+            - lighting in different rooms and outside
+            - climate and temperature alarms
+            - ventilation and air quality
+            - media control such as TV and music
+            - doorbell and camera notifications
+            - camera AI detection through Frigate
+
+            ## How the system is structured
+
+            The configuration is organized as a package-based system.
+            That means related automations, helpers, scripts, and sensors are grouped by topic instead of being scattered around in one large file.
+
+            The most important parts are:
+            - configuration.yaml for the main entrypoint
+            - packages/ for the actual logic
+            - dashboards and UI files for the user interface
+            - custom_components/ for custom integrations
+
+            ## Main subsystems
+
+            ### Lighting
+            Lighting is one of the biggest parts of the setup.
+            It includes indoor and outdoor lights, seasonal modes, scene-based behavior, and home/away logic.
+
+            ### Climate and alarms
+            Temperature and humidity are monitored in important areas.
+            If something becomes too warm or too cold, the system can raise an alarm and send a notification.
+
+            ### Ventilation
+            The ventilation system controls air flow and fan behavior.
+            It uses sensors and timers to keep the home comfortable and safe.
+
+            ### Media and notifications
+            The house can control media devices and handle doorbell events, snapshots, and mobile notifications.
+
+            ### Cameras and Frigate
+            Frigate adds AI-style detection for people, animals, and faces.
+            Home Assistant then reacts based on those detections.
+
+            ## Core modes
+
+            The system uses a few important modes such as:
+            - Home
+            - Away
+            - Sleep
+
+            These modes affect how lights, alerts, and reactions behave.
+
+            ## Main files behind the system
+
+            - configuration.yaml
+            - packages/helpers/input_booleans.yaml
+            - packages/lights/inside.yaml
+            - packages/alerts/temperature.yaml
+            - packages/ventilation/ventilation_system.yaml
+            - packages/notifications/doorbell.yaml
+            - packages/frigate/frigate_person_detected.yaml
+
+            ## Final summary
+
+            This Home Assistant setup is a connected system where comfort, safety, and automation all work together.
+            The structure is modular, which makes it easier to maintain and extend over time.
+
+      - type: conditional
+        conditions:
+          - entity: input_boolean.documentation_language_swedish
+            state: "on"
+        card:
+          type: markdown
+          title: Systemöversikt
+          content: |
+            # Översikt över Home Assistant-systemet
+
+            Den här uppsättningen är byggd kring ett fåtal huvudidéer.
+
+            ## Enkel version
+
+            I enkla ord är detta Home Assistant-system tänkt att göra huset bekvämare, säkrare och enklare att använda.
+
+            Det hjälper till med:
+            - belysning i olika rum och utomhus
+            - klimat och temperaturlarm
+            - ventilation och luftkvalitet
+            - mediekontroll som TV och musik
+            - dörrklocka och kameranotiser
+            - AI-detektering via Frigate
+
+            ## Hur systemet är uppbyggt
+
+            Konfigurationen är organiserad som ett paketbaserat system.
+            Det betyder att relaterad automatisering, hjälpare, skript och sensorer är grupperade efter ämne istället för att vara utspridda i en stor fil.
+
+            De viktigaste delarna är:
+            - configuration.yaml för huvudinställningen
+            - packages/ för själva logiken
+            - dashboards och UI-filer för användargränssnittet
+            - custom_components/ för anpassade integrationer
+
+            ## Huvuddelar
+
+            ### Belysning
+            Belysning är en av de största delarna i systemet.
+            Den omfattar inomhus- och utomhusljus, säsongsbaserade lägen, scenbaserat beteende och hembaserad logik.
+
+            ### Klimat och larm
+            Temperatur och fuktighet övervakas i viktiga områden.
+            Om något blir för varmt eller för kallt kan systemet skapa ett larm och skicka en notis.
+
+            ### Ventilation
+            Ventilationssystemet styr luftflöde och fläktbeteende.
+            Det använder sensorer och timers för att hålla huset bekvämt och säkert.
+
+            ### Media och notiser
+            Huset kan styra medieenheter och hantera dörrklockhändelser, ögonblicksbilder och mobilnotiser.
+
+            ### Kameror och Frigate
+            Frigate lägger till AI-liknande detektering för personer, djur och ansikten.
+            Home Assistant reagerar sedan på dessa detektioner.
+
+            ## Grundläggande lägen
+
+            Systemet använder några viktiga lägen som:
+            - Hemma
+            - Borta
+            - Sömn
+
+            Dessa lägen påverkar hur belysning, varningar och reaktioner fungerar.
+
+            ## Huvudfiler bakom systemet
+
+            - configuration.yaml
+            - packages/helpers/input_booleans.yaml
+            - packages/lights/inside.yaml
+            - packages/alerts/temperature.yaml
+            - packages/ventilation/ventilation_system.yaml
+            - packages/notifications/doorbell.yaml
+            - packages/frigate/frigate_person_detected.yaml
+
+            ## Sammanfattning
+
+            Detta Home Assistant-system är ett sammankopplat system där komfort, säkerhet och automatisering fungerar tillsammans.
+            Strukturen är modulär, vilket gör den enklare att underhålla och bygga vidare på över tid.

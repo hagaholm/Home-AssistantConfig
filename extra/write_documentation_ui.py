@@ -1,4 +1,6 @@
-title: Documentation
+from pathlib import Path
+
+content = r'''title: Documentation
 views:
   - path: frigate-docs
     title: Frigate
@@ -194,3 +196,6 @@ views:
             ## Sammanfattning
 
             Frigate följer kamerorna, förstår vad den ser och låter Home Assistant reagera på ett smart sätt.
+'''
+
+Path(r'c:/Users/micke/Documents/GitHub/Home-AssistantConfig/documentation.ui').write_text(content, encoding='utf-8')

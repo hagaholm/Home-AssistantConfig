@@ -1,5 +1,518 @@
-title: Documentation
+﻿title: Documentation
 views:
+  - path: system-overview
+    title: Home Assistant system overview
+    icon: mdi:home-assistant
+    theme: default
+    badges: []
+    cards:
+      - type: entities
+        title: Language
+        entities:
+          - entity: input_boolean.documentation_language_swedish
+            name: Show Swedish text
+            icon: mdi:translate
+
+      - type: conditional
+        conditions:
+          - entity: input_boolean.documentation_language_swedish
+            state: "off"
+        card:
+          type: markdown
+          title: Home Assistant system overview
+          content: |
+            # Home Assistant system overview
+
+            This setup is organized around a few main goals: comfort, safety, convenience, and automation.
+
+            ## Easy version
+
+            In simple words, this Home Assistant configuration is a connected system that helps the house behave in a smart way.
+
+            It helps with:
+            - lighting indoors and outdoors
+            - climate and temperature alarms
+            - air quality and ventilation
+            - media control and notifications
+            - cameras and AI-based detection
+
+            ## How the system is structured
+
+            The configuration uses a package-based structure.
+            That means related automations, helpers, scripts, sensors, and logic are grouped by topic.
+
+            The most important parts are:
+            - configuration.yaml for the main entrypoint
+            - packages/ for the actual logic
+            - dashboards and UI files for the interface
+            - custom_components/ for add-ons and custom integrations
+
+            ## Main subsystems
+
+            The system is split into several practical areas:
+            - Lighting
+            - Climate and alarms
+            - Ventilation
+            - Presence and home modes
+            - Notifications and doorbell
+            - Media and Harmony
+            - Frigate and camera AI
+
+            ## Final summary
+
+            The system is designed to be modular, predictable, and easy to expand.
+
+      - type: conditional
+        conditions:
+          - entity: input_boolean.documentation_language_swedish
+            state: "on"
+        card:
+          type: markdown
+          title: Översikt över Home Assistant-systemet
+          content: |
+            # Översikt över Home Assistant-systemet
+
+            Den här uppsättningen är organiserad kring några huvudmål: komfort, säkerhet, bekvämlighet och automatisering.
+
+            ## Enkel version
+
+            I enkla ord är denna Home Assistant-konfiguration ett sammankopplat system som hjälper huset att agera på ett smart sätt.
+
+            Det hjälper till med:
+            - belysning inomhus och utomhus
+            - klimat och temperaturlarm
+            - luftkvalitet och ventilation
+            - mediekontroll och notiser
+            - kameror och AI-baserad detektering
+
+            ## Hur systemet är uppbyggt
+
+            Konfigurationen använder en paketbaserad struktur.
+            Det betyder att relaterad automatisering, hjälpare, skript, sensorer och logik är grupperade efter ämne.
+
+            De viktigaste delarna är:
+            - configuration.yaml för huvudinställningen
+            - packages/ för själva logiken
+            - dashboards och UI-filer för gränssnittet
+            - custom_components/ för tillägg och anpassade integrationer
+
+            ## Huvuddelar
+
+            Systemet är uppdelat i flera praktiska områden:
+            - Belysning
+            - Klimat och larm
+            - Ventilation
+            - Närvaro och hemmalägen
+            - Notiser och ringklocka
+            - Media och Harmony
+            - Frigate och kamera-AI
+
+            ## Sammanfattning
+
+            Systemet är designat för att vara modulärt, förutsägbart och enkelt att utöka.
+
+  - path: lighting-docs
+    title: Lighting
+    icon: mdi:lightbulb
+    theme: default
+    badges: []
+    cards:
+      - type: entities
+        title: Language
+        entities:
+          - entity: input_boolean.documentation_language_swedish
+            name: Show Swedish text
+            icon: mdi:translate
+
+      - type: conditional
+        conditions:
+          - entity: input_boolean.documentation_language_swedish
+            state: "off"
+        card:
+          type: markdown
+          title: Lighting documentation
+          content: |
+            # Lighting
+
+            Lighting is one of the largest subsystems in the setup.
+            It includes indoor lighting, outdoor lighting, seasonal behavior, and scene-based logic.
+
+            ## Main ideas
+
+            The system uses a scene/state-machine approach so the lighting can switch depending on time of day, home mode, and presence.
+
+            ## Key files
+
+            - packages/lights/inside.yaml
+            - packages/lights/facade.yaml
+            - packages/lights/garden.yaml
+            - packages/lights/hall.yaml
+            - packages/lights/kitchen.yaml
+            - packages/lights/scenes.yaml
+
+            ## What the logic does
+
+            It can:
+            - switch between morning, day, evening, night, away, and window modes
+            - use seasonal light groups
+            - react to presence and home status
+            - restore or reset lights from the UI
+
+      - type: conditional
+        conditions:
+          - entity: input_boolean.documentation_language_swedish
+            state: "on"
+        card:
+          type: markdown
+          title: Belysning
+          content: |
+            # Belysning
+
+            Belysning är ett av de största delsystemen i uppsättningen.
+            Det omfattar inomhusbelysning, utomhusbelysning, säsongsbeteende och scenbaserad logik.
+
+            ## Huvudidéer
+
+            Systemet använder en scen- och tillståndsmodell så att belysningen kan byta beroende på tid på dygnet, hemmaläge och närvaro.
+
+            ## Viktiga filer
+
+            - packages/lights/inside.yaml
+            - packages/lights/facade.yaml
+            - packages/lights/garden.yaml
+            - packages/lights/hall.yaml
+            - packages/lights/kitchen.yaml
+            - packages/lights/scenes.yaml
+
+            ## Vad logiken gör
+
+            Den kan:
+            - växla mellan morgon-, dag-, kväll-, natt-, borta- och fönstermode
+            - använda säsongsbaserade ljusgrupper
+            - reagera på närvaro och hemmaläge
+            - återställa eller nollställa lampor från UI
+
+  - path: climate-docs
+    title: Climate & alarms
+    icon: mdi:thermometer
+    theme: default
+    badges: []
+    cards:
+      - type: entities
+        title: Language
+        entities:
+          - entity: input_boolean.documentation_language_swedish
+            name: Show Swedish text
+            icon: mdi:translate
+
+      - type: conditional
+        conditions:
+          - entity: input_boolean.documentation_language_swedish
+            state: "off"
+        card:
+          type: markdown
+          title: Climate and alarms
+          content: |
+            # Climate and alarms
+
+            Temperature and humidity are monitored in important areas such as storage, freezer, fridge, and outdoor spaces.
+
+            ## What this part does
+
+            It provides alerts when values go out of range and helps protect sensitive areas.
+
+            ## Key files
+
+            - packages/alerts/temperature.yaml
+            - packages/climate/friggebod.yaml
+            - packages/climate/garage.yaml
+            - packages/climate/ute.yaml
+
+            ## Typical behavior
+
+            The alarms use thresholds, delays, and notifications so they do not react to very short flickers.
+
+      - type: conditional
+        conditions:
+          - entity: input_boolean.documentation_language_swedish
+            state: "on"
+        card:
+          type: markdown
+          title: Klimat och larm
+          content: |
+            # Klimat och larm
+
+            Temperatur och fuktighet övervakas i viktiga områden som förråd, frys, kyl och uterum.
+
+            ## Vad den här delen gör
+
+            Den ger larm när värden går utanför ett acceptabelt intervall och hjälper till att skydda känsliga områden.
+
+            ## Viktiga filer
+
+            - packages/alerts/temperature.yaml
+            - packages/climate/friggebod.yaml
+            - packages/climate/garage.yaml
+            - packages/climate/ute.yaml
+
+            ## Typiskt beteende
+
+            Larmen använder trösklar, fördröjningar och notiser så att de inte reagerar på korta fluktuationer.
+
+  - path: ventilation-docs
+    title: Ventilation
+    icon: mdi:fan
+    theme: default
+    badges: []
+    cards:
+      - type: entities
+        title: Language
+        entities:
+          - entity: input_boolean.documentation_language_swedish
+            name: Show Swedish text
+            icon: mdi:translate
+
+      - type: conditional
+        conditions:
+          - entity: input_boolean.documentation_language_swedish
+            state: "off"
+        card:
+          type: markdown
+          title: Ventilation
+          content: |
+            # Ventilation
+
+            The ventilation system is a dedicated subsystem for controlling air flow and fan behavior.
+
+            ## What it does
+
+            It can force high speed based on humidity and temperature, and it uses timers and safety logic to prevent runaway behavior.
+
+            ## Key files
+
+            - packages/ventilation/ventilation_system.yaml
+            - packages/ventilation/fan.yaml
+            - packages/sensors/template_sensors/template_ventilation_system.yaml
+
+            ## Why it exists
+
+            This part balances comfort, air quality, and safety in a controlled and predictable way.
+
+      - type: conditional
+        conditions:
+          - entity: input_boolean.documentation_language_swedish
+            state: "on"
+        card:
+          type: markdown
+          title: Ventilation
+          content: |
+            # Ventilation
+
+            Ventilationssystemet är ett separat delsystem för att styra luftflöde och fläktbeteende.
+
+            ## Vad det gör
+
+            Det kan forcera hög hastighet baserat på fuktighet och temperatur, och det använder timers och säkerhetslogik för att förhindra okontrollerat beteende.
+
+            ## Viktiga filer
+
+            - packages/ventilation/ventilation_system.yaml
+            - packages/ventilation/fan.yaml
+            - packages/sensors/template_sensors/template_ventilation_system.yaml
+
+            ## Varför det finns
+
+            Den här delen balanserar komfort, luftkvalitet och säkerhet på ett kontrollerat och förutsägbart sätt.
+
+  - path: presence-docs
+    title: Presence & modes
+    icon: mdi:account-multiple
+    theme: default
+    badges: []
+    cards:
+      - type: entities
+        title: Language
+        entities:
+          - entity: input_boolean.documentation_language_swedish
+            name: Show Swedish text
+            icon: mdi:translate
+
+      - type: conditional
+        conditions:
+          - entity: input_boolean.documentation_language_swedish
+            state: "off"
+        card:
+          type: markdown
+          title: Presence and modes
+          content: |
+            # Presence and modes
+
+            This part is about how the house interprets whether people are home, away, or sleeping.
+
+            ## Main idea
+
+            Presence is used as a shared input for many other automations.
+            When the mode changes, lighting, notifications, and reactions can behave differently.
+
+            ## Key files
+
+            - packages/presence/home_away.yaml
+            - packages/presence/person.yaml
+            - packages/presence/working_at_home.yaml
+
+            ## Why it matters
+
+            A single presence model keeps other automations simpler and more consistent.
+
+      - type: conditional
+        conditions:
+          - entity: input_boolean.documentation_language_swedish
+            state: "on"
+        card:
+          type: markdown
+          title: Närvaro och lägen
+          content: |
+            # Närvaro och lägen
+
+            Den här delen handlar om hur huset tolkar om människor är hemma, borta eller sover.
+
+            ## Huvudidé
+
+            Närvaro används som en gemensam ingång för många andra automatiseringar.
+            När läget ändras kan belysning, notiser och reaktioner uppföra sig annorlunda.
+
+            ## Viktiga filer
+
+            - packages/presence/home_away.yaml
+            - packages/presence/person.yaml
+            - packages/presence/working_at_home.yaml
+
+            ## Varför det är viktigt
+
+            En enda närvaromodell gör att andra automatiseringar blir enklare och mer konsekventa.
+
+  - path: notifications-docs
+    title: Notifications
+    icon: mdi:bell
+    theme: default
+    badges: []
+    cards:
+      - type: entities
+        title: Language
+        entities:
+          - entity: input_boolean.documentation_language_swedish
+            name: Show Swedish text
+            icon: mdi:translate
+
+      - type: conditional
+        conditions:
+          - entity: input_boolean.documentation_language_swedish
+            state: "off"
+        card:
+          type: markdown
+          title: Notifications and doorbell
+          content: |
+            # Notifications and doorbell
+
+            This area handles the doorbell flow, snapshots, and mobile notifications.
+
+            ## What happens
+
+            When the doorbell is pressed, the system can:
+            - blink a light
+            - take a snapshot
+            - send a push notification with the image
+
+            ## Key files
+
+            - packages/notifications/doorbell.yaml
+
+            ## Why it matters
+
+            It connects the hardware input, the camera system, and the phone notifications into one flow.
+
+      - type: conditional
+        conditions:
+          - entity: input_boolean.documentation_language_swedish
+            state: "on"
+        card:
+          type: markdown
+          title: Notiser och ringklocka
+          content: |
+            # Notiser och ringklocka
+
+            Det här området hanterar ringklockflödet, ögonblicksbilder och mobilnotiser.
+
+            ## Vad som händer
+
+            När ringklockan aktiveras kan systemet:
+            - blinka med ett ljus
+            - ta en snapshot
+            - skicka en push-notis med bilden
+
+            ## Viktiga filer
+
+            - packages/notifications/doorbell.yaml
+
+            ## Varför det är viktigt
+
+            Det kopplar samman hårdvaruinput, kamerasystem och telefonnotiser i ett flöde.
+
+  - path: media-docs
+    title: Media
+    icon: mdi:play-box-multiple
+    theme: default
+    badges: []
+    cards:
+      - type: entities
+        title: Language
+        entities:
+          - entity: input_boolean.documentation_language_swedish
+            name: Show Swedish text
+            icon: mdi:translate
+
+      - type: conditional
+        conditions:
+          - entity: input_boolean.documentation_language_swedish
+            state: "off"
+        card:
+          type: markdown
+          title: Media and Harmony
+          content: |
+            # Media and Harmony
+
+            The media system controls devices such as TV, radio, Chromecast, and Spotify through Harmony-style automation.
+
+            ## Main idea
+
+            Media behavior is integrated with the rest of the house so that power, activity, and related devices are handled consistently.
+
+            ## Key files
+
+            - packages/media/harmony_hub.yaml
+            - packages/integrations/media_player.yaml
+
+      - type: conditional
+        conditions:
+          - entity: input_boolean.documentation_language_swedish
+            state: "on"
+        card:
+          type: markdown
+          title: Media och Harmony
+          content: |
+            # Media och Harmony
+
+            Mediasystemet styr enheter som TV, radio, Chromecast och Spotify via Harmony-liknande automatisering.
+
+            ## Huvudidé
+
+            Mediebeteende är integrerat med resten av huset så att ström, aktivitet och relaterade enheter hanteras konsekvent.
+
+            ## Viktiga filer
+
+            - packages/media/harmony_hub.yaml
+            - packages/integrations/media_player.yaml
+
   - path: frigate-docs
     title: Frigate
     icon: mdi:cctv
@@ -23,75 +536,19 @@ views:
           content: |
             # Frigate
 
-            Frigate is the “camera brain” in this setup.
-            It watches the video from your cameras and tries to understand what it sees.
+            Frigate is the camera brain of the setup.
+            It watches camera streams and tries to understand what it sees.
 
-            ## Easy version
+            ## Main areas
 
-            In simple words:
-            - it notices movement
-            - it tries to identify what it is
-            - it tells Home Assistant what happened
-            - Home Assistant can then decide what to do
+            - person detection
+            - animal detection
+            - intruder alarm logic
+            - face detection
+            - summary sensors and helpers
+            - media cleanup
 
-            This is useful when you want the house to react to people, animals, or faces.
-
-            ## How it works
-
-            1. A camera sees movement.
-            2. Frigate looks at the image.
-            3. It tries to decide if it is a person, animal, or face.
-            4. It sends that information to Home Assistant.
-            5. Home Assistant checks the rules and decides what should happen.
-
-            ## Person detection
-
-            ### Easy version
-            This part is for when Frigate sees a person.
-            It can send you a warning and make the house react.
-
-            ### More advanced version
-            The person automations are triggered by the person activity summary sensor.
-            They check whether you are asleep, away, or home and then decide whether to send an immediate notification or wait a few minutes.
-            There is also a blinking-light automation for extra attention.
-
-            ## Animal detection
-
-            ### Easy version
-            This part is for animals such as cats, dogs, or other wildlife.
-            It helps the house react when something animal-like appears.
-
-            ### More advanced version
-            The animal automation listens to the animal activity summary sensor.
-            If the detection is still active and the conditions are right, it turns on lights.
-            If the detection disappears, it waits and then turns the lights off again.
-            There is also a safety fallback that turns off the deck light after 10 minutes.
-
-            ## Intruder alarm logic
-
-            ### Easy version
-            This is the stronger security part.
-            If a person is detected in a sensitive zone, the house can make a stronger response.
-
-            ### More advanced version
-            The intruder alarm automation listens to MQTT Frigate event messages.
-            It only acts if the event is new, comes from the right camera, is labeled as person, happens in the backyard zone, and the home mode is right.
-            Then it turns on the siren briefly and sends a notification with event details.
-
-            ## Face detection
-
-            This part collects face-related information from Frigate and creates sensors for the face name, camera, score, and timestamp.
-
-            ## Summary sensors and helpers
-
-            These helpers make the system easier to use by turning many raw values into simple yes/no sensors.
-            That lets the automations react to a simple signal instead of checking everything one by one.
-
-            ## Media cleanup
-
-            This part keeps Frigate storage from filling up by cleaning old clips and recordings.
-
-            ## Main files
+            ## Key files
 
             - packages/frigate/frigate_person_detected.yaml
             - packages/frigate/frigate_animal_detected.yaml
@@ -99,10 +556,6 @@ views:
             - packages/frigate/frigate_face_detection.yaml
             - packages/frigate/frigate_sensors.yaml
             - packages/frigate/frigate_media.yaml
-
-            ## Final summary
-
-            Frigate watches the cameras, understands what it sees, and lets Home Assistant react in a smart way.
 
       - type: conditional
         conditions:
@@ -114,75 +567,19 @@ views:
           content: |
             # Frigate
 
-            Frigate är “kamerahjärnan” i den här uppsättningen.
-            Den följer videon från dina kameror och försöker förstå vad den ser.
+            Frigate är kamerahjärnan i uppsättningen.
+            Den följer kameraströmmar och försöker förstå vad den ser.
 
-            ## Enkel version
+            ## Huvudområden
 
-            I enkla ord:
-            - den märker rörelse
-            - den försöker identifiera vad det är
-            - den berättar för Home Assistant vad som hände
-            - Home Assistant kan sedan bestämma vad som ska göras
+            - persondetektering
+            - djurdetektering
+            - intruder-alarmlogik
+            - ansiktsdetektering
+            - sammanfattningssensorer och hjälpare
+            - mediarensning
 
-            Det här är användbart när du vill att huset ska reagera på människor, djur eller ansikten.
-
-            ## Hur det fungerar
-
-            1. En kamera ser rörelse.
-            2. Frigate tittar på bilden.
-            3. Den försöker avgöra om det är en person, ett djur eller ett ansikte.
-            4. Den skickar information till Home Assistant.
-            5. Home Assistant kontrollerar reglerna och bestämmer vad som ska hända.
-
-            ## Persondetektering
-
-            ### Enkel version
-            Den här delen gäller när Frigate ser en person.
-            Den kan skicka en varning och få huset att reagera.
-
-            ### Mer avancerad version
-            Personautomatiseringarna startar från en sammanfattningssensor för personaktivitet.
-            De kontrollerar om du sover, är borta eller hemma och bestämmer sedan om det ska skickas en omedelbar varning eller vänta några minuter.
-            Det finns också en blinkande-ljussautomation för extra uppmärksamhet.
-
-            ## Djurdetektering
-
-            ### Enkel version
-            Den här delen gäller djur som katter, hundar eller annat vilt.
-            Den hjälper huset att reagera när något djurlikt dyker upp.
-
-            ### Mer avancerad version
-            Djurautomationen lyssnar på en sammanfattningssensor för djuraktivitet.
-            Om detekteringen fortfarande är aktiv och villkoren är rätt, tänds lampor.
-            Om detekteringen försvinner väntar systemet en stund och stänger sedan av lamporna igen.
-            Det finns också en säkerhetsåtgärd som stänger av trädäcksljuset efter 10 minuter.
-
-            ## Intruder alarm logic
-
-            ### Enkel version
-            Det här är den starkare säkerhetsdelen.
-            Om en person upptäcks i ett känsligt område kan huset göra en starkare reaktion.
-
-            ### Mer avancerad version
-            Intruder-alarmautomationen lyssnar på MQTT-meddelanden från Frigate.
-            Den agerar bara om händelsen är ny, kommer från rätt kamera, är märkt som person, sker i bakgårdszonen och hemmets läge passar.
-            Därefter tänds sirenen kort och en notis skickas med detaljer om händelsen.
-
-            ## Ansiktsdetektering
-
-            Den här delen samlar in ansiktsrelaterad information från Frigate och skapar sensorer för namn, kamera, poäng och tidsstämpel.
-
-            ## Sammanfattningssensorer och hjälpare
-
-            Dessa hjälpare gör systemet enklare att använda genom att omvandla många råa värden till enkla ja/nej-sensorer.
-            Det gör att automatiseringarna kan reagera på ett enkelt signal istället för att kontrollera allt ett i taget.
-
-            ## Media-rensning
-
-            Den här delen håller Frigate-lagringen från att bli full genom att rensa gamla klipp och inspelningar.
-
-            ## Huvudfiler
+            ## Viktiga filer
 
             - packages/frigate/frigate_person_detected.yaml
             - packages/frigate/frigate_animal_detected.yaml
@@ -190,180 +587,3 @@ views:
             - packages/frigate/frigate_face_detection.yaml
             - packages/frigate/frigate_sensors.yaml
             - packages/frigate/frigate_media.yaml
-
-            ## Sammanfattning
-
-            Frigate följer kamerorna, förstår vad den ser och låter Home Assistant reagera på ett smart sätt.
-
-  - path: system-docs
-    title: System
-    icon: mdi:home-assistant
-    theme: default
-    badges: []
-    cards:
-      - type: entities
-        title: Language
-        entities:
-          - entity: input_boolean.documentation_language_swedish
-            name: Show Swedish text
-            icon: mdi:translate
-
-      - type: conditional
-        conditions:
-          - entity: input_boolean.documentation_language_swedish
-            state: "off"
-        card:
-          type: markdown
-          title: System overview
-          content: |
-            # Home Assistant system overview
-
-            This setup is built around a few main ideas.
-
-            ## Easy version
-
-            In simple words, this Home Assistant setup is meant to make the house feel comfortable, safe, and convenient.
-
-            It helps with:
-            - lighting in different rooms and outside
-            - climate and temperature alarms
-            - ventilation and air quality
-            - media control such as TV and music
-            - doorbell and camera notifications
-            - camera AI detection through Frigate
-
-            ## How the system is structured
-
-            The configuration is organized as a package-based system.
-            That means related automations, helpers, scripts, and sensors are grouped by topic instead of being scattered around in one large file.
-
-            The most important parts are:
-            - configuration.yaml for the main entrypoint
-            - packages/ for the actual logic
-            - dashboards and UI files for the user interface
-            - custom_components/ for custom integrations
-
-            ## Main subsystems
-
-            ### Lighting
-            Lighting is one of the biggest parts of the setup.
-            It includes indoor and outdoor lights, seasonal modes, scene-based behavior, and home/away logic.
-
-            ### Climate and alarms
-            Temperature and humidity are monitored in important areas.
-            If something becomes too warm or too cold, the system can raise an alarm and send a notification.
-
-            ### Ventilation
-            The ventilation system controls air flow and fan behavior.
-            It uses sensors and timers to keep the home comfortable and safe.
-
-            ### Media and notifications
-            The house can control media devices and handle doorbell events, snapshots, and mobile notifications.
-
-            ### Cameras and Frigate
-            Frigate adds AI-style detection for people, animals, and faces.
-            Home Assistant then reacts based on those detections.
-
-            ## Core modes
-
-            The system uses a few important modes such as:
-            - Home
-            - Away
-            - Sleep
-
-            These modes affect how lights, alerts, and reactions behave.
-
-            ## Main files behind the system
-
-            - configuration.yaml
-            - packages/helpers/input_booleans.yaml
-            - packages/lights/inside.yaml
-            - packages/alerts/temperature.yaml
-            - packages/ventilation/ventilation_system.yaml
-            - packages/notifications/doorbell.yaml
-            - packages/frigate/frigate_person_detected.yaml
-
-            ## Final summary
-
-            This Home Assistant setup is a connected system where comfort, safety, and automation all work together.
-            The structure is modular, which makes it easier to maintain and extend over time.
-
-      - type: conditional
-        conditions:
-          - entity: input_boolean.documentation_language_swedish
-            state: "on"
-        card:
-          type: markdown
-          title: Systemöversikt
-          content: |
-            # Översikt över Home Assistant-systemet
-
-            Den här uppsättningen är byggd kring ett fåtal huvudidéer.
-
-            ## Enkel version
-
-            I enkla ord är detta Home Assistant-system tänkt att göra huset bekvämare, säkrare och enklare att använda.
-
-            Det hjälper till med:
-            - belysning i olika rum och utomhus
-            - klimat och temperaturlarm
-            - ventilation och luftkvalitet
-            - mediekontroll som TV och musik
-            - dörrklocka och kameranotiser
-            - AI-detektering via Frigate
-
-            ## Hur systemet är uppbyggt
-
-            Konfigurationen är organiserad som ett paketbaserat system.
-            Det betyder att relaterad automatisering, hjälpare, skript och sensorer är grupperade efter ämne istället för att vara utspridda i en stor fil.
-
-            De viktigaste delarna är:
-            - configuration.yaml för huvudinställningen
-            - packages/ för själva logiken
-            - dashboards och UI-filer för användargränssnittet
-            - custom_components/ för anpassade integrationer
-
-            ## Huvuddelar
-
-            ### Belysning
-            Belysning är en av de största delarna i systemet.
-            Den omfattar inomhus- och utomhusljus, säsongsbaserade lägen, scenbaserat beteende och hembaserad logik.
-
-            ### Klimat och larm
-            Temperatur och fuktighet övervakas i viktiga områden.
-            Om något blir för varmt eller för kallt kan systemet skapa ett larm och skicka en notis.
-
-            ### Ventilation
-            Ventilationssystemet styr luftflöde och fläktbeteende.
-            Det använder sensorer och timers för att hålla huset bekvämt och säkert.
-
-            ### Media och notiser
-            Huset kan styra medieenheter och hantera dörrklockhändelser, ögonblicksbilder och mobilnotiser.
-
-            ### Kameror och Frigate
-            Frigate lägger till AI-liknande detektering för personer, djur och ansikten.
-            Home Assistant reagerar sedan på dessa detektioner.
-
-            ## Grundläggande lägen
-
-            Systemet använder några viktiga lägen som:
-            - Hemma
-            - Borta
-            - Sömn
-
-            Dessa lägen påverkar hur belysning, varningar och reaktioner fungerar.
-
-            ## Huvudfiler bakom systemet
-
-            - configuration.yaml
-            - packages/helpers/input_booleans.yaml
-            - packages/lights/inside.yaml
-            - packages/alerts/temperature.yaml
-            - packages/ventilation/ventilation_system.yaml
-            - packages/notifications/doorbell.yaml
-            - packages/frigate/frigate_person_detected.yaml
-
-            ## Sammanfattning
-
-            Detta Home Assistant-system är ett sammankopplat system där komfort, säkerhet och automatisering fungerar tillsammans.
-            Strukturen är modulär, vilket gör den enklare att underhålla och bygga vidare på över tid.

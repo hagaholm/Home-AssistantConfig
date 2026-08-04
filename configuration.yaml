@@ -117,6 +117,15 @@ lovelace:
       show_in_sidebar: true
       filename: ui-lights.yaml
 
+    # Documentation
+    lovelace-documentation:
+      mode: yaml
+      filename: documentation.ui
+      title: Documentation
+      icon: mdi:book-open-page-variant
+      show_in_sidebar: true
+      require_admin: true
+
     # Generated - flat (one view per source YAML file)
     lovelace-generated-flat:
       mode: yaml

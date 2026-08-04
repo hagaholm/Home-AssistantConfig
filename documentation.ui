@@ -1,0 +1,259 @@
+title: Documentation
+views:
+  - path: frigate-docs
+    title: Frigate
+    icon: mdi:cctv
+    theme: default
+    badges: []
+    cards:
+      - type: markdown
+        title: Frigate - simple explanation
+        content: |
+          # Frigate
+
+          Frigate is the “camera brain” in this setup.
+          It watches the video from your cameras and tries to understand what it sees.
+
+          In simple words:
+          - it notices movement
+          - it tries to identify what it is
+          - it tells Home Assistant what happened
+          - Home Assistant can then decide what to do
+
+          This is useful when you want the house to react to people, animals, or faces.
+
+      - type: markdown
+        title: Easy version
+        content: |
+          ## What Frigate does in everyday language
+
+          Think of Frigate like a smart security helper.
+
+          It can:
+          - detect a person
+          - detect an animal
+          - detect a face
+          - notice when something happens in a certain area, such as the backyard or driveway
+          - send information to your Home Assistant automations
+
+          When it sees something important, your home can react.
+          For example:
+          - turn on lights
+          - send a phone notification
+          - start a siren
+          - blink lights inside to get attention
+
+      - type: markdown
+        title: How it works
+        content: |
+          ## A simple example
+
+          1. A camera sees movement.
+          2. Frigate looks at the image.
+          3. It tries to decide if it is a person, animal, or face.
+          4. It sends that information to Home Assistant.
+          5. Home Assistant checks the rules and decides what should happen.
+
+          Example:
+          - a person appears at the back of the house at night
+          - Frigate recognizes it as a person
+          - the lights turn on
+          - you get a notification
+
+      - type: markdown
+        title: More advanced version
+        content: |
+          ## How the logic works in more detail
+
+          The Frigate package is not only “detect something”.
+          It also checks conditions before acting.
+
+          ### Important ideas
+
+          - Trigger: what starts the process
+          - Condition: what must be true before the action runs
+          - Action: what the house actually does
+
+          In this setup, the system often checks things like:
+          - which camera saw the event
+          - whether the event is in a special zone such as “Baksidan”
+          - whether you are home, away, or sleeping
+          - whether it is dark outside or the light level is low
+          - whether the same alarm has already happened recently
+
+      - type: markdown
+        title: Person detection
+        content: |
+          ## Person detection
+
+          ### Easy version
+          This part is for when Frigate sees a person.
+          It can send you a warning and make the house react.
+
+          Examples:
+          - a person is seen at the backyard
+          - a person is seen near the entrance
+          - a person is seen while you are away
+
+          ### More advanced version
+          The automations use a trigger based on the binary sensor for person activity.
+          Then they check the home mode:
+          - Sleep mode: alerts are sent quickly
+          - Away mode: some alerts are immediate, and some are delayed
+          - Home mode: fewer alerts are sent
+
+          The logic also checks which cameras detected the event.
+          Some cameras are treated as higher priority, especially the backside cameras.
+
+          This is why you might see:
+          - immediate notifications for priority cameras
+          - delayed notifications for other cameras
+          - blinking lights when a person is detected
+
+      - type: markdown
+        title: Animal detection
+        content: |
+          ## Animal detection
+
+          ### Easy version
+          This part is for animals such as cats, dogs, or other wildlife.
+          It helps the house react when something animal-like appears.
+
+          Examples:
+          - a cat is seen in the backyard
+          - a dog appears near the rear yard
+          - an animal is detected when it is dark
+
+          ### More advanced version
+          The animal logic watches a summary sensor for animal activity on the backside.
+          When the sensor turns on, the system checks if it is night or if the light level is low.
+          If that is true, the house can:
+          - turn on the deck light
+          - turn on outdoor floodlights
+          - turn them off again after a short time if the detection is gone
+
+          This is why the response is more careful than a simple “lights on” rule.
+          It waits a little to avoid reacting to a short flicker.
+
+      - type: markdown
+        title: Intruder alarm logic
+        content: |
+          ## Intruder alarm logic
+
+          ### Easy version
+          This is the stronger security part.
+          If a person is detected in a sensitive zone, the house can make a more serious response.
+
+          Examples:
+          - a person is seen in the backyard zone at night
+          - the system decides it is important enough to react strongly
+          - a siren is activated briefly
+          - a phone notification is sent
+
+          ### More advanced version
+          This part listens to Frigate event messages from MQTT.
+          It checks:
+          - the event type is new
+          - the camera is one of the relevant cameras
+          - the label is person
+          - the event is in the “Baksidan” zone
+          - the home mode is Sleep or Away at the right time
+          - the alarm has not already fired too recently
+
+          If all conditions are met, the automation:
+          - turns the siren on
+          - sets the volume to full
+          - waits a few seconds
+          - turns the siren off again
+          - sends a notification with details about the event
+
+      - type: markdown
+        title: Face detection
+        content: |
+          ## Face detection
+
+          ### Easy version
+          This part is for face-related events.
+          Frigate can publish updates about faces, and Home Assistant can store that information.
+
+          ### More advanced version
+          The face part listens to MQTT updates from Frigate.
+          It creates sensors for:
+          - the detected face name
+          - the camera that saw the face
+          - the confidence score
+          - the timestamp
+          - the raw event data
+
+          This is useful if you want to build more advanced automations later.
+
+      - type: markdown
+        title: Summary sensors and helpers
+        content: |
+          ## Summary sensors and helpers
+
+          ### Easy version
+          This part makes the system easier to use.
+          Instead of having many separate raw values, it creates simple summary sensors.
+
+          Example:
+          - “is there any person activity right now?”
+          - “is there any animal activity on the backside?”
+          - “is there any activity at all?”
+
+          ### More advanced version
+          The summary sensors combine values from several camera-specific sensors.
+          This means the automations can react to a simple yes/no signal instead of checking many sensors individually.
+
+          That makes the setup cleaner and easier to maintain.
+
+      - type: markdown
+        title: Media cleanup
+        content: |
+          ## Media cleanup
+
+          ### Easy version
+          This part helps keep the storage from filling up.
+          It can remove old video clips and recordings.
+
+          ### More advanced version
+          The cleanup script stops Frigate, removes old media files and database files, and then restarts Frigate.
+          This is a maintenance tool, not a normal detection feature.
+
+      - type: markdown
+        title: Main files in this group
+        content: |
+          ## Files behind the Frigate setup
+
+          - [packages/frigate/frigate_person_detected.yaml](packages/frigate/frigate_person_detected.yaml)  
+            Person detection, alerts, and light reactions.
+
+          - [packages/frigate/frigate_animal_detected.yaml](packages/frigate/frigate_animal_detected.yaml)  
+            Animal detection and backyard light reactions.
+
+          - [packages/frigate/frigate_intruder_alarm.yaml](packages/frigate/frigate_intruder_alarm.yaml)  
+            Stronger alarm-style actions for person events.
+
+          - [packages/frigate/frigate_face_detection.yaml](packages/frigate/frigate_face_detection.yaml)  
+            Face-related MQTT sensors and helpers.
+
+          - [packages/frigate/frigate_sensors.yaml](packages/frigate/frigate_sensors.yaml)  
+            Summary sensors used by the automations.
+
+          - [packages/frigate/frigate_media.yaml](packages/frigate/frigate_media.yaml)  
+            Cleanup of old Frigate media and database files.
+
+      - type: markdown
+        title: Final summary
+        content: |
+          ## Final summary
+
+          Frigate is a smart camera monitoring system.
+          In this setup it helps your house react to people, animals, and faces.
+
+          The simple idea is:
+          - cameras see things
+          - Frigate understands what it sees
+          - Home Assistant reacts
+
+          If you want, this page can later be expanded with more groups such as Lights, Climate, Presence, and Media.

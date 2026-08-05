@@ -3,15 +3,23 @@
 #                      PERSON                      #
 #                                                  #
 ####################################################
-# Person entities for presence detection and tracking
-# Aggregates multiple device trackers per person
-# Documentation: https://www.home-assistant.io/integrations/person/
+# Person entities are the human-facing presence layer.
+# They should be treated as "who is home?" rather than as a
+# device-specific tracker.
 #
-# Design Pattern:
-# - Each person has multiple device trackers (phone, WiFi, BT)
-# - Home Assistant intelligently determines presence
-# - Used by automations for home/away status
-# - Updates input_select.home_status based on occupancy
+# Simple flow:
+#   device_tracker -> person -> group.persons / group.track_for_home_devices -> input_select.home_status
+#
+# Recommended pattern for phone changes:
+# 1. Add the new phone's device tracker to the existing person's device_trackers list.
+# 2. Keep the old phone tracker for a transition period (a few days to 1-2 weeks).
+# 3. Verify that the person entity still changes to home/away correctly.
+# 4. Remove the old tracker only after the new one is reliable and stable.
+#
+# Notes:
+# - A new phone should normally be added to the existing person, not treated as a new person.
+# - The person entity is more robust than relying on a single phone tracker.
+# - Keep the list of trackers small and meaningful; avoid adding old or unused devices.
 #
 # Family Members:
 # - Micke, Annelie: Parents (primary occupants)

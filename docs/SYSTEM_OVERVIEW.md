@@ -105,6 +105,18 @@ The home/away automation lives in `packages/presence/home_away.yaml` and does:
 
 This mode is then referenced by many other automations (lighting, doorbell behavior, etc.).
 
+### Phone change procedure
+
+When a person changes to a new phone, keep the setup simple and stable:
+
+1. Add the new phone's device tracker to the same person's entry in `packages/presence/person.yaml`.
+2. Keep the old phone tracker for a transition period so presence does not flap during the change.
+3. Verify that the person entity still changes to `home`/`not_home` correctly in Home Assistant.
+4. Remove the old tracker only after the new one has been working reliably for several days.
+5. If the new phone is not detected properly, check that the mobile app is correctly configured, that the tracker entity has the expected name, and that the phone is actually reporting as home/away.
+
+This keeps the presence system reliable without creating a new person entity for every phone change.
+
 ---
 
 ## 5) Lighting system (the biggest subsystem)

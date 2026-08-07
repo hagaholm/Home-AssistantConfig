@@ -25,18 +25,35 @@ views:
           content: |
             # Home Assistant system overview
 
-            ## Summary
+            ## Scope of the system
 
-            This is a package-based Home Assistant setup that manages everyday comfort and house automation in a structured way.
-            It covers lighting, climate, presence, notifications, media, and camera-based awareness.
+            This documentation covers the complete house automation stack, not only one feature area.
+            The same control model is reused across lighting, ventilation, presence, notifications, media, and camera-based reactions so the house behaves like a coordinated system rather than a collection of unrelated automations.
 
-            ## Detailed description
+            ## Architecture
 
-            The system is organized around a central configuration entrypoint in configuration.yaml.
-            The real behavior lives in separate package files that group automations, helpers, scripts, sensors, and templates by topic.
-            This structure keeps the logic modular, so changes can be made in one area without rewriting the entire house behavior.
-            In practice, the system is built as a network of smaller subsystems that all use the same shared state model: presence, home mode, time, and sensor values are reused across lighting, climate, notifications, media, and camera logic.
-            That makes the installation easier to maintain, easier to troubleshoot, and easier to expand with new features later.
+            The system is organized as a package-based Home Assistant deployment where each domain is implemented in its own package and wired together through shared entities such as home status, timers, helpers, and trigger sensors.
+            The main entrypoint is configuration.yaml, while the practical behavior lives in packages/ and is then referenced by automations, scripts, and UI views.
+
+            ## Control model
+
+            The house behaves like a layered state machine.
+            Presence and home state are resolved first, then time and sensor values are evaluated, and finally domain-specific automations decide which actions to execute.
+            That means the same condition, for example “someone is home” or “bathroom humidity is high”, can influence lighting, ventilation, notifications, media, and camera-based reactions at the same time.
+
+            ## Runtime flow
+
+            1. Person entities and device trackers produce presence information.
+            2. The shared home-status entity becomes the single source of truth for the rest of the system.
+            3. Domain automations consume that state together with lux, temperature, humidity, and time-based inputs.
+            4. Scripts execute the real actions so the automations stay small and the behavior is easier to reason about.
+
+            ## Main subsystems
+
+            - Lighting: scenes, facade logic, indoor and outdoor groups, and seasonal behavior.
+            - Ventilation: humidity/temperature-driven fan logic with forced mode, timers, and safety guards.
+            - Presence: person tracking, home/away logic, and sleep/wake handling.
+            - Notifications, media, and Frigate: event-driven reactions that build on the same shared state model.
 
       - type: conditional
         conditions:
@@ -48,18 +65,35 @@ views:
           content: |
             # Översikt över Home Assistant-systemet
 
-            ## Sammanfattning
+            ## Omfattning av systemet
 
-            Detta är en paketbaserad Home Assistant-uppsättning som sköter vardagskomfort och husautomation på ett strukturerat sätt.
-            Den täcker belysning, klimat, närvaro, notiser, media och kamerabaserad uppfattning.
+            Den här dokumentationen täcker hela husautomationsstacken, inte bara ett enskilt funktionsområde.
+            Samma styrmodell används över belysning, ventilation, närvaro, notiser, media och kamerabaserade reaktioner, så huset beter sig som ett samordnat system snarare än som en samling oberoende automatiseringar.
 
-            ## Detaljerad beskrivning
+            ## Arkitektur
 
-            Systemet är organiserat kring en central konfigurationsingång i configuration.yaml.
-            Det verkliga beteendet finns i separata paketfiler som grupperar automatiseringar, hjälpare, skript, sensorer och mallar efter ämne.
-            Den här strukturen gör logiken modulär, så att ändringar kan göras i ett område utan att hela husets beteende behöver skrivas om.
-            I praktiken byggs systemet upp som ett nätverk av mindre delsystem som alla använder samma delade tillståndsmodell: närvaro, hemmaläge, tid och sensordata återanvänds i belysning, klimat, notiser, media och kameralogik.
-            Det gör installationen lättare att underhålla, felsöka och utöka med nya funktioner längre fram.
+            Systemet är uppbyggt som en paketbaserad Home Assistant-installation där varje domän implementeras i sitt eget paket och kopplas samman via delade entiteter som hemmaläge, timers, hjälpare och triggningssensorer.
+            Huvudingången är configuration.yaml, medan det verkliga beteendet finns i packages/ och sedan anropas genom automatiseringar, skript och UI-vyer.
+
+            ## Styrmodell
+
+            Huset fungerar som en lagerindelad tillståndsmaskin.
+            Närvaro och hemmaläge löses först, därefter utvärderas tid och sensordata, och slutligen väljer domänspecifika automatiseringar vilka åtgärder som ska utföras.
+            Det innebär att samma villkor, till exempel “någon är hemma” eller “luftfuktigheten i badrummet är hög”, kan påverka belysning, ventilation, notiser, media och kamerabaserade reaktioner samtidigt.
+
+            ## Körningsflöde
+
+            1. Personentiteter och device trackers skapar närvaroinformation.
+            2. Den gemensamma hemmalägesentiteten blir en enda källa till sanning för resten av systemet.
+            3. Domänautomatiseringar använder detta tillstånd tillsammans med lux, temperatur, fuktighet och tidsbaserade indata.
+            4. Skript utför de faktiska åtgärderna så att automatiseringarna förblir små och lättare att förstå.
+
+            ## Huvuddelar
+
+            - Belysning: scener, fasadlogik, inomhus- och utomhusgrupper samt säsongsbeteende.
+            - Ventilation: fukt-/temperaturstyrd fläktlogik med forcerat läge, timers och säkerhetsgrindar.
+            - Närvaro: personspårning, hem/borta-logik och sömn/vaken-hantering.
+            - Notiser, media och Frigate: händelsedrivna reaktioner som bygger på samma delade tillståndsmodell.
 
   - path: lighting-docs
     title: Lighting
@@ -84,18 +118,62 @@ views:
           content: |
             # Lighting
 
-            ## Summary
+            ## Control architecture
 
-            The lighting system controls indoor and outdoor lights, seasonal behavior, and scene-based changes across the home.
-            It reacts to time of day, presence, and home mode so the lighting feels natural and adaptive.
+            The lighting system is one of the core domains in the house automation stack.
+            It is implemented as a set of package-based automations and scripts that all consume the same shared house context: home status, time, lux, presence, and manual overrides.
+            In practice this means the lighting layer behaves like a state-driven control system rather than a simple timer-based switchboard.
 
-            ## Detailed description
+            ## How the lighting flow works
 
-            The logic is organized around scenes, state transitions, and grouped light entities.
-            Files such as packages/lights/inside.yaml, facade.yaml, garden.yaml, hall.yaml, kitchen.yaml, and scenes.yaml define the behavior for morning, day, evening, night, away, and window modes.
-            The deeper functionality is that multiple automations work together: time-based triggers decide when a mode should change, presence data decides whether someone is at home, and home-mode conditions decide how the house should behave in each situation.
-            In practice, this means the system can apply a general evening rule for the whole house while still allowing room-specific overrides for kitchens, hallways, or outdoor areas.
-            The result is a layered lighting model where global rules set the baseline and local logic adds the finer adjustments.
+            A typical lighting decision follows this sequence:
+
+            1. The presence layer resolves whether the house is occupied, away, or in a sleep-like state.
+            2. The time and lux layer decides which lighting mode is currently appropriate.
+            3. The lighting package selects the right scene or facade mode.
+            4. Scripts apply the actual light changes with brightness, transition timing, and room-specific behavior.
+
+            This is why the system can keep lighting consistent across indoor and outdoor areas even when the house changes state rapidly.
+
+            ## Main lighting packages
+
+            The implementation is split into several packages:
+
+            - inside.yaml for general indoor behavior
+            - facade.yaml for the exterior state machine and facade light modes
+            - garden.yaml and hall.yaml for room-specific lighting logic
+            - kitchen.yaml for kitchen-specific behavior
+            - scenes.yaml for reusable scene definitions and shared light states
+
+            ## Facade lighting in detail
+
+            The facade subsystem uses an explicit state machine with the entity input_select.facade_lights and the helper input_boolean.lights_auto_fasad.
+            The resolver evaluates three kinds of inputs before it sets a new mode:
+
+            - lux level from the outdoor light sensor
+            - home status from input_select.home_status
+            - camera-based occupancy from the exterior camera binary sensors
+
+            The decision order is intentionally simple and deterministic:
+
+            1. If the outdoor light is bright enough, the system selects the Off state.
+            2. If a person is detected and the light is not already bright, it switches to Person detected, which is the maximum-brightness mode.
+            3. If the house is in Sleep mode and the environment is dark enough, it uses the Night mode.
+            4. If the environment is dark and none of the above conditions apply, it selects Morning/Evening mode.
+            5. If none of those conditions apply, the current state is retained.
+
+            This makes the facade lighting behave as a controlled fallback system rather than a purely time-based switch. The reason it escalates to maximum brightness is visibility and safety: a detected person near the entrance should always be visible even if the normal evening mode would be too dim.
+
+            ## Script behavior
+
+            Each facade mode is executed by a dedicated script:
+
+            - Off turns the facade fixtures off with a short transition.
+            - Morning/Evening turns the lights on at moderate brightness.
+            - Night uses a reduced brightness profile for the more subtle nighttime look.
+            - Person detected uses the highest brightness values, which is why it is the most visible mode.
+
+            The scripts are intentionally restart-safe so that rapid state changes do not leave the lights half-updated.
 
       - type: conditional
         conditions:
@@ -107,18 +185,62 @@ views:
           content: |
             # Belysning
 
-            ## Sammanfattning
+            ## Styrarkitektur
 
-            Belysningssystemet styr inomhus- och utomhusljus, säsongsbeteende och scenbaserade förändringar i huset.
-            Det reagerar på tid på dygnet, närvaro och hemmaläge så att belysningen känns naturlig och anpassningsbar.
+            Belysningssystemet är ett av de centrala delarna i husautomationsstacken.
+            Det implementeras som en uppsättning paketbaserade automatiseringar och skript som alla konsumerar samma gemensamma huskontext: hemmaläge, tid, lux, närvaro och manuella åsidosättningar.
+            I praktiken betyder det att ljuslagret beter sig som ett tillståndsstyrt styrsystem snarare än en enkel timerbaserad brytare.
 
-            ## Detaljerad beskrivning
+            ## Hur ljusflödet fungerar
 
-            Logiken är organiserad kring scener, tillståndsövergångar och grupperade ljusentiteter.
-            Filer som packages/lights/inside.yaml, facade.yaml, garden.yaml, hall.yaml, kitchen.yaml och scenes.yaml definierar beteendet för morgon-, dag-, kväll-, natt-, borta- och fönstermode.
-            Den djupare funktionen är att flera automatiseringar arbetar tillsammans: tidsbaserade triggar avgör när ett läge ska ändras, närvarodata avgör om någon är hemma, och hemmalägesvillkor avgör hur huset ska bete sig i varje situation.
-            I praktiken innebär det att systemet kan tillämpa en generell kvällsregel för hela huset samtidigt som det fortfarande tillåter rumsspecifika undantag för kök, hallar eller utomhusområden.
-            Resultatet är en lagerindelad belysningsmodell där globala regler sätter grunden och lokal logik gör de finare justeringarna.
+            Ett typiskt ljusbeslut följer denna sekvens:
+
+            1. Närvarolagret löser om huset är upptaget, borta eller i ett sovliknande tillstånd.
+            2. Tid- och luxlagret avgör vilket ljusläge som är aktuellt.
+            3. Belysningspaketet väljer rätt scen eller fasadläge.
+            4. Skript tillämpar de faktiska ljusändringarna med styrka, övergångstid och rumspecifikt beteende.
+
+            Det är därför systemet kan hålla belysningen konsekvent över inomhus- och utomhusområden även när huset ändrar tillstånd snabbt.
+
+            ## Huvudpaket för belysning
+
+            Implementationen är uppdelad i flera paket:
+
+            - inside.yaml för allmän inomhusbelysning
+            - facade.yaml för det yttre tillstånds- och fasadljusläget
+            - garden.yaml och hall.yaml för rumspecifik ljuslogik
+            - kitchen.yaml för kökspecifik beteende
+            - scenes.yaml för återanvändbara scener och delade ljuslägen
+
+            ## Fasadbelysning i detalj
+
+            Fasadsubsystemet använder en explicit tillståndsmaskin med entiteten input_select.facade_lights och hjälpen input_boolean.lights_auto_fasad.
+            Resolvern utvärderar tre typer av indata innan den sätter ett nytt läge:
+
+            - lux-nivå från utomhusljussensorn
+            - hemmaläge från input_select.home_status
+            - kamerabaserad närvaro från de externa kamerornas binära sensorer
+
+            Beslutsordningen är avsiktligt enkel och deterministisk:
+
+            1. Om det är tillräckligt ljust ute väljs avstängt läge.
+            2. Om en person upptäcks och ljuset inte redan är starkt väljs läget Person upptäckt, vilket är maxljusläget.
+            3. Om huset är i sovläge och miljön är tillräckligt mörk används nattläge.
+            4. Om miljön är mörk och inget av ovanstående gäller väljs morgon-/kvällsläge.
+            5. Om inget av dessa villkor gäller behålls det aktuella läget.
+
+            Det gör att fasadbelysningen beter sig som ett kontrollerat fallback-system istället för en ren tidsbaserad brytare. Anledningen till att den höjs till maxljus är synlighet och säkerhet: en upptäckt person nära ingången ska alltid vara synlig även om normal kvällsinställning skulle vara för svag.
+
+            ## Skriptbeteende
+
+            Varje fasadläge exekveras av ett dedikerat skript:
+
+            - Av stänger fasadarmaturerna av med en kort övergång.
+            - Morgon/Kväll slår på ljuset med måttlig styrka.
+            - Natt använder en reducerad ljusstyrka för ett mer subtilt nattutseende.
+            - Person upptäckt använder de högsta ljusvärdena, vilket är varför det är det mest synliga läget.
+
+            Skripten är avsiktligt säkra vid omstart så att snabba tillståndsändringar inte lämnar ljuset halvuppdaterat.
 
   - path: climate-docs
     title: Climate & alarms
@@ -202,18 +324,35 @@ views:
           content: |
             # Ventilation
 
-            ## Summary
+            ## Control philosophy
 
-            The ventilation part keeps the indoor environment comfortable by controlling air flow and fan speed.
-            It reacts to humidity, temperature, and timing so the system can adjust smoothly rather than just switching on and off.
+            The ventilation system is not a simple on/off switch. It is a closed-loop control system that uses humidity, temperature, timers, and safety conditions to decide whether the fan should run in normal mode or be forced into a higher-speed state.
 
-            ## Detailed description
+            ## Fan states and transitions
 
-            Ventilation is implemented as a control loop with thresholds and safety logic.
-            Files such as packages/ventilation/ventilation_system.yaml, packages/ventilation/fan.yaml, and packages/sensors/template_sensors/template_ventilation_system.yaml define the fan modes and the conditions that force higher speed.
-            The detailed behavior includes mode transitions, timers, and fallback logic so the system avoids unstable or overly aggressive behavior.
-            In real use, the ventilation can be driven by humidity and temperature sensors, but it can also be influenced by occupancy, schedules, or manual overrides, which makes it useful both for comfort and for preventing stale air.
-            The important point is that the system is not just a simple on/off fan; it is tuned to ramp smoothly and stay predictable under changing conditions.
+            The system has three practical operating concepts:
+
+            - Normal mode: the fan operates under the standard control logic and only changes state when the measured values cross configured thresholds.
+            - Forced mode: the system actively drives the fan into a higher-speed state when humidity or temperature conditions indicate that the airflow needs to increase immediately.
+            - Off/available recovery: if the actuator becomes unavailable, the automation can recover to normal mode when the device is available again and no forced timer is active.
+
+            ## How forced mode is triggered
+
+            Forced mode is activated when the system detects that bathroom humidity is high enough, or when temperature conditions indicate that the ventilation should run more aggressively.
+            The logic uses configurable thresholds and compares current values against them so that short spikes do not immediately cause the fan to stay in forced mode forever.
+
+            ## Why timers exist
+
+            Two timers are central to the design:
+
+            - A stability timer prevents rapid oscillation by requiring the humidity condition to remain valid for a period before a new state transition is accepted.
+            - A maximum runtime timer prevents forced mode from continuing indefinitely. After the configured maximum runtime, the system returns to the normal control path.
+
+            This design keeps the ventilation system predictable and avoids unstable behavior caused by a single transient condition.
+
+            ## Practical behavior
+
+            In normal operation the fan can be considered to be “idle” with the standard control loop. When the humidity or temperature signal becomes severe enough, the system enters forced mode and stays there until the conditions normalize or the timer expires. The actuator is treated as the physical output of the control loop, while the helper values and timers are the control layer.
 
       - type: conditional
         conditions:
@@ -225,18 +364,35 @@ views:
           content: |
             # Ventilation
 
-            ## Sammanfattning
+            ## Styrfilosofi
 
-            Ventilationsdelen håller inomhusmiljön bekväm genom att styra luftflöde och fläkthastighet.
-            Den reagerar på fuktighet, temperatur och tid så att systemet kan justeras mjukt istället för att bara slås på och av.
+            Ventilationssystemet är inte en enkel på/av-brytare. Det är ett slutet styrsystem som använder fuktighet, temperatur, timers och säkerhetsvillkor för att avgöra om fläkten ska köra i normalt läge eller tvingas till ett högre hastighetsläge.
 
-            ## Detaljerad beskrivning
+            ## Fläktlägen och övergångar
 
-            Ventilation implementeras som en styrloop med trösklar och säkerhetslogik.
-            Filer som packages/ventilation/ventilation_system.yaml, packages/ventilation/fan.yaml och packages/sensors/template_sensors/template_ventilation_system.yaml definierar fläktlägen och villkoren som tvingar högre hastighet.
-            Det detaljerade beteendet inkluderar lägesövergångar, timers och reservlogik så att systemet undviker instabilt eller för aggressivt beteende.
-            I verklig användning kan ventilationen drivas av fukt- och temperatursensorer, men den kan också påverkas av närvaro, scheman eller manuella överskridanden, vilket gör den användbar både för komfort och för att förhindra dålig luft.
-            Den viktiga poängen är att systemet inte bara är en enkel på/av-fläkt; det är finjusterat för att öka gradvis och förbli förutsägbart under förändrade förhållanden.
+            Systemet har tre praktiska driftskoncept:
+
+            - Normalt läge: fläkten arbetar under standardstyrlogiken och byter endast tillstånd när uppmätta värden passerar konfigurerade trösklar.
+            - Forcerat läge: systemet driver aktivt fläkten till ett högre hastighetsläge när fuktighet eller temperatur indikerar att luftflödet behöver öka omedelbart.
+            - Av/återhämtning: om ställdonet blir otillgängligt kan automationen återgå till normalt läge när enheten är tillgänglig igen och inget forceringstimer är aktivt.
+
+            ## Hur forcerat läge aktiveras
+
+            Forcerat läge aktiveras när systemet upptäcker att badrumsfuktigheten är tillräckligt hög, eller när temperaturförhållanden indikerar att ventilationen bör köras aggressivare.
+            Logiken använder konfigurerbara trösklar och jämför aktuella värden med dem så att korta toppar inte gör att fläkten blir förcerad för alltid.
+
+            ## Varför timers finns
+
+            Två timers är centrala för designen:
+
+            - En stabilitetstimer förhindrar snabb oscillation genom att kräva att fuktighetsvillkoret förblir giltigt under en viss period innan en ny tillståndsövergång accepteras.
+            - En maxtidstimer förhindrar att forcerat läge fortsätter oändligt. När den konfigurerade maxtiden passerats går systemet tillbaka till den normala styrvägen.
+
+            Den här designen gör ventilationssystemet förutsägbart och undviker instabilt beteende orsakad av en enda tillfällig händelse.
+
+            ## Praktiskt beteende
+
+            I normal drift kan fläkten betraktas som “vilande” under standardstyrloopen. När fuktighets- eller temperaturvärdet blir tillräckligt allvarligt går systemet in i forcerat läge och stannar där tills villkoren normaliseras eller timern löper ut. Ställdonet behandlas som det fysiska utfallet av styrloopen, medan hjälpvärdena och timerna är styrlagret.
 
   - path: presence-docs
     title: Presence & modes
@@ -261,18 +417,30 @@ views:
           content: |
             # Presence and modes
 
-            ## Summary
+            ## Role of the home-status state
 
-            This part answers whether someone is home, away, or asleep, and that information is reused across the house.
-            It acts as a shared state layer for many other automations.
+            The home-status entity is the house-level abstraction that other subsystems consume.
+            It is the single source of truth that the rest of the automation network uses to decide whether to behave as if the house is occupied, empty, or in a sleep-like state.
 
-            ## Detailed description
+            ## How the state changes
 
-            Presence is treated as a shared state layer that influences many other subsystems.
-            Files such as packages/presence/home_away.yaml, packages/presence/person.yaml, and packages/presence/working_at_home.yaml define how the home mode changes and how people are represented.
-            The real value is that one consistent presence model keeps the rest of the automations simpler, because they can depend on a stable state instead of guessing from many individual inputs.
-            This is especially important because many automations are not driven by a single sensor; they are driven by the combined interpretation of presence, time, and manual choices such as working from home or sleeping.
-            In other words, this layer provides a stable “house context” that the rest of the system can trust.
+            The presence automation evaluates two main input groups:
+
+            - person entities and device trackers, which determine whether anyone is effectively at home
+            - the kitchen motion sensor, which can wake the house from sleep mode during daytime
+
+            The transition logic is simple:
+
+            1. If at least one person or tracked device is home, the target state becomes Hemma.
+            2. If nobody is home, the target state becomes Borta.
+            3. If the current state is Sover and motion occurs during daytime, the system can switch back to Hemma.
+
+            In other words, Hemma and Borta are the primary occupancy states, while Sover is a special state that acts as a sleep override and can be used to suppress normal daytime behavior until a wake event occurs.
+
+            ## Why this matters
+
+            This layer is important because it keeps lighting, race conditions, media behavior, and other automations consistent.
+            Instead of each subsystem trying to infer occupancy from its own sensors, they all rely on the same shared state and therefore behave as part of a single coordinated system.
 
       - type: conditional
         conditions:
@@ -284,18 +452,30 @@ views:
           content: |
             # Närvaro och lägen
 
-            ## Sammanfattning
+            ## Hemmalägets roll
 
-            Den här delen svarar på om någon är hemma, borta eller sover, och den informationen används igen över hela huset.
-            Den fungerar som ett gemensamt tillståndslager för många andra automatiseringar.
+            Hemmalägesentiteten är den husnivåabstraktion som andra delsystem konsumerar.
+            Det är den enda källan till sanning som resten av automationsnätverket använder för att avgöra om huset ska bete sig som om det är upptaget, tomt eller i ett sovliknande tillstånd.
 
-            ## Detaljerad beskrivning
+            ## Hur tillståndet ändras
 
-            Närvaro behandlas som ett gemensamt tillståndslager som påverkar många andra delsystem.
-            Filer som packages/presence/home_away.yaml, packages/presence/person.yaml och packages/presence/working_at_home.yaml definierar hur hemmaläget ändras och hur personer representeras.
-            Det verkliga värdet är att en konsekvent närvaromodell gör resten av automatiseringarna enklare, eftersom de kan lita på ett stabilt tillstånd istället för att gissa från många individuella ingångar.
-            Detta är särskilt viktigt eftersom många automatiseringar inte drivs av en enda sensor; de drivs av en kombinerad tolkning av närvaro, tid och manuella val som att arbeta hemifrån eller sova.
-            Med andra ord ger detta lager ett stabilt ”huskontext” som resten av systemet kan lita på.
+            Närvaroautomationen utvärderar två huvudsakliga ingångsgrupper:
+
+            - personentiteter och device trackers, som avgör om någon faktiskt är hemma
+            - köksrörelsesensorn, som kan väcka huset från sovläge under dagtid
+
+            Övergångslogiken är enkel:
+
+            1. Om minst en person eller spårad enhet är hemma blir måltillståndet Hemma.
+            2. Om ingen är hemma blir måltillståndet Borta.
+            3. Om det aktuella tillståndet är Sover och rörelse inträffar under dagtid kan systemet gå tillbaka till Hemma.
+
+            Med andra ord är Hemma och Borta de primära närvarotillstånden, medan Sover är ett specialtillstånd som fungerar som en sömnöverskridning och kan användas för att dämpa normalt dagligt beteende tills ett väckningshändelse sker.
+
+            ## Varför detta är viktigt
+
+            Detta lager är viktigt eftersom det håller belysning, media, krockningar mellan automationsflöden och andra delsystem konsekventa.
+            Istället för att varje subsystem försöker dra slutsatser om närvaro från egna sensorer, så litar de alla på samma delade tillstånd och agerar därför som en del av ett samordnat system.
 
   - path: notifications-docs
     title: Notifications

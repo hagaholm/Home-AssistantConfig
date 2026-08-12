@@ -134,8 +134,10 @@ automation:
               and is_state('group.track_for_home_devices', 'home')
               and current_home_status == 'Sover'
               and 5 <= now().hour < 21 }}
+          sleep_hold_until_morning: >-
+            {{ current_home_status == 'Sover' and now().hour < 5 }}
           target_home_status: >-
-            {{ 'Hemma' if (someone_is_home or motion_wake) else 'Borta' }}
+            {{ 'Sover' if sleep_hold_until_morning else ('Hemma' if (someone_is_home or motion_wake) else 'Borta') }}
 
       - if:
           - condition: template

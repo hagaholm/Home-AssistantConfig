@@ -132,6 +132,33 @@ automation:
     action:
       - service: script.inside_apply_current_scene
 
+  - alias: Innebelysning väcker hemstatus från Sover
+    id: '1735304100092'
+    mode: single
+
+    trigger:
+      - platform: state
+        entity_id: input_select.light_inside
+
+    condition:
+      - condition: state
+        entity_id: input_select.home_status
+        state: 'Sover'
+      - condition: template
+        value_template: >-
+          {{
+            trigger.from_state is not none
+            and trigger.to_state is not none
+            and trigger.from_state.state in ['Släckt', 'Nattbelysning']
+            and trigger.to_state.state not in ['Släckt', 'Nattbelysning']
+          }}
+
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.home_status
+          option: Hemma
+
   ################################
   ### TV-ljusläge (manuell UI) ###
   ################################

@@ -13,7 +13,8 @@
 # Main automations:
 # - Animal Motion Radio Control Backside
 #   - Trigger: cams_animal_backside_active (on/off)
-#   - Turn ON: waits 15s, then turns on deck light if detection persists.
+#   - Turn ON: waits 15s, then turns on light.tradack_ute if detection persists.
+#     Note: light.tradack_ute is physically a radio (animal deterrent), not a light fixture.
 #     Note: current logic requires low lux (<10) at turn-on time.
 #   - Turn OFF: after 20s with no detection.
 #
@@ -24,7 +25,7 @@
 #
 # Test automations (using cams_all_backside_active):
 # - Test Motion Light Control (floodlights): on immediately, off after 10s clear.
-# - Test Motion Radio Control Backside (deck light): on immediately, off after 30s clear.
+# - Test Motion Radio Control Backside (radio): on immediately, off after 30s clear.
 #
 # Notifications:
 # - Animal Detection Notify
@@ -33,10 +34,10 @@
 #
 # Failsafe:
 # - Turn Off Deck Light After 10 Minutes (failsafe)
-#   - If cams_animal_backside_active stays on for 10 minutes, force deck light off
+#   - If cams_animal_backside_active stays on for 10 minutes, force light.tradack_ute (radio) off
 #
-# Controlled lights:
-# - light.tradack_ute
+# Controlled entities:
+# - light.tradack_ute (physically a radio - animal deterrent, not a light fixture)
 # - light.stralkastare_husgavel
 # - light.kamera5_stralkastare
 # - light.kamera6_stralkastare

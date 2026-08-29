@@ -49,9 +49,10 @@ light:
     # Garden shed exterior light (Shelly plug smart switch)
     
   - platform: switch
-    name: trädäck ute
+    name: Trädäck radio (djurskrämma)
     entity_id: switch.shellyoutdoorsg3_e4b063f3674c
-    # Deck/patio lights (outdoor ground lighting)
+    # Physically a radio on the deck, used as an animal deterrent - not a light fixture
+    # Controlled by "Animal Motion Radio Control Backside" in packages/frigate/frigate_animal_detected.yaml
     
   - platform: switch
     name: Kök lilla fönstret

@@ -150,10 +150,16 @@ wiim_automations: !include packages/wiim/wiim_automations.yaml
 ####################
 ### Frigate     ###
 ####################
+# Sammanställning
 frigate_sensors: !include packages/frigate/frigate_sensors.yaml
+# Detektion
 frigate_face_detection: !include packages/frigate/frigate_face_detection.yaml
 frigate_animal_detected: !include packages/frigate/frigate_animal_detected.yaml
 frigate_person_detected: !include packages/frigate/frigate_person_detected.yaml
+# Media/lagring
 frigate_media: !include packages/frigate/frigate_media.yaml
+# Närvaro
 frigate_temp_presence: !include packages/frigate/frigate_temp_presence.yaml
+# Larm
 frigate_intruder_alarm: !include packages/frigate/frigate_intruder_alarm.yaml
+

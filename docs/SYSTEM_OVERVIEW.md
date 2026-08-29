@@ -265,19 +265,20 @@ Notes:
 
 ## 10) Cameras & Frigate
 
-Frigate integration is represented via a set of package files:
+Frigate integration is represented via a set of package files under `packages/frigate/`, grouped by concern:
 
-- `packages/frigate_sensors.yaml` – aggregates counts and creates “any camera active” binary sensors
-- `packages/frigate_person_detected.yaml`
-- `packages/frigate_animal_detected.yaml`
-- `packages/frigate_media.yaml`
+- Sammanställning: `frigate_sensors.yaml` – aggregates counts and creates “any camera active” binary sensors
+- Detektion: `frigate_person_detected.yaml`, `frigate_animal_detected.yaml`, `frigate_face_detection.yaml`
+- Media/lagring: `frigate_media.yaml`
+- Närvaro: `frigate_temp_presence.yaml`
+- Larm: `frigate_intruder_alarm.yaml`
 
 The idea is to make “raw camera detections” easier to consume by:
 
 - Creating summary counts (e.g. total persons detected across multiple cameras)
 - Creating summary binary_sensors (e.g. any person active)
 
-Some of these packages also include “reaction” automations (e.g. lighting + notifications) built on top of the summary sensors.
+Some of these packages also include “reaction” automations (e.g. lighting + notifications) built on top of the summary sensors. Diagnostics: `sensor.frigate_debug_animal_backside` (see `ui-debug.yaml`) explains why the animal-triggered radio/floodlights are on or off.
 
 These summary sensors can be used by dashboards, notifications, and other automations.
 

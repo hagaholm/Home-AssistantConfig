@@ -94,7 +94,7 @@ lovelace:
       mode: yaml
       title: Automation v2
       show_in_sidebar: true
-      filename: ui-automation-v2.yaml
+      filename: ui-automations-v2.yaml
     
     # Ventilaton
     lovelace-ventilation:
@@ -116,6 +116,13 @@ lovelace:
       title: Lights
       show_in_sidebar: true
       filename: ui-lights.yaml
+
+    # Diagnostik (varför är en lampa/automation i sitt nuvarande läge)
+    lovelace-debug:
+      mode: yaml
+      title: Diagnostik
+      show_in_sidebar: true
+      filename: ui-debug.yaml
 
     # Generated - flat (one view per source YAML file)
     lovelace-generated-flat:

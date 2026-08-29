@@ -1,0 +1,126 @@
+#######################################################
+# UI DEBUG / DIAGNOSTIK
+#######################################################
+# Visar VARFÖR en lampa eller automation är i sitt nuvarande läge,
+# genom att exponera de "debug"-sensorer som redan finns i
+# packages/lights/debug.yaml och packages/frigate/frigate_animal_detected.yaml.
+#
+# Varje sensor har attributen:
+# - state: nuvarande beslutade läge
+# - reason: en rad som förklarar varför
+# - why_not: (endast lights_debug_*) alla regler och varför de inte valdes
+#######################################################
+
+title: Diagnostik
+views:
+  - path: diagnostik
+    title: Varför?
+    icon: mdi:help-circle-outline
+    badges: []
+    cards:
+      - type: markdown
+        content: |
+          # 🔍 Varför är det så här?
+          Den här vyn förklarar varför en lampa eller automation är i sitt
+          nuvarande läge. "Varför" kommer från paketens debug-sensorer -
+          se `packages/lights/debug.yaml` och
+          `packages/frigate/frigate_animal_detected.yaml`.
+
+      - type: markdown
+        title: 💡 Inne
+        content: >-
+          **Läge:** {{ states('sensor.lights_debug_inside') }}
+
+          **Varför:** {{ state_attr('sensor.lights_debug_inside', 'reason') }}
+
+          **Alla regler:**
+
+          {{ state_attr('sensor.lights_debug_inside', 'why_not') }}
+
+      - type: markdown
+        title: 💡 Kök
+        content: >-
+          **Läge:** {{ states('sensor.lights_debug_kitchen') }}
+
+          **Varför:** {{ state_attr('sensor.lights_debug_kitchen', 'reason') }}
+
+          **Alla regler:**
+
+          {{ state_attr('sensor.lights_debug_kitchen', 'why_not') }}
+
+      - type: markdown
+        title: 💡 Badrum
+        content: >-
+          **Läge:** {{ states('sensor.lights_debug_bathroom') }}
+
+          **Varför:** {{ state_attr('sensor.lights_debug_bathroom', 'reason') }}
+
+          **Alla regler:**
+
+          {{ state_attr('sensor.lights_debug_bathroom', 'why_not') }}
+
+      - type: markdown
+        title: 💡 Hall
+        content: >-
+          **Läge:** {{ states('sensor.lights_debug_hall') }}
+
+          **Varför:** {{ state_attr('sensor.lights_debug_hall', 'reason') }}
+
+          **Alla regler:**
+
+          {{ state_attr('sensor.lights_debug_hall', 'why_not') }}
+
+      - type: markdown
+        title: 💡 Trädgård
+        content: >-
+          **Läge:** {{ states('sensor.lights_debug_garden') }}
+
+          **Varför:** {{ state_attr('sensor.lights_debug_garden', 'reason') }}
+
+          **Alla regler:**
+
+          {{ state_attr('sensor.lights_debug_garden', 'why_not') }}
+
+      - type: markdown
+        title: 💡 Uterum
+        content: >-
+          **Läge:** {{ states('sensor.lights_debug_uterum') }}
+
+          **Varför:** {{ state_attr('sensor.lights_debug_uterum', 'reason') }}
+
+          **Alla regler:**
+
+          {{ state_attr('sensor.lights_debug_uterum', 'why_not') }}
+
+      - type: markdown
+        title: 💡 Spabad
+        content: >-
+          **Läge:** {{ states('sensor.lights_debug_spabad') }}
+
+          **Varför:** {{ state_attr('sensor.lights_debug_spabad', 'reason') }}
+
+          **Alla regler:**
+
+          {{ state_attr('sensor.lights_debug_spabad', 'why_not') }}
+
+      - type: markdown
+        title: 💡 Fasad
+        content: >-
+          **Läge:** {{ states('sensor.lights_debug_facade') }}
+
+          **Varför:** {{ state_attr('sensor.lights_debug_facade', 'reason') }}
+
+          **Alla regler:**
+
+          {{ state_attr('sensor.lights_debug_facade', 'why_not') }}
+
+      - type: markdown
+        title: 🦊 Djurdetektering (radio + strålkastare, baksida)
+        content: >-
+          **Läge:** {{ states('sensor.frigate_debug_animal_backside') }}
+
+          **Varför:** {{ state_attr('sensor.frigate_debug_animal_backside', 'reason') }}
+
+          **Djur upptäckt just nu:** {{ state_attr('sensor.frigate_debug_animal_backside', 'animal_detected') }}
+
+          **Radio-automation på:** {{ state_attr('sensor.frigate_debug_animal_backside', 'radio_automation_enabled') }}

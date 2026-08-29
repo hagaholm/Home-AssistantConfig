@@ -64,7 +64,8 @@ views:
         content: |
           # 💡 Belysningsautomationer
           
-          Alla automationer som styr belysning i hemmet
+          Alla automationer som styr belysning i hemmet.
+          Se **Diagnostik → Varför?** för en förklaring av varför en lampa är i sitt nuvarande läge just nu.
 
       # Resolvers - Main control logic
       - type: entities
@@ -256,6 +257,10 @@ views:
           - automation.person_motion_light_control_frontside_garage
 
       # Animal Detection
+      - type: markdown
+        content: >-
+          🦊 **Djurdetektering (baksida):** Tänder radio (`light.tradack_ute` - fysiskt en radio, inte en lampa)
+          och strålkastare vid djurdetektering om det är mörkt/natt. Se **Diagnostik → Varför?** för aktuell status.
       - type: entities
         title: 🦊 Djurdetektering
         show_header_toggle: true
@@ -265,6 +270,7 @@ views:
           - automation.animal_motion_light_control
           - automation.animal_motion_radio_control_backside
           - automation.turn_off_deck_light_after_10_minutes_failsafe
+          - sensor.frigate_debug_animal_backside
 
       # Test Automations
       - type: entities

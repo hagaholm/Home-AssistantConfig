@@ -56,6 +56,41 @@
 # - Failsafe + reset-script för att nollställa läget
 #
 
+##############
+### Sensor ###
+##############
+# Debug/diagnostik-sensor - visar varför radion (light.tradack_ute) och strålkastarna
+# är på/av just nu, analogt med packages/lights/debug.yaml-mönstret.
+template:
+  - sensor:
+      - name: frigate_debug_animal_backside
+        unique_id: frigate_debug_animal_backside
+        state: >-
+          Radio: {{ states('light.tradack_ute') }}, Strålkastare: {{ 'on' if is_state('light.stralkastare_husgavel', 'on') or is_state('light.kamera5_stralkastare', 'on') or is_state('light.kamera6_stralkastare', 'on') or is_state('light.kamera8_stralkastare', 'on') else 'off' }}
+        attributes:
+          animal_detected: "{{ is_state('binary_sensor.cams_animal_backside_active', 'on') }}"
+          lux: "{{ states('sensor.ljusstyrka') }}"
+          is_night: >-
+            {% from 'time_windows.jinja' import in_time_range %}
+            {{ in_time_range(20, 0, 8, 0) }}
+          radio_automation_enabled: "{{ is_state('automation.animal_motion_radio_control_backside', 'on') }}"
+          floodlight_automation_enabled: "{{ is_state('automation.animal_motion_light_control', 'on') }}"
+          reason: >-
+            {% from 'time_windows.jinja' import in_time_range %}
+            {% set detected = is_state('binary_sensor.cams_animal_backside_active', 'on') %}
+            {% set lux = states('sensor.ljusstyrka') | float(none) %}
+            {% set is_night = (in_time_range(20, 0, 8, 0) | trim) == 'True' %}
+            {% set dark_enough = is_night or (lux is number and lux < 10) %}
+            {% if not is_state('automation.animal_motion_radio_control_backside', 'on') %}
+              Automationen "Animal Motion Radio Control Backside" är avstängd -> radion styrs inte automatiskt
+            {% elif not detected %}
+              Ingen djurdetektering just nu (cams_animal_backside_active=off) -> radio släcks 20s efter senaste detektion
+            {% elif dark_enough %}
+              Djur upptäckt + mörkt (natt 20-08 eller lux<10) -> radio tänds 10s efter detektion om det kvarstår
+            {% else %}
+              Djur upptäckt men för ljust (lux>=10, inte natt) -> radion tänds INTE
+            {% endif %}
+
 ##################
 ### Automation ###
 ##################

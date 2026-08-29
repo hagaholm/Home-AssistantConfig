@@ -1,0 +1,25 @@
+# Helpers/entities for spabad lighting - split out of packages/lights/spabad.yaml (Fas 2)
+# Full documentation: packages/lights/spabad.yaml
+
+input_select:
+  light_outside:
+    name: Spabad
+    # Simple on/off for spa lighting
+    # Updated by: automation "Spabad resolver" via script.spabad_set_correct_mode (manual override allowed)
+    options:
+      - Släckt
+      - Tänd
+    icon: mdi:lightbulb
+
+########################
+### Input Boolean(s) ###
+########################
+input_boolean:
+  lights_auto_spabad:
+    name: Auto Spabad
+    icon: mdi:hot-tub
+    initial: on
+
+##################
+### Automation ###
+##################

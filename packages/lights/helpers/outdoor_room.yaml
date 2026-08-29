@@ -1,0 +1,26 @@
+# Helpers/entities for outdoor_room lighting - split out of packages/lights/outdoor_room.yaml (Fas 2)
+# Full documentation: packages/lights/outdoor_room.yaml
+
+input_select:
+  light_uterum:
+    name: Uterum
+    # Conservatory/sunroom simple on/off control
+    # Controls accent lighting and decorative lights in conservatory
+    # Used by: Garden room automation sequences
+    options:
+      - Släckt
+      - Tänd
+    icon: mdi:lightbulb
+
+########################
+### Input Boolean(s) ###
+########################
+input_boolean:
+  lights_auto_uterum:
+    name: Auto Uterum
+    icon: mdi:greenhouse
+    initial: on
+
+##################
+### Automation ###
+##################

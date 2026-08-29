@@ -1,0 +1,26 @@
+# Helpers/entities for garden lighting - split out of packages/lights/garden.yaml (Fas 2)
+# Full documentation: packages/lights/garden.yaml
+
+input_select:
+  light_garden: 
+    name: Trädgård
+    # Garden/patio lighting simple on/off
+    # Controls deck lights and ground-level garden accent lights
+    # Updated by: automation "Trädgårdsbelysning resolver" via script.garden_set_correct_mode (manual override allowed)
+    options:
+      - Släckt
+      - Tänd
+    icon: mdi:lightbulb
+
+########################
+### Input Boolean(s) ###
+########################
+input_boolean:
+  lights_auto_tradgard:
+    name: Auto Trädgård
+    icon: mdi:flower
+    initial: on
+
+##################
+### Automation ###
+##################

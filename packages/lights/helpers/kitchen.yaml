@@ -1,0 +1,29 @@
+# Helpers/entities for kitchen lighting - split out of packages/lights/kitchen.yaml (Fas 2)
+# Full documentation: packages/lights/kitchen.yaml
+
+input_select:
+  light_kitchen:
+    name: Kök
+    # Kitchen brightness control with 4 levels
+    # Allows fine-grained control of brightness in kitchen work areas
+    # Updated by: automation "Köksbelysning resolver" via script.kitchen_set_correct_mode (manual override allowed)
+    # Used by: light_kitchen script for brightness adjustment
+    options:
+      - Släckt
+      - 25%
+      - 50%
+      - 100%
+    icon: mdi:lightbulb
+
+########################
+### Input Boolean(s) ###
+########################
+input_boolean:
+  lights_auto_kok:
+    name: Auto Kök
+    icon: mdi:lightbulb
+    initial: on
+
+##################
+### Automation ###
+##################

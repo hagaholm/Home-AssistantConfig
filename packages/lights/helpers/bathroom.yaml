@@ -1,0 +1,28 @@
+# Helpers/entities for bathroom lighting - split out of packages/lights/bathroom.yaml (Fas 2)
+# Full documentation: packages/lights/bathroom.yaml
+
+input_select:
+  light_bathroom:
+    name: Badrum
+    # Bathroom lighting with occupancy-aware modes
+    # Four modes: Off, Day (full), Day with presence, Night with presence
+    # Used by: Bathroom automation for motion-sensitive lighting
+    options:
+      - Släckt
+      - Dag
+      - Dag närvaro
+      - Natt närvaro
+    icon: mdi:lightbulb
+
+########################
+### Input Boolean(s) ###
+########################
+input_boolean:
+  lights_auto_badrum:
+    name: Auto Badrum
+    icon: mdi:shower
+    initial: on
+
+##################
+### Automation ###
+##################

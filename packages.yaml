@@ -49,20 +49,37 @@ integrations_rest_command: !include packages/integrations/rest_command.yaml
 ####################
 ### Lights      ###
 ####################
+lights_bathroom_helpers: !include packages/lights/helpers/bathroom.yaml
 lights_bathroom: !include packages/lights/bathroom.yaml
+lights_bathroom_scripts: !include packages/scripts/lights/bathroom.yaml
 lights_debug: !include packages/lights/debug.yaml
+lights_facade_helpers: !include packages/lights/helpers/facade.yaml
 lights_facade: !include packages/lights/facade.yaml
+lights_facade_scripts: !include packages/scripts/lights/facade.yaml
+lights_garden_helpers: !include packages/lights/helpers/garden.yaml
 lights_garden: !include packages/lights/garden.yaml
+lights_garden_scripts: !include packages/scripts/lights/garden.yaml
+lights_hall_helpers: !include packages/lights/helpers/hall.yaml
 lights_hall: !include packages/lights/hall.yaml
+lights_hall_scripts: !include packages/scripts/lights/hall.yaml
+lights_inside_helpers: !include packages/lights/helpers/inside.yaml
 lights_inside: !include packages/lights/inside.yaml
+lights_inside_scripts: !include packages/scripts/lights/inside.yaml
+lights_kitchen_helpers: !include packages/lights/helpers/kitchen.yaml
 lights_kitchen: !include packages/lights/kitchen.yaml
+lights_kitchen_scripts: !include packages/scripts/lights/kitchen.yaml
 lights_light_entities: !include packages/lights/light_entities.yaml
 lights_light_groups_seasonal: !include packages/lights/light_groups_seasonal.yaml
 lights_light_groups_standard: !include packages/lights/light_groups_standard.yaml
+lights_outdoor_room_helpers: !include packages/lights/helpers/outdoor_room.yaml
 lights_outdoor_room: !include packages/lights/outdoor_room.yaml
+lights_outdoor_room_scripts: !include packages/scripts/lights/outdoor_room.yaml
 lights_restore_all: !include packages/lights/restore_all.yaml
 lights_scenes: !include packages/lights/scenes.yaml
+lights_spabad_helpers: !include packages/lights/helpers/spabad.yaml
 lights_spabad: !include packages/lights/spabad.yaml
+lights_spabad_scripts: !include packages/scripts/lights/spabad.yaml
+
 
 ####################
 ### Media       ###

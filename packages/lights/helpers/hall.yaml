@@ -1,0 +1,29 @@
+# Helpers/entities for hall lighting - split out of packages/lights/hall.yaml (Fas 2)
+# Full documentation: packages/lights/hall.yaml
+
+input_select:
+  light_hall:
+    name: Halltak
+    # Manuell och automatiserad styrning av halltak.
+    # Används av: automation "Halltakbelysning (input_select)".
+    # Synkas även av fjärrkontroll-automationen.
+    options:
+      - Släckt
+      - 1%
+      - 10%
+      - 50%
+      - 100%
+    icon: mdi:lightbulb
+
+########################
+### Input Boolean(s) ###
+########################
+input_boolean:
+  lights_auto_halltak:
+    name: Auto Halltak
+    icon: mdi:ceiling-light
+    initial: on
+
+##################
+### Automation ###
+##################

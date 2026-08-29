@@ -9,6 +9,24 @@ The canonical, full template is: `extra/AUTOMATION_TEMPLATE.md`.
 ### Naming
 - Prefer: `packages/<domain>/<topic>.yaml` (example: `packages/lights/inside.yaml`, `packages/climate/garage.yaml`).
 - Keep one “topic” per file when possible.
+- Don't add a domain prefix to the filename when the folder already names the domain (`packages/climate/garage.yaml`, not `packages/climate/climate_garage.yaml`). Keep a prefix (e.g. `frigate_`) only when several files in the same folder would otherwise be hard to tell apart in an editor tab list.
+
+### Splitting a package into helpers / automation / scripts
+Split a package file into three when it meets **at least one** of:
+- the file is over ~200 lines, or
+- the file contains 3 or more `script:` entries
+
+into:
+- `packages/<domain>/helpers/<topic>.yaml` — `input_select`/`input_boolean`/template sensors
+- `packages/<domain>/<topic>.yaml` — entities + resolver automation(s)
+- `packages/scripts/<domain>/<topic>.yaml` — scripts
+
+Smaller packages keep the single-file layout below. Always preserve existing `id:`/`entity_id` values when splitting a file — never renumber or rename them.
+
+### Naming new automations/scripts/entities
+This applies only to **newly created** ids/aliases — never rename an existing `id:` or `entity_id`.
+- New automation/script `id:` and `alias:` use consistent Swedish, pattern `<rum/domän>_<syfte>` (e.g. `kok_satt_korrekt_lage`), instead of mixed Swenglish.
+- Entity friendly names must describe **function**, not just placement (e.g. a switch that physically powers a radio should say so, not just describe its location).
 
 ### Order inside a package file
 Use a consistent top-to-bottom order so files are easy to scan:
@@ -68,7 +86,18 @@ Run:
 - `py extra/ha_audit.py` (duplicates + missing script/helper references)
 - `py extra/ha_audit.py --style` (best-effort header/comment consistency check for `packages/*.yaml`)
 
-## 6) Notes
+## 6) Shared templates (custom_templates)
+
+For Jinja logic that's duplicated across 2+ package files (e.g. dew point calculation, time-of-day windows, "seconds since home_status changed"), define it once as a macro in `custom_templates/<topic>.jinja` and import it where needed:
+
+```jinja
+{% from 'dew_point.jinja' import dew_point %}
+{{ dew_point(states('sensor.x_temperature'), states('sensor.x_humidity')) }}
+```
+
+Don't extract logic that's only used in one file — inline templates are fine for one-off cases.
+
+## 7) Notes
 - Some integration-focused package files may intentionally be “light” on metadata. For automation-heavy files, prefer the full header standard.
 
 ## Appendix: Lighting package convention

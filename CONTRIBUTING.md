@@ -11,7 +11,9 @@ This repository is a Home Assistant configuration organized around **packages**.
 
 - Prefer adding new logic under `packages/<domain>/...`.
 - Keep package files focused (one topic per file when reasonable).
+- Split a package into `helpers/` + topic file + `packages/scripts/<domain>/` once it passes ~200 lines or has 3+ scripts — see `automations.md` §1.
 - Preserve existing `id:` values when moving/consolidating automations.
+- Extract Jinja that's duplicated across 2+ files into a `custom_templates/*.jinja` macro instead of copy-pasting — see `automations.md` §6.
 
 ## Safety rules
 

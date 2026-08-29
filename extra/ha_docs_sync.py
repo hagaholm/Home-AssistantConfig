@@ -4,7 +4,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TARGET = ROOT / "SYSTEM_OVERVIEW.md"
+TARGET = ROOT / "docs" / "SYSTEM_OVERVIEW.md"
 PACKAGES_DIR = ROOT / "packages"
 
 START = "<!-- AUTO:PACKAGE_INVENTORY_START -->"
@@ -61,7 +61,8 @@ def generate_inventory_md() -> str:
     if folders:
         lines.append("### Package folders")
         for d in folders:
-            yaml_files = list(iter_yaml_files(d))
+            # rglob: some folders (lights/, scripts/) nest files one level deeper (helpers/, lights/)
+            yaml_files = sorted(p for p in d.rglob("*.yaml") if not p.name.startswith("."))
             if not yaml_files:
                 continue
             active, disabled = classify_files(yaml_files)

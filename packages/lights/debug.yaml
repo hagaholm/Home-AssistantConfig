@@ -33,27 +33,33 @@ template:
               and (states('input_select.home_status') | trim) == 'Hemma'
             }}
           seconds_since_home_status_changed: >-
-            {% set home_status_changed = states.input_select.home_status.last_changed %}
-            {{ (as_timestamp(now()) - as_timestamp(home_status_changed)) | int(0) }}
+            {% from 'home_status.jinja' import seconds_since_home_status_change %}
+            {{ seconds_since_home_status_change() }}
           pause_day_window_transition: "{{ is_state('input_boolean.inside_pause_day_window_transition', 'on') }}"
           morning_on: "{{ is_state('input_boolean.morning_light_on', 'on') }}"
           daylight_on: "{{ is_state('input_boolean.daylight_on', 'on') }}"
           awaylight_on: "{{ is_state('input_boolean.awaylight_on', 'on') }}"
           christmas_on: "{{ is_state('input_boolean.christmas_light', 'on') }}"
           kitchen_motion: "{{ is_state('binary_sensor.kok_narvaro', 'on') }}"
-          is_time_05_09: "{{ 5 <= now().hour < 9 }}"
-          is_time_09_05: "{{ (now().hour >= 9) or (now().hour < 5) }}"
-          is_time_08_22: "{{ 8 <= now().hour < 22 }}"
+          is_time_05_09: >-
+            {% from 'time_windows.jinja' import in_time_range %}
+            {{ in_time_range(5, 0, 9, 0) }}
+          is_time_09_05: >-
+            {% from 'time_windows.jinja' import in_time_range %}
+            {{ in_time_range(9, 0, 5, 0) }}
+          is_time_08_22: >-
+            {% from 'time_windows.jinja' import in_time_range %}
+            {{ in_time_range(8, 0, 22, 0) }}
           reason: >-
+            {% from 'home_status.jinja' import borta_long_enough %}
+            {% from 'time_windows.jinja' import in_time_range %}
             {% set home_status = states('input_select.home_status') %}
-            {% set home_status_changed = states.input_select.home_status.last_changed %}
-            {% set seconds_since = (as_timestamp(now()) - as_timestamp(home_status_changed)) | int(0) %}
-            {% set borta_long_enough = seconds_since >= 60 %}
+            {% set borta_long_enough = (borta_long_enough(60) | trim) == 'True' %}
             {% set pause_day_window_transition = is_state('input_boolean.inside_pause_day_window_transition', 'on') %}
             {% set current_option = states('input_select.light_inside') %}
-            {% set is_time_05_09 = 5 <= now().hour < 9 %}
-            {% set is_time_09_05 = (now().hour >= 9) or (now().hour < 5) %}
-            {% set is_time_08_22 = 8 <= now().hour < 22 %}
+            {% set is_time_05_09 = (in_time_range(5, 0, 9, 0) | trim) == 'True' %}
+            {% set is_time_09_05 = (in_time_range(9, 0, 5, 0) | trim) == 'True' %}
+            {% set is_time_08_22 = (in_time_range(8, 0, 22, 0) | trim) == 'True' %}
             {% set morning_on = is_state('input_boolean.morning_light_on', 'on') %}
             {% set daylight_on = is_state('input_boolean.daylight_on', 'on') %}
             {% set awaylight_on = is_state('input_boolean.awaylight_on', 'on') %}
@@ -77,16 +83,16 @@ template:
               Fallback: Släckt
             {% endif %}
           why_not: >-
+            {% from 'home_status.jinja' import borta_long_enough %}
+            {% from 'time_windows.jinja' import in_time_range %}
             {% set desired = states('sensor.light_inside_desired_option') | trim %}
             {% set home_status = states('input_select.home_status') %}
-            {% set home_status_changed = states.input_select.home_status.last_changed %}
-            {% set seconds_since = (as_timestamp(now()) - as_timestamp(home_status_changed)) | int(0) %}
-            {% set borta_long_enough = seconds_since >= 60 %}
+            {% set borta_long_enough = (borta_long_enough(60) | trim) == 'True' %}
             {% set pause_day_window_transition = is_state('input_boolean.inside_pause_day_window_transition', 'on') %}
 
-            {% set is_time_05_09 = 5 <= now().hour < 9 %}
-            {% set is_time_09_05 = (now().hour >= 9) or (now().hour < 5) %}
-            {% set is_time_08_22 = 8 <= now().hour < 22 %}
+            {% set is_time_05_09 = (in_time_range(5, 0, 9, 0) | trim) == 'True' %}
+            {% set is_time_09_05 = (in_time_range(9, 0, 5, 0) | trim) == 'True' %}
+            {% set is_time_08_22 = (in_time_range(8, 0, 22, 0) | trim) == 'True' %}
 
             {% set morning_on = is_state('input_boolean.morning_light_on', 'on') %}
             {% set daylight_on = is_state('input_boolean.daylight_on', 'on') %}

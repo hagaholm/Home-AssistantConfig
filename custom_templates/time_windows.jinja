@@ -1,0 +1,18 @@
+{# Shared Jinja macros for recurring time-of-day window checks.
+   Usage: {% from 'time_windows.jinja' import in_time_range %}
+          {% set is_evening = (in_time_range(9, 0, 5, 0) | trim) == 'True' %}
+   NOTE: macro calls always render as text, so a set-assignment must be
+   coerced back to a real boolean with `| trim == 'True'` - a plain
+   `{{ in_time_range(...) }}` inside an if/elif condition works fine as-is.
+   Returns true if now() falls in [start, end). Handles overnight ranges where end < start. #}
+{% macro in_time_range(start_hour, start_minute, end_hour, end_minute) %}
+{%- set n = now() -%}
+{%- set start = start_hour * 60 + start_minute -%}
+{%- set end = end_hour * 60 + end_minute -%}
+{%- set current = n.hour * 60 + n.minute -%}
+{%- if start <= end -%}
+  {{ start <= current < end }}
+{%- else -%}
+  {{ current >= start or current < end }}
+{%- endif -%}
+{% endmacro %}

@@ -1,0 +1,18 @@
+{# Shared Jinja macro for absolute humidity (Magnus-Tetens approximation, -40..+60°C).
+   Usage: {% from 'absolute_humidity.jinja' import absolute_humidity %}
+          {{ absolute_humidity(T, RH) }}
+   Returns none if T or RH is none, otherwise g/m³ rounded to 2 decimals. #}
+{% macro absolute_humidity(T, RH) %}
+{%- if T is none or RH is none -%}
+  {{ none }}
+{%- else -%}
+  {%- set a = 17.67 -%}
+  {%- set b = 243.5 -%}
+  {%- set R_sp = 2.1674 -%}
+  {%- set T_abs = 273.15 -%}
+  {%- set K = 6.112 -%}
+  {%- set exp_val = (a * T) / (T + b) -%}
+  {%- set e = 2.718281828459045 -%}
+  {{ (K * (e ** exp_val) * RH * R_sp / (T_abs + T)) | round(2) }}
+{%- endif -%}
+{% endmacro %}

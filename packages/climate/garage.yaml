@@ -37,13 +37,6 @@ homeassistant:
       mogelrisk_troskel: &mogelrisk_troskel 75
       mogelrisk_varning: &mogelrisk_varning 60
       mogelrisk_varning_tid: &mogelrisk_varning_tid 6  # timmar
-      
-      # Matematiska konstanter för fuktberäkning
-      magnus_a: &magnus_a 17.67
-      magnus_b: &magnus_b 243.5
-      absolut_noll: &absolut_noll 273.15
-      ideal_gas_konstant: &ideal_gas_konstant 2.1674
-      magnus_konstant: &magnus_konstant 6.112
 
 ############################################
 # TEMPLATE SENSORER
@@ -59,20 +52,10 @@ template:
           {{ states('sensor.garage_temperature') not in ['unknown', 'unavailable', '']
              and states('sensor.garage_humidity') not in ['unknown', 'unavailable', ''] }}
         state: >
+          {% from 'absolute_humidity.jinja' import absolute_humidity %}
           {% set T = states('sensor.garage_temperature') | float(none) %}
           {% set RH = states('sensor.garage_humidity') | float(none) %}
-          {% if T is none or RH is none %}
-            {{ none }}
-          {% else %}
-            {% set a = 17.67 %}
-            {% set b = 243.5 %}
-            {% set R_sp = 2.1674 %}
-            {% set T_abs = 273.15 %}
-            {% set K = 6.112 %}
-            {% set exp_val = (a * T) / (T + b) %}
-            {% set e = 2.718281828459045 %}
-            {{ (K * (e ** exp_val) * RH * R_sp / (T_abs + T)) | round(2) }}
-          {% endif %}
+          {{ absolute_humidity(T, RH) }}
 
       # Beräknar mögelrisk baserat på relativ fuktighet
       - name: "Garage mögelrisk"

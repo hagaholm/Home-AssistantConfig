@@ -1,0 +1,12 @@
+{# Shared Jinja macros for home_status duration checks (input_select.home_status).
+   Usage: {% from 'home_status.jinja' import seconds_since_home_status_change, borta_long_enough %}
+          {% set enough = (borta_long_enough(60) | trim) == 'True' %}
+   NOTE: macro calls always render as text - coerce set-assignments with `| trim == 'True'`. #}
+{% macro seconds_since_home_status_change() %}
+{%- set changed = states.input_select.home_status.last_changed -%}
+{{ (as_timestamp(now()) - as_timestamp(changed)) | int(0) }}
+{%- endmacro %}
+
+{% macro borta_long_enough(min_seconds=60) %}
+{{ seconds_since_home_status_change() | int(0) >= min_seconds }}
+{%- endmacro %}

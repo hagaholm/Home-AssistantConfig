@@ -22,7 +22,13 @@ template:
           {% else %}OK{% endif %}
         attributes:
           reason: >-
-            {% if states('sensor.forrad_mogelrisk') | float(none) is not number %}Temperatur, fukt eller mögelrisk saknar giltigt värde
+            {% set temperature = states('sensor.forrad_temperature') | float(none) %}
+            {% set humidity = states('sensor.forrad_luftfuktighet') | float(none) %}
+            {% set risk = states('sensor.forrad_mogelrisk') | float(none) %}
+            {% set missing = [] %}
+            {% if states('sensor.forrad_temperature') in ['unknown', 'unavailable', ''] %}{% set missing = missing + ['sensor.forrad_temperature (temperatur)'] %}{% endif %}
+            {% if states('sensor.forrad_luftfuktighet') in ['unknown', 'unavailable', ''] %}{% set missing = missing + ['sensor.forrad_luftfuktighet (luftfuktighet)'] %}{% endif %}
+            {% if temperature is not number or humidity is not number or risk is not number %}Data saknas: {{ missing | join(', ') if missing else 'mögelrisken kan inte beräknas från källvärdena' }}
             {% elif states('sensor.forrad_mogelrisk') | float(0) > 50 %}Mögelrisk över varningsgränsen 50 %
             {% elif is_state('switch.forrad_elvarme', 'on') %}Elvärmen är aktiv enligt befintlig värmestyrning
             {% else %}Mögelrisk under varningsgränsen och elvärmen är av{% endif %}
@@ -30,6 +36,11 @@ template:
           humidity: "{{ states('sensor.forrad_luftfuktighet') }}"
           mold_risk: "{{ states('sensor.forrad_mogelrisk') }}"
           heat_active: "{{ is_state('switch.forrad_elvarme', 'on') }}"
+          missing_inputs: >-
+            {% set missing = [] %}
+            {% if states('sensor.forrad_temperature') in ['unknown', 'unavailable', ''] %}{% set missing = missing + ['sensor.forrad_temperature (temperatur)'] %}{% endif %}
+            {% if states('sensor.forrad_luftfuktighet') in ['unknown', 'unavailable', ''] %}{% set missing = missing + ['sensor.forrad_luftfuktighet (luftfuktighet)'] %}{% endif %}
+            {{ missing | join(', ') if missing else 'Inga' }}
           warning_threshold: 50
           automation: automation.forrad_mogelvarning
 
@@ -45,7 +56,13 @@ template:
           {% else %}OK{% endif %}
         attributes:
           reason: >-
-            {% if states('sensor.friggebod_mogelrisk') | float(none) is not number %}Temperatur, fukt eller mögelrisk saknar giltigt värde
+            {% set temperature = states('sensor.friggebod_temperatur') | float(none) %}
+            {% set humidity = states('sensor.friggebod_luftfuktighet') | float(none) %}
+            {% set risk = states('sensor.friggebod_mogelrisk') | float(none) %}
+            {% set missing = [] %}
+            {% if states('sensor.friggebod_temperatur') in ['unknown', 'unavailable', ''] %}{% set missing = missing + ['sensor.friggebod_temperatur (temperatur)'] %}{% endif %}
+            {% if states('sensor.friggebod_luftfuktighet') in ['unknown', 'unavailable', ''] %}{% set missing = missing + ['sensor.friggebod_luftfuktighet (luftfuktighet)'] %}{% endif %}
+            {% if temperature is not number or humidity is not number or risk is not number %}Data saknas: {{ missing | join(', ') if missing else 'mögelrisken kan inte beräknas från källvärdena' }}
             {% elif states('sensor.friggebod_mogelrisk') | float(0) > 50 %}Mögelrisk över varningsgränsen 50 %
             {% elif is_state('switch.friggebod_elvarme', 'on') %}Elvärmen är aktiv enligt befintlig värmestyrning
             {% else %}Mögelrisk under varningsgränsen och elvärmen är av{% endif %}
@@ -53,6 +70,11 @@ template:
           humidity: "{{ states('sensor.friggebod_luftfuktighet') }}"
           mold_risk: "{{ states('sensor.friggebod_mogelrisk') }}"
           heat_active: "{{ is_state('switch.friggebod_elvarme', 'on') }}"
+          missing_inputs: >-
+            {% set missing = [] %}
+            {% if states('sensor.friggebod_temperatur') in ['unknown', 'unavailable', ''] %}{% set missing = missing + ['sensor.friggebod_temperatur (temperatur)'] %}{% endif %}
+            {% if states('sensor.friggebod_luftfuktighet') in ['unknown', 'unavailable', ''] %}{% set missing = missing + ['sensor.friggebod_luftfuktighet (luftfuktighet)'] %}{% endif %}
+            {{ missing | join(', ') if missing else 'Inga' }}
           warning_threshold: 50
           automation: automation.friggebod_mogelvarning
 
@@ -66,12 +88,23 @@ template:
           {% elif risk > 50 %}Varning{% else %}OK{% endif %}
         attributes:
           reason: >-
-            {% if states('sensor.garage_mogelrisk') | float(none) is not number %}Temperatur, fukt eller mögelrisk saknar giltigt värde
+            {% set temperature = states('sensor.garage_temperature') | float(none) %}
+            {% set humidity = states('sensor.garage_humidity') | float(none) %}
+            {% set risk = states('sensor.garage_mogelrisk') | float(none) %}
+            {% set missing = [] %}
+            {% if states('sensor.garage_temperature') in ['unknown', 'unavailable', ''] %}{% set missing = missing + ['sensor.garage_temperature (temperatur)'] %}{% endif %}
+            {% if states('sensor.garage_humidity') in ['unknown', 'unavailable', ''] %}{% set missing = missing + ['sensor.garage_humidity (luftfuktighet)'] %}{% endif %}
+            {% if temperature is not number or humidity is not number or risk is not number %}Data saknas: {{ missing | join(', ') if missing else 'mögelrisken kan inte beräknas från källvärdena' }}
             {% elif states('sensor.garage_mogelrisk') | float(0) > 50 %}Mögelrisk över varningsgränsen 50 %
             {% else %}Mögelrisk under varningsgränsen{% endif %}
           temperature: "{{ states('sensor.garage_temperature') }}"
           humidity: "{{ states('sensor.garage_humidity') }}"
           mold_risk: "{{ states('sensor.garage_mogelrisk') }}"
+          missing_inputs: >-
+            {% set missing = [] %}
+            {% if states('sensor.garage_temperature') in ['unknown', 'unavailable', ''] %}{% set missing = missing + ['sensor.garage_temperature (temperatur)'] %}{% endif %}
+            {% if states('sensor.garage_humidity') in ['unknown', 'unavailable', ''] %}{% set missing = missing + ['sensor.garage_humidity (luftfuktighet)'] %}{% endif %}
+            {{ missing | join(', ') if missing else 'Inga' }}
           warning_threshold: 50
           automation: automation.garage_mogelvarning
 
@@ -85,12 +118,23 @@ template:
           {% elif risk > 50 %}Varning{% else %}OK{% endif %}
         attributes:
           reason: >-
-            {% if states('sensor.husvagn_mogelrisk') | float(none) is not number %}Temperatur, fukt eller mögelrisk saknar giltigt värde
+            {% set temperature = states('sensor.husvagn_temperature') | float(none) %}
+            {% set humidity = states('sensor.husvagn_humidity') | float(none) %}
+            {% set risk = states('sensor.husvagn_mogelrisk') | float(none) %}
+            {% set missing = [] %}
+            {% if states('sensor.husvagn_temperature') in ['unknown', 'unavailable', ''] %}{% set missing = missing + ['sensor.husvagn_temperature (temperatur)'] %}{% endif %}
+            {% if states('sensor.husvagn_humidity') in ['unknown', 'unavailable', ''] %}{% set missing = missing + ['sensor.husvagn_humidity (luftfuktighet)'] %}{% endif %}
+            {% if temperature is not number or humidity is not number or risk is not number %}Data saknas: {{ missing | join(', ') if missing else 'mögelrisken kan inte beräknas från källvärdena' }}
             {% elif states('sensor.husvagn_mogelrisk') | float(0) > 50 %}Mögelrisk över varningsgränsen 50 %
             {% else %}Mögelrisk under varningsgränsen{% endif %}
           temperature: "{{ states('sensor.husvagn_temperature') }}"
           humidity: "{{ states('sensor.husvagn_humidity') }}"
           mold_risk: "{{ states('sensor.husvagn_mogelrisk') }}"
+          missing_inputs: >-
+            {% set missing = [] %}
+            {% if states('sensor.husvagn_temperature') in ['unknown', 'unavailable', ''] %}{% set missing = missing + ['sensor.husvagn_temperature (temperatur)'] %}{% endif %}
+            {% if states('sensor.husvagn_humidity') in ['unknown', 'unavailable', ''] %}{% set missing = missing + ['sensor.husvagn_humidity (luftfuktighet)'] %}{% endif %}
+            {{ missing | join(', ') if missing else 'Inga' }}
           warning_threshold: 50
           automation: automation.husvagn_mogelvarning
 
@@ -104,12 +148,23 @@ template:
           {% elif risk > 50 %}Varning{% else %}OK{% endif %}
         attributes:
           reason: >-
-            {% if states('sensor.uterum_mogelrisk') | float(none) is not number %}Temperatur, fukt eller mögelrisk saknar giltigt värde
+            {% set temperature = states('sensor.uterum_temperatur') | float(none) %}
+            {% set humidity = states('sensor.uterum_luftfuktighet') | float(none) %}
+            {% set risk = states('sensor.uterum_mogelrisk') | float(none) %}
+            {% set missing = [] %}
+            {% if states('sensor.uterum_temperatur') in ['unknown', 'unavailable', ''] %}{% set missing = missing + ['sensor.uterum_temperatur (temperatur)'] %}{% endif %}
+            {% if states('sensor.uterum_luftfuktighet') in ['unknown', 'unavailable', ''] %}{% set missing = missing + ['sensor.uterum_luftfuktighet (luftfuktighet)'] %}{% endif %}
+            {% if temperature is not number or humidity is not number or risk is not number %}Data saknas: {{ missing | join(', ') if missing else 'mögelrisken kan inte beräknas från källvärdena' }}
             {% elif states('sensor.uterum_mogelrisk') | float(0) > 50 %}Mögelrisk över varningsgränsen 50 %
             {% else %}Mögelrisk under varningsgränsen{% endif %}
           temperature: "{{ states('sensor.uterum_temperatur') }}"
           humidity: "{{ states('sensor.uterum_luftfuktighet') }}"
           mold_risk: "{{ states('sensor.uterum_mogelrisk') }}"
+          missing_inputs: >-
+            {% set missing = [] %}
+            {% if states('sensor.uterum_temperatur') in ['unknown', 'unavailable', ''] %}{% set missing = missing + ['sensor.uterum_temperatur (temperatur)'] %}{% endif %}
+            {% if states('sensor.uterum_luftfuktighet') in ['unknown', 'unavailable', ''] %}{% set missing = missing + ['sensor.uterum_luftfuktighet (luftfuktighet)'] %}{% endif %}
+            {{ missing | join(', ') if missing else 'Inga' }}
           warning_threshold: 50
           automation: automation.uterum_mogelvarning
 

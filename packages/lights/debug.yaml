@@ -27,6 +27,21 @@ template:
         state: "{{ states('sensor.light_inside_desired_option') | trim }}"
         attributes:
           current_option: "{{ states('input_select.light_inside') | trim }}"
+          reality_status: >-
+            {% set selected_mode = states('input_select.light_inside') | trim %}
+            {% set lights_on = expand('light.dagbelysning', 'light.dagbelysning_jul')
+              | selectattr('state', 'eq', 'on') | map(attribute='name') | unique | list %}
+            {% if selected_mode == 'Släckt' and lights_on | count > 0 %}
+              Avvikelse: {{ lights_on | count }} lampa(or) är tänd(a)
+            {% elif selected_mode == 'Släckt' %}
+              Stämmer: inga övervakade innelampor är tända
+            {% else %}
+              Övervakade tända lampor: {{ lights_on | count }}
+            {% endif %}
+          lights_on: >-
+            {% set lights_on = expand('light.dagbelysning', 'light.dagbelysning_jul')
+              | selectattr('state', 'eq', 'on') | map(attribute='name') | unique | list %}
+            {{ lights_on | join(', ') if lights_on else 'Inga' }}
           home_status: "{{ states('input_select.home_status') | trim }}"
           manual_evening_lock: >-
             {{ (states('input_select.light_inside') | trim) == 'Kvällsbelysning'
@@ -191,6 +206,13 @@ template:
           {% endif %}
         attributes:
           current_option: "{{ states('input_select.light_kitchen') | trim }}"
+          reality_status: >-
+            {% set selected = states('input_select.light_kitchen') | trim %}
+            {% set on = expand('light.kok_underskap_bank', 'light.kok_underskap_diskbank', 'light.kok_vitrinskap') | selectattr('state', 'eq', 'on') | map(attribute='name') | list %}
+            {% if selected == 'Släckt' and on %}Avvikelse: {{ on | count }} lampa(or) är tänd(a)
+            {% elif selected != 'Släckt' and not on %}Avvikelse: läget {{ selected }} är valt men alla övervakade lampor är släckta
+            {% else %}Stämmer med valt läge{% endif %}
+          lights_on: "{{ expand('light.kok_underskap_bank', 'light.kok_underskap_diskbank', 'light.kok_vitrinskap') | selectattr('state', 'eq', 'on') | map(attribute='name') | list | join(', ') or 'Inga' }}"
           home_status: "{{ states('input_select.home_status') | trim }}"
           presence_all: "{{ is_state('binary_sensor.presence_sensor_fp2_9a29_presence_sensor_1', 'on') }}"
           presence_zone_2: "{{ is_state('binary_sensor.presence_sensor_fp2_9a29_presence_sensor_2', 'on') }}"
@@ -271,6 +293,13 @@ template:
           {% endif %}
         attributes:
           current_option: "{{ states('input_select.light_bathroom') | trim }}"
+          reality_status: >-
+            {% set selected = states('input_select.light_bathroom') | trim %}
+            {% set on = is_state('light.fonster_spott', 'on') %}
+            {% if selected == 'Släckt' and on %}Avvikelse: Fönsterspott är tänd
+            {% elif selected != 'Släckt' and not on %}Avvikelse: läget {{ selected }} är valt men Fönsterspott är släckt
+            {% else %}Stämmer med valt läge{% endif %}
+          lights_on: "{{ 'Fönsterspott' if is_state('light.fonster_spott', 'on') else 'Inga' }}"
           home_status: "{{ states('input_select.home_status') | trim }}"
           motion: "{{ is_state('binary_sensor.motion_sensor', 'on') }}"
           lux: "{{ states('sensor.kokets_ljusniva') }}"
@@ -355,6 +384,13 @@ template:
           {% endif %}
         attributes:
           current_option: "{{ states('input_select.light_garden') | trim }}"
+          reality_status: >-
+            {% set selected = states('input_select.light_garden') | trim %}
+            {% set on = expand('switch.tradgard', 'switch.shellyoutdoorsg3_e4b063f8f840', 'switch.friggebod_fonster', 'light.friggebod_ute_2') | selectattr('state', 'eq', 'on') | map(attribute='name') | list %}
+            {% if selected == 'Släckt' and on %}Avvikelse: {{ on | count }} lampa(or) är tänd(a)
+            {% elif selected != 'Släckt' and not on %}Avvikelse: läget {{ selected }} är valt men alla övervakade lampor är släckta
+            {% else %}Stämmer med valt läge{% endif %}
+          lights_on: "{{ expand('switch.tradgard', 'switch.shellyoutdoorsg3_e4b063f8f840', 'switch.friggebod_fonster', 'light.friggebod_ute_2') | selectattr('state', 'eq', 'on') | map(attribute='name') | list | join(', ') or 'Inga' }}"
           home_status: "{{ states('input_select.home_status') | trim }}"
           track_state: "{{ states('group.track_for_home_devices') | trim }}"
           lux: "{{ states('sensor.ljusstyrka') }}"
@@ -461,6 +497,13 @@ template:
           {% endif %}
         attributes:
           current_option: "{{ states('input_select.light_uterum') | trim }}"
+          reality_status: >-
+            {% set selected = states('input_select.light_uterum') | trim %}
+            {% set on = expand('light.uterum_led', 'light.uterum_fotogenlampa') | selectattr('state', 'eq', 'on') | map(attribute='name') | list %}
+            {% if selected == 'Släckt' and on %}Avvikelse: {{ on | count }} lampa(or) är tänd(a)
+            {% elif selected != 'Släckt' and not on %}Avvikelse: läget {{ selected }} är valt men alla övervakade lampor är släckta
+            {% else %}Stämmer med valt läge{% endif %}
+          lights_on: "{{ expand('light.uterum_led', 'light.uterum_fotogenlampa') | selectattr('state', 'eq', 'on') | map(attribute='name') | list | join(', ') or 'Inga' }}"
           home_status: "{{ states('input_select.home_status') | trim }}"
           track_state: "{{ states('group.track_for_home_devices') | trim }}"
           lux: "{{ states('sensor.ljusstyrka') }}"
@@ -559,6 +602,13 @@ template:
           {% endif %}
         attributes:
           current_option: "{{ states('input_select.light_outside') | trim }}"
+          reality_status: >-
+            {% set selected = states('input_select.light_outside') | trim %}
+            {% set on = expand('light.spabad_v', 'light.spabad_m', 'light.spabad_h') | selectattr('state', 'eq', 'on') | map(attribute='name') | list %}
+            {% if selected == 'Släckt' and on %}Avvikelse: {{ on | count }} lampa(or) är tänd(a)
+            {% elif selected != 'Släckt' and not on %}Avvikelse: läget {{ selected }} är valt men alla övervakade lampor är släckta
+            {% else %}Stämmer med valt läge{% endif %}
+          lights_on: "{{ expand('light.spabad_v', 'light.spabad_m', 'light.spabad_h') | selectattr('state', 'eq', 'on') | map(attribute='name') | list | join(', ') or 'Inga' }}"
           home_status: "{{ states('input_select.home_status') | trim }}"
           track_state: "{{ states('group.track_for_home_devices') | trim }}"
           workday_tomorrow: "{{ is_state('binary_sensor.workday_tomorrow', 'on') }}"
@@ -653,6 +703,13 @@ template:
           {% endif %}
         attributes:
           current_option: "{{ states('input_select.facade_lights') | trim }}"
+          reality_status: >-
+            {% set selected = states('input_select.facade_lights') | trim %}
+            {% set on = expand('light.friggebod_fasad', 'light.forrad_fasad', 'light.tvattstugan_fasad', 'light.huvudentre2') | selectattr('state', 'eq', 'on') | map(attribute='name') | list %}
+            {% if selected == 'Släckt' and on %}Avvikelse: {{ on | count }} lampa(or) är tänd(a)
+            {% elif selected != 'Släckt' and not on %}Avvikelse: läget {{ selected }} är valt men alla övervakade lampor är släckta
+            {% else %}Stämmer med valt läge{% endif %}
+          lights_on: "{{ expand('light.friggebod_fasad', 'light.forrad_fasad', 'light.tvattstugan_fasad', 'light.huvudentre2') | selectattr('state', 'eq', 'on') | map(attribute='name') | list | join(', ') or 'Inga' }}"
           home_status: "{{ states('input_select.home_status') | trim }}"
           lux: "{{ states('sensor.ljusstyrka') }}"
           lux_40: "{{ states('input_number.ljusstyrka_40') }}"
@@ -751,6 +808,13 @@ template:
           {% endif %}
         attributes:
           current_option: "{{ states('input_select.light_hall') | trim }}"
+          reality_status: >-
+            {% set selected = states('input_select.light_hall') | trim %}
+            {% set on = is_state('light.hall_tak', 'on') %}
+            {% if selected == 'Släckt' and on %}Avvikelse: Hall tak är tänd
+            {% elif selected != 'Släckt' and not on %}Avvikelse: läget {{ selected }} är valt men Hall tak är släckt
+            {% else %}Stämmer med valt läge{% endif %}
+          lights_on: "{{ 'Hall tak' if is_state('light.hall_tak', 'on') else 'Inga' }}"
           home_status: "{{ states('input_select.home_status') | trim }}"
           hall_state: "{{ states('light.hall_tak') }}"
           brightness: "{{ state_attr('light.hall_tak', 'brightness') }}"

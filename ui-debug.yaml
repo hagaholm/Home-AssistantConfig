@@ -39,6 +39,42 @@ views:
     icon: mdi:lightbulb-group-outline
     badges: []
     cards:
+      - type: markdown
+        title: Verklighetskontroll
+        content: >-
+          **Inne:** {{ state_attr('sensor.lights_debug_inside', 'reality_status') }}
+
+          {{ state_attr('sensor.lights_debug_inside', 'lights_on') }}
+
+          **Kök:** {{ state_attr('sensor.lights_debug_kitchen', 'reality_status') }}
+
+          {{ state_attr('sensor.lights_debug_kitchen', 'lights_on') }}
+
+          **Badrum:** {{ state_attr('sensor.lights_debug_bathroom', 'reality_status') }}
+
+          {{ state_attr('sensor.lights_debug_bathroom', 'lights_on') }}
+
+          **Hall:** {{ state_attr('sensor.lights_debug_hall', 'reality_status') }}
+
+          {{ state_attr('sensor.lights_debug_hall', 'lights_on') }}
+
+          **Trädgård:** {{ state_attr('sensor.lights_debug_garden', 'reality_status') }}
+
+          {{ state_attr('sensor.lights_debug_garden', 'lights_on') }}
+
+          **Uterum:** {{ state_attr('sensor.lights_debug_uterum', 'reality_status') }}
+
+          {{ state_attr('sensor.lights_debug_uterum', 'lights_on') }}
+
+          **Spabad:** {{ state_attr('sensor.lights_debug_spabad', 'reality_status') }}
+
+          {{ state_attr('sensor.lights_debug_spabad', 'lights_on') }}
+
+          **Fasad:** {{ state_attr('sensor.lights_debug_facade', 'reality_status') }}
+
+          {{ state_attr('sensor.lights_debug_facade', 'lights_on') }}
+
+          En avvikelse betyder att valt automationsläge och de lampor som respektive grupp styr inte är överens.
       - type: entities
         title: Valda lägen
         entities:

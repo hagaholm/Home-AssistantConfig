@@ -19,6 +19,50 @@
 
 template:
   - sensor:
+      - name: diagnostics_lights_health
+        unique_id: diagnostics_lights_health
+        icon: >-
+          {% if this.state == 'OK' %}mdi:lightbulb-check-outline
+          {% elif this.state == 'Varning' %}mdi:lightbulb-alert-outline
+          {% else %}mdi:lightbulb-off-outline{% endif %}
+        state: >-
+          {% set checks = [
+            {'name': 'Inne', 'entity': 'sensor.lights_debug_inside'}, {'name': 'Kök', 'entity': 'sensor.lights_debug_kitchen'}, {'name': 'Badrum', 'entity': 'sensor.lights_debug_bathroom'}, {'name': 'Hall', 'entity': 'sensor.lights_debug_hall'}, {'name': 'Trädgård', 'entity': 'sensor.lights_debug_garden'}, {'name': 'Uterum', 'entity': 'sensor.lights_debug_uterum'}, {'name': 'Spabad', 'entity': 'sensor.lights_debug_spabad'}, {'name': 'Fasad', 'entity': 'sensor.lights_debug_facade'}
+          ] %}
+          {% set controlled = expand('light.dagbelysning', 'light.dagbelysning_jul', 'light.kok_underskap_bank', 'light.kok_underskap_diskbank', 'light.kok_vitrinskap', 'light.fonster_spott', 'switch.tradgard', 'switch.shellyoutdoorsg3_e4b063f8f840', 'switch.friggebod_fonster', 'light.friggebod_ute_2', 'light.uterum_led', 'light.uterum_fotogenlampa', 'light.spabad_v', 'light.spabad_m', 'light.spabad_h', 'light.friggebod_fasad', 'light.forrad_fasad', 'light.tvattstugan_fasad', 'light.huvudentre2', 'light.hall_tak') %}
+          {% set unavailable = controlled | selectattr('state', 'in', ['unknown', 'unavailable']) | list %}
+          {% set health = namespace(failed=false, warning=false) %}
+          {% if unavailable %}{% set health.failed = true %}{% endif %}
+          {% for check in checks %}
+            {% if states(check.entity) in ['unknown', 'unavailable'] %}{% set health.failed = true %}
+            {% elif 'Avvikelse:' in (state_attr(check.entity, 'reality_status') | string) %}{% set health.warning = true %}{% endif %}
+          {% endfor %}
+          {% if health.failed %}Fel
+          {% elif health.warning %}Varning
+          {% else %}OK{% endif %}
+        attributes:
+          reason: >-
+            {% if this.state == 'Fel' %}Minst en belysningsdiagnos kan inte rapportera
+            {% elif this.state == 'Varning' %}Minst ett automationsläge stämmer inte med de verkliga lamporna
+            {% else %}Alla övervakade belysningsgrupper stämmer med sina automationslägen{% endif %}
+          active_issues: >-
+            {% set checks = [
+              {'name': 'Inne', 'entity': 'sensor.lights_debug_inside'}, {'name': 'Kök', 'entity': 'sensor.lights_debug_kitchen'}, {'name': 'Badrum', 'entity': 'sensor.lights_debug_bathroom'}, {'name': 'Hall', 'entity': 'sensor.lights_debug_hall'}, {'name': 'Trädgård', 'entity': 'sensor.lights_debug_garden'}, {'name': 'Uterum', 'entity': 'sensor.lights_debug_uterum'}, {'name': 'Spabad', 'entity': 'sensor.lights_debug_spabad'}, {'name': 'Fasad', 'entity': 'sensor.lights_debug_facade'}
+            ] %}
+            {% set issues = namespace(items=[]) %}
+            {% set controlled = expand('light.dagbelysning', 'light.dagbelysning_jul', 'light.kok_underskap_bank', 'light.kok_underskap_diskbank', 'light.kok_vitrinskap', 'light.fonster_spott', 'switch.tradgard', 'switch.shellyoutdoorsg3_e4b063f8f840', 'switch.friggebod_fonster', 'light.friggebod_ute_2', 'light.uterum_led', 'light.uterum_fotogenlampa', 'light.spabad_v', 'light.spabad_m', 'light.spabad_h', 'light.friggebod_fasad', 'light.forrad_fasad', 'light.tvattstugan_fasad', 'light.huvudentre2', 'light.hall_tak') %}
+            {% for entity in controlled %}{% if entity.state in ['unknown', 'unavailable'] %}{% set issues.items = issues.items + ['Fel: ' ~ entity.name ~ ' (' ~ entity.entity_id ~ ': ' ~ entity.state ~ ')'] %}{% endif %}{% endfor %}
+            {% for check in checks %}
+              {% if states(check.entity) in ['unknown', 'unavailable'] %}{% set issues.items = issues.items + ['Fel: ' ~ check.name ~ ' diagnostik ' ~ states(check.entity)] %}
+              {% else %}{% set reality = state_attr(check.entity, 'reality_status') | string %}{% if 'Avvikelse:' in reality %}{% set issues.items = issues.items + ['Varning: ' ~ check.name ~ ': ' ~ reality] %}{% endif %}{% endif %}
+            {% endfor %}
+            {{ issues.items | join('\n') if issues.items else 'Inga' }}
+          unavailable_controlled_entities: >-
+            {% set controlled = expand('light.dagbelysning', 'light.dagbelysning_jul', 'light.kok_underskap_bank', 'light.kok_underskap_diskbank', 'light.kok_vitrinskap', 'light.fonster_spott', 'switch.tradgard', 'switch.shellyoutdoorsg3_e4b063f8f840', 'switch.friggebod_fonster', 'light.friggebod_ute_2', 'light.uterum_led', 'light.uterum_fotogenlampa', 'light.spabad_v', 'light.spabad_m', 'light.spabad_h', 'light.friggebod_fasad', 'light.forrad_fasad', 'light.tvattstugan_fasad', 'light.huvudentre2', 'light.hall_tak') %}
+            {% set unavailable = controlled | selectattr('state', 'in', ['unknown', 'unavailable']) | map(attribute='entity_id') | list %}
+            {{ unavailable | join(', ') if unavailable else 'Inga' }}
+          checked_at: "{{ now().isoformat() }}"
+
       # -----------------
       # INSIDE (Innebelysning)
       # -----------------

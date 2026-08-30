@@ -48,6 +48,75 @@ views:
           - sensor.diagnostics_frigate_security
           - sensor.diagnostics_system_health
           - sensor.diagnostics_sensor_freshness
+          - sensor.diagnostics_sensors_health
+          - sensor.diagnostics_network_health
+
+  - path: natverk
+    title: Nätverk & infrastruktur
+    icon: mdi:lan
+    badges: []
+    cards:
+      - type: markdown
+        title: Infrastrukturhälsa
+        content: >-
+          **Läge:** {{ states('sensor.diagnostics_network_health') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_network_health', 'reason') }}
+
+          **Problem:**
+
+          {{ state_attr('sensor.diagnostics_network_health', 'active_issues') }}
+      - type: entities
+        title: Kritisk infrastruktur
+        entities:
+          - sensor.asus_rt_ac86u
+          - sensor.tradfri_gateway
+          - sensor.raspberry_pi_b_1_wire
+          - sensor.raspberry_pi_3b_lux
+          - sensor.kamera_5
+          - sensor.kamera_6
+          - sensor.kamera_7
+          - sensor.kamera_8
+          - sensor.kamera_10
+      - type: entities
+        title: Sekundär infrastruktur
+        entities:
+          - sensor.nas_dns_320
+          - sensor.harmony_hub
+          - sensor.kamera_1
+          - sensor.kamera_2
+          - sensor.kamera_4
+
+  - path: sensorer
+    title: Sensorer & givare
+    icon: mdi:access-point
+    badges: []
+    cards:
+      - type: markdown
+        title: Givarhälsa
+        content: >-
+          **Läge:** {{ states('sensor.diagnostics_sensors_health') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_sensors_health', 'reason') }}
+
+          **Problem:** {{ state_attr('sensor.diagnostics_sensors_health', 'active_issues') }}
+
+          **Kontrollgräns:** {{ state_attr('sensor.diagnostics_sensors_health', 'threshold_minutes') }} minuter sedan senaste uppdatering.
+      - type: entities
+        title: Kritiska givare
+        entities:
+          - sensor.diagnostics_sensor_freshness
+          - sensor.ljusstyrka
+          - sensor.ljusstyrka_measured
+          - sensor.kokets_ljusniva
+          - sensor.hall_ljusniva
+          - sensor.vardagsrum_ljusniva
+          - sensor.uterum_temperatur
+          - sensor.uterum_luftfuktighet
+          - sensor.forrad_temperature
+          - sensor.forrad_luftfuktighet
+          - sensor.friggebod_temperatur
+          - sensor.friggebod_luftfuktighet
 
   - path: belysning
     title: Belysning
@@ -91,6 +160,14 @@ views:
 
           En avvikelse betyder att valt automationsläge och de lampor som respektive grupp styr inte är överens.
       - type: entities
+        title: Belysningshälsa
+        entities:
+          - sensor.diagnostics_lights_health
+      - type: markdown
+        title: Otillgängliga lampor och switchar
+        content: >-
+          {{ state_attr('sensor.diagnostics_lights_health', 'unavailable_controlled_entities') }}
+      - type: entities
         title: Valda lägen
         entities:
           - sensor.lights_debug_inside
@@ -107,6 +184,10 @@ views:
     icon: mdi:home-thermometer-outline
     badges: []
     cards:
+      - type: entities
+        title: Klimathälsa
+        entities:
+          - sensor.diagnostics_climate_health
       - type: markdown
         title: Data saknas - felsökning
         content: >-

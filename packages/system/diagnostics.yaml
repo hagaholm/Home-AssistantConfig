@@ -40,7 +40,12 @@ template:
             {'name': 'Ute friggebod temperatur', 'entity': 'sensor.ute_friggebod_temperature'},
             {'name': 'Ute friggebod luftfuktighet', 'entity': 'sensor.ute_friggebod_humidity'},
             {'name': 'Uterum temperatur', 'entity': 'sensor.uterum_temperatur'},
-            {'name': 'Uterum luftfuktighet', 'entity': 'sensor.uterum_luftfuktighet'}
+            {'name': 'Uterum luftfuktighet', 'entity': 'sensor.uterum_luftfuktighet'},
+            {'name': 'Utomhus ljusstyrka', 'entity': 'sensor.ljusstyrka'},
+            {'name': 'Utomhus ljusstyrka råvärde', 'entity': 'sensor.ljusstyrka_measured'},
+            {'name': 'Kök ljusnivå', 'entity': 'sensor.kokets_ljusniva'},
+            {'name': 'Hall ljusnivå', 'entity': 'sensor.hall_ljusniva'},
+            {'name': 'Vardagsrum ljusnivå', 'entity': 'sensor.vardagsrum_ljusniva'}
           ] %}
           {% set freshness = namespace(stale=[]) %}
           {% for item in monitored %}
@@ -72,7 +77,12 @@ template:
               {'name': 'Ute friggebod temperatur', 'entity': 'sensor.ute_friggebod_temperature'},
               {'name': 'Ute friggebod luftfuktighet', 'entity': 'sensor.ute_friggebod_humidity'},
               {'name': 'Uterum temperatur', 'entity': 'sensor.uterum_temperatur'},
-              {'name': 'Uterum luftfuktighet', 'entity': 'sensor.uterum_luftfuktighet'}
+              {'name': 'Uterum luftfuktighet', 'entity': 'sensor.uterum_luftfuktighet'},
+              {'name': 'Utomhus ljusstyrka', 'entity': 'sensor.ljusstyrka'},
+              {'name': 'Utomhus ljusstyrka råvärde', 'entity': 'sensor.ljusstyrka_measured'},
+              {'name': 'Kök ljusnivå', 'entity': 'sensor.kokets_ljusniva'},
+              {'name': 'Hall ljusnivå', 'entity': 'sensor.hall_ljusniva'},
+              {'name': 'Vardagsrum ljusnivå', 'entity': 'sensor.vardagsrum_ljusniva'}
             ] %}
             {% set freshness = namespace(stale=[]) %}
             {% for item in monitored %}
@@ -86,6 +96,78 @@ template:
             {% endfor %}
             {{ freshness.stale | join(', ') if freshness.stale else 'Inga' }}
           threshold_minutes: 60
+
+  - sensor:
+      - name: diagnostics_sensors_health
+        unique_id: diagnostics_sensors_health
+        icon: >-
+          {% if this.state == 'OK' %}mdi:access-point-check
+          {% else %}mdi:access-point-alert{% endif %}
+        state: >-
+          {% if states('sensor.diagnostics_sensor_freshness') in ['unknown', 'unavailable'] %}Fel
+          {% elif is_state('sensor.diagnostics_sensor_freshness', 'Varning') %}Varning
+          {% else %}OK{% endif %}
+        attributes:
+          reason: >-
+            {% if states('sensor.diagnostics_sensor_freshness') in ['unknown', 'unavailable'] %}Färskhetskontrollen kan inte rapportera
+            {% elif is_state('sensor.diagnostics_sensor_freshness', 'Varning') %}En eller flera direktmätande givare saknar färsk data
+            {% else %}Alla övervakade temperatur-, fukt- och ljusgivare är färska{% endif %}
+          active_issues: "{{ state_attr('sensor.diagnostics_sensor_freshness', 'stale_sensors') or 'Inga' }}"
+          affected_entities: "{{ state_attr('sensor.diagnostics_sensor_freshness', 'stale_sensors') or 'Inga' }}"
+          checked_at: "{{ now().isoformat() }}"
+          threshold_minutes: 60
+
+      - name: diagnostics_network_health
+        unique_id: diagnostics_network_health
+        icon: >-
+          {% if this.state == 'OK' %}mdi:lan-check
+          {% elif this.state == 'Varning' %}mdi:lan-pending
+          {% else %}mdi:lan-disconnect{% endif %}
+        state: >-
+          {% set critical = [
+            {'name': 'Router', 'entity': 'sensor.asus_rt_ac86u'},
+            {'name': 'Trådfri Gateway', 'entity': 'sensor.tradfri_gateway'},
+            {'name': 'Kamera 5', 'entity': 'sensor.kamera_5'},
+            {'name': 'Kamera 6', 'entity': 'sensor.kamera_6'},
+            {'name': 'Kamera 7', 'entity': 'sensor.kamera_7'},
+            {'name': 'Kamera 8', 'entity': 'sensor.kamera_8'},
+            {'name': 'Kamera 10', 'entity': 'sensor.kamera_10'}
+          ] %}
+          {% set warning = [
+            {'name': 'NAS', 'entity': 'sensor.nas_dns_320'},
+            {'name': 'Harmony Hub', 'entity': 'sensor.harmony_hub'},
+            {'name': 'Raspberry Pi 1-Wire', 'entity': 'sensor.raspberry_pi_b_1_wire'},
+            {'name': 'Raspberry Pi Lux', 'entity': 'sensor.raspberry_pi_3b_lux'},
+            {'name': 'Kamera 1', 'entity': 'sensor.kamera_1'},
+            {'name': 'Kamera 2', 'entity': 'sensor.kamera_2'},
+            {'name': 'Kamera 4', 'entity': 'sensor.kamera_4'}
+          ] %}
+          {% set health = namespace(critical_issue=false, warning_issue=false) %}
+          {% for device in critical %}
+            {% if states(device.entity) in ['Offline', 'unknown', 'unavailable'] %}{% set health.critical_issue = true %}{% endif %}
+          {% endfor %}
+          {% for device in warning %}
+            {% if states(device.entity) in ['Offline', 'unknown', 'unavailable'] %}{% set health.warning_issue = true %}{% endif %}
+          {% endfor %}
+          {% if health.critical_issue %}Fel
+          {% elif health.warning_issue %}Varning
+          {% else %}OK{% endif %}
+        attributes:
+          reason: >-
+            {% if this.state == 'Fel' %}En kritisk nätverks-, gateway- eller kamerakälla är offline eller kan inte rapportera
+            {% elif this.state == 'Varning' %}En sekundär infrastruktureenhet är offline
+            {% else %}Router, gateway, sensorhubbar och övervakade kameror rapporterar online{% endif %}
+          active_issues: >-
+            {% set devices = [
+              {'name': 'Router', 'entity': 'sensor.asus_rt_ac86u', 'severity': 'Fel'}, {'name': 'Trådfri Gateway', 'entity': 'sensor.tradfri_gateway', 'severity': 'Fel'}, {'name': 'Kamera 5', 'entity': 'sensor.kamera_5', 'severity': 'Fel'}, {'name': 'Kamera 6', 'entity': 'sensor.kamera_6', 'severity': 'Fel'}, {'name': 'Kamera 7', 'entity': 'sensor.kamera_7', 'severity': 'Fel'}, {'name': 'Kamera 8', 'entity': 'sensor.kamera_8', 'severity': 'Fel'}, {'name': 'Kamera 10', 'entity': 'sensor.kamera_10', 'severity': 'Fel'}, {'name': 'NAS', 'entity': 'sensor.nas_dns_320', 'severity': 'Varning'}, {'name': 'Harmony Hub', 'entity': 'sensor.harmony_hub', 'severity': 'Varning'}, {'name': 'Raspberry Pi 1-Wire', 'entity': 'sensor.raspberry_pi_b_1_wire', 'severity': 'Varning'}, {'name': 'Raspberry Pi Lux', 'entity': 'sensor.raspberry_pi_3b_lux', 'severity': 'Varning'}, {'name': 'Kamera 1', 'entity': 'sensor.kamera_1', 'severity': 'Varning'}, {'name': 'Kamera 2', 'entity': 'sensor.kamera_2', 'severity': 'Varning'}, {'name': 'Kamera 4', 'entity': 'sensor.kamera_4', 'severity': 'Varning'}
+            ] %}
+            {% set issues = namespace(items=[]) %}
+            {% for device in devices %}{% if states(device.entity) in ['Offline', 'unknown', 'unavailable'] %}{% set issues.items = issues.items + [device.severity ~ ': ' ~ device.name ~ ' (' ~ states(device.entity) ~ ')'] %}{% endif %}{% endfor %}
+            {{ issues.items | join('\n') if issues.items else 'Inga' }}
+          affected_entities: >-
+            {% set devices = ['sensor.asus_rt_ac86u', 'sensor.tradfri_gateway', 'sensor.kamera_5', 'sensor.kamera_6', 'sensor.kamera_7', 'sensor.kamera_8', 'sensor.kamera_10', 'sensor.nas_dns_320', 'sensor.harmony_hub', 'sensor.raspberry_pi_b_1_wire', 'sensor.raspberry_pi_3b_lux', 'sensor.kamera_1', 'sensor.kamera_2', 'sensor.kamera_4'] %}
+            {{ devices | select('is_state', 'Offline') | list | join(', ') or 'Inga' }}
+          checked_at: "{{ now().isoformat() }}"
 
   - sensor:
       - name: diagnostics_system_health
@@ -116,6 +198,18 @@ template:
             {'name': 'Ute', 'entity': 'sensor.diagnostics_climate_ute'}
           ] %}
           {% set issues = namespace(items=[]) %}
+          {% if states('sensor.diagnostics_climate_health') in ['Fel', 'Varning'] %}
+            {% set issues.items = issues.items + ['Klimat & ventilation: ' ~ state_attr('sensor.diagnostics_climate_health', 'active_issues')] %}
+          {% endif %}
+          {% if states('sensor.diagnostics_lights_health') in ['Fel', 'Varning'] %}
+            {% set issues.items = issues.items + ['Belysning & styrning: ' ~ state_attr('sensor.diagnostics_lights_health', 'active_issues')] %}
+          {% endif %}
+          {% if states('sensor.diagnostics_network_health') in ['Fel', 'Varning'] %}
+            {% set issues.items = issues.items + ['Nätverk & infrastruktur: ' ~ state_attr('sensor.diagnostics_network_health', 'active_issues')] %}
+          {% endif %}
+          {% if states('sensor.diagnostics_sensors_health') in ['Fel', 'Varning'] %}
+            {% set issues.items = issues.items + ['Sensorer & givare: ' ~ state_attr('sensor.diagnostics_sensors_health', 'active_issues')] %}
+          {% endif %}
           {% if is_state('sensor.diagnostics_sensor_freshness', 'Varning') %}
             {% set issues.items = issues.items + ['Givare: ' ~ state_attr('sensor.diagnostics_sensor_freshness', 'stale_sensors')] %}
           {% endif %}
@@ -155,6 +249,10 @@ template:
               {'name': 'Ute', 'entity': 'sensor.diagnostics_climate_ute'}
             ] %}
             {% set issues = namespace(items=[]) %}
+            {% if states('sensor.diagnostics_climate_health') in ['Fel', 'Varning'] %}{% set issues.items = issues.items + ['Klimat & ventilation: ' ~ state_attr('sensor.diagnostics_climate_health', 'active_issues')] %}{% endif %}
+            {% if states('sensor.diagnostics_lights_health') in ['Fel', 'Varning'] %}{% set issues.items = issues.items + ['Belysning & styrning: ' ~ state_attr('sensor.diagnostics_lights_health', 'active_issues')] %}{% endif %}
+            {% if states('sensor.diagnostics_network_health') in ['Fel', 'Varning'] %}{% set issues.items = issues.items + ['Nätverk & infrastruktur: ' ~ state_attr('sensor.diagnostics_network_health', 'active_issues')] %}{% endif %}
+            {% if states('sensor.diagnostics_sensors_health') in ['Fel', 'Varning'] %}{% set issues.items = issues.items + ['Sensorer & givare: ' ~ state_attr('sensor.diagnostics_sensors_health', 'active_issues')] %}{% endif %}
             {% if is_state('sensor.diagnostics_sensor_freshness', 'Varning') %}{% set issues.items = issues.items + ['Givare: ' ~ state_attr('sensor.diagnostics_sensor_freshness', 'stale_sensors')] %}{% endif %}
             {% for item in light_diagnostics %}
               {% set reality = state_attr(item.entity, 'reality_status') | string %}
@@ -179,6 +277,10 @@ template:
               {'name': 'Förråd', 'entity': 'sensor.diagnostics_climate_forrad'}, {'name': 'Friggebod', 'entity': 'sensor.diagnostics_climate_friggebod'}, {'name': 'Garage', 'entity': 'sensor.diagnostics_climate_garage'}, {'name': 'Husvagn', 'entity': 'sensor.diagnostics_climate_husvagn'}, {'name': 'Uterum', 'entity': 'sensor.diagnostics_climate_uterum'}, {'name': 'Ute', 'entity': 'sensor.diagnostics_climate_ute'}
             ] %}
             {% set issues = namespace(items=[]) %}
+            {% if states('sensor.diagnostics_climate_health') in ['Fel', 'Varning'] %}{% set issues.items = issues.items + ['Klimat & ventilation: ' ~ state_attr('sensor.diagnostics_climate_health', 'active_issues')] %}{% endif %}
+            {% if states('sensor.diagnostics_lights_health') in ['Fel', 'Varning'] %}{% set issues.items = issues.items + ['Belysning & styrning: ' ~ state_attr('sensor.diagnostics_lights_health', 'active_issues')] %}{% endif %}
+            {% if states('sensor.diagnostics_network_health') in ['Fel', 'Varning'] %}{% set issues.items = issues.items + ['Nätverk & infrastruktur: ' ~ state_attr('sensor.diagnostics_network_health', 'active_issues')] %}{% endif %}
+            {% if states('sensor.diagnostics_sensors_health') in ['Fel', 'Varning'] %}{% set issues.items = issues.items + ['Sensorer & givare: ' ~ state_attr('sensor.diagnostics_sensors_health', 'active_issues')] %}{% endif %}
             {% if is_state('sensor.diagnostics_sensor_freshness', 'Varning') %}{% set issues.items = issues.items + ['Givare: ' ~ state_attr('sensor.diagnostics_sensor_freshness', 'stale_sensors')] %}{% endif %}
             {% for item in light_diagnostics %}{% set reality = state_attr(item.entity, 'reality_status') | string %}{% if 'Avvikelse:' in reality %}{% set issues.items = issues.items + ['Belysning ' ~ item.name ~ ': ' ~ reality] %}{% endif %}{% endfor %}
             {% for item in climate_diagnostics %}{% if states(item.entity) in ['Varning', 'Data saknas'] %}{% set issues.items = issues.items + ['Klimat ' ~ item.name ~ ': ' ~ states(item.entity)] %}{% endif %}{% endfor %}

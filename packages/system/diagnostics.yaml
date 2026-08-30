@@ -9,6 +9,84 @@
 #
 
 template:
+  - trigger:
+      - platform: homeassistant
+        event: start
+      - platform: time_pattern
+        minutes: "/5"
+    sensor:
+      - name: diagnostics_sensor_freshness
+        unique_id: diagnostics_sensor_freshness
+        icon: >-
+          {% if this.state == 'OK' %}mdi:clock-check-outline
+          {% else %}mdi:clock-alert-outline{% endif %}
+        state: >-
+          {% set monitored = [
+            {'name': 'Frys temperatur', 'entity': 'sensor.frys_temperature'},
+            {'name': 'Kyl temperatur', 'entity': 'sensor.kyl_temperature'},
+            {'name': 'Badrum temperatur', 'entity': 'sensor.lumi_lumi_sensor_ht_agl02_temperatur'},
+            {'name': 'Badrum luftfuktighet', 'entity': 'sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet'},
+            {'name': 'Tvättstuga temperatur', 'entity': 'sensor.tvattstuga_temperature'},
+            {'name': 'Tvättstuga luftfuktighet', 'entity': 'sensor.tvattstuga_humidity'},
+            {'name': 'Värmepump temperatur', 'entity': 'sensor.varmepump_temperature'},
+            {'name': 'Hall temperatur', 'entity': 'sensor.lumi_lumi_sensor_ht_agl02_temperatur_2'},
+            {'name': 'Hall luftfuktighet', 'entity': 'sensor.lumi_lumi_weather_humidity_2'},
+            {'name': 'Garage temperatur', 'entity': 'sensor.garage_temperature'},
+            {'name': 'Garage luftfuktighet', 'entity': 'sensor.garage_humidity'},
+            {'name': 'Förråd temperatur', 'entity': 'sensor.forrad_temperature'},
+            {'name': 'Förråd luftfuktighet', 'entity': 'sensor.forrad_luftfuktighet'},
+            {'name': 'Friggebod temperatur', 'entity': 'sensor.friggebod_temperatur'},
+            {'name': 'Friggebod luftfuktighet', 'entity': 'sensor.friggebod_luftfuktighet'},
+            {'name': 'Ute friggebod temperatur', 'entity': 'sensor.ute_friggebod_temperature'},
+            {'name': 'Ute friggebod luftfuktighet', 'entity': 'sensor.ute_friggebod_humidity'},
+            {'name': 'Uterum temperatur', 'entity': 'sensor.uterum_temperatur'},
+            {'name': 'Uterum luftfuktighet', 'entity': 'sensor.uterum_luftfuktighet'}
+          ] %}
+          {% set freshness = namespace(stale=[]) %}
+          {% for item in monitored %}
+            {% set source = states[item.entity] %}
+            {% if source is none or source.state in ['unknown', 'unavailable', ''] or (as_timestamp(now()) - as_timestamp(source.last_updated, 0)) > 3600 %}
+              {% set freshness.stale = freshness.stale + [item.name] %}
+            {% endif %}
+          {% endfor %}
+          {% if freshness.stale %}Varning{% else %}OK{% endif %}
+        attributes:
+          reason: "Givare i listan nedan saknar data eller har inte uppdaterats på minst 60 minuter; om listan är Inga är alla övervakade givare färska"
+          stale_sensors: >-
+            {% set monitored = [
+              {'name': 'Frys temperatur', 'entity': 'sensor.frys_temperature'},
+              {'name': 'Kyl temperatur', 'entity': 'sensor.kyl_temperature'},
+              {'name': 'Badrum temperatur', 'entity': 'sensor.lumi_lumi_sensor_ht_agl02_temperatur'},
+              {'name': 'Badrum luftfuktighet', 'entity': 'sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet'},
+              {'name': 'Tvättstuga temperatur', 'entity': 'sensor.tvattstuga_temperature'},
+              {'name': 'Tvättstuga luftfuktighet', 'entity': 'sensor.tvattstuga_humidity'},
+              {'name': 'Värmepump temperatur', 'entity': 'sensor.varmepump_temperature'},
+              {'name': 'Hall temperatur', 'entity': 'sensor.lumi_lumi_sensor_ht_agl02_temperatur_2'},
+              {'name': 'Hall luftfuktighet', 'entity': 'sensor.lumi_lumi_weather_humidity_2'},
+              {'name': 'Garage temperatur', 'entity': 'sensor.garage_temperature'},
+              {'name': 'Garage luftfuktighet', 'entity': 'sensor.garage_humidity'},
+              {'name': 'Förråd temperatur', 'entity': 'sensor.forrad_temperature'},
+              {'name': 'Förråd luftfuktighet', 'entity': 'sensor.forrad_luftfuktighet'},
+              {'name': 'Friggebod temperatur', 'entity': 'sensor.friggebod_temperatur'},
+              {'name': 'Friggebod luftfuktighet', 'entity': 'sensor.friggebod_luftfuktighet'},
+              {'name': 'Ute friggebod temperatur', 'entity': 'sensor.ute_friggebod_temperature'},
+              {'name': 'Ute friggebod luftfuktighet', 'entity': 'sensor.ute_friggebod_humidity'},
+              {'name': 'Uterum temperatur', 'entity': 'sensor.uterum_temperatur'},
+              {'name': 'Uterum luftfuktighet', 'entity': 'sensor.uterum_luftfuktighet'}
+            ] %}
+            {% set freshness = namespace(stale=[]) %}
+            {% for item in monitored %}
+              {% set source = states[item.entity] %}
+              {% if source is none or source.state in ['unknown', 'unavailable', ''] %}
+                {% set freshness.stale = freshness.stale + [item.name ~ ' (' ~ (source.state if source is not none else 'entitet saknas') ~ ')'] %}
+              {% elif (as_timestamp(now()) - as_timestamp(source.last_updated, 0)) > 3600 %}
+                {% set age = ((as_timestamp(now()) - as_timestamp(source.last_updated, 0)) / 60) | round(0) | int %}
+                {% set freshness.stale = freshness.stale + [item.name ~ ' (' ~ age ~ ' min sedan senaste uppdatering)'] %}
+              {% endif %}
+            {% endfor %}
+            {{ freshness.stale | join(', ') if freshness.stale else 'Inga' }}
+          threshold_minutes: 60
+
   - sensor:
       - name: diagnostics_system_health
         unique_id: diagnostics_system_health
@@ -33,7 +111,7 @@ template:
             'input_boolean.ute_friggebod_reading_missing_alarm'
           ] %}
           {% set active = stale_alarms | select('is_state', 'on') | list %}
-          {% if active | count > 0 %}
+          {% if is_state('sensor.diagnostics_sensor_freshness', 'Varning') or active | count > 0 %}
             Varning
           {% elif is_state('binary_sensor.updater', 'on') %}
             Uppdatering tillgänglig
@@ -56,7 +134,9 @@ template:
               'input_boolean.ute_friggebod_reading_missing_alarm'
             ] %}
             {% set active = stale_alarms | select('is_state', 'on') | list %}
-            {% if active | count > 0 %}
+            {% if is_state('sensor.diagnostics_sensor_freshness', 'Varning') %}
+              Givare utan färsk data: {{ state_attr('sensor.diagnostics_sensor_freshness', 'stale_sensors') }}
+            {% elif active | count > 0 %}
               Saknade avläsningar: {{ active | join(', ') }}
             {% elif is_state('binary_sensor.updater', 'on') %}
               En Home Assistant-uppdatering är tillgänglig
@@ -78,6 +158,8 @@ template:
               'input_boolean.ute_friggebod_reading_missing_alarm'
             ] %}
             {{ stale_alarms | select('is_state', 'on') | list | join(', ') }}
+          sensor_freshness: "{{ states('sensor.diagnostics_sensor_freshness') }}"
+          stale_sensors: "{{ state_attr('sensor.diagnostics_sensor_freshness', 'stale_sensors') }}"
           update_available: "{{ is_state('binary_sensor.updater', 'on') }}"
           installed_version: "{{ states('sensor.installed_version') }}"
           latest_version: "{{ states('sensor.current_ha_version') }}"

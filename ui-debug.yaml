@@ -26,6 +26,16 @@ views:
           **Varför:** {{ state_attr('sensor.diagnostics_system_health', 'reason') }}
 
           **Aktiva avläsningslarm:** {{ state_attr('sensor.diagnostics_system_health', 'active_reading_alarms') or 'Inga' }}
+      - type: markdown
+        title: Sensorer utan färsk data
+        content: >-
+          **Status:** {{ states('sensor.diagnostics_sensor_freshness') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_sensor_freshness', 'reason') }}
+
+          **Berörda givare:** {{ state_attr('sensor.diagnostics_sensor_freshness', 'stale_sensors') }}
+
+          En varning visas när en övervakad givare saknar data eller inte har uppdaterats på 60 minuter. Orsaken kan vara batteri, kontakt, gateway eller integration.
       - type: entities
         title: Aktiva system
         entities:
@@ -33,6 +43,7 @@ views:
           - sensor.diagnostics_ventilation
           - sensor.diagnostics_frigate_security
           - sensor.diagnostics_system_health
+          - sensor.diagnostics_sensor_freshness
 
   - path: belysning
     title: Belysning
@@ -250,6 +261,7 @@ views:
         title: Versioner och avläsningar
         entities:
           - sensor.diagnostics_system_health
+          - sensor.diagnostics_sensor_freshness
           - sensor.installed_version
           - sensor.current_ha_version
           - sensor.frys_temp_senast_uppdaterad

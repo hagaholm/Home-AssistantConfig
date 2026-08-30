@@ -56,6 +56,24 @@ views:
     icon: mdi:home-thermometer-outline
     badges: []
     cards:
+      - type: markdown
+        title: Ute - varför detta läge?
+        content: >-
+          **Läge:** {{ states('sensor.diagnostics_climate_ute') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_climate_ute', 'reason') }}
+
+          **Datastatus:** {{ state_attr('sensor.diagnostics_climate_ute', 'data_status') }}
+
+          **Saknade värden:** {{ state_attr('sensor.diagnostics_climate_ute', 'missing_inputs') }}
+
+          **Temperatur:** {{ state_attr('sensor.diagnostics_climate_ute', 'temperature') }} °C
+
+          **Luftfuktighet:** {{ state_attr('sensor.diagnostics_climate_ute', 'humidity') }} %
+
+          **Beräknad mögelrisk:** {{ state_attr('sensor.diagnostics_climate_ute', 'mold_risk') }} %
+
+          **Beräknad RH-gräns:** {{ state_attr('sensor.diagnostics_climate_ute', 'calculated_humidity_threshold') }}
       - type: entities
         title: Klimatzoner
         entities:

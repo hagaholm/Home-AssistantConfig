@@ -15,7 +15,7 @@
 # Device Categories:
 # - Network Infrastructure: Router, NAS, Raspberry Pi servers
 # - Entertainment: Harmony Hub, Chromecast, TV, receiver
-# - Smart Home: Trådfri Gateway, cameras, sensors
+# - Smart Home: cameras, sensors
 # - People: Family member phones and computers
 #
 # Usage:
@@ -35,12 +35,6 @@
 # Modern template sensors migrated from packages/system_info.yaml
 template:
   - sensor:
-      # Network Infrastructure
-      - name: "Asus RT-AC86U"
-        unique_id: system_router_status
-        state: "{{ 'Online' if is_state('device_tracker.24_4b_fe_be_c1_58', 'home') else 'Offline' }}"
-        # Primary WiFi router and network gateway
-        
       - name: "Nas DNS-320"
         unique_id: system_nas_status
         state: "{{ 'Online' if is_state('device_tracker.dns320', 'home') else 'Offline' }}"
@@ -97,12 +91,6 @@ template:
         unique_id: system_google_home_status
         state: "{{ 'Online' if is_state('device_tracker.google_home_mini', 'home') else 'Offline' }}"
         # Google Assistant smart speaker
-
-      # Smart Home Infrastructure
-      - name: "Trådfri Gateway"
-        unique_id: system_tradfri_gateway_status
-        state: "{{ 'Online' if is_state('device_tracker.gw_a0c9a0d8bf11', 'home') else 'Offline' }}"
-        # IKEA Trådfri ZigBee gateway for smart lights
         
       - name: "Raspberry Pi B+ (1-Wire)"
         unique_id: system_rpi_1wire_status

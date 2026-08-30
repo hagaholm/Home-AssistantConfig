@@ -31,7 +31,13 @@ template:
               {'name': 'Förråd', 'entity': 'sensor.diagnostics_climate_forrad'}, {'name': 'Friggebod', 'entity': 'sensor.diagnostics_climate_friggebod'}, {'name': 'Garage', 'entity': 'sensor.diagnostics_climate_garage'}, {'name': 'Husvagn', 'entity': 'sensor.diagnostics_climate_husvagn'}, {'name': 'Uterum', 'entity': 'sensor.diagnostics_climate_uterum'}, {'name': 'Ute', 'entity': 'sensor.diagnostics_climate_ute'}
             ] %}
             {% set issues = namespace(items=[]) %}
-            {% for zone in zones %}{% if states(zone.entity) in ['Data saknas', 'unknown', 'unavailable'] %}{% set issues.items = issues.items + ['Fel: ' ~ zone.name ~ ': ' ~ (state_attr(zone.entity, 'reason') or states(zone.entity)) %}{% elif is_state(zone.entity, 'Varning') %}{% set issues.items = issues.items + ['Varning: ' ~ zone.name ~ ': ' ~ (state_attr(zone.entity, 'reason') or 'förhöjd mögelrisk') %}{% endif %}{% endfor %}
+            {% for zone in zones %}
+              {% if states(zone.entity) in ['Data saknas', 'unknown', 'unavailable'] %}
+                {% set issues.items = issues.items + ['Fel: ' ~ zone.name ~ ': ' ~ (state_attr(zone.entity, 'reason') or states(zone.entity))] %}
+              {% elif is_state(zone.entity, 'Varning') %}
+                {% set issues.items = issues.items + ['Varning: ' ~ zone.name ~ ': ' ~ (state_attr(zone.entity, 'reason') or 'förhöjd mögelrisk')] %}
+              {% endif %}
+            {% endfor %}
             {{ issues.items | join('\n') if issues.items else 'Inga' }}
           checked_at: "{{ now().isoformat() }}"
 

@@ -97,21 +97,37 @@ template:
             mdi:alert-circle-outline
           {% endif %}
         state: >-
-          {% set stale_alarms = [
-            'input_boolean.frys_reading_missing_alarm',
-            'input_boolean.kyl_reading_missing_alarm',
-            'input_boolean.badrum_reading_missing_alarm',
-            'input_boolean.tvattstuga_reading_missing_alarm',
-            'input_boolean.varmepump_reading_missing_alarm',
-            'input_boolean.vardagsrum_reading_missing_alarm',
-            'input_boolean.hall_reading_missing_alarm',
-            'input_boolean.forrad_reading_missing_alarm',
-            'input_boolean.garage_reading_missing_alarm',
-            'input_boolean.friggebod_reading_missing_alarm',
-            'input_boolean.ute_friggebod_reading_missing_alarm'
+          {% set light_diagnostics = [
+            {'name': 'Inne', 'entity': 'sensor.lights_debug_inside'},
+            {'name': 'Kök', 'entity': 'sensor.lights_debug_kitchen'},
+            {'name': 'Badrum', 'entity': 'sensor.lights_debug_bathroom'},
+            {'name': 'Hall', 'entity': 'sensor.lights_debug_hall'},
+            {'name': 'Trädgård', 'entity': 'sensor.lights_debug_garden'},
+            {'name': 'Uterum', 'entity': 'sensor.lights_debug_uterum'},
+            {'name': 'Spabad', 'entity': 'sensor.lights_debug_spabad'},
+            {'name': 'Fasad', 'entity': 'sensor.lights_debug_facade'}
           ] %}
-          {% set active = stale_alarms | select('is_state', 'on') | list %}
-          {% if is_state('sensor.diagnostics_sensor_freshness', 'Varning') or active | count > 0 %}
+          {% set climate_diagnostics = [
+            {'name': 'Förråd', 'entity': 'sensor.diagnostics_climate_forrad'},
+            {'name': 'Friggebod', 'entity': 'sensor.diagnostics_climate_friggebod'},
+            {'name': 'Garage', 'entity': 'sensor.diagnostics_climate_garage'},
+            {'name': 'Husvagn', 'entity': 'sensor.diagnostics_climate_husvagn'},
+            {'name': 'Uterum', 'entity': 'sensor.diagnostics_climate_uterum'},
+            {'name': 'Ute', 'entity': 'sensor.diagnostics_climate_ute'}
+          ] %}
+          {% set issues = namespace(items=[]) %}
+          {% if is_state('sensor.diagnostics_sensor_freshness', 'Varning') %}
+            {% set issues.items = issues.items + ['Givare: ' ~ state_attr('sensor.diagnostics_sensor_freshness', 'stale_sensors')] %}
+          {% endif %}
+          {% for item in light_diagnostics %}
+            {% set reality = state_attr(item.entity, 'reality_status') | string %}
+            {% if 'Avvikelse:' in reality %}{% set issues.items = issues.items + ['Belysning ' ~ item.name ~ ': ' ~ reality] %}{% endif %}
+          {% endfor %}
+          {% for item in climate_diagnostics %}
+            {% if states(item.entity) in ['Varning', 'Data saknas'] %}{% set issues.items = issues.items + ['Klimat ' ~ item.name ~ ': ' ~ states(item.entity)] %}{% endif %}
+          {% endfor %}
+          {% if is_state('sensor.diagnostics_ventilation', 'Varning') %}{% set issues.items = issues.items + ['Ventilation: ' ~ state_attr('sensor.diagnostics_ventilation', 'reason')] %}{% endif %}
+          {% if issues.items %}
             Varning
           {% elif is_state('binary_sensor.updater', 'on') %}
             Uppdatering tillgänglig
@@ -120,29 +136,54 @@ template:
           {% endif %}
         attributes:
           reason: >-
-            {% set stale_alarms = [
-              'input_boolean.frys_reading_missing_alarm',
-              'input_boolean.kyl_reading_missing_alarm',
-              'input_boolean.badrum_reading_missing_alarm',
-              'input_boolean.tvattstuga_reading_missing_alarm',
-              'input_boolean.varmepump_reading_missing_alarm',
-              'input_boolean.vardagsrum_reading_missing_alarm',
-              'input_boolean.hall_reading_missing_alarm',
-              'input_boolean.forrad_reading_missing_alarm',
-              'input_boolean.garage_reading_missing_alarm',
-              'input_boolean.friggebod_reading_missing_alarm',
-              'input_boolean.ute_friggebod_reading_missing_alarm'
+            {% set light_diagnostics = [
+              {'name': 'Inne', 'entity': 'sensor.lights_debug_inside'},
+              {'name': 'Kök', 'entity': 'sensor.lights_debug_kitchen'},
+              {'name': 'Badrum', 'entity': 'sensor.lights_debug_bathroom'},
+              {'name': 'Hall', 'entity': 'sensor.lights_debug_hall'},
+              {'name': 'Trädgård', 'entity': 'sensor.lights_debug_garden'},
+              {'name': 'Uterum', 'entity': 'sensor.lights_debug_uterum'},
+              {'name': 'Spabad', 'entity': 'sensor.lights_debug_spabad'},
+              {'name': 'Fasad', 'entity': 'sensor.lights_debug_facade'}
             ] %}
-            {% set active = stale_alarms | select('is_state', 'on') | list %}
-            {% if is_state('sensor.diagnostics_sensor_freshness', 'Varning') %}
-              Givare utan färsk data: {{ state_attr('sensor.diagnostics_sensor_freshness', 'stale_sensors') }}
-            {% elif active | count > 0 %}
-              Saknade avläsningar: {{ active | join(', ') }}
+            {% set climate_diagnostics = [
+              {'name': 'Förråd', 'entity': 'sensor.diagnostics_climate_forrad'},
+              {'name': 'Friggebod', 'entity': 'sensor.diagnostics_climate_friggebod'},
+              {'name': 'Garage', 'entity': 'sensor.diagnostics_climate_garage'},
+              {'name': 'Husvagn', 'entity': 'sensor.diagnostics_climate_husvagn'},
+              {'name': 'Uterum', 'entity': 'sensor.diagnostics_climate_uterum'},
+              {'name': 'Ute', 'entity': 'sensor.diagnostics_climate_ute'}
+            ] %}
+            {% set issues = namespace(items=[]) %}
+            {% if is_state('sensor.diagnostics_sensor_freshness', 'Varning') %}{% set issues.items = issues.items + ['Givare: ' ~ state_attr('sensor.diagnostics_sensor_freshness', 'stale_sensors')] %}{% endif %}
+            {% for item in light_diagnostics %}
+              {% set reality = state_attr(item.entity, 'reality_status') | string %}
+              {% if 'Avvikelse:' in reality %}{% set issues.items = issues.items + ['Belysning ' ~ item.name ~ ': ' ~ reality] %}{% endif %}
+            {% endfor %}
+            {% for item in climate_diagnostics %}
+              {% if states(item.entity) in ['Varning', 'Data saknas'] %}{% set issues.items = issues.items + ['Klimat ' ~ item.name ~ ': ' ~ states(item.entity)] %}{% endif %}
+            {% endfor %}
+            {% if is_state('sensor.diagnostics_ventilation', 'Varning') %}{% set issues.items = issues.items + ['Ventilation: ' ~ state_attr('sensor.diagnostics_ventilation', 'reason')] %}{% endif %}
+            {% if issues.items %}
+              {{ issues.items | join(' | ') }}
             {% elif is_state('binary_sensor.updater', 'on') %}
               En Home Assistant-uppdatering är tillgänglig
             {% else %}
-              Inga aktiva avläsningslarm eller väntande uppdateringar
+              Inga aktiva delsystemproblem eller väntande uppdateringar
             {% endif %}
+          active_issues: >-
+            {% set light_diagnostics = [
+              {'name': 'Inne', 'entity': 'sensor.lights_debug_inside'}, {'name': 'Kök', 'entity': 'sensor.lights_debug_kitchen'}, {'name': 'Badrum', 'entity': 'sensor.lights_debug_bathroom'}, {'name': 'Hall', 'entity': 'sensor.lights_debug_hall'}, {'name': 'Trädgård', 'entity': 'sensor.lights_debug_garden'}, {'name': 'Uterum', 'entity': 'sensor.lights_debug_uterum'}, {'name': 'Spabad', 'entity': 'sensor.lights_debug_spabad'}, {'name': 'Fasad', 'entity': 'sensor.lights_debug_facade'}
+            ] %}
+            {% set climate_diagnostics = [
+              {'name': 'Förråd', 'entity': 'sensor.diagnostics_climate_forrad'}, {'name': 'Friggebod', 'entity': 'sensor.diagnostics_climate_friggebod'}, {'name': 'Garage', 'entity': 'sensor.diagnostics_climate_garage'}, {'name': 'Husvagn', 'entity': 'sensor.diagnostics_climate_husvagn'}, {'name': 'Uterum', 'entity': 'sensor.diagnostics_climate_uterum'}, {'name': 'Ute', 'entity': 'sensor.diagnostics_climate_ute'}
+            ] %}
+            {% set issues = namespace(items=[]) %}
+            {% if is_state('sensor.diagnostics_sensor_freshness', 'Varning') %}{% set issues.items = issues.items + ['Givare: ' ~ state_attr('sensor.diagnostics_sensor_freshness', 'stale_sensors')] %}{% endif %}
+            {% for item in light_diagnostics %}{% set reality = state_attr(item.entity, 'reality_status') | string %}{% if 'Avvikelse:' in reality %}{% set issues.items = issues.items + ['Belysning ' ~ item.name ~ ': ' ~ reality] %}{% endif %}{% endfor %}
+            {% for item in climate_diagnostics %}{% if states(item.entity) in ['Varning', 'Data saknas'] %}{% set issues.items = issues.items + ['Klimat ' ~ item.name ~ ': ' ~ states(item.entity)] %}{% endif %}{% endfor %}
+            {% if is_state('sensor.diagnostics_ventilation', 'Varning') %}{% set issues.items = issues.items + ['Ventilation: ' ~ state_attr('sensor.diagnostics_ventilation', 'reason')] %}{% endif %}
+            {{ issues.items | join('\n') if issues.items else 'Inga' }}
           active_reading_alarms: >-
             {% set stale_alarms = [
               'input_boolean.frys_reading_missing_alarm',

@@ -25,6 +25,10 @@ views:
 
           **Varför:** {{ state_attr('sensor.diagnostics_system_health', 'reason') }}
 
+          **Aktiva delsystemproblem:**
+
+          {{ state_attr('sensor.diagnostics_system_health', 'active_issues') }}
+
           **Aktiva avläsningslarm:** {{ state_attr('sensor.diagnostics_system_health', 'active_reading_alarms') or 'Inga' }}
       - type: markdown
         title: Sensorer utan färsk data

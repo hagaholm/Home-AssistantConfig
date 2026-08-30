@@ -10,11 +10,11 @@
 template:
   - sensor:
       - name: "Frys temp senast uppdaterad"
-        availability: "{{ state_attr('sensor.frys_temperature', 'last_updated') is not none }}"
-        state: "{{ state_attr('sensor.frys_temperature', 'last_updated') }}"
+        availability: "{{ states.sensor.frys_temperature is defined and states.sensor.frys_temperature.last_updated is not none }}"
+        state: "{{ states.sensor.frys_temperature.last_updated if states.sensor.frys_temperature is defined else none }}"
         device_class: timestamp
         icon: >-
-          {% set lu = state_attr('sensor.frys_temperature', 'last_updated') %}
+          {% set lu = states.sensor.frys_temperature.last_updated if states.sensor.frys_temperature is defined else none %}
           {% if lu is none %}
             mdi:progress-check
           {% elif (as_timestamp(now()) - as_timestamp(lu) > 100) %}
@@ -24,11 +24,11 @@ template:
           {% endif %}
 
       - name: "Kyl temp senast uppdaterad"
-        availability: "{{ state_attr('sensor.kyl_temperature', 'last_updated') is not none }}"
-        state: "{{ state_attr('sensor.kyl_temperature', 'last_updated') }}"
+        availability: "{{ states.sensor.kyl_temperature is defined and states.sensor.kyl_temperature.last_updated is not none }}"
+        state: "{{ states.sensor.kyl_temperature.last_updated if states.sensor.kyl_temperature is defined else none }}"
         device_class: timestamp
         icon: >-
-          {% set lu = state_attr('sensor.kyl_temperature', 'last_updated') %}
+          {% set lu = states.sensor.kyl_temperature.last_updated if states.sensor.kyl_temperature is defined else none %}
           {% if lu is none %}
             mdi:progress-check
           {% elif (as_timestamp(now()) - as_timestamp(lu) > 100) %}
@@ -38,11 +38,11 @@ template:
           {% endif %}
 
       - name: "Badrum temp senast uppdaterad"
-        availability: "{{ state_attr('sensor.lumi_lumi_sensor_ht_agl02_temperatur', 'last_updated') is not none }}"
-        state: "{{ state_attr('sensor.lumi_lumi_sensor_ht_agl02_temperatur', 'last_updated') }}"
+        availability: "{{ states.sensor.badrum_temperatur is defined and states.sensor.badrum_temperatur.last_updated is not none }}"
+        state: "{{ states.sensor.badrum_temperatur.last_updated if states.sensor.badrum_temperatur is defined else none }}"
         device_class: timestamp
         icon: >-
-          {% set lu = state_attr('sensor.lumi_lumi_sensor_ht_agl02_temperatur', 'last_updated') %}
+          {% set lu = states.sensor.badrum_temperatur.last_updated if states.sensor.badrum_temperatur is defined else none %}
           {% if lu is none %}
             mdi:progress-check
           {% elif (as_timestamp(now()) - as_timestamp(lu) > 100) %}
@@ -52,11 +52,11 @@ template:
           {% endif %}
 
       - name: "Badrum fukt senast uppdaterad"
-        availability: "{{ state_attr('sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet', 'last_updated') is not none }}"
-        state: "{{ state_attr('sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet', 'last_updated') }}"
+        availability: "{{ states.sensor.badrum_luftfuktighet is defined and states.sensor.badrum_luftfuktighet.last_updated is not none }}"
+        state: "{{ states.sensor.badrum_luftfuktighet.last_updated if states.sensor.badrum_luftfuktighet is defined else none }}"
         device_class: timestamp
         icon: >-
-          {% set lu = state_attr('sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet', 'last_updated') %}
+          {% set lu = states.sensor.badrum_luftfuktighet.last_updated if states.sensor.badrum_luftfuktighet is defined else none %}
           {% if lu is none %}
             mdi:progress-check
           {% elif (as_timestamp(now()) - as_timestamp(lu) > 100) %}
@@ -67,11 +67,11 @@ template:
 
       # ... other sensors migrated similarly ...
       - name: "Aqara Multi Sensor 4 fukt senast uppdaterad"
-        availability: "{{ state_attr('sensor.aqara_multi_sensor_4_humidity', 'last_updated') is not none }}"
-        state: "{{ state_attr('sensor.aqara_multi_sensor_4_humidity', 'last_updated') }}"
+        availability: "{{ states.sensor.aqara_multi_sensor_4_humidity is defined and states.sensor.aqara_multi_sensor_4_humidity.last_updated is not none }}"
+        state: "{{ states.sensor.aqara_multi_sensor_4_humidity.last_updated if states.sensor.aqara_multi_sensor_4_humidity is defined else none }}"
         device_class: timestamp
         icon: >-
-          {% set lu = state_attr('sensor.aqara_multi_sensor_4_humidity', 'last_updated') %}
+          {% set lu = states.sensor.aqara_multi_sensor_4_humidity.last_updated if states.sensor.aqara_multi_sensor_4_humidity is defined else none %}
           {% if lu is none %}
             mdi:progress-check
           {% elif (as_timestamp(now()) - as_timestamp(lu) > 100) %}

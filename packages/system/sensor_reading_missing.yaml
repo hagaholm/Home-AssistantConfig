@@ -92,7 +92,7 @@ automation:
           state: 'off'
         - condition: template
           value_template: >
-            {% if state_attr('sensor.frys_temperature', 'last_updated') == None %} 
+            {% if states.sensor.frys_temperature is not defined or states.sensor.frys_temperature.last_updated is none %} 
               0
             {% else %} 
               {{ (as_timestamp(now())-as_timestamp(states.sensor.frys_temperature.last_updated)) > 7200 }}
@@ -120,7 +120,7 @@ automation:
           state: 'off'
         - condition: template
           value_template: >
-            {% if state_attr('sensor.kyl_temperature', 'last_updated') == None %} 
+            {% if states.sensor.kyl_temperature is not defined or states.sensor.kyl_temperature.last_updated is none %} 
               0
             {% else %} 
               {{ (as_timestamp(now())-as_timestamp(states.sensor.kyl_temperature.last_updated)) > 7200 }}
@@ -150,17 +150,17 @@ automation:
           conditions:
             - condition: template
               value_template: >
-                {% if state_attr('sensor.lumi_lumi_sensor_ht_agl02_temperatur', 'last_updated') == None %} 
+                {% if states.sensor.badrum_temperatur is not defined or states.sensor.badrum_temperatur.last_updated is none %} 
                   0
                 {% else %} 
-                  {{ (as_timestamp(now())-as_timestamp(states.sensor.lumi_lumi_sensor_ht_agl02_temperatur.last_updated)) > 7200 }}
+                  {{ (as_timestamp(now())-as_timestamp(states.sensor.badrum_temperatur.last_updated)) > 7200 }}
                 {% endif %}
             - condition: template
               value_template: > 
-                {% if state_attr('sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet', 'last_updated') == None %} 
+                {% if states.sensor.badrum_luftfuktighet is not defined or states.sensor.badrum_luftfuktighet.last_updated is none %} 
                   0
                 {% else %} 
-                  {{ (as_timestamp(now())-as_timestamp(states.sensor.lumi_lumi_sensor_ht_agl02_luftfuktighet.last_updated)) > 7200 }}
+                  {{ (as_timestamp(now())-as_timestamp(states.sensor.badrum_luftfuktighet.last_updated)) > 7200 }}
                 {% endif %}
 
     action:
@@ -187,14 +187,14 @@ automation:
           conditions:
             - condition: template
               value_template: > 
-                {% if state_attr('sensor.tvattstuga_temperature', 'last_updated') == None %} 
+                {% if states.sensor.tvattstuga_temperature is not defined or states.sensor.tvattstuga_temperature.last_updated is none %} 
                   0
                 {% else %} 
                   {{ (as_timestamp(now())-as_timestamp(states.sensor.tvattstuga_temperature.last_updated)) > 7200 }}
                 {% endif %}
             - condition: template
               value_template: > 
-                {% if state_attr('sensor.tvattstuga_humidity', 'last_updated') == None %} 
+                {% if states.sensor.tvattstuga_humidity is not defined or states.sensor.tvattstuga_humidity.last_updated is none %} 
                   0
                 {% else %} 
                   {{ (as_timestamp(now())-as_timestamp(states.sensor.tvattstuga_humidity.last_updated)) > 7200 }}
@@ -222,7 +222,7 @@ automation:
           state: 'off'
         - condition: template
           value_template: >
-            {% if state_attr('sensor.varmepump_temperature', 'last_updated') == None %} 
+            {% if states.sensor.varmepump_temperature is not defined or states.sensor.varmepump_temperature.last_updated is none %} 
               0
             {% else %} 
               {{ (as_timestamp(now())-as_timestamp(states.sensor.varmepump_temperature.last_updated)) > 7200 }}
@@ -250,10 +250,10 @@ automation:
           state: 'off'
         - condition: template
           value_template: >
-            {% if state_attr('sensor.lumi_lumi_sensor_ht_agl02_temperatur', 'last_updated') == None %} 
+            {% if states.sensor.vardagsrum_temperatur is not defined or states.sensor.vardagsrum_temperatur.last_updated is none %} 
               0
             {% else %} 
-              {{ (as_timestamp(now())-as_timestamp(states.sensor.lumi_lumi_sensor_ht_agl02_temperatur.last_updated)) > 7200 }}
+              {{ (as_timestamp(now())-as_timestamp(states.sensor.vardagsrum_temperatur.last_updated)) > 7200 }}
             {% endif %}
 
     action:
@@ -280,17 +280,17 @@ automation:
           conditions:
             - condition: template
               value_template: >
-                {% if state_attr('sensor.lumi_lumi_sensor_ht_agl02_temperatur_2', 'last_updated') == None %} 
+                {% if states.sensor.hall_temperatur is not defined or states.sensor.hall_temperatur.last_updated is none %} 
                   0
                 {% else %} 
-                  {{ (as_timestamp(now())-as_timestamp(states.sensor.lumi_lumi_sensor_ht_agl02_temperatur_2.last_updated)) > 7200 }}
+                  {{ (as_timestamp(now())-as_timestamp(states.sensor.hall_temperatur.last_updated)) > 7200 }}
                 {% endif %}
             - condition: template
               value_template: > 
-                {% if state_attr('sensor.lumi_lumi_weather_humidity_2', 'last_updated') == None %} 
+                {% if states.sensor.hall_luftfuktighet is not defined or states.sensor.hall_luftfuktighet.last_updated is none %} 
                   0
                 {% else %} 
-                  {{ (as_timestamp(now())-as_timestamp(states.sensor.lumi_lumi_weather_humidity_2.last_updated)) > 7200 }}
+                  {{ (as_timestamp(now())-as_timestamp(states.sensor.hall_luftfuktighet.last_updated)) > 7200 }}
                 {% endif %}
 
     action:
@@ -317,17 +317,17 @@ automation:
           conditions:
             - condition: template
               value_template: > 
-                {% if state_attr('sensor.garage_temperature', 'last_updated') == None %} 
+                {% if states.sensor.garage_temperature is not defined or states.sensor.garage_temperature.last_updated is none %} 
                   0
                 {% else %} 
                   {{ (as_timestamp(now())-as_timestamp(states.sensor.garage_temperature.last_updated)) > 7200 }}
                 {% endif %}
             - condition: template
               value_template: > 
-                {% if state_attr('sensor.forrad_luftfuktighet', 'last_updated') == None %} 
+                {% if states.sensor.garage_humidity is not defined or states.sensor.garage_humidity.last_updated is none %} 
                   0
                 {% else %} 
-                  {{ (as_timestamp(now())-as_timestamp(states.sensor.forrad_luftfuktighet.last_updated)) > 7200 }}
+                  {{ (as_timestamp(now())-as_timestamp(states.sensor.garage_humidity.last_updated)) > 7200 }}
                 {% endif %}
 
     action:
@@ -352,7 +352,7 @@ automation:
           state: 'off'
         - condition: template
           value_template: >
-            {% if state_attr('sensor.forrad_temperature', 'last_updated') == None %} 
+            {% if states.sensor.forrad_temperature is not defined or states.sensor.forrad_temperature.last_updated is none %} 
               0
             {% else %} 
               {{ (as_timestamp(now())-as_timestamp(states.sensor.forrad_temperature.last_updated)) > 7200 }}
@@ -382,14 +382,14 @@ automation:
           conditions:
             - condition: template
               value_template: > 
-                {% if state_attr('sensor.friggebod_temperatur', 'last_updated') == None %} 
+                {% if states.sensor.friggebod_temperatur is not defined or states.sensor.friggebod_temperatur.last_updated is none %} 
                   0
                 {% else %} 
                   {{ (as_timestamp(now())-as_timestamp(states.sensor.friggebod_temperatur.last_updated)) > 7200 }}
                 {% endif %}
             - condition: template
               value_template: > 
-                {% if state_attr('sensor.friggebod_luftfuktighet', 'last_updated') == None %} 
+                {% if states.sensor.friggebod_luftfuktighet is not defined or states.sensor.friggebod_luftfuktighet.last_updated is none %} 
                   0
                 {% else %} 
                   {{ (as_timestamp(now())-as_timestamp(states.sensor.friggebod_luftfuktighet.last_updated)) > 7200 }}
@@ -418,14 +418,14 @@ automation:
           conditions:
             - condition: template
               value_template: > 
-                {% if state_attr('sensor.ute_friggebod_temperature', 'last_updated') == None %} 
+                {% if states.sensor.ute_friggebod_temperature is not defined or states.sensor.ute_friggebod_temperature.last_updated is none %} 
                   0
                 {% else %} 
                   {{ (as_timestamp(now())-as_timestamp(states.sensor.ute_friggebod_temperature.last_updated)) > 7200 }}
                 {% endif %}
             - condition: template
               value_template: > 
-                {% if state_attr('sensor.ute_friggebod_humidity', 'last_updated') == None %} 
+                {% if states.sensor.ute_friggebod_humidity is not defined or states.sensor.ute_friggebod_humidity.last_updated is none %} 
                   0
                 {% else %} 
                   {{ (as_timestamp(now())-as_timestamp(states.sensor.ute_friggebod_humidity.last_updated)) > 7200 }}

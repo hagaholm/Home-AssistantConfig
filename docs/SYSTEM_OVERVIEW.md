@@ -366,6 +366,7 @@ Run `py extra/ha_docs_sync.py` to refresh it.
 - **packages/automations/**
   - [packages/automations/input_select_light_control.yaml](packages/automations/input_select_light_control.yaml)
 - **packages/climate/**
+  - [packages/climate/diagnostics.yaml](packages/climate/diagnostics.yaml)
   - [packages/climate/forrad.yaml](packages/climate/forrad.yaml)
   - [packages/climate/friggebod.yaml](packages/climate/friggebod.yaml)
   - [packages/climate/garage.yaml](packages/climate/garage.yaml)
@@ -373,6 +374,7 @@ Run `py extra/ha_docs_sync.py` to refresh it.
   - [packages/climate/ute.yaml](packages/climate/ute.yaml)
   - [packages/climate/uterum.yaml](packages/climate/uterum.yaml)
 - **packages/frigate/**
+  - [packages/frigate/diagnostics.yaml](packages/frigate/diagnostics.yaml)
   - [packages/frigate/frigate_animal_detected.yaml](packages/frigate/frigate_animal_detected.yaml)
   - [packages/frigate/frigate_face_detection.yaml](packages/frigate/frigate_face_detection.yaml)
   - [packages/frigate/frigate_intruder_alarm.yaml](packages/frigate/frigate_intruder_alarm.yaml)
@@ -421,6 +423,7 @@ Run `py extra/ha_docs_sync.py` to refresh it.
 - **packages/notifications/**
   - [packages/notifications/doorbell.yaml](packages/notifications/doorbell.yaml)
 - **packages/presence/**
+  - [packages/presence/diagnostics.yaml](packages/presence/diagnostics.yaml)
   - [packages/presence/home_away.yaml](packages/presence/home_away.yaml)
   - [packages/presence/person.yaml](packages/presence/person.yaml)
   - [packages/presence/working_at_home.yaml](packages/presence/working_at_home.yaml)
@@ -454,10 +457,12 @@ Run `py extra/ha_docs_sync.py` to refresh it.
   - [packages/sensors/template_sensors/template_xiaomi_lumi_mgl01_livingroom.yaml](packages/sensors/template_sensors/template_xiaomi_lumi_mgl01_livingroom.yaml)
   - [packages/sensors/template_sensors/template_xiaomi_lumi_mgl01_louise_room_is_not_working.yaml](packages/sensors/template_sensors/template_xiaomi_lumi_mgl01_louise_room_is_not_working.yaml)
 - **packages/system/**
+  - [packages/system/diagnostics.yaml](packages/system/diagnostics.yaml)
   - [packages/system/sensor_reading_missing.yaml](packages/system/sensor_reading_missing.yaml)
   - [packages/system/system_info.yaml](packages/system/system_info.yaml)
   - [packages/system/ui_generator.yaml](packages/system/ui_generator.yaml)
 - **packages/ventilation/**
+  - [packages/ventilation/diagnostics.yaml](packages/ventilation/diagnostics.yaml)
   - [packages/ventilation/fan.yaml](packages/ventilation/fan.yaml)
   - [packages/ventilation/ventilation_system.yaml](packages/ventilation/ventilation_system.yaml)
   - [packages/ventilation/ventilation_tuning.yaml](packages/ventilation/ventilation_tuning.yaml)

@@ -1,0 +1,30 @@
+####################################################
+# FRIGATE DIAGNOSTICS
+# Läsande status för sammanställd detektering och larmräknare.
+####################################################
+#
+# Källor:
+# - frigate_sensors.yaml och Frigate-detekteringspaketen.
+#
+# BESKRIVNING:
+# Sammanfattar aktiv Frigate-detektering och inbrottslarm för Diagnostik.
+
+template:
+  - sensor:
+      - name: diagnostics_frigate_security
+        unique_id: diagnostics_frigate_security
+        state: >-
+          {% if is_state('binary_sensor.cams_person_active', 'on') %}Person upptäckt
+          {% elif is_state('binary_sensor.cams_animal_backside_active', 'on') %}Djur upptäckt
+          {% else %}Ingen aktiv detektering{% endif %}
+        attributes:
+          reason: >-
+            {% if is_state('binary_sensor.cams_person_active', 'on') %}Frigate rapporterar minst en aktiv persondetektering
+            {% elif is_state('binary_sensor.cams_animal_backside_active', 'on') %}Frigate rapporterar djurdetektering på baksidan
+            {% else %}Inga aktiva Frigate-sammanställningssensorer rapporterar person eller djur{% endif %}
+          home_status: "{{ states('input_select.home_status') }}"
+          person_detected: "{{ is_state('binary_sensor.cams_person_active', 'on') }}"
+          animal_backside_detected: "{{ is_state('binary_sensor.cams_animal_backside_active', 'on') }}"
+          cam5_intruder_today: "{{ states('counter.intruder_alarm_cam5_daily_count') }}"
+          cam6_intruder_today: "{{ states('counter.intruder_alarm_cam6_daily_count') }}"
+          latest_face_camera: "{{ states('sensor.frigate_face_camera') }}"

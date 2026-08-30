@@ -1,0 +1,29 @@
+####################################################
+# PRESENCE DIAGNOSTICS
+# Läsande status för hemstatus och dess beslutskällor.
+####################################################
+#
+# Källor:
+# - home_away.yaml och frigate_temp_presence.yaml.
+#
+# BESKRIVNING:
+# Förklarar hemstatus utifrån spårade enheter, personer och tillfällig närvaro.
+
+template:
+  - sensor:
+      - name: diagnostics_presence
+        unique_id: diagnostics_presence
+        state: "{{ states('input_select.home_status') }}"
+        attributes:
+          reason: >-
+            {% set status = states('input_select.home_status') %}
+            {% if is_state('input_boolean.frigate_temp_presence', 'on') %}Tillfällig närvaro från bekräftad Frigate-ansiktsdetektering
+            {% elif status == 'Borta' %}Alla spårade enheter eller personer rapporterar borta
+            {% elif status == 'Sover' %}Hemstatus är manuellt eller automatiskt satt till Sover
+            {% elif is_state('group.track_for_home_devices', 'home') or is_state('group.persons', 'home') %}Minst en spårad enhet eller person är hemma
+            {% else %}Hemstatusens källa kan inte fastställas från aktuella tillstånd{% endif %}
+          tracked_devices: "{{ states('group.track_for_home_devices') }}"
+          persons: "{{ states('group.persons') }}"
+          kitchen_presence: "{{ states('binary_sensor.kok_narvaro') }}"
+          frigate_temporary_presence: "{{ is_state('input_boolean.frigate_temp_presence', 'on') }}"
+          temporary_presence_timeout: "{{ states('input_datetime.frigate_temp_presence_timeout') }}"

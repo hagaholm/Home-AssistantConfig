@@ -1,0 +1,83 @@
+####################################################
+#                                                  #
+#              SYSTEM DIAGNOSTICS                  #
+#                                                  #
+####################################################
+# BESKRIVNING:
+# Läsande diagnostiksensorer för systemets hälsa. De
+# sammanfattar befintliga larm och påverkar aldrig automationer.
+#
+
+template:
+  - sensor:
+      - name: diagnostics_system_health
+        unique_id: diagnostics_system_health
+        icon: >-
+          {% if this.state == 'OK' %}
+            mdi:check-circle-outline
+          {% else %}
+            mdi:alert-circle-outline
+          {% endif %}
+        state: >-
+          {% set stale_alarms = [
+            'input_boolean.frys_reading_missing_alarm',
+            'input_boolean.kyl_reading_missing_alarm',
+            'input_boolean.badrum_reading_missing_alarm',
+            'input_boolean.tvattstuga_reading_missing_alarm',
+            'input_boolean.varmepump_reading_missing_alarm',
+            'input_boolean.vardagsrum_reading_missing_alarm',
+            'input_boolean.hall_reading_missing_alarm',
+            'input_boolean.forrad_reading_missing_alarm',
+            'input_boolean.garage_reading_missing_alarm',
+            'input_boolean.friggebod_reading_missing_alarm',
+            'input_boolean.ute_friggebod_reading_missing_alarm'
+          ] %}
+          {% set active = stale_alarms | select('is_state', 'on') | list %}
+          {% if active | count > 0 %}
+            Varning
+          {% elif is_state('binary_sensor.updater', 'on') %}
+            Uppdatering tillgänglig
+          {% else %}
+            OK
+          {% endif %}
+        attributes:
+          reason: >-
+            {% set stale_alarms = [
+              'input_boolean.frys_reading_missing_alarm',
+              'input_boolean.kyl_reading_missing_alarm',
+              'input_boolean.badrum_reading_missing_alarm',
+              'input_boolean.tvattstuga_reading_missing_alarm',
+              'input_boolean.varmepump_reading_missing_alarm',
+              'input_boolean.vardagsrum_reading_missing_alarm',
+              'input_boolean.hall_reading_missing_alarm',
+              'input_boolean.forrad_reading_missing_alarm',
+              'input_boolean.garage_reading_missing_alarm',
+              'input_boolean.friggebod_reading_missing_alarm',
+              'input_boolean.ute_friggebod_reading_missing_alarm'
+            ] %}
+            {% set active = stale_alarms | select('is_state', 'on') | list %}
+            {% if active | count > 0 %}
+              Saknade avläsningar: {{ active | join(', ') }}
+            {% elif is_state('binary_sensor.updater', 'on') %}
+              En Home Assistant-uppdatering är tillgänglig
+            {% else %}
+              Inga aktiva avläsningslarm eller väntande uppdateringar
+            {% endif %}
+          active_reading_alarms: >-
+            {% set stale_alarms = [
+              'input_boolean.frys_reading_missing_alarm',
+              'input_boolean.kyl_reading_missing_alarm',
+              'input_boolean.badrum_reading_missing_alarm',
+              'input_boolean.tvattstuga_reading_missing_alarm',
+              'input_boolean.varmepump_reading_missing_alarm',
+              'input_boolean.vardagsrum_reading_missing_alarm',
+              'input_boolean.hall_reading_missing_alarm',
+              'input_boolean.forrad_reading_missing_alarm',
+              'input_boolean.garage_reading_missing_alarm',
+              'input_boolean.friggebod_reading_missing_alarm',
+              'input_boolean.ute_friggebod_reading_missing_alarm'
+            ] %}
+            {{ stale_alarms | select('is_state', 'on') | list | join(', ') }}
+          update_available: "{{ is_state('binary_sensor.updater', 'on') }}"
+          installed_version: "{{ states('sensor.installed_version') }}"
+          latest_version: "{{ states('sensor.current_ha_version') }}"

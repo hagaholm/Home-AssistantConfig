@@ -13,18 +13,185 @@
 
 title: Diagnostik
 views:
-  - path: diagnostik
-    title: Varför?
-    icon: mdi:help-circle-outline
+  - path: overview
+    title: Översikt
+    icon: mdi:monitor-dashboard
     badges: []
     cards:
       - type: markdown
-        content: |
-          # 🔍 Varför är det så här?
-          Den här vyn förklarar varför en lampa eller automation är i sitt
-          nuvarande läge. "Varför" kommer från paketens debug-sensorer -
-          se `packages/lights/debug.yaml` och
-          `packages/frigate/frigate_animal_detected.yaml`.
+        title: Systemstatus
+        content: >-
+          **Läge:** {{ states('sensor.diagnostics_system_health') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_system_health', 'reason') }}
+
+          **Aktiva avläsningslarm:** {{ state_attr('sensor.diagnostics_system_health', 'active_reading_alarms') or 'Inga' }}
+      - type: entities
+        title: Aktiva system
+        entities:
+          - sensor.diagnostics_presence
+          - sensor.diagnostics_ventilation
+          - sensor.diagnostics_frigate_security
+          - sensor.diagnostics_system_health
+
+  - path: belysning
+    title: Belysning
+    icon: mdi:lightbulb-group-outline
+    badges: []
+    cards:
+      - type: entities
+        title: Valda lägen
+        entities:
+          - sensor.lights_debug_inside
+          - sensor.lights_debug_kitchen
+          - sensor.lights_debug_bathroom
+          - sensor.lights_debug_hall
+          - sensor.lights_debug_garden
+          - sensor.lights_debug_uterum
+          - sensor.lights_debug_spabad
+          - sensor.lights_debug_facade
+
+  - path: klimat
+    title: Klimat
+    icon: mdi:home-thermometer-outline
+    badges: []
+    cards:
+      - type: entities
+        title: Klimatzoner
+        entities:
+          - sensor.diagnostics_climate_forrad
+          - sensor.diagnostics_climate_friggebod
+          - sensor.diagnostics_climate_garage
+          - sensor.diagnostics_climate_husvagn
+          - sensor.diagnostics_climate_uterum
+          - sensor.diagnostics_climate_ute
+
+  - path: ventilation
+    title: Ventilation
+    icon: mdi:fan
+    badges: []
+    cards:
+      - type: markdown
+        title: FTX - varför detta läge?
+        content: >-
+          **Läge:** {{ states('sensor.diagnostics_ventilation') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_ventilation', 'reason') }}
+
+          **Forceringstimer:** {{ state_attr('sensor.diagnostics_ventilation', 'max_timer') }}
+
+          **Stabilitetstimer:** {{ state_attr('sensor.diagnostics_ventilation', 'stability_timer') }}
+      - type: entities
+        entities:
+          - switch.shelly1_c45bbe77099d
+          - input_boolean.alarm_ventilation
+          - sensor.fukt_badrumsfonster
+
+  - path: sakerhet
+    title: Säkerhet & Frigate
+    icon: mdi:cctv
+    badges: []
+    cards:
+      - type: markdown
+        title: Aktiv detektering
+        content: >-
+          **Läge:** {{ states('sensor.diagnostics_frigate_security') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_frigate_security', 'reason') }}
+
+          **Djur på baksidan:** {{ state_attr('sensor.diagnostics_frigate_security', 'animal_backside_detected') }}
+      - type: markdown
+        title: Djurdetektering - baksida
+        content: >-
+          **Läge:** {{ states('sensor.frigate_debug_animal_backside') }}
+
+          **Varför:** {{ state_attr('sensor.frigate_debug_animal_backside', 'reason') }}
+      - type: entities
+        entities:
+          - binary_sensor.cams_person_active
+          - binary_sensor.cams_animal_backside_active
+          - counter.intruder_alarm_cam5_daily_count
+          - counter.intruder_alarm_cam6_daily_count
+
+  - path: narvaro
+    title: Närvaro & Automation
+    icon: mdi:home-account
+    badges: []
+    cards:
+      - type: markdown
+        title: Hemmastatus - varför detta läge?
+        content: >-
+          **Läge:** {{ states('sensor.diagnostics_presence') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_presence', 'reason') }}
+
+          **Tillfällig Frigate-närvaro:** {{ state_attr('sensor.diagnostics_presence', 'frigate_temporary_presence') }}
+      - type: entities
+        entities:
+          - input_select.home_status
+          - group.track_for_home_devices
+          - group.persons
+          - binary_sensor.kok_narvaro
+          - input_boolean.working_at_home
+          - sensor.mickes_work_laptop
+
+  - path: larm
+    title: Larm & Notifieringar
+    icon: mdi:bell-alert-outline
+    badges: []
+    cards:
+      - type: entities
+        title: Larmkällor
+        entities:
+          - input_boolean.alarm_ventilation
+          - input_boolean.frys_reading_missing_alarm
+          - input_boolean.kyl_reading_missing_alarm
+          - device_tracker.raspberry_pi_b_plus
+          - device_tracker.raspberry_pi_3b_2
+      - type: entities
+        title: Dörrklocka
+        entities:
+          - switch.ringklocka_tvattstuga
+          - switch.ringklocka_hall
+
+  - path: integrationer
+    title: Media & Integrationer
+    icon: mdi:connection
+    badges: []
+    cards:
+      - type: entities
+        title: Observerbara integrationer
+        entities:
+          - remote.harmony_hub
+          - sensor.installed_version
+          - sensor.current_ha_version
+          - sensor.frigate_face_camera
+          - sensor.frigate_face_score
+      - type: markdown
+        content: >-
+          Integreringar utan en tillgänglig Home Assistant-entitet kan inte få
+          en tillförlitlig hälsobedömning från YAML-konfigurationen och visas
+          därför inte som ett konstruerat OK- eller felläge.
+
+  - path: systemhalsa
+    title: Systemhälsa
+    icon: mdi:heart-pulse
+    badges: []
+    cards:
+      - type: entities
+        title: Versioner och avläsningar
+        entities:
+          - sensor.diagnostics_system_health
+          - sensor.installed_version
+          - sensor.current_ha_version
+          - sensor.frys_temp_senast_uppdaterad
+          - sensor.kyl_temp_senast_uppdaterad
+
+  - path: belysning-varfor
+    title: Belysning - Varför?
+    icon: mdi:help-circle-outline
+    badges: []
+    cards:
 
       - type: markdown
         title: 💡 Inne

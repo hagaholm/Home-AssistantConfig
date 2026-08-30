@@ -1,0 +1,132 @@
+####################################################
+#                                                  #
+#             CLIMATE DIAGNOSTICS                  #
+#                                                  #
+####################################################
+# BESKRIVNING:
+# Läsande status för klimatzonerna. Sensorerna återger
+# befintliga mätningar och larmgränser utan att styra värme.
+#
+
+template:
+  - sensor:
+      - name: diagnostics_climate_forrad
+        unique_id: diagnostics_climate_forrad
+        state: >-
+          {% set temperature = states('sensor.forrad_temperature') | float(none) %}
+          {% set humidity = states('sensor.forrad_luftfuktighet') | float(none) %}
+          {% set risk = states('sensor.forrad_mogelrisk') | float(none) %}
+          {% if temperature is not number or humidity is not number or risk is not number %}Data saknas
+          {% elif risk > 50 %}Varning
+          {% elif is_state('switch.forrad_elvarme', 'on') %}Värmer
+          {% else %}OK{% endif %}
+        attributes:
+          reason: >-
+            {% if states('sensor.forrad_mogelrisk') | float(none) is not number %}Temperatur, fukt eller mögelrisk saknar giltigt värde
+            {% elif states('sensor.forrad_mogelrisk') | float(0) > 50 %}Mögelrisk över varningsgränsen 50 %
+            {% elif is_state('switch.forrad_elvarme', 'on') %}Elvärmen är aktiv enligt befintlig värmestyrning
+            {% else %}Mögelrisk under varningsgränsen och elvärmen är av{% endif %}
+          temperature: "{{ states('sensor.forrad_temperature') }}"
+          humidity: "{{ states('sensor.forrad_luftfuktighet') }}"
+          mold_risk: "{{ states('sensor.forrad_mogelrisk') }}"
+          heat_active: "{{ is_state('switch.forrad_elvarme', 'on') }}"
+          warning_threshold: 50
+          automation: automation.forrad_mogelvarning
+
+      - name: diagnostics_climate_friggebod
+        unique_id: diagnostics_climate_friggebod
+        state: >-
+          {% set temperature = states('sensor.friggebod_temperatur') | float(none) %}
+          {% set humidity = states('sensor.friggebod_luftfuktighet') | float(none) %}
+          {% set risk = states('sensor.friggebod_mogelrisk') | float(none) %}
+          {% if temperature is not number or humidity is not number or risk is not number %}Data saknas
+          {% elif risk > 50 %}Varning
+          {% elif is_state('switch.friggebod_elvarme', 'on') %}Värmer
+          {% else %}OK{% endif %}
+        attributes:
+          reason: >-
+            {% if states('sensor.friggebod_mogelrisk') | float(none) is not number %}Temperatur, fukt eller mögelrisk saknar giltigt värde
+            {% elif states('sensor.friggebod_mogelrisk') | float(0) > 50 %}Mögelrisk över varningsgränsen 50 %
+            {% elif is_state('switch.friggebod_elvarme', 'on') %}Elvärmen är aktiv enligt befintlig värmestyrning
+            {% else %}Mögelrisk under varningsgränsen och elvärmen är av{% endif %}
+          temperature: "{{ states('sensor.friggebod_temperatur') }}"
+          humidity: "{{ states('sensor.friggebod_luftfuktighet') }}"
+          mold_risk: "{{ states('sensor.friggebod_mogelrisk') }}"
+          heat_active: "{{ is_state('switch.friggebod_elvarme', 'on') }}"
+          warning_threshold: 50
+          automation: automation.friggebod_mogelvarning
+
+      - name: diagnostics_climate_garage
+        unique_id: diagnostics_climate_garage
+        state: >-
+          {% set temperature = states('sensor.garage_temperature') | float(none) %}
+          {% set humidity = states('sensor.garage_humidity') | float(none) %}
+          {% set risk = states('sensor.garage_mogelrisk') | float(none) %}
+          {% if temperature is not number or humidity is not number or risk is not number %}Data saknas
+          {% elif risk > 50 %}Varning{% else %}OK{% endif %}
+        attributes:
+          reason: >-
+            {% if states('sensor.garage_mogelrisk') | float(none) is not number %}Temperatur, fukt eller mögelrisk saknar giltigt värde
+            {% elif states('sensor.garage_mogelrisk') | float(0) > 50 %}Mögelrisk över varningsgränsen 50 %
+            {% else %}Mögelrisk under varningsgränsen{% endif %}
+          temperature: "{{ states('sensor.garage_temperature') }}"
+          humidity: "{{ states('sensor.garage_humidity') }}"
+          mold_risk: "{{ states('sensor.garage_mogelrisk') }}"
+          warning_threshold: 50
+          automation: automation.garage_mogelvarning
+
+      - name: diagnostics_climate_husvagn
+        unique_id: diagnostics_climate_husvagn
+        state: >-
+          {% set temperature = states('sensor.husvagn_temperature') | float(none) %}
+          {% set humidity = states('sensor.husvagn_humidity') | float(none) %}
+          {% set risk = states('sensor.husvagn_mogelrisk') | float(none) %}
+          {% if temperature is not number or humidity is not number or risk is not number %}Data saknas
+          {% elif risk > 50 %}Varning{% else %}OK{% endif %}
+        attributes:
+          reason: >-
+            {% if states('sensor.husvagn_mogelrisk') | float(none) is not number %}Temperatur, fukt eller mögelrisk saknar giltigt värde
+            {% elif states('sensor.husvagn_mogelrisk') | float(0) > 50 %}Mögelrisk över varningsgränsen 50 %
+            {% else %}Mögelrisk under varningsgränsen{% endif %}
+          temperature: "{{ states('sensor.husvagn_temperature') }}"
+          humidity: "{{ states('sensor.husvagn_humidity') }}"
+          mold_risk: "{{ states('sensor.husvagn_mogelrisk') }}"
+          warning_threshold: 50
+          automation: automation.husvagn_mogelvarning
+
+      - name: diagnostics_climate_uterum
+        unique_id: diagnostics_climate_uterum
+        state: >-
+          {% set temperature = states('sensor.uterum_temperatur') | float(none) %}
+          {% set humidity = states('sensor.uterum_luftfuktighet') | float(none) %}
+          {% set risk = states('sensor.uterum_mogelrisk') | float(none) %}
+          {% if temperature is not number or humidity is not number or risk is not number %}Data saknas
+          {% elif risk > 50 %}Varning{% else %}OK{% endif %}
+        attributes:
+          reason: >-
+            {% if states('sensor.uterum_mogelrisk') | float(none) is not number %}Temperatur, fukt eller mögelrisk saknar giltigt värde
+            {% elif states('sensor.uterum_mogelrisk') | float(0) > 50 %}Mögelrisk över varningsgränsen 50 %
+            {% else %}Mögelrisk under varningsgränsen{% endif %}
+          temperature: "{{ states('sensor.uterum_temperatur') }}"
+          humidity: "{{ states('sensor.uterum_luftfuktighet') }}"
+          mold_risk: "{{ states('sensor.uterum_mogelrisk') }}"
+          warning_threshold: 50
+          automation: automation.uterum_mogelvarning
+
+      - name: diagnostics_climate_ute
+        unique_id: diagnostics_climate_ute
+        state: >-
+          {% set temperature = states('sensor.ute') | float(none) %}
+          {% set humidity = states('sensor.ute_friggebod_humidity') | float(none) %}
+          {% set risk = states('sensor.ute_mogelrisk') | float(none) %}
+          {% if temperature is not number or humidity is not number or risk is not number %}Data saknas
+          {% elif risk > 50 %}Varning{% else %}OK{% endif %}
+        attributes:
+          reason: >-
+            {% if states('sensor.ute_mogelrisk') | float(none) is not number %}Temperatur, fukt eller mögelrisk saknar giltigt värde
+            {% elif states('sensor.ute_mogelrisk') | float(0) > 50 %}Förhöjd beräknad mögelrisk i utomhusmätningen
+            {% else %}Utomhusmätningarna är tillgängliga{% endif %}
+          temperature: "{{ states('sensor.ute') }}"
+          humidity: "{{ states('sensor.ute_friggebod_humidity') }}"
+          mold_risk: "{{ states('sensor.ute_mogelrisk') }}"
+          warning_threshold: 50

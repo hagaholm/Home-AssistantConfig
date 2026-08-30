@@ -22,6 +22,7 @@ climate_garage: !include packages/climate/garage.yaml
 climate_husvagn: !include packages/climate/husvagn.yaml
 climate_ute: !include packages/climate/ute.yaml
 climate_uterum: !include packages/climate/uterum.yaml
+climate_diagnostics: !include packages/climate/diagnostics.yaml
 
 ####################
 ### Automations  ###
@@ -98,6 +99,7 @@ notifications_doorbell: !include packages/notifications/doorbell.yaml
 presence_home_away: !include packages/presence/home_away.yaml
 presence_person: !include packages/presence/person.yaml
 presence_working_at_home: !include packages/presence/working_at_home.yaml
+presence_diagnostics: !include packages/presence/diagnostics.yaml
 
 ####################
 ### Scripts     ###
@@ -134,12 +136,14 @@ template_xiaomi_lumi_mgl01_louise_room: !include packages/sensors/template_senso
 system_info: !include packages/system/system_info.yaml
 system_sensor_reading_missing: !include packages/system/sensor_reading_missing.yaml
 system_ui_generator: !include packages/system/ui_generator.yaml
+system_diagnostics: !include packages/system/diagnostics.yaml
 
 ####################
 ### Ventilation ###
 ####################
 ventilation_system: !include packages/ventilation/ventilation_system.yaml
 ventilation_fan: !include packages/ventilation/fan.yaml
+ventilation_diagnostics: !include packages/ventilation/diagnostics.yaml
 
 ####################
 ### WiiM        ###
@@ -161,4 +165,5 @@ frigate_media: !include packages/frigate/frigate_media.yaml
 frigate_temp_presence: !include packages/frigate/frigate_temp_presence.yaml
 # Larm
 frigate_intruder_alarm: !include packages/frigate/frigate_intruder_alarm.yaml
+frigate_diagnostics: !include packages/frigate/diagnostics.yaml
 

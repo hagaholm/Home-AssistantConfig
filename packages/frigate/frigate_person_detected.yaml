@@ -95,9 +95,6 @@ automation:
             {% if states('sensor.cam6_person_count') | int(0) > 0 %}
               {% set detections = detections + ['- Cam 6 Baksida: ' + states('sensor.cam6_person_count')] %}
             {% endif %}
-            {% if states('sensor.cam7_person_count') | int(0) > 0 %}
-              {% set detections = detections + ['- Cam 7 Frigge: ' + states('sensor.cam7_person_count')] %}
-            {% endif %}
             {% if states('sensor.cam8_person_count') | int(0) > 0 %}
               {% set detections = detections + ['- Cam 8 Entre: ' + states('sensor.cam8_person_count')] %}
             {% endif %}
@@ -170,9 +167,6 @@ automation:
             {% endif %}
             {% if states('sensor.cam6_person_count') | int(0) > 0 %}
               {% set detections = detections + ['- Cam 6 Baksida: ' + states('sensor.cam6_person_count')] %}
-            {% endif %}
-            {% if states('sensor.cam7_person_count') | int(0) > 0 %}
-              {% set detections = detections + ['- Cam 7 Frigge: ' + states('sensor.cam7_person_count')] %}
             {% endif %}
             {% if states('sensor.cam8_person_count') | int(0) > 0 %}
               {% set detections = detections + ['- Cam 8 Entre: ' + states('sensor.cam8_person_count')] %}

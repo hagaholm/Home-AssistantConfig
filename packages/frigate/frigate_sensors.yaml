@@ -45,9 +45,6 @@ template:
       - name: "Cam6 Animal Active"
         state: "{{ states('sensor.cam6_animal_count')|int(0) > 0 }}"
 
-      - name: "Cam7 Animal Active"
-        state: "{{ states('sensor.cam7_animal_count')|int(0) > 0 }}"
-
       - name: "Cam8 Animal Active"
         state: "{{ states('sensor.cam8_animal_count')|int(0) > 0 }}"
 
@@ -72,7 +69,6 @@ template:
             states('sensor.cam10_all_count') | int(0) +
             states('sensor.cam5_all_count') | int(0) +
             states('sensor.cam6_all_count') | int(0) +
-            states('sensor.cam7_all_count') | int(0) +
             states('sensor.cam8_all_count') | int(0) +
             states('sensor.cam9_all_count') | int(0)
           }}
@@ -91,7 +87,6 @@ template:
         state: >
           {{
             states('sensor.cam10_all_count') | int(0) +
-            states('sensor.cam7_all_count') | int(0) +
             states('sensor.cam9_all_count') | int(0)
           }}
 ##################################################################################
@@ -102,7 +97,6 @@ template:
             states('sensor.cam10_person_count') | int(0) +
             states('sensor.cam5_person_count') | int(0) +
             states('sensor.cam6_person_count') | int(0) +
-            states('sensor.cam7_person_count') | int(0) +
             states('sensor.cam8_person_count') | int(0) +
             states('sensor.cam9_person_count') | int(0)
           }}
@@ -130,7 +124,6 @@ template:
         state: >
           {{
             states('sensor.cam10_person_count') | int(0) +
-            states('sensor.cam7_person_count') | int(0) +
             states('sensor.cam9_person_count') | int(0)
           }}
 ##################################################################################
@@ -167,17 +160,6 @@ template:
             states('sensor.cam6_sheep_count') | int(0)
           }}
 
-      - name: "Cam7 Animal Count"
-        state_class: measurement
-        state: >
-          {{
-            states('sensor.cam7_bear_count') | int(0) +
-            states('sensor.cam7_cat_count') | int(0) +
-            states('sensor.cam7_dog_count') | int(0) +
-            states('sensor.cam7_horse_count') | int(0) +
-            states('sensor.cam7_sheep_count') | int(0)
-          }}
-
       - name: "Cam8 Animal Count"
         state_class: measurement
         state: >
@@ -207,7 +189,6 @@ template:
             states('sensor.cam10_animal_count') | int(0) +
             states('sensor.cam5_animal_count') | int(0) +
             states('sensor.cam6_animal_count') | int(0) +
-            states('sensor.cam7_animal_count') | int(0) +
             states('sensor.cam8_animal_count') | int(0) +
             states('sensor.cam9_animal_count') | int(0)
           }}
@@ -226,6 +207,5 @@ template:
         state: >
           {{
             states('sensor.cam10_animal_count') | int(0) +
-            states('sensor.cam7_animal_count') | int(0) +
             states('sensor.cam9_animal_count') | int(0)
           }}

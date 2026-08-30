@@ -72,16 +72,6 @@ views:
                   - condition: numeric_state
                     entity: input_number.frigate_cam6_animal_count
                     above: 0
-              - entity: input_number.frigate_cam7_person_count
-                visibility:
-                  - condition: numeric_state
-                    entity: input_number.frigate_cam7_person_count
-                    above: 0
-              - entity: input_number.frigate_cam7_animal_count
-                visibility:
-                  - condition: numeric_state
-                    entity: input_number.frigate_cam7_animal_count
-                    above: 0
               - entity: input_number.frigate_cam8_person_count
                 visibility:
                   - condition: numeric_state
@@ -135,16 +125,6 @@ views:
                 visibility:
                   - condition: numeric_state
                     entity: input_number.reolink_cam6_animal_count
-                    above: 0
-              - entity: input_number.reolink_cam7_person_count
-                visibility:
-                  - condition: numeric_state
-                    entity: input_number.reolink_cam7_person_count
-                    above: 0
-              - entity: input_number.reolink_cam7_animal_count
-                visibility:
-                  - condition: numeric_state
-                    entity: input_number.reolink_cam7_animal_count
                     above: 0
               - entity: input_number.reolink_cam8_person_count
                 visibility:
@@ -373,51 +353,6 @@ views:
                 above: 0
 
       - type: heading
-        heading: Frigate Camera 7 - Home Status
-
-      - type: entities
-        title: Cam7 - Hemma
-        entities:
-          - entity: input_number.frigate_cam7_hemma_pa_person_count
-            visibility:
-              - condition: numeric_state
-                entity: input_number.frigate_cam7_hemma_pa_person_count
-                above: 0
-          - entity: input_number.frigate_cam7_hemma_pa_animal_count
-            visibility:
-              - condition: numeric_state
-                entity: input_number.frigate_cam7_hemma_pa_animal_count
-                above: 0
-
-      - type: entities
-        title: Cam7 - Sover
-        entities:
-          - entity: input_number.frigate_cam7_hemma_av_person_count
-            visibility:
-              - condition: numeric_state
-                entity: input_number.frigate_cam7_hemma_av_person_count
-                above: 0
-          - entity: input_number.frigate_cam7_hemma_av_animal_count
-            visibility:
-              - condition: numeric_state
-                entity: input_number.frigate_cam7_hemma_av_animal_count
-                above: 0
-
-      - type: entities
-        title: Cam7 - Borta
-        entities:
-          - entity: input_number.frigate_cam7_borta_person_count
-            visibility:
-              - condition: numeric_state
-                entity: input_number.frigate_cam7_borta_person_count
-                above: 0
-          - entity: input_number.frigate_cam7_borta_animal_count
-            visibility:
-              - condition: numeric_state
-                entity: input_number.frigate_cam7_borta_animal_count
-                above: 0
-
-      - type: heading
         heading: Frigate Camera 8 - Home Status
 
       - type: entities
@@ -610,51 +545,6 @@ views:
                 above: 0
 
       - type: heading
-        heading: Reolink Camera 7 - Home Status
-
-      - type: entities
-        title: Cam7 - Hemma
-        entities:
-          - entity: input_number.reolink_cam7_hemma_pa_person_count
-            visibility:
-              - condition: numeric_state
-                entity: input_number.reolink_cam7_hemma_pa_person_count
-                above: 0
-          - entity: input_number.reolink_cam7_hemma_pa_animal_count
-            visibility:
-              - condition: numeric_state
-                entity: input_number.reolink_cam7_hemma_pa_animal_count
-                above: 0
-
-      - type: entities
-        title: Cam7 - Sover
-        entities:
-          - entity: input_number.reolink_cam7_hemma_av_person_count
-            visibility:
-              - condition: numeric_state
-                entity: input_number.reolink_cam7_hemma_av_person_count
-                above: 0
-          - entity: input_number.reolink_cam7_hemma_av_animal_count
-            visibility:
-              - condition: numeric_state
-                entity: input_number.reolink_cam7_hemma_av_animal_count
-                above: 0
-
-      - type: entities
-        title: Cam7 - Borta
-        entities:
-          - entity: input_number.reolink_cam7_borta_person_count
-            visibility:
-              - condition: numeric_state
-                entity: input_number.reolink_cam7_borta_person_count
-                above: 0
-          - entity: input_number.reolink_cam7_borta_animal_count
-            visibility:
-              - condition: numeric_state
-                entity: input_number.reolink_cam7_borta_animal_count
-                above: 0
-
-      - type: heading
         heading: Reolink Camera 8 - Home Status
 
       - type: entities
@@ -775,8 +665,6 @@ views:
           - input_number.frigate_cam5_animal_count
           - input_number.frigate_cam6_person_count
           - input_number.frigate_cam6_animal_count
-          - input_number.frigate_cam7_person_count
-          - input_number.frigate_cam7_animal_count
           - input_number.frigate_cam8_person_count
           - input_number.frigate_cam8_animal_count
           - input_number.frigate_cam9_person_count
@@ -786,8 +674,6 @@ views:
           - input_number.reolink_cam5_animal_count
           - input_number.reolink_cam6_person_count
           - input_number.reolink_cam6_animal_count
-          - input_number.reolink_cam7_person_count
-          - input_number.reolink_cam7_animal_count
           - input_number.reolink_cam8_person_count
           - input_number.reolink_cam8_animal_count
           - input_number.reolink_cam9_person_count

@@ -144,7 +144,6 @@ automation:
       - platform: state
         entity_id:
           - binary_sensor.cam10_person_occupancy
-          - binary_sensor.cam7_person_occupancy
           - binary_sensor.cam8_person_occupancy
           - binary_sensor.cam9_person_occupancy
         to: 'on'
@@ -153,7 +152,6 @@ automation:
       - platform: state
         entity_id:
           - binary_sensor.cam10_person_occupancy
-          - binary_sensor.cam7_person_occupancy
           - binary_sensor.cam8_person_occupancy
           - binary_sensor.cam9_person_occupancy
         to: 'off'
@@ -167,7 +165,7 @@ automation:
 # - sensor.ljusstyrka
 # - input_select.facade_lights
 # - input_select.home_status
-# - binary_sensor.cam10/7/8_person_occupancy
+# - binary_sensor.cam10/8/9_person_occupancy
 # - script.fasadbelysning_*
 ####################################################
 

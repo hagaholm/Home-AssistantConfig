@@ -129,18 +129,15 @@ template:
             {'name': 'Trådfri Gateway', 'entity': 'sensor.tradfri_gateway'},
             {'name': 'Kamera 5', 'entity': 'sensor.kamera_5'},
             {'name': 'Kamera 6', 'entity': 'sensor.kamera_6'},
-            {'name': 'Kamera 7', 'entity': 'sensor.kamera_7'},
             {'name': 'Kamera 8', 'entity': 'sensor.kamera_8'},
+            {'name': 'Kamera 9', 'entity': 'sensor.kamera_9'},
             {'name': 'Kamera 10', 'entity': 'sensor.kamera_10'}
           ] %}
           {% set warning = [
             {'name': 'NAS', 'entity': 'sensor.nas_dns_320'},
             {'name': 'Harmony Hub', 'entity': 'sensor.harmony_hub'},
             {'name': 'Raspberry Pi 1-Wire', 'entity': 'sensor.raspberry_pi_b_1_wire'},
-            {'name': 'Raspberry Pi Lux', 'entity': 'sensor.raspberry_pi_3b_lux'},
-            {'name': 'Kamera 1', 'entity': 'sensor.kamera_1'},
-            {'name': 'Kamera 2', 'entity': 'sensor.kamera_2'},
-            {'name': 'Kamera 4', 'entity': 'sensor.kamera_4'}
+            {'name': 'Raspberry Pi Lux', 'entity': 'sensor.raspberry_pi_3b_lux'}
           ] %}
           {% set health = namespace(critical_issue=false, warning_issue=false) %}
           {% for device in critical %}
@@ -159,13 +156,13 @@ template:
             {% else %}Router, gateway, sensorhubbar och övervakade kameror rapporterar online{% endif %}
           active_issues: >-
             {% set devices = [
-              {'name': 'Router', 'entity': 'sensor.asus_rt_ac86u', 'severity': 'Fel'}, {'name': 'Trådfri Gateway', 'entity': 'sensor.tradfri_gateway', 'severity': 'Fel'}, {'name': 'Kamera 5', 'entity': 'sensor.kamera_5', 'severity': 'Fel'}, {'name': 'Kamera 6', 'entity': 'sensor.kamera_6', 'severity': 'Fel'}, {'name': 'Kamera 7', 'entity': 'sensor.kamera_7', 'severity': 'Fel'}, {'name': 'Kamera 8', 'entity': 'sensor.kamera_8', 'severity': 'Fel'}, {'name': 'Kamera 10', 'entity': 'sensor.kamera_10', 'severity': 'Fel'}, {'name': 'NAS', 'entity': 'sensor.nas_dns_320', 'severity': 'Varning'}, {'name': 'Harmony Hub', 'entity': 'sensor.harmony_hub', 'severity': 'Varning'}, {'name': 'Raspberry Pi 1-Wire', 'entity': 'sensor.raspberry_pi_b_1_wire', 'severity': 'Varning'}, {'name': 'Raspberry Pi Lux', 'entity': 'sensor.raspberry_pi_3b_lux', 'severity': 'Varning'}, {'name': 'Kamera 1', 'entity': 'sensor.kamera_1', 'severity': 'Varning'}, {'name': 'Kamera 2', 'entity': 'sensor.kamera_2', 'severity': 'Varning'}, {'name': 'Kamera 4', 'entity': 'sensor.kamera_4', 'severity': 'Varning'}
+              {'name': 'Router', 'entity': 'sensor.asus_rt_ac86u', 'severity': 'Fel'}, {'name': 'Trådfri Gateway', 'entity': 'sensor.tradfri_gateway', 'severity': 'Fel'}, {'name': 'Kamera 5', 'entity': 'sensor.kamera_5', 'severity': 'Fel'}, {'name': 'Kamera 6', 'entity': 'sensor.kamera_6', 'severity': 'Fel'}, {'name': 'Kamera 8', 'entity': 'sensor.kamera_8', 'severity': 'Fel'}, {'name': 'Kamera 9', 'entity': 'sensor.kamera_9', 'severity': 'Fel'}, {'name': 'Kamera 10', 'entity': 'sensor.kamera_10', 'severity': 'Fel'}, {'name': 'NAS', 'entity': 'sensor.nas_dns_320', 'severity': 'Varning'}, {'name': 'Harmony Hub', 'entity': 'sensor.harmony_hub', 'severity': 'Varning'}, {'name': 'Raspberry Pi 1-Wire', 'entity': 'sensor.raspberry_pi_b_1_wire', 'severity': 'Varning'}, {'name': 'Raspberry Pi Lux', 'entity': 'sensor.raspberry_pi_3b_lux', 'severity': 'Varning'}
             ] %}
             {% set issues = namespace(items=[]) %}
             {% for device in devices %}{% if states(device.entity) in ['Offline', 'unknown', 'unavailable'] %}{% set issues.items = issues.items + [device.severity ~ ': ' ~ device.name ~ ' (' ~ states(device.entity) ~ ')'] %}{% endif %}{% endfor %}
             {{ issues.items | join('\n') if issues.items else 'Inga' }}
           affected_entities: >-
-            {% set devices = ['sensor.asus_rt_ac86u', 'sensor.tradfri_gateway', 'sensor.kamera_5', 'sensor.kamera_6', 'sensor.kamera_7', 'sensor.kamera_8', 'sensor.kamera_10', 'sensor.nas_dns_320', 'sensor.harmony_hub', 'sensor.raspberry_pi_b_1_wire', 'sensor.raspberry_pi_3b_lux', 'sensor.kamera_1', 'sensor.kamera_2', 'sensor.kamera_4'] %}
+            {% set devices = ['sensor.asus_rt_ac86u', 'sensor.tradfri_gateway', 'sensor.kamera_5', 'sensor.kamera_6', 'sensor.kamera_8', 'sensor.kamera_9', 'sensor.kamera_10', 'sensor.nas_dns_320', 'sensor.harmony_hub', 'sensor.raspberry_pi_b_1_wire', 'sensor.raspberry_pi_3b_lux'] %}
             {{ devices | select('is_state', 'Offline') | list | join(', ') or 'Inga' }}
           checked_at: "{{ now().isoformat() }}"
 

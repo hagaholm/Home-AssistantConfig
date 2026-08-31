@@ -1,0 +1,48 @@
+# Källor:
+# - Zigbee/Timmerflotte Temp & Humidity Sensor 1 (Uterum) (template-"proxy"-sensorer)
+#
+# BESKRIVNING:
+# Template-sensorer för temperatur/fukt/tryck i Uterum baserat på Timmerflotte Temp & Humidity Sensor 1.
+#
+
+# Timmerflotte Temp & Humidity Sensor 1 (Uterum)
+template:
+  - sensor:
+      # Source: Timmerflotte Temp & Humidity Sensor 1 (Uterum)
+      # Company: Timmerflotte
+      # Type: Temperature, Humidity, Pressure sensor
+      - name: "Uterum Temperatur"
+        unique_id: uterum_lumi_weather_temperature_3
+        availability: "{{ states('sensor.uterum_timmerflotte_temp_hmd_1_temperatur') not in ['unknown', 'unavailable', ''] }}"
+        state: "{{ states('sensor.uterum_timmerflotte_temp_hmd_1_temperatur') | float(0) }}"
+        unit_of_measurement: "°C"
+        device_class: temperature
+        state_class: measurement
+        attributes:
+          source_sensor: sensor.uterum_timmerflotte_temp_hmd_1_temperatur
+          icon: mdi:thermometer
+          friendly_name: Uterum Temperatur
+
+      - name: "Uterum Luftfuktighet"
+        unique_id: uterum_lumi_weather_humidity_3
+        availability: "{{ states('sensor.uterum_timmerflotte_temp_hmd_1_luftfuktighet') not in ['unknown', 'unavailable', ''] }}"
+        state: "{{ states('sensor.uterum_timmerflotte_temp_hmd_1_luftfuktighet') | float(0) }}"
+        unit_of_measurement: "%"
+        device_class: humidity
+        state_class: measurement
+        attributes:
+          source_sensor: sensor.uterum_timmerflotte_temp_hmd_1_luftfuktighet
+          icon: mdi:water-percent
+          friendly_name: Uterum Luftfuktighet
+
+      - name: "Uterum Lufttryck"
+        unique_id: uterum_lumi_weather_pressure_3
+        availability: "{{ states('sensor.uterum_timmerflotte_temp_hmd_1_tryck') not in ['unknown', 'unavailable', ''] }}"
+        state: "{{ states('sensor.uterum_timmerflotte_temp_hmd_1_tryck') | float(0) }}"
+        unit_of_measurement: "hPa"
+        device_class: pressure
+        state_class: measurement
+        attributes:
+          source_sensor: sensor.uterum_timmerflotte_temp_hmd_1_tryck
+          icon: mdi:gauge
+          friendly_name: Uterum Lufttryck

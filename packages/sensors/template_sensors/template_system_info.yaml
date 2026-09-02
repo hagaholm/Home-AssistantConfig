@@ -94,18 +94,18 @@ template:
         
       - name: "Raspberry Pi B+ (1-Wire)"
         unique_id: system_rpi_1wire_status
-        state: "{{ 'Online' if is_state('device_tracker.raspberrypi', 'home') else 'Offline' }}"
+        state: "{{ 'Online' if is_state('device_tracker.raspberry_pi_b_plus', 'home') else 'Offline' }}"
         # Raspberry Pi running 1-Wire temperature monitoring
         
       - name: "Raspberry Pi 3B (Lux)"
         unique_id: system_rpi_lux_status
-        state: "{{ 'Online' if is_state('device_tracker.raspberrypi3b', 'home') else 'Offline' }}"
+        state: "{{ 'Online' if is_state('device_tracker.raspberry_pi_3b_2', 'home') else 'Offline' }}"
         # Raspberry Pi 3B running TSL2591 lux sensor monitoring
 
       # Security Cameras
       - name: "Kamera 10"
         unique_id: system_camera_10_status
-        state: "{{ 'Online' if is_state('device_tracker.reolink_kamera_10_rlc_1220a', 'home') else 'Offline' }}"
+        state: "{{ 'Online' if is_state('device_tracker.reolink_kamera_10_rlc_1224a', 'home') else 'Offline' }}"
       - name: "Kamera 5"
         unique_id: system_camera_5_status
         state: "{{ 'Online' if is_state('device_tracker.reolink_kamera_5_rlc_1224a', 'home') else 'Offline' }}"

@@ -43,7 +43,7 @@ template:
       # Entertainment System Devices
       - name: "Harmony Hub"
         unique_id: system_harmony_status
-        state: "{{ 'Online' if is_state('device_tracker.harmonyhub', 'home') else 'Offline' }}"
+        state: "{{ 'Online' if is_state('device_tracker.logitech_harmony_hub', 'home') else 'Offline' }}"
         # Logitech Harmony Hub IR control system
         
       - name: "Canal Digital"

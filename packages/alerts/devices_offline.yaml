@@ -31,8 +31,8 @@ automation:
 #
 # HÅRDVARA/ENTITETER:
 # Aktiva enheter:
-# - device_tracker.raspberry_pi_b_plus (1-Wire sensor hub)
-# - device_tracker.raspberry_pi_3b_2 (Lux mätning)
+# - device_tracker.raspberry_pi_b_1_wire (1-Wire sensor hub)
+# - device_tracker.raspberry_pi_3b_lux (Lux mätning)
 #
 # Notification: notify.mobile_app_sm_a528b
 #######################################################
@@ -45,13 +45,13 @@ automation:
     trigger:
       # Raspberry Pi B+ (1-Wire)
       - platform: state
-        entity_id: device_tracker.raspberry_pi_b_plus
+        entity_id: device_tracker.raspberry_pi_b_1_wire
         to: 'not_home'
         id: pi_b_plus
 
       # Raspberry Pi 3B (Lux)
       - platform: state
-        entity_id: device_tracker.raspberry_pi_3b_2
+        entity_id: device_tracker.raspberry_pi_3b_lux
         to: 'not_home'
         id: pi_3b_lux
 

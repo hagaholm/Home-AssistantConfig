@@ -17,9 +17,9 @@
 # Main automations:
 # - Animal Motion Radio Control Backside
 #   - Trigger: cams_animal_backside_active (on/off)
-#   - Turn ON: waits 15s, then turns on light.tradack_ute if detection persists.
+#   - Turn ON: waits 10s, then turns on light.tradack_ute if detection persists
+#     during night hours (20:00-08:00) or when lux is below 10.
 #     Note: light.tradack_ute is physically a radio (animal deterrent), not a light fixture.
-#     Note: current logic requires low lux (<10) at turn-on time.
 #   - Turn OFF: after 20s with no detection.
 #
 # - Animal Motion Light Control
@@ -77,7 +77,7 @@ template:
           is_night: >-
             {% from 'time_windows.jinja' import in_time_range %}
             {{ in_time_range(20, 0, 8, 0) }}
-          radio_automation_enabled: "{{ is_state('automation.animal_motion_radio_control_backside', 'on') }}"
+          radio_automation_enabled: "{{ is_state('automation.animal_motion_radio_on', 'on') }}"
           floodlight_automation_enabled: "{{ is_state('automation.animal_motion_light_control', 'on') }}"
           reason: >-
             {% from 'time_windows.jinja' import in_time_range %}
@@ -85,7 +85,7 @@ template:
             {% set lux = states('sensor.ljusstyrka') | float(none) %}
             {% set is_night = (in_time_range(20, 0, 8, 0) | trim) == 'True' %}
             {% set dark_enough = is_night or (lux is number and lux < 10) %}
-            {% if not is_state('automation.animal_motion_radio_control_backside', 'on') %}
+            {% if not is_state('automation.animal_motion_radio_on', 'on') %}
               Automationen "Animal Motion Radio Control Backside" är avstängd -> radion styrs inte automatiskt
             {% elif not detected %}
               Ingen djurdetektering just nu (cams_animal_backside_active=off) -> radio släcks 20s efter senaste detektion
@@ -137,9 +137,14 @@ automation:
               - condition: state
                 entity_id: binary_sensor.cams_animal_backside_active
                 state: 'on'
-              - condition: numeric_state
-                entity_id: sensor.ljusstyrka
-                below: 10
+              - condition: or
+                conditions:
+                  - condition: time
+                    after: '20:00:00'
+                    before: '08:00:00'
+                  - condition: numeric_state
+                    entity_id: sensor.ljusstyrka
+                    below: 10
               - service: light.turn_on
                 target:
                   entity_id: light.tradack_ute
@@ -427,7 +432,7 @@ script:
     sequence:
       # Store initial automation states
       - variables:
-          auto_backside: "{{ is_state('automation.animal_motion_radio_control_backside', 'on') }}"
+          auto_backside: "{{ is_state('automation.animal_motion_radio_on', 'on') }}"
           auto_light: "{{ is_state('automation.animal_motion_light_control', 'on') }}"
           auto_notify: "{{ is_state('automation.animal_detection_notify', 'on') }}"
           auto_blink: "{{ is_state('automation.blink_light_when_detcection_cam_5', 'on') }}"
@@ -436,7 +441,7 @@ script:
       - service: automation.turn_off
         target:
           entity_id:
-            - automation.animal_motion_radio_control_backside
+            - automation.animal_motion_radio_on
             - automation.animal_motion_light_control
             - automation.animal_detection_notify
             - automation.blink_light_when_detcection_cam_5
@@ -462,7 +467,7 @@ script:
             sequence:
               - service: automation.turn_on
                 target:
-                  entity_id: automation.animal_motion_radio_control_backside
+                  entity_id: automation.animal_motion_radio_on
           - conditions:
               - condition: template
                 value_template: "{{ auto_light }}"

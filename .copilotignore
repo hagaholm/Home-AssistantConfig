@@ -1,0 +1,31 @@
+# =========================================
+# Home Assistant - AI Ignore Configuration
+# =========================================
+# Förhindrar att AI-agenter läser in känslig 
+# data från din mappade katalog i VS Code.
+
+# 1. Känsliga filer (Lösenord, tokens, certifikat)
+secrets.yaml
+*.pem
+*.crt
+*.key
+.cloud/
+
+# 2. Home Assistant intern lagring 
+# (innehåller auth tokens, integrationer och enhetsdata)
+.storage/
+
+# 3. Databaser (Historik, tillstånd och händelser)
+*.db
+*.db-shm
+*.db-wal
+zigbee.db
+
+# 4. Loggar (Kan ibland innehålla kraschdumpar eller nätverksinfo)
+*.log
+OZW_Log.txt
+
+# 5. Backuper och annat brus
+backups/
+network/
+tts/

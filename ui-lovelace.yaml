@@ -1533,12 +1533,12 @@ views:
         title: Raspberry Pi 3B (Lux)
         show_header_toggle: true
         state_color: true
-#      - type: entities
-#        entities:
-#          - sensor.raspberry_pi_3b_plus
-#        title: Raspberry Pi 3B+ (Flightradar24)
-#        show_header_toggle: true
-#        state_color: true
+      - type: entities
+        entities:
+          - sensor.raspberry_pi_flightradar24
+        title: Raspberry Pi Flightradar24
+        show_header_toggle: true
+        state_color: true
       - type: entities
         entities:
           - sensor.last_boot

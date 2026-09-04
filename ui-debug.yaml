@@ -71,6 +71,7 @@ views:
         entities:
           - sensor.raspberry_pi_b_1_wire
           - sensor.raspberry_pi_3b_lux
+          - sensor.raspberry_pi_flightradar24
           - sensor.kamera_5
           - sensor.kamera_6
           - sensor.kamera_8
@@ -307,6 +308,7 @@ views:
           - input_boolean.kyl_reading_missing_alarm
           - device_tracker.raspberry_pi_b_1_wire
           - device_tracker.raspberry_pi_3b_lux
+          - device_tracker.raspberry_flightradar24
       - type: entities
         title: Dörrklocka
         entities:

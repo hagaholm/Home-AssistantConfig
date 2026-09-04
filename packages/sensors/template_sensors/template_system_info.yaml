@@ -102,6 +102,11 @@ template:
         state: "{{ 'Online' if is_state('device_tracker.raspberry_pi_3b_lux', 'home') else 'Offline' }}"
         # Raspberry Pi 3B running TSL2591 lux sensor monitoring
 
+      - name: "Raspberry Pi Flightradar24"
+        unique_id: system_rpi_flightradar24_status
+        state: "{{ 'Online' if is_state('.device_tracker.raspberry_flightradar24', 'home') else 'Offline' }}"
+        # Raspberry Pi running Flightradar24 monitoring
+
       # Security Cameras
       - name: "Kamera 10"
         unique_id: system_camera_10_status

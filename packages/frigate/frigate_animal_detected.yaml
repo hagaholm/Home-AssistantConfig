@@ -17,9 +17,9 @@
 # Main automations:
 # - Animal Motion Radio Control Backside
 #   - Trigger: cams_animal_backside_active (on/off)
-#   - Turn ON: waits 10s, then turns on light.tradack_ute if detection persists
+#   - Turn ON: waits 10s, then turns on the Shelly radio switch if detection persists
 #     during night hours (20:00-08:00) or when lux is below 10.
-#     Note: light.tradack_ute is physically a radio (animal deterrent), not a light fixture.
+#     The switch controls a physical radio used as an animal deterrent.
 #   - Turn OFF: after 20s with no detection.
 #
 # - Animal Motion Light Control
@@ -38,10 +38,10 @@
 #
 # Failsafe:
 # - Turn Off Deck Light After 10 Minutes (failsafe)
-#   - If cams_animal_backside_active stays on for 10 minutes, force light.tradack_ute (radio) off
+#   - If cams_animal_backside_active stays on for 10 minutes, force the radio switch off
 #
 # Controlled entities:
-# - light.tradack_ute (physically a radio - animal deterrent, not a light fixture)
+# - switch.shellyoutdoorsg3_e4b063f3674c (physically a radio - animal deterrent)
 # - light.stralkastare_husgavel
 # - light.kamera5_stralkastare
 # - light.kamera6_stralkastare
@@ -63,15 +63,17 @@
 ##############
 ### Sensor ###
 ##############
-# Debug/diagnostik-sensor - visar varför radion (light.tradack_ute) och strålkastarna
+# Debug/diagnostik-sensor - visar varför radion och strålkastarna
 # är på/av just nu, analogt med packages/lights/debug.yaml-mönstret.
 template:
   - sensor:
       - name: frigate_debug_animal_backside
         unique_id: frigate_debug_animal_backside
         state: >-
-          Radio: {{ states('light.tradack_ute') }}, Strålkastare: {{ 'on' if is_state('light.stralkastare_husgavel', 'on') or is_state('light.kamera5_stralkastare', 'on') or is_state('light.kamera6_stralkastare', 'on') or is_state('light.kamera8_stralkastare', 'on') else 'off' }}
+          Radio: {{ states('switch.shellyoutdoorsg3_e4b063f3674c') }}, Strålkastare: {{ 'on' if is_state('light.stralkastare_husgavel', 'on') or is_state('light.kamera5_stralkastare', 'on') or is_state('light.kamera6_stralkastare', 'on') or is_state('light.kamera8_stralkastare', 'on') else 'off' }}
         attributes:
+          radio_control_entity: switch.shellyoutdoorsg3_e4b063f3674c
+          radio_state: "{{ states('switch.shellyoutdoorsg3_e4b063f3674c') }}"
           animal_detected: "{{ is_state('binary_sensor.cams_animal_backside_active', 'on') }}"
           lux: "{{ states('sensor.ljusstyrka') }}"
           is_night: >-
@@ -145,9 +147,9 @@ automation:
                   - condition: numeric_state
                     entity_id: sensor.ljusstyrka
                     below: 10
-              - service: light.turn_on
+              - service: switch.turn_on
                 target:
-                  entity_id: light.tradack_ute
+                  entity_id: switch.shellyoutdoorsg3_e4b063f3674c
 
           # Turn off light if no motion is detected after 20 seconds
           - conditions:
@@ -161,9 +163,9 @@ automation:
                   - condition: state
                     entity_id: binary_sensor.cams_animal_backside_active
                     state: 'off'
-              - service: light.turn_off
+              - service: switch.turn_off
                 target:
-                  entity_id: light.tradack_ute
+                  entity_id: switch.shellyoutdoorsg3_e4b063f3674c
 
   ###################################
   ### Animal Motion Light Control ###
@@ -341,9 +343,9 @@ automation:
                     entity_id: binary_sensor.cams_all_backside_active
                     state: 'on'
             sequence:
-              - service: light.turn_on
+              - service: switch.turn_on
                 target:
-                  entity_id: light.tradack_ute
+                  entity_id: switch.shellyoutdoorsg3_e4b063f3674c
 
           # Turn off light if no motion is detected after 30 seconds
           - conditions:
@@ -357,9 +359,9 @@ automation:
                   - condition: state
                     entity_id: binary_sensor.cams_all_backside_active
                     state: 'off'
-              - service: light.turn_off
+              - service: switch.turn_off
                 target:
-                  entity_id: light.tradack_ute
+                  entity_id: switch.shellyoutdoorsg3_e4b063f3674c
 
   ###############################
   ### Animal Detection Notify ###
@@ -418,9 +420,9 @@ automation:
     condition: []
 
     action:
-      - service: light.turn_off
+      - service: switch.turn_off
         target:
-          entity_id: light.tradack_ute
+          entity_id: switch.shellyoutdoorsg3_e4b063f3674c
 
 ######################################
 ### Script: Reset Animal detection ###
@@ -446,11 +448,13 @@ script:
             - automation.animal_detection_notify
             - automation.blink_light_when_detcection_cam_5
 
-      # Turn off all lights controlled by the automations
+      # Turn off the radio and all lights controlled by the automations
+      - service: switch.turn_off
+        target:
+          entity_id: switch.shellyoutdoorsg3_e4b063f3674c
       - service: light.turn_off
         target:
           entity_id:
-            - light.tradack_ute
             - light.stralkastare_husgavel
             - light.kamera5_stralkastare
             - light.kamera6_stralkastare

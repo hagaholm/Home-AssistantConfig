@@ -231,7 +231,7 @@ automation:
   ############################################
   ### Person Motion Radio Control Backside ###
   ############################################
-  # Note: light.tradack_ute is physically a radio (animal/deterrent), not a light fixture
+  # The Shelly switch controls a physical radio used as an animal deterrent.
   - alias: Person Motion Radio Control Backside
     id: '1416857464123'
     mode: restart
@@ -270,9 +270,9 @@ automation:
               - condition: numeric_state
                 entity_id: sensor.ljusstyrka
                 below: 10
-              - service: light.turn_on
+              - service: switch.turn_on
                 target:
-                  entity_id: light.tradack_ute
+                  entity_id: switch.shellyoutdoorsg3_e4b063f3674c
 
           # Turn off light if no motion is detected after 20 seconds
           - conditions:
@@ -286,9 +286,9 @@ automation:
                   - condition: state
                     entity_id: binary_sensor.cams_person_backside_north_active
                     state: 'off'
-              - service: light.turn_off
+              - service: switch.turn_off
                 target:
-                  entity_id: light.tradack_ute
+                  entity_id: switch.shellyoutdoorsg3_e4b063f3674c
 
   ###################################
   ### Person Motion Light Control ###

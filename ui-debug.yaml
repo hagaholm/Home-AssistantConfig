@@ -453,3 +453,209 @@ views:
           **Djur upptäckt just nu:** {{ state_attr('sensor.frigate_debug_animal_backside', 'animal_detected') }}
 
           **Radio-automation på:** {{ state_attr('sensor.frigate_debug_animal_backside', 'radio_automation_enabled') }}
+
+  - path: klimat-ventilation-varfor
+    title: Klimat & Ventilation - Varför?
+    icon: mdi:help-circle-outline
+    badges: []
+    cards:
+      - type: markdown
+        title: Förråd
+        content: >-
+          **Läge:** {{ states('sensor.diagnostics_climate_forrad') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_climate_forrad', 'reason') }}
+
+          **Temperatur:** {{ state_attr('sensor.diagnostics_climate_forrad', 'temperature') }} °C
+
+          **Luftfuktighet:** {{ state_attr('sensor.diagnostics_climate_forrad', 'humidity') }} %
+
+          **Mögelrisk:** {{ state_attr('sensor.diagnostics_climate_forrad', 'mold_risk') }} %
+
+          **Värme aktiv:** {{ state_attr('sensor.diagnostics_climate_forrad', 'heat_active') }}
+
+          **Saknade värden:** {{ state_attr('sensor.diagnostics_climate_forrad', 'missing_inputs') }}
+      - type: markdown
+        title: Friggebod
+        content: >-
+          **Läge:** {{ states('sensor.diagnostics_climate_friggebod') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_climate_friggebod', 'reason') }}
+
+          **Temperatur:** {{ state_attr('sensor.diagnostics_climate_friggebod', 'temperature') }} °C
+
+          **Luftfuktighet:** {{ state_attr('sensor.diagnostics_climate_friggebod', 'humidity') }} %
+
+          **Mögelrisk:** {{ state_attr('sensor.diagnostics_climate_friggebod', 'mold_risk') }} %
+
+          **Värme aktiv:** {{ state_attr('sensor.diagnostics_climate_friggebod', 'heat_active') }}
+
+          **Saknade värden:** {{ state_attr('sensor.diagnostics_climate_friggebod', 'missing_inputs') }}
+      - type: markdown
+        title: Garage
+        content: >-
+          **Läge:** {{ states('sensor.diagnostics_climate_garage') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_climate_garage', 'reason') }}
+
+          **Temperatur:** {{ state_attr('sensor.diagnostics_climate_garage', 'temperature') }} °C
+
+          **Luftfuktighet:** {{ state_attr('sensor.diagnostics_climate_garage', 'humidity') }} %
+
+          **Mögelrisk:** {{ state_attr('sensor.diagnostics_climate_garage', 'mold_risk') }} %
+
+          **Saknade värden:** {{ state_attr('sensor.diagnostics_climate_garage', 'missing_inputs') }}
+      - type: markdown
+        title: Husvagn
+        content: >-
+          **Läge:** {{ states('sensor.diagnostics_climate_husvagn') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_climate_husvagn', 'reason') }}
+
+          **Temperatur:** {{ state_attr('sensor.diagnostics_climate_husvagn', 'temperature') }} °C
+
+          **Luftfuktighet:** {{ state_attr('sensor.diagnostics_climate_husvagn', 'humidity') }} %
+
+          **Mögelrisk:** {{ state_attr('sensor.diagnostics_climate_husvagn', 'mold_risk') }} %
+
+          **Saknade värden:** {{ state_attr('sensor.diagnostics_climate_husvagn', 'missing_inputs') }}
+      - type: markdown
+        title: Uterum
+        content: >-
+          **Läge:** {{ states('sensor.diagnostics_climate_uterum') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_climate_uterum', 'reason') }}
+
+          **Temperatur:** {{ state_attr('sensor.diagnostics_climate_uterum', 'temperature') }} °C
+
+          **Luftfuktighet:** {{ state_attr('sensor.diagnostics_climate_uterum', 'humidity') }} %
+
+          **Mögelrisk:** {{ state_attr('sensor.diagnostics_climate_uterum', 'mold_risk') }} %
+
+          **Saknade värden:** {{ state_attr('sensor.diagnostics_climate_uterum', 'missing_inputs') }}
+      - type: markdown
+        title: Ute
+        content: >-
+          **Läge:** {{ states('sensor.diagnostics_climate_ute') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_climate_ute', 'reason') }}
+
+          **Temperatur:** {{ state_attr('sensor.diagnostics_climate_ute', 'temperature') }} °C
+
+          **Luftfuktighet:** {{ state_attr('sensor.diagnostics_climate_ute', 'humidity') }} %
+
+          **Mögelrisk:** {{ state_attr('sensor.diagnostics_climate_ute', 'mold_risk') }} %
+
+          **RH-gräns:** {{ state_attr('sensor.diagnostics_climate_ute', 'calculated_humidity_threshold') }}
+
+          **Saknade värden:** {{ state_attr('sensor.diagnostics_climate_ute', 'missing_inputs') }}
+      - type: markdown
+        title: FTX-ventilation
+        content: >-
+          **Läge:** {{ states('sensor.diagnostics_ventilation') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_ventilation', 'reason') }}
+
+          **Relä:** {{ state_attr('sensor.diagnostics_ventilation', 'relay_state') }}
+
+          **Badrumsfukt:** {{ state_attr('sensor.diagnostics_ventilation', 'bathroom_humidity') }} %
+
+          **Forceringsgräns:** {{ state_attr('sensor.diagnostics_ventilation', 'humidity_force_on') }} %
+
+          **Forceringstimer:** {{ state_attr('sensor.diagnostics_ventilation', 'max_timer') }}
+
+          **Aktiva larm:** {{ state_attr('sensor.diagnostics_ventilation', 'active_alarm_flags') or 'Inga' }}
+
+  - path: narvaro-sakerhet-varfor
+    title: Närvaro & Säkerhet - Varför?
+    icon: mdi:help-circle-outline
+    badges: []
+    cards:
+      - type: markdown
+        title: Hemmastatus
+        content: >-
+          **Läge:** {{ states('sensor.diagnostics_presence') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_presence', 'reason') }}
+
+          **Spårade enheter:** {{ state_attr('sensor.diagnostics_presence', 'tracked_devices') }}
+
+          **Personer:** {{ state_attr('sensor.diagnostics_presence', 'persons') }}
+
+          **Närvaro i kök:** {{ state_attr('sensor.diagnostics_presence', 'kitchen_presence') }}
+
+          **Tillfällig Frigate-närvaro:** {{ state_attr('sensor.diagnostics_presence', 'frigate_temporary_presence') }}
+
+          **Tillfällig närvaro till:** {{ state_attr('sensor.diagnostics_presence', 'temporary_presence_timeout') }}
+      - type: markdown
+        title: Frigate-säkerhet
+        content: >-
+          **Läge:** {{ states('sensor.diagnostics_frigate_security') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_frigate_security', 'reason') }}
+
+          **Hemstatus:** {{ state_attr('sensor.diagnostics_frigate_security', 'home_status') }}
+
+          **Person upptäckt:** {{ state_attr('sensor.diagnostics_frigate_security', 'person_detected') }}
+
+          **Djur på baksidan:** {{ state_attr('sensor.diagnostics_frigate_security', 'animal_backside_detected') }}
+
+          **Inbrottslarm kamera 5 idag:** {{ state_attr('sensor.diagnostics_frigate_security', 'cam5_intruder_today') }}
+
+          **Inbrottslarm kamera 6 idag:** {{ state_attr('sensor.diagnostics_frigate_security', 'cam6_intruder_today') }}
+
+          **Senaste ansiktskamera:** {{ state_attr('sensor.diagnostics_frigate_security', 'latest_face_camera') }}
+
+  - path: system-infrastruktur-varfor
+    title: System & Infrastruktur - Varför?
+    icon: mdi:help-circle-outline
+    badges: []
+    cards:
+      - type: markdown
+        title: Systemhälsa
+        content: >-
+          **Läge:** {{ states('sensor.diagnostics_system_health') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_system_health', 'reason') }}
+
+          **Aktiva problem:** {{ state_attr('sensor.diagnostics_system_health', 'active_issues') or 'Inga' }}
+
+          **Aktiva avläsningslarm:** {{ state_attr('sensor.diagnostics_system_health', 'active_reading_alarms') or 'Inga' }}
+
+          **Installerad version:** {{ state_attr('sensor.diagnostics_system_health', 'installed_version') }}
+
+          **Senaste version:** {{ state_attr('sensor.diagnostics_system_health', 'latest_version') }}
+      - type: markdown
+        title: Nätverk & infrastruktur
+        content: >-
+          **Läge:** {{ states('sensor.diagnostics_network_health') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_network_health', 'reason') }}
+
+          **Aktiva problem:** {{ state_attr('sensor.diagnostics_network_health', 'active_issues') or 'Inga' }}
+
+          **Berörda entiteter:** {{ state_attr('sensor.diagnostics_network_health', 'affected_entities') or 'Inga' }}
+
+          **Senast kontrollerad:** {{ state_attr('sensor.diagnostics_network_health', 'checked_at') }}
+      - type: markdown
+        title: Givarfärskhet
+        content: >-
+          **Läge:** {{ states('sensor.diagnostics_sensor_freshness') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_sensor_freshness', 'reason') }}
+
+          **Givare utan färsk data:** {{ state_attr('sensor.diagnostics_sensor_freshness', 'stale_sensors') or 'Inga' }}
+
+          **Kontrollgräns:** {{ state_attr('sensor.diagnostics_sensor_freshness', 'threshold_minutes') }} minuter
+      - type: markdown
+        title: Givarsystem
+        content: >-
+          **Läge:** {{ states('sensor.diagnostics_sensors_health') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_sensors_health', 'reason') }}
+
+          **Aktiva problem:** {{ state_attr('sensor.diagnostics_sensors_health', 'active_issues') or 'Inga' }}
+
+          **Berörda entiteter:** {{ state_attr('sensor.diagnostics_sensors_health', 'affected_entities') or 'Inga' }}
+
+          **Kontrollgräns:** {{ state_attr('sensor.diagnostics_sensors_health', 'threshold_minutes') }} minuter

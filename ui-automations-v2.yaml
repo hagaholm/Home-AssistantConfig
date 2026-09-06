@@ -75,7 +75,7 @@ views:
         entities:
           - automation.innebelysning_resolver
           - automation.koksbelysning_resolver
-          - automation.halltakbelysning_resolver
+          - automation.halltak_resolver
           - automation.badrumsbelysning_resolver
           - automation.uterumsbelysning_resolver
           - automation.tradgardsbelysning_resolver
@@ -90,11 +90,11 @@ views:
         entities:
           - automation.innebelysning
           - automation.koksbelysning
-          - automation.halltakbelysning_input_select
+          - automation.hall_takbelysning_input_select
           - automation.badrumsbelysning
-          - automation.uterumsbelysning_input_select
-          - automation.tradgardsbelysning_input_select
-          - automation.spabadbelysning_input_select
+          - automation.tand_uterumsbelysning
+          - automation.tradgardsbelysning
+          - automation.utebelysning_changed
           - automation.facade_light_changed
 
       # Light Modes & Scenes
@@ -171,14 +171,14 @@ views:
         show_header_toggle: true
         state_color: true
         entities:
-          - automation.vent_off_60_borta_ute_24_c_inne_23_c
-          - automation.vent_off_ute_24_c_borta_60_inne_23_c
-          - automation.vent_off_borta_ute_24_c_60_inne_23_c
-          - automation.vent_off_inne_23_c_borta_60_ute_24_c
+          - automation.vent_off_60_borta_ute_24degc_inne_23degc
+          - automation.vent_off_ute_24degc_borta_60_inne_23degc
+          - automation.vent_off_borta_ute_24degc_60_inne_23degc
+          - automation.vent_off_inne_23degc_borta_60_ute_24degc
           - automation.vent_on_hemma_off
-          - automation.vent_on_ute_22_c_off
+          - automation.vent_on_ute_22degc_off
           - automation.vent_on_60_off
-          - automation.vent_on_inne_23_c_off
+          - automation.vent_on_inne_23degc_off
 
       # Ventilation - Timers & Support
       - type: entities
@@ -226,10 +226,10 @@ views:
         show_header_toggle: true
         state_color: true
         entities:
-          - automation.forrad_smart_varmestyrning
+          - automation.forrad_komplett_smart_varmestyrning
           - automation.forrad_rakna_varmetid
           - automation.forrad_reset_varmetid
-          - automation.forrad_temperaturvarning
+          - automation.forrad_temperaturlarm
 
   #######################################################
   # CAMERAS & SECURITY - Frigate & Detection
@@ -251,7 +251,7 @@ views:
         show_header_toggle: true
         state_color: true
         entities:
-          - automation.person_detection_notify_immediate
+          - automation.person_detection_notify
           - automation.person_detection_notify_delayed
           - automation.blink_light_person_detected
           - automation.person_motion_light_control_frontside_garage
@@ -269,7 +269,7 @@ views:
           - automation.animal_detection_notify
           - automation.animal_motion_light_control
           - automation.animal_motion_radio_on
-          - automation.turn_off_deck_light_after_10_minutes_failsafe
+          - automation.turn_off_radio_after_10_minutes
           - sensor.frigate_debug_animal_backside
 
       # Test Automations
@@ -444,10 +444,10 @@ views:
         show_header_toggle: true
         state_color: true
         entities:
-          - automation.satt_pa_subbas_vid_poweron
-          - automation.stang_av_subbas_vid_poweroff
-          - automation.satt_pa_subbas_vid_hog_volym
-          - automation.stang_av_subbas_vid_lag_volym
+          - automation.satt_pa_subbasar_vid_poweron
+          - automation.stang_av_subbasar_vid_poweroff
+          - automation.satt_pa_subbasar_vid_hog_volym
+          - automation.stang_av_subbasar_vid_lag_volym
 
       # Other Media
       - type: entities
@@ -456,7 +456,7 @@ views:
         state_color: true
         entities:
           - automation.satt_pa_tv_bank_vid_rorelse
-          - automation.media_av_vid_sover
+          - automation.media_och_varmekallor_av_vid_sover
 
   #######################################################
   # SYSTEM & MAINTENANCE

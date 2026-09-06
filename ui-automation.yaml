@@ -27,8 +27,8 @@ views:
       - type: entities
         entities:
           - automation.garage_avfuktare_styrning
-          - automation.starta_avfuktare_vid_hog_fukt
-          - automation.stoppa_avfuktare_vid_lag_fukt
+          - automation.starta_avfuktare
+          - automation.stoppa_avfuktare
         title: Garage avfuktare
         show_header_toggle: true
         state_color: true
@@ -54,9 +54,9 @@ views:
       - type: entities
         entities:
           - automation.hem_borta_status_styrning
-          - automation.aktivera_hemma_lage
-          - automation.aktivera_borta_lage_och_stang_av_media
-          - automation.aktivera_hemma_vid_rorelse_i_kok
+          - automation.aktivera_hemma_pa_mode
+          - automation.aktivera_borta_mode
+          - automation.aktivera_hemma_pa_mode_vid_rorelse
         title: Hemma/Borta
         show_header_toggle: true
         state_color: true
@@ -64,16 +64,16 @@ views:
         entities:
           - automation.animal_detection_notify
           - automation.animal_motion_light_control
-          - automation.person_detection_notify
+          - automation.person_detection_notify_delayed
           - automation.person_motion_light_control
-          - automation.person_motion_light_control_frontside_garage
+          - automation.person_motion_light_control_frontside_cam10_cam9
           - automation.blink_light_person_detected
-          - automation.person_detection_notify_immediate
+          - automation.person_detection_notify
           - automation.person_detection_notify_delayed
           - automation.animal_motion_radio_on
           - automation.test_motion_light_control
           - automation.test_motion_radio_control_backside
-          - automation.turn_off_deck_light_after_10_minutes_failsafe
+          - automation.turn_off_radio_after_10_minutes
         title: Frigate
         show_header_toggle: true
         state_color: true
@@ -137,8 +137,8 @@ views:
       - type: entities
         entities:
           - automation.raspberry_pi_offline_larm
-          - automation.pi_b_offline
-          - automation.pi_3b_lux_offline
+          - automation.raspberry_pi_b_1_wire_offline
+          - automation.raspberry_pi_3b_lux_offline
         title: Larm Raspberry Pi
         show_header_toggle: true
         state_color: true
@@ -194,12 +194,9 @@ views:
 
       - type: entities
         entities:
-          - automation.larm_lag_temperatur
-          - automation.larm_hog_temperatur_niva
-          - automation.lag_temperatur_larm
-          - automation.hog_temperatur_larm
-          - automation.varning_hog_temperatur
-          - automation.frysvakt_akut_larm
+          - automation.forrad_temperaturlarm
+          - automation.frys_temperaturlarm
+          - automation.kyl_temperaturlarm
         title: Larm temperatur
         show_header_toggle: true
         state_color: true
@@ -230,7 +227,7 @@ views:
         state_color: true
       - type: entities
         entities:
-          - entity: automation.tradgardsbelysning_input_select
+          - entity: automation.tradgardsbelysning
           - entity: automation.tradgardsbelysning_resolver
         title: Trädgårdsbelysning
         show_header_toggle: true
@@ -250,7 +247,7 @@ views:
         state_color: true
       - type: entities
         entities:
-          - automation.tradgardsbelysning_input_select
+          - automation.tradgardsbelysning
           - automation.tradgardsbelysning_resolver
         title: Input select - Trädgård
         show_header_toggle: true
@@ -265,7 +262,7 @@ views:
         state_color: true
       - type: entities
         entities:
-          - automation.uterumsbelysning_input_select
+          - automation.tand_uterumsbelysning
           - automation.uterumsbelysning_resolver
         title: Input select - Uterum
         show_header_toggle: true
@@ -293,7 +290,7 @@ views:
         state_color: true
       - type: entities
         entities:
-          - automation.halltakbelysning_input_select
+          - automation.hall_takbelysning_input_select
         title: Halltak
         show_header_toggle: true
         state_color: true
@@ -327,14 +324,14 @@ views:
         state_color: true
       - type: entities
         entities:
-          - automation.vent_off_60_borta_ute_24_c_inne_23_c
-          - automation.vent_off_borta_ute_24_c_60_inne_23_c
-          - automation.vent_off_inne_23_c_borta_60_ute_24_c
-          - automation.vent_off_ute_24_c_borta_60_inne_23_c
+          - automation.vent_off_60_borta_ute_24degc_inne_23degc
+          - automation.vent_off_borta_ute_24degc_60_inne_23degc
+          - automation.vent_off_inne_23degc_borta_60_ute_24degc
+          - automation.vent_off_ute_24degc_borta_60_inne_23degc
           - automation.vent_on_60_off
           - automation.vent_on_hemma_off
-          - automation.vent_on_inne_23_c_off
-          - automation.vent_on_ute_22_c_off
+          - automation.vent_on_inne_23degc_off
+          - automation.vent_on_ute_22degc_off
         title: Ventilation On/Off
         show_header_toggle: true
         state_color: true
@@ -368,11 +365,11 @@ views:
           - automation.satt_pa_mediaspelare_vid_listen_to_spotify
           - automation.satt_pa_mediaspelare_vid_watch_chromecast_ultra
           - automation.satt_pa_mediaspelare_vid_listen_to_chromecast_ultra
-          - automation.satt_pa_subbas_vid_poweron
-          - automation.stang_av_subbas_vid_poweroff
-          - automation.satt_pa_subbas_vid_hog_volym
-          - automation.stang_av_subbas_vid_lag_volym
-          - automation.media_av_vid_sover
+          - automation.satt_pa_subbasar_vid_poweron
+          - automation.stang_av_subbasar_vid_poweroff
+          - automation.satt_pa_subbasar_vid_hog_volym
+          - automation.stang_av_subbasar_vid_lag_volym
+          - automation.media_och_varmekallor_av_vid_sover
           - automation.satt_pa_tv_bank_vid_rorelse
         title: Mediaspelare
         show_header_toggle: true

@@ -359,6 +359,9 @@ To validate in CI (or before committing) without modifying files:
 This section is auto-generated from the filesystem.
 Run `py extra/ha_docs_sync.py` to refresh it.
 
+### Top-level package files
+- [packages/car.yaml](packages/car.yaml)
+
 ### Package folders
 - **packages/alerts/**
   - [packages/alerts/devices_offline.yaml](packages/alerts/devices_offline.yaml)

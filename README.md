@@ -152,6 +152,7 @@ Automated alerts for temperature thresholds in various zones.
 ## 📚 Documentation Links
 
 - System overview (architecture, flows, and file map): `SYSTEM_OVERVIEW.md`
+- AI context and troubleshooting routing: `docs/AI_CONTEXT.md`
 
 - [Home Assistant Docs](https://www.home-assistant.io/docs/)
 - [Package Documentation](https://www.home-assistant.io/docs/configuration/packages/)

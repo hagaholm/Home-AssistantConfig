@@ -104,7 +104,7 @@ template:
 
       - name: "Raspberry Pi Flightradar24"
         unique_id: system_rpi_flightradar24_status
-        state: "{{ 'Online' if is_state('.device_tracker.raspberry_flightradar24', 'home') else 'Offline' }}"
+        state: "{{ 'Online' if is_state('device_tracker.raspberry_flightradar24', 'home') else 'Offline' }}"
         # Raspberry Pi running Flightradar24 monitoring
 
       # Security Cameras

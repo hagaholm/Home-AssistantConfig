@@ -27,3 +27,6 @@ template:
           kitchen_presence: "{{ states('binary_sensor.kok_narvaro') }}"
           frigate_temporary_presence: "{{ is_state('input_boolean.frigate_temp_presence', 'on') }}"
           temporary_presence_timeout: "{{ states('input_datetime.frigate_temp_presence_timeout') }}"
+          face_confirmations: "{{ states('counter.frigate_temp_presence_confirmation') }}"
+          temporary_presence_rules: >-
+            Tillfällig Frigate-närvaro kräver att hemstatus är Borta, en igenkänd Micke- eller Annelie-detektering med minst 95 % träffsäkerhet från kamera 8, 9 eller 10 och två bekräftelser. Bekräftelser just nu: {{ states('counter.frigate_temp_presence_confirmation') }} av 2. När fönstret är aktivt sätts Hemma i 5 minuter till {{ states('input_datetime.frigate_temp_presence_timeout') }}. Vid timeout återgår status till Borta endast om spårade enheter fortfarande är not_home.

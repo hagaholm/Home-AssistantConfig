@@ -75,27 +75,38 @@ template:
           radio_control_entity: switch.shellyoutdoorsg3_e4b063f3674c
           radio_state: "{{ states('switch.shellyoutdoorsg3_e4b063f3674c') }}"
           animal_detected: "{{ is_state('binary_sensor.cams_animal_backside_active', 'on') }}"
+          person_detected: "{{ is_state('binary_sensor.cams_person_backside_north_active', 'on') }}"
           lux: "{{ states('sensor.ljusstyrka') }}"
           is_night: >-
             {% from 'time_windows.jinja' import in_time_range %}
             {{ in_time_range(20, 0, 8, 0) }}
           radio_automation_enabled: "{{ is_state('automation.animal_motion_radio_on', 'on') }}"
+          person_radio_automation_enabled: "{{ is_state('automation.person_motion_radio_control_backside', 'on') }}"
           floodlight_automation_enabled: "{{ is_state('automation.animal_motion_light_control', 'on') }}"
           reason: >-
             {% from 'time_windows.jinja' import in_time_range %}
-            {% set detected = is_state('binary_sensor.cams_animal_backside_active', 'on') %}
+            {% set animal_detected = is_state('binary_sensor.cams_animal_backside_active', 'on') %}
+            {% set person_detected = is_state('binary_sensor.cams_person_backside_north_active', 'on') %}
             {% set lux = states('sensor.ljusstyrka') | float(none) %}
             {% set is_night = (in_time_range(20, 0, 8, 0) | trim) == 'True' %}
-            {% set dark_enough = is_night or (lux is number and lux < 10) %}
-            {% if not is_state('automation.animal_motion_radio_on', 'on') %}
-              Automationen "Animal Motion Radio Control Backside" är avstängd -> radion styrs inte automatiskt
-            {% elif not detected %}
-              Ingen djurdetektering just nu (cams_animal_backside_active=off) -> radio släcks 20s efter senaste detektion
-            {% elif dark_enough %}
-              Djur upptäckt + mörkt (natt 20-08 eller lux<10) -> radio tänds 10s efter detektion om det kvarstår
+            {% set animal_dark_enough = is_night or (lux is number and lux < 10) %}
+            {% set person_dark_enough = is_night and (lux is number and lux < 10) %}
+            {% if animal_detected and is_state('automation.animal_motion_radio_on', 'on') and animal_dark_enough %}
+              Djurdetektering är aktiv och mörkervillkoret är uppfyllt -> djurautomation kan tända radion efter 10 sekunder
+            {% elif person_detected and is_state('automation.person_motion_radio_control_backside', 'on') and person_dark_enough %}
+              Persondetektering på baksidan är aktiv, det är natt och lux är under 10 -> personautomation kan tända radion efter 2 sekunder
+            {% elif not animal_detected and not person_detected %}
+              Ingen aktiv djur- eller persondetektering på baksidan -> respektive automation släcker radion 20 sekunder efter avslutad detektering
             {% else %}
-              Djur upptäckt men för ljust (lux>=10, inte natt) -> radion tänds INTE
+              Ingen aktiv radioregel är helt uppfylld. Se aktuella regler för djur- och persondetektering nedan
             {% endif %}
+          radio_rules: >-
+            {% from 'time_windows.jinja' import in_time_range %}
+            {% set lux = states('sensor.ljusstyrka') | float(none) %}
+            {% set is_night = (in_time_range(20, 0, 8, 0) | trim) == 'True' %}
+            Djurdetektering: automation {{ 'på' if is_state('automation.animal_motion_radio_on', 'on') else 'av' }}, detektering {{ states('binary_sensor.cams_animal_backside_active') }}, mörker (natt eller lux under 10): {{ 'ja' if is_night or (lux is number and lux < 10) else 'nej' }}. Tändning kräver samtliga villkor och väntar 10 sekunder.
+            Persondetektering: automation {{ 'på' if is_state('automation.person_motion_radio_control_backside', 'on') else 'av' }}, detektering {{ states('binary_sensor.cams_person_backside_north_active') }}, natt: {{ 'ja' if is_night else 'nej' }}, lux under 10: {{ 'ja' if lux is number and lux < 10 else 'nej' }}. Tändning kräver samtliga villkor och väntar 2 sekunder.
+            Båda automationerna släcker radion 20 sekunder efter att sin egen detektering blivit av.
 
 ##################
 ### Automation ###

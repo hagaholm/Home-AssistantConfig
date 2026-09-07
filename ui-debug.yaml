@@ -452,11 +452,49 @@ views:
 
           **Djur upptäckt just nu:** {{ state_attr('sensor.frigate_debug_animal_backside', 'animal_detected') }}
 
-          **Radio-automation på:** {{ state_attr('sensor.frigate_debug_animal_backside', 'radio_automation_enabled') }}
+          **Person upptäckt på baksidan:** {{ state_attr('sensor.frigate_debug_animal_backside', 'person_detected') }}
 
-            **Styr radio via:** {{ state_attr('sensor.frigate_debug_animal_backside', 'radio_control_entity') }}
+          **Djur-radioautomation på:** {{ state_attr('sensor.frigate_debug_animal_backside', 'radio_automation_enabled') }}
 
-            **Radions läge:** {{ state_attr('sensor.frigate_debug_animal_backside', 'radio_state') }}
+          **Person-radioautomation på:** {{ state_attr('sensor.frigate_debug_animal_backside', 'person_radio_automation_enabled') }}
+
+          **Styr radio via:** {{ state_attr('sensor.frigate_debug_animal_backside', 'radio_control_entity') }}
+
+          **Radions läge:** {{ state_attr('sensor.frigate_debug_animal_backside', 'radio_state') }}
+
+          **Aktuella regler:**
+
+          {{ state_attr('sensor.frigate_debug_animal_backside', 'radio_rules') }}
+
+      - type: markdown
+        title: Strålkastare - baksida
+        content: >-
+          **Läge:** {{ states('sensor.diagnostics_backside_floodlights') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_backside_floodlights', 'reason') }}
+
+          **Styrda lampor:** {{ state_attr('sensor.diagnostics_backside_floodlights', 'controlled_entities') }}
+
+          **Faktiska lägen:** {{ state_attr('sensor.diagnostics_backside_floodlights', 'physical_states') }}
+
+          **Aktuella regler:**
+
+          {{ state_attr('sensor.diagnostics_backside_floodlights', 'decision_rules') }}
+
+      - type: markdown
+        title: Strålkastare - uppfart & garage
+        content: >-
+          **Läge:** {{ states('sensor.diagnostics_frontside_floodlights') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_frontside_floodlights', 'reason') }}
+
+          **Styrda lampor:** {{ state_attr('sensor.diagnostics_frontside_floodlights', 'controlled_entities') }}
+
+          **Faktiska lägen:** {{ state_attr('sensor.diagnostics_frontside_floodlights', 'physical_states') }}
+
+          **Aktuella regler:**
+
+          {{ state_attr('sensor.diagnostics_frontside_floodlights', 'decision_rules') }}
 
   - path: klimat-ventilation-varfor
     title: Klimat & Ventilation - Varför?
@@ -493,6 +531,14 @@ views:
           **Mögelrisk:** {{ state_attr('sensor.diagnostics_climate_friggebod', 'mold_risk') }} %
 
           **Värme aktiv:** {{ state_attr('sensor.diagnostics_climate_friggebod', 'heat_active') }}
+
+          **Styr värmen via:** {{ state_attr('sensor.diagnostics_climate_friggebod', 'heat_control_entity') }}
+
+          **Värmeautomatik på:** {{ state_attr('sensor.diagnostics_climate_friggebod', 'heat_automation_enabled') }}
+
+          **Aktuella regler:**
+
+          {{ state_attr('sensor.diagnostics_climate_friggebod', 'heating_rules') }}
 
           **Saknade värden:** {{ state_attr('sensor.diagnostics_climate_friggebod', 'missing_inputs') }}
       - type: markdown
@@ -562,13 +608,34 @@ views:
 
           **Relä:** {{ state_attr('sensor.diagnostics_ventilation', 'relay_state') }}
 
+          **Styr ventilation via:** {{ state_attr('sensor.diagnostics_ventilation', 'ventilation_control_entity') }}
+
           **Badrumsfukt:** {{ state_attr('sensor.diagnostics_ventilation', 'bathroom_humidity') }} %
 
           **Forceringsgräns:** {{ state_attr('sensor.diagnostics_ventilation', 'humidity_force_on') }} %
 
+          **Återgångsgräns:** {{ state_attr('sensor.diagnostics_ventilation', 'humidity_force_off') }} %
+
           **Forceringstimer:** {{ state_attr('sensor.diagnostics_ventilation', 'max_timer') }}
 
           **Aktiva larm:** {{ state_attr('sensor.diagnostics_ventilation', 'active_alarm_flags') or 'Inga' }}
+
+          **Aktuella regler:**
+
+          {{ state_attr('sensor.diagnostics_ventilation', 'force_rules') }}
+
+      - type: markdown
+        title: Ventilation auto-tuning
+        content: >-
+          **Auto-tuning på:** {{ states('input_boolean.ventilation_auto_tuning_enabled') }}
+
+          **Auto-applicering på:** {{ states('input_boolean.ventilation_auto_tuning_auto_apply') }}
+
+          **Förslag RH start/stopp:** {{ states('sensor.ventilation_recommended_rh_force_on') }} / {{ states('sensor.ventilation_recommended_rh_force_off') }} %
+
+          **Förslag stabiltid/maxtid:** {{ states('sensor.ventilation_recommended_stable_minutes') }} / {{ states('sensor.ventilation_recommended_max_runtime_minutes') }} min
+
+          **Varför:** Förslagen höjer RH-gränser när forceringstid är över 90 % av maxtiden, och sänker dem när högsta RH är över 85 % men forcering är under 30 minuter per dygn. Stabiltid och maxtid justeras vid upprepade korta eller mycket långa forceringar.
 
   - path: narvaro-sakerhet-varfor
     title: Närvaro & Säkerhet - Varför?
@@ -591,6 +658,8 @@ views:
           **Tillfällig Frigate-närvaro:** {{ state_attr('sensor.diagnostics_presence', 'frigate_temporary_presence') }}
 
           **Tillfällig närvaro till:** {{ state_attr('sensor.diagnostics_presence', 'temporary_presence_timeout') }}
+
+          **Aktuella regler:** {{ state_attr('sensor.diagnostics_presence', 'temporary_presence_rules') }}
       - type: markdown
         title: Frigate-säkerhet
         content: >-
@@ -609,6 +678,17 @@ views:
           **Inbrottslarm kamera 6 idag:** {{ state_attr('sensor.diagnostics_frigate_security', 'cam6_intruder_today') }}
 
           **Senaste ansiktskamera:** {{ state_attr('sensor.diagnostics_frigate_security', 'latest_face_camera') }}
+
+      - type: markdown
+        title: Inbrottssiren - kamera 5 & 6
+        content: >-
+          **Läge:** {{ states('sensor.diagnostics_intruder_alarm') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_intruder_alarm', 'reason') }}
+
+          **Sirener:** {{ state_attr('sensor.diagnostics_intruder_alarm', 'siren_states') }}
+
+          **Aktuella regler:** {{ state_attr('sensor.diagnostics_intruder_alarm', 'decision_rules') }}
 
   - path: system-infrastruktur-varfor
     title: System & Infrastruktur - Varför?
@@ -663,3 +743,19 @@ views:
           **Berörda entiteter:** {{ state_attr('sensor.diagnostics_sensors_health', 'affected_entities') or 'Inga' }}
 
           **Kontrollgräns:** {{ state_attr('sensor.diagnostics_sensors_health', 'threshold_minutes') }} minuter
+      - type: markdown
+        title: Temperaturlarm
+        content: >-
+          **Läge:** {{ states('sensor.diagnostics_temperature_alerts') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_temperature_alerts', 'reason') }}
+
+          **Aktuella regler:** {{ state_attr('sensor.diagnostics_temperature_alerts', 'alert_rules') }}
+      - type: markdown
+        title: Offline-larm
+        content: >-
+          **Läge:** {{ states('sensor.diagnostics_offline_alerts') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_offline_alerts', 'reason') }}
+
+          **Enhetslägen:** {{ state_attr('sensor.diagnostics_offline_alerts', 'device_states') }}

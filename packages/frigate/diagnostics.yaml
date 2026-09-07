@@ -28,3 +28,54 @@ template:
           cam5_intruder_today: "{{ states('counter.intruder_alarm_cam5_daily_count') }}"
           cam6_intruder_today: "{{ states('counter.intruder_alarm_cam6_daily_count') }}"
           latest_face_camera: "{{ states('sensor.frigate_face_camera') }}"
+
+      - name: diagnostics_backside_floodlights
+        unique_id: diagnostics_backside_floodlights
+        state: >-
+          {% set lights = ['light.stralkastare_husgavel', 'light.kamera5_stralkastare', 'light.kamera6_stralkastare', 'light.kamera8_stralkastare'] %}
+          {% if lights | select('is_state', 'on') | list %}Tänd
+          {% elif lights | select('is_state', 'unavailable') | list %}Delvis otillgänglig
+          {% else %}Släckt{% endif %}
+        attributes:
+          reason: >-
+            {% set lights = ['light.stralkastare_husgavel', 'light.kamera5_stralkastare', 'light.kamera6_stralkastare', 'light.kamera8_stralkastare'] %}
+            {% if lights | select('is_state', 'on') | list %}Minst en baksidesstrålkastare är tänd. Se aktiva regler nedan för vilka automatiska styrvägar som för närvarande kan begära tändning; manuella ändringar kan inte särskiljas från ett automatiskt anrop.
+            {% elif lights | select('is_state', 'unavailable') | list %}Ingen lampa rapporterar tänd, men minst en strålkastare är otillgänglig
+            {% else %}Alla fyra baksidesstrålkastare rapporterar släckta{% endif %}
+          controlled_entities: light.stralkastare_husgavel, light.kamera5_stralkastare, light.kamera6_stralkastare, light.kamera8_stralkastare
+          physical_states: >-
+            Husgavel: {{ states('light.stralkastare_husgavel') }}, kamera 5: {{ states('light.kamera5_stralkastare') }}, kamera 6: {{ states('light.kamera6_stralkastare') }}, kamera 8: {{ states('light.kamera8_stralkastare') }}
+          decision_rules: >-
+            Djurdetektering: automation {{ 'på' if is_state('automation.animal_motion_light_control', 'on') else 'av' }}, djurdetektering {{ states('binary_sensor.cams_animal_backside_active') }}, mörkt enligt regeln (natt 20-08 eller lux under 10): {{ 'ja' if now().hour >= 20 or now().hour < 8 or states('sensor.ljusstyrka') | float(999999) < 10 else 'nej' }}. Tändning kräver automation på, aktiv djurdetektering och mörker; därefter väntar automationen 2 sekunder. Släckning sker 30 sekunder efter att djurdetektering blivit av.
+            Persondetektering: automation {{ 'på' if is_state('automation.person_motion_light_control', 'on') else 'av' }}, persondetektering norr baksida {{ states('binary_sensor.cams_person_backside_north_active') }}, natt (20-08): {{ 'ja' if now().hour >= 20 or now().hour < 8 else 'nej' }}, lux {{ states('sensor.ljusstyrka') }} och kräver under 10: {{ 'ja' if states('sensor.ljusstyrka') | float(999999) < 10 else 'nej' }}. Tändning kräver alla dessa villkor och väntar sedan 2 sekunder; släckning sker 30 sekunder efter avslutad persondetektering.
+            Testdetektering: testautomation {{ 'på' if is_state('automation.test_motion_light_control', 'on') else 'av' }}, valfri detektering på baksidan {{ states('binary_sensor.cams_all_backside_active') }}. När testautomation är på tänder den efter 2 sekunder utan mörkervillkor och släcker 10 sekunder efter avslutad detektering.
+
+      - name: diagnostics_frontside_floodlights
+        unique_id: diagnostics_frontside_floodlights
+        state: >-
+          {% if is_state('light.kamera9_stralkastare', 'on') or is_state('light.kamera10_stralkastare', 'on') %}Tänd
+          {% elif is_state('light.kamera9_stralkastare', 'unavailable') or is_state('light.kamera10_stralkastare', 'unavailable') %}Delvis otillgänglig
+          {% else %}Släckt{% endif %}
+        attributes:
+          reason: >-
+            {% if is_state('light.kamera9_stralkastare', 'on') or is_state('light.kamera10_stralkastare', 'on') %}Minst en strålkastare vid uppfart eller garage är tänd. Den normala personautomationen kan tända dem när dess villkor nedan är uppfyllda; manuella ändringar kan inte särskiljas från automatiska anrop.
+            {% elif is_state('light.kamera9_stralkastare', 'unavailable') or is_state('light.kamera10_stralkastare', 'unavailable') %}Minst en strålkastare är otillgänglig
+            {% else %}Båda strålkastarna vid uppfart och garage rapporterar släckta{% endif %}
+          controlled_entities: light.kamera9_stralkastare, light.kamera10_stralkastare
+          physical_states: "Kamera 9: {{ states('light.kamera9_stralkastare') }}, kamera 10: {{ states('light.kamera10_stralkastare') }}"
+          decision_rules: >-
+            Kamera 9: persondetektering {{ states('binary_sensor.cam9_person_occupancy') }}, hemstatus {{ states('input_select.home_status') }} och kräver Borta eller Sover: {{ 'ja' if states('input_select.home_status') in ['Borta', 'Sover'] else 'nej' }}, lux {{ states('sensor.ljusstyrka') }} och kräver under 10: {{ 'ja' if states('sensor.ljusstyrka') | float(999999) < 10 else 'nej' }}. Tändning kräver samtliga villkor och väntar 2 sekunder; släckning sker 10 sekunder efter avslutad persondetektering.
+            Kamera 10: persondetektering {{ states('binary_sensor.cam10_person_occupancy') }}, hemstatus {{ states('input_select.home_status') }} och kräver Borta eller Sover: {{ 'ja' if states('input_select.home_status') in ['Borta', 'Sover'] else 'nej' }}, lux {{ states('sensor.ljusstyrka') }} och kräver under 10: {{ 'ja' if states('sensor.ljusstyrka') | float(999999) < 10 else 'nej' }}. Tändning kräver samtliga villkor och väntar 2 sekunder; släckning sker 10 sekunder efter avslutad persondetektering.
+
+      - name: diagnostics_intruder_alarm
+        unique_id: diagnostics_intruder_alarm
+        state: >-
+          {% if is_state('siren.kamera5_siren', 'on') or is_state('siren.kamera6_siren', 'on') %}Aktivt larm
+          {% else %}Beredd{% endif %}
+        attributes:
+          reason: >-
+            {% if is_state('siren.kamera5_siren', 'on') or is_state('siren.kamera6_siren', 'on') %}Minst en inbrottssiren är aktiv; den normala sirentiden är 5 sekunder och failsafe stänger senast efter 6 sekunder
+            {% else %}Kamera 5 och 6:s inbrottssirener är inte aktiva{% endif %}
+          siren_states: "Kamera 5: {{ states('siren.kamera5_siren') }}, kamera 6: {{ states('siren.kamera6_siren') }}"
+          decision_rules: >-
+            Kamera 5 och 6 kan larma vid en ny Frigate-persondetektering i zonen Baksidan. Hemstatus måste vara Sover, eller Borta mellan 18:00 och 09:00. Varje kamera är begränsad till högst 10 larm per dag och minst 20 sekunder mellan larm. Aktuell hemstatus: {{ states('input_select.home_status') }}. Dagens larm: kamera 5 {{ states('counter.intruder_alarm_cam5_daily_count') }} av 10, kamera 6 {{ states('counter.intruder_alarm_cam6_daily_count') }} av 10.

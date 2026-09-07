@@ -101,6 +101,21 @@ template:
           humidity: "{{ states('sensor.friggebod_luftfuktighet') }}"
           mold_risk: "{{ states('sensor.friggebod_mogelrisk') }}"
           heat_active: "{{ is_state('switch.friggebod_elvarme', 'on') }}"
+          heat_control_entity: switch.friggebod_elvarme
+          heat_automation_enabled: "{{ is_state('input_boolean.friggebod_varme_auto', 'on') }}"
+          heating_rules: >-
+            {% set temperature = states('sensor.friggebod_temperatur') | float(none) %}
+            {% set humidity = states('sensor.friggebod_luftfuktighet') | float(none) %}
+            {% set absolute_inside = states('sensor.friggebod_absolut_fukt_inne') | float(none) %}
+            {% set absolute_outside = states('sensor.utomhus_absolut_fukt') | float(none) %}
+            {% set runtime = states('counter.friggebod_varme_tid') | int(0) %}
+            {% set min_runtime_active = is_state('timer.friggebod_min_runtime', 'active') %}
+            Frostskydd: temperatur {{ temperature if temperature is number else 'saknas' }} °C, kräver under 3 °C: {{ 'uppfyllt' if temperature is number and temperature < 3 else 'ej uppfyllt' }}.
+            Fuktdriven värme: RH {{ humidity if humidity is number else 'saknas' }} %, kräver över 60 %: {{ 'uppfyllt' if humidity is number and humidity > 60 else 'ej uppfyllt' }}.
+            Absolut fukt inne minus ute: {{ (absolute_inside - absolute_outside) | round(1) if absolute_inside is number and absolute_outside is number else 'saknas' }} g/m³, kräver över 1,0 g/m³: {{ 'uppfyllt' if absolute_inside is number and absolute_outside is number and (absolute_inside - absolute_outside) > 1 else 'ej uppfyllt' }}.
+            Temperatur för fuktvärme, kräver över 0 °C: {{ 'uppfyllt' if temperature is number and temperature > 0 else 'ej uppfyllt' }}.
+            Dagens värmetid: {{ runtime }} av högst 12 tio-minutersperioder: {{ 'uppfyllt' if runtime < 12 else 'uppnådd' }}.
+            Avstängning är tillåten när RH är under 55 %, fuktdifferensen är under 0,5 g/m³ eller maxtiden är uppnådd, och minsta gångtid är klar: {{ 'väntar på minsta gångtid' if min_runtime_active else 'kan utvärderas' }}.
           missing_inputs: >-
             {% set missing = [] %}
             {% if states('sensor.friggebod_temperatur') in ['unknown', 'unavailable', ''] %}{% set missing = missing + ['sensor.friggebod_temperatur (temperatur)'] %}{% endif %}

@@ -302,3 +302,33 @@ template:
           update_available: "{{ is_state('binary_sensor.updater', 'on') }}"
           installed_version: "{{ states('sensor.installed_version') }}"
           latest_version: "{{ states('sensor.current_ha_version') }}"
+
+  - sensor:
+      - name: diagnostics_temperature_alerts
+        unique_id: diagnostics_temperature_alerts
+        state: >-
+          {% set readings = [states('sensor.forrad_temperature') | float(none), states('sensor.friggebod_temperatur') | float(none), states('sensor.frys_temperature') | float(none), states('sensor.kyl_temperature') | float(none), states('sensor.uterum_temperatur') | float(none), states('sensor.varmepump_temperature') | float(none)] %}
+          {% if readings | select('equalto', none) | list %}Data saknas
+          {% elif readings[0] > 11 or readings[0] < 4 or readings[1] > 23 or readings[1] < 19 or readings[2] > -13 or readings[2] < -25 or readings[3] > 10 or readings[3] < 3 or readings[4] > 35 or readings[5] > 55 or readings[5] < 20 %}Larmvillkor uppfyllt
+          {% else %}OK{% endif %}
+        attributes:
+          reason: >-
+            {% if this.state == 'Larmvillkor uppfyllt' %}Minst en temperatur ligger utanför ett larmintervall. Notifieringen kräver normalt att villkoret kvarstår i 10 minuter; friggebodens frysvakt kräver 5 minuter under 3 °C.
+            {% elif this.state == 'Data saknas' %}Minst en övervakad temperatursensor saknar ett numeriskt värde
+            {% else %}Alla övervakade temperaturer är inom sina larmintervall{% endif %}
+          alert_rules: >-
+            Förråd {{ states('sensor.forrad_temperature') }} °C: larm under 4 eller över 11 °C när ute är under 5 °C, efter 10 min. Friggebod {{ states('sensor.friggebod_temperatur') }} °C: larm under 19 eller över 23 °C efter 10 min när ute är under 15 °C; frysvakt under 3 °C efter 5 min. Frys {{ states('sensor.frys_temperature') }} °C: larm över -13 eller under -25 °C efter 10 min. Kyl {{ states('sensor.kyl_temperature') }} °C: larm under 3 eller över 10 °C efter 10 min. Uterum {{ states('sensor.uterum_temperatur') }} °C: larm över 35 °C efter 10 min. Ackumulatortank {{ states('sensor.varmepump_temperature') }} °C: larm under 20 eller över 55 °C efter 10 min.
+
+      - name: diagnostics_offline_alerts
+        unique_id: diagnostics_offline_alerts
+        state: >-
+          {% set devices = ['device_tracker.raspberry_pi_b_1_wire', 'device_tracker.raspberry_pi_3b_lux', 'device_tracker.raspberry_pi_flightradar24'] %}
+          {% if devices | select('is_state', 'not_home') | list %}Offline-larm
+          {% else %}OK{% endif %}
+        attributes:
+          reason: >-
+            {% set devices = ['device_tracker.raspberry_pi_b_1_wire', 'device_tracker.raspberry_pi_3b_lux', 'device_tracker.raspberry_pi_flightradar24'] %}
+            {% set offline = devices | select('is_state', 'not_home') | list %}
+            {% if offline %}Minst en övervakad Raspberry Pi rapporterar not_home och offline-notifieringen kan ha skickats
+            {% else %}Samtliga Raspberry Pi-enheter rapporterar annat än not_home{% endif %}
+          device_states: "1-Wire: {{ states('device_tracker.raspberry_pi_b_1_wire') }}, Lux: {{ states('device_tracker.raspberry_pi_3b_lux') }}, Flightradar24: {{ states('device_tracker.raspberry_pi_flightradar24') }}"

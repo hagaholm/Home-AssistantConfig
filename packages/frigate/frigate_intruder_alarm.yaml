@@ -125,7 +125,7 @@ automation:
 
       - condition: template
         value_template: >
-          {{ states('counter.intruder_alarm_cam5_daily_count') | int(0) < 10 }}
+          {{ states('counter.intruder_alarm_cam5_daily_count') | int(0) < 2 }}
 
       - condition: template
         value_template: >
@@ -183,7 +183,7 @@ automation:
         target:
           entity_id: number.kamera5_volym
         data:
-          value: 100
+          value: 50
 
       - service: siren.turn_on
         target:
@@ -229,7 +229,7 @@ automation:
             Area: {{ area }}.
             Ratio W/H: {{ ratio }}.
             Region: {{ region }}.
-            Siren activated for 5 seconds at 100%.
+            Siren activated for 5 seconds at 50%.
 
   - alias: Cam5 Intruder Alarm Daily Reset
     id: '81119011564401'
@@ -311,7 +311,7 @@ automation:
 
       - condition: template
         value_template: >
-          {{ states('counter.intruder_alarm_cam6_daily_count') | int(0) < 10 }}
+          {{ states('counter.intruder_alarm_cam6_daily_count') | int(0) < 2 }}
 
       - condition: template
         value_template: >
@@ -369,7 +369,7 @@ automation:
         target:
           entity_id: number.kamera6_volym
         data:
-          value: 100
+          value: 50
 
       - service: siren.turn_on
         target:
@@ -415,7 +415,7 @@ automation:
             Area: {{ area }}.
             Ratio W/H: {{ ratio }}.
             Region: {{ region }}.
-            Siren activated for 5 seconds at 100%.
+            Siren activated for 5 seconds at 50%.
 
   - alias: Cam6 Intruder Alarm Daily Reset
     id: '81119011564403'

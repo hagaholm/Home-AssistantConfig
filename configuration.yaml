@@ -123,34 +123,6 @@ lovelace:
       show_in_sidebar: true
       filename: ui-debug.yaml
 
-    # Generated - flat (one view per source YAML file)
-    lovelace-generated-flat:
-      mode: yaml
-      filename: generated_ui/ui-generated-flat.yaml
-      title: Generated (Flat)
-      icon: mdi:view-list
-      show_in_sidebar: true
-      require_admin: true
-
-    # Generated - grouped (one view per category)
-    lovelace-generated-grouped:
-      mode: yaml
-      filename: generated_ui/ui-generated-grouped.yaml
-      title: Generated (Grouped)
-      icon: mdi:view-grid
-      show_in_sidebar: true
-      require_admin: true
-
-    # Generated - entity types (one view per entity type)
-    lovelace-generated-entity-types:
-      mode: yaml
-      filename: generated_ui/ui-generated-entity-types.yaml
-      title: Generated (Entity Types)
-      icon: mdi:shape-outline
-      show_in_sidebar: true
-      require_admin: true
-
-
 ####################################################
 #                                                  #
 #      LINKS TO INDIVUAL CONFIGURATION FILES       #

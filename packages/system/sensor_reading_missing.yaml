@@ -92,10 +92,11 @@ automation:
           state: 'off'
         - condition: template
           value_template: >
-            {% if states.sensor.frys_temperature is not defined or states.sensor.frys_temperature.last_updated is none %} 
+            {% set lu = states.sensor.frys_temperature.last_updated if states.sensor.frys_temperature is defined and states.sensor.frys_temperature.last_updated is not none and states.sensor.frys_temperature.last_updated != '' else none %}
+            {% if lu is none %}
               0
-            {% else %} 
-              {{ (as_timestamp(now())-as_timestamp(states.sensor.frys_temperature.last_updated)) > 7200 }}
+            {% else %}
+              {{ (as_timestamp(now()) - as_timestamp(lu)) > 7200 }}
             {% endif %}
 
     action:
@@ -120,10 +121,11 @@ automation:
           state: 'off'
         - condition: template
           value_template: >
-            {% if states.sensor.kyl_temperature is not defined or states.sensor.kyl_temperature.last_updated is none %} 
+            {% set lu = states.sensor.kyl_temperature.last_updated if states.sensor.kyl_temperature is defined and states.sensor.kyl_temperature.last_updated is not none and states.sensor.kyl_temperature.last_updated != '' else none %}
+            {% if lu is none %}
               0
-            {% else %} 
-              {{ (as_timestamp(now())-as_timestamp(states.sensor.kyl_temperature.last_updated)) > 7200 }}
+            {% else %}
+              {{ (as_timestamp(now()) - as_timestamp(lu)) > 7200 }}
             {% endif %}
 
     action:
@@ -150,17 +152,19 @@ automation:
           conditions:
             - condition: template
               value_template: >
-                {% if states.sensor.badrum_temperatur is not defined or states.sensor.badrum_temperatur.last_updated is none %} 
+                {% set lu = states.sensor.badrum_temperatur.last_updated if states.sensor.badrum_temperatur is defined and states.sensor.badrum_temperatur.last_updated is not none and states.sensor.badrum_temperatur.last_updated != '' else none %}
+                {% if lu is none %}
                   0
-                {% else %} 
-                  {{ (as_timestamp(now())-as_timestamp(states.sensor.badrum_temperatur.last_updated)) > 7200 }}
+                {% else %}
+                  {{ (as_timestamp(now()) - as_timestamp(lu)) > 7200 }}
                 {% endif %}
             - condition: template
-              value_template: > 
-                {% if states.sensor.badrum_luftfuktighet is not defined or states.sensor.badrum_luftfuktighet.last_updated is none %} 
+              value_template: >
+                {% set lu = states.sensor.badrum_luftfuktighet.last_updated if states.sensor.badrum_luftfuktighet is defined and states.sensor.badrum_luftfuktighet.last_updated is not none and states.sensor.badrum_luftfuktighet.last_updated != '' else none %}
+                {% if lu is none %}
                   0
-                {% else %} 
-                  {{ (as_timestamp(now())-as_timestamp(states.sensor.badrum_luftfuktighet.last_updated)) > 7200 }}
+                {% else %}
+                  {{ (as_timestamp(now()) - as_timestamp(lu)) > 7200 }}
                 {% endif %}
 
     action:
@@ -186,18 +190,20 @@ automation:
         - condition: or
           conditions:
             - condition: template
-              value_template: > 
-                {% if states.sensor.tvattstuga_temperature is not defined or states.sensor.tvattstuga_temperature.last_updated is none %} 
+              value_template: >
+                {% set lu = states.sensor.tvattstuga_temperature.last_updated if states.sensor.tvattstuga_temperature is defined and states.sensor.tvattstuga_temperature.last_updated is not none and states.sensor.tvattstuga_temperature.last_updated != '' else none %}
+                {% if lu is none %}
                   0
-                {% else %} 
-                  {{ (as_timestamp(now())-as_timestamp(states.sensor.tvattstuga_temperature.last_updated)) > 7200 }}
+                {% else %}
+                  {{ (as_timestamp(now()) - as_timestamp(lu)) > 7200 }}
                 {% endif %}
             - condition: template
-              value_template: > 
-                {% if states.sensor.tvattstuga_humidity is not defined or states.sensor.tvattstuga_humidity.last_updated is none %} 
+              value_template: >
+                {% set lu = states.sensor.tvattstuga_humidity.last_updated if states.sensor.tvattstuga_humidity is defined and states.sensor.tvattstuga_humidity.last_updated is not none and states.sensor.tvattstuga_humidity.last_updated != '' else none %}
+                {% if lu is none %}
                   0
-                {% else %} 
-                  {{ (as_timestamp(now())-as_timestamp(states.sensor.tvattstuga_humidity.last_updated)) > 7200 }}
+                {% else %}
+                  {{ (as_timestamp(now()) - as_timestamp(lu)) > 7200 }}
                 {% endif %}
 
     action:
@@ -222,10 +228,11 @@ automation:
           state: 'off'
         - condition: template
           value_template: >
-            {% if states.sensor.varmepump_temperature is not defined or states.sensor.varmepump_temperature.last_updated is none %} 
+            {% set lu = states.sensor.varmepump_temperature.last_updated if states.sensor.varmepump_temperature is defined and states.sensor.varmepump_temperature.last_updated is not none and states.sensor.varmepump_temperature.last_updated != '' else none %}
+            {% if lu is none %}
               0
-            {% else %} 
-              {{ (as_timestamp(now())-as_timestamp(states.sensor.varmepump_temperature.last_updated)) > 7200 }}
+            {% else %}
+              {{ (as_timestamp(now()) - as_timestamp(lu)) > 7200 }}
             {% endif %}
 
     action:
@@ -250,10 +257,11 @@ automation:
           state: 'off'
         - condition: template
           value_template: >
-            {% if states.sensor.vardagsrum_temperatur is not defined or states.sensor.vardagsrum_temperatur.last_updated is none %} 
+            {% set lu = states.sensor.vardagsrum_temperatur.last_updated if states.sensor.vardagsrum_temperatur is defined and states.sensor.vardagsrum_temperatur.last_updated is not none and states.sensor.vardagsrum_temperatur.last_updated != '' else none %}
+            {% if lu is none %}
               0
-            {% else %} 
-              {{ (as_timestamp(now())-as_timestamp(states.sensor.vardagsrum_temperatur.last_updated)) > 7200 }}
+            {% else %}
+              {{ (as_timestamp(now()) - as_timestamp(lu)) > 7200 }}
             {% endif %}
 
     action:
@@ -280,17 +288,19 @@ automation:
           conditions:
             - condition: template
               value_template: >
-                {% if states.sensor.hall_temperatur is not defined or states.sensor.hall_temperatur.last_updated is none %} 
+                {% set lu = states.sensor.hall_temperatur.last_updated if states.sensor.hall_temperatur is defined and states.sensor.hall_temperatur.last_updated is not none and states.sensor.hall_temperatur.last_updated != '' else none %}
+                {% if lu is none %}
                   0
-                {% else %} 
-                  {{ (as_timestamp(now())-as_timestamp(states.sensor.hall_temperatur.last_updated)) > 7200 }}
+                {% else %}
+                  {{ (as_timestamp(now()) - as_timestamp(lu)) > 7200 }}
                 {% endif %}
             - condition: template
-              value_template: > 
-                {% if states.sensor.hall_luftfuktighet is not defined or states.sensor.hall_luftfuktighet.last_updated is none %} 
+              value_template: >
+                {% set lu = states.sensor.hall_luftfuktighet.last_updated if states.sensor.hall_luftfuktighet is defined and states.sensor.hall_luftfuktighet.last_updated is not none and states.sensor.hall_luftfuktighet.last_updated != '' else none %}
+                {% if lu is none %}
                   0
-                {% else %} 
-                  {{ (as_timestamp(now())-as_timestamp(states.sensor.hall_luftfuktighet.last_updated)) > 7200 }}
+                {% else %}
+                  {{ (as_timestamp(now()) - as_timestamp(lu)) > 7200 }}
                 {% endif %}
 
     action:
@@ -316,18 +326,20 @@ automation:
         - condition: or
           conditions:
             - condition: template
-              value_template: > 
-                {% if states.sensor.garage_temperature is not defined or states.sensor.garage_temperature.last_updated is none %} 
+              value_template: >
+                {% set lu = states.sensor.garage_temperature.last_updated if states.sensor.garage_temperature is defined and states.sensor.garage_temperature.last_updated is not none and states.sensor.garage_temperature.last_updated != '' else none %}
+                {% if lu is none %}
                   0
-                {% else %} 
-                  {{ (as_timestamp(now())-as_timestamp(states.sensor.garage_temperature.last_updated)) > 7200 }}
+                {% else %}
+                  {{ (as_timestamp(now()) - as_timestamp(lu)) > 7200 }}
                 {% endif %}
             - condition: template
-              value_template: > 
-                {% if states.sensor.garage_humidity is not defined or states.sensor.garage_humidity.last_updated is none %} 
+              value_template: >
+                {% set lu = states.sensor.garage_humidity.last_updated if states.sensor.garage_humidity is defined and states.sensor.garage_humidity.last_updated is not none and states.sensor.garage_humidity.last_updated != '' else none %}
+                {% if lu is none %}
                   0
-                {% else %} 
-                  {{ (as_timestamp(now())-as_timestamp(states.sensor.garage_humidity.last_updated)) > 7200 }}
+                {% else %}
+                  {{ (as_timestamp(now()) - as_timestamp(lu)) > 7200 }}
                 {% endif %}
 
     action:
@@ -352,10 +364,11 @@ automation:
           state: 'off'
         - condition: template
           value_template: >
-            {% if states.sensor.forrad_temperature is not defined or states.sensor.forrad_temperature.last_updated is none %} 
+            {% set lu = states.sensor.forrad_temperature.last_updated if states.sensor.forrad_temperature is defined and states.sensor.forrad_temperature.last_updated is not none and states.sensor.forrad_temperature.last_updated != '' else none %}
+            {% if lu is none %}
               0
-            {% else %} 
-              {{ (as_timestamp(now())-as_timestamp(states.sensor.forrad_temperature.last_updated)) > 7200 }}
+            {% else %}
+              {{ (as_timestamp(now()) - as_timestamp(lu)) > 7200 }}
             {% endif %}
 
     action:
@@ -381,18 +394,20 @@ automation:
         - condition: or
           conditions:
             - condition: template
-              value_template: > 
-                {% if states.sensor.friggebod_temperatur is not defined or states.sensor.friggebod_temperatur.last_updated is none %} 
+              value_template: >
+                {% set lu = states.sensor.friggebod_temperatur.last_updated if states.sensor.friggebod_temperatur is defined and states.sensor.friggebod_temperatur.last_updated is not none and states.sensor.friggebod_temperatur.last_updated != '' else none %}
+                {% if lu is none %}
                   0
-                {% else %} 
-                  {{ (as_timestamp(now())-as_timestamp(states.sensor.friggebod_temperatur.last_updated)) > 7200 }}
+                {% else %}
+                  {{ (as_timestamp(now()) - as_timestamp(lu)) > 7200 }}
                 {% endif %}
             - condition: template
-              value_template: > 
-                {% if states.sensor.friggebod_luftfuktighet is not defined or states.sensor.friggebod_luftfuktighet.last_updated is none %} 
+              value_template: >
+                {% set lu = states.sensor.friggebod_luftfuktighet.last_updated if states.sensor.friggebod_luftfuktighet is defined and states.sensor.friggebod_luftfuktighet.last_updated is not none and states.sensor.friggebod_luftfuktighet.last_updated != '' else none %}
+                {% if lu is none %}
                   0
-                {% else %} 
-                  {{ (as_timestamp(now())-as_timestamp(states.sensor.friggebod_luftfuktighet.last_updated)) > 7200 }}
+                {% else %}
+                  {{ (as_timestamp(now()) - as_timestamp(lu)) > 7200 }}
                 {% endif %}
 
     action:
@@ -417,18 +432,20 @@ automation:
         - condition: or
           conditions:
             - condition: template
-              value_template: > 
-                {% if states.sensor.ute_friggebod_temperature is not defined or states.sensor.ute_friggebod_temperature.last_updated is none %} 
+              value_template: >
+                {% set lu = states.sensor.ute_friggebod_temperature.last_updated if states.sensor.ute_friggebod_temperature is defined and states.sensor.ute_friggebod_temperature.last_updated is not none and states.sensor.ute_friggebod_temperature.last_updated != '' else none %}
+                {% if lu is none %}
                   0
-                {% else %} 
-                  {{ (as_timestamp(now())-as_timestamp(states.sensor.ute_friggebod_temperature.last_updated)) > 7200 }}
+                {% else %}
+                  {{ (as_timestamp(now()) - as_timestamp(lu)) > 7200 }}
                 {% endif %}
             - condition: template
-              value_template: > 
-                {% if states.sensor.ute_friggebod_humidity is not defined or states.sensor.ute_friggebod_humidity.last_updated is none %} 
+              value_template: >
+                {% set lu = states.sensor.ute_friggebod_humidity.last_updated if states.sensor.ute_friggebod_humidity is defined and states.sensor.ute_friggebod_humidity.last_updated is not none and states.sensor.ute_friggebod_humidity.last_updated != '' else none %}
+                {% if lu is none %}
                   0
-                {% else %} 
-                  {{ (as_timestamp(now())-as_timestamp(states.sensor.ute_friggebod_humidity.last_updated)) > 7200 }}
+                {% else %}
+                  {{ (as_timestamp(now()) - as_timestamp(lu)) > 7200 }}
                 {% endif %}
 
     action:

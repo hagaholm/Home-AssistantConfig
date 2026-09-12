@@ -286,14 +286,18 @@ These summary sensors can be used by dashboards, notifications, and other automa
 
 ## 11) System health and maintenance
 
-System monitoring lives in `packages/system_info.yaml` (+ templates in `packages/template_system_info.yaml`).
+System monitoring lives in `packages/system/system_info.yaml`, `packages/system/diagnostics.yaml`, and `packages/system/diagnostic_controls.yaml`.
 
 It includes:
 
-- Version sensors (installed vs current)
-- Start/shutdown notifications
-- Update-available notifications
-- Optional (commented) SSH-based Raspberry Pi temperature monitoring
+- **Version & system sensors**: installed vs latest HA version, uptime, and update notifications.
+- **Diagnostics & Reason engines**:
+  - `sensor.diagnostics_system_health` – aggregated health state across all subsystems.
+  - `sensor.diagnostics_sensor_freshness` & `sensor.diagnostics_sensors_health` – tracks stale temperature/humidity/lux sensors (>60 min age).
+  - `sensor.diagnostics_network_health` – tracks camera and node availability.
+  - `sensor.diagnostics_automation_drift` – verifies all automations match their expected operating state (detects accidentally disabled automations or rogue test scripts).
+- **Per-Device Muting / Control**:
+  - `input_boolean.monitor_sensor_*` and `input_boolean.monitor_node_*` in `packages/system/diagnostic_controls.yaml` allow muting warnings for individual broken/offline devices without breaking the global system health status.
 
 Logging is configured under `logging/`:
 
@@ -460,6 +464,7 @@ Run `py extra/ha_docs_sync.py` to refresh it.
   - [packages/sensors/template_sensors/template_xiaomi_lumi_mgl01_livingroom.yaml](packages/sensors/template_sensors/template_xiaomi_lumi_mgl01_livingroom.yaml)
   - [packages/sensors/template_sensors/template_xiaomi_lumi_mgl01_louise_room_is_not_working.yaml](packages/sensors/template_sensors/template_xiaomi_lumi_mgl01_louise_room_is_not_working.yaml)
 - **packages/system/**
+  - [packages/system/diagnostic_controls.yaml](packages/system/diagnostic_controls.yaml)
   - [packages/system/diagnostics.yaml](packages/system/diagnostics.yaml)
   - [packages/system/sensor_reading_missing.yaml](packages/system/sensor_reading_missing.yaml)
   - [packages/system/system_info.yaml](packages/system/system_info.yaml)

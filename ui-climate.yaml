@@ -1,16 +1,28 @@
+#######################################################
+# UI CLIMATE & VENTILATION (KLIMAT & VENTILATION)
+#######################################################
+# Unified Klimat & Ventilation Subsystem Dashboard
+# 5-Tab Structure:
+# 1. Översikt (Overview & Key Metrics)
+# 2. Rum & Zoner (Per-zone & room sensors, physics & energy)
+# 3. Automationer (All ventilation & heating automations)
+# 4. Inställningar & Styrning (Thresholds, setpoints, tuning)
+# 5. Diagnostik & Varför (Diagnostics, why-sensors, local mutes)
+#######################################################
+
 title: Klimat
 views:
-  ####################################################
-  # STATUS VY
-  ####################################################
-  - theme: Backend-selected
-    title: Information
-    icon: 'mdi:information-outline'
+  #######################################################
+  # TAB 1: ÖVERSIKT (OVERVIEW)
+  #######################################################
+  - path: overview
+    title: Översikt
+    icon: mdi:view-dashboard-outline
     badges: []
     cards:
-# -------------------------------------
-      - type: markdown
-        content: "# 🌬️ Ventilation"
+      - type: heading
+        heading: 🌬️ Ventilation & FTX
+
       - type: grid
         columns: 3
         square: false
@@ -18,11 +30,588 @@ views:
           - type: tile
             entity: switch.ventilationsaggregat
             name: Ventilation
+            icon: mdi:fan
           - type: tile
             entity: switch.shelly1_c45bbe77099d
             name: Forcerad fläkt
+            icon: mdi:fan-speed-3
           - type: tile
             entity: input_boolean.alarm_ventilation
+            name: Larm status
+            icon: mdi:alert-circle
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: sensor.badrum_luftfuktighet
+            name: Badrum fukt
+          - type: tile
+            entity: sensor.fukt_badrumsfonster
+            name: Fönster fukt
+          - type: tile
+            entity: sensor.badrum_temperatur
+            name: Badrum temp
+
+      - type: heading
+        heading: 🌡️ Temperaturer & Inomhusklimat
+
+      - type: grid
+        columns: 4
+        square: false
+        cards:
+          - type: tile
+            entity: sensor.ute
+            name: Ute
+            icon: mdi:thermometer
+          - type: tile
+            entity: sensor.inne_medel
+            name: Inne medel
+            icon: mdi:home-thermometer
+          - type: tile
+            entity: sensor.hall_temperatur
+            name: Hall
+          - type: tile
+            entity: sensor.tvattstuga_temperature
+            name: Tvättstuga
+
+      - type: heading
+        heading: ⚡ Värmezoner & Frostskydd
+
+      - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: switch.forrad_elvarme
+            name: Förråd elvärme
+            icon: mdi:radiator
+          - type: tile
+            entity: switch.friggebod_elvarme
+            name: Friggebod elvärme
+            icon: mdi:radiator
+          - type: tile
+            entity: sensor.varmepump_temperature
+            name: Värmepump
+            icon: mdi:heat-pump
+
+      - type: heading
+        heading: ⚠️ Mögelrisk & Ytterzoner
+
+      - type: grid
+        columns: 4
+        square: false
+        cards:
+          - type: tile
+            entity: sensor.uterum_temperatur
+            name: Uterum
+          - type: tile
+            entity: sensor.garage_temperature
+            name: Garage
+          - type: tile
+            entity: sensor.forrad_temperature
+            name: Förråd
+          - type: tile
+            entity: sensor.friggebod_temperatur
+            name: Friggebod
+
+      - type: grid
+        columns: 4
+        square: false
+        cards:
+          - type: tile
+            entity: sensor.uterum_mogelrisk
+            name: Mögelrisk Uterum
+          - type: tile
+            entity: sensor.garage_mogelrisk
+            name: Mögelrisk Garage
+          - type: tile
+            entity: sensor.forrad_mogelrisk
+            name: Mögelrisk Förråd
+          - type: tile
+            entity: sensor.friggebod_mogelrisk
+            name: Mögelrisk Friggebod
+
+  #######################################################
+  # TAB 2: RUM & ZONER (ROOMS & ZONES)
+  #######################################################
+  - path: zoner
+    title: Rum & Zoner
+    icon: mdi:home-thermometer-outline
+    badges: []
+    cards:
+      # --- VENTILATION & BADRUM ---
+      - type: heading
+        heading: 🌬️ Ventilation & Badrum
+
+      - type: entities
+        title: FTX Status & Timers
+        state_color: true
+        entities:
+          - entity: switch.ventilationsaggregat
+            name: Ventilationsaggregat
+          - entity: switch.shelly1_c45bbe77099d
+            name: Forcerad fläkt (Shelly 1)
+          - entity: timer.timer_humidity_bathroom_max_time
+            name: Max-timer forcerad drift
+          - entity: timer.timer_humidity_bathroom
+            name: Fördröjningstimer
+          - entity: sensor.badrum_luftfuktighet
+            name: Badrum luftfuktighet
+          - entity: sensor.fukt_badrumsfonster
+            name: Fönster luftfuktighet
+          - entity: sensor.badrum_temperatur
+            name: Badrum temperatur
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: gauge
+            entity: sensor.badrum_luftfuktighet
+            name: Fukt Badrum
+            min: 0
+            max: 100
+            severity:
+              green: 0
+              yellow: 70
+              red: 80
+            needle: true
+          - type: gauge
+            entity: sensor.fukt_badrumsfonster
+            name: Fukt Badrum Fönster
+            min: 0
+            max: 100
+            severity:
+              green: 0
+              yellow: 70
+              red: 80
+            needle: true
+
+      - type: history-graph
+        title: Ventilation & Badrumsfukt (24h)
+        entities:
+          - entity: switch.ventilationsaggregat
+            name: Aggregat På/Av
+          - entity: switch.shelly1_c45bbe77099d
+            name: Forcerad drift
+          - entity: sensor.badrum_luftfuktighet
+            name: Fukt Badrum
+          - entity: sensor.fukt_badrumsfonster
+            name: Fukt Fönster
+        hours_to_show: 24
+
+      # --- FÖRRÅD ---
+      - type: heading
+        heading: 📦 Förråd (Smart Fukt- & Värmestyrning)
+
+      - type: entities
+        title: Förråd Drift & Miljö
+        state_color: true
+        entities:
+          - entity: switch.forrad_elvarme
+            name: Elvärme switch
+          - entity: sensor.forrad_temperature
+            name: Temperatur inne
+          - entity: sensor.forrad_luftfuktighet
+            name: Luftfuktighet inne
+          - entity: sensor.forrad_absolut_fukt_inne
+            name: Absolut fukt inne
+          - entity: sensor.forrad_mogelrisk
+            name: Mögelrisk
+          - entity: sensor.forrad_varmetid_idag
+            name: Värmetid idag
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: gauge
+            entity: sensor.forrad_aktuell_effekt
+            name: Aktuell effekt
+            min: 0
+            max: 2000
+            unit: "W"
+            severity:
+              green: 0
+              yellow: 800
+              red: 1500
+            needle: true
+          - type: gauge
+            entity: sensor.forrad_drifttid_procent
+            name: Drifttid idag
+            min: 0
+            max: 100
+            unit: "%"
+            needle: true
+
+      - type: entities
+        title: Förråd Energi & Byggnadsfysik
+        state_color: true
+        entities:
+          - entity: sensor.forrad_energi_idag
+            name: Energi idag
+          - entity: sensor.forrad_kostnad_idag
+            name: Kostnad idag
+          - entity: sensor.forrad_varmebehov_per_grad
+            name: Värmebehov per °C (W/°C)
+          - entity: sensor.forrad_uppskattat_u_varde
+            name: Uppskattat U-värde (W/m²K)
+          - entity: sensor.forrad_temperaturfall_per_timme
+            name: Temperaturfall (°C/h)
+
+      # --- FRIGGEBOD ---
+      - type: heading
+        heading: 🏡 Friggebod (Smart Fukt- & Värmestyrning)
+
+      - type: entities
+        title: Friggebod Drift & Miljö
+        state_color: true
+        entities:
+          - entity: switch.friggebod_elvarme
+            name: Elvärme switch
+          - entity: sensor.friggebod_temperatur
+            name: Temperatur inne
+          - entity: sensor.friggebod_luftfuktighet
+            name: Luftfuktighet inne
+          - entity: sensor.friggebod_absolut_fukt_inne
+            name: Absolut fukt inne
+          - entity: sensor.friggebod_mogelrisk
+            name: Mögelrisk
+          - entity: sensor.friggebod_varmetid_idag
+            name: Värmetid idag
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: gauge
+            entity: sensor.friggebod_aktuell_effekt
+            name: Aktuell effekt
+            min: 0
+            max: 2000
+            unit: "W"
+            severity:
+              green: 0
+              yellow: 800
+              red: 1500
+            needle: true
+          - type: gauge
+            entity: sensor.friggebod_drifttid_procent
+            name: Drifttid idag
+            min: 0
+            max: 100
+            unit: "%"
+            needle: true
+
+      - type: entities
+        title: Friggebod Energi & Byggnadsfysik
+        state_color: true
+        entities:
+          - entity: sensor.friggebod_energi_idag
+            name: Energi idag
+          - entity: sensor.friggebod_kostnad_idag
+            name: Kostnad idag
+          - entity: sensor.friggebod_varmebehov_per_grad
+            name: Värmebehov per °C (W/°C)
+          - entity: sensor.friggebod_uppskattat_u_varde
+            name: Uppskattat U-värde (W/m²K)
+          - entity: sensor.friggebod_temperaturfall_per_timme
+            name: Temperaturfall (°C/h)
+
+      # --- ÖVRIGA ZONER ---
+      - type: heading
+        heading: 🏠 Uterum, Garage, Husvagn & Ute
+
+      - type: entities
+        title: Ytterzoner Sensorer & Mögelrisk
+        state_color: true
+        entities:
+          - entity: sensor.uterum_temperatur
+            name: Uterum temperatur
+          - entity: sensor.uterum_luftfuktighet
+            name: Uterum luftfuktighet
+          - entity: sensor.uterum_mogelrisk
+            name: Uterum mögelrisk
+          - entity: sensor.garage_temperature
+            name: Garage temperatur
+          - entity: sensor.garage_humidity
+            name: Garage luftfuktighet
+          - entity: sensor.garage_mogelrisk
+            name: Garage mögelrisk
+          - entity: sensor.husvagn_temperature
+            name: Husvagn temperatur
+          - entity: sensor.husvagn_humidity
+            name: Husvagn luftfuktighet
+          - entity: sensor.husvagn_mogelrisk
+            name: Husvagn mögelrisk
+          - entity: sensor.ute
+            name: Ute temperatur
+          - entity: sensor.ute_friggebod_humidity
+            name: Ute luftfuktighet
+          - entity: sensor.ute_mogelrisk
+            name: Ute mögelrisk
+
+  #######################################################
+  # TAB 3: AUTOMATIONER (AUTOMATIONS)
+  #######################################################
+  - path: automationer
+    title: Automationer
+    icon: mdi:robot-outline
+    badges: []
+    cards:
+      - type: heading
+        heading: 🌬️ Ventilation Automationer
+
+      - type: entities
+        title: Timers & Fläktstyrning
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - entity: automation.startar_max_timer_badrum
+            name: Startar max-timer
+          - entity: automation.restart_timer_badrum
+            name: Restartar timer
+          - entity: automation.reset_timer_nar_vent_satts_till_normal
+            name: Återställ timer vid normaldrift
+          - entity: automation.forcerad_badrumsfonster_hog_fukt
+            name: Forcera vid hög badrumsfukt
+          - entity: automation.normal_badrumsfonster_lag_fukt
+            name: Återgå vid låg badrumsfukt
+          - entity: automation.normal_vid_stabiliserad_fukt
+            name: Återgå vid stabiliserad fukt
+          - entity: automation.normal_efter_maxtid
+            name: Återgå efter maxtid
+          - entity: automation.normal_hog_fukt_i_huset
+            name: Återgå om hela huset är fuktigt
+
+      - type: entities
+        title: Ventilation På/Av Regler
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - entity: automation.vent_on_hemma_off
+            name: På när hemma
+          - entity: automation.vent_on_ute_22degc_off
+            name: På vid ute < 22°C
+          - entity: automation.vent_on_inne_23degc_off
+            name: På vid inne < 23°C
+          - entity: automation.vent_on_60_off
+            name: På vid fukt < 60%
+          - entity: automation.vent_off_borta_ute_24degc_60_inne_23degc
+            name: Av vid borta & varmt/fuktigt
+
+      - type: heading
+        heading: 🔥 Värmestyrning Automationer
+
+      - type: entities
+        title: Förråd & Friggebod Värmestyrning
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - entity: automation.forrad_komplett_smart_varmestyrning
+            name: Förråd smart värmestyrning
+          - entity: automation.forrad_rakna_varmetid
+            name: Förråd räkna värmetid
+          - entity: automation.forrad_reset_varmetid
+            name: Förråd reset värmetid
+          - entity: automation.forrad_mogelvarning
+            name: Förråd mögelvarning
+          - entity: automation.friggebod_komplett_smart_varmestyrning
+            name: Friggebod smart värmestyrning
+          - entity: automation.friggebod_rakna_varmetid
+            name: Friggebod räkna värmetid
+          - entity: automation.friggebod_reset_varmetid
+            name: Friggebod reset värmetid
+          - entity: automation.friggebod_mogelvarning
+            name: Friggebod mögelvarning
+
+      - type: heading
+        heading: 🚨 Klimat & Temperaturlarm
+
+      - type: entities
+        title: Larmautomationer
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - entity: automation.satt_larm_for_vent
+            name: Ventilationslarm aktivering
+          - entity: automation.badrumsfonster_hog_fukt_larm
+            name: Badrumsfönster hög fukt larm
+          - entity: automation.frys_temperaturlarm
+            name: Frys temperaturlarm
+          - entity: automation.kyl_temperaturlarm
+            name: Kyl temperaturlarm
+          - entity: automation.forrad_temperaturlarm
+            name: Förråd temperaturlarm
+          - entity: automation.friggebod_temperaturlarm
+            name: Friggebod temperaturlarm
+          - entity: automation.uterum_temperaturlarm
+            name: Uterum temperaturlarm
+          - entity: automation.varmepump_temperaturlarm
+            name: Värmepump temperaturlarm
+
+  #######################################################
+  # TAB 4: INSTÄLLNINGAR & STYRNING (SETTINGS & TUNING)
+  #######################################################
+  - path: installningar
+    title: Inställningar
+    icon: mdi:tune-vertical
+    badges: []
+    cards:
+      - type: heading
+        heading: 🌬️ Ventilation Trösklar & Timers
+
+      - type: tile
+        entity: script.ventilation_tuning_reset_defaults
+        name: Återställ standardvärden ventilation
+        icon: mdi:backup-restore
+
+      - type: entities
+        title: Gränser & Timers Ventilation
+        state_color: true
+        entities:
+          - entity: input_number.ventilation_rh_force_on
+            name: RH start forcerad
+          - entity: input_number.ventilation_rh_force_off
+            name: RH stopp forcerad
+          - entity: input_number.ventilation_rh_stable_min
+            name: Stabil RH min
+          - entity: input_number.ventilation_rh_stable_max
+            name: Stabil RH max
+          - entity: input_number.ventilation_rh_delta_fast
+            name: ΔRH snabb
+          - entity: input_number.ventilation_rh_delta_high
+            name: ΔRH hög
+          - entity: input_number.ventilation_outdoor_temp_min_force
+            name: Minsta utetemperatur för forcerad
+          - entity: input_number.ventilation_max_runtime_minutes
+            name: Maxtid forcerad drift (min)
+          - entity: input_number.ventilation_stable_minutes
+            name: Stabil tid (min)
+          - entity: input_number.ventilation_house_humidity_diff
+            name: Fuktdiff Badrum vs Vardagsrum
+          - entity: input_number.ventilation_sensor_fresh_seconds
+            name: Sensor-färskhet gräns (sekunder)
+
+      - type: heading
+        heading: 📦 Förråd & 🏡 Friggebod Parametrar
+
+      - type: entities
+        title: Förråd Värme- & Elprisinställningar
+        state_color: true
+        entities:
+          - entity: input_number.forrad_element_effekt
+            name: Elementeffekt (Watt)
+          - entity: input_number.forrad_elpris
+            name: Elpris (SEK/kWh)
+          - entity: input_text.forrad_notification_target
+            name: Notifikation målenhet
+
+      - type: entities
+        title: Friggebod Värme- & Elprisinställningar
+        state_color: true
+        entities:
+          - entity: input_number.friggebod_element_effekt
+            name: Elementeffekt (Watt)
+          - entity: input_number.friggebod_elpris
+            name: Elpris (SEK/kWh)
+          - entity: input_text.friggebod_notification_target
+            name: Notifikation målenhet
+
+  #######################################################
+  # TAB 5: DIAGNOSTIK & VARFÖR (DIAGNOSTICS & WHY)
+  #######################################################
+  - path: diagnostik
+    title: Diagnostik & Varför
+    icon: mdi:help-circle-outline
+    badges: []
+    cards:
+      - type: heading
+        heading: 🩺 Hälsa & Beslutsstatus
+
+      - type: markdown
+        title: Klimathälsa
+        content: >-
+          **Status:** {{ states('sensor.diagnostics_climate_health') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_climate_health', 'reason') }}
+
+          **Aktiva problem:** {{ state_attr('sensor.diagnostics_climate_health', 'active_issues') or 'Inga' }}
+
+      - type: markdown
+        title: Ventilationshälsa
+        content: >-
+          **Status:** {{ states('sensor.diagnostics_ventilation') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_ventilation', 'reason') }}
+
+          **Driftläge:** {{ state_attr('sensor.diagnostics_ventilation', 'mode') }}
+
+          **Forceringsorsak:** {{ state_attr('sensor.diagnostics_ventilation', 'force_reason') }}
+
+      - type: heading
+        heading: 🔎 Zon-för-Zon Diagnostik (Varför?)
+
+      - type: markdown
+        title: Förråd Värme & Fuktstatus
+        content: >-
+          **Läge:** {{ states('sensor.diagnostics_climate_forrad') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_climate_forrad', 'reason') }}
+
+          **Värme aktiv:** {{ state_attr('sensor.diagnostics_climate_forrad', 'heat_active') }}
+
+          **Mögelrisk:** {{ state_attr('sensor.diagnostics_climate_forrad', 'mold_risk') }}%
+
+      - type: markdown
+        title: Friggebod Värme & Fuktstatus
+        content: >-
+          **Läge:** {{ states('sensor.diagnostics_climate_friggebod') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_climate_friggebod', 'reason') }}
+
+          **Värme aktiv:** {{ state_attr('sensor.diagnostics_climate_friggebod', 'heat_active') }}
+
+          **Mögelrisk:** {{ state_attr('sensor.diagnostics_climate_friggebod', 'mold_risk') }}%
+
+      - type: markdown
+        title: Garage, Uterum, Husvagn & Ute
+        content: >-
+          **Garage:** {{ states('sensor.diagnostics_climate_garage') }} ({{ state_attr('sensor.diagnostics_climate_garage', 'reason') }})
+
+          **Uterum:** {{ states('sensor.diagnostics_climate_uterum') }} ({{ state_attr('sensor.diagnostics_climate_uterum', 'reason') }})
+
+          **Husvagn:** {{ states('sensor.diagnostics_climate_husvagn') }} ({{ state_attr('sensor.diagnostics_climate_husvagn', 'reason') }})
+
+          **Ute:** {{ states('sensor.diagnostics_climate_ute') }} ({{ state_attr('sensor.diagnostics_climate_ute', 'reason') }})
+
+      - type: heading
+        heading: 🔕 Lokala Mute-switchar (Klimatsensorer)
+
+      - type: entities
+        title: Övervakningskontroll Klimat
+        state_color: true
+        entities:
+          - entity: input_boolean.monitor_sensor_badrum_temperatur
+            name: Badrum temperatur & fukt
+          - entity: input_boolean.monitor_sensor_tvattstuga_temperature
+            name: Tvättstuga temperatur & fukt
+          - entity: input_boolean.monitor_sensor_varmepump_temperature
+            name: Värmepump temperatur
+          - entity: input_boolean.monitor_sensor_hall_temperatur
+            name: Hall temperatur & fukt
+          - entity: input_boolean.monitor_sensor_forrad_temperature
+            name: Förråd temperatur & fukt
+          - entity: input_boolean.monitor_sensor_friggebod_temperatur
+            name: Friggebod temperatur & fukt
+          - entity: input_boolean.monitor_sensor_garage_temperature
+            name: Garage temperatur & fukt
+          - entity: input_boolean.monitor_sensor_uterum_temperatur
+            name: Uterum temperatur & fukt
+          - entity: input_boolean.monitor_sensor_ute_friggebod_temperature
+            name: Ute friggebod temperatur & fukt
             name: Larm
 # -------------------------------------
       - type: markdown

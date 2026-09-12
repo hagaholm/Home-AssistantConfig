@@ -100,6 +100,23 @@ Don't extract logic that's only used in one file — inline templates are fine f
 ## 7) Notes
 - Some integration-focused package files may intentionally be “light” on metadata. For automation-heavy files, prefer the full header standard.
 
+## 8) Diagnostics, Muting & Automation Drift Standards
+
+### Adding a new monitored sensor or hardware node
+When adding a new critical physical sensor or node:
+1. Define a corresponding mute boolean in `packages/system/diagnostic_controls.yaml`:
+   - Pattern: `input_boolean.monitor_sensor_<name>` or `input_boolean.monitor_node_<name>` (Default: `initial: on`).
+2. Add the sensor/node entry with its `'mute'` key to the monitored lists in `packages/system/diagnostics.yaml`:
+   - `diagnostics_sensor_freshness` (for temp/humidity/lux sensors)
+   - `diagnostics_network_health` (for network nodes/devices)
+3. Expose the switch in `ui-debug.yaml` under **Övervakningskontroll (Mute)** and in the local subsystem dashboard's Tab 5 (Diagnostik & Varför).
+
+### Normal Mode vs Automation Drift
+The system tracks whether automations match their baseline operating state via `sensor.diagnostics_automation_drift`:
+- **Default rule**: All standard automations are expected to be **ON** under normal operation.
+- **Exceptions (Expected OFF)**: If an automation is designed to be normally OFF (e.g., manual test routines, temporary tools, seasonal scripts), add its `entity_id` to the `expected_off` list in `packages/system/diagnostics.yaml` (`sensor.diagnostics_automation_drift`).
+- When creating a new automation, verify that it runs in its expected state so it doesn't trigger unexpected drift alerts in Diagnostik.
+
 ## Appendix: Lighting package convention
 
 Most files under `packages/lights/` follow a consistent pattern:

@@ -4,8 +4,9 @@
 #                                                  #
 ####################################################
 # BESKRIVNING:
-# Läsande diagnostiksensorer för systemets hälsa. De
-# sammanfattar befintliga larm och påverkar aldrig automationer.
+# Läsande diagnostiksensorer för systemets hälsa,
+# integrationer, nätverk, hårdvarunoder, automationer
+# och sensorfärskhet med stöd för muting/ignorering.
 #
 
 template:
@@ -22,36 +23,38 @@ template:
           {% else %}mdi:clock-alert-outline{% endif %}
         state: >-
           {% set monitored = [
-            {'name': 'Frys temperatur', 'entity': 'sensor.frys_temperature'},
-            {'name': 'Kyl temperatur', 'entity': 'sensor.kyl_temperature'},
-            {'name': 'Badrum temperatur', 'entity': 'sensor.badrum_temperatur'},
-            {'name': 'Badrum luftfuktighet', 'entity': 'sensor.badrum_luftfuktighet'},
-            {'name': 'Tvättstuga temperatur', 'entity': 'sensor.tvattstuga_temperature'},
-            {'name': 'Tvättstuga luftfuktighet', 'entity': 'sensor.tvattstuga_humidity'},
-            {'name': 'Värmepump temperatur', 'entity': 'sensor.varmepump_temperature'},
-            {'name': 'Hall temperatur', 'entity': 'sensor.hall_temperatur'},
-            {'name': 'Hall luftfuktighet', 'entity': 'sensor.hall_luftfuktighet'},
-            {'name': 'Garage temperatur', 'entity': 'sensor.garage_temperature'},
-            {'name': 'Garage luftfuktighet', 'entity': 'sensor.garage_humidity'},
-            {'name': 'Förråd temperatur', 'entity': 'sensor.forrad_temperature'},
-            {'name': 'Förråd luftfuktighet', 'entity': 'sensor.forrad_luftfuktighet'},
-            {'name': 'Friggebod temperatur', 'entity': 'sensor.friggebod_temperatur'},
-            {'name': 'Friggebod luftfuktighet', 'entity': 'sensor.friggebod_luftfuktighet'},
-            {'name': 'Ute friggebod temperatur', 'entity': 'sensor.ute_friggebod_temperature'},
-            {'name': 'Ute friggebod luftfuktighet', 'entity': 'sensor.ute_friggebod_humidity'},
-            {'name': 'Uterum temperatur', 'entity': 'sensor.uterum_temperatur'},
-            {'name': 'Uterum luftfuktighet', 'entity': 'sensor.uterum_luftfuktighet'},
-            {'name': 'Utomhus ljusstyrka', 'entity': 'sensor.ljusstyrka'},
-            {'name': 'Utomhus ljusstyrka råvärde', 'entity': 'sensor.ljusstyrka_measured'},
-            {'name': 'Kök ljusnivå', 'entity': 'sensor.kokets_ljusniva'},
-            {'name': 'Hall ljusnivå', 'entity': 'sensor.hall_ljusniva'},
-            {'name': 'Vardagsrum ljusnivå', 'entity': 'sensor.vardagsrum_ljusniva'}
+            {'name': 'Frys temperatur', 'entity': 'sensor.frys_temperature', 'mute': 'input_boolean.monitor_sensor_frys_temperature'},
+            {'name': 'Kyl temperatur', 'entity': 'sensor.kyl_temperature', 'mute': 'input_boolean.monitor_sensor_kyl_temperature'},
+            {'name': 'Badrum temperatur', 'entity': 'sensor.badrum_temperatur', 'mute': 'input_boolean.monitor_sensor_badrum_temperatur'},
+            {'name': 'Badrum luftfuktighet', 'entity': 'sensor.badrum_luftfuktighet', 'mute': 'input_boolean.monitor_sensor_badrum_temperatur'},
+            {'name': 'Tvättstuga temperatur', 'entity': 'sensor.tvattstuga_temperature', 'mute': 'input_boolean.monitor_sensor_tvattstuga_temperature'},
+            {'name': 'Tvättstuga luftfuktighet', 'entity': 'sensor.tvattstuga_humidity', 'mute': 'input_boolean.monitor_sensor_tvattstuga_temperature'},
+            {'name': 'Värmepump temperatur', 'entity': 'sensor.varmepump_temperature', 'mute': 'input_boolean.monitor_sensor_varmepump_temperature'},
+            {'name': 'Hall temperatur', 'entity': 'sensor.hall_temperatur', 'mute': 'input_boolean.monitor_sensor_hall_temperatur'},
+            {'name': 'Hall luftfuktighet', 'entity': 'sensor.hall_luftfuktighet', 'mute': 'input_boolean.monitor_sensor_hall_temperatur'},
+            {'name': 'Garage temperatur', 'entity': 'sensor.garage_temperature', 'mute': 'input_boolean.monitor_sensor_garage_temperature'},
+            {'name': 'Garage luftfuktighet', 'entity': 'sensor.garage_humidity', 'mute': 'input_boolean.monitor_sensor_garage_temperature'},
+            {'name': 'Förråd temperatur', 'entity': 'sensor.forrad_temperature', 'mute': 'input_boolean.monitor_sensor_forrad_temperature'},
+            {'name': 'Förråd luftfuktighet', 'entity': 'sensor.forrad_luftfuktighet', 'mute': 'input_boolean.monitor_sensor_forrad_temperature'},
+            {'name': 'Friggebod temperatur', 'entity': 'sensor.friggebod_temperatur', 'mute': 'input_boolean.monitor_sensor_friggebod_temperatur'},
+            {'name': 'Friggebod luftfuktighet', 'entity': 'sensor.friggebod_luftfuktighet', 'mute': 'input_boolean.monitor_sensor_friggebod_temperatur'},
+            {'name': 'Ute friggebod temperatur', 'entity': 'sensor.ute_friggebod_temperature', 'mute': 'input_boolean.monitor_sensor_ute_friggebod_temperature'},
+            {'name': 'Ute friggebod luftfuktighet', 'entity': 'sensor.ute_friggebod_humidity', 'mute': 'input_boolean.monitor_sensor_ute_friggebod_temperature'},
+            {'name': 'Uterum temperatur', 'entity': 'sensor.uterum_temperatur', 'mute': 'input_boolean.monitor_sensor_uterum_temperatur'},
+            {'name': 'Uterum luftfuktighet', 'entity': 'sensor.uterum_luftfuktighet', 'mute': 'input_boolean.monitor_sensor_uterum_temperatur'},
+            {'name': 'Utomhus ljusstyrka', 'entity': 'sensor.ljusstyrka', 'mute': 'input_boolean.monitor_sensor_ljusstyrka'},
+            {'name': 'Utomhus ljusstyrka råvärde', 'entity': 'sensor.ljusstyrka_measured', 'mute': 'input_boolean.monitor_sensor_ljusstyrka'},
+            {'name': 'Kök ljusnivå', 'entity': 'sensor.kokets_ljusniva', 'mute': 'input_boolean.monitor_sensor_ljusstyrka'},
+            {'name': 'Hall ljusnivå', 'entity': 'sensor.hall_ljusniva', 'mute': 'input_boolean.monitor_sensor_ljusstyrka'},
+            {'name': 'Vardagsrum ljusnivå', 'entity': 'sensor.vardagsrum_ljusniva', 'mute': 'input_boolean.monitor_sensor_ljusstyrka'}
           ] %}
           {% set freshness = namespace(stale=[]) %}
           {% for item in monitored %}
-            {% set source = states[item.entity] %}
-            {% if source is none or source.state in ['unknown', 'unavailable', ''] or (as_timestamp(now()) - as_timestamp(source.last_updated, 0)) > 3600 %}
-              {% set freshness.stale = freshness.stale + [item.name] %}
+            {% if not is_state(item.mute, 'off') %}
+              {% set source = states[item.entity] %}
+              {% if source is none or source.state in ['unknown', 'unavailable', ''] or (as_timestamp(now()) - as_timestamp(source.last_updated, 0)) > 3600 %}
+                {% set freshness.stale = freshness.stale + [item.name] %}
+              {% endif %}
             {% endif %}
           {% endfor %}
           {% if freshness.stale %}Varning{% else %}OK{% endif %}
@@ -59,42 +62,78 @@ template:
           reason: "Givare i listan nedan saknar data eller har inte uppdaterats på minst 60 minuter; om listan är Inga är alla övervakade givare färska"
           stale_sensors: >-
             {% set monitored = [
-              {'name': 'Frys temperatur', 'entity': 'sensor.frys_temperature'},
-              {'name': 'Kyl temperatur', 'entity': 'sensor.kyl_temperature'},
-              {'name': 'Badrum temperatur', 'entity': 'sensor.badrum_temperatur'},
-              {'name': 'Badrum luftfuktighet', 'entity': 'sensor.badrum_luftfuktighet'},
-              {'name': 'Tvättstuga temperatur', 'entity': 'sensor.tvattstuga_temperature'},
-              {'name': 'Tvättstuga luftfuktighet', 'entity': 'sensor.tvattstuga_humidity'},
-              {'name': 'Värmepump temperatur', 'entity': 'sensor.varmepump_temperature'},
-              {'name': 'Hall temperatur', 'entity': 'sensor.hall_temperatur'},
-              {'name': 'Hall luftfuktighet', 'entity': 'sensor.hall_luftfuktighet'},
-              {'name': 'Garage temperatur', 'entity': 'sensor.garage_temperature'},
-              {'name': 'Garage luftfuktighet', 'entity': 'sensor.garage_humidity'},
-              {'name': 'Förråd temperatur', 'entity': 'sensor.forrad_temperature'},
-              {'name': 'Förråd luftfuktighet', 'entity': 'sensor.forrad_luftfuktighet'},
-              {'name': 'Friggebod temperatur', 'entity': 'sensor.friggebod_temperatur'},
-              {'name': 'Friggebod luftfuktighet', 'entity': 'sensor.friggebod_luftfuktighet'},
-              {'name': 'Ute friggebod temperatur', 'entity': 'sensor.ute_friggebod_temperature'},
-              {'name': 'Ute friggebod luftfuktighet', 'entity': 'sensor.ute_friggebod_humidity'},
-              {'name': 'Uterum temperatur', 'entity': 'sensor.uterum_temperatur'},
-              {'name': 'Uterum luftfuktighet', 'entity': 'sensor.uterum_luftfuktighet'},
-              {'name': 'Utomhus ljusstyrka', 'entity': 'sensor.ljusstyrka'},
-              {'name': 'Utomhus ljusstyrka råvärde', 'entity': 'sensor.ljusstyrka_measured'},
-              {'name': 'Kök ljusnivå', 'entity': 'sensor.kokets_ljusniva'},
-              {'name': 'Hall ljusnivå', 'entity': 'sensor.hall_ljusniva'},
-              {'name': 'Vardagsrum ljusnivå', 'entity': 'sensor.vardagsrum_ljusniva'}
+              {'name': 'Frys temperatur', 'entity': 'sensor.frys_temperature', 'mute': 'input_boolean.monitor_sensor_frys_temperature'},
+              {'name': 'Kyl temperatur', 'entity': 'sensor.kyl_temperature', 'mute': 'input_boolean.monitor_sensor_kyl_temperature'},
+              {'name': 'Badrum temperatur', 'entity': 'sensor.badrum_temperatur', 'mute': 'input_boolean.monitor_sensor_badrum_temperatur'},
+              {'name': 'Badrum luftfuktighet', 'entity': 'sensor.badrum_luftfuktighet', 'mute': 'input_boolean.monitor_sensor_badrum_temperatur'},
+              {'name': 'Tvättstuga temperatur', 'entity': 'sensor.tvattstuga_temperature', 'mute': 'input_boolean.monitor_sensor_tvattstuga_temperature'},
+              {'name': 'Tvättstuga luftfuktighet', 'entity': 'sensor.tvattstuga_humidity', 'mute': 'input_boolean.monitor_sensor_tvattstuga_temperature'},
+              {'name': 'Värmepump temperatur', 'entity': 'sensor.varmepump_temperature', 'mute': 'input_boolean.monitor_sensor_varmepump_temperature'},
+              {'name': 'Hall temperatur', 'entity': 'sensor.hall_temperatur', 'mute': 'input_boolean.monitor_sensor_hall_temperatur'},
+              {'name': 'Hall luftfuktighet', 'entity': 'sensor.hall_luftfuktighet', 'mute': 'input_boolean.monitor_sensor_hall_temperatur'},
+              {'name': 'Garage temperatur', 'entity': 'sensor.garage_temperature', 'mute': 'input_boolean.monitor_sensor_garage_temperature'},
+              {'name': 'Garage luftfuktighet', 'entity': 'sensor.garage_humidity', 'mute': 'input_boolean.monitor_sensor_garage_temperature'},
+              {'name': 'Förråd temperatur', 'entity': 'sensor.forrad_temperature', 'mute': 'input_boolean.monitor_sensor_forrad_temperature'},
+              {'name': 'Förråd luftfuktighet', 'entity': 'sensor.forrad_luftfuktighet', 'mute': 'input_boolean.monitor_sensor_forrad_temperature'},
+              {'name': 'Friggebod temperatur', 'entity': 'sensor.friggebod_temperatur', 'mute': 'input_boolean.monitor_sensor_friggebod_temperatur'},
+              {'name': 'Friggebod luftfuktighet', 'entity': 'sensor.friggebod_luftfuktighet', 'mute': 'input_boolean.monitor_sensor_friggebod_temperatur'},
+              {'name': 'Ute friggebod temperatur', 'entity': 'sensor.ute_friggebod_temperature', 'mute': 'input_boolean.monitor_sensor_ute_friggebod_temperature'},
+              {'name': 'Ute friggebod luftfuktighet', 'entity': 'sensor.ute_friggebod_humidity', 'mute': 'input_boolean.monitor_sensor_ute_friggebod_temperature'},
+              {'name': 'Uterum temperatur', 'entity': 'sensor.uterum_temperatur', 'mute': 'input_boolean.monitor_sensor_uterum_temperatur'},
+              {'name': 'Uterum luftfuktighet', 'entity': 'sensor.uterum_luftfuktighet', 'mute': 'input_boolean.monitor_sensor_uterum_temperatur'},
+              {'name': 'Utomhus ljusstyrka', 'entity': 'sensor.ljusstyrka', 'mute': 'input_boolean.monitor_sensor_ljusstyrka'},
+              {'name': 'Utomhus ljusstyrka råvärde', 'entity': 'sensor.ljusstyrka_measured', 'mute': 'input_boolean.monitor_sensor_ljusstyrka'},
+              {'name': 'Kök ljusnivå', 'entity': 'sensor.kokets_ljusniva', 'mute': 'input_boolean.monitor_sensor_ljusstyrka'},
+              {'name': 'Hall ljusnivå', 'entity': 'sensor.hall_ljusniva', 'mute': 'input_boolean.monitor_sensor_ljusstyrka'},
+              {'name': 'Vardagsrum ljusnivå', 'entity': 'sensor.vardagsrum_ljusniva', 'mute': 'input_boolean.monitor_sensor_ljusstyrka'}
             ] %}
             {% set freshness = namespace(stale=[]) %}
             {% for item in monitored %}
-              {% set source = states[item.entity] %}
-              {% if source is none or source.state in ['unknown', 'unavailable', ''] %}
-                {% set freshness.stale = freshness.stale + [item.name ~ ' (' ~ (source.state if source is not none else 'entitet saknas') ~ ')'] %}
-              {% elif (as_timestamp(now()) - as_timestamp(source.last_updated, 0)) > 3600 %}
-                {% set age = ((as_timestamp(now()) - as_timestamp(source.last_updated, 0)) / 60) | round(0) | int %}
-                {% set freshness.stale = freshness.stale + [item.name ~ ' (' ~ age ~ ' min sedan senaste uppdatering)'] %}
+              {% if not is_state(item.mute, 'off') %}
+                {% set source = states[item.entity] %}
+                {% if source is none or source.state in ['unknown', 'unavailable', ''] %}
+                  {% set freshness.stale = freshness.stale + [item.name ~ ' (' ~ (source.state if source is not none else 'entitet saknas') ~ ')'] %}
+                {% elif (as_timestamp(now()) - as_timestamp(source.last_updated, 0)) > 3600 %}
+                  {% set age = ((as_timestamp(now()) - as_timestamp(source.last_updated, 0)) / 60) | round(0) | int %}
+                  {% set freshness.stale = freshness.stale + [item.name ~ ' (' ~ age ~ ' min sedan senaste uppdatering)'] %}
+                {% endif %}
               {% endif %}
             {% endfor %}
             {{ freshness.stale | join(', ') if freshness.stale else 'Inga' }}
+          muted_sensors: >-
+            {% set monitored = [
+              {'name': 'Frys temperatur', 'entity': 'sensor.frys_temperature', 'mute': 'input_boolean.monitor_sensor_frys_temperature'},
+              {'name': 'Kyl temperatur', 'entity': 'sensor.kyl_temperature', 'mute': 'input_boolean.monitor_sensor_kyl_temperature'},
+              {'name': 'Badrum temperatur', 'entity': 'sensor.badrum_temperatur', 'mute': 'input_boolean.monitor_sensor_badrum_temperatur'},
+              {'name': 'Badrum luftfuktighet', 'entity': 'sensor.badrum_luftfuktighet', 'mute': 'input_boolean.monitor_sensor_badrum_temperatur'},
+              {'name': 'Tvättstuga temperatur', 'entity': 'sensor.tvattstuga_temperature', 'mute': 'input_boolean.monitor_sensor_tvattstuga_temperature'},
+              {'name': 'Tvättstuga luftfuktighet', 'entity': 'sensor.tvattstuga_humidity', 'mute': 'input_boolean.monitor_sensor_tvattstuga_temperature'},
+              {'name': 'Värmepump temperatur', 'entity': 'sensor.varmepump_temperature', 'mute': 'input_boolean.monitor_sensor_varmepump_temperature'},
+              {'name': 'Hall temperatur', 'entity': 'sensor.hall_temperatur', 'mute': 'input_boolean.monitor_sensor_hall_temperatur'},
+              {'name': 'Hall luftfuktighet', 'entity': 'sensor.hall_luftfuktighet', 'mute': 'input_boolean.monitor_sensor_hall_temperatur'},
+              {'name': 'Garage temperatur', 'entity': 'sensor.garage_temperature', 'mute': 'input_boolean.monitor_sensor_garage_temperature'},
+              {'name': 'Garage luftfuktighet', 'entity': 'sensor.garage_humidity', 'mute': 'input_boolean.monitor_sensor_garage_temperature'},
+              {'name': 'Förråd temperatur', 'entity': 'sensor.forrad_temperature', 'mute': 'input_boolean.monitor_sensor_forrad_temperature'},
+              {'name': 'Förråd luftfuktighet', 'entity': 'sensor.forrad_luftfuktighet', 'mute': 'input_boolean.monitor_sensor_forrad_temperature'},
+              {'name': 'Friggebod temperatur', 'entity': 'sensor.friggebod_temperatur', 'mute': 'input_boolean.monitor_sensor_friggebod_temperatur'},
+              {'name': 'Friggebod luftfuktighet', 'entity': 'sensor.friggebod_luftfuktighet', 'mute': 'input_boolean.monitor_sensor_friggebod_temperatur'},
+              {'name': 'Ute friggebod temperatur', 'entity': 'sensor.ute_friggebod_temperature', 'mute': 'input_boolean.monitor_sensor_ute_friggebod_temperature'},
+              {'name': 'Ute friggebod luftfuktighet', 'entity': 'sensor.ute_friggebod_humidity', 'mute': 'input_boolean.monitor_sensor_ute_friggebod_temperature'},
+              {'name': 'Uterum temperatur', 'entity': 'sensor.uterum_temperatur', 'mute': 'input_boolean.monitor_sensor_uterum_temperatur'},
+              {'name': 'Uterum luftfuktighet', 'entity': 'sensor.uterum_luftfuktighet', 'mute': 'input_boolean.monitor_sensor_uterum_temperatur'},
+              {'name': 'Utomhus ljusstyrka', 'entity': 'sensor.ljusstyrka', 'mute': 'input_boolean.monitor_sensor_ljusstyrka'},
+              {'name': 'Utomhus ljusstyrka råvärde', 'entity': 'sensor.ljusstyrka_measured', 'mute': 'input_boolean.monitor_sensor_ljusstyrka'},
+              {'name': 'Kök ljusnivå', 'entity': 'sensor.kokets_ljusniva', 'mute': 'input_boolean.monitor_sensor_ljusstyrka'},
+              {'name': 'Hall ljusnivå', 'entity': 'sensor.hall_ljusniva', 'mute': 'input_boolean.monitor_sensor_ljusstyrka'},
+              {'name': 'Vardagsrum ljusnivå', 'entity': 'sensor.vardagsrum_ljusniva', 'mute': 'input_boolean.monitor_sensor_ljusstyrka'}
+            ] %}
+            {% set muted = namespace(items=[]) %}
+            {% for item in monitored %}
+              {% if is_state(item.mute, 'off') %}
+                {% set muted.items = muted.items + [item.name] %}
+              {% endif %}
+            {% endfor %}
+            {{ muted.items | unique | join(', ') if muted.items else 'Inga' }}
           threshold_minutes: 60
 
   - sensor:
@@ -114,6 +153,7 @@ template:
             {% else %}Alla övervakade temperatur-, fukt- och ljusgivare är färska{% endif %}
           active_issues: "{{ state_attr('sensor.diagnostics_sensor_freshness', 'stale_sensors') or 'Inga' }}"
           affected_entities: "{{ state_attr('sensor.diagnostics_sensor_freshness', 'stale_sensors') or 'Inga' }}"
+          muted_sensors: "{{ state_attr('sensor.diagnostics_sensor_freshness', 'muted_sensors') or 'Inga' }}"
           checked_at: "{{ now().isoformat() }}"
           threshold_minutes: 60
 
@@ -125,25 +165,29 @@ template:
           {% else %}mdi:lan-disconnect{% endif %}
         state: >-
           {% set critical = [
-            {'name': 'Kamera 5', 'entity': 'sensor.kamera_5'},
-            {'name': 'Kamera 6', 'entity': 'sensor.kamera_6'},
-            {'name': 'Kamera 8', 'entity': 'sensor.kamera_8'},
-            {'name': 'Kamera 9', 'entity': 'sensor.kamera_9'},
-            {'name': 'Kamera 10', 'entity': 'sensor.kamera_10'}
+            {'name': 'Kamera 5', 'entity': 'sensor.kamera_5', 'mute': 'input_boolean.monitor_node_kamera_5'},
+            {'name': 'Kamera 6', 'entity': 'sensor.kamera_6', 'mute': 'input_boolean.monitor_node_kamera_6'},
+            {'name': 'Kamera 8', 'entity': 'sensor.kamera_8', 'mute': 'input_boolean.monitor_node_kamera_8'},
+            {'name': 'Kamera 9', 'entity': 'sensor.kamera_9', 'mute': 'input_boolean.monitor_node_kamera_9'},
+            {'name': 'Kamera 10', 'entity': 'sensor.kamera_10', 'mute': 'input_boolean.monitor_node_kamera_10'}
           ] %}
           {% set warning = [
-            {'name': 'NAS', 'entity': 'sensor.nas_dns_320'},
-            {'name': 'Harmony Hub', 'entity': 'sensor.harmony_hub'},
-            {'name': 'Raspberry Pi 1-Wire', 'entity': 'sensor.raspberry_pi_b_1_wire'},
-            {'name': 'Raspberry Pi Lux', 'entity': 'sensor.raspberry_pi_3b_lux'},
-            {'name': 'Raspberry Pi Flightradar24', 'entity': 'sensor.raspberry_pi_flightradar24'}
+            {'name': 'NAS', 'entity': 'sensor.nas_dns_320', 'mute': 'input_boolean.monitor_node_nas'},
+            {'name': 'Harmony Hub', 'entity': 'sensor.harmony_hub', 'mute': 'input_boolean.monitor_node_harmony_hub'},
+            {'name': 'Raspberry Pi 1-Wire', 'entity': 'sensor.raspberry_pi_b_1_wire', 'mute': 'input_boolean.monitor_node_pi_1wire'},
+            {'name': 'Raspberry Pi Lux', 'entity': 'sensor.raspberry_pi_3b_lux', 'mute': 'input_boolean.monitor_node_pi_lux'},
+            {'name': 'Raspberry Pi Flightradar24', 'entity': 'sensor.raspberry_pi_flightradar24', 'mute': 'input_boolean.monitor_node_pi_flightradar'}
           ] %}
           {% set health = namespace(critical_issue=false, warning_issue=false) %}
           {% for device in critical %}
-            {% if states(device.entity) in ['Offline', 'unknown', 'unavailable'] %}{% set health.critical_issue = true %}{% endif %}
+            {% if not is_state(device.mute, 'off') %}
+              {% if states(device.entity) in ['Offline', 'unknown', 'unavailable'] %}{% set health.critical_issue = true %}{% endif %}
+            {% endif %}
           {% endfor %}
           {% for device in warning %}
-            {% if states(device.entity) in ['Offline', 'unknown', 'unavailable'] %}{% set health.warning_issue = true %}{% endif %}
+            {% if not is_state(device.mute, 'off') %}
+              {% if states(device.entity) in ['Offline', 'unknown', 'unavailable'] %}{% set health.warning_issue = true %}{% endif %}
+            {% endif %}
           {% endfor %}
           {% if health.critical_issue %}Fel
           {% elif health.warning_issue %}Varning
@@ -155,15 +199,129 @@ template:
             {% else %}Router, gateway, sensorhubbar och övervakade kameror rapporterar online{% endif %}
           active_issues: >-
             {% set devices = [
-              {'name': 'Kamera 5', 'entity': 'sensor.kamera_5', 'severity': 'Fel'}, {'name': 'Kamera 6', 'entity': 'sensor.kamera_6', 'severity': 'Fel'}, {'name': 'Kamera 8', 'entity': 'sensor.kamera_8', 'severity': 'Fel'}, {'name': 'Kamera 9', 'entity': 'sensor.kamera_9', 'severity': 'Fel'}, {'name': 'Kamera 10', 'entity': 'sensor.kamera_10', 'severity': 'Fel'}, {'name': 'NAS', 'entity': 'sensor.nas_dns_320', 'severity': 'Varning'}, {'name': 'Harmony Hub', 'entity': 'sensor.harmony_hub', 'severity': 'Varning'}, {'name': 'Raspberry Pi 1-Wire', 'entity': 'sensor.raspberry_pi_b_1_wire', 'severity': 'Varning'}, {'name': 'Raspberry Pi Lux', 'entity': 'sensor.raspberry_pi_3b_lux', 'severity': 'Varning'}, {'name': 'Raspberry Pi Flightradar24', 'entity': 'sensor.raspberry_pi_flightradar24', 'severity': 'Varning'}
+              {'name': 'Kamera 5', 'entity': 'sensor.kamera_5', 'severity': 'Fel', 'mute': 'input_boolean.monitor_node_kamera_5'},
+              {'name': 'Kamera 6', 'entity': 'sensor.kamera_6', 'severity': 'Fel', 'mute': 'input_boolean.monitor_node_kamera_6'},
+              {'name': 'Kamera 8', 'entity': 'sensor.kamera_8', 'severity': 'Fel', 'mute': 'input_boolean.monitor_node_kamera_8'},
+              {'name': 'Kamera 9', 'entity': 'sensor.kamera_9', 'severity': 'Fel', 'mute': 'input_boolean.monitor_node_kamera_9'},
+              {'name': 'Kamera 10', 'entity': 'sensor.kamera_10', 'severity': 'Fel', 'mute': 'input_boolean.monitor_node_kamera_10'},
+              {'name': 'NAS', 'entity': 'sensor.nas_dns_320', 'severity': 'Varning', 'mute': 'input_boolean.monitor_node_nas'},
+              {'name': 'Harmony Hub', 'entity': 'sensor.harmony_hub', 'severity': 'Varning', 'mute': 'input_boolean.monitor_node_harmony_hub'},
+              {'name': 'Raspberry Pi 1-Wire', 'entity': 'sensor.raspberry_pi_b_1_wire', 'severity': 'Varning', 'mute': 'input_boolean.monitor_node_pi_1wire'},
+              {'name': 'Raspberry Pi Lux', 'entity': 'sensor.raspberry_pi_3b_lux', 'severity': 'Varning', 'mute': 'input_boolean.monitor_node_pi_lux'},
+              {'name': 'Raspberry Pi Flightradar24', 'entity': 'sensor.raspberry_pi_flightradar24', 'severity': 'Varning', 'mute': 'input_boolean.monitor_node_pi_flightradar'}
             ] %}
             {% set issues = namespace(items=[]) %}
-            {% for device in devices %}{% if states(device.entity) in ['Offline', 'unknown', 'unavailable'] %}{% set issues.items = issues.items + [device.severity ~ ': ' ~ device.name ~ ' (' ~ states(device.entity) ~ ')'] %}{% endif %}{% endfor %}
+            {% for device in devices %}
+              {% if not is_state(device.mute, 'off') %}
+                {% if states(device.entity) in ['Offline', 'unknown', 'unavailable'] %}
+                  {% set issues.items = issues.items + [device.severity ~ ': ' ~ device.name ~ ' (' ~ states(device.entity) ~ ')'] %}
+                {% endif %}
+              {% endif %}
+            {% endfor %}
             {{ issues.items | join('\n') if issues.items else 'Inga' }}
-          affected_entities: >-
-            {% set devices = ['sensor.kamera_5', 'sensor.kamera_6', 'sensor.kamera_8', 'sensor.kamera_9', 'sensor.kamera_10', 'sensor.nas_dns_320', 'sensor.harmony_hub', 'sensor.raspberry_pi_b_1_wire', 'sensor.raspberry_pi_3b_lux', 'sensor.raspberry_pi_flightradar24'] %}
-            {{ devices | select('is_state', 'Offline') | list | join(', ') or 'Inga' }}
+          muted_devices: >-
+            {% set devices = [
+              {'name': 'Kamera 5', 'mute': 'input_boolean.monitor_node_kamera_5'},
+              {'name': 'Kamera 6', 'mute': 'input_boolean.monitor_node_kamera_6'},
+              {'name': 'Kamera 8', 'mute': 'input_boolean.monitor_node_kamera_8'},
+              {'name': 'Kamera 9', 'mute': 'input_boolean.monitor_node_kamera_9'},
+              {'name': 'Kamera 10', 'mute': 'input_boolean.monitor_node_kamera_10'},
+              {'name': 'NAS', 'mute': 'input_boolean.monitor_node_nas'},
+              {'name': 'Harmony Hub', 'mute': 'input_boolean.monitor_node_harmony_hub'},
+              {'name': 'Raspberry Pi 1-Wire', 'mute': 'input_boolean.monitor_node_pi_1wire'},
+              {'name': 'Raspberry Pi Lux', 'mute': 'input_boolean.monitor_node_pi_lux'},
+              {'name': 'Raspberry Pi Flightradar24', 'mute': 'input_boolean.monitor_node_pi_flightradar'}
+            ] %}
+            {% set muted = namespace(items=[]) %}
+            {% for d in devices %}
+              {% if is_state(d.mute, 'off') %}{% set muted.items = muted.items + [d.name] %}{% endif %}
+            {% endfor %}
+            {{ muted.items | join(', ') if muted.items else 'Inga' }}
           checked_at: "{{ now().isoformat() }}"
+
+      # Automation drift detection
+      - name: diagnostics_automation_drift
+        unique_id: diagnostics_automation_drift
+        icon: >-
+          {% if this.state == 'OK' %}mdi:robot-happy-outline
+          {% else %}mdi:robot-confused-outline{% endif %}
+        state: >-
+          {% if is_state('input_boolean.monitor_automation_drift', 'off') %}
+            Avaktiverad
+          {% else %}
+            {% set expected_off = [
+              'automation.test_motion_light_control',
+              'automation.test_motion_radio_control_backside',
+              'automation.person_motion_light_control_frontside_test',
+              'automation.blink_light_person_detected',
+              'automation.hassbian_startad',
+              'automation.hassbian_stoppad'
+            ] %}
+            {% set drift = namespace(count=0) %}
+            {% for auto in states.automation %}
+              {% if auto.entity_id in expected_off and auto.state == 'on' %}
+                {% set drift.count = drift.count + 1 %}
+              {% elif auto.entity_id not in expected_off and auto.state == 'off' %}
+                {% set drift.count = drift.count + 1 %}
+              {% endif %}
+            {% endfor %}
+            {% if drift.count > 0 %}Avvikelse ({{ drift.count }}){% else %}OK{% endif %}
+          {% endif %}
+        attributes:
+          reason: >-
+            {% if is_state('input_boolean.monitor_automation_drift', 'off') %}Övervakning av automationsavvikelser är tystad/avaktiverad
+            {% elif this.state == 'OK' %}Alla automationer matchar sitt förväntade driftläge (normalt på/av)
+            {% else %}En eller flera automationer avviker från förväntat läge{% endif %}
+          deviating_count: >-
+            {% set expected_off = [
+              'automation.test_motion_light_control',
+              'automation.test_motion_radio_control_backside',
+              'automation.person_motion_light_control_frontside_test',
+              'automation.blink_light_person_detected',
+              'automation.hassbian_startad',
+              'automation.hassbian_stoppad'
+            ] %}
+            {% set drift = namespace(count=0) %}
+            {% for auto in states.automation %}
+              {% if auto.entity_id in expected_off and auto.state == 'on' %}
+                {% set drift.count = drift.count + 1 %}
+              {% elif auto.entity_id not in expected_off and auto.state == 'off' %}
+                {% set drift.count = drift.count + 1 %}
+              {% endif %}
+            {% endfor %}
+            {{ drift.count }}
+          unexpectedly_off: >-
+            {% set expected_off = [
+              'automation.test_motion_light_control',
+              'automation.test_motion_radio_control_backside',
+              'automation.person_motion_light_control_frontside_test',
+              'automation.blink_light_person_detected',
+              'automation.hassbian_startad',
+              'automation.hassbian_stoppad'
+            ] %}
+            {% set items = namespace(list=[]) %}
+            {% for auto in states.automation %}
+              {% if auto.entity_id not in expected_off and auto.state == 'off' %}
+                {% set items.list = items.list + [auto.name ~ ' (' ~ auto.entity_id ~ ')'] %}
+              {% endif %}
+            {% endfor %}
+            {{ items.list | join('\n') if items.list else 'Inga' }}
+          unexpectedly_on: >-
+            {% set expected_off = [
+              'automation.test_motion_light_control',
+              'automation.test_motion_radio_control_backside',
+              'automation.person_motion_light_control_frontside_test',
+              'automation.blink_light_person_detected',
+              'automation.hassbian_startad',
+              'automation.hassbian_stoppad'
+            ] %}
+            {% set items = namespace(list=[]) %}
+            {% for auto in states.automation %}
+              {% if auto.entity_id in expected_off and auto.state == 'on' %}
+                {% set items.list = items.list + [auto.name ~ ' (' ~ auto.entity_id ~ ')'] %}
+              {% endif %}
+            {% endfor %}
+            {{ items.list | join('\n') if items.list else 'Inga' }}
 
   - sensor:
       - name: diagnostics_system_health
@@ -209,6 +367,9 @@ template:
           {% if is_state('sensor.diagnostics_sensor_freshness', 'Varning') %}
             {% set issues.items = issues.items + ['Givare: ' ~ state_attr('sensor.diagnostics_sensor_freshness', 'stale_sensors')] %}
           {% endif %}
+          {% if is_state('sensor.diagnostics_automation_drift', 'Avvikelse') or 'Avvikelse' in states('sensor.diagnostics_automation_drift') %}
+            {% set issues.items = issues.items + ['Automationer: ' ~ states('sensor.diagnostics_automation_drift')] %}
+          {% endif %}
           {% for item in light_diagnostics %}
             {% set reality = state_attr(item.entity, 'reality_status') | string %}
             {% if 'Avvikelse:' in reality %}{% set issues.items = issues.items + ['Belysning ' ~ item.name ~ ': ' ~ reality] %}{% endif %}
@@ -250,6 +411,9 @@ template:
             {% if states('sensor.diagnostics_network_health') in ['Fel', 'Varning'] %}{% set issues.items = issues.items + ['Nätverk & infrastruktur: ' ~ state_attr('sensor.diagnostics_network_health', 'active_issues')] %}{% endif %}
             {% if states('sensor.diagnostics_sensors_health') in ['Fel', 'Varning'] %}{% set issues.items = issues.items + ['Sensorer & givare: ' ~ state_attr('sensor.diagnostics_sensors_health', 'active_issues')] %}{% endif %}
             {% if is_state('sensor.diagnostics_sensor_freshness', 'Varning') %}{% set issues.items = issues.items + ['Givare: ' ~ state_attr('sensor.diagnostics_sensor_freshness', 'stale_sensors')] %}{% endif %}
+            {% if is_state('sensor.diagnostics_automation_drift', 'Avvikelse') or 'Avvikelse' in states('sensor.diagnostics_automation_drift') %}
+              {% set issues.items = issues.items + ['Automationer: ' ~ states('sensor.diagnostics_automation_drift')] %}
+            {% endif %}
             {% for item in light_diagnostics %}
               {% set reality = state_attr(item.entity, 'reality_status') | string %}
               {% if 'Avvikelse:' in reality %}{% set issues.items = issues.items + ['Belysning ' ~ item.name ~ ': ' ~ reality] %}{% endif %}
@@ -278,6 +442,9 @@ template:
             {% if states('sensor.diagnostics_network_health') in ['Fel', 'Varning'] %}{% set issues.items = issues.items + ['Nätverk & infrastruktur: ' ~ state_attr('sensor.diagnostics_network_health', 'active_issues')] %}{% endif %}
             {% if states('sensor.diagnostics_sensors_health') in ['Fel', 'Varning'] %}{% set issues.items = issues.items + ['Sensorer & givare: ' ~ state_attr('sensor.diagnostics_sensors_health', 'active_issues')] %}{% endif %}
             {% if is_state('sensor.diagnostics_sensor_freshness', 'Varning') %}{% set issues.items = issues.items + ['Givare: ' ~ state_attr('sensor.diagnostics_sensor_freshness', 'stale_sensors')] %}{% endif %}
+            {% if is_state('sensor.diagnostics_automation_drift', 'Avvikelse') or 'Avvikelse' in states('sensor.diagnostics_automation_drift') %}
+              {% set issues.items = issues.items + ['Automationer: ' ~ states('sensor.diagnostics_automation_drift')] %}
+            {% endif %}
             {% for item in light_diagnostics %}{% set reality = state_attr(item.entity, 'reality_status') | string %}{% if 'Avvikelse:' in reality %}{% set issues.items = issues.items + ['Belysning ' ~ item.name ~ ': ' ~ reality] %}{% endif %}{% endfor %}
             {% for item in climate_diagnostics %}{% if states(item.entity) in ['Varning', 'Data saknas'] %}{% set issues.items = issues.items + ['Klimat ' ~ item.name ~ ': ' ~ states(item.entity)] %}{% endif %}{% endfor %}
             {% if is_state('sensor.diagnostics_ventilation', 'Varning') %}{% set issues.items = issues.items + ['Ventilation: ' ~ state_attr('sensor.diagnostics_ventilation', 'reason')] %}{% endif %}
@@ -299,9 +466,40 @@ template:
             {{ stale_alarms | select('is_state', 'on') | list | join(', ') }}
           sensor_freshness: "{{ states('sensor.diagnostics_sensor_freshness') }}"
           stale_sensors: "{{ state_attr('sensor.diagnostics_sensor_freshness', 'stale_sensors') }}"
+          automation_drift: "{{ states('sensor.diagnostics_automation_drift') }}"
           update_available: "{{ is_state('binary_sensor.updater', 'on') }}"
           installed_version: "{{ states('sensor.installed_version') }}"
           latest_version: "{{ states('sensor.current_ha_version') }}"
+
+  - sensor:
+      - name: diagnostics_temperature_alerts
+        unique_id: diagnostics_temperature_alerts
+        state: >-
+          {% set readings = [states('sensor.forrad_temperature') | float(none), states('sensor.friggebod_temperatur') | float(none), states('sensor.frys_temperature') | float(none), states('sensor.kyl_temperature') | float(none), states('sensor.uterum_temperatur') | float(none), states('sensor.varmepump_temperature') | float(none)] %}
+          {% if readings | select('equalto', none) | list %}Data saknas
+          {% elif readings[0] > 11 or readings[0] < 4 or readings[1] > 23 or readings[1] < 19 or readings[2] > -13 or readings[2] < -25 or readings[3] > 10 or readings[3] < 3 or readings[4] > 35 or readings[5] > 55 or readings[5] < 20 %}Larmvillkor uppfyllt
+          {% else %}OK{% endif %}
+        attributes:
+          reason: >-
+            {% if this.state == 'Larmvillkor uppfyllt' %}Minst en temperatur ligger utanför ett larmintervall. Notifieringen kräver normalt att villkoret kvarstår i 10 minuter; friggebodens frysvakt kräver 5 minuter under 3 °C.
+            {% elif this.state == 'Data saknas' %}Minst en övervakad temperatursensor saknar ett numeriskt värde
+            {% else %}Alla övervakade temperaturer är inom sina larmintervall{% endif %}
+          alert_rules: >-
+            Förråd {{ states('sensor.forrad_temperature') }} °C: larm under 4 eller över 11 °C när ute är under 5 °C, efter 10 min. Friggebod {{ states('sensor.friggebod_temperatur') }} °C: larm under 19 eller över 23 °C efter 10 min när ute är under 15 °C; frysvakt under 3 °C efter 5 min. Frys {{ states('sensor.frys_temperature') }} °C: larm över -13 eller under -25 °C efter 10 min. Kyl {{ states('sensor.kyl_temperature') }} °C: larm under 3 eller över 10 °C efter 10 min. Uterum {{ states('sensor.uterum_temperatur') }} °C: larm över 35 °C efter 10 min. Ackumulatortank {{ states('sensor.varmepump_temperature') }} °C: larm under 20 eller över 55 °C efter 10 min.
+
+      - name: diagnostics_offline_alerts
+        unique_id: diagnostics_offline_alerts
+        state: >-
+          {% set devices = ['device_tracker.raspberry_pi_b_1_wire', 'device_tracker.raspberry_pi_3b_lux', 'device_tracker.raspberry_pi_flightradar24'] %}
+          {% if devices | select('is_state', 'not_home') | list %}Offline-larm
+          {% else %}OK{% endif %}
+        attributes:
+          reason: >-
+            {% set devices = ['device_tracker.raspberry_pi_b_1_wire', 'device_tracker.raspberry_pi_3b_lux', 'device_tracker.raspberry_pi_flightradar24'] %}
+            {% set offline = devices | select('is_state', 'not_home') | list %}
+            {% if offline %}Minst en övervakad Raspberry Pi rapporterar not_home och offline-notifieringen kan ha skickats
+            {% else %}Samtliga Raspberry Pi-enheter rapporterar annat än not_home{% endif %}
+          device_states: "1-Wire: {{ states('device_tracker.raspberry_pi_b_1_wire') }}, Lux: {{ states('device_tracker.raspberry_pi_3b_lux') }}, Flightradar24: {{ states('device_tracker.raspberry_pi_flightradar24') }}"
 
   - sensor:
       - name: diagnostics_temperature_alerts

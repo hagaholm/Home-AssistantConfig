@@ -30,6 +30,8 @@ views:
           {{ state_attr('sensor.diagnostics_system_health', 'active_issues') }}
 
           **Aktiva avläsningslarm:** {{ state_attr('sensor.diagnostics_system_health', 'active_reading_alarms') or 'Inga' }}
+
+          **Automationsdrift:** {{ states('sensor.diagnostics_automation_drift') }}
       - type: markdown
         title: Sensorer utan färsk data
         content: >-
@@ -38,6 +40,8 @@ views:
           **Varför:** {{ state_attr('sensor.diagnostics_sensor_freshness', 'reason') }}
 
           **Berörda givare:** {{ state_attr('sensor.diagnostics_sensor_freshness', 'stale_sensors') }}
+
+          **Tystade givare:** {{ state_attr('sensor.diagnostics_sensor_freshness', 'muted_sensors') or 'Inga' }}
 
           En varning visas när en övervakad givare saknar data eller inte har uppdaterats på 60 minuter. Orsaken kan vara batteri, kontakt, gateway eller integration.
       - type: entities
@@ -50,6 +54,7 @@ views:
           - sensor.diagnostics_sensor_freshness
           - sensor.diagnostics_sensors_health
           - sensor.diagnostics_network_health
+          - sensor.diagnostics_automation_drift
 
   - path: natverk
     title: Nätverk & infrastruktur
@@ -759,3 +764,114 @@ views:
           **Varför:** {{ state_attr('sensor.diagnostics_offline_alerts', 'reason') }}
 
           **Enhetslägen:** {{ state_attr('sensor.diagnostics_offline_alerts', 'device_states') }}
+
+  #######################################################
+  # AUTOMATIONSAVVIKELSER (DRIFT)
+  #######################################################
+  - path: automationer-drift
+    title: Automationer & Drift
+    icon: mdi:robot-confused-outline
+    badges: []
+    cards:
+      - type: markdown
+        title: 🤖 Automationsdrift översikt
+        content: >-
+          **Status:** {{ states('sensor.diagnostics_automation_drift') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_automation_drift', 'reason') }}
+
+          **Antal avvikelser:** {{ state_attr('sensor.diagnostics_automation_drift', 'deviating_count') }}
+
+          Här listas automationer som inte matchar sitt normala förväntade driftläge (t.ex. aktiva automationer som råkat stängas av, eller testrutiner som lämnats igång).
+      - type: entities
+        title: Huvudkontroll
+        entities:
+          - entity: input_boolean.monitor_automation_drift
+            name: Aktivera driftövervakning
+      - type: markdown
+        title: ⚠️ Oväntat avstängda (Borde vara På)
+        content: >-
+          {{ state_attr('sensor.diagnostics_automation_drift', 'unexpectedly_off') or 'Inga' }}
+      - type: markdown
+        title: ⚠️ Oväntat igång (Borde vara Av)
+        content: >-
+          {{ state_attr('sensor.diagnostics_automation_drift', 'unexpectedly_on') or 'Inga' }}
+
+  #######################################################
+  # ÖVERVAKNINGSKONTROLL (MUTE / IGNORE CENTER)
+  #######################################################
+  - path: overvakningskontroll
+    title: Övervakningskontroll (Mute)
+    icon: mdi:bell-cancel-outline
+    badges: []
+    cards:
+      - type: markdown
+        title: 🔕 Övervakningsstatus
+        content: >-
+          Här kan du slå av och på diagnostik och larm för enskilda givare och hårdvarunoder.
+
+          Om en givare är trasig eller urkopplad kan du stänga av dess switch här för att **tysta varningen** så att systemhälsan inte blockeras i fel-läge.
+
+          **Tystade givare just nu:**
+
+          {{ state_attr('sensor.diagnostics_sensor_freshness', 'muted_sensors') or 'Inga' }}
+
+          **Tystade hårdvarunoder just nu:**
+
+          {{ state_attr('sensor.diagnostics_network_health', 'muted_devices') or 'Inga' }}
+      - type: entities
+        title: 🌡️ Sensorövervakning (Givare)
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - entity: input_boolean.monitor_sensor_frys_temperature
+            name: Frys temperatur
+          - entity: input_boolean.monitor_sensor_kyl_temperature
+            name: Kyl temperatur
+          - entity: input_boolean.monitor_sensor_badrum_temperatur
+            name: Badrum temperatur & fukt
+          - entity: input_boolean.monitor_sensor_tvattstuga_temperature
+            name: Tvättstuga temperatur & fukt
+          - entity: input_boolean.monitor_sensor_varmepump_temperature
+            name: Värmepump temperatur
+          - entity: input_boolean.monitor_sensor_hall_temperatur
+            name: Hall temperatur & fukt
+          - entity: input_boolean.monitor_sensor_garage_temperature
+            name: Garage temperatur & fukt
+          - entity: input_boolean.monitor_sensor_forrad_temperature
+            name: Förråd temperatur & fukt
+          - entity: input_boolean.monitor_sensor_friggebod_temperatur
+            name: Friggebod temperatur & fukt
+          - entity: input_boolean.monitor_sensor_ute_friggebod_temperature
+            name: Ute friggebod temperatur & fukt
+          - entity: input_boolean.monitor_sensor_uterum_temperatur
+            name: Uterum temperatur & fukt
+          - entity: input_boolean.monitor_sensor_ljusstyrka
+            name: Ljusstyrka givare
+      - type: entities
+        title: 🌐 Hårdvaru- & Nodövervakning
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - entity: input_boolean.monitor_node_kamera_5
+            name: Kamera 5
+          - entity: input_boolean.monitor_node_kamera_6
+            name: Kamera 6
+          - entity: input_boolean.monitor_node_kamera_8
+            name: Kamera 8
+          - entity: input_boolean.monitor_node_kamera_9
+            name: Kamera 9
+          - entity: input_boolean.monitor_node_kamera_10
+            name: Kamera 10
+          - entity: input_boolean.monitor_node_nas
+            name: NAS
+          - entity: input_boolean.monitor_node_harmony_hub
+            name: Harmony Hub
+          - entity: input_boolean.monitor_node_pi_1wire
+            name: Raspberry Pi 1-Wire
+          - entity: input_boolean.monitor_node_pi_lux
+            name: Raspberry Pi Lux
+          - entity: input_boolean.monitor_node_pi_flightradar
+            name: Raspberry Pi Flightradar24
+          - entity: input_boolean.monitor_esphome_nodes
+            name: ESPHome Noder

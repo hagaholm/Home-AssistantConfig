@@ -1,0 +1,135 @@
+####################################################
+#                                                  #
+#         DIAGNOSTIC CONTROLS & MUTES              #
+#                                                  #
+####################################################
+# Input boolean toggles to enable or mute diagnostics
+# and alerts on specific devices, sensors, and nodes.
+# When ON: Device/sensor is monitored by diagnostics
+# When OFF: Device/sensor is ignored/muted (does not trigger alarms/warnings)
+#
+####################################################
+
+input_boolean:
+  # Sensors - Temperature & Humidity
+  monitor_sensor_frys_temperature:
+    name: Övervaka Frys temperatur
+    icon: mdi:snowflake-alert
+    initial: on
+
+  monitor_sensor_kyl_temperature:
+    name: Övervaka Kyl temperatur
+    icon: mdi:fridge-alert-outline
+    initial: on
+
+  monitor_sensor_badrum_temperatur:
+    name: Övervaka Badrum temperatur & fukt
+    icon: mdi:shower
+    initial: on
+
+  monitor_sensor_tvattstuga_temperature:
+    name: Övervaka Tvättstuga temperatur & fukt
+    icon: mdi:washing-machine
+    initial: on
+
+  monitor_sensor_varmepump_temperature:
+    name: Övervaka Värmepump temperatur
+    icon: mdi:heat-pump
+    initial: on
+
+  monitor_sensor_hall_temperatur:
+    name: Övervaka Hall temperatur & fukt
+    icon: mdi:home-thermometer
+    initial: on
+
+  monitor_sensor_garage_temperature:
+    name: Övervaka Garage temperatur & fukt
+    icon: mdi:garage
+    initial: on
+
+  monitor_sensor_forrad_temperature:
+    name: Övervaka Förråd temperatur & fukt
+    icon: mdi:warehouse
+    initial: on
+
+  monitor_sensor_friggebod_temperatur:
+    name: Övervaka Friggebod temperatur & fukt
+    icon: mdi:home-variant
+    initial: on
+
+  monitor_sensor_ute_friggebod_temperature:
+    name: Övervaka Ute friggebod temperatur & fukt
+    icon: mdi:thermometer
+    initial: on
+
+  monitor_sensor_uterum_temperatur:
+    name: Övervaka Uterum temperatur & fukt
+    icon: mdi:glass-cocktail
+    initial: on
+
+  monitor_sensor_ljusstyrka:
+    name: Övervaka Ljusstyrka givare
+    icon: mdi:brightness-6
+    initial: on
+
+  # Hardware / Network / Infrastructure
+  monitor_node_kamera_5:
+    name: Övervaka Kamera 5
+    icon: mdi:cctv
+    initial: on
+
+  monitor_node_kamera_6:
+    name: Övervaka Kamera 6
+    icon: mdi:cctv
+    initial: on
+
+  monitor_node_kamera_8:
+    name: Övervaka Kamera 8
+    icon: mdi:cctv
+    initial: on
+
+  monitor_node_kamera_9:
+    name: Övervaka Kamera 9
+    icon: mdi:cctv
+    initial: on
+
+  monitor_node_kamera_10:
+    name: Övervaka Kamera 10
+    icon: mdi:cctv
+    initial: on
+
+  monitor_node_nas:
+    name: Övervaka NAS
+    icon: mdi:nas
+    initial: on
+
+  monitor_node_harmony_hub:
+    name: Övervaka Harmony Hub
+    icon: mdi:remote
+    initial: on
+
+  monitor_node_pi_1wire:
+    name: Övervaka Raspberry Pi 1-Wire
+    icon: mdi:raspberry-pi
+    initial: on
+
+  monitor_node_pi_lux:
+    name: Övervaka Raspberry Pi Lux
+    icon: mdi:raspberry-pi
+    initial: on
+
+  monitor_node_pi_flightradar:
+    name: Övervaka Raspberry Pi Flightradar24
+    icon: mdi:airplane
+    initial: on
+
+  monitor_esphome_nodes:
+    name: Övervaka ESPHome Noder
+    icon: mdi:chip
+    initial: on
+
+  # Automation Drift Master Toggle
+  monitor_automation_drift:
+    name: Övervaka Automationer normalläge
+    icon: mdi:robot-confused
+    initial: on

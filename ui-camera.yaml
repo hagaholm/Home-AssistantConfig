@@ -29,27 +29,27 @@ views:
         cards:
           - type: picture-entity
             entity: camera.kamera10_lag_klarhet
-            name: Kamera 10 (Uppfarten)
+            name: Kamera 10 (Söder)
             camera_view: live
             show_state: false
           - type: picture-entity
             entity: camera.kamera5_fluent
-            name: Kamera 5 (Entré)
+            name: Kamera 5 (Norr/öster)
             camera_view: live
             show_state: false
           - type: picture-entity
             entity: camera.kamera6_fluent
-            name: Kamera 6 (Baksidan)
+            name: Kamera 6 (Norr/väster)
             camera_view: live
             show_state: false
           - type: picture-entity
-            entity: camera.kamera8_fluent
-            name: Kamera 8 (Uterum)
+            entity: camera.kamera8_lag_klarhet
+            name: Kamera 8 (Väster)
             camera_view: live
             show_state: false
           - type: picture-entity
             entity: camera.kamera9_lag_klarhet
-            name: Kamera 9 (Gavel)
+            name: Kamera 9 (Garage söder)
             camera_view: live
             show_state: false
 
@@ -110,7 +110,7 @@ views:
     badges: []
     cards:
       - type: heading
-        heading: 🚪 Kamera 10 (Uppfarten)
+        heading: 🚪 Kamera 10 (Söder)
 
       - type: grid
         columns: 2
@@ -149,7 +149,7 @@ views:
             name: Starta om kamera
 
       - type: heading
-        heading: 🚪 Kamera 5 (Entré)
+        heading: 🚪 Kamera 5 (Norr/öster)
 
       - type: grid
         columns: 2
@@ -186,7 +186,7 @@ views:
             name: Starta om kamera
 
       - type: heading
-        heading: 🌳 Kamera 6 (Baksidan)
+        heading: 🌳 Kamera 6 (Norr/väster)
 
       - type: grid
         columns: 2
@@ -221,7 +221,7 @@ views:
             name: Starta om kamera
 
       - type: heading
-        heading: 🏡 Kamera 8 (Uterum) & Kamera 9 (Gavel)
+        heading: 🏡 Kamera 8 (Väster) & Kamera 9 (Garage söder)
 
       - type: entities
         title: Kamera 8 & 9 Kontroller
@@ -414,12 +414,12 @@ views:
         state_color: true
         entities:
           - entity: input_boolean.monitor_node_kamera_5
-            name: Kamera 5 (Entré)
+            name: Kamera 5 (Norr/öster)
           - entity: input_boolean.monitor_node_kamera_6
-            name: Kamera 6 (Baksidan)
+            name: Kamera 6 (Norr/väster)
           - entity: input_boolean.monitor_node_kamera_8
-            name: Kamera 8 (Uterum)
+            name: Kamera 8 (Väster)
           - entity: input_boolean.monitor_node_kamera_9
-            name: Kamera 9 (Gavel)
+            name: Kamera 9 (Garage söder)
           - entity: input_boolean.monitor_node_kamera_10
-            name: Kamera 10 (Uppfarten)
+            name: Kamera 10 (Söder)

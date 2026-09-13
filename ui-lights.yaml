@@ -1,13 +1,28 @@
+#######################################################
+# UI LIGHTS (BELYSNING)
+#######################################################
+# Unified Belysning Subsystem Dashboard
+# 5-Tab Structure:
+# 1. Översikt (Overview & Key quick scenes/toggles)
+# 2. Rum & Grupper (All light entities per room/zone)
+# 3. Automationer (Resolvers, state machines, triggers)
+# 4. Skript & Scener (Scene controls, restore scripts)
+# 5. Diagnostik & Varför (Lights debug, why-sensors, lux thresholds)
+#######################################################
+
 title: Lights
 views:
+  #######################################################
+  # TAB 1: ÖVERSIKT (FAVORITER & SNABBVAL)
+  #######################################################
   - path: lights
-    title: Favoriter
+    title: Översikt
     icon: mdi:lightbulb-on-outline
     theme: default
     badges: []
     cards:
       - type: heading
-        heading: Belysning
+        heading: 💡 Snabbval & Scener
 
       - type: grid
         columns: 4
@@ -31,7 +46,7 @@ views:
             icon: mdi:sleep
 
       - type: heading
-        heading: Lägen & säsong
+        heading: 🎭 Lägen & Säsong
 
       - type: grid
         columns: 3
@@ -66,7 +81,7 @@ views:
             name: Jul
 
       - type: heading
-        heading: Auto
+        heading: 🤖 Auto-automatik per zon
 
       - type: grid
         columns: 4
@@ -98,7 +113,7 @@ views:
             name: Auto Fasad
 
       - type: heading
-        heading: Snabbt – rum
+        heading: 🚪 Snabbt – Rumstoggling
 
       - type: grid
         columns: 3
@@ -149,17 +164,20 @@ views:
             - input_boolean.daylight_on
             - light.dagbelysning_jul
 
+  #######################################################
+  # TAB 2: RUM & GRUPPER (ROOMS & GROUPS)
+  #######################################################
   - path: lights-rum
-    title: Rum
+    title: Rum & Grupper
     icon: mdi:sofa-outline
     theme: Backend-selected
     badges: []
     cards:
       - type: heading
-        heading: Inne
+        heading: 🛋️ Inomhusbelysning
 
       - type: entities
-        title: Inne (översikt)
+        title: Inne (Översikt & Hemläge)
         show_header_toggle: false
         state_color: true
         entities:
@@ -241,7 +259,7 @@ views:
           - light.andreas_fonster_2
 
       - type: heading
-        heading: Ute
+        heading: 🌳 Utomhus & Trädgård
 
       - type: entities
         title: Uterum
@@ -265,7 +283,7 @@ views:
           - switch.shellyoutdoorsg3_e4b063f8f840
           - switch.friggebod_fonster
           - light.friggebod_ute_2
-            - switch.shellyoutdoorsg3_e4b063f3674c
+          - switch.shellyoutdoorsg3_e4b063f3674c
 
       - type: entities
         title: Spabad
@@ -279,7 +297,7 @@ views:
           - light.spabad_h
 
       - type: entities
-        title: Fasad
+        title: Fasad & Strålkastare
         show_header_toggle: false
         state_color: true
         entities:
@@ -290,6 +308,11 @@ views:
           - light.forrad_fasad
           - light.friggebod_fasad
           - light.stralkastare_husgavel
+          - light.kamera5_stralkastare
+          - light.kamera6_stralkastare
+          - light.kamera8_stralkastare
+          - light.kamera9_stralkastare
+          - light.kamera10_stralkastare
 
       - type: conditional
         conditions:
@@ -297,7 +320,7 @@ views:
             state: 'on'
         card:
           type: entities
-          title: Jul (extra)
+          title: Julbelysning (aktiv)
           show_header_toggle: false
           state_color: true
           entities:
@@ -309,21 +332,95 @@ views:
             - light.uterum_julstjarnor
             - light.andreas_fonster
 
+  #######################################################
+  # TAB 3: AUTOMATIONER (AUTOMATIONS)
+  #######################################################
+  - path: lights-automationer
+    title: Automationer
+    icon: mdi:robot-outline
+    theme: Backend-selected
+    badges: []
+    cards:
+      - type: heading
+        heading: 🎯 Resolvers (Beslutslogik)
+
+      - type: entities
+        title: Huvudstyrning & Resolvers
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.innebelysning_resolver
+          - automation.koksbelysning_resolver
+          - automation.halltak_resolver
+          - automation.badrumsbelysning_resolver
+          - automation.uterumsbelysning_resolver
+          - automation.tradgardsbelysning_resolver
+          - automation.spabad_resolver
+          - automation.fasadbelysning_resolver
+
+      - type: heading
+        heading: 🔄 State Machines (Input Select → Scripts)
+
+      - type: entities
+        title: Scen-exekverare
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.innebelysning
+          - automation.koksbelysning
+          - automation.hall_takbelysning_input_select
+          - automation.badrumsbelysning
+          - automation.tand_uterumsbelysning
+          - automation.tradgardsbelysning
+          - automation.utebelysning_changed
+          - automation.facade_light_changed
+
+      - type: heading
+        heading: ⏰ Tidsstyrda Övergångar & Sensorhändelser
+
+      - type: entities
+        title: Tidsstyrning Inne & Ute
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.morning_light_on_inside
+          - automation.morning_light_on_outside
+          - automation.morning_light_off_inside
+          - automation.morning_light_off_outside
+          - automation.daylight_on_inside
+          - automation.daylight_on_outside
+          - automation.daylight_off_inside
+          - automation.daylight_off_outside
+          - automation.awaylight_on_inside
+          - automation.awaylight_on_outside
+          - automation.awaylight_off_inside
+          - automation.awaylight_off_outside
+          - automation.kitchen_light_on_inside
+          - automation.kitchen_light_on_outside
+          - automation.kitchen_light_off_inside
+          - automation.kitchen_light_off_outside
+
+      - type: entities
+        title: Specialstyrning & Knappar
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - automation.tv_ljuslage
+          - automation.hall_fjarrkontroll
+          - automation.hall_slack_belysning
+          - automation.facade_light_option_migration
+
+  #######################################################
+  # TAB 4: SKRIPT & SCENER (SCRIPTS & SCENES)
+  #######################################################
   - path: lights-kontroll
-    title: Kontroll
-    icon: mdi:tune
+    title: Skript & Scener
+    icon: mdi:script-text-outline
     theme: default
     badges: []
     cards:
       - type: heading
-        heading: Säsong & scener
-
-      - type: entities
-        title: Säsong
-        show_header_toggle: false
-        state_color: true
-        entities:
-          - input_boolean.christmas_light
+        heading: 🎄 Säsong & Masterscener
 
       - type: grid
         columns: 2
@@ -349,10 +446,10 @@ views:
                 entity_id: scene.lighting_christmas_mode
 
       - type: heading
-        heading: Resolvers (återställ)
+        heading: 🔄 Återställ korrekta lägen (Resolvers)
 
       - type: entities
-        title: Återställ korrekt läge
+        title: Master & Områdesåterställning
         show_header_toggle: false
         state_color: true
         entities:
@@ -367,10 +464,10 @@ views:
           - script.facade_set_correct_mode
 
       - type: heading
-        heading: Manuell snabbkontroll
+        heading: 🛋️ Inomhus Scenskript
 
       - type: entities
-        title: Inne-scripts
+        title: Inne Huvudscener
         show_header_toggle: false
         state_color: true
         entities:
@@ -392,7 +489,7 @@ views:
           - script.louise_room_off
 
       - type: entities
-        title: Kök/Hall/Badrum
+        title: Kök, Hall & Badrum
         show_header_toggle: false
         state_color: true
         entities:
@@ -410,8 +507,11 @@ views:
           - script.bathroom_light_night_presence
           - script.bathroom_light_off
 
+      - type: heading
+        heading: 🌳 Utomhus Scenskript
+
       - type: entities
-        title: Ute-scripts
+        title: Trädgård, Uterum, Spabad & Fasad
         show_header_toggle: false
         state_color: true
         entities:
@@ -426,21 +526,29 @@ views:
           - script.fasadbelysning_max
           - script.fasadbelysning_off
 
+  #######################################################
+  # TAB 5: DIAGNOSTIK & VARFÖR (DIAGNOSTICS & WHY)
+  #######################################################
   - path: lights-debug
-    title: Debug
-    icon: mdi:bug
+    title: Diagnostik & Varför
+    icon: mdi:help-circle-outline
     theme: Backend-selected
     badges: []
     cards:
-      - type: markdown
-        content: |
-          ## Lights Debug
+      - type: heading
+        heading: 🩺 Hälsa & Beslutsstatus
 
-          Visar beräknat läge (state), en kort **reason** samt villkor/inputs.
-          Klicka på en sensor för att se attribut.
+      - type: markdown
+        title: Belysningshälsa
+        content: >-
+          **Status:** {{ states('sensor.diagnostics_lights_health') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_lights_health', 'reason') }}
+
+          **Aktiva problem:** {{ state_attr('sensor.diagnostics_lights_health', 'active_issues') or 'Inga' }}
 
       - type: entities
-        title: Debug-sensorer
+        title: Belysningssensorer (Varför?)
         show_header_toggle: false
         state_color: true
         entities:
@@ -453,16 +561,32 @@ views:
           - sensor.lights_debug_spabad
           - sensor.lights_debug_facade
 
+      - type: heading
+        heading: ☀️ Sensorvärden & Trösklar
+
       - type: entities
-        title: Viktiga inputs
+        title: Viktiga sensorinputs
         show_header_toggle: false
         state_color: true
         entities:
+          - sensor.ljusstyrka
+          - sensor.ljusstyrka_measured
+          - sensor.kokets_ljusniva
+          - sensor.hall_ljusniva
+          - sensor.vardagsrum_ljusniva
           - input_select.home_status
           - input_boolean.morning_light_on
           - input_boolean.daylight_on
           - input_boolean.awaylight_on
           - input_boolean.christmas_light
-          - sensor.ljusstyrka
-          - sensor.uterum_temperatur
-          - sensor.kokets_ljusniva
+
+      - type: heading
+        heading: 🔕 Lokala Mute-switchar (Ljusgivare)
+
+      - type: entities
+        title: Övervakningskontroll Ljusgivare
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - entity: input_boolean.monitor_sensor_ljusstyrka
+            name: Ljusstyrka givare (utomhus/inomhus)

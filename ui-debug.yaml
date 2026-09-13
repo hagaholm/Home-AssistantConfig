@@ -325,19 +325,65 @@ views:
     icon: mdi:connection
     badges: []
     cards:
+      - type: heading
+        heading: 🌐 ESPHome & Hårdvarunoder
+
       - type: entities
-        title: Observerbara integrationer
+        title: ESPHome Noder & Sensorer
+        state_color: true
         entities:
-          - remote.harmony_hub
-          - sensor.installed_version
-          - sensor.current_ha_version
-          - sensor.frigate_face_camera
-          - sensor.frigate_face_score
-      - type: markdown
-        content: >-
-          Integreringar utan en tillgänglig Home Assistant-entitet kan inte få
-          en tillförlitlig hälsobedömning från YAML-konfigurationen och visas
-          därför inte som ett konstruerat OK- eller felläge.
+          - entity: sensor.esphome_web_37b6a4_esp32_bathroom_wifi_signal_dbm
+            name: ESP32 Badrum (37b6a4) WiFi RSSI
+          - entity: sensor.esphome_web_37a3e8_temperatur
+            name: ESP32 Badrum BME680 (37a3e8) Temp
+          - entity: sensor.esphome_web_37a3e8_luftfuktighet
+            name: ESP32 Badrum BME680 (37a3e8) Fukt
+          - entity: sensor.esphome_web_37a3e8_bme680_iaq_classification
+            name: ESP32 BME680 Luftkvalitet
+          - entity: input_boolean.monitor_esphome_nodes
+            name: Mute/Övervaka ESPHome Noder
+
+      - type: heading
+        heading: 📡 Nätverk, Routers & Hubbar
+
+      - type: entities
+        title: Nätverksintegrationer & Media
+        state_color: true
+        entities:
+          - entity: remote.harmony_hub
+            name: Harmony Hub
+          - entity: sensor.nas_dns_320
+            name: NAS DNS-320
+          - entity: sensor.raspberry_pi_b_1_wire
+            name: Raspberry Pi 1-Wire
+          - entity: sensor.raspberry_pi_3b_lux
+            name: Raspberry Pi Lux
+          - entity: sensor.raspberry_pi_flightradar24
+            name: Raspberry Pi Flightradar24
+          - entity: sensor.installed_version
+            name: Installerad HA version
+          - entity: sensor.current_ha_version
+            name: Senaste tillgängliga version
+
+      - type: heading
+        heading: 📹 Frigate & Reolink AI NVR
+
+      - type: entities
+        title: Frigate AI Metrik
+        state_color: true
+        entities:
+          - entity: sensor.frigate_status
+            name: Frigate Status
+          - entity: sensor.frigate_coral_inference_speed
+            name: Google Coral TPU Latens (ms)
+          - entity: sensor.frigate_intel_vaapi_gpu_load
+            name: Intel GPU Decode Load (%)
+          - entity: sensor.frigate_detection_fps
+            name: Detektion FPS Totalt
+          - entity: sensor.frigate_face_camera
+            name: Senaste ansiktskamera
+          - entity: sensor.frigate_face_score
+            name: Ansiktsigenkänning Score
 
   - path: systemhalsa
     title: Systemhälsa

@@ -1,123 +1,428 @@
-title: kameror
-views:
-  - path: kamera-gemensamt
-    title: Kamera gemensamt
-    badges: []
+#######################################################
+# UI CAMERAS & SECURITY (KAMEROR & FRIGATE)
+#######################################################
+# Unified Camera & Security Subsystem Dashboard
+# 5-Tab Structure:
+# 1. Översikt (Live views, instant statuses & spotlights)
+# 2. Kameror & NVR (Per-camera streams, controls, switches)
+# 3. Automationer (Detection reactions, notifications, sirens)
+# 4. Media & Statistik (Detection comparison, media files, counters)
+# 5. Diagnostik & Hälsa (Camera ping, Frigate AI load, mute switches)
+#######################################################
 
-  - path: compare
-    title: Compare
+title: Kameror
+views:
+  #######################################################
+  # TAB 1: ÖVERSIKT (LIVE & INSTANT STATUS)
+  #######################################################
+  - path: overview
+    title: Översikt
+    icon: mdi:cctv
     badges: []
     cards:
       - type: heading
-        heading: 📊 Daily Detection Summary & Comparison
+        heading: 📹 Live Översikt
 
-      - type: custom:stack-in-card
+      - type: grid
+        columns: 2
+        square: false
         cards:
-          - type: entities
-            title: Overall Totals
-            entities:
-              - sensor.frigate_total_person_detections
-              - sensor.frigate_total_animal_detections
-              - sensor.reolink_total_person_detections
-              - sensor.reolink_total_animal_detections
+          - type: picture-entity
+            entity: camera.kamera10_lag_klarhet
+            name: Kamera 10 (Uppfarten)
+            camera_view: live
+            show_state: false
+          - type: picture-entity
+            entity: camera.kamera5_fluent
+            name: Kamera 5 (Entré)
+            camera_view: live
+            show_state: false
+          - type: picture-entity
+            entity: camera.kamera6_fluent
+            name: Kamera 6 (Baksidan)
+            camera_view: live
+            show_state: false
+          - type: picture-entity
+            entity: camera.kamera8_fluent
+            name: Kamera 8 (Uterum)
+            camera_view: live
+            show_state: false
+          - type: picture-entity
+            entity: camera.kamera9_lag_klarhet
+            name: Kamera 9 (Gavel)
+            camera_view: live
+            show_state: false
 
       - type: heading
-        heading: ⚡ Response Time Analysis
+        heading: 💡 Strålkastare & Spotlights
 
-      - type: custom:stack-in-card
+      - type: grid
+        columns: 5
+        square: false
         cards:
-          - type: entities
-            title: Detection Speed Comparison
-            entities:
-              - sensor.fastest_detection_system
-              - sensor.detection_response_time_difference
-              - input_number.frigate_last_detection_time
-              - input_number.reolink_last_detection_time
+          - type: tile
+            entity: light.kamera10_stralkastare
+            name: Cam 10
+            icon: mdi:spotlight-beam
+          - type: tile
+            entity: light.kamera5_stralkastare
+            name: Cam 5
+            icon: mdi:spotlight-beam
+          - type: tile
+            entity: light.kamera6_stralkastare
+            name: Cam 6
+            icon: mdi:spotlight-beam
+          - type: tile
+            entity: light.kamera8_stralkastare
+            name: Cam 8
+            icon: mdi:spotlight-beam
+          - type: tile
+            entity: light.kamera9_stralkastare
+            name: Cam 9
+            icon: mdi:spotlight-beam
 
       - type: heading
-        heading: Frigate Daily Detections
+        heading: 🚨 Aktiva Detekteringar & Säkerhet
 
-      - type: custom:stack-in-card
+      - type: grid
+        columns: 4
+        square: false
         cards:
-          - type: entities
-            title: Frigate Camera Totals
-            entities:
-              - entity: input_number.frigate_cam10_person_count
-                visibility:
-                  - condition: numeric_state
-                    entity: input_number.frigate_cam10_person_count
-                    above: 0
-              - entity: input_number.frigate_cam10_animal_count
-                visibility:
-                  - condition: numeric_state
-                    entity: input_number.frigate_cam10_animal_count
-                    above: 0
-              - entity: input_number.frigate_cam5_person_count
-                visibility:
-                  - condition: numeric_state
-                    entity: input_number.frigate_cam5_person_count
-                    above: 0
-              - entity: input_number.frigate_cam5_animal_count
-                visibility:
-                  - condition: numeric_state
-                    entity: input_number.frigate_cam5_animal_count
-                    above: 0
-              - entity: input_number.frigate_cam6_person_count
-                visibility:
-                  - condition: numeric_state
-                    entity: input_number.frigate_cam6_person_count
-                    above: 0
-              - entity: input_number.frigate_cam6_animal_count
-                visibility:
-                  - condition: numeric_state
-                    entity: input_number.frigate_cam6_animal_count
-                    above: 0
-              - entity: input_number.frigate_cam8_person_count
-                visibility:
-                  - condition: numeric_state
-                    entity: input_number.frigate_cam8_person_count
-                    above: 0
-              - entity: input_number.frigate_cam8_animal_count
-                visibility:
-                  - condition: numeric_state
-                    entity: input_number.frigate_cam8_animal_count
-                    above: 0
-              - entity: input_number.frigate_cam9_person_count
-                visibility:
-                  - condition: numeric_state
-                    entity: input_number.frigate_cam9_person_count
-                    above: 0
+          - type: tile
+            entity: binary_sensor.cam10_person_occupancy
+            name: Person Cam 10
+          - type: tile
+            entity: binary_sensor.cam5_person_occupancy
+            name: Person Cam 5
+          - type: tile
+            entity: binary_sensor.cam6_person_occupancy
+            name: Person Cam 6
+          - type: tile
+            entity: binary_sensor.cam8_person_occupancy
+            name: Person Cam 8
+
+  #######################################################
+  # TAB 2: KAMEROR & NVR (PER-CAMERA STREAMS & CONTROLS)
+  #######################################################
+  - path: enheter
+    title: Kameror & NVR
+    icon: mdi:video-vintage
+    badges: []
+    cards:
+      - type: heading
+        heading: 🚪 Kamera 10 (Uppfarten)
+
+      - type: grid
+        columns: 4
+        square: false
+        cards:
+          - type: tile
+            entity: switch.cam10_detect
+            name: Frigate Detect
+          - type: tile
+            entity: switch.cam10_recordings
+            name: Inspelning
+          - type: tile
+            entity: switch.cam10_snapshots
+            name: Snapshots
+          - type: tile
+            entity: switch.cam10_motion
+            name: Rörelse
+
+      - type: entities
+        title: Kamera 10 Detaljer & Inställningar
+        state_color: true
+        entities:
+          - entity: sensor.kamera_10
+            name: Nätverksstatus
+          - entity: light.kamera10_stralkastare
+            name: Strålkastare
+          - entity: number.kamera10_stralkastare_ljusstyrka
+            name: Ljusstyrka strålkastare
+          - entity: binary_sensor.kamera10_person
+            name: Reolink Person
+          - entity: binary_sensor.kamera10_fordon
+            name: Reolink Fordon
+          - entity: binary_sensor.kamera10_djur
+            name: Reolink Djur
+          - entity: button.kamera10_starta_om
+            name: Starta om kamera
 
       - type: heading
-        heading: Reolink Daily Detections
+        heading: 🚪 Kamera 5 (Entré)
 
-      - type: custom:stack-in-card
+      - type: grid
+        columns: 4
+        square: false
         cards:
-          - type: entities
-            title: Reolink Camera Totals
-            entities:
-              - entity: input_number.reolink_cam10_person_count
-                visibility:
-                  - condition: numeric_state
-                    entity: input_number.reolink_cam10_person_count
-                    above: 0
-              - entity: input_number.reolink_cam10_animal_count
-                visibility:
-                  - condition: numeric_state
-                    entity: input_number.reolink_cam10_animal_count
-                    above: 0
-              - entity: input_number.reolink_cam5_person_count
-                visibility:
-                  - condition: numeric_state
-                    entity: input_number.reolink_cam5_person_count
-                    above: 0
-              - entity: input_number.reolink_cam5_animal_count
-                visibility:
-                  - condition: numeric_state
-                    entity: input_number.reolink_cam5_animal_count
-                    above: 0
-              - entity: input_number.reolink_cam6_person_count
-                visibility:
+          - type: tile
+            entity: switch.cam5_detect
+            name: Frigate Detect
+          - type: tile
+            entity: switch.cam5_recordings
+            name: Inspelning
+          - type: tile
+            entity: switch.cam5_snapshots
+            name: Snapshots
+          - type: tile
+            entity: switch.cam5_motion
+            name: Rörelse
+
+      - type: entities
+        title: Kamera 5 Detaljer & Inställningar
+        state_color: true
+        entities:
+          - entity: sensor.kamera_5
+            name: Nätverksstatus
+          - entity: light.kamera5_stralkastare
+            name: Strålkastare
+          - entity: binary_sensor.kamera5_person
+            name: Reolink Person
+          - entity: binary_sensor.kamera5_fordon
+            name: Reolink Fordon
+          - entity: binary_sensor.kamera5_djur
+            name: Reolink Djur
+          - entity: button.kamera5_starta_om
+            name: Starta om kamera
+
+      - type: heading
+        heading: 🌳 Kamera 6 (Baksidan)
+
+      - type: grid
+        columns: 4
+        square: false
+        cards:
+          - type: tile
+            entity: switch.cam6_detect
+            name: Frigate Detect
+          - type: tile
+            entity: switch.cam6_recordings
+            name: Inspelning
+          - type: tile
+            entity: switch.cam6_snapshots
+            name: Snapshots
+          - type: tile
+            entity: switch.cam6_motion
+            name: Rörelse
+
+      - type: entities
+        title: Kamera 6 Detaljer & Inställningar
+        state_color: true
+        entities:
+          - entity: sensor.kamera_6
+            name: Nätverksstatus
+          - entity: light.kamera6_stralkastare
+            name: Strålkastare
+          - entity: binary_sensor.kamera6_person
+            name: Reolink Person
+          - entity: binary_sensor.kamera6_djur
+            name: Reolink Djur
+          - entity: button.kamera6_starta_om
+            name: Starta om kamera
+
+      - type: heading
+        heading: 🏡 Kamera 8 (Uterum) & Kamera 9 (Gavel)
+
+      - type: entities
+        title: Kamera 8 & 9 Kontroller
+        state_color: true
+        entities:
+          - entity: sensor.kamera_8
+            name: Kamera 8 Status
+          - entity: light.kamera8_stralkastare
+            name: Kamera 8 Strålkastare
+          - entity: switch.cam8_detect
+            name: Kamera 8 Frigate Detect
+          - entity: button.kamera8_starta_om
+            name: Starta om Kamera 8
+          - entity: sensor.kamera_9
+            name: Kamera 9 Status
+          - entity: light.kamera9_stralkastare
+            name: Kamera 9 Strålkastare
+          - entity: switch.cam9_detect
+            name: Kamera 9 Frigate Detect
+          - entity: button.kamera9_starta_om
+            name: Starta om Kamera 9
+
+  #######################################################
+  # TAB 3: AUTOMATIONER (AUTOMATIONS)
+  #######################################################
+  - path: automationer
+    title: Automationer
+    icon: mdi:robot-outline
+    badges: []
+    cards:
+      - type: heading
+        heading: 👤 Person- & Rörelseautomationer
+
+      - type: entities
+        title: Personnotiser & Belysning
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - entity: automation.person_detection_notify_immediate
+            name: Notis omedelbar vid person
+          - entity: automation.person_detection_notify_delayed
+            name: Notis fördröjd vid person
+          - entity: automation.blink_light_person_detected
+            name: Blinka lampor vid persondetektion
+          - entity: automation.person_motion_light_control_frontside_cam10_cam9
+            name: Tänd strålkastare framsida
+          - entity: automation.person_motion_radio_control_backside
+            name: Radio på vid rörelse baksida
+          - entity: automation.frigate_face_detection_triggers_temporary_presence
+            name: Ansiktsigenkänning närvaroväxling
+
+      - type: heading
+        heading: 🐾 Djurdetektion & Reaktion
+
+      - type: entities
+        title: Djurnotiser & Belysning
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - entity: automation.animal_detection_notify
+            name: Notis vid djurdetektion
+          - entity: automation.animal_motion_light_control
+            name: Tänd lampor vid djurdetektion
+          - entity: automation.animal_motion_radio_on
+            name: Radio på vid djurdetektion
+          - entity: automation.turn_off_radio_after_10_minutes
+            name: Stäng av radio efter 10 min
+
+      - type: heading
+        heading: 🚨 Inbrottslarm & Sirener
+
+      - type: entities
+        title: Sirenhantering
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - entity: automation.cam5_person_intruder_alarm
+            name: Cam5 Inbrottslarm siren
+          - entity: automation.cam6_person_intruder_alarm
+            name: Cam6 Inbrottslarm siren
+          - entity: automation.cam5_siren_failsafe_off
+            name: Cam5 Siren failsafe av
+          - entity: automation.cam6_siren_failsafe_off
+            name: Cam6 Siren failsafe av
+          - entity: automation.cam_siren_reset_on_ha_start
+            name: Återställ sirener vid start
+
+      - type: heading
+        heading: 🔔 Dörrklocka & Snapshots
+
+      - type: entities
+        title: Dörrklocka
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - entity: automation.ringklocka_hantering
+            name: Dörrklocka snapshot & notis
+
+  #######################################################
+  # TAB 4: MEDIA & STATISTIK (MEDIA & STATS)
+  #######################################################
+  - path: media-statistik
+    title: Media & Statistik
+    icon: mdi:chart-timeline-variant-shimmer
+    badges: []
+    cards:
+      - type: heading
+        heading: 📊 AI Detektionsjämförelse (Frigate vs Reolink)
+
+      - type: entities
+        title: Totala Dagsdetektioner
+        state_color: true
+        entities:
+          - sensor.frigate_total_person_detections
+          - sensor.frigate_total_animal_detections
+          - sensor.reolink_total_person_detections
+          - sensor.reolink_total_animal_detections
+
+      - type: entities
+        title: Svarstidsanalys & Snabbaste System
+        state_color: true
+        entities:
+          - sensor.fastest_detection_system
+          - sensor.detection_response_time_difference
+          - input_number.frigate_last_detection_time
+          - input_number.reolink_last_detection_time
+
+      - type: heading
+        heading: 📁 Media & Galleri
+
+      - type: markdown
+        content: |
+          ### 📸 Sparade Snapshot-kataloger
+          - **Frigate Person:** [`/media/camera_compare/frigate/person/`](/media/camera_compare/frigate/person/)
+          - **Frigate Djur:** [`/media/camera_compare/frigate/animal/`](/media/camera_compare/frigate/animal/)
+          - **Reolink Person:** [`/media/camera_compare/reolink/person/`](/media/camera_compare/reolink/person/)
+          - **Reolink Djur:** [`/media/camera_compare/reolink/animal/`](/media/camera_compare/reolink/animal/)
+          - **Dörrklocka:** `/media/Day/`, `/media/Night/`, `/media/Away/`
+
+  #######################################################
+  # TAB 5: DIAGNOSTIK & HÄLSA (DIAGNOSTICS & HEALTH)
+  #######################################################
+  - path: diagnostik
+    title: Diagnostik & Varför
+    icon: mdi:help-circle-outline
+    badges: []
+    cards:
+      - type: heading
+        heading: 🩺 Hälsa & Beslutsstatus
+
+      - type: markdown
+        title: Säkerhet & Frigate Status
+        content: >-
+          **Status:** {{ states('sensor.diagnostics_frigate_security') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_frigate_security', 'reason') }}
+
+          **Senaste ansiktskamera:** {{ state_attr('sensor.diagnostics_frigate_security', 'latest_face_camera') }}
+
+      - type: markdown
+        title: Inbrottslarm Diagnostik
+        content: >-
+          **Status:** {{ states('sensor.diagnostics_intruder_alarm') }}
+
+          **Varför:** {{ state_attr('sensor.diagnostics_intruder_alarm', 'reason') }}
+
+          **Sirener:** {{ state_attr('sensor.diagnostics_intruder_alarm', 'siren_states') }}
+
+      - type: heading
+        heading: ⚡ Frigate NVR & AI Performance
+
+      - type: entities
+        title: Frigate Server Metrik
+        state_color: true
+        entities:
+          - entity: sensor.frigate_status
+            name: Frigate Status
+          - entity: sensor.frigate_coral_inference_speed
+            name: Coral TPU Inferenstid (ms)
+          - entity: sensor.frigate_intel_vaapi_gpu_load
+            name: Intel GPU Load (%)
+          - entity: sensor.frigate_detection_fps
+            name: Detektion FPS totalt
+
+      - type: heading
+        heading: 🔕 Lokala Mute-switchar (Kameror)
+
+      - type: entities
+        title: Övervakningskontroll Kameror
+        state_color: true
+        entities:
+          - entity: input_boolean.monitor_node_kamera_5
+            name: Kamera 5 (Entré)
+          - entity: input_boolean.monitor_node_kamera_6
+            name: Kamera 6 (Baksidan)
+          - entity: input_boolean.monitor_node_kamera_8
+            name: Kamera 8 (Uterum)
+          - entity: input_boolean.monitor_node_kamera_9
+            name: Kamera 9 (Gavel)
+          - entity: input_boolean.monitor_node_kamera_10
+            name: Kamera 10 (Uppfarten)
                   - condition: numeric_state
                     entity: input_number.reolink_cam6_person_count
                     above: 0

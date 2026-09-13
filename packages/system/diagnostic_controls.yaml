@@ -15,121 +15,234 @@ input_boolean:
   monitor_sensor_frys_temperature:
     name: Övervaka Frys temperatur
     icon: mdi:snowflake-alert
-    initial: on
 
   monitor_sensor_kyl_temperature:
     name: Övervaka Kyl temperatur
     icon: mdi:fridge-alert-outline
-    initial: on
 
   monitor_sensor_badrum_temperatur:
     name: Övervaka Badrum temperatur & fukt
     icon: mdi:shower
-    initial: on
 
   monitor_sensor_tvattstuga_temperature:
     name: Övervaka Tvättstuga temperatur & fukt
     icon: mdi:washing-machine
-    initial: on
 
   monitor_sensor_varmepump_temperature:
     name: Övervaka Värmepump temperatur
     icon: mdi:heat-pump
-    initial: on
 
   monitor_sensor_hall_temperatur:
     name: Övervaka Hall temperatur & fukt
     icon: mdi:home-thermometer
-    initial: on
 
   monitor_sensor_garage_temperature:
     name: Övervaka Garage temperatur & fukt
     icon: mdi:garage
-    initial: on
 
   monitor_sensor_forrad_temperature:
     name: Övervaka Förråd temperatur & fukt
     icon: mdi:warehouse
-    initial: on
 
   monitor_sensor_friggebod_temperatur:
     name: Övervaka Friggebod temperatur & fukt
     icon: mdi:home-variant
-    initial: on
 
   monitor_sensor_ute_friggebod_temperature:
     name: Övervaka Ute friggebod temperatur & fukt
     icon: mdi:thermometer
-    initial: on
 
   monitor_sensor_uterum_temperatur:
     name: Övervaka Uterum temperatur & fukt
     icon: mdi:glass-cocktail
-    initial: on
 
   monitor_sensor_ljusstyrka:
     name: Övervaka Ljusstyrka givare
     icon: mdi:brightness-6
-    initial: on
 
   # Hardware / Network / Infrastructure
   monitor_node_kamera_5:
     name: Övervaka Kamera 5
     icon: mdi:cctv
-    initial: on
 
   monitor_node_kamera_6:
     name: Övervaka Kamera 6
     icon: mdi:cctv
-    initial: on
 
   monitor_node_kamera_8:
     name: Övervaka Kamera 8
     icon: mdi:cctv
-    initial: on
 
   monitor_node_kamera_9:
     name: Övervaka Kamera 9
     icon: mdi:cctv
-    initial: on
 
   monitor_node_kamera_10:
     name: Övervaka Kamera 10
     icon: mdi:cctv
-    initial: on
 
   monitor_node_nas:
     name: Övervaka NAS
     icon: mdi:nas
-    initial: on
 
   monitor_node_harmony_hub:
     name: Övervaka Harmony Hub
     icon: mdi:remote
-    initial: on
 
   monitor_node_pi_1wire:
     name: Övervaka Raspberry Pi 1-Wire
     icon: mdi:raspberry-pi
-    initial: on
 
   monitor_node_pi_lux:
     name: Övervaka Raspberry Pi Lux
     icon: mdi:raspberry-pi
-    initial: on
 
   monitor_node_pi_flightradar:
     name: Övervaka Raspberry Pi Flightradar24
     icon: mdi:airplane
-    initial: on
 
   monitor_esphome_nodes:
     name: Övervaka ESPHome Noder
     icon: mdi:chip
-    initial: on
+
+  # Lamps & Lights (Inne, Ute & Jul)
+  monitor_light_kok_underskap_bank:
+    name: Övervaka Kök underskåp bänk
+    icon: mdi:lightbulb
+
+  monitor_light_kok_underskap_diskbank:
+    name: Övervaka Kök underskåp diskbänk
+    icon: mdi:lightbulb
+
+  monitor_light_kok_vitrinskap:
+    name: Övervaka Kök vitrinskåp
+    icon: mdi:lightbulb
+
+  monitor_light_kok_stora_fonstret:
+    name: Övervaka Kök stora fönstret
+    icon: mdi:lightbulb
+
+  monitor_light_kok_lilla_fonstret:
+    name: Övervaka Kök lilla fönstret
+    icon: mdi:lightbulb
+
+  monitor_light_hall_tak:
+    name: Övervaka Hall tak
+    icon: mdi:lightbulb
+
+  monitor_light_hall_byra:
+    name: Övervaka Hall byrå
+    icon: mdi:lightbulb
+
+  monitor_light_hall_skap:
+    name: Övervaka Hall skåp
+    icon: mdi:lightbulb
+
+  monitor_light_badrum:
+    name: Övervaka Badrum tak & spottar
+    icon: mdi:lightbulb
+
+  monitor_light_fonster_spott:
+    name: Övervaka Badrum fönsterspott
+    icon: mdi:lightbulb
+
+  monitor_light_vardagsrum_fonster:
+    name: Övervaka Vardagsrum fönster
+    icon: mdi:lightbulb
+
+  monitor_light_vardagsrum_skank:
+    name: Övervaka Vardagsrum skänk
+    icon: mdi:lightbulb
+
+  monitor_light_vardagsrum_vagn:
+    name: Övervaka Vardagsrum vagn
+    icon: mdi:lightbulb
+
+  monitor_light_vardagsrum_vitrinskap2:
+    name: Övervaka Vardagsrum vitrinskåp
+    icon: mdi:lightbulb
+
+  monitor_light_sovrum_fonster:
+    name: Övervaka Sovrum fönster
+    icon: mdi:lightbulb
+
+  monitor_light_sovrum_sangbord:
+    name: Övervaka Sovrum sängbord
+    icon: mdi:lightbulb
+
+  monitor_light_louise_fonster:
+    name: Övervaka Louise fönster
+    icon: mdi:lightbulb
+
+  monitor_light_louise_golvlampa:
+    name: Övervaka Louise golvlampa
+    icon: mdi:lightbulb
+
+  monitor_light_louise_skrivbord:
+    name: Övervaka Louise skrivbord
+    icon: mdi:lightbulb
+
+  monitor_light_andreas_fonster:
+    name: Övervaka Andreas fönster
+    icon: mdi:lightbulb
+
+  monitor_light_uterum_led:
+    name: Övervaka Uterum LED
+    icon: mdi:lightbulb
+
+  monitor_light_uterum_fonster:
+    name: Övervaka Uterum fönster
+    icon: mdi:lightbulb
+
+  monitor_light_uterum_fotogenlampa:
+    name: Övervaka Uterum fotogenlampa
+    icon: mdi:lightbulb
+
+  monitor_light_tradgard:
+    name: Övervaka Trädgård
+    icon: mdi:lightbulb
+
+  monitor_light_shellyoutdoorsg3_e4b063f8f840:
+    name: Övervaka Trädäck
+    icon: mdi:lightbulb
+
+  monitor_light_friggebod_fonster:
+    name: Övervaka Friggebod fönster
+    icon: mdi:lightbulb
+
+  monitor_light_friggebod_ute_2:
+    name: Övervaka Friggebod ute
+    icon: mdi:lightbulb
+
+  monitor_light_spabad:
+    name: Övervaka Spabad belysning
+    icon: mdi:lightbulb
+
+  monitor_light_fasad:
+    name: Övervaka Fasadbelysning
+    icon: mdi:lightbulb
+
+  monitor_light_jul_kok_ljusstake:
+    name: Övervaka Jul Kök ljusstake
+    icon: mdi:pine-tree
+
+  monitor_light_jul_hall_jullampa:
+    name: Övervaka Jul Hall jullampa
+    icon: mdi:pine-tree
+
+  monitor_light_jul_vardagsrum_ljusstake:
+    name: Övervaka Jul Vardagsrum ljusstake
+    icon: mdi:pine-tree
+
+  monitor_light_jul_vardagsrum_gran:
+    name: Övervaka Jul Vardagsrum gran
+    icon: mdi:pine-tree
+
+  monitor_light_jul_uterum_stjarnor:
+    name: Övervaka Jul Uterum julstjärnor
+    icon: mdi:pine-tree
 
   # Automation Drift Master Toggle
   monitor_automation_drift:
     name: Övervaka Automationer normalläge
     icon: mdi:robot-confused
-    initial: on

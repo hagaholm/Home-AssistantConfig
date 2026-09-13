@@ -29,10 +29,53 @@ template:
           {% set checks = [
             {'name': 'Inne', 'entity': 'sensor.lights_debug_inside'}, {'name': 'Kök', 'entity': 'sensor.lights_debug_kitchen'}, {'name': 'Badrum', 'entity': 'sensor.lights_debug_bathroom'}, {'name': 'Hall', 'entity': 'sensor.lights_debug_hall'}, {'name': 'Trädgård', 'entity': 'sensor.lights_debug_garden'}, {'name': 'Uterum', 'entity': 'sensor.lights_debug_uterum'}, {'name': 'Spabad', 'entity': 'sensor.lights_debug_spabad'}, {'name': 'Fasad', 'entity': 'sensor.lights_debug_facade'}
           ] %}
-          {% set controlled = expand('light.dagbelysning', 'light.dagbelysning_jul', 'light.kok_underskap_bank', 'light.kok_underskap_diskbank', 'light.kok_vitrinskap', 'light.fonster_spott', 'switch.tradgard', 'switch.shellyoutdoorsg3_e4b063f8f840', 'switch.friggebod_fonster', 'light.friggebod_ute_2', 'light.uterum_led', 'light.uterum_fotogenlampa', 'light.spabad_v', 'light.spabad_m', 'light.spabad_h', 'light.friggebod_fasad', 'light.forrad_fasad', 'light.tvattstugan_fasad', 'light.huvudentre2', 'light.hall_tak') %}
-          {% set unavailable = controlled | selectattr('state', 'in', ['unknown', 'unavailable']) | list %}
+          {% set controlled = [
+            {'name': 'Kök underskåp bänk', 'entity': 'light.kok_underskap_bank', 'mute': 'input_boolean.monitor_light_kok_underskap_bank'},
+            {'name': 'Kök underskåp diskbänk', 'entity': 'light.kok_underskap_diskbank', 'mute': 'input_boolean.monitor_light_kok_underskap_diskbank'},
+            {'name': 'Kök vitrinskåp', 'entity': 'light.kok_vitrinskap', 'mute': 'input_boolean.monitor_light_kok_vitrinskap'},
+            {'name': 'Kök stora fönstret', 'entity': 'light.kok_stora_fonstret', 'mute': 'input_boolean.monitor_light_kok_stora_fonstret'},
+            {'name': 'Kök lilla fönstret', 'entity': 'light.kok_lilla_fonstret', 'mute': 'input_boolean.monitor_light_kok_lilla_fonstret'},
+            {'name': 'Hall tak', 'entity': 'light.hall_tak', 'mute': 'input_boolean.monitor_light_hall_tak'},
+            {'name': 'Hall byrå', 'entity': 'light.hall_byra', 'mute': 'input_boolean.monitor_light_hall_byra'},
+            {'name': 'Hall skåp', 'entity': 'light.hall_skap', 'mute': 'input_boolean.monitor_light_hall_skap'},
+            {'name': 'Badrum fönsterspott', 'entity': 'light.fonster_spott', 'mute': 'input_boolean.monitor_light_fonster_spott'},
+            {'name': 'Vardagsrum fönster', 'entity': 'light.vardagsrum_fonster', 'mute': 'input_boolean.monitor_light_vardagsrum_fonster'},
+            {'name': 'Vardagsrum skänk', 'entity': 'light.vardagsrum_skank', 'mute': 'input_boolean.monitor_light_vardagsrum_skank'},
+            {'name': 'Vardagsrum vagn', 'entity': 'light.vardagsrum_vagn', 'mute': 'input_boolean.monitor_light_vardagsrum_vagn'},
+            {'name': 'Vardagsrum vitrinskåp', 'entity': 'light.vardagsrum_vitrinskap2', 'mute': 'input_boolean.monitor_light_vardagsrum_vitrinskap2'},
+            {'name': 'Sovrum fönster', 'entity': 'light.sovrum_fonster', 'mute': 'input_boolean.monitor_light_sovrum_fonster'},
+            {'name': 'Sovrum sängbord', 'entity': 'light.sovrum_sangbord', 'mute': 'input_boolean.monitor_light_sovrum_sangbord'},
+            {'name': 'Louise fönster', 'entity': 'light.louise_fonster', 'mute': 'input_boolean.monitor_light_louise_fonster'},
+            {'name': 'Louise golvlampa', 'entity': 'light.louise_golvlampa', 'mute': 'input_boolean.monitor_light_louise_golvlampa'},
+            {'name': 'Louise skrivbord', 'entity': 'light.louise_skrivbord', 'mute': 'input_boolean.monitor_light_louise_skrivbord'},
+            {'name': 'Andreas fönster', 'entity': 'light.andreas_fonster_2', 'mute': 'input_boolean.monitor_light_andreas_fonster'},
+            {'name': 'Uterum LED', 'entity': 'light.uterum_led', 'mute': 'input_boolean.monitor_light_uterum_led'},
+            {'name': 'Uterum fönster', 'entity': 'light.uterum_fonster', 'mute': 'input_boolean.monitor_light_uterum_fonster'},
+            {'name': 'Uterum fotogenlampa', 'entity': 'light.uterum_fotogenlampa', 'mute': 'input_boolean.monitor_light_uterum_fotogenlampa'},
+            {'name': 'Trädgård', 'entity': 'switch.tradgard', 'mute': 'input_boolean.monitor_light_tradgard'},
+            {'name': 'Trädäck', 'entity': 'switch.shellyoutdoorsg3_e4b063f8f840', 'mute': 'input_boolean.monitor_light_shellyoutdoorsg3_e4b063f8f840'},
+            {'name': 'Friggebod fönster', 'entity': 'switch.friggebod_fonster', 'mute': 'input_boolean.monitor_light_friggebod_fonster'},
+            {'name': 'Friggebod ute', 'entity': 'light.friggebod_ute_2', 'mute': 'input_boolean.monitor_light_friggebod_ute_2'},
+            {'name': 'Spabad Vänster', 'entity': 'light.spabad_v', 'mute': 'input_boolean.monitor_light_spabad'},
+            {'name': 'Spabad Mitten', 'entity': 'light.spabad_m', 'mute': 'input_boolean.monitor_light_spabad'},
+            {'name': 'Spabad Höger', 'entity': 'light.spabad_h', 'mute': 'input_boolean.monitor_light_spabad'},
+            {'name': 'Friggebod fasad', 'entity': 'light.friggebod_fasad', 'mute': 'input_boolean.monitor_light_fasad'},
+            {'name': 'Förråd fasad', 'entity': 'light.forrad_fasad', 'mute': 'input_boolean.monitor_light_fasad'},
+            {'name': 'Tvättstuga fasad', 'entity': 'light.tvattstugan_fasad', 'mute': 'input_boolean.monitor_light_fasad'},
+            {'name': 'Huvudentré', 'entity': 'light.huvudentre2', 'mute': 'input_boolean.monitor_light_fasad'},
+            {'name': 'Jul Kök ljusstake', 'entity': 'light.kok_stora_fonstret_ljusstake', 'mute': 'input_boolean.monitor_light_jul_kok_ljusstake'},
+            {'name': 'Jul Hall jullampa', 'entity': 'light.hall_jullampa', 'mute': 'input_boolean.monitor_light_jul_hall_jullampa'},
+            {'name': 'Jul Vardagsrum ljusstake', 'entity': 'light.vardagsrum_fonster_ljusstake_2', 'mute': 'input_boolean.monitor_light_jul_vardagsrum_ljusstake'},
+            {'name': 'Jul Vardagsrum gran', 'entity': 'light.vardagsrum_gran', 'mute': 'input_boolean.monitor_light_jul_vardagsrum_gran'},
+            {'name': 'Jul Uterum stjärnor', 'entity': 'light.uterum_julstjarnor', 'mute': 'input_boolean.monitor_light_jul_uterum_stjarnor'}
+          ] %}
           {% set health = namespace(failed=false, warning=false) %}
-          {% if unavailable %}{% set health.failed = true %}{% endif %}
+          {% for item in controlled %}
+            {% if not is_state(item.mute, 'off') %}
+              {% set s = states[item.entity] %}
+              {% if s is none or s.state in ['unknown', 'unavailable'] %}{% set health.failed = true %}{% endif %}
+            {% endif %}
+          {% endfor %}
           {% for check in checks %}
             {% if states(check.entity) in ['unknown', 'unavailable'] %}{% set health.failed = true %}
             {% elif 'Avvikelse:' in (state_attr(check.entity, 'reality_status') | string) %}{% set health.warning = true %}{% endif %}
@@ -42,25 +85,114 @@ template:
           {% else %}OK{% endif %}
         attributes:
           reason: >-
-            {% if this.state == 'Fel' %}Minst en belysningsdiagnos kan inte rapportera
+            {% if this.state == 'Fel' %}Minst en övervakad lampa eller belysningsdiagnos kan inte rapportera
             {% elif this.state == 'Varning' %}Minst ett automationsläge stämmer inte med de verkliga lamporna
-            {% else %}Alla övervakade belysningsgrupper stämmer med sina automationslägen{% endif %}
+            {% else %}Alla övervakade lampor och belysningsgrupper stämmer med sina automationslägen{% endif %}
           active_issues: >-
             {% set checks = [
               {'name': 'Inne', 'entity': 'sensor.lights_debug_inside'}, {'name': 'Kök', 'entity': 'sensor.lights_debug_kitchen'}, {'name': 'Badrum', 'entity': 'sensor.lights_debug_bathroom'}, {'name': 'Hall', 'entity': 'sensor.lights_debug_hall'}, {'name': 'Trädgård', 'entity': 'sensor.lights_debug_garden'}, {'name': 'Uterum', 'entity': 'sensor.lights_debug_uterum'}, {'name': 'Spabad', 'entity': 'sensor.lights_debug_spabad'}, {'name': 'Fasad', 'entity': 'sensor.lights_debug_facade'}
             ] %}
+            {% set controlled = [
+              {'name': 'Kök underskåp bänk', 'entity': 'light.kok_underskap_bank', 'mute': 'input_boolean.monitor_light_kok_underskap_bank'},
+              {'name': 'Kök underskåp diskbänk', 'entity': 'light.kok_underskap_diskbank', 'mute': 'input_boolean.monitor_light_kok_underskap_diskbank'},
+              {'name': 'Kök vitrinskåp', 'entity': 'light.kok_vitrinskap', 'mute': 'input_boolean.monitor_light_kok_vitrinskap'},
+              {'name': 'Kök stora fönstret', 'entity': 'light.kok_stora_fonstret', 'mute': 'input_boolean.monitor_light_kok_stora_fonstret'},
+              {'name': 'Kök lilla fönstret', 'entity': 'light.kok_lilla_fonstret', 'mute': 'input_boolean.monitor_light_kok_lilla_fonstret'},
+              {'name': 'Hall tak', 'entity': 'light.hall_tak', 'mute': 'input_boolean.monitor_light_hall_tak'},
+              {'name': 'Hall byrå', 'entity': 'light.hall_byra', 'mute': 'input_boolean.monitor_light_hall_byra'},
+              {'name': 'Hall skåp', 'entity': 'light.hall_skap', 'mute': 'input_boolean.monitor_light_hall_skap'},
+              {'name': 'Badrum fönsterspott', 'entity': 'light.fonster_spott', 'mute': 'input_boolean.monitor_light_fonster_spott'},
+              {'name': 'Vardagsrum fönster', 'entity': 'light.vardagsrum_fonster', 'mute': 'input_boolean.monitor_light_vardagsrum_fonster'},
+              {'name': 'Vardagsrum skänk', 'entity': 'light.vardagsrum_skank', 'mute': 'input_boolean.monitor_light_vardagsrum_skank'},
+              {'name': 'Vardagsrum vagn', 'entity': 'light.vardagsrum_vagn', 'mute': 'input_boolean.monitor_light_vardagsrum_vagn'},
+              {'name': 'Vardagsrum vitrinskåp', 'entity': 'light.vardagsrum_vitrinskap2', 'mute': 'input_boolean.monitor_light_vardagsrum_vitrinskap2'},
+              {'name': 'Sovrum fönster', 'entity': 'light.sovrum_fonster', 'mute': 'input_boolean.monitor_light_sovrum_fonster'},
+              {'name': 'Sovrum sängbord', 'entity': 'light.sovrum_sangbord', 'mute': 'input_boolean.monitor_light_sovrum_sangbord'},
+              {'name': 'Louise fönster', 'entity': 'light.louise_fonster', 'mute': 'input_boolean.monitor_light_louise_fonster'},
+              {'name': 'Louise golvlampa', 'entity': 'light.louise_golvlampa', 'mute': 'input_boolean.monitor_light_louise_golvlampa'},
+              {'name': 'Louise skrivbord', 'entity': 'light.louise_skrivbord', 'mute': 'input_boolean.monitor_light_louise_skrivbord'},
+              {'name': 'Andreas fönster', 'entity': 'light.andreas_fonster_2', 'mute': 'input_boolean.monitor_light_andreas_fonster'},
+              {'name': 'Uterum LED', 'entity': 'light.uterum_led', 'mute': 'input_boolean.monitor_light_uterum_led'},
+              {'name': 'Uterum fönster', 'entity': 'light.uterum_fonster', 'mute': 'input_boolean.monitor_light_uterum_fonster'},
+              {'name': 'Uterum fotogenlampa', 'entity': 'light.uterum_fotogenlampa', 'mute': 'input_boolean.monitor_light_uterum_fotogenlampa'},
+              {'name': 'Trädgård', 'entity': 'switch.tradgard', 'mute': 'input_boolean.monitor_light_tradgard'},
+              {'name': 'Trädäck', 'entity': 'switch.shellyoutdoorsg3_e4b063f8f840', 'mute': 'input_boolean.monitor_light_shellyoutdoorsg3_e4b063f8f840'},
+              {'name': 'Friggebod fönster', 'entity': 'switch.friggebod_fonster', 'mute': 'input_boolean.monitor_light_friggebod_fonster'},
+              {'name': 'Friggebod ute', 'entity': 'light.friggebod_ute_2', 'mute': 'input_boolean.monitor_light_friggebod_ute_2'},
+              {'name': 'Spabad Vänster', 'entity': 'light.spabad_v', 'mute': 'input_boolean.monitor_light_spabad'},
+              {'name': 'Spabad Mitten', 'entity': 'light.spabad_m', 'mute': 'input_boolean.monitor_light_spabad'},
+              {'name': 'Spabad Höger', 'entity': 'light.spabad_h', 'mute': 'input_boolean.monitor_light_spabad'},
+              {'name': 'Friggebod fasad', 'entity': 'light.friggebod_fasad', 'mute': 'input_boolean.monitor_light_fasad'},
+              {'name': 'Förråd fasad', 'entity': 'light.forrad_fasad', 'mute': 'input_boolean.monitor_light_fasad'},
+              {'name': 'Tvättstuga fasad', 'entity': 'light.tvattstugan_fasad', 'mute': 'input_boolean.monitor_light_fasad'},
+              {'name': 'Huvudentré', 'entity': 'light.huvudentre2', 'mute': 'input_boolean.monitor_light_fasad'},
+              {'name': 'Jul Kök ljusstake', 'entity': 'light.kok_stora_fonstret_ljusstake', 'mute': 'input_boolean.monitor_light_jul_kok_ljusstake'},
+              {'name': 'Jul Hall jullampa', 'entity': 'light.hall_jullampa', 'mute': 'input_boolean.monitor_light_jul_hall_jullampa'},
+              {'name': 'Jul Vardagsrum ljusstake', 'entity': 'light.vardagsrum_fonster_ljusstake_2', 'mute': 'input_boolean.monitor_light_jul_vardagsrum_ljusstake'},
+              {'name': 'Jul Vardagsrum gran', 'entity': 'light.vardagsrum_gran', 'mute': 'input_boolean.monitor_light_jul_vardagsrum_gran'},
+              {'name': 'Jul Uterum stjärnor', 'entity': 'light.uterum_julstjarnor', 'mute': 'input_boolean.monitor_light_jul_uterum_stjarnor'}
+            ] %}
             {% set issues = namespace(items=[]) %}
-            {% set controlled = expand('light.dagbelysning', 'light.dagbelysning_jul', 'light.kok_underskap_bank', 'light.kok_underskap_diskbank', 'light.kok_vitrinskap', 'light.fonster_spott', 'switch.tradgard', 'switch.shellyoutdoorsg3_e4b063f8f840', 'switch.friggebod_fonster', 'light.friggebod_ute_2', 'light.uterum_led', 'light.uterum_fotogenlampa', 'light.spabad_v', 'light.spabad_m', 'light.spabad_h', 'light.friggebod_fasad', 'light.forrad_fasad', 'light.tvattstugan_fasad', 'light.huvudentre2', 'light.hall_tak') %}
-            {% for entity in controlled %}{% if entity.state in ['unknown', 'unavailable'] %}{% set issues.items = issues.items + ['Fel: ' ~ entity.name ~ ' (' ~ entity.entity_id ~ ': ' ~ entity.state ~ ')'] %}{% endif %}{% endfor %}
+            {% for item in controlled %}
+              {% if not is_state(item.mute, 'off') %}
+                {% set s = states[item.entity] %}
+                {% if s is none or s.state in ['unknown', 'unavailable'] %}
+                  {% set issues.items = issues.items + ['Fel: ' ~ item.name ~ ' (' ~ item.entity ~ ': ' ~ (s.state if s is not none else 'saknas') ~ ')'] %}
+                {% endif %}
+              {% endif %}
+            {% endfor %}
             {% for check in checks %}
-              {% if states(check.entity) in ['unknown', 'unavailable'] %}{% set issues.items = issues.items + ['Fel: ' ~ check.name ~ ' diagnostik ' ~ states(check.entity)] %}
-              {% else %}{% set reality = state_attr(check.entity, 'reality_status') | string %}{% if 'Avvikelse:' in reality %}{% set issues.items = issues.items + ['Varning: ' ~ check.name ~ ': ' ~ reality] %}{% endif %}{% endif %}
+              {% if states(check.entity) in ['unknown', 'unavailable'] %}
+                {% set issues.items = issues.items + ['Fel: ' ~ check.name ~ ' diagnostik ' ~ states(check.entity)] %}
+              {% else %}
+                {% set reality = state_attr(check.entity, 'reality_status') | string %}
+                {% if 'Avvikelse:' in reality %}{% set issues.items = issues.items + ['Varning: ' ~ check.name ~ ': ' ~ reality] %}{% endif %}
+              {% endif %}
             {% endfor %}
             {{ issues.items | join('\n') if issues.items else 'Inga' }}
-          unavailable_controlled_entities: >-
-            {% set controlled = expand('light.dagbelysning', 'light.dagbelysning_jul', 'light.kok_underskap_bank', 'light.kok_underskap_diskbank', 'light.kok_vitrinskap', 'light.fonster_spott', 'switch.tradgard', 'switch.shellyoutdoorsg3_e4b063f8f840', 'switch.friggebod_fonster', 'light.friggebod_ute_2', 'light.uterum_led', 'light.uterum_fotogenlampa', 'light.spabad_v', 'light.spabad_m', 'light.spabad_h', 'light.friggebod_fasad', 'light.forrad_fasad', 'light.tvattstugan_fasad', 'light.huvudentre2', 'light.hall_tak') %}
-            {% set unavailable = controlled | selectattr('state', 'in', ['unknown', 'unavailable']) | map(attribute='entity_id') | list %}
-            {{ unavailable | join(', ') if unavailable else 'Inga' }}
+          muted_lights: >-
+            {% set controlled = [
+              {'name': 'Kök underskåp bänk', 'mute': 'input_boolean.monitor_light_kok_underskap_bank'},
+              {'name': 'Kök underskåp diskbänk', 'mute': 'input_boolean.monitor_light_kok_underskap_diskbank'},
+              {'name': 'Kök vitrinskåp', 'mute': 'input_boolean.monitor_light_kok_vitrinskap'},
+              {'name': 'Kök stora fönstret', 'mute': 'input_boolean.monitor_light_kok_stora_fonstret'},
+              {'name': 'Kök lilla fönstret', 'mute': 'input_boolean.monitor_light_kok_lilla_fonstret'},
+              {'name': 'Hall tak', 'mute': 'input_boolean.monitor_light_hall_tak'},
+              {'name': 'Hall byrå', 'mute': 'input_boolean.monitor_light_hall_byra'},
+              {'name': 'Hall skåp', 'mute': 'input_boolean.monitor_light_hall_skap'},
+              {'name': 'Badrum fönsterspott', 'mute': 'input_boolean.monitor_light_fonster_spott'},
+              {'name': 'Vardagsrum fönster', 'mute': 'input_boolean.monitor_light_vardagsrum_fonster'},
+              {'name': 'Vardagsrum skänk', 'mute': 'input_boolean.monitor_light_vardagsrum_skank'},
+              {'name': 'Vardagsrum vagn', 'mute': 'input_boolean.monitor_light_vardagsrum_vagn'},
+              {'name': 'Vardagsrum vitrinskåp', 'mute': 'input_boolean.monitor_light_vardagsrum_vitrinskap2'},
+              {'name': 'Sovrum fönster', 'mute': 'input_boolean.monitor_light_sovrum_fonster'},
+              {'name': 'Sovrum sängbord', 'mute': 'input_boolean.monitor_light_sovrum_sangbord'},
+              {'name': 'Louise fönster', 'mute': 'input_boolean.monitor_light_louise_fonster'},
+              {'name': 'Louise golvlampa', 'mute': 'input_boolean.monitor_light_louise_golvlampa'},
+              {'name': 'Louise skrivbord', 'mute': 'input_boolean.monitor_light_louise_skrivbord'},
+              {'name': 'Andreas fönster', 'mute': 'input_boolean.monitor_light_andreas_fonster'},
+              {'name': 'Uterum LED', 'mute': 'input_boolean.monitor_light_uterum_led'},
+              {'name': 'Uterum fönster', 'mute': 'input_boolean.monitor_light_uterum_fonster'},
+              {'name': 'Uterum fotogenlampa', 'mute': 'input_boolean.monitor_light_uterum_fotogenlampa'},
+              {'name': 'Trädgård', 'mute': 'input_boolean.monitor_light_tradgard'},
+              {'name': 'Trädäck', 'mute': 'input_boolean.monitor_light_shellyoutdoorsg3_e4b063f8f840'},
+              {'name': 'Friggebod fönster', 'mute': 'input_boolean.monitor_light_friggebod_fonster'},
+              {'name': 'Friggebod ute', 'mute': 'input_boolean.monitor_light_friggebod_ute_2'},
+              {'name': 'Spabad', 'mute': 'input_boolean.monitor_light_spabad'},
+              {'name': 'Fasad', 'mute': 'input_boolean.monitor_light_fasad'},
+              {'name': 'Jul Kök ljusstake', 'mute': 'input_boolean.monitor_light_jul_kok_ljusstake'},
+              {'name': 'Jul Hall jullampa', 'mute': 'input_boolean.monitor_light_jul_hall_jullampa'},
+              {'name': 'Jul Vardagsrum ljusstake', 'mute': 'input_boolean.monitor_light_jul_vardagsrum_ljusstake'},
+              {'name': 'Jul Vardagsrum gran', 'mute': 'input_boolean.monitor_light_jul_vardagsrum_gran'},
+              {'name': 'Jul Uterum stjärnor', 'mute': 'input_boolean.monitor_light_jul_uterum_stjarnor'}
+            ] %}
+            {% set muted = namespace(items=[]) %}
+            {% for item in controlled %}
+              {% if is_state(item.mute, 'off') %}
+                {% set muted.items = muted.items + [item.name] %}
+              {% endif %}
+            {% endfor %}
+            {{ muted.items | unique | join(', ') if muted.items else 'Inga' }}
           checked_at: "{{ now().isoformat() }}"
 
       # -----------------

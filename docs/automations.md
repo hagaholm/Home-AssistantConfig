@@ -102,13 +102,13 @@ Don't extract logic that's only used in one file — inline templates are fine f
 
 ## 8) Diagnostics, Muting & Automation Drift Standards
 
-### Adding a new monitored sensor or hardware node
-When adding a new critical physical sensor or node:
+### Adding a new monitored sensor, lamp, or hardware node
+When adding a new critical physical sensor, light fixture, or node:
 1. Define a corresponding mute boolean in `packages/system/diagnostic_controls.yaml`:
-   - Pattern: `input_boolean.monitor_sensor_<name>` or `input_boolean.monitor_node_<name>` (Default: `initial: on`).
-2. Add the sensor/node entry with its `'mute'` key to the monitored lists in `packages/system/diagnostics.yaml`:
-   - `diagnostics_sensor_freshness` (for temp/humidity/lux sensors)
-   - `diagnostics_network_health` (for network nodes/devices)
+   - Pattern: `input_boolean.monitor_sensor_<name>`, `input_boolean.monitor_light_<name>`, or `input_boolean.monitor_node_<name>` (Default: `initial: on`).
+2. Add the entity entry with its `'mute'` key to the monitored lists:
+   - `packages/system/diagnostics.yaml`: `diagnostics_sensor_freshness` (temp/humidity/lux) and `diagnostics_network_health` (network nodes/devices).
+   - `packages/lights/debug.yaml`: `diagnostics_lights_health` (monitored indoor/outdoor/seasonal lights).
 3. Expose the switch in `ui-debug.yaml` under **Övervakningskontroll (Mute)** and in the local subsystem dashboard's Tab 5 (Diagnostik & Varför).
 
 ### Normal Mode vs Automation Drift

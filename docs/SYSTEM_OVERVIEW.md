@@ -293,11 +293,12 @@ It includes:
 - **Version & system sensors**: installed vs latest HA version, uptime, and update notifications.
 - **Diagnostics & Reason engines**:
   - `sensor.diagnostics_system_health` – aggregated health state across all subsystems.
+  - `sensor.diagnostics_lights_health` – tracks availability and reality alignment of monitored lights.
   - `sensor.diagnostics_sensor_freshness` & `sensor.diagnostics_sensors_health` – tracks stale temperature/humidity/lux sensors (>60 min age).
   - `sensor.diagnostics_network_health` – tracks camera and node availability.
   - `sensor.diagnostics_automation_drift` – verifies all automations match their expected operating state (detects accidentally disabled automations or rogue test scripts).
 - **Per-Device Muting / Control**:
-  - `input_boolean.monitor_sensor_*` and `input_boolean.monitor_node_*` in `packages/system/diagnostic_controls.yaml` allow muting warnings for individual broken/offline devices without breaking the global system health status.
+  - `input_boolean.monitor_sensor_*`, `input_boolean.monitor_light_*`, and `input_boolean.monitor_node_*` in `packages/system/diagnostic_controls.yaml` allow muting warnings for individual broken, seasonal, or unplugged lamps/devices without breaking the global system health status.
 
 Logging is configured under `logging/`:
 

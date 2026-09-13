@@ -865,6 +865,10 @@ views:
           **Tystade hårdvarunoder just nu:**
 
           {{ state_attr('sensor.diagnostics_network_health', 'muted_devices') or 'Inga' }}
+
+          **Tystade lampor just nu:**
+
+          {{ state_attr('sensor.diagnostics_lights_health', 'muted_lights') or 'Inga' }}
       - type: entities
         title: 🌡️ Sensorövervakning (Givare)
         show_header_toggle: false
@@ -921,3 +925,79 @@ views:
             name: Raspberry Pi Flightradar24
           - entity: input_boolean.monitor_esphome_nodes
             name: ESPHome Noder
+      - type: entities
+        title: 💡 Belysningsövervakning (Inomhus)
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - entity: input_boolean.monitor_light_kok_underskap_bank
+            name: Kök underskåp bänk
+          - entity: input_boolean.monitor_light_kok_underskap_diskbank
+            name: Kök underskåp diskbänk
+          - entity: input_boolean.monitor_light_kok_vitrinskap
+            name: Kök vitrinskåp
+          - entity: input_boolean.monitor_light_kok_stora_fonstret
+            name: Kök stora fönstret
+          - entity: input_boolean.monitor_light_kok_lilla_fonstret
+            name: Kök lilla fönstret
+          - entity: input_boolean.monitor_light_hall_tak
+            name: Hall tak
+          - entity: input_boolean.monitor_light_hall_byra
+            name: Hall byrå
+          - entity: input_boolean.monitor_light_hall_skap
+            name: Hall skåp
+          - entity: input_boolean.monitor_light_fonster_spott
+            name: Badrum fönsterspott
+          - entity: input_boolean.monitor_light_vardagsrum_fonster
+            name: Vardagsrum fönster
+          - entity: input_boolean.monitor_light_vardagsrum_skank
+            name: Vardagsrum skänk
+          - entity: input_boolean.monitor_light_vardagsrum_vagn
+            name: Vardagsrum vagn
+          - entity: input_boolean.monitor_light_vardagsrum_vitrinskap2
+            name: Vardagsrum vitrinskåp
+          - entity: input_boolean.monitor_light_sovrum_fonster
+            name: Sovrum fönster
+          - entity: input_boolean.monitor_light_sovrum_sangbord
+            name: Sovrum sängbord
+          - entity: input_boolean.monitor_light_louise_fonster
+            name: Louise fönster
+          - entity: input_boolean.monitor_light_louise_golvlampa
+            name: Louise golvlampa
+          - entity: input_boolean.monitor_light_louise_skrivbord
+            name: Louise skrivbord
+          - entity: input_boolean.monitor_light_andreas_fonster
+            name: Andreas fönster
+      - type: entities
+        title: 🌳 Belysningsövervakning (Utomhus & Jul)
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - entity: input_boolean.monitor_light_uterum_led
+            name: Uterum LED
+          - entity: input_boolean.monitor_light_uterum_fonster
+            name: Uterum fönster
+          - entity: input_boolean.monitor_light_uterum_fotogenlampa
+            name: Uterum fotogenlampa
+          - entity: input_boolean.monitor_light_tradgard
+            name: Trädgård
+          - entity: input_boolean.monitor_light_shellyoutdoorsg3_e4b063f8f840
+            name: Trädäck
+          - entity: input_boolean.monitor_light_friggebod_fonster
+            name: Friggebod fönster
+          - entity: input_boolean.monitor_light_friggebod_ute_2
+            name: Friggebod ute
+          - entity: input_boolean.monitor_light_spabad
+            name: Spabad
+          - entity: input_boolean.monitor_light_fasad
+            name: Fasad
+          - entity: input_boolean.monitor_light_jul_kok_ljusstake
+            name: Jul Kök ljusstake
+          - entity: input_boolean.monitor_light_jul_hall_jullampa
+            name: Jul Hall jullampa
+          - entity: input_boolean.monitor_light_jul_vardagsrum_ljusstake
+            name: Jul Vardagsrum ljusstake
+          - entity: input_boolean.monitor_light_jul_vardagsrum_gran
+            name: Jul Vardagsrum gran
+          - entity: input_boolean.monitor_light_jul_uterum_stjarnor
+            name: Jul Uterum julstjärnor

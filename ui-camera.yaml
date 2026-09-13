@@ -21,6 +21,28 @@ views:
     badges: []
     cards:
       - type: heading
+        heading: 🩺 Status & Diagnostik (Tryck för analys)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: sensor.diagnostics_frigate_security
+            name: Säkerhetsstatus
+            icon: mdi:shield-check
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-camera/diagnostik
+          - type: tile
+            entity: sensor.diagnostics_intruder_alarm
+            name: Inbrottslarm
+            icon: mdi:bell-ring-outline
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-camera/diagnostik
+
+      - type: heading
         heading: 📹 Live Översikt
 
       - type: grid

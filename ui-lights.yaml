@@ -22,6 +22,28 @@ views:
     badges: []
     cards:
       - type: heading
+        heading: 🩺 Status & Diagnostik (Tryck för analys)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: sensor.diagnostics_lights_health
+            name: Belysningshälsa
+            icon: mdi:lightbulb-check-outline
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-lights/lights-debug
+          - type: tile
+            entity: sensor.lights_debug_inside
+            name: Innebelysning Läge
+            icon: mdi:theme-light-dark
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-lights/lights-debug
+
+      - type: heading
         heading: 💡 Snabbval & Scener
 
       - type: grid

@@ -21,6 +21,28 @@ views:
     badges: []
     cards:
       - type: heading
+        heading: 🩺 Status & Diagnostik (Tryck för analys)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: sensor.diagnostics_climate_health
+            name: Klimathälsa
+            icon: mdi:home-thermometer-outline
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-climate/diagnostik
+          - type: tile
+            entity: sensor.diagnostics_ventilation
+            name: Ventilationshälsa
+            icon: mdi:fan
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-climate/diagnostik
+
+      - type: heading
         heading: 🌬️ Ventilation & FTX
 
       - type: grid

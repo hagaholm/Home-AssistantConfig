@@ -18,43 +18,167 @@ views:
     icon: mdi:monitor-dashboard
     badges: []
     cards:
+      - type: heading
+        heading: 🩺 Subsystem Hälsa (Tryck för detaljer)
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: sensor.diagnostics_lights_health
+            name: Belysning
+            icon: mdi:lightbulb-group-outline
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-debug/belysning
+          - type: tile
+            entity: sensor.diagnostics_climate_health
+            name: Klimat
+            icon: mdi:home-thermometer-outline
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-debug/klimat
+          - type: tile
+            entity: sensor.diagnostics_ventilation
+            name: Ventilation
+            icon: mdi:fan
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-debug/ventilation
+          - type: tile
+            entity: sensor.diagnostics_frigate_security
+            name: Kameror & Säkerhet
+            icon: mdi:cctv
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-debug/sakerhet
+          - type: tile
+            entity: sensor.diagnostics_network_health
+            name: Nätverk & Noder
+            icon: mdi:lan
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-debug/natverk
+          - type: tile
+            entity: sensor.diagnostics_sensor_freshness
+            name: Givarfärskhet
+            icon: mdi:access-point
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-debug/sensorer
+          - type: tile
+            entity: sensor.diagnostics_automation_drift
+            name: Automationsdrift
+            icon: mdi:robot-confused-outline
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-debug/automationer-drift
+          - type: tile
+            entity: sensor.diagnostics_presence
+            name: Närvaro & Läge
+            icon: mdi:home-account
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-debug/narvaro
+
+      - type: heading
+        heading: 🚨 Aktiva problem & Avvikelser
+
       - type: markdown
-        title: Systemstatus
+        title: Detaljerad Problemstatus per Område
         content: >-
-          **Läge:** {{ states('sensor.diagnostics_system_health') }}
+          {% set issues_found = namespace(count=0) %}
 
-          **Varför:** {{ state_attr('sensor.diagnostics_system_health', 'reason') }}
+          {% if not is_state('sensor.diagnostics_lights_health', 'OK') %}
+            {% set issues_found.count = issues_found.count + 1 %}
+            ### 💡 Belysning: {{ states('sensor.diagnostics_lights_health') }}
+            {{ state_attr('sensor.diagnostics_lights_health', 'active_issues') or state_attr('sensor.diagnostics_lights_health', 'reason') }}
 
-          **Aktiva delsystemproblem:**
+            👉 [Öppna Belysningsöversikt](/lovelace-debug/belysning) | [Belysning Varför-analys](/lovelace-debug/belysning-varfor)
 
-          {{ state_attr('sensor.diagnostics_system_health', 'active_issues') }}
+          {% endif %}
 
-          **Aktiva avläsningslarm:** {{ state_attr('sensor.diagnostics_system_health', 'active_reading_alarms') or 'Inga' }}
+          {% if not is_state('sensor.diagnostics_climate_health', 'OK') %}
+            {% set issues_found.count = issues_found.count + 1 %}
+            ### 🌡️ Klimat: {{ states('sensor.diagnostics_climate_health') }}
+            {{ state_attr('sensor.diagnostics_climate_health', 'active_issues') or state_attr('sensor.diagnostics_climate_health', 'reason') }}
 
-          **Automationsdrift:** {{ states('sensor.diagnostics_automation_drift') }}
-      - type: markdown
-        title: Sensorer utan färsk data
-        content: >-
-          **Status:** {{ states('sensor.diagnostics_sensor_freshness') }}
+            👉 [Öppna Klimatöversikt](/lovelace-debug/klimat) | [Klimat Varför-analys](/lovelace-debug/klimat-ventilation-varfor)
 
-          **Varför:** {{ state_attr('sensor.diagnostics_sensor_freshness', 'reason') }}
+          {% endif %}
 
-          **Berörda givare:** {{ state_attr('sensor.diagnostics_sensor_freshness', 'stale_sensors') }}
+          {% if not is_state('sensor.diagnostics_ventilation', 'OK') %}
+            {% set issues_found.count = issues_found.count + 1 %}
+            ### 🌬️ Ventilation: {{ states('sensor.diagnostics_ventilation') }}
+            **Orsak:** {{ state_attr('sensor.diagnostics_ventilation', 'reason') }}
 
-          **Tystade givare:** {{ state_attr('sensor.diagnostics_sensor_freshness', 'muted_sensors') or 'Inga' }}
+            👉 [Öppna Ventilation](/lovelace-debug/ventilation)
 
-          En varning visas när en övervakad givare saknar data eller inte har uppdaterats på 60 minuter. Orsaken kan vara batteri, kontakt, gateway eller integration.
-      - type: entities
-        title: Aktiva system
-        entities:
-          - sensor.diagnostics_presence
-          - sensor.diagnostics_ventilation
-          - sensor.diagnostics_frigate_security
-          - sensor.diagnostics_system_health
-          - sensor.diagnostics_sensor_freshness
-          - sensor.diagnostics_sensors_health
-          - sensor.diagnostics_network_health
-          - sensor.diagnostics_automation_drift
+          {% endif %}
+
+          {% if not is_state('sensor.diagnostics_network_health', 'OK') %}
+            {% set issues_found.count = issues_found.count + 1 %}
+            ### 🌐 Nätverk & Infrastruktur: {{ states('sensor.diagnostics_network_health') }}
+            {{ state_attr('sensor.diagnostics_network_health', 'active_issues') }}
+
+            👉 [Öppna Nätverk & Hårdvara](/lovelace-debug/natverk)
+
+          {% endif %}
+
+          {% if not is_state('sensor.diagnostics_sensor_freshness', 'OK') %}
+            {% set issues_found.count = issues_found.count + 1 %}
+            ### 📡 Givare utan färsk data: {{ states('sensor.diagnostics_sensor_freshness') }}
+            **Givare:** {{ state_attr('sensor.diagnostics_sensor_freshness', 'stale_sensors') }}
+
+            👉 [Öppna Givardiagnostik](/lovelace-debug/sensorer) | [Muta givare i Mute Center](/lovelace-debug/overvakningskontroll)
+
+          {% endif %}
+
+          {% if 'Avvikelse' in states('sensor.diagnostics_automation_drift') %}
+            {% set issues_found.count = issues_found.count + 1 %}
+            ### 🤖 Automationsavvikelser: {{ states('sensor.diagnostics_automation_drift') }}
+            **Oväntat avstängda automationer:**
+            {{ state_attr('sensor.diagnostics_automation_drift', 'unexpectedly_off') or 'Inga' }}
+
+            👉 [Öppna Automationsdrift](/lovelace-debug/automationer-drift)
+
+          {% endif %}
+
+          {% if not is_state('sensor.diagnostics_frigate_security', 'OK') and states('sensor.diagnostics_frigate_security') not in ['unknown', 'unavailable', 'Hemma', 'Borta', 'Sover'] %}
+            {% set issues_found.count = issues_found.count + 1 %}
+            ### 📹 Säkerhet & Kameror: {{ states('sensor.diagnostics_frigate_security') }}
+            {{ state_attr('sensor.diagnostics_frigate_security', 'reason') }}
+
+            👉 [Öppna Säkerhetsdiagnostik](/lovelace-debug/sakerhet)
+
+          {% endif %}
+
+          {% if issues_found.count == 0 %}
+            ✅ **Alla delsystem rapporterar normal drift!** Inga aktiva problem eller avvikelser har identifierats.
+          {% endif %}
+
+      - type: heading
+        heading: ⚙️ Snabbgenvägar
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: input_boolean.monitor_automation_drift
+            name: Övervakningskontroll (Mute Center)
+            icon: mdi:bell-cancel-outline
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-debug/overvakningskontroll
+          - type: tile
+            entity: sensor.diagnostics_system_health
+            name: Systemhälsa & Versioner
+            icon: mdi:heart-pulse
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-debug/systemhalsa
 
   - path: natverk
     title: Nätverk & infrastruktur

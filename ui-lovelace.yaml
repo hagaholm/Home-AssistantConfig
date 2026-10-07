@@ -357,6 +357,8 @@ views:
           - sensor.friggebod_luftfuktighet
           - sensor.forrad_temperature
           - sensor.forrad_luftfuktighet
+          - sensor.garage_temperature
+          - sensor.garage_humidity
           - sensor.pa_vinden
           - sensor.husvagn_temperature
           - sensor.husvagn_humidity
@@ -999,6 +1001,14 @@ views:
           - sensor.apple_tv
           - switch.forrad_elvarme          
         title: Förråd
+        show_header_toggle: false
+        state_color: true
+      - type: entities
+        entities:
+          - sensor.garage_temperature
+          - sensor.garage_humidity
+          - sensor.garage_mogelrisk
+        title: Garage
         show_header_toggle: false
         state_color: true
       - type: entities

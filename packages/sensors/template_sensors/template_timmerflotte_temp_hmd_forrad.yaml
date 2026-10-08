@@ -28,42 +28,48 @@ template:
         device_class: temperature
         state_class: measurement
         state: >
-          {% set primary = states('sensor.timmerflotte_temp_hmd_sensor_temperatur') %}
-          {% set backup = states('sensor.forrad_backup_temperature') %}
-          {% set primary_last = as_timestamp(states.sensor.timmerflotte_temp_hmd_sensor_temperatur.last_changed) %}
+          {% set primary = states('sensor.timmerflotte_temp_hmd_sensor_temperatur') | float(none) %}
+          {% set backup = states('sensor.forrad_backup_temperature') | float(none) %}
+          {% set primary_sensor = states.sensor.timmerflotte_temp_hmd_sensor_temperatur %}
+          {% set primary_last = primary_sensor.last_changed if primary_sensor is not none else none %}
           {% set now_ts = as_timestamp(now()) %}
+          {% set primary_last_ts = as_timestamp(primary_last, default=0) %}
 
-          {% if primary not in ['unknown','unavailable',''] and primary_last is not none and (now_ts - primary_last) < 1800 %}
-            {{ primary | float }}
-          {% elif backup not in ['unknown','unavailable',''] %}
-            {{ backup | float }}
+          {% if primary is not none and primary_last is not none and (now_ts - primary_last_ts) < 1800 %}
+            {{ primary }}
+          {% elif backup is not none %}
+            {{ backup }}
           {% else %}
-            unknown
+            0
           {% endif %}
         availability: >
-          {{ (states('sensor.timmerflotte_temp_hmd_sensor_temperatur') not in ['unknown','unavailable',''])
-             or (states('sensor.forrad_backup_temperature') not in ['unknown','unavailable','']) }}
+          {{ is_number(states('sensor.timmerflotte_temp_hmd_sensor_temperatur'))
+             or is_number(states('sensor.forrad_backup_temperature')) }}
         attributes:
           source_sensor: >
-            {% set primary = states('sensor.timmerflotte_temp_hmd_sensor_temperatur') %}
-            {% set primary_last = as_timestamp(states.sensor.timmerflotte_temp_hmd_sensor_temperatur.last_changed) %}
+            {% set primary = states('sensor.timmerflotte_temp_hmd_sensor_temperatur') | float(none) %}
+            {% set primary_sensor = states.sensor.timmerflotte_temp_hmd_sensor_temperatur %}
+            {% set primary_last = primary_sensor.last_changed if primary_sensor is not none else none %}
             {% set now_ts = as_timestamp(now()) %}
 
-            {% if primary not in ['unknown','unavailable',''] and primary_last is not none and (now_ts - primary_last) < 1800 %}
+            {% if primary is not none and primary_last is not none and (now_ts - as_timestamp(primary_last, default=0)) < 1800 %}
               sensor.timmerflotte_temp_hmd_sensor_temperatur
-            {% elif states('sensor.forrad_backup_temperature') not in ['unknown','unavailable',''] %}
+            {% elif is_number(states('sensor.forrad_backup_temperature')) %}
               sensor.forrad_backup_temperature
             {% else %}
               unknown
             {% endif %}
           used_at: >
-            {% set primary = states('sensor.timmerflotte_temp_hmd_sensor_temperatur') %}
-            {% set primary_last = states.sensor.timmerflotte_temp_hmd_sensor_temperatur.last_changed %}
-            {% set backup_last = states.sensor.forrad_backup_temperature.last_changed %}
+            {% set primary = states('sensor.timmerflotte_temp_hmd_sensor_temperatur') | float(none) %}
+            {% set backup = states('sensor.forrad_backup_temperature') | float(none) %}
+            {% set primary_sensor = states.sensor.timmerflotte_temp_hmd_sensor_temperatur %}
+            {% set backup_sensor = states.sensor.forrad_backup_temperature %}
+            {% set primary_last = primary_sensor.last_changed if primary_sensor is not none else none %}
+            {% set backup_last = backup_sensor.last_changed if backup_sensor is not none else none %}
 
-            {% if primary not in ['unknown','unavailable',''] and primary_last is not none and (as_timestamp(now()) - as_timestamp(primary_last)) < 1800 %}
+            {% if primary is not none and primary_last is not none and (as_timestamp(now()) - as_timestamp(primary_last, default=0)) < 1800 %}
               {{ primary_last.isoformat() }}
-            {% elif states('sensor.forrad_backup_temperature') not in ['unknown','unavailable',''] and backup_last is not none %}
+            {% elif backup is not none and backup_last is not none %}
               {{ backup_last.isoformat() }}
             {% else %}
               unknown

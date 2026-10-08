@@ -92,12 +92,8 @@ automation:
           state: 'off'
         - condition: template
           value_template: >
-            {% set lu = states.sensor.frys_temperature.last_updated if states.sensor.frys_temperature is defined and states.sensor.frys_temperature.last_updated is not none and states.sensor.frys_temperature.last_updated != '' else none %}
-            {% if lu is none %}
-              0
-            {% else %}
-              {{ (as_timestamp(now()) - as_timestamp(lu)) > 7200 }}
-            {% endif %}
+            {% set sensor = states.sensor.frys_temperature %}
+            {{ sensor is none or (as_timestamp(now()) - as_timestamp(sensor.last_updated, default=0)) > 7200 }}
 
     action:
       - service: homeassistant.turn_on
@@ -121,12 +117,8 @@ automation:
           state: 'off'
         - condition: template
           value_template: >
-            {% set lu = states.sensor.kyl_temperature.last_updated if states.sensor.kyl_temperature is defined and states.sensor.kyl_temperature.last_updated is not none and states.sensor.kyl_temperature.last_updated != '' else none %}
-            {% if lu is none %}
-              0
-            {% else %}
-              {{ (as_timestamp(now()) - as_timestamp(lu)) > 7200 }}
-            {% endif %}
+            {% set sensor = states.sensor.kyl_temperature %}
+            {{ sensor is none or (as_timestamp(now()) - as_timestamp(sensor.last_updated, default=0)) > 7200 }}
 
     action:
       - service: homeassistant.turn_on
@@ -364,12 +356,8 @@ automation:
           state: 'off'
         - condition: template
           value_template: >
-            {% set lu = states.sensor.forrad_temperature.last_updated if states.sensor.forrad_temperature is defined and states.sensor.forrad_temperature.last_updated is not none and states.sensor.forrad_temperature.last_updated != '' else none %}
-            {% if lu is none %}
-              0
-            {% else %}
-              {{ (as_timestamp(now()) - as_timestamp(lu)) > 7200 }}
-            {% endif %}
+            {% set sensor = states.sensor.forrad_temperature %}
+            {{ sensor is none or (as_timestamp(now()) - as_timestamp(sensor.last_updated, default=0)) > 7200 }}
 
     action:
       - service: homeassistant.turn_on

@@ -10,28 +10,30 @@
 template:
   - sensor:
       - name: "Frys temp senast uppdaterad"
-        availability: "{{ states.sensor.frys_temperature is defined and states.sensor.frys_temperature.last_updated is not none and states.sensor.frys_temperature.last_updated != '' }}"
-        state: "{{ states.sensor.frys_temperature.last_updated.isoformat() if states.sensor.frys_temperature is defined and states.sensor.frys_temperature.last_updated is not none and states.sensor.frys_temperature.last_updated != '' else 'unknown' }}"
+        availability: "{{ states.sensor.frys_temperature is not none }}"
+        state: >-
+          {% set sensor = states.sensor.frys_temperature %}
+          {{ sensor.last_updated.isoformat() if sensor is not none else 'unknown' }}
         device_class: timestamp
         icon: >-
-          {% set lu = states.sensor.frys_temperature.last_updated if states.sensor.frys_temperature is defined and states.sensor.frys_temperature.last_updated is not none and states.sensor.frys_temperature.last_updated != '' else none %}
-          {% if lu is none %}
-            mdi:progress-check
-          {% elif (as_timestamp(now()) - as_timestamp(lu) > 100) %}
+          {% set sensor = states.sensor.frys_temperature %}
+          {% set lu = sensor.last_updated if sensor is not none else none %}
+          {% if lu is none or (as_timestamp(now()) - as_timestamp(lu, default=0) > 100) %}
             mdi:progress-alert
           {% else %}
             mdi:progress-check
           {% endif %}
 
       - name: "Kyl temp senast uppdaterad"
-        availability: "{{ states.sensor.kyl_temperature is defined and states.sensor.kyl_temperature.last_updated is not none and states.sensor.kyl_temperature.last_updated != '' }}"
-        state: "{{ states.sensor.kyl_temperature.last_updated.isoformat() if states.sensor.kyl_temperature is defined and states.sensor.kyl_temperature.last_updated is not none and states.sensor.kyl_temperature.last_updated != '' else 'unknown' }}"
+        availability: "{{ states.sensor.kyl_temperature is not none }}"
+        state: >-
+          {% set sensor = states.sensor.kyl_temperature %}
+          {{ sensor.last_updated.isoformat() if sensor is not none else 'unknown' }}
         device_class: timestamp
         icon: >-
-          {% set lu = states.sensor.kyl_temperature.last_updated if states.sensor.kyl_temperature is defined and states.sensor.kyl_temperature.last_updated is not none and states.sensor.kyl_temperature.last_updated != '' else none %}
-          {% if lu is none %}
-            mdi:progress-check
-          {% elif (as_timestamp(now()) - as_timestamp(lu) > 100) %}
+          {% set sensor = states.sensor.kyl_temperature %}
+          {% set lu = sensor.last_updated if sensor is not none else none %}
+          {% if lu is none or (as_timestamp(now()) - as_timestamp(lu, default=0) > 100) %}
             mdi:progress-alert
           {% else %}
             mdi:progress-check
@@ -67,14 +69,15 @@ template:
 
       # ... other sensors migrated similarly ...
       - name: "Aqara Multi Sensor 4 fukt senast uppdaterad"
-        availability: "{{ states.sensor.aqara_multi_sensor_4_humidity is defined and states.sensor.aqara_multi_sensor_4_humidity.last_updated is not none and states.sensor.aqara_multi_sensor_4_humidity.last_updated != '' }}"
-        state: "{{ states.sensor.aqara_multi_sensor_4_humidity.last_updated.isoformat() if states.sensor.aqara_multi_sensor_4_humidity is defined and states.sensor.aqara_multi_sensor_4_humidity.last_updated is not none and states.sensor.aqara_multi_sensor_4_humidity.last_updated != '' else 'unknown' }}"
+        availability: "{{ states.sensor.aqara_multi_sensor_4_humidity is not none }}"
+        state: >-
+          {% set sensor = states.sensor.aqara_multi_sensor_4_humidity %}
+          {{ sensor.last_updated.isoformat() if sensor is not none else 'unknown' }}
         device_class: timestamp
         icon: >-
-          {% set lu = states.sensor.aqara_multi_sensor_4_humidity.last_updated if states.sensor.aqara_multi_sensor_4_humidity is defined and states.sensor.aqara_multi_sensor_4_humidity.last_updated is not none and states.sensor.aqara_multi_sensor_4_humidity.last_updated != '' else none %}
-          {% if lu is none %}
-            mdi:progress-check
-          {% elif (as_timestamp(now()) - as_timestamp(lu) > 100) %}
+          {% set sensor = states.sensor.aqara_multi_sensor_4_humidity %}
+          {% set lu = sensor.last_updated if sensor is not none else none %}
+          {% if lu is none or (as_timestamp(now()) - as_timestamp(lu, default=0) > 100) %}
             mdi:progress-alert
           {% else %}
             mdi:progress-check

@@ -650,106 +650,60 @@ template:
       # -----------------
       - name: lights_debug_uterum
         unique_id: lights_debug_uterum
-        state: >-
-          {% set home_status = states('input_select.home_status') %}
-          {% set track_state = states('group.track_for_home_devices') %}
-          {% set lux = states('sensor.ljusstyrka') | float(none) %}
-          {% set lux_150 = states('input_number.ljusstyrka_150') | float(150) %}
-          {% set temp = states('sensor.uterum_temperatur') | float(none) %}
-          {% set is_time_12_2145 = (now().hour > 12 or (now().hour == 12 and now().minute >= 0)) and (now().hour < 21 or (now().hour == 21 and now().minute <= 45)) %}
-          {% set is_dark = lux is number and lux < lux_150 %}
-          {% set temp_ok = temp is number and temp > 18 %}
-          {% set temp_too_cold = temp is number and temp < 17 %}
-          {% if home_status == 'Sover' %}
-            Släckt
-          {% elif track_state != 'home' %}
-            Släckt
-          {% elif temp_too_cold %}
-            Släckt
-          {% elif is_time_12_2145 and is_dark and temp_ok %}
-            Tänd
-          {% else %}
-            {{ states('input_select.light_uterum') | trim }}
-          {% endif %}
+        state: "{{ states('input_select.light_uterum') | trim }}"
         attributes:
           current_option: "{{ states('input_select.light_uterum') | trim }}"
           reality_status: >-
             {% set selected = states('input_select.light_uterum') | trim %}
-            {% set on = expand('light.uterum_led', 'light.uterum_fotogenlampa') | selectattr('state', 'eq', 'on') | map(attribute='name') | list %}
-            {% if selected == 'Släckt' and on %}Avvikelse: {{ on | count }} lampa(or) är tänd(a)
-            {% elif selected != 'Släckt' and not on %}Avvikelse: läget {{ selected }} är valt men alla övervakade lampor är släckta
+            {% set room_lights_on = is_state('light.uterum_led', 'on') and is_state('light.uterum_fotogenlampa', 'on') %}
+            {% set window_on = is_state('light.uterum_fonster', 'on') %}
+            {% if room_lights_on and not window_on %}Avvikelse: uterumslamporna är tända utan fönsterlampan
+            {% elif selected == 'Släckt' and (room_lights_on or window_on) %}Avvikelse: Släckt är valt men en lampa är tänd
+            {% elif selected == 'Fönsterbelysning' and (room_lights_on or not window_on) %}Avvikelse: läget Fönsterbelysning stämmer inte med lamporna
+            {% elif selected == 'Tänd' and (not room_lights_on or not window_on) %}Avvikelse: läget Tänd stämmer inte med lamporna
             {% else %}Stämmer med valt läge{% endif %}
-          lights_on: "{{ expand('light.uterum_led', 'light.uterum_fotogenlampa') | selectattr('state', 'eq', 'on') | map(attribute='name') | list | join(', ') or 'Inga' }}"
+          lights_on: "{{ expand('light.uterum_led', 'light.uterum_fonster', 'light.uterum_fotogenlampa') | selectattr('state', 'eq', 'on') | map(attribute='name') | list | join(', ') or 'Inga' }}"
           home_status: "{{ states('input_select.home_status') | trim }}"
           track_state: "{{ states('group.track_for_home_devices') | trim }}"
           lux: "{{ states('sensor.ljusstyrka') }}"
           lux_150: "{{ states('input_number.ljusstyrka_150') }}"
+          lux_200: "{{ states('input_number.ljusstyrka_200') }}"
           temp: "{{ states('sensor.uterum_temperatur') }}"
-          is_time_12_2145: "{{ (now().hour > 12 or (now().hour == 12 and now().minute >= 0)) and (now().hour < 21 or (now().hour == 21 and now().minute <= 45)) }}"
-          is_dark: >-
+          room_lights_dark: >-
             {% set lux = states('sensor.ljusstyrka') | float(none) %}
             {% set lux_150 = states('input_number.ljusstyrka_150') | float(150) %}
             {{ lux is number and lux < lux_150 }}
-          temp_ok: >-
-            {% set temp = states('sensor.uterum_temperatur') | float(none) %}
-            {{ temp is number and temp > 18 }}
-          temp_too_cold: >-
-            {% set temp = states('sensor.uterum_temperatur') | float(none) %}
-            {{ temp is number and temp < 17 }}
+          window_dark: >-
+            {% set lux = states('sensor.ljusstyrka') | float(none) %}
+            {% set lux_200 = states('input_number.ljusstyrka_200') | float(200) %}
+            {{ lux is number and lux < lux_200 }}
           reason: >-
             {% set home_status = states('input_select.home_status') %}
-            {% set track_state = states('group.track_for_home_devices') %}
             {% set lux = states('sensor.ljusstyrka') | float(none) %}
-            {% set lux_150 = states('input_number.ljusstyrka_150') | float(150) %}
-            {% set temp = states('sensor.uterum_temperatur') | float(none) %}
-            {% set is_time_12_2145 = (now().hour > 12 or (now().hour == 12 and now().minute >= 0)) and (now().hour < 21 or (now().hour == 21 and now().minute <= 45)) %}
-            {% set is_dark = lux is number and lux < lux_150 %}
-            {% set temp_ok = temp is number and temp > 18 %}
-            {% set temp_too_cold = temp is number and temp < 17 %}
+            {% set lux_200 = states('input_number.ljusstyrka_200') | float(200) %}
+            {% from 'home_status.jinja' import borta_long_enough %}
+            {% from 'time_windows.jinja' import in_time_range %}
+            {% set away_long_enough = (borta_long_enough(60) | trim) == 'True' %}
+            {% set is_time_08_22 = (in_time_range(8, 0, 22, 0) | trim) == 'True' %}
             {% if home_status == 'Sover' %}
-              Sover => Släckt
-            {% elif track_state != 'home' %}
-              Ingen hemma (track!=home) => Släckt
-            {% elif temp_too_cold %}
-              För kallt (temp<17) => Släckt
-            {% elif is_time_12_2145 and is_dark and temp_ok %}
-              Tid 12-21:45 + mörkt + varmt => Tänd
+              Godnatt => Släckt
+            {% elif home_status == 'Borta' and not is_time_08_22 %}
+              Ingen hemma efter 22:00 => Släckt
+            {% elif home_status == 'Borta' and not away_long_enough %}
+              Väntar 60 sekunder efter hemstatus Borta
+            {% elif states('input_select.light_uterum') == 'Tänd' %}
+              De två andra lamporna är tända => behåll läget Tänd
+            {% elif lux is number and lux < lux_200 %}
+              Utomhusljus under {{ lux_200 }} lux => fönsterlampan tänds
+            {% elif lux is number and lux > lux_200 %}
+              Utomhusljus över {{ lux_200 }} lux => fönsterlampan släcks
+            {% elif lux is number %}
+              Ljusstyrkan är exakt vid gränsen {{ lux_200 }} lux => behåll nuvarande läge
             {% else %}
-              Behåll nuvarande
+              Ljussensorn saknar värde => behåll fönsterlampans läge
             {% endif %}
           why_not: >-
-            {% set desired = (states('sensor.lights_debug_uterum') | trim) %}
-            {% set home_status = states('input_select.home_status') %}
-            {% set track_state = states('group.track_for_home_devices') %}
-            {% set lux = states('sensor.ljusstyrka') | float(none) %}
-            {% set lux_150 = states('input_number.ljusstyrka_150') | float(150) %}
-            {% set temp = states('sensor.uterum_temperatur') | float(none) %}
-            {% set is_time_12_2145 = (now().hour > 12 or (now().hour == 12 and now().minute >= 0)) and (now().hour < 21 or (now().hour == 21 and now().minute <= 45)) %}
-            {% set is_dark = lux is number and lux < lux_150 %}
-            {% set temp_ok = temp is number and temp > 18 %}
-            {% set temp_too_cold = temp is number and temp < 17 %}
-            {% set can_turn_on = (home_status != 'Sover' and track_state == 'home' and (not temp_too_cold) and is_time_12_2145 and is_dark and temp_ok) %}
-
-            {% set lines = [
-              'Tänd: ' ~ ('VALD' if desired == 'Tänd' else ('Kräver hemma + 12-21:45 + mörkt + temp>18' ~ ('' if can_turn_on else ' (false)'))),
-              'Släckt: ' ~ ('VALD' if desired == 'Släckt' else 'Någon tänd-regel matchade'),
-            ] %}
-
-            {% if home_status == 'Sover' %}
-              {% set lines = lines + ['Blocker: Sover => Släckt'] %}
-            {% elif track_state != 'home' %}
-              {% set lines = lines + ['Blocker: Ingen hemma (track!=home) => Släckt'] %}
-            {% elif temp_too_cold %}
-              {% set lines = lines + ['Blocker: För kallt (temp<17) => Släckt'] %}
-            {% elif not is_time_12_2145 %}
-              {% set lines = lines + ['Blocker: Utanför tidsfönster 12-21:45'] %}
-            {% elif not is_dark %}
-              {% set lines = lines + ['Blocker: Inte mörkt (lux>=150)'] %}
-            {% elif not temp_ok %}
-              {% set lines = lines + ['Blocker: Inte varmt nog (temp<=18)'] %}
-            {% endif %}
-
-            {{ lines | join('\n') }}
+            Fönsterlampan styrs av utomhusljus (på under {{ states('input_number.ljusstyrka_200') }} lux), godnatt och frånvarotid 08:00-22:00. Temperaturstyrningen gäller bara de två andra uterumslamporna.
 
       # -----------------
       # SPABAD (light_outside)

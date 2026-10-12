@@ -19,7 +19,8 @@
 # - Ljussensor: sensor.ljusstyrka
 # - Hemspårning: group.track_for_home_devices
 # - Uterumsbelysning: light.uterum_led, light.uterum_fotogenlampa
-# - input_select.light_uterum (Släckt/Tänd)
+# - Fönsterbelysning: light.uterum_fonster (egen 200-luxgräns, ej temperaturstyrd)
+# - input_select.light_uterum (Släckt/Fönsterbelysning/Tänd)
 #
 # Säkerhet:
 # - IDs och alias bibehållna för bakåtkompatibilitet
@@ -62,12 +63,17 @@ automation:
 #
 #
 # LOGIK:
+# - Fönsterlampan tänds under 200 lux; när de andra lamporna är tända följer den läget "Tänd".
+# - Temperatur påverkar inte fönsterlampan.
+# - Vid hemstatus Borta följer fönsterlampan inomhuslogikens 60 sekunders fördröjning
+#   och är bara tillåten mellan 08:00 och 22:00.
+# - Godnatt släcker fönsterlampan direkt.
 # TÄND:
 # - Mellan 12:00-21:45
 # - När ljus <150 lux OCH temp >18°C OCH hemma
 #
 # SLÄCK:
-# - Temperatur <17°C (för kallt att sitta ute)
+# - Temperatur <17°C släcker de två andra uterumslamporna, inte fönsterlampan.
 # - När alla lämnar hemmet
 # - Sover: Släck när hemstatus blir 'Sover'
 #
@@ -99,6 +105,11 @@ automation:
         entity_id: input_select.home_status
 
       - platform: state
+        entity_id: input_select.home_status
+        to: 'Borta'
+        for: '00:01:00'
+
+      - platform: state
         entity_id: group.track_for_home_devices
 
       - platform: numeric_state
@@ -112,6 +123,26 @@ automation:
       - platform: numeric_state
         entity_id: sensor.ljusstyrka
         below: input_number.ljusstyrka_150
+
+      - platform: numeric_state
+        entity_id: sensor.ljusstyrka
+        above: input_number.ljusstyrka_200
+
+      - platform: numeric_state
+        entity_id: sensor.ljusstyrka
+        below: input_number.ljusstyrka_200
+
+      - platform: state
+        entity_id: input_number.ljusstyrka_150
+
+      - platform: state
+        entity_id: input_number.ljusstyrka_200
+
+      - platform: time
+        at: '08:00:00'
+
+      - platform: time
+        at: '22:00:00'
 
     action:
       - service: script.uterum_set_correct_mode
@@ -129,18 +160,18 @@ automation:
 # motsvarande belysningsskript.
 #
 # HÅRDVARA/ENTITETER:
-# - input_select.light_uterum (Tänd/Släckt)
+# - input_select.light_uterum (Släckt/Fönsterbelysning/Tänd)
 # - script.outdoor_room_light_on
 # - script.outdoor_room_light_off
 #
 # TRIGGRAR:
-# - input_select.light_uterum -> 'Tänd'
-# - input_select.light_uterum -> 'Släckt'
+# - Tänd: alla tre lampor
+# - Fönsterbelysning: endast fönsterlampan
+# - Släckt: alla lampor
 #
 # LOGIK:
 # När input_select.light_uterum ändras:
-# - Tänd -> Anropar script.outdoor_room_light_on
-# - Släckt -> Anropar script.outdoor_room_light_off
+# - Läget väljer både de två temperaturstyrda lamporna och fönsterlampan
 #
 # INTEGRATION:
 # - Kopplad till input_select.light_uterum
@@ -177,12 +208,70 @@ automation:
                 state: Tänd
             sequence:
               - service: script.outdoor_room_light_on
+              - service: script.uterum_window_light_on
+          - conditions:
+              - condition: state
+                entity_id: input_select.light_uterum
+                state: Fönsterbelysning
+            sequence:
+              - service: script.outdoor_room_light_off
+              - service: script.uterum_window_light_on
           - conditions:
               - condition: state
                 entity_id: input_select.light_uterum
                 state: Släckt
             sequence:
               - service: script.outdoor_room_light_off
+              - service: script.uterum_window_light_off
+        default: []
+
+  - alias: Uterumsbelysning synka läge med lamporna
+    id: 'uterum_light_mode_sync'
+    mode: restart
+    trigger:
+      - platform: state
+        entity_id:
+          - light.uterum_led
+          - light.uterum_fotogenlampa
+          - light.uterum_fonster
+        to: 'on'
+        for: '00:00:03'
+      - platform: state
+        entity_id:
+          - light.uterum_led
+          - light.uterum_fotogenlampa
+          - light.uterum_fonster
+        to: 'off'
+        for: '00:00:03'
+    action:
+      - variables:
+          room_lights_on: >-
+            {{ is_state('light.uterum_led', 'on') or is_state('light.uterum_fotogenlampa', 'on') }}
+          window_on: "{{ is_state('light.uterum_fonster', 'on') }}"
+          current_option: "{{ states('input_select.light_uterum') | trim }}"
+          actual_option: >-
+            {% if room_lights_on | bool %}
+              Tänd
+            {% elif window_on | bool %}
+              Fönsterbelysning
+            {% else %}
+              Släckt
+            {% endif %}
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: "{{ (actual_option | trim) != (current_option | trim) }}"
+            sequence:
+              - service: input_select.select_option
+                data:
+                  entity_id: input_select.light_uterum
+                  option: "{{ actual_option | trim }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ (actual_option | trim) == 'Tänd' }}"
+            sequence:
+              - service: script.outdoor_room_light_on
+              - service: script.uterum_window_light_on
         default: []
 
 ##############

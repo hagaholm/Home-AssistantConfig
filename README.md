@@ -100,7 +100,7 @@ Automated alerts for temperature thresholds in various zones.
 - `light_outside` - Spa/outdoor lighting (UI: "Spabad")
 - `facade_lights` - Facade lighting modes
 - `light_garden` - Garden lighting
-- `light_uterum` - Outdoor room lighting
+- `light_uterum` - Outdoor room lighting: `Släckt`, `Fönsterbelysning` (window lamp only), or `Tänd` (all three lamps). The window lamp uses a 200-lux threshold independent of temperature; when away, it follows the 60-second delay and 08:00-22:00 window used by indoor lighting, and goodnight turns it off.
 
 ### Switch-as-Light Entities
 14 lights defined as switch platforms (decorative/window lights)

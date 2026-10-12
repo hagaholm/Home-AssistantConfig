@@ -49,6 +49,7 @@ script:
         data:
           entity_id: input_select.home_status
           option: Sover
+      - service: script.uterum_goodnight_off
       - service: input_select.select_option
         data:
           entity_id: input_select.light_inside
@@ -86,6 +87,7 @@ script:
         data:
           entity_id: input_select.home_status
           option: Sover
+      - service: script.uterum_goodnight_off
       - service: input_select.select_option
         data:
           entity_id: input_select.light_inside
@@ -122,6 +124,7 @@ script:
         data:
           entity_id: input_select.home_status
           option: Sover
+      - service: script.uterum_goodnight_off
       - service: input_select.select_option
         data:
           entity_id: input_select.light_inside
@@ -159,6 +162,7 @@ script:
         data:
           entity_id: input_select.home_status
           option: Sover
+      - service: script.uterum_goodnight_off
       - service: input_select.select_option
         data:
           entity_id: input_select.light_inside
@@ -194,6 +198,7 @@ script:
         data:
           entity_id: input_select.home_status
           option: Sover
+      - service: script.uterum_goodnight_off
       - service: input_select.select_option
         data:
           entity_id: input_select.light_inside

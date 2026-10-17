@@ -275,6 +275,19 @@ views:
     badges: []
     cards:
       - type: heading
+        heading: Frigate Alerts vid Borta eller Sover
+
+      - type: entities
+        title: Alert-automationer
+        show_header_toggle: true
+        state_color: true
+        entities:
+          - entity: automation.rakna_frigate_alerts_nar_ingen_ar_hemma
+            name: Räkna Frigate Alerts
+          - entity: automation.nollstall_frigate_alerts_nar_ingen_ar_hemma
+            name: Nollställ Frigate-räknare
+
+      - type: heading
         heading: 👤 Person- & Rörelseautomationer
 
       - type: entities
@@ -350,6 +363,21 @@ views:
     icon: mdi:chart-timeline-variant-shimmer
     badges: []
     cards:
+      - type: heading
+        heading: Frigate Alerts vid Borta och Sover
+
+      - type: entities
+        title: Räknare & återställning
+        show_header_toggle: false
+        state_color: true
+        entities:
+          - entity: counter.frigate_alerts_nar_ingen_ar_hemma
+            name: Alerts när Borta
+          - entity: counter.frigate_alerts_sover
+            name: Alerts när Sover
+          - entity: input_button.nollstall_frigate_alerts_nar_ingen_ar_hemma
+            name: Nollställ båda räknarna
+
       - type: heading
         heading: 📊 AI Detektionsjämförelse (Frigate vs Reolink)
 

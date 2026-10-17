@@ -1,0 +1,38 @@
+automation:
+  - id: frigate_alerts_nar_ingen_ar_hemma
+    alias: Räkna Frigate Alerts när ingen är hemma
+    description: Räknar alerts direkt när Hemstatus är Sover, eller efter tre minuter om den fortfarande är Borta.
+    triggers:
+      - trigger: mqtt
+        topic: frigate/reviews
+        payload: alert
+        value_template: >-
+          {% set p = value_json %}
+          {% set after = p.get('after', {}) or {} %}
+          {% set before = p.get('before', {}) or {} %}
+          {{ 'alert' if after.get('severity') == 'alert' and (p.get('type') == 'new' or (p.get('type') == 'update' and before.get('severity') != 'alert')) else 'ignore' }}
+        id: frigate_alert
+    actions:
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: input_select.home_status
+                state: Sover
+            sequence:
+              - action: counter.increment
+                target:
+                  entity_id: counter.frigate_alerts_sover
+          - conditions:
+              - condition: state
+                entity_id: input_select.home_status
+                state: Borta
+            sequence:
+              - delay: "00:03:00"
+              - condition: state
+                entity_id: input_select.home_status
+                state: Borta
+              - action: counter.increment
+                target:
+                  entity_id: counter.frigate_alerts_nar_ingen_ar_hemma
+    mode: parallel
+    max: 5

@@ -2,6 +2,38 @@ title: Hagaholm
 views:
   - badges: []
     cards:
+      - type: conditional
+        conditions:
+          - condition: or
+            conditions:
+              - condition: numeric_state
+                entity: counter.frigate_alerts_nar_ingen_ar_hemma
+                above: 0
+              - condition: numeric_state
+                entity: counter.frigate_alerts_sover
+                above: 0
+        card:
+          type: grid
+          columns: 3
+          square: false
+          cards:
+            - type: tile
+              entity: counter.frigate_alerts_nar_ingen_ar_hemma
+              name: Borta
+            - type: tile
+              entity: counter.frigate_alerts_sover
+              name: Sover
+            - type: button
+              entity: input_button.nollstall_frigate_alerts_nar_ingen_ar_hemma
+              name: Nollställ
+              icon: mdi:restart
+              show_name: true
+              show_icon: true
+              tap_action:
+                action: perform-action
+                perform_action: input_button.press
+                target:
+                  entity_id: input_button.nollstall_frigate_alerts_nar_ingen_ar_hemma
       - type: horizontal-stack
         cards:
           - type: conditional

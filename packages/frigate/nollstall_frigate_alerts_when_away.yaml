@@ -1,0 +1,14 @@
+automation:
+  - id: nollstall_frigate_alerts_nar_ingen_ar_hemma
+    alias: Nollställ Frigate Alerts när ingen är hemma
+    description: Nollställer båda Frigate-räknarna när återställningsknappen trycks.
+    triggers:
+      - trigger: state
+        entity_id: input_button.nollstall_frigate_alerts_nar_ingen_ar_hemma
+    actions:
+      - action: counter.reset
+        target:
+          entity_id:
+            - counter.frigate_alerts_nar_ingen_ar_hemma
+            - counter.frigate_alerts_sover
+    mode: single

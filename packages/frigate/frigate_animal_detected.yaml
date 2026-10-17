@@ -137,14 +137,9 @@ automation:
                   - condition: state
                     entity_id: binary_sensor.cams_animal_backside_active
                     state: 'on'
-                  - condition: or
-                    conditions:
-                      - condition: time
-                        after: '20:00:00'
-                        before: '08:00:00'
-                      - condition: numeric_state
-                        entity_id: sensor.ljusstyrka
-                        below: 10
+                  - condition: numeric_state
+                    entity_id: sensor.ljusstyrka
+                    below: 10
             sequence:
               - delay: '00:00:10'
               - condition: state
@@ -230,13 +225,13 @@ automation:
                 target:
                   entity_id: light.kamera8_stralkastare
 
-          # Turn off light if no motion is detected after 30 seconds
+          # Turn off lights if no motion is detected after 15 seconds
           - conditions:
               - condition: state
                 entity_id: binary_sensor.cams_animal_backside_active
                 state: 'off'
             sequence:
-              - delay: '00:00:30'
+              - delay: '00:00:15'
               - condition: and
                 conditions:
                   - condition: state

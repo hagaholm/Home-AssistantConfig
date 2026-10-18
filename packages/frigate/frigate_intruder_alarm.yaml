@@ -101,37 +101,20 @@ automation:
     id: '81119011564400'
     mode: single
     trigger:
-      - platform: mqtt
-        topic: frigate/events
+      - platform: state
+        entity_id: binary_sensor.cam5_person_occupancy
+        to: "on"
 
     condition:
-      - condition: template
-        value_template: >
-          {% set p = trigger.payload_json %}
-          {% set a = p.get('after', {}) %}
-          {{ p.get('type') == 'new'
-            and a.get('camera') == 'cam5'
-            and a.get('label') == 'person'
-            and (
-              'Baksidan' in a.get('entered_zones', [])
-               or 'Baksidan' in a.get('current_zones', [])
-            ) }}
-
       - condition: or
         conditions:
           - condition: state
             entity_id: input_select.home_status
             state: "Sover"
 
-          - condition: and
-            conditions:
-              - condition: state
-                entity_id: input_select.home_status
-                state: "Borta"
-
-#              - condition: time
-#                after: "18:00:00"
-#                before: "09:00:00"
+          - condition: state
+            entity_id: input_select.home_status
+            state: "Borta"
 
       - condition: template
         value_template: >
@@ -147,48 +130,6 @@ automation:
           {% endif %}
 
     action:
-      - variables:
-          p: "{{ trigger.payload_json }}"
-          e: "{{ trigger.payload_json.get('after', {}) }}"
-          event_id: "{{ e.get('id', 'n/a') }}"
-          camera: "{{ e.get('camera', 'n/a') }}"
-          label: "{{ e.get('label', 'n/a') }}"
-          score: "{{ e.get('score', 'n/a') }}"
-          top_score: "{{ e.get('top_score', 'n/a') }}"
-          false_positive: "{{ e.get('false_positive', 'n/a') }}"
-          stationary: "{{ e.get('stationary', 'n/a') }}"
-          box: "{{ e.get('box', [0, 0, 0, 0]) }}"
-          region: "{{ e.get('region', 'n/a') }}"
-          entered_zones: >
-            {% set z = e.get('entered_zones', []) %}
-            {% if z %}
-              {{ z | join(', ') }}
-            {% else %}
-              none
-            {% endif %}
-          current_zones: >
-            {% set z = e.get('current_zones', []) %}
-            {% if z %}
-              {{ z | join(', ') }}
-            {% else %}
-              none
-            {% endif %}
-          x: "{{ e.get('box', [0, 0, 0, 0])[0] | int(0) }}"
-          y: "{{ e.get('box', [0, 0, 0, 0])[1] | int(0) }}"
-          w: "{{ e.get('box', [0, 0, 0, 0])[2] | int(0) }}"
-          h: "{{ e.get('box', [0, 0, 0, 0])[3] | int(0) }}"
-          area: >
-            {% set b = e.get('box', [0, 0, 0, 0]) %}
-            {{ (b[2] | int(0)) * (b[3] | int(0)) }}
-          ratio: >
-            {% set b = e.get('box', [0, 0, 0, 0]) %}
-            {% set hh = b[3] | float(0) %}
-            {% if hh > 0 %}
-              {{ ((b[2] | float(0)) / hh) | round(3) }}
-            {% else %}
-              0
-            {% endif %}
-
       - service: number.set_value
         target:
           entity_id: number.kamera5_volym
@@ -227,18 +168,7 @@ automation:
         data:
           title: "Cam5 Intruder Alarm"
           message: >-
-            Person detected by Cam5 while {{ states('input_select.home_status') }}.
-            Event ID: {{ event_id }}.
-            Zone entered: {{ entered_zones }}.
-            Current zones: {{ current_zones }}.
-            Score: {{ score }}.
-            Top score: {{ top_score }}.
-            False positive: {{ false_positive }}.
-            Stationary: {{ stationary }}.
-            Box: [{{ x }}, {{ y }}, {{ w }}, {{ h }}].
-            Area: {{ area }}.
-            Ratio W/H: {{ ratio }}.
-            Region: {{ region }}.
+            Person detected by Cam5 occupancy sensor while {{ states('input_select.home_status') }}.
             Siren activated for 5 seconds at 50%.
 
   - alias: Cam5 Intruder Alarm Daily Reset
@@ -287,37 +217,20 @@ automation:
     id: "81119011564402"
     mode: single
     trigger:
-      - platform: mqtt
-        topic: frigate/events
+      - platform: state
+        entity_id: binary_sensor.cam6_person_occupancy
+        to: "on"
 
     condition:
-      - condition: template
-        value_template: >
-          {% set p = trigger.payload_json %}
-          {% set a = p.get('after', {}) %}
-          {{ p.get('type') == 'new'
-            and a.get('camera') == 'cam6'
-            and a.get('label') == 'person'
-            and (
-              'Baksidan' in a.get('entered_zones', [])
-               or 'Baksidan' in a.get('current_zones', [])
-            ) }}
-
       - condition: or
         conditions:
           - condition: state
             entity_id: input_select.home_status
             state: "Sover"
 
-          - condition: and
-            conditions:
-              - condition: state
-                entity_id: input_select.home_status
-                state: "Borta"
-
-#              - condition: time
-#                after: "18:00:00"
-#                before: "09:00:00"
+          - condition: state
+            entity_id: input_select.home_status
+            state: "Borta"
 
       - condition: template
         value_template: >
@@ -333,48 +246,6 @@ automation:
           {% endif %}
 
     action:
-      - variables:
-          p: "{{ trigger.payload_json }}"
-          e: "{{ trigger.payload_json.get('after', {}) }}"
-          event_id: "{{ e.get('id', 'n/a') }}"
-          camera: "{{ e.get('camera', 'n/a') }}"
-          label: "{{ e.get('label', 'n/a') }}"
-          score: "{{ e.get('score', 'n/a') }}"
-          top_score: "{{ e.get('top_score', 'n/a') }}"
-          false_positive: "{{ e.get('false_positive', 'n/a') }}"
-          stationary: "{{ e.get('stationary', 'n/a') }}"
-          box: "{{ e.get('box', [0, 0, 0, 0]) }}"
-          region: "{{ e.get('region', 'n/a') }}"
-          entered_zones: >
-            {% set z = e.get('entered_zones', []) %}
-            {% if z %}
-              {{ z | join(', ') }}
-            {% else %}
-              none
-            {% endif %}
-          current_zones: >
-            {% set z = e.get('current_zones', []) %}
-            {% if z %}
-              {{ z | join(', ') }}
-            {% else %}
-              none
-            {% endif %}
-          x: "{{ e.get('box', [0, 0, 0, 0])[0] | int(0) }}"
-          y: "{{ e.get('box', [0, 0, 0, 0])[1] | int(0) }}"
-          w: "{{ e.get('box', [0, 0, 0, 0])[2] | int(0) }}"
-          h: "{{ e.get('box', [0, 0, 0, 0])[3] | int(0) }}"
-          area: >
-            {% set b = e.get('box', [0, 0, 0, 0]) %}
-            {{ (b[2] | int(0)) * (b[3] | int(0)) }}
-          ratio: >
-            {% set b = e.get('box', [0, 0, 0, 0]) %}
-            {% set hh = b[3] | float(0) %}
-            {% if hh > 0 %}
-              {{ ((b[2] | float(0)) / hh) | round(3) }}
-            {% else %}
-              0
-            {% endif %}
-
       - service: number.set_value
         target:
           entity_id: number.kamera6_volym
@@ -413,18 +284,7 @@ automation:
         data:
           title: "Cam6 Intruder Alarm"
           message: >-
-            Person detected by Cam6 while {{ states('input_select.home_status') }}.
-            Event ID: {{ event_id }}.
-            Zone entered: {{ entered_zones }}.
-            Current zones: {{ current_zones }}.
-            Score: {{ score }}.
-            Top score: {{ top_score }}.
-            False positive: {{ false_positive }}.
-            Stationary: {{ stationary }}.
-            Box: [{{ x }}, {{ y }}, {{ w }}, {{ h }}].
-            Area: {{ area }}.
-            Ratio W/H: {{ ratio }}.
-            Region: {{ region }}.
+            Person detected by Cam6 occupancy sensor while {{ states('input_select.home_status') }}.
             Siren activated for 5 seconds at 50%.
 
   - alias: Cam6 Intruder Alarm Daily Reset

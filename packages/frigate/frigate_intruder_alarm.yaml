@@ -17,6 +17,11 @@ counter:
     initial: 0
     step: 1
 
+  intruder_alarm_cam9_daily_count:
+    name: "Cam9 Intruder Alarm Daily Count"
+    initial: 0
+    step: 1
+
 ### input_datetime ###
 input_datetime:
   intruder_alarm_cam5_last_trigger:
@@ -26,6 +31,11 @@ input_datetime:
 
   intruder_alarm_cam6_last_trigger:
     name: "Cam6 Intruder Alarm Last Trigger"
+    has_date: true
+    has_time: true
+
+  intruder_alarm_cam9_last_trigger:
+    name: "Cam9 Intruder Alarm Last Trigger"
     has_date: true
     has_time: true
 
@@ -119,9 +129,9 @@ automation:
                 entity_id: input_select.home_status
                 state: "Borta"
 
-              - condition: time
-                after: "18:00:00"
-                before: "09:00:00"
+#              - condition: time
+#                after: "18:00:00"
+#                before: "09:00:00"
 
       - condition: template
         value_template: >
@@ -305,9 +315,9 @@ automation:
                 entity_id: input_select.home_status
                 state: "Borta"
 
-              - condition: time
-                after: "18:00:00"
-                before: "09:00:00"
+#              - condition: time
+#                after: "18:00:00"
+#                before: "09:00:00"
 
       - condition: template
         value_template: >
@@ -455,3 +465,120 @@ automation:
           title: "Cam6 Siren Failsafe"
           message: >-
             Failsafe turned off Cam6 siren because it remained on for more than 6 seconds.
+
+  - alias: Cam9 Person Intruder Alarm
+    id: "cam9_person_intruder_alarm"
+    mode: single
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.cam9_person_occupancy
+        to: "on"
+
+    condition:
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: input_select.home_status
+            state: "Sover"
+          - condition: and
+            conditions:
+              - condition: state
+                entity_id: input_select.home_status
+                state: "Borta"
+#              - condition: time
+#                after: "18:00:00"
+#                before: "09:00:00"
+
+      - condition: template
+        value_template: >
+          {{ states('counter.intruder_alarm_cam9_daily_count') | int(0) < 2 }}
+
+      - condition: template
+        value_template: >
+          {% set last = states('input_datetime.intruder_alarm_cam9_last_trigger') %}
+          {% if last in ['unknown', 'unavailable', '', none] %}
+            true
+          {% else %}
+            {{ (as_timestamp(now()) - as_timestamp(last, 0)) > 20 }}
+          {% endif %}
+
+    action:
+      - service: number.set_value
+        target:
+          entity_id: number.kamera9_volym
+        data:
+          value: 20
+
+      - service: siren.turn_on
+        target:
+          entity_id: siren.kamera9_siren
+
+      - delay: "00:00:02"
+
+      - service: siren.turn_off
+        target:
+          entity_id: siren.kamera9_siren
+
+      - delay: "00:00:01"
+
+      - service: number.set_value
+        target:
+          entity_id: number.kamera9_volym
+        data:
+          value: 0
+
+      - service: counter.increment
+        target:
+          entity_id: counter.intruder_alarm_cam9_daily_count
+
+      - service: input_datetime.set_datetime
+        target:
+          entity_id: input_datetime.intruder_alarm_cam9_last_trigger
+        data:
+          datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+
+      - service: notify.mobile_app_sm_a528b
+        data:
+          title: "Cam9 Intruder Alarm"
+          message: >-
+            Person detected by Cam9 while {{ states('input_select.home_status') }}.
+            Siren activated for 2 seconds at volume 20.
+
+  - alias: Cam9 Intruder Alarm Daily Reset
+    id: "cam9_intruder_alarm_daily_reset"
+    mode: single
+    trigger:
+      - platform: time
+        at: "00:00:00"
+    action:
+      - service: counter.reset
+        target:
+          entity_id: counter.intruder_alarm_cam9_daily_count
+
+  - alias: Cam9 Siren Failsafe Off
+    id: "cam9_siren_failsafe_off"
+    mode: single
+    trigger:
+      - platform: state
+        entity_id: siren.kamera9_siren
+        to: "on"
+        for: "00:00:04"
+
+    action:
+      - service: siren.turn_off
+        target:
+          entity_id: siren.kamera9_siren
+
+      - delay: "00:00:01"
+
+      - service: number.set_value
+        target:
+          entity_id: number.kamera9_volym
+        data:
+          value: 0
+
+      - service: notify.mobile_app_sm_a528b
+        data:
+          title: "Cam9 Siren Failsafe"
+          message: >-
+            Failsafe turned off Cam9 siren because it remained on for more than 4 seconds.

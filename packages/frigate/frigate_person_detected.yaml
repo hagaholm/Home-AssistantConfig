@@ -552,33 +552,6 @@ automation:
                 state: 'on'
             sequence:
 
-              # Set volume to 20
-              - service: number.set_value
-                target:
-                  entity_id: number.kamera9_volym
-                data:
-                  value: 20
-
-              # Activate siren
-              - service: siren.turn_on
-                target:
-                  entity_id: siren.kamera9_siren
-
-              # Wait 1 second
-              - delay: '00:00:02'
-
-              # Deactivate siren
-              - service: siren.turn_off
-                target:
-                  entity_id: siren.kamera9_siren
-
-              # Set volume to 0
-              - service: number.set_value
-                target:
-                  entity_id: number.kamera9_volym
-                data:
-                  value: 0
-
               # Turn on camera 9 light
               - service: light.turn_on
                 target:

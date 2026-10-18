@@ -345,6 +345,12 @@ views:
             name: Cam5 Återställ räknare dagligen
           - entity: automation.cam6_intruder_alarm_daily_reset
             name: Cam6 Återställ räknare dagligen
+          - entity: automation.cam9_person_intruder_alarm
+            name: Cam9 Inbrottslarm siren
+          - entity: automation.cam9_siren_failsafe_off
+            name: Cam9 Siren failsafe av
+          - entity: automation.cam9_intruder_alarm_daily_reset
+            name: Cam9 Återställ räknare dagligen
           - entity: siren.kamera5_siren
             name: Cam5 Siren
           - entity: number.kamera5_volym
@@ -361,6 +367,14 @@ views:
             name: Cam6 Larm idag
           - entity: input_datetime.intruder_alarm_cam6_last_trigger
             name: Cam6 Senaste larm
+          - entity: siren.kamera9_siren
+            name: Cam9 Siren
+          - entity: number.kamera9_volym
+            name: Cam9 Sirenvolym
+          - entity: counter.intruder_alarm_cam9_daily_count
+            name: Cam9 Larm idag
+          - entity: input_datetime.intruder_alarm_cam9_last_trigger
+            name: Cam9 Senaste larm
           - entity: automation.cam_siren_reset_on_ha_start
             name: Återställ sirener vid start
 

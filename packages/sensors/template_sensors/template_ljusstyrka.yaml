@@ -10,11 +10,12 @@
 # Purpose:
 # - Monitors outdoor light levels via TSL2591 sensor
 # - Used by dusk/dawn automation for lighting triggers
-# - Filters spurious readings when facade light is active
+# - Prevents camera spotlights from feeding their own light back into automation
 #
 # Logic:
 # - Reads from sensor.ljusstyrka_measured (MQTT TSL2591)
-# - Compensates for facade light interference (optional)
+# - Holds the last ambient reading while the sensor-facing spotlights are on
+#   and briefly after they turn off, while the sensor settles
 # - Returns rounded lux value for threshold comparisons
 #
 # Usage:
@@ -38,17 +39,22 @@ template:
         unit_of_measurement: "lx"
         unique_id: sensor_ljusstyrka_calibrated
         # Primary ambient light sensor for automation triggers
-        # Measures outdoor brightness via TSL2591 high dynamic range sensor
-        # Used by: Dusk/dawn detection, facade lighting, away mode
+        # Holds ambient lux from before the spotlights turn on and while the sensor settles after they turn off.
         state: >-
-          {% set light = states('light.stralkastare_husgavel') %}
-          {% set light_obj = states.light.stralkastare_husgavel %}
-          {% if light == 'off' and light_obj != none and (as_timestamp(now()) - as_timestamp(light_obj.last_changed, 0)) > 30 %}
-            {{ (states('sensor.ljusstyrka_measured') | float(0)) | round(0) }}
+          {% set sensor_lights_on =
+            is_state('light.stralkastare_husgavel', 'on')
+            or is_state('light.kamera5_stralkastare', 'on')
+            or is_state('light.kamera6_stralkastare', 'on')
+          %}
+          {% set light_changed_recently =
+            (as_timestamp(now()) - as_timestamp(states.light.stralkastare_husgavel.last_changed, 0)) < 10
+            or (as_timestamp(now()) - as_timestamp(states.light.kamera5_stralkastare.last_changed, 0)) < 10
+            or (as_timestamp(now()) - as_timestamp(states.light.kamera6_stralkastare.last_changed, 0)) < 10
+          %}
+          {% set previous_lux = this.state | float(none) %}
+          {% if (sensor_lights_on or light_changed_recently) and previous_lux is number %}
+            {{ previous_lux | round(0) }}
           {% else %}
-            {{ (states('sensor.ljusstyrka_measured') | float(0)) | round(0) }}
+            {{ states('sensor.ljusstyrka_measured') | float(0) | round(0) }}
           {% endif %}
-          {# Note: Facade spotlight (stralkastare_husgavel) can interfere with sensor #}
-          {# Logic currently returns same value regardless - can be enhanced if needed #}
         availability: "{{ states('sensor.ljusstyrka_measured') not in ['unknown', 'unavailable'] }}"
-

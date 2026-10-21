@@ -841,6 +841,15 @@ template:
           lights_on: "{{ expand('light.friggebod_fasad', 'light.forrad_fasad', 'light.tvattstugan_fasad', 'light.huvudentre2') | selectattr('state', 'eq', 'on') | map(attribute='name') | list | join(', ') or 'Inga' }}"
           home_status: "{{ states('input_select.home_status') | trim }}"
           lux: "{{ states('sensor.ljusstyrka') }}"
+          lux_measured_raw: "{{ states('sensor.ljusstyrka_measured') }}"
+          lux_self_light_filter_active: >-
+            {{ is_state('light.stralkastare_husgavel', 'on')
+              or is_state('light.kamera5_stralkastare', 'on')
+              or is_state('light.kamera6_stralkastare', 'on')
+              or (as_timestamp(now()) - as_timestamp(states.light.stralkastare_husgavel.last_changed, 0)) < 10
+              or (as_timestamp(now()) - as_timestamp(states.light.kamera5_stralkastare.last_changed, 0)) < 10
+              or (as_timestamp(now()) - as_timestamp(states.light.kamera6_stralkastare.last_changed, 0)) < 10
+            }}
           lux_40: "{{ states('input_number.ljusstyrka_40') }}"
           lux_60: "{{ states('input_number.ljusstyrka_60') }}"
           person_any: >-

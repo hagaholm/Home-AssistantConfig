@@ -77,6 +77,13 @@ counter:
     initial: 0
     step: 1
 
+input_text:
+  frigate_temp_presence_detection:
+    name: "Frigate Temporary Presence Detection"
+    initial: "No detection details saved"
+    max: 255
+    # Retains the confirming face detection details for the timeout notification.
+
 automation:
 
   # ============================================
@@ -158,6 +165,15 @@ automation:
                 value_template: >
                   {{ states('counter.frigate_temp_presence_confirmation') | int(0) >= 2 }}
             sequence:
+              - service: input_text.set_value
+                target:
+                  entity_id: input_text.frigate_temp_presence_detection
+                data:
+                  value: >
+                    {{ trigger.payload_json.name }} on
+                    {{ trigger.payload_json.camera | upper }}
+                    (score: {{ trigger.payload_json.score }})
+
               - service: system_log.write
                 data:
                   level: info
@@ -284,6 +300,7 @@ automation:
           message: >
             WiFi ej ansluten inom 5 min. 
             Status: Borta (igen). 
+            Frigate detection: {{ states('input_text.frigate_temp_presence_detection') }}.
             Försök WiFi-anslutning eller visa upp ansiktet igen.
           data:
             tag: "frigate_presence"

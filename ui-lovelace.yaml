@@ -1773,3 +1773,34 @@ views:
           - entity: input_select.home_status
           - entity: input_boolean.inside_pause_day_window_transition
           - entity: input_boolean.christmas_light
+
+  - title: Oral-B
+    path: oral-b
+    icon: mdi:toothbrush-paste
+    badges:
+      - entity: sensor.io_series_6_7_8d94_battery
+        name: Series 8D94
+      - entity: sensor.io_series_6_7_583e_battery
+        name: Series 583E
+    cards:
+      - type: entities
+        title: Oral-B battery status
+        show_header_toggle: false
+        entities:
+          - entity: sensor.io_series_6_7_8d94_battery
+            name: Series 8D94 battery
+          - entity: sensor.io_series_6_7_583e_battery
+            name: Series 583E battery
+      - type: entities
+        title: Low-battery alert
+        show_header_toggle: false
+        entities:
+          - entity: automation.oral_b_low_battery_bathroom_light_alert
+            name: Flash bathroom spots below 10%
+          - entity: light.tak_spottar
+            name: Bathroom ceiling spots
+      - type: markdown
+        content: |
+          [Open automation settings](/config/automation/dashboard)
+
+          When the 8D94 battery crosses below 10%, the bathroom ceiling spots flash once. When the 583E battery crosses below 10%, they flash twice.

@@ -1,0 +1,47 @@
+- id: oral_b_low_battery_flash
+  alias: Oral-B low battery bathroom light alert
+  description: Flash the bathroom ceiling spots when either Oral-B battery crosses below 10%. The 8D94 flashes once; the 583E flashes twice.
+  triggers:
+    - trigger: numeric_state
+      entity_id: sensor.io_series_6_7_8d94_battery
+      below: 10
+      id: series_8d94
+    - trigger: numeric_state
+      entity_id: sensor.io_series_6_7_583e_battery
+      below: 10
+      id: series_583e
+  conditions: []
+  actions:
+    - choose:
+        - conditions:
+            - condition: trigger
+              id: series_8d94
+          sequence:
+            - action: light.toggle
+              target:
+                entity_id: light.tak_spottar
+            - delay: "00:00:01"
+            - action: light.toggle
+              target:
+                entity_id: light.tak_spottar
+        - conditions:
+            - condition: trigger
+              id: series_583e
+          sequence:
+            - action: light.toggle
+              target:
+                entity_id: light.tak_spottar
+            - delay: "00:00:01"
+            - action: light.toggle
+              target:
+                entity_id: light.tak_spottar
+            - delay: "00:00:01"
+            - action: light.toggle
+              target:
+                entity_id: light.tak_spottar
+            - delay: "00:00:01"
+            - action: light.toggle
+              target:
+                entity_id: light.tak_spottar
+  mode: queued
+  max: 10

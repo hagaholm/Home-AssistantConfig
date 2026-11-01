@@ -34,6 +34,29 @@ views:
                 perform_action: input_button.press
                 target:
                   entity_id: input_button.nollstall_frigate_alerts_nar_ingen_ar_hemma
+      - type: grid
+        columns: 4
+        square: false
+        cards:
+          - type: tile
+            entity: counter.intruder_alarm_cam5_daily_count
+            name: Cam5 personlarm idag
+          - type: tile
+            entity: counter.intruder_alarm_cam6_daily_count
+            name: Cam6 personlarm idag
+          - type: tile
+            entity: counter.intruder_alarm_cam9_daily_count
+            name: Cam9 personlarm idag
+          - type: button
+            name: Nollställ Cam9
+            icon: mdi:restart
+            tap_action:
+              action: perform-action
+              perform_action: counter.reset
+              target:
+                entity_id: counter.intruder_alarm_cam9_daily_count
+              confirmation:
+                text: Nollställ Cam9:s personlarm för idag?
       - type: horizontal-stack
         cards:
           - type: conditional

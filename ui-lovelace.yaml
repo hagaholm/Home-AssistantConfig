@@ -287,6 +287,11 @@ views:
                 action: toggle
               entity: light.kok_jul
               name: Kök
+      - type: entities
+        entities:
+          - entity: input_select.kitchen_light_mode
+        title: Köksbelysning
+        show_header_toggle: false
       - entity: input_select.light_inside
         type: entity
         state_color: true
@@ -459,13 +464,13 @@ views:
         entities:
           - input_boolean.lights_auto_inne
           - input_boolean.lights_auto_halltak
-          - input_boolean.lights_auto_kok
+          - input_select.kitchen_light_mode
           - input_boolean.lights_auto_uterum
           - input_boolean.lights_auto_badrum
           - input_boolean.lights_auto_tradgard
           - input_boolean.lights_auto_fasad
           - input_boolean.lights_auto_spabad
-        title: Auto belysning
+        title: Auto belysning och lägen
         show_header_toggle: false
         state_color: true
       - type: button

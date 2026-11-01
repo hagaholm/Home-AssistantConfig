@@ -113,8 +113,8 @@ views:
             entity: input_boolean.lights_auto_inne
             name: Auto Inne
           - type: tile
-            entity: input_boolean.lights_auto_kok
-            name: Auto Kök
+            entity: input_select.kitchen_light_mode
+            name: Köksläge
           - type: tile
             entity: input_boolean.lights_auto_halltak
             name: Auto Halltak
@@ -215,7 +215,7 @@ views:
         state_color: true
         entities:
           - input_select.light_kitchen
-          - input_boolean.lights_auto_kok
+          - input_select.kitchen_light_mode
           - input_boolean.kitchen_light_on
           - input_boolean.morning_light_on
           - light.kok_underskap_bank

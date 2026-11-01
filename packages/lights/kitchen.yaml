@@ -4,7 +4,7 @@
 #                                                  #
 ####################################################
 # Samlar all köksbelysningslogik i ett paket:
-# - Input select för ljusnivåer
+# - Input selects för ljusnivåer och auto/manuellt läge
 # - Automations för närvaro- och state-machine-styrning
 # - Scripts för faktiska ljusnivåer
 #
@@ -16,8 +16,9 @@
 #
 # Hårdvara/Entiteter:
 # - Aqara FP2 närvarosensor (3 zoner)
+# - input_select.kitchen_light_mode (Automatisk/På/Av)
 # - input_select.light_kitchen (Släckt/25%/50%/100%)
-# - input_boolean.kitchen_light_on, input_boolean.morning_light_on
+# - input_boolean.lights_auto_kok, input_boolean.kitchen_light_on, input_boolean.morning_light_on
 # - Scripts: script.kitchen_light_{25,50,100,off}
 #
 # Säkerhet:
@@ -67,13 +68,76 @@ automation:
 #
 # INTEGRATION:
 # - Styrs via input_select.light_kitchen (Släckt/25%/100%)
-# - Aktiveras/inaktiveras via input_boolean.kitchen_light_on
+# - Läget väljs via input_select.kitchen_light_mode
+# - input_boolean.lights_auto_kok är den automatiska resolverns aktiveringsflagga
 # - Hemstatus från input_select.home_status
 ####################################################
 
-  ###################################
+  #####################################
+  ### Köksbelysning lägesstyrning
+  #####################################
+  - alias: Köksbelysning lägesstyrning
+    id: kitchen_light_mode_controller
+    mode: restart
+
+    trigger:
+      - platform: state
+        entity_id: input_select.kitchen_light_mode
+
+      - platform: homeassistant
+        event: start
+
+    action:
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id: input_select.kitchen_light_mode
+                state: Automatisk
+            sequence:
+              - service: input_boolean.turn_on
+                target:
+                  entity_id: input_boolean.lights_auto_kok
+              - service: script.kitchen_set_correct_mode
+
+          - conditions:
+              - condition: state
+                entity_id: input_select.kitchen_light_mode
+                state: På
+            sequence:
+              - service: input_boolean.turn_off
+                target:
+                  entity_id: input_boolean.lights_auto_kok
+              - variables:
+                  current_option: "{{ states('input_select.light_kitchen') }}"
+              - service: input_select.select_option
+                target:
+                  entity_id: input_select.light_kitchen
+                data:
+                  option: '100%'
+              - if:
+                  - condition: template
+                    value_template: "{{ current_option == '100%' }}"
+                then:
+                  - service: script.kitchen_light_100
+
+          - conditions:
+              - condition: state
+                entity_id: input_select.kitchen_light_mode
+                state: Av
+            sequence:
+              - service: input_boolean.turn_off
+                target:
+                  entity_id: input_boolean.lights_auto_kok
+              - service: input_select.select_option
+                target:
+                  entity_id: input_select.light_kitchen
+                data:
+                  option: Släckt
+              - service: script.kitchen_light_off
+
+  #####################################
   ### Köksbelysning resolver (single)
-  ###################################
+  #####################################
   - alias: Köksbelysning resolver
     id: '1735604100092'
     mode: restart
@@ -82,6 +146,9 @@ automation:
       - condition: state
         entity_id: input_boolean.lights_auto_kok
         state: 'on'
+      - condition: state
+        entity_id: input_select.kitchen_light_mode
+        state: Automatisk
 
     trigger:
       - platform: homeassistant
@@ -180,6 +247,17 @@ automation:
         entity_id: input_select.light_kitchen
     action:
       - choose:
+          - conditions:
+              - condition: state
+                entity_id: input_select.kitchen_light_mode
+                state: Av
+            sequence:
+              - service: input_select.select_option
+                target:
+                  entity_id: input_select.light_kitchen
+                data:
+                  option: Släckt
+
           - conditions:
               - condition: state
                 entity_id: input_select.light_kitchen

@@ -2,6 +2,16 @@
 # Full documentation: packages/lights/kitchen.yaml
 
 input_select:
+  # This is the user-facing override; the kitchen mode automation syncs the
+  # automatic-lighting gate and requested brightness with this selection.
+  kitchen_light_mode:
+    name: Köksbelysning
+    options:
+      - Automatisk
+      - På
+      - Av
+    icon: mdi:lightbulb-auto
+
   light_kitchen:
     name: Kök
     # Kitchen brightness control with 4 levels

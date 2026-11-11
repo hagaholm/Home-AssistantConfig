@@ -189,10 +189,11 @@ script:
           entity_id: light.vardagsrum_vitrinskap2
           transition: 2
 
-      # Tellstick
+      # IKEA
       - service: light.turn_on
         data:
           entity_id: light.kok_lilla_fonstret
+          brightness_pct: 40
           transition: 2
 
   morning_lights_christmas_on:
@@ -227,10 +228,11 @@ script:
           entity_id: light.vardagsrum_vitrinskap2
           transition: 2
 
-      # Tellstick
+      # IKEA
       - service: light.turn_on
         data:
           entity_id: light.kok_lilla_fonstret
+          brightness_pct: 40
           transition: 2
 
       # Tellstick Julbelysning (50-100%)
@@ -303,7 +305,7 @@ script:
           entity_id: light.vardagsrum_fonster
           transition: 2
 
-      # Tellstick
+      # IKEA
       - service: light.turn_off
         data:
           entity_id: light.kok_lilla_fonstret
@@ -313,7 +315,7 @@ script:
     alias: Morgonbelysning jul off
     mode: restart
     sequence:
-      # Tellstick
+      # IKEA
       - service: light.turn_off
         data:
           entity_id: light.kok_lilla_fonstret
@@ -433,9 +435,11 @@ script:
 
 # IKEA Julbelysning
 
-# Tellstick
+# IKEA
       - service: light.turn_on
-        entity_id: light.kok_lilla_fonstret
+        data:
+          entity_id: light.kok_lilla_fonstret
+          brightness_pct: 40
 
   daylights_christmas_on:
     alias: Dagbelysning jul on
@@ -474,9 +478,11 @@ script:
 
 # IKEA Julbelysning
 
-# Tellstick
+# IKEA
       - service: light.turn_on
-        entity_id: light.kok_lilla_fonstret
+        data:
+          entity_id: light.kok_lilla_fonstret
+          brightness_pct: 40
 
 # Tellstick Julbelysning
       - service: light.turn_on
@@ -614,9 +620,11 @@ script:
 
 # IKEA Julbelysning
 
-# Tellstick
+# IKEA
       - service: light.turn_on
-        entity_id: light.kok_lilla_fonstret
+        data:
+          entity_id: light.kok_lilla_fonstret
+          brightness_pct: 40
 
   eveninglights_christmas_on:
     alias: Kvällsbelysning jul on
@@ -653,9 +661,11 @@ script:
 
 # IKEA Julbelysning
 
-# Tellstick
+# IKEA
       - service: light.turn_on
-        entity_id: light.kok_lilla_fonstret
+        data:
+          entity_id: light.kok_lilla_fonstret
+          brightness_pct: 40
 
 # Tellstick Julbelysning
       - service: light.turn_on
@@ -721,10 +731,11 @@ script:
           brightness_pct: 1
           transition: 5
 
-      # Tellstick
+      # IKEA
       - service: light.turn_on
         data:
           entity_id: light.kok_lilla_fonstret
+          brightness_pct: 40
           transition: 5
 
   night_light_christmas_on:
@@ -743,9 +754,11 @@ script:
           entity_id: light.hall_jullampa
           transition: 5
 
+      # IKEA
       - service: light.turn_on
         data:
           entity_id: light.kok_lilla_fonstret
+          brightness_pct: 40
           transition: 5
 
   night_light_off:
@@ -857,9 +870,11 @@ script:
 
 # IKEA Julbelysning
 
-# Tellstick
+# IKEA
       - service: light.turn_on
-        entity_id: light.kok_lilla_fonstret
+        data:
+          entity_id: light.kok_lilla_fonstret
+          brightness_pct: 40
 
   away_lights_christmas_on:
     alias: Bortabelysning jul on
@@ -887,9 +902,11 @@ script:
 
 # IKEA Julbelysning
 
-# Tellstick
+# IKEA
       - service: light.turn_on
-        entity_id: light.kok_lilla_fonstret
+        data:
+          entity_id: light.kok_lilla_fonstret
+          brightness_pct: 40
 
 # Tellstick Julbelysning
       - service: light.turn_on
@@ -962,7 +979,7 @@ script:
 
 # IKEA Julbelysning
 
-# Tellstick
+# IKEA
       - service: light.turn_off
         entity_id: light.kok_lilla_fonstret
 
@@ -989,7 +1006,7 @@ script:
 
 # IKEA Julbelysning
 
-# Tellstick
+# IKEA
       - service: light.turn_off
         entity_id: light.kok_lilla_fonstret
 
@@ -1054,10 +1071,11 @@ script:
           entity_id: light.vardagsrum_vitrinskap2
           transition: 2
 
-      # Tellstick
+      # IKEA
       - service: light.turn_on
         data:
           entity_id: light.kok_lilla_fonstret
+          brightness_pct: 40
           transition: 2
 
       # Tellstick Julbelysning
@@ -1163,10 +1181,11 @@ script:
           entity_id: light.vardagsrum_vitrinskap2
           transition: 2
 
-# Tellstick
+# IKEA
       - service: light.turn_on
         data:
           entity_id: light.kok_lilla_fonstret
+          brightness_pct: 40
           transition: 2
       - service: light.turn_on
         data:

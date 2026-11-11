@@ -9,19 +9,19 @@ if not light:
 original_state = light.state
 
 if original_state == 'off':
-    hass.services.call('light', 'turn_on', {'entity_id': entity_id})
+    hass.services.call('light', 'turn_on', {'entity_id': entity_id, 'brightness_pct': 40})
     time.sleep(1)
     hass.services.call('light', 'turn_off', {'entity_id': entity_id})
     time.sleep(1)
-    hass.services.call('light', 'turn_on', {'entity_id': entity_id})
+    hass.services.call('light', 'turn_on', {'entity_id': entity_id, 'brightness_pct': 40})
     time.sleep(1)
     hass.services.call('light', 'turn_off', {'entity_id': entity_id})
 
 if original_state == 'on':
     hass.services.call('light', 'turn_off', {'entity_id': entity_id})
     time.sleep(1)
-    hass.services.call('light', 'turn_on', {'entity_id': entity_id})
+    hass.services.call('light', 'turn_on', {'entity_id': entity_id, 'brightness_pct': 40})
     time.sleep(1)
     hass.services.call('light', 'turn_off', {'entity_id': entity_id})
     time.sleep(1)
-    hass.services.call('light', 'turn_on', {'entity_id': entity_id})
+    hass.services.call('light', 'turn_on', {'entity_id': entity_id, 'brightness_pct': 40})

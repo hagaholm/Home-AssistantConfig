@@ -391,8 +391,12 @@ views:
             name: Notis fördröjd vid person
           - entity: automation.blink_light_person_detected
             name: Blinka lampor vid persondetektion
-          - entity: automation.person_motion_light_control_frontside_cam10_cam9
-            name: Tänd strålkastare framsida
+          - entity: automation.cam9_person_spotlight_low_light
+            name: Cam 9 strålkastare vid mörker
+          - entity: automation.cam8_person_spotlight_borta_sover
+            name: Cam 8 strålkastare vid Borta/Sover
+          - entity: automation.cam10_person_spotlight_borta_sover
+            name: Cam 10 strålkastare vid Borta/Sover
           - entity: automation.person_motion_radio_control_backside
             name: Radio på vid rörelse baksida
           - entity: automation.frigate_face_detection_triggers_temporary_presence

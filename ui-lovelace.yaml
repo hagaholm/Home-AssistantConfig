@@ -301,14 +301,14 @@ views:
                 action: toggle
               entity: light.kok_jul
               name: Kök
+      - entity: input_select.light_inside
+        type: entity
+        state_color: true
       - type: entities
         entities:
           - entity: input_select.kitchen_light_mode
         title: Köksbelysning
         show_header_toggle: false
-      - entity: input_select.light_inside
-        type: entity
-        state_color: true
     icon: 'mdi:information-outline'
     panel: false
     path: Start

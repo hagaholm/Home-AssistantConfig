@@ -194,8 +194,11 @@ Some climate logic is in dedicated packages:
 
 - `packages/climate/garage.yaml`
 - `packages/climate/friggebod.yaml`
+- `packages/climate/mold_risk_rooms.yaml`
 
 These typically coordinate heaters, thresholds, and safe fallback behavior.
+
+The mold-risk package adds percentage indicators for the bathroom, laundry room, and attic. It calculates each indicator from temperature and relative humidity using the shared `custom_templates/mold_risk.jinja` macro, and the values are shown in `ui-climate.yaml`. The percentage is a relative risk indicator, not a probability; the sensors are unavailable when their input readings are invalid.
 
 ---
 
@@ -278,7 +281,7 @@ The idea is to make “raw camera detections” easier to consume by:
 - Creating summary counts (e.g. total persons detected across multiple cameras)
 - Creating summary binary_sensors (e.g. any person active)
 
-Some of these packages also include “reaction” automations (e.g. lighting + notifications) built on top of the summary sensors. Diagnostics: `sensor.frigate_debug_animal_backside` (see `ui-debug.yaml`) explains why the animal-triggered radio/floodlights are on or off.
+Some of these packages also include “reaction” automations (e.g. lighting + notifications) built on top of the summary sensors. Person- and animal-detection notifications use camera snapshots. Diagnostics: `sensor.frigate_debug_animal_backside` (see `ui-debug.yaml`) explains why the animal-triggered radio/floodlights are on or off.
 
 These summary sensors can be used by dashboards, notifications, and other automations.
 
@@ -294,7 +297,7 @@ It includes:
 - **Diagnostics & Reason engines**:
   - `sensor.diagnostics_system_health` – aggregated health state across all subsystems.
   - `sensor.diagnostics_lights_health` – tracks availability and reality alignment of monitored lights.
-  - `sensor.diagnostics_sensor_freshness` & `sensor.diagnostics_sensors_health` – tracks temperature/humidity/lux sensors with no report in over 60 minutes.
+  - `sensor.diagnostics_sensor_freshness` & `sensor.diagnostics_sensors_health` – tracks missing/unavailable sensors and temperature/humidity/lux sensors with no report in over 60 minutes. Freshness uses the last reported event (`last_reported`), so an unchanged sensor value can still be fresh.
   - `sensor.diagnostics_network_health` – tracks camera and node availability.
   - `sensor.diagnostics_automation_drift` – verifies all automations match their expected operating state (detects accidentally disabled automations or rogue test scripts).
 - **Per-Device Muting / Control**:
@@ -379,10 +382,12 @@ Run `py extra/ha_docs_sync.py` to refresh it.
   - [packages/climate/friggebod.yaml](packages/climate/friggebod.yaml)
   - [packages/climate/garage.yaml](packages/climate/garage.yaml)
   - [packages/climate/husvagn.yaml](packages/climate/husvagn.yaml)
+  - [packages/climate/mold_risk_rooms.yaml](packages/climate/mold_risk_rooms.yaml)
   - [packages/climate/ute.yaml](packages/climate/ute.yaml)
   - [packages/climate/uterum.yaml](packages/climate/uterum.yaml)
 - **packages/frigate/**
   - [packages/frigate/diagnostics.yaml](packages/frigate/diagnostics.yaml)
+  - [packages/frigate/frigate_alerts_when_away.yaml](packages/frigate/frigate_alerts_when_away.yaml)
   - [packages/frigate/frigate_animal_detected.yaml](packages/frigate/frigate_animal_detected.yaml)
   - [packages/frigate/frigate_face_detection.yaml](packages/frigate/frigate_face_detection.yaml)
   - [packages/frigate/frigate_intruder_alarm.yaml](packages/frigate/frigate_intruder_alarm.yaml)
@@ -390,6 +395,7 @@ Run `py extra/ha_docs_sync.py` to refresh it.
   - [packages/frigate/frigate_person_detected.yaml](packages/frigate/frigate_person_detected.yaml)
   - [packages/frigate/frigate_sensors.yaml](packages/frigate/frigate_sensors.yaml)
   - [packages/frigate/frigate_temp_presence.yaml](packages/frigate/frigate_temp_presence.yaml)
+  - [packages/frigate/nollstall_frigate_alerts_when_away.yaml](packages/frigate/nollstall_frigate_alerts_when_away.yaml)
 - **packages/helpers/**
   - [packages/helpers/input_booleans.yaml](packages/helpers/input_booleans.yaml)
   - [packages/helpers/input_datetimes.yaml](packages/helpers/input_datetimes.yaml)

@@ -226,7 +226,7 @@ views:
 
           **Problem:** {{ state_attr('sensor.diagnostics_sensors_health', 'active_issues') }}
 
-          **Kontrollgräns:** {{ state_attr('sensor.diagnostics_sensors_health', 'threshold_minutes') }} minuter sedan senaste uppdatering.
+          **Kontrollgräns:** {{ state_attr('sensor.diagnostics_sensors_health', 'threshold_minutes') }} minuter sedan senaste rapport.
       - type: entities
         title: Kritiska givare
         entities:

@@ -294,7 +294,7 @@ It includes:
 - **Diagnostics & Reason engines**:
   - `sensor.diagnostics_system_health` – aggregated health state across all subsystems.
   - `sensor.diagnostics_lights_health` – tracks availability and reality alignment of monitored lights.
-  - `sensor.diagnostics_sensor_freshness` & `sensor.diagnostics_sensors_health` – tracks stale temperature/humidity/lux sensors (>60 min age).
+  - `sensor.diagnostics_sensor_freshness` & `sensor.diagnostics_sensors_health` – tracks temperature/humidity/lux sensors with no report in over 60 minutes.
   - `sensor.diagnostics_network_health` – tracks camera and node availability.
   - `sensor.diagnostics_automation_drift` – verifies all automations match their expected operating state (detects accidentally disabled automations or rogue test scripts).
 - **Per-Device Muting / Control**:

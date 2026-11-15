@@ -57,9 +57,13 @@ template:
               {% endif %}
             {% endif %}
           {% endfor %}
+          {% set leak_sensor = states['binary_sensor.diskmaskin_lackage'] %}
+          {% if leak_sensor is none or leak_sensor.state in ['unknown', 'unavailable', ''] %}
+            {% set freshness.stale = freshness.stale + ['Diskmaskin läckagesensor'] %}
+          {% endif %}
           {% if freshness.stale %}Varning{% else %}OK{% endif %}
         attributes:
-          reason: "Givare i listan nedan saknar data eller har inte rapporterat på minst 60 minuter; om listan är Inga är alla övervakade givare färska"
+          reason: "Givare i listan nedan saknar data eller har inte rapporterat på minst 60 minuter; läckagesensorn kontrolleras för tillgänglighet"
           stale_sensors: >-
             {% set monitored = [
               {'name': 'Frys temperatur', 'entity': 'sensor.frys_temperature', 'mute': 'input_boolean.monitor_sensor_frys_temperature'},
@@ -99,6 +103,10 @@ template:
                 {% endif %}
               {% endif %}
             {% endfor %}
+            {% set leak_sensor = states['binary_sensor.diskmaskin_lackage'] %}
+            {% if leak_sensor is none or leak_sensor.state in ['unknown', 'unavailable', ''] %}
+              {% set freshness.stale = freshness.stale + ['Diskmaskin läckagesensor (' ~ (leak_sensor.state if leak_sensor is not none else 'entitet saknas') ~ ')'] %}
+            {% endif %}
             {{ freshness.stale | join(', ') if freshness.stale else 'Inga' }}
           muted_sensors: >-
             {% set monitored = [

@@ -1,0 +1,46 @@
+template:
+  - sensor:
+      - name: "Badrum mögelrisk"
+        unique_id: bathroom_mold_risk
+        unit_of_measurement: "%"
+        state_class: measurement
+        icon: mdi:mushroom
+        availability: >
+          {% set temperature = states('sensor.badrum_temperatur') | float(none) %}
+          {% set humidity = states('sensor.badrum_luftfuktighet') | float(none) %}
+          {{ temperature is number and humidity is number }}
+        state: >
+          {% from 'mold_risk.jinja' import mold_risk %}
+          {% set temperature = states('sensor.badrum_temperatur') | float(none) %}
+          {% set humidity = states('sensor.badrum_luftfuktighet') | float(none) %}
+          {{ mold_risk(temperature, humidity) }}
+
+      - name: "Tvättstuga mögelrisk"
+        unique_id: laundry_room_mold_risk
+        unit_of_measurement: "%"
+        state_class: measurement
+        icon: mdi:mushroom
+        availability: >
+          {% set temperature = states('sensor.tvattstuga_temperature') | float(none) %}
+          {% set humidity = states('sensor.tvattstuga_humidity') | float(none) %}
+          {{ temperature is number and humidity is number }}
+        state: >
+          {% from 'mold_risk.jinja' import mold_risk %}
+          {% set temperature = states('sensor.tvattstuga_temperature') | float(none) %}
+          {% set humidity = states('sensor.tvattstuga_humidity') | float(none) %}
+          {{ mold_risk(temperature, humidity) }}
+
+      - name: "Vind mögelrisk"
+        unique_id: attic_mold_risk
+        unit_of_measurement: "%"
+        state_class: measurement
+        icon: mdi:mushroom
+        availability: >
+          {% set temperature = states('sensor.vinden_temperature') | float(none) %}
+          {% set humidity = states('sensor.vinden_luftfuktighet') | float(none) %}
+          {{ temperature is number and humidity is number }}
+        state: >
+          {% from 'mold_risk.jinja' import mold_risk %}
+          {% set temperature = states('sensor.vinden_temperature') | float(none) %}
+          {% set humidity = states('sensor.vinden_luftfuktighet') | float(none) %}
+          {{ mold_risk(temperature, humidity) }}

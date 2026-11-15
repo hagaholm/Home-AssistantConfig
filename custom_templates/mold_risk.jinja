@@ -1,0 +1,15 @@
+{% macro mold_risk(T, RH) %}
+{%- if T is none or RH is none -%}
+  {{ none }}
+{%- elif T <= 0 -%}
+  0
+{%- else -%}
+  {%- set threshold = [[85 - (T * 0.5), 75] | max, 95] | min -%}
+  {%- if RH <= threshold -%}
+    0
+  {%- else -%}
+    {%- set risk = ((RH - threshold) / (100 - threshold)) * 100 -%}
+    {{ [[risk, 0] | max, 100] | min | round(0) }}
+  {%- endif -%}
+{%- endif -%}
+{% endmacro %}

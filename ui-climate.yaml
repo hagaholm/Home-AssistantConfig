@@ -21,7 +21,7 @@ views:
     badges: []
     cards:
       - type: heading
-        heading: 🩺 Status & Diagnostik (Tryck för analys)
+        heading: Status
 
       - type: grid
         columns: 2
@@ -43,7 +43,47 @@ views:
               navigation_path: /lovelace-climate/diagnostik
 
       - type: heading
-        heading: 🌬️ Ventilation & FTX
+        heading: Mögelrisk
+
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: tile
+            entity: sensor.badrum_mogelrisk
+            name: Badrum
+            icon: mdi:mushroom
+          - type: tile
+            entity: sensor.tvattstuga_mogelrisk
+            name: Tvättstuga
+            icon: mdi:mushroom
+          - type: tile
+            entity: sensor.vind_mogelrisk
+            name: Vind
+            icon: mdi:mushroom
+          - type: tile
+            entity: sensor.forrad_mogelrisk
+            name: Förråd
+            icon: mdi:mushroom
+          - type: tile
+            entity: sensor.friggebod_mogelrisk
+            name: Friggebod
+            icon: mdi:mushroom
+          - type: tile
+            entity: sensor.garage_mogelrisk
+            name: Garage
+            icon: mdi:mushroom
+          - type: tile
+            entity: sensor.husvagn_mogelrisk
+            name: Husvagn
+            icon: mdi:mushroom
+          - type: tile
+            entity: sensor.uterum_mogelrisk
+            name: Uterum
+            icon: mdi:mushroom
+
+      - type: heading
+        heading: Ventilation och värme
 
       - type: grid
         columns: 2
@@ -51,7 +91,7 @@ views:
         cards:
           - type: tile
             entity: switch.ventilationsaggregat
-            name: Ventilation
+            name: Ventilationsaggregat
             icon: mdi:fan
           - type: tile
             entity: switch.shelly1_c45bbe77099d
@@ -59,62 +99,15 @@ views:
             icon: mdi:fan-speed-3
           - type: tile
             entity: input_boolean.alarm_ventilation
-            name: Larm status
+            name: Ventilationslarm
             icon: mdi:alert-circle
-
-      - type: grid
-        columns: 2
-        square: false
-        cards:
-          - type: tile
-            entity: sensor.badrum_luftfuktighet
-            name: Badrum fukt
-          - type: tile
-            entity: sensor.fukt_badrumsfonster
-            name: Fönster fukt
-          - type: tile
-            entity: sensor.badrum_temperatur
-            name: Badrum temp
-          - type: tile
-            entity: sensor.esphome_web_37a3e8_bme680_iaq_classification
-            name: ESPHome luftkvalitet
-
-      - type: heading
-        heading: 🌡️ Temperaturer & Inomhusklimat
-
-      - type: grid
-        columns: 2
-        square: false
-        cards:
-          - type: tile
-            entity: sensor.ute
-            name: Ute
-            icon: mdi:thermometer
-          - type: tile
-            entity: sensor.inne_medel
-            name: Inne medel
-            icon: mdi:home-thermometer
-          - type: tile
-            entity: sensor.hall_temperatur
-            name: Hall
-          - type: tile
-            entity: sensor.tvattstuga_temperature
-            name: Tvättstuga
-
-      - type: heading
-        heading: ⚡ Värmezoner & Frostskydd
-
-      - type: grid
-        columns: 2
-        square: false
-        cards:
           - type: tile
             entity: switch.forrad_elvarme
-            name: Förråd elvärme
+            name: Förråd
             icon: mdi:radiator
           - type: tile
             entity: switch.friggebod_elvarme
-            name: Friggebod elvärme
+            name: Friggebod
             icon: mdi:radiator
           - type: tile
             entity: sensor.varmepump_temperature
@@ -122,36 +115,32 @@ views:
             icon: mdi:heat-pump
 
       - type: heading
-        heading: ⚠️ Mögelrisk & Ytterzoner
+        heading: Övriga klimatvärden
 
       - type: grid
         columns: 2
         square: false
         cards:
           - type: tile
-            entity: sensor.uterum_temperatur
-            name: Uterum
+            entity: sensor.ute
+            name: Utomhustemperatur
+            icon: mdi:thermometer
           - type: tile
-            entity: sensor.garage_temperature
-            name: Garage
+            entity: sensor.ute_friggebod_humidity
+            name: Utomhusfukt
+            icon: mdi:water-percent
           - type: tile
-            entity: sensor.forrad_temperature
-            name: Förråd
+            entity: sensor.inne_medel
+            name: Innetemperatur, medel
+            icon: mdi:home-thermometer
           - type: tile
-            entity: sensor.friggebod_temperatur
-            name: Friggebod
+            entity: sensor.hall_temperatur
+            name: Hall
+            icon: mdi:thermometer
           - type: tile
-            entity: sensor.uterum_mogelrisk
-            name: Mögelrisk Uterum
-          - type: tile
-            entity: sensor.garage_mogelrisk
-            name: Mögelrisk Garage
-          - type: tile
-            entity: sensor.forrad_mogelrisk
-            name: Mögelrisk Förråd
-          - type: tile
-            entity: sensor.friggebod_mogelrisk
-            name: Mögelrisk Friggebod
+            entity: sensor.esphome_web_37a3e8_bme680_iaq_classification
+            name: Luftkvalitet
+            icon: mdi:air-filter
 
   #######################################################
   # TAB 2: RUM & ZONER (ROOMS & ZONES)
@@ -180,9 +169,14 @@ views:
           - entity: sensor.badrum_luftfuktighet
             name: Badrum luftfuktighet
           - entity: sensor.fukt_badrumsfonster
-            name: Fönster luftfuktighet
+            name: Fönster – beräknad luftfuktighet
           - entity: sensor.badrum_temperatur
             name: Badrum temperatur
+
+      - type: tile
+        entity: sensor.badrum_mogelrisk
+        name: Badrum
+        icon: mdi:mushroom
 
       - type: grid
         columns: 3
@@ -214,7 +208,7 @@ views:
             needle: true
           - type: gauge
             entity: sensor.fukt_badrumsfonster
-            name: Fukt Badrum Fönster
+            name: Beräknad fukt vid fönster
             min: 0
             max: 100
             severity:
@@ -235,8 +229,34 @@ views:
           - entity: sensor.badrum_luftfuktighet
             name: Fukt Badrum
           - entity: sensor.fukt_badrumsfonster
-            name: Fukt Fönster
+            name: Beräknad fukt vid fönster
         hours_to_show: 24
+
+      - type: entities
+        title: Tvättstuga – klimat
+        entities:
+          - entity: sensor.tvattstuga_temperature
+            name: Temperatur
+          - entity: sensor.tvattstuga_humidity
+            name: Luftfuktighet
+
+      - type: tile
+        entity: sensor.tvattstuga_mogelrisk
+        name: Tvättstuga
+        icon: mdi:mushroom
+
+      - type: entities
+        title: Vind – klimat
+        entities:
+          - entity: sensor.vinden_temperature
+            name: Temperatur
+          - entity: sensor.vinden_luftfuktighet
+            name: Luftfuktighet
+
+      - type: tile
+        entity: sensor.vind_mogelrisk
+        name: Vind
+        icon: mdi:mushroom
 
       # --- FÖRRÅD ---
       - type: heading

@@ -432,6 +432,8 @@ views:
           - sensor.garage_temperature
           - sensor.garage_humidity
           - sensor.pa_vinden
+          - sensor.vinden_temperature
+          - sensor.vinden_luftfuktighet
           - sensor.husvagn_temperature
           - sensor.husvagn_humidity
         title: Övrigt
@@ -1035,6 +1037,8 @@ views:
       - type: entities
         entities:
           - sensor.pa_vinden
+          - sensor.vinden_temperature
+          - sensor.vinden_luftfuktighet
         title: Vinden
         show_header_toggle: false
         state_color: true

@@ -75,6 +75,9 @@ views:
           - type: tile
             entity: sensor.badrum_temperatur
             name: Badrum temp
+          - type: tile
+            entity: sensor.esphome_web_37a3e8_bme680_iaq_classification
+            name: ESPHome luftkvalitet
 
       - type: heading
         heading: 🌡️ Temperaturer & Inomhusklimat
@@ -182,6 +185,20 @@ views:
             name: Badrum temperatur
 
       - type: grid
+        columns: 3
+        square: false
+        cards:
+          - type: tile
+            entity: sensor.esphome_web_37a3e8_temperatur
+            name: Temperatur (ESPHome)
+          - type: tile
+            entity: sensor.esphome_web_37a3e8_luftfuktighet
+            name: Luftfuktighet (ESPHome)
+          - type: tile
+            entity: sensor.esphome_web_37a3e8_bme680_iaq_classification
+            name: Luftkvalitet
+
+      - type: grid
         columns: 2
         square: false
         cards:
@@ -209,6 +226,8 @@ views:
       - type: history-graph
         title: Ventilation & Badrumsfukt (24h)
         entities:
+          - entity: sensor.esphome_web_37a3e8_luftfuktighet
+            name: Fukt ESPHome
           - entity: switch.ventilationsaggregat
             name: Aggregat På/Av
           - entity: switch.shelly1_c45bbe77099d

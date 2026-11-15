@@ -397,6 +397,36 @@ automation:
           below: 10
 
     action:
+      - variables:
+          snapshot_camera: >-
+            {% if states('sensor.cam5_animal_count') | int(0) > 0 -%}
+            camera.kamera5_snapshots_clear
+            {%- elif states('sensor.cam6_animal_count') | int(0) > 0 -%}
+            camera.kamera6_snapshots_clear
+            {%- elif states('sensor.cam8_animal_count') | int(0) > 0 -%}
+            camera.kamera8_hog_klarhet
+            {%- endif %}
+          snapshot_label: >-
+            {% if states('sensor.cam5_animal_count') | int(0) > 0 -%}
+            cam5
+            {%- elif states('sensor.cam6_animal_count') | int(0) > 0 -%}
+            cam6
+            {%- elif states('sensor.cam8_animal_count') | int(0) > 0 -%}
+            cam8
+            {%- endif %}
+      - variables:
+          snapshot_file: >-
+            {{ '/media/Away/animal_' ~ snapshot_label ~ '_latest.jpg' if snapshot_camera and states(snapshot_camera) not in ['unavailable', 'unknown'] else '' }}
+          snapshot_image: >-
+            {{ '/media/local/Away/animal_' ~ snapshot_label ~ '_latest.jpg' if snapshot_camera and states(snapshot_camera) not in ['unavailable', 'unknown'] else '' }}
+      - if:
+          - condition: template
+            value_template: "{{ snapshot_file != '' }}"
+        then:
+          - service: camera.snapshot
+            data:
+              entity_id: "{{ snapshot_camera }}"
+              filename: "{{ snapshot_file }}"
       - service: notify.mobile_app_sm_a528b
         data_template:
           title: >
@@ -408,6 +438,8 @@ automation:
             - Dog:      {{ states('sensor.cam5_dog_count') | int(0) }} {{ states('sensor.cam6_dog_count') | int(0) }} {{ states('sensor.cam8_dog_count') | int(0) }}
             - Horse:    {{ states('sensor.cam5_horse_count') | int(0) }} {{ states('sensor.cam6_horse_count') | int(0) }} {{ states('sensor.cam8_horse_count') | int(0) }}
             - Sheep:    {{ states('sensor.cam5_sheep_count') | int(0) }} {{ states('sensor.cam6_sheep_count') | int(0) }} {{ states('sensor.cam8_sheep_count') | int(0) }}
+          data:
+            image: "{{ snapshot_image }}"
 
   #######################################
   ### Turn Off Deck Light After 10 Minutes (failsafe) ###

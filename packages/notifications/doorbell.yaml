@@ -105,7 +105,7 @@ automation:
                           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
                           message: "Ringklocka tvättstuga, dag"
                           data:
-                            file: /media/Day/camera_10_latest.jpg
+                            image: /media/local/Day/camera_10_latest.jpg
                   - conditions:
                       - condition: state
                         entity_id: input_select.home_status
@@ -120,7 +120,7 @@ automation:
                           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
                           message: "Ringklocka tvättstuga, natt"
                           data:
-                            file: /media/Night/camera_10_latest.jpg
+                            image: /media/local/Night/camera_10_latest.jpg
                   - conditions:
                       - condition: state
                         entity_id: input_select.home_status
@@ -135,7 +135,7 @@ automation:
                           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
                           message: "Ringklocka tvättstuga, borta"
                           data:
-                            file: /media/Away/camera_10_latest.jpg
+                            image: /media/local/Away/camera_10_latest.jpg
               - delay:
                   seconds: 10
 
@@ -188,7 +188,7 @@ automation:
                           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
                           message: "Ringklocka hall, dag"
                           data:
-                            file: /media/Day/camera_2_latest.jpg
+                            image: /media/local/Day/camera_2_latest.jpg
                   - conditions:
                       - condition: state
                         entity_id: input_select.home_status
@@ -203,7 +203,7 @@ automation:
                           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
                           message: "Ringklocka hall, natt"
                           data:
-                            file: /media/Night/camera_2_latest.jpg
+                            image: /media/local/Night/camera_2_latest.jpg
                   - conditions:
                       - condition: state
                         entity_id: input_select.home_status
@@ -218,7 +218,7 @@ automation:
                           title: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
                           message: "Ringklocka hall, borta"
                           data:
-                            file: /media/Away/camera_2_latest.jpg
+                            image: /media/local/Away/camera_2_latest.jpg
               - delay:
                   seconds: 10
 

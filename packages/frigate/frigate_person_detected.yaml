@@ -84,6 +84,30 @@ automation:
 
     action:
       - variables:
+          snapshot_camera: >-
+            {% if states('sensor.cam5_person_count') | int(0) > 0 -%}
+            camera.kamera5_snapshots_clear
+            {%- elif states('sensor.cam6_person_count') | int(0) > 0 -%}
+            camera.kamera6_snapshots_clear
+            {%- elif states('sensor.cam10_person_count') | int(0) > 0 -%}
+            camera.kamera10_hog_klarhet
+            {%- elif states('sensor.cam8_person_count') | int(0) > 0 -%}
+            camera.kamera8_hog_klarhet
+            {%- elif states('sensor.cam9_person_count') | int(0) > 0 -%}
+            camera.kamera9_hog_klarhet
+            {%- endif %}
+          snapshot_label: >-
+            {% if states('sensor.cam5_person_count') | int(0) > 0 -%}
+            cam5
+            {%- elif states('sensor.cam6_person_count') | int(0) > 0 -%}
+            cam6
+            {%- elif states('sensor.cam10_person_count') | int(0) > 0 -%}
+            cam10
+            {%- elif states('sensor.cam8_person_count') | int(0) > 0 -%}
+            cam8
+            {%- elif states('sensor.cam9_person_count') | int(0) > 0 -%}
+            cam9
+            {%- endif %}
           detection_message: >
             {% set detections = [] %}
             {% if states('sensor.cam10_person_count') | int(0) > 0 %}
@@ -102,6 +126,19 @@ automation:
               {% set detections = detections + ['- Cam 9 Garage: ' + states('sensor.cam9_person_count')] %}
             {% endif %}
             {{ detections | join('\n') }}
+      - variables:
+          snapshot_file: >-
+            {{ '/media/Away/person_' ~ snapshot_label ~ '_latest.jpg' if snapshot_camera and states(snapshot_camera) not in ['unavailable', 'unknown'] else '' }}
+          snapshot_image: >-
+            {{ '/media/local/Away/person_' ~ snapshot_label ~ '_latest.jpg' if snapshot_camera and states(snapshot_camera) not in ['unavailable', 'unknown'] else '' }}
+      - if:
+          - condition: template
+            value_template: "{{ snapshot_file != '' }}"
+        then:
+          - service: camera.snapshot
+            data:
+              entity_id: "{{ snapshot_camera }}"
+              filename: "{{ snapshot_file }}"
       - choose:
           - conditions:
               - condition: state
@@ -115,6 +152,8 @@ automation:
                   message: >
                     Person detected:
                     {{ detection_message }}
+                  data:
+                    image: "{{ snapshot_image }}"
           - conditions:
               - condition: state
                 entity_id: input_select.home_status
@@ -127,6 +166,8 @@ automation:
                   message: >
                     Person detected (priority cameras):
                     {{ detection_message }}
+                  data:
+                    image: "{{ snapshot_image }}"
 
   # Delayed notifications for non-priority cameras when away
   - alias: Person Detection Notify Delayed
@@ -157,6 +198,22 @@ automation:
       # Capture detection info at trigger time
       - variables:
           trigger_time: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+          snapshot_camera: >-
+            {% if states('sensor.cam10_person_count') | int(0) > 0 -%}
+            camera.kamera10_hog_klarhet
+            {%- elif states('sensor.cam8_person_count') | int(0) > 0 -%}
+            camera.kamera8_hog_klarhet
+            {%- elif states('sensor.cam9_person_count') | int(0) > 0 -%}
+            camera.kamera9_hog_klarhet
+            {%- endif %}
+          snapshot_label: >-
+            {% if states('sensor.cam10_person_count') | int(0) > 0 -%}
+            cam10
+            {%- elif states('sensor.cam8_person_count') | int(0) > 0 -%}
+            cam8
+            {%- elif states('sensor.cam9_person_count') | int(0) > 0 -%}
+            cam9
+            {%- endif %}
           detection_message: >
             {% set detections = [] %}
             {% if states('sensor.cam10_person_count') | int(0) > 0 %}
@@ -175,6 +232,19 @@ automation:
               {% set detections = detections + ['- Cam 9 Garage: ' + states('sensor.cam9_person_count')] %}
             {% endif %}
             {{ detections | join('\n') }}
+      - variables:
+          snapshot_file: >-
+            {{ '/media/Away/person_' ~ snapshot_label ~ '_latest.jpg' if snapshot_camera and states(snapshot_camera) not in ['unavailable', 'unknown'] else '' }}
+          snapshot_image: >-
+            {{ '/media/local/Away/person_' ~ snapshot_label ~ '_latest.jpg' if snapshot_camera and states(snapshot_camera) not in ['unavailable', 'unknown'] else '' }}
+      - if:
+          - condition: template
+            value_template: "{{ snapshot_file != '' }}"
+        then:
+          - service: camera.snapshot
+            data:
+              entity_id: "{{ snapshot_camera }}"
+              filename: "{{ snapshot_file }}"
       # Wait 3 minutes
       - delay: "00:03:00"
       # Check if still away and no immediate notification was sent in the meantime
@@ -197,6 +267,8 @@ automation:
           message: >
             Person detected at {{ trigger_time }}:
             {{ detection_message }}
+          data:
+            image: "{{ snapshot_image }}"
 
   ####################################
   ### Blink Light Person Detcected ###

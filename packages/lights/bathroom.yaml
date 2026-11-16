@@ -15,7 +15,7 @@
 # - helpers/input_selects.yaml (light_bathroom)
 #
 # Hårdvara/Entiteter:
-# - Närvarosensor: binary_sensor.motion_sensor
+# - Närvarosensor: binary_sensor.vallhorn_badrum
 # - Ljussensor: sensor.kokets_ljusniva
 # - Belysning: light.fonster_spott
 # - input_select.light_bathroom (Släckt/Dag/Dag närvaro/Natt närvaro)
@@ -47,7 +47,7 @@ automation:
 # som sätter input_select.light_bathroom vid behov.
 #
 # HÅRDVARA:
-# - Närvarosensor: binary_sensor.motion_sensor
+# - Närvarosensor: binary_sensor.vallhorn_badrum
 # - Ljussensor: sensor.kokets_ljusniva
 # - Belysning: light.fonster_spott
 #
@@ -118,11 +118,11 @@ automation:
         entity_id: input_select.home_status
 
       - platform: state
-        entity_id: binary_sensor.motion_sensor
+        entity_id: binary_sensor.vallhorn_badrum
         to: 'on'
 
       - platform: state
-        entity_id: binary_sensor.motion_sensor
+        entity_id: binary_sensor.vallhorn_badrum
         to: 'off'
         for:
           seconds: 60

@@ -9,7 +9,7 @@ script:
     sequence:
       - variables:
           home_status: "{{ states('input_select.home_status') }}"
-          motion: "{{ is_state('binary_sensor.motion_sensor', 'on') }}"
+          motion: "{{ is_state('binary_sensor.vallhorn_badrum', 'on') }}"
           lux: "{{ states('sensor.kokets_ljusniva') | float(none) }}"
           current_option: "{{ states('input_select.light_bathroom') }}"
 

@@ -444,7 +444,7 @@ template:
         unique_id: lights_debug_bathroom
         state: >-
           {% set home_status = states('input_select.home_status') %}
-          {% set motion = is_state('binary_sensor.motion_sensor', 'on') %}
+          {% set motion = is_state('binary_sensor.vallhorn_badrum', 'on') %}
           {% set lux = states('sensor.kokets_ljusniva') | float(none) %}
           {% set is_dark = lux is number and lux < 100 %}
           {% set is_bright = lux is number and lux > 150 %}
@@ -477,7 +477,7 @@ template:
             {% else %}Stämmer med valt läge{% endif %}
           lights_on: "{{ 'Fönsterspott' if is_state('light.fonster_spott', 'on') else 'Inga' }}"
           home_status: "{{ states('input_select.home_status') | trim }}"
-          motion: "{{ is_state('binary_sensor.motion_sensor', 'on') }}"
+          motion: "{{ is_state('binary_sensor.vallhorn_badrum', 'on') }}"
           lux: "{{ states('sensor.kokets_ljusniva') }}"
           is_dark: >-
             {% set lux = states('sensor.kokets_ljusniva') | float(none) %}
@@ -487,7 +487,7 @@ template:
             {{ lux is number and lux > 150 }}
           reason: >-
             {% set home_status = states('input_select.home_status') %}
-            {% set motion = is_state('binary_sensor.motion_sensor', 'on') %}
+            {% set motion = is_state('binary_sensor.vallhorn_badrum', 'on') %}
             {% set lux = states('sensor.kokets_ljusniva') | float(none) %}
             {% set is_dark = lux is number and lux < 100 %}
             {% set is_bright = lux is number and lux > 150 %}
@@ -505,7 +505,7 @@ template:
           why_not: >-
             {% set desired = (states('sensor.lights_debug_bathroom') | trim) %}
             {% set home_status = states('input_select.home_status') %}
-            {% set motion = is_state('binary_sensor.motion_sensor', 'on') %}
+            {% set motion = is_state('binary_sensor.vallhorn_badrum', 'on') %}
             {% set lux = states('sensor.kokets_ljusniva') | float(none) %}
             {% set is_dark = lux is number and lux < 100 %}
             {% set is_bright = lux is number and lux > 150 %}

@@ -26,16 +26,11 @@ views:
         state_color: true
       - type: entities
         entities:
-          - automation.garage_avfuktare_styrning
-          - automation.starta_avfuktare
-          - automation.stoppa_avfuktare
-        title: Garage avfuktare
-        show_header_toggle: true
-        state_color: true
-      - type: entities
-        entities:
-          - automation.elvarme_garage
-        title: Förråd elvärme
+          - automation.garage_komplett_smart_varmestyrning
+          - automation.garage_rakna_varmetid
+          - automation.garage_reset_varmetid
+          - automation.garage_mogelvarning
+        title: Garage värmestyrning
         show_header_toggle: true
         state_color: true
       - type: entities

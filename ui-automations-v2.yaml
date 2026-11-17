@@ -206,8 +206,10 @@ views:
         show_header_toggle: true
         state_color: true
         entities:
-          - automation.elvarme_garage
-          - automation.garage_avfuktare_styrning
+          - automation.garage_komplett_smart_varmestyrning
+          - automation.garage_rakna_varmetid
+          - automation.garage_reset_varmetid
+          - automation.garage_mogelvarning
 
       # Heating - Friggebod
       - type: entities

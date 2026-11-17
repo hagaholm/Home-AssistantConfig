@@ -1,19 +1,22 @@
 ####################################################
 #                                                  #
-#           GARAGE ÖVERVAKNING PACKAGE             #
+#           GARAGE KLIMAT PACKAGE                  #
 #                                                  #
 ####################################################
-# Övervakning av klimat i garage baserat på temperatur och fukt.
-# Systemet beräknar absolut fuktighet och varnar vid hög mögelrisk.
+# Styr elvärme och övervakar klimat i garaget baserat på temperatur och fukt.
+# Systemet skyddar mot frost, reglerar fukt och varnar vid hög mögelrisk.
 #
 # EXTERNA BEROENDEN (sensorer definierade på annat håll):
 # - sensor.garage_temperature (temperatur garage, °C)
 # - sensor.garage_humidity (relativ fukt garage, %)
 # - sensor.ute (utomhustemperatur, °C)
 # - sensor.ute_friggebod_humidity (relativ fukt ute, %)
+# - switch.garage_elvarme (framtida brytare, namn: Garage elvärme)
 # - notify.* (notification service, se input_text.garage_notification_target)
 #
 # Funktioner:
+# - Frostskydd och fuktdriven värmestyrning
+# - Daglig begränsning av värmetid och minsta gångtid
 # - Mögelriskberäkning (absolut fukt + relativ fukt)
 # - Mögelvarning vid högt värde
 ####################################################
@@ -89,9 +92,131 @@ template:
           {% endif %}
 
 ############################################
+# VÄRMEHELPERS
+############################################
+input_boolean:
+  garage_varme_auto:
+    name: Garage värme automatik
+    icon: mdi:radiator
+
+timer:
+  garage_min_runtime:
+    name: Garage min gångtid
+    duration: "00:30:00"
+
+counter:
+  garage_varme_tid:
+    name: Garage värmetid idag
+    initial: 0
+    step: 1
+
+############################################
 # AUTOMATIONER
 ############################################
 automation:
+  - alias: Garage – räkna värmetid
+    description: Räknar upp värmetid var tionde minut när värmaren är på
+    trigger:
+      - platform: time_pattern
+        minutes: "/10"
+    condition:
+      - condition: state
+        entity_id: switch.garage_elvarme
+        state: "on"
+    action:
+      - service: counter.increment
+        target:
+          entity_id: counter.garage_varme_tid
+
+  - alias: Garage – reset värmetid
+    description: Nollställer värmetidsräknaren varje midnatt
+    trigger:
+      - platform: time
+        at: "00:00:00"
+    action:
+      - service: counter.reset
+        target:
+          entity_id: counter.garage_varme_tid
+
+  - alias: Garage – komplett smart värmestyrning
+    description: Styr garagets elvärme baserat på temperatur, fukt och daglig körtid
+    mode: restart
+    trigger:
+      - platform: time_pattern
+        minutes: "/5"
+      - platform: state
+        entity_id:
+          - sensor.garage_temperature
+          - sensor.garage_humidity
+          - sensor.ute
+          - sensor.ute_friggebod_humidity
+    condition:
+      - condition: state
+        entity_id: input_boolean.garage_varme_auto
+        state: "on"
+    action:
+      - variables:
+          temp_frostskydd: 5
+          temp_min_for_fuktvarme: 0
+          rh_aktivering: 60
+          rh_avaktivering: 55
+          delta_abs_aktivering: 1.0
+          delta_abs_avaktivering: 0.5
+          max_varmetid: 12
+          temp_in: "{{ states('sensor.garage_temperature') | float(0) }}"
+          rh_in: "{{ states('sensor.garage_humidity') | float(0) }}"
+          abs_in: "{{ states('sensor.garage_absolut_fukt_inne') | float(0) }}"
+          abs_out: "{{ states('sensor.utomhus_absolut_fukt') | float(0) }}"
+          delta_abs: "{{ abs_in - abs_out }}"
+          runtime_ok: "{{ states('counter.garage_varme_tid') | int(0) < max_varmetid }}"
+
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: "{{ temp_in < temp_frostskydd }}"
+            sequence:
+              - service: switch.turn_on
+                target:
+                  entity_id: switch.garage_elvarme
+              - condition: state
+                entity_id: timer.garage_min_runtime
+                state: "idle"
+              - service: timer.start
+                target:
+                  entity_id: timer.garage_min_runtime
+
+          - conditions:
+              - condition: template
+                value_template: >
+                  {{ rh_in > rh_aktivering
+                     and delta_abs > delta_abs_aktivering
+                     and temp_in > temp_min_for_fuktvarme
+                     and runtime_ok }}
+            sequence:
+              - service: switch.turn_on
+                target:
+                  entity_id: switch.garage_elvarme
+              - condition: state
+                entity_id: timer.garage_min_runtime
+                state: "idle"
+              - service: timer.start
+                target:
+                  entity_id: timer.garage_min_runtime
+
+          - conditions:
+              - condition: template
+                value_template: >
+                  {{ rh_in < rh_avaktivering
+                     or delta_abs < delta_abs_avaktivering
+                     or not runtime_ok }}
+              - condition: state
+                entity_id: timer.garage_min_runtime
+                state: "idle"
+            sequence:
+              - service: switch.turn_off
+                target:
+                  entity_id: switch.garage_elvarme
+
   # AUTO: MÖGELVARNING
   # Skickar notifikation om mögelrisken är högt under längre tid.
   - alias: Garage – mögelvarning

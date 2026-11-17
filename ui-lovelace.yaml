@@ -1082,6 +1082,8 @@ views:
         state_color: true
       - type: entities
         entities:
+          - entity: switch.garage_elvarme
+            name: Elvärme
           - sensor.garage_temperature
           - sensor.garage_humidity
           - sensor.garage_mogelrisk

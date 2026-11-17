@@ -376,9 +376,34 @@ views:
           - entity: sensor.friggebod_temperaturfall_per_timme
             name: Temperaturfall (°C/h)
 
+      # --- GARAGE ---
+      - type: heading
+        heading: Garage (Smart Fukt- & Värmestyrning)
+
+      - type: entities
+        title: Garage Drift & Miljö
+        state_color: true
+        entities:
+          - entity: input_boolean.garage_varme_auto
+            name: Värmeautomatik
+          - entity: switch.garage_elvarme
+            name: Garage elvärme (brytare läggs till senare)
+          - entity: sensor.garage_temperature
+            name: Temperatur inne
+          - entity: sensor.garage_humidity
+            name: Luftfuktighet inne
+          - entity: sensor.garage_absolut_fukt_inne
+            name: Absolut fukt inne
+          - entity: sensor.garage_mogelrisk
+            name: Mögelrisk
+          - entity: counter.garage_varme_tid
+            name: Värmetid idag
+          - entity: timer.garage_min_runtime
+            name: Minsta gångtid
+
       # --- ÖVRIGA ZONER ---
       - type: heading
-        heading: 🏠 Uterum, Garage, Husvagn & Ute
+        heading: 🏠 Uterum, Husvagn & Ute
 
       - type: entities
         title: Ytterzoner Sensorer & Mögelrisk
@@ -390,12 +415,6 @@ views:
             name: Uterum luftfuktighet
           - entity: sensor.uterum_mogelrisk
             name: Uterum mögelrisk
-          - entity: sensor.garage_temperature
-            name: Garage temperatur
-          - entity: sensor.garage_humidity
-            name: Garage luftfuktighet
-          - entity: sensor.garage_mogelrisk
-            name: Garage mögelrisk
           - entity: sensor.husvagn_temperature
             name: Husvagn temperatur
           - entity: sensor.husvagn_humidity

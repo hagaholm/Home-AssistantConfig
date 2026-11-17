@@ -10,14 +10,14 @@ input_select:
     # Used by: light_morning, light_day, light_evening, light_night scripts
     options:
       - Släckt
-      - Morgonbelysning
-      - Förmiddagsbelysning
-      - Dagbelysning
-      - Kvällsbelysning
-      - Nattbelysning
-      - Bortabelysning
-      - Arbetsbelysning
-      - Fönsterbelysning
+      - Morgon
+      - Förmiddag
+      - Dag
+      - Kväll
+      - Natt
+      - Borta
+      - Arbete
+      - Fönster
     icon: mdi:lightbulb
 
 ########################
@@ -66,21 +66,21 @@ template:
           {% set kitchen_motion = is_state('binary_sensor.kok_narvaro', 'on') %}
 
           {% if home_status == 'Borta' and awaylight_on and is_time_08_22 and borta_long_enough %}
-            Bortabelysning
+            Borta
           {% elif home_status == 'Sover' %}
             {% if kitchen_motion and daylight_on %}
-              Nattbelysning
+              Natt
             {% else %}
               Släckt
             {% endif %}
           {% elif home_status == 'Hemma' and morning_on and is_time_05_09 %}
-            Morgonbelysning
+            Morgon
           {% elif pause_day_window_transition and home_status == 'Hemma' and is_time_09_05 and daylight_on %}
             {{ current_option | trim }}
           {% elif home_status == 'Hemma' and daylight_on and is_time_09_05 %}
-            Dagbelysning
+            Dag
           {% elif home_status == 'Hemma' and christmas_on and is_time_09_05 %}
-            Fönsterbelysning
+            Fönster
           {% else %}
             Släckt
           {% endif %}

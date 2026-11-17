@@ -70,13 +70,17 @@ The system supports automatic switching between standard and Christmas lighting:
 4. **Scripts:** Automatically detect mode via templates in `/scripts/light_*.yaml`
 
 ### Light Groups
-- **Dagbelysning** - Daytime lighting
-- **Morgonbelysning** - Morning lighting  
-- **Nattbelysning** - Night lighting
-- **Bortabelysning** - Away mode lighting
-- **Fasadbelysning** - Facade lighting
-- **Utebelysning** - Outdoor lighting
-- Room-specific: Kök, Vardagsrum, Hall, Sovrum, Badrum, Uterum, etc.
+- **Scenario – Inne – Dag** - Daytime lighting
+- **Scenario – Inne – Morgon** - Morning lighting
+- **Scenario – Inne – Natt** - Night lighting
+- **Scenario – Inne – Borta** - Away mode lighting
+- **Område – Fasad** - Facade lighting
+- **Område – Ute – Friggebod och spabad** - Outdoor lighting
+- **Funktion – Kök – Bänk och vitrin** - Kitchen counter and cabinet lights
+- **Funktion – Hall – Tak** - Hall ceiling lights
+- Room groups: **Rum – Kök – Fönster**, **Rum – Vardagsrum**, **Rum – Hall**, **Rum – Sovrum**, **Rum – Louise**, **Rum – Andreas**, **Rum – Uterum**, and **Rum – Badrum**
+- Christmas scenarios: **Scenario – Inne – Dag – Jul**, **Scenario – Inne – Morgon – Jul**, **Scenario – Inne – Natt – Jul**, and **Scenario – Inne – Borta – Jul**
+- Christmas room groups: **Rum – Hall – Jul**, **Rum – Vardagsrum – Jul**, **Rum – Kök – Fönster – Jul**, **Rum – Andreas – Jul**, and **Rum – Uterum – Jul**
 
 ## 🌡️ Temperature Monitoring
 

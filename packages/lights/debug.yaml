@@ -35,7 +35,7 @@ template:
             {'name': 'Kök vitrinskåp', 'entity': 'light.kok_vitrinskap', 'mute': 'input_boolean.monitor_light_kok_vitrinskap'},
             {'name': 'Kök stora fönstret', 'entity': 'light.kok_stora_fonstret', 'mute': 'input_boolean.monitor_light_kok_stora_fonstret'},
             {'name': 'Kök lilla fönstret', 'entity': 'light.kok_lilla_fonstret', 'mute': 'input_boolean.monitor_light_kok_lilla_fonstret'},
-            {'name': 'Hall tak', 'entity': 'light.hall_tak', 'mute': 'input_boolean.monitor_light_hall_tak'},
+            {'name': 'Funktion – Hall – Tak', 'entity': 'light.funktion_hall_tak', 'mute': 'input_boolean.monitor_light_hall_tak'},
             {'name': 'Hall byrå', 'entity': 'light.hall_byra', 'mute': 'input_boolean.monitor_light_hall_byra'},
             {'name': 'Hall skåp', 'entity': 'light.hall_skap', 'mute': 'input_boolean.monitor_light_hall_skap'},
             {'name': 'Badrum fönsterspott', 'entity': 'light.fonster_spott', 'mute': 'input_boolean.monitor_light_fonster_spott'},
@@ -98,7 +98,7 @@ template:
               {'name': 'Kök vitrinskåp', 'entity': 'light.kok_vitrinskap', 'mute': 'input_boolean.monitor_light_kok_vitrinskap'},
               {'name': 'Kök stora fönstret', 'entity': 'light.kok_stora_fonstret', 'mute': 'input_boolean.monitor_light_kok_stora_fonstret'},
               {'name': 'Kök lilla fönstret', 'entity': 'light.kok_lilla_fonstret', 'mute': 'input_boolean.monitor_light_kok_lilla_fonstret'},
-              {'name': 'Hall tak', 'entity': 'light.hall_tak', 'mute': 'input_boolean.monitor_light_hall_tak'},
+              {'name': 'Funktion – Hall – Tak', 'entity': 'light.funktion_hall_tak', 'mute': 'input_boolean.monitor_light_hall_tak'},
               {'name': 'Hall byrå', 'entity': 'light.hall_byra', 'mute': 'input_boolean.monitor_light_hall_byra'},
               {'name': 'Hall skåp', 'entity': 'light.hall_skap', 'mute': 'input_boolean.monitor_light_hall_skap'},
               {'name': 'Badrum fönsterspott', 'entity': 'light.fonster_spott', 'mute': 'input_boolean.monitor_light_fonster_spott'},
@@ -205,7 +205,7 @@ template:
           current_option: "{{ states('input_select.light_inside') | trim }}"
           reality_status: >-
             {% set selected_mode = states('input_select.light_inside') | trim %}
-            {% set lights_on = expand('light.dagbelysning', 'light.dagbelysning_jul')
+            {% set lights_on = expand('light.scenario_inne_dag', 'light.scenario_inne_dag_jul')
               | selectattr('state', 'eq', 'on') | map(attribute='name') | unique | list %}
             {% if selected_mode == 'Släckt' and lights_on | count > 0 %}
               Avvikelse: {{ lights_on | count }} lampa(or) är tänd(a)
@@ -215,12 +215,12 @@ template:
               Övervakade tända lampor: {{ lights_on | count }}
             {% endif %}
           lights_on: >-
-            {% set lights_on = expand('light.dagbelysning', 'light.dagbelysning_jul')
+            {% set lights_on = expand('light.scenario_inne_dag', 'light.scenario_inne_dag_jul')
               | selectattr('state', 'eq', 'on') | map(attribute='name') | unique | list %}
             {{ lights_on | join(', ') if lights_on else 'Inga' }}
           home_status: "{{ states('input_select.home_status') | trim }}"
           manual_evening_lock: >-
-            {{ (states('input_select.light_inside') | trim) == 'Kvällsbelysning'
+            {{ (states('input_select.light_inside') | trim) == 'Kväll'
               and (states('input_select.home_status') | trim) == 'Hemma'
             }}
           seconds_since_home_status_changed: >-
@@ -256,8 +256,8 @@ template:
             {% set awaylight_on = is_state('input_boolean.awaylight_on', 'on') %}
             {% set christmas_on = is_state('input_boolean.christmas_light', 'on') %}
             {% set kitchen_motion = is_state('binary_sensor.kok_narvaro', 'on') %}
-            {% if (current_option | trim) == 'Kvällsbelysning' and (home_status | trim) == 'Hemma' %}
-              Manuell Kvällsbelysning (låst)
+            {% if (current_option | trim) == 'Kväll' and (home_status | trim) == 'Hemma' %}
+              Manuell Kväll (låst)
             {% elif home_status == 'Borta' and awaylight_on and is_time_08_22 and borta_long_enough %}
               Borta + awaylight_on + tid 08-22 + borta>=60s
             {% elif home_status == 'Sover' %}
@@ -293,7 +293,7 @@ template:
 
             {% set lines = [
               'Släckt: ' ~ ('VALD' if desired == 'Släckt' else 'Inte vald (någon regel matchade: ' ~ desired ~ ')'),
-              'Morgonbelysning: ' ~ ('VALD' if desired == 'Morgonbelysning' else (
+              'Morgon: ' ~ ('VALD' if desired == 'Morgon' else (
                 'Kräver Hemma + morning_on + tid 05-09' ~ (
                   '' if (home_status == 'Hemma' and morning_on and is_time_05_09) else
                   ' (saknas: ' ~ (
@@ -303,7 +303,7 @@ template:
                   ) ~ ')'
                 )
               )),
-              'Dagbelysning: ' ~ ('VALD' if desired == 'Dagbelysning' else (
+              'Dag: ' ~ ('VALD' if desired == 'Dag' else (
                 'Kräver Hemma + daylight_on + tid 09-05 + ej pausad' ~ (
                   '' if (home_status == 'Hemma' and daylight_on and is_time_09_05 and not pause_day_window_transition) else
                   ' (saknas: ' ~ (
@@ -314,7 +314,7 @@ template:
                   ) ~ ')'
                 )
               )),
-              'Nattbelysning: ' ~ ('VALD' if desired == 'Nattbelysning' else (
+              'Natt: ' ~ ('VALD' if desired == 'Natt' else (
                 'Kräver Sover + köksrörelse + daylight_on' ~ (
                   '' if (home_status == 'Sover' and kitchen_motion and daylight_on) else
                   ' (saknas: ' ~ (
@@ -324,7 +324,7 @@ template:
                   ) ~ ')'
                 )
               )),
-              'Bortabelysning: ' ~ ('VALD' if desired == 'Bortabelysning' else (
+              'Borta: ' ~ ('VALD' if desired == 'Borta' else (
                 'Kräver Borta + awaylight_on + tid 08-22 + borta>=60s' ~ (
                   '' if (home_status == 'Borta' and awaylight_on and is_time_08_22 and borta_long_enough) else
                   ' (saknas: ' ~ (
@@ -335,7 +335,7 @@ template:
                   ) ~ ')'
                 )
               )),
-              'Fönsterbelysning: ' ~ ('VALD' if desired == 'Fönsterbelysning' else (
+              'Fönster: ' ~ ('VALD' if desired == 'Fönster' else (
                 'Kräver Hemma + christmas_on + tid 09-05 + ej pausad' ~ (
                   '' if (home_status == 'Hemma' and christmas_on and is_time_09_05 and not pause_day_window_transition) else
                   ' (saknas: ' ~ (
@@ -346,8 +346,8 @@ template:
                   ) ~ ')'
                 )
               )),
-              'Förmiddagsbelysning: ' ~ ('VALD' if desired == 'Förmiddagsbelysning' else 'Väljs normalt inte av resolver (manuell/legacy)'),
-              'Arbetsbelysning: ' ~ ('VALD' if desired == 'Arbetsbelysning' else 'Väljs normalt inte av resolver (manuell)'),
+              'Förmiddag: ' ~ ('VALD' if desired == 'Förmiddag' else 'Väljs normalt inte av resolver (manuell/legacy)'),
+              'Arbete: ' ~ ('VALD' if desired == 'Arbete' else 'Väljs normalt inte av resolver (manuell)'),
             ] %}
 
             {% if pause_day_window_transition and home_status == 'Hemma' and is_time_09_05 and daylight_on and desired == states('input_select.light_inside') | trim %}
@@ -923,8 +923,8 @@ template:
         unique_id: lights_debug_hall
         state: >-
           {% set home_status = states('input_select.home_status') %}
-          {% set hall_state = states('light.hall_tak') %}
-          {% set bri = state_attr('light.hall_tak', 'brightness') %}
+          {% set hall_state = states('light.funktion_hall_tak') %}
+          {% set bri = state_attr('light.funktion_hall_tak', 'brightness') %}
           {% set bri_pct = ((bri | float(0)) * 100 / 255) | round(0) | int if (bri is number) else -1 %}
           {% if home_status != 'Hemma' %}
             Släckt
@@ -945,16 +945,16 @@ template:
           current_option: "{{ states('input_select.light_hall') | trim }}"
           reality_status: >-
             {% set selected = states('input_select.light_hall') | trim %}
-            {% set on = is_state('light.hall_tak', 'on') %}
+            {% set on = is_state('light.funktion_hall_tak', 'on') %}
             {% if selected == 'Släckt' and on %}Avvikelse: Hall tak är tänd
             {% elif selected != 'Släckt' and not on %}Avvikelse: läget {{ selected }} är valt men Hall tak är släckt
             {% else %}Stämmer med valt läge{% endif %}
-          lights_on: "{{ 'Hall tak' if is_state('light.hall_tak', 'on') else 'Inga' }}"
+          lights_on: "{{ 'Funktion – Hall – Tak' if is_state('light.funktion_hall_tak', 'on') else 'Inga' }}"
           home_status: "{{ states('input_select.home_status') | trim }}"
-          hall_state: "{{ states('light.hall_tak') }}"
-          brightness: "{{ state_attr('light.hall_tak', 'brightness') }}"
+          hall_state: "{{ states('light.funktion_hall_tak') }}"
+          brightness: "{{ state_attr('light.funktion_hall_tak', 'brightness') }}"
           brightness_pct: >-
-            {% set bri = state_attr('light.hall_tak', 'brightness') %}
+            {% set bri = state_attr('light.funktion_hall_tak', 'brightness') %}
             {% if bri is number %}
               {{ ((bri | float(0)) * 100 / 255) | round(0) | int }}
             {% else %}
@@ -962,8 +962,8 @@ template:
             {% endif %}
           reason: >-
             {% set home_status = states('input_select.home_status') %}
-            {% set hall_state = states('light.hall_tak') %}
-            {% set bri = state_attr('light.hall_tak', 'brightness') %}
+            {% set hall_state = states('light.funktion_hall_tak') %}
+            {% set bri = state_attr('light.funktion_hall_tak', 'brightness') %}
             {% set bri_pct = ((bri | float(0)) * 100 / 255) | round(0) | int if (bri is number) else -1 %}
             {% if home_status != 'Hemma' %}
               Hemstatus != Hemma => Släckt
@@ -983,8 +983,8 @@ template:
           why_not: >-
             {% set desired = (states('sensor.lights_debug_hall') | trim) %}
             {% set home_status = states('input_select.home_status') %}
-            {% set hall_state = states('light.hall_tak') %}
-            {% set bri = state_attr('light.hall_tak', 'brightness') %}
+            {% set hall_state = states('light.funktion_hall_tak') %}
+            {% set bri = state_attr('light.funktion_hall_tak', 'brightness') %}
             {% set bri_pct = ((bri | float(0)) * 100 / 255) | round(0) | int if (bri is number) else -1 %}
 
             {% set lines = [

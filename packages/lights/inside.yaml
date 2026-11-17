@@ -61,14 +61,14 @@ automation:
 #
 # TILLSTÅND (input_select.light_inside):
 # - Släckt: Släcker allt inne
-# - Morgonbelysning: Mjukt morgonljus (ca 05:00-09:00)
-# - Förmiddagsbelysning: Övergång till dagläge
-# - Dagbelysning: Normalt dagsljus
-# - Kvällsbelysning: Dämpat kvällsljus
-# - Nattbelysning: Minimalt nattljus (vid rörelse)
-# - Bortabelysning: Simulerar närvaro när borta
-# - Arbetsbelysning: Praktiskt/klart ljus (mappas till städbelysning)
-# - Fönsterbelysning: Fönster/julbelysning
+# - Morgon: Mjukt morgonljus (ca 05:00-09:00)
+# - Förmiddag: Övergång till dagläge
+# - Dag: Normalt dagsljus
+# - Kväll: Dämpat kvällsljus
+# - Natt: Minimalt nattljus (vid rörelse)
+# - Borta: Simulerar närvaro när borta
+# - Arbete: Praktiskt/klart ljus (mappas till städbelysning)
+# - Fönster: Fönster/julbelysning
 #
 # LOGIK:
 # När input_select.light_inside ändras:
@@ -103,56 +103,56 @@ automation:
           - conditions:
               - condition: state
                 entity_id: input_select.light_inside
-                state: Morgonbelysning
+                state: Morgon
             sequence:
               - service: script.morning_lights_on
 
           - conditions:
               - condition: state
                 entity_id: input_select.light_inside
-                state: Förmiddagsbelysning
+                state: Förmiddag
             sequence:
               - service: script.daylights_on
 
           - conditions:
               - condition: state
                 entity_id: input_select.light_inside
-                state: Dagbelysning
+                state: Dag
             sequence:
               - service: script.daylights_on
 
           - conditions:
               - condition: state
                 entity_id: input_select.light_inside
-                state: Kvällsbelysning
+                state: Kväll
             sequence:
               - service: script.eveninglights_on
 
           - conditions:
               - condition: state
                 entity_id: input_select.light_inside
-                state: Nattbelysning
+                state: Natt
             sequence:
               - service: script.night_light
 
           - conditions:
               - condition: state
                 entity_id: input_select.light_inside
-                state: Bortabelysning
+                state: Borta
             sequence:
               - service: script.away_lights_on
 
           - conditions:
               - condition: state
                 entity_id: input_select.light_inside
-                state: Fönsterbelysning
+                state: Fönster
             sequence:
               - service: script.window_lights_on
 
           - conditions:
               - condition: state
                 entity_id: input_select.light_inside
-                state: Arbetsbelysning
+                state: Arbete
             sequence:
               - service: script.cleaning_lights_on
 

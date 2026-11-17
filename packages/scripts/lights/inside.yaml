@@ -13,14 +13,14 @@ script:
           current_option: "{{ states('input_select.light_inside') | trim }}"
           valid_options:
             - Släckt
-            - Morgonbelysning
-            - Förmiddagsbelysning
-            - Dagbelysning
-            - Kvällsbelysning
-            - Nattbelysning
-            - Bortabelysning
-            - Arbetsbelysning
-            - Fönsterbelysning
+            - Morgon
+            - Förmiddag
+            - Dag
+            - Kväll
+            - Natt
+            - Borta
+            - Arbete
+            - Fönster
 
       - choose:
           - conditions:
@@ -29,7 +29,7 @@ script:
                   {{
                     desired_option in valid_options
                     and desired_option != current_option
-                    and not (current_option == 'Kvällsbelysning' and home_status == 'Hemma')
+                    and not (current_option == 'Kväll' and home_status == 'Hemma')
                   }}
             sequence:
               - service: input_select.select_option
@@ -54,56 +54,56 @@ script:
           - conditions:
               - condition: state
                 entity_id: input_select.light_inside
-                state: Morgonbelysning
+                state: Morgon
             sequence:
               - service: script.morning_lights_on
 
           - conditions:
               - condition: state
                 entity_id: input_select.light_inside
-                state: Förmiddagsbelysning
+                state: Förmiddag
             sequence:
               - service: script.daylights_on
 
           - conditions:
               - condition: state
                 entity_id: input_select.light_inside
-                state: Dagbelysning
+                state: Dag
             sequence:
               - service: script.daylights_on
 
           - conditions:
               - condition: state
                 entity_id: input_select.light_inside
-                state: Kvällsbelysning
+                state: Kväll
             sequence:
               - service: script.eveninglights_on
 
           - conditions:
               - condition: state
                 entity_id: input_select.light_inside
-                state: Nattbelysning
+                state: Natt
             sequence:
               - service: script.night_light
 
           - conditions:
               - condition: state
                 entity_id: input_select.light_inside
-                state: Bortabelysning
+                state: Borta
             sequence:
               - service: script.away_lights_on
 
           - conditions:
               - condition: state
                 entity_id: input_select.light_inside
-                state: Fönsterbelysning
+                state: Fönster
             sequence:
               - service: script.window_lights_on
 
           - conditions:
               - condition: state
                 entity_id: input_select.light_inside
-                state: Arbetsbelysning
+                state: Arbete
             sequence:
               - service: script.cleaning_lights_on
 
@@ -139,7 +139,7 @@ script:
       - service: light.turn_on
         data:
           entity_id: light.kok_stora_fonstret
-          brightness_pct: 50
+          brightness_pct: 60
           transition: 2
 
       - service: light.turn_on
@@ -378,7 +378,7 @@ script:
       - service: light.turn_on
         data:
           entity_id: light.kok_stora_fonstret
-          brightness_pct: 50
+          brightness_pct: 60
           transition: 2
 
       - service: light.turn_on
@@ -530,10 +530,10 @@ script:
     sequence:
 # IKEA
       - service: light.turn_off
-        entity_id: light.dagbelysning
+        entity_id: light.scenario_inne_dag
 
       - service: light.turn_off
-        entity_id: light.dagbelysning_jul
+        entity_id: light.scenario_inne_dag_jul
 
 #######################################################
 #                                                     #
@@ -780,7 +780,7 @@ script:
     sequence:
       - service: light.turn_off
         data:
-          entity_id: light.nattbelysning
+          entity_id: light.scenario_inne_natt
           transition: 2
 
   night_light_christmas_off:
@@ -789,7 +789,7 @@ script:
     sequence:
       - service: light.turn_off
         data:
-          entity_id: light.nattbelysning_jul
+          entity_id: light.scenario_inne_natt_jul
           transition: 2
 
 #######################################################
@@ -1351,7 +1351,7 @@ script:
       - service: input_select.select_option
         data:
           entity_id: input_select.light_inside
-          option: Dagbelysning
+          option: Dag
 
 #######################################################
 #                                                     #
@@ -1364,10 +1364,10 @@ script:
     mode: restart
     sequence:
       - condition: template
-        value_template: "{{ states('light.sovrum') != 'unavailable' }}"
+        value_template: "{{ states('light.rum_sovrum') != 'unavailable' }}"
       - service: light.turn_off
         data:
-          entity_id: light.sovrum
+          entity_id: light.rum_sovrum
           transition: 2
 
   andreas_room_off:
@@ -1375,10 +1375,10 @@ script:
     mode: restart
     sequence:
       - condition: template
-        value_template: "{{ states('light.andreas_rum') != 'unavailable' }}"
+        value_template: "{{ states('light.rum_andreas') != 'unavailable' }}"
       - service: light.turn_off
         data:
-          entity_id: light.andreas_rum
+          entity_id: light.rum_andreas
           transition: 2
 
       - condition: template
@@ -1391,8 +1391,8 @@ script:
     mode: restart
     sequence:
       - condition: template
-        value_template: "{{ states('light.louise_rum') != 'unavailable' }}"
+        value_template: "{{ states('light.rum_louise') != 'unavailable' }}"
       - service: light.turn_off
         data:
-          entity_id: light.louise_rum
+          entity_id: light.rum_louise
           transition: 2

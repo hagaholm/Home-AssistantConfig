@@ -14,7 +14,7 @@
 # - automations/light_hall_remote_control.yaml (Hall fjärrkontroll automation)
 #
 # Hårdvara/Entiteter:
-# - Light: light.hall_tak
+# - Light: light.funktion_hall_tak
 # - Switch: switch.fjarrkontroll_hall
 # - input_select: input_select.light_hall
 # - input_select: input_select.home_status
@@ -46,7 +46,7 @@ automation:
   # TRIGGRAR:
   # - HA start (initiering av system)
   # - input_select.home_status ändras (hemstatus shift)
-  # - light.hall_tak state changes (manuell override detection)
+  # - light.funktion_hall_tak state changes (manuell override detection)
   #
   # SÄKERHET:
   # - Mode: restart (förhindrar överlappande körningar)
@@ -72,7 +72,7 @@ automation:
         entity_id: input_select.home_status
 
       - platform: state
-        entity_id: light.hall_tak
+        entity_id: light.funktion_hall_tak
 
     action:
       - service: script.hall_set_correct_mode
@@ -145,7 +145,7 @@ automation:
 # Möjliggör manuell styrning via fjärrkontroll.
 #
 # HÅRDVARA/ENTITETER:
-# - Light: light.hall_tak
+# - Light: light.funktion_hall_tak
 # - Switch: switch.fjarrkontroll_hall
 # - input_select: input_select.light_hall
 # - input_select: input_select.home_status
@@ -188,7 +188,7 @@ automation:
 #######################################################
 
   - alias: "Hall släck belysning"
-    description: "Kör script.hall_taklampor_off om light.hall_tak är på och (input_select.home_status != Hemma)"
+    description: "Kör script.hall_taklampor_off om light.funktion_hall_tak är på och (input_select.home_status != Hemma)"
     id: hall_slack_belysning
     mode: single
     trigger:

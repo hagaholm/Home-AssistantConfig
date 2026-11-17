@@ -142,23 +142,23 @@ views:
         square: false
         cards:
           - type: tile
-            entity: light.kok
-            name: Kök
+            entity: light.rum_kok_fonster
+            name: Rum – Kök – Fönster
           - type: tile
-            entity: light.hall
-            name: Hall
+            entity: light.rum_hall
+            name: Rum – Hall
           - type: tile
-            entity: light.vardagsrum
-            name: Vardagsrum
+            entity: light.rum_vardagsrum
+            name: Rum – Vardagsrum
           - type: tile
-            entity: light.sovrum
-            name: Sovrum
+            entity: light.rum_sovrum
+            name: Rum – Sovrum
           - type: tile
-            entity: light.louise_rum
-            name: Louise rum
+            entity: light.rum_louise
+            name: Rum – Louise
           - type: tile
-            entity: light.andreas_rum
-            name: Andreas rum
+            entity: light.rum_andreas
+            name: Rum – Andreas
 
       - type: conditional
         conditions:
@@ -166,12 +166,12 @@ views:
             state: 'off'
         card:
           type: entities
-          title: Dagläge (standard)
+          title: Scenario – Inne – Dag
           show_header_toggle: false
           state_color: true
           entities:
             - input_boolean.daylight_on
-            - light.dagbelysning
+            - light.scenario_inne_dag
 
       - type: conditional
         conditions:
@@ -179,12 +179,12 @@ views:
             state: 'on'
         card:
           type: entities
-          title: Dagläge (jul)
+          title: Scenario – Inne – Dag – Jul
           show_header_toggle: false
           state_color: true
           entities:
             - input_boolean.daylight_on
-            - light.dagbelysning_jul
+            - light.scenario_inne_dag_jul
 
   #######################################################
   # TAB 2: RUM & GRUPPER (ROOMS & GROUPS)
@@ -231,7 +231,7 @@ views:
         entities:
           - input_select.light_hall
           - input_boolean.lights_auto_halltak
-          - light.hall_tak
+          - light.funktion_hall_tak
           - light.hall_byra
           - light.hall_skap
 
@@ -242,7 +242,7 @@ views:
         entities:
           - input_select.light_bathroom
           - input_boolean.lights_auto_badrum
-          - light.badrum
+          - light.rum_badrum
           - light.tak_spottar
           - light.fonster_spott
 

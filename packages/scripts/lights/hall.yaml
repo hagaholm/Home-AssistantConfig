@@ -9,8 +9,8 @@ script:
     sequence:
       - variables:
           home_status: "{{ states('input_select.home_status') }}"
-          hall_state: "{{ states('light.hall_tak') }}"
-          bri: "{{ state_attr('light.hall_tak', 'brightness') }}"
+          hall_state: "{{ states('light.funktion_hall_tak') }}"
+          bri: "{{ state_attr('light.funktion_hall_tak', 'brightness') }}"
           bri_pct: >-
             {% if bri is number %}
               {{ ((bri | float(0)) * 100 / 255) | round(0) | int }}
@@ -64,7 +64,7 @@ script:
 #
 # SÄKERHET:
 # - Mode: single (för att undvika samtidiga dim-ändringar)
-# - Tillgänglighetskontroll för light.hall_tak
+# - Tillgänglighetskontroll för light.funktion_hall_tak
 #######################################################
 
   ##########################
@@ -75,10 +75,10 @@ script:
     mode: single
     sequence:
       - condition: template
-        value_template: "{{ states('light.hall_tak') != 'unavailable' }}"
+        value_template: "{{ states('light.funktion_hall_tak') != 'unavailable' }}"
       - service: light.turn_off
         target:
-          entity_id: light.hall_tak
+          entity_id: light.funktion_hall_tak
         data:
           transition: 10
 
@@ -87,10 +87,10 @@ script:
     mode: single
     sequence:
       - condition: template
-        value_template: "{{ states('light.hall_tak') != 'unavailable' }}"
+        value_template: "{{ states('light.funktion_hall_tak') != 'unavailable' }}"
       - service: light.turn_on
         target:
-          entity_id: light.hall_tak
+          entity_id: light.funktion_hall_tak
         data:
           brightness_pct: 1
           transition: 5
@@ -100,10 +100,10 @@ script:
     mode: single
     sequence:
       - condition: template
-        value_template: "{{ states('light.hall_tak') != 'unavailable' }}"
+        value_template: "{{ states('light.funktion_hall_tak') != 'unavailable' }}"
       - service: light.turn_on
         target:
-          entity_id: light.hall_tak
+          entity_id: light.funktion_hall_tak
         data:
           brightness_pct: 10
           transition: 5
@@ -113,10 +113,10 @@ script:
     mode: single
     sequence:
       - condition: template
-        value_template: "{{ states('light.hall_tak') != 'unavailable' }}"
+        value_template: "{{ states('light.funktion_hall_tak') != 'unavailable' }}"
       - service: light.turn_on
         target:
-          entity_id: light.hall_tak
+          entity_id: light.funktion_hall_tak
         data:
           brightness_pct: 50
           transition: 5
@@ -126,10 +126,10 @@ script:
     mode: single
     sequence:
       - condition: template
-        value_template: "{{ states('light.hall_tak') != 'unavailable' }}"
+        value_template: "{{ states('light.funktion_hall_tak') != 'unavailable' }}"
       - service: light.turn_on
         target:
-          entity_id: light.hall_tak
+          entity_id: light.funktion_hall_tak
         data:
           brightness_pct: 100
           transition: 5

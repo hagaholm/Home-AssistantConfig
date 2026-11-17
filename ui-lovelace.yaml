@@ -232,15 +232,15 @@ views:
             - type: button
               tap_action:
                 action: toggle
-              entity: light.sovrum
+              entity: light.rum_sovrum
             - type: button
               tap_action:
                 action: toggle
-              entity: light.andreas_rum
+              entity: light.rum_andreas
             - type: button
               tap_action:
                 action: toggle
-              entity: light.louise_rum
+              entity: light.rum_louise
       - type: conditional
         conditions:
           - entity: input_boolean.christmas_light
@@ -251,16 +251,16 @@ views:
             - type: button
               tap_action:
                 action: toggle
-              entity: light.sovrum
+              entity: light.rum_sovrum
             - type: button
               tap_action:
                 action: toggle
-              entity: light.andreas_rum_jul
-              name: Andreas rum
+              entity: light.rum_andreas_jul
+              name: Rum – Andreas – Jul
             - type: button
               tap_action:
                 action: toggle
-              entity: light.louise_rum
+              entity: light.rum_louise
       - type: conditional
         conditions:
           - entity: input_boolean.christmas_light
@@ -271,15 +271,15 @@ views:
             - type: button
               tap_action:
                 action: toggle
-              entity: light.vardagsrum
+              entity: light.rum_vardagsrum
             - type: button
               tap_action:
                 action: toggle
-              entity: light.hall
+              entity: light.rum_hall
             - type: button
               tap_action:
                 action: toggle
-              entity: light.kok
+              entity: light.rum_kok_fonster
       - type: conditional
         conditions:
           - entity: input_boolean.christmas_light
@@ -290,17 +290,17 @@ views:
             - type: button
               tap_action:
                 action: toggle
-              entity: light.vardagsrum_jul
-              name: Vardagsrum
+              entity: light.rum_vardagsrum_jul
+              name: Rum – Vardagsrum – Jul
             - type: button
               tap_action:
                 action: toggle
-              entity: light.hall_jul
+              entity: light.rum_hall_jul
             - type: button
               tap_action:
                 action: toggle
-              entity: light.kok_jul
-              name: Kök
+              entity: light.rum_kok_fonster_jul
+              name: Rum – Kök – Fönster – Jul
       - entity: input_select.light_inside
         type: entity
         state_color: true
@@ -524,7 +524,7 @@ views:
           - entity: light.vardagsrum_fonster
           - entity: light.uterum_fonster
           - entity: input_boolean.morning_light_on
-          title: Morgonbelysning
+          title: Scenario – Inne – Morgon
           show_header_toggle: true
           state_color: true
       - type: conditional
@@ -540,7 +540,7 @@ views:
           - entity: light.vardagsrum_fonster_ljusstake_2
           - entity: light.vardagsrum_gran
           - entity: light.uterum_julstjarnor
-          title: Morgonbelysning jul
+          title: Scenario – Inne – Morgon – Jul
           show_header_toggle: true
           state_color: true
       - type: conditional
@@ -565,7 +565,7 @@ views:
             - entity: light.louise_golvlampa
             - entity: light.uterum_fonster
             - entity: input_boolean.daylight_on
-          title: Dagbelysning
+          title: Scenario – Inne – Dag
           show_header_toggle: true
           state_color: true
       - type: conditional
@@ -589,7 +589,7 @@ views:
             - entity: light.louise_fonster
             - entity: light.louise_golvlampa
             - entity: light.uterum_julstjarnor
-          title: Dagbelysning jul
+          title: Scenario – Inne – Dag – Jul
           show_header_toggle: true
           state_color: true
       - type: conditional
@@ -603,7 +603,7 @@ views:
             - light.kok_stora_fonstret    
             - light.hall_byra
             - light.vardagsrum_fonster
-          title: Nattbelysning
+          title: Scenario – Inne – Natt
           show_header_toggle: true
           state_color: true
       - type: conditional
@@ -617,7 +617,7 @@ views:
             - light.kok_stora_fonstret_ljusstake #jul
             - light.hall_jullampa
             - light.vardagsrum_fonster_ljusstake_2 #jul
-          title: Nattbelysning jul
+          title: Scenario – Inne – Natt – Jul
           show_header_toggle: true
           state_color: true
       - type: conditional
@@ -630,7 +630,7 @@ views:
             - light.uterum_led
             - light.uterum_fonster
             - light.uterum_fotogenlampa
-          title: Uterum
+          title: Rum – Uterum
           show_header_toggle: true
           state_color: true
       - type: conditional
@@ -644,7 +644,7 @@ views:
             - light.uterum_fonster
             - light.uterum_julstjarnor #jul
             - light.uterum_fotogenlampa
-          title: Uterum jul
+          title: Rum – Uterum – Jul
           show_header_toggle: true
           state_color: true
       - type: entities
@@ -670,7 +670,7 @@ views:
           - light.tvattstugan_fasad
           - light.forrad_fasad
           - light.friggebod_fasad
-        title: Fasad
+        title: Område – Fasad
         show_header_toggle: true
         state_color: true
 
@@ -689,19 +689,19 @@ views:
             - light.louise_fonster
             - light.uterum_fonster
             - input_boolean.awaylight_on
-          title: Bortabelysning
+          title: Scenario – Inne – Borta
           show_header_toggle: true
           state_color: true
       - type: entities
         entities:
-          - light.badrum
-        title: Badrum
+          - light.rum_badrum
+        title: Rum – Badrum
         show_header_toggle: false
         state_color: true
       - type: entities
         entities:
-          - light.hall_tak
-        title: Hall
+          - light.funktion_hall_tak
+        title: Funktion – Hall – Tak
         show_header_toggle: false
         state_color: true
       - type: conditional
@@ -718,7 +718,7 @@ views:
             - light.sovrum_sangbord
             - light.louise_fonster
             - light.uterum_julstjarnor
-          title: Bortabelysning jul
+          title: Scenario – Inne – Borta – Jul
           show_header_toggle: true
           state_color: true
     icon: 'mdi:lightbulb'
@@ -818,7 +818,7 @@ views:
             attribute: why_not
             name: why_not
           - input_select.light_hall
-          - light.hall_tak
+          - light.funktion_hall_tak
           - input_select.home_status
 
       - type: entities

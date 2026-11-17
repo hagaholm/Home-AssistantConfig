@@ -23,7 +23,7 @@
 light:
   # Daily Lighting Scenarios - Times of day
   - platform: group
-    name: Dagbelysning
+    name: Scenario – Inne – Dag
     # Day mode lighting (maximum brightness general illumination)
     # Used by: light_day script for daytime ambiance
     # Includes: Window lights, cabinet accent lights, and room illumination
@@ -43,7 +43,7 @@ light:
       - light.louise_golvlampa
 
   - platform: group
-    name: Köksbelysning
+    name: Funktion – Kök – Bänk och vitrin
     # Kitchen-specific lighting (task and ambient)
     # Used by: light_kitchen script for brightness adjustment
     # Includes: Under-cabinet work lights and cabinet accent lighting
@@ -53,7 +53,7 @@ light:
       - light.kok_vitrinskap
 
   - platform: group
-    name: Morgonbelysning
+    name: Scenario – Inne – Morgon
     # Morning/breakfast lighting (soft, focused)
     # Used by: light_morning script for gentle wake-up lighting
     # Includes: Kitchen windows and main living areas
@@ -64,7 +64,7 @@ light:
       - light.vardagsrum_fonster
 
   - platform: group
-    name: Nattbelysning
+    name: Scenario – Inne – Natt
     # Night/bedroom lighting (very low brightness)
     # Used by: light_night script for sleeping mode
     # Includes: Minimal lighting for safe movement without waking
@@ -75,7 +75,7 @@ light:
       - light.vardagsrum_fonster
 
   - platform: group
-    name: Fasadbelysning
+    name: Område – Fasad
     # House exterior facade lighting (decorative accents)
     # Used by: fasadbelysning_* (packages/lights/facade.yaml)
     # Includes: Front entrance, laundry room, storage, garden shed accents
@@ -86,7 +86,7 @@ light:
       - light.friggebod_fasad
 
   - platform: group
-    name: Utebelysning
+    name: Område – Ute – Friggebod och spabad
     # Exterior outdoor lighting (gardens and entertainment areas)
     # Used by:
     # - outside_light_on/off (packages/lights/spabad.yaml) (spabad-lampor)
@@ -99,7 +99,7 @@ light:
       - light.spabad_h
 
   - platform: group
-    name: Bortabelysning
+    name: Scenario – Inne – Borta
     # Away mode lighting (security simulation)
     # Used by: light_away script to simulate occupancy
     # Includes: Key visible windows and entry lighting
@@ -113,7 +113,7 @@ light:
 
   # Room-based Lighting Groups
   - platform: group
-    name: Sovrum
+    name: Rum – Sovrum
     # Master bedroom all lights
     # Used by: Room-specific automation and scene control
     # Includes: Bedside lamp and window accent
@@ -122,7 +122,7 @@ light:
       - light.sovrum_fonster
 
   - platform: group
-    name: Hall
+    name: Rum – Hall
     # Hallway and entryway lights
     # Used by: Motion-activated hallway lighting
     # Includes: Hallway furniture accents
@@ -131,7 +131,7 @@ light:
       - light.hall_skap
 
   - platform: group
-    name: Vardagsrum
+    name: Rum – Vardagsrum
     # Living room all lights
     # Used by: Main living area scene activation
     # Includes: Window lights, furniture, cabinet lighting, Christmas tree
@@ -143,7 +143,7 @@ light:
       - light.vardagsrum_gran
 
   - platform: group
-    name: Kök
+    name: Rum – Kök – Fönster
     # Kitchen general lighting (windows)
     # Used by: Kitchen automation scenes
     # Includes: Window candle lights
@@ -152,7 +152,7 @@ light:
       - light.kok_lilla_fonstret
 
   - platform: group
-    name: Louise rum
+    name: Rum – Louise
     # Louise's bedroom lights
     # Used by: Child's room automation (bedtime, morning)
     # Includes: Window light, floor lamp
@@ -161,7 +161,7 @@ light:
       - light.louise_golvlampa
 
   - platform: group
-    name: Andreas rum
+    name: Rum – Andreas
     # Andreas's bedroom lights
     # Used by: Child's room automation (bedtime, morning)
     # Includes: Window light
@@ -169,20 +169,20 @@ light:
       - light.andreas_fonster_2
 
   - platform: group
-    name: Uterum
+    name: Rum – Uterum
     entities:
       - light.uterum_led
       - light.uterum_fonster
       - light.uterum_fotogenlampa
 
   - platform: group
-    name: Badrum
+    name: Rum – Badrum
     entities:
       - light.tak_spottar
       - light.fonster_spott
 
   - platform: group
-    name: Hall tak
+    name: Funktion – Hall – Tak
     entities:
       - light.kajplats_e27_ws_globe_470lm # 1.1
       - light.kajplats_e27_ws_globe_470lm_2 # 1.2
